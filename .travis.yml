@@ -16,7 +16,7 @@ before_install:
 - sudo apt-get update
 - sudo apt-get install pandoc
 - pip install pypandoc
-# - 'openssl aes-256-cbc -K $ghost_key -iv $ghost_iv -in .ghostenv.enc -out .ghostenv -d || true'
+# - '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $ghost_key -iv $ghost_iv -in .ghostenv.enc -out .ghostenv -d || true'
 
 install:
 - pip install tox-travis
@@ -24,22 +24,22 @@ install:
 script:
 - tox
 
-# before_deploy:
-# - pip install bump2version
-# - nvm install 12
-# - npm install @semantic-release/changelog
-# - npm install @semantic-release/exec
-# - npm install @semantic-release/git
-# - npm install @semantic-release/github
-# 
-# deploy:
-# - provider: script
-#   script: npx semantic-release
-#   skip_cleanup: true
-#   on:
-#     python: '3.5'
-#     branch: master
-# 
+before_deploy:
+- pip install bump2version
+- nvm install 12
+- npm install @semantic-release/changelog
+- npm install @semantic-release/exec
+- npm install @semantic-release/git
+- npm install @semantic-release/github
+
+deploy:
+- provider: script
+  script: npx semantic-release
+  skip_cleanup: true
+  on:
+    python: '3.5'
+    branch: master
+
 # - provider: pypi
 #   user: $PYPI_USER
 #   password: $PYPI_PASSWORD
