@@ -20,7 +20,7 @@ import sys
 import pkg_resources
 
 __version__ = '0.3.0'
-PACKAGE_NAME = 'platform_services'
+PACKAGE_NAME = 'ibm_platform_services'
 PACKAGE_DESC = 'IBM Cloud Platform Services Python SDK client library'
 
 with open('requirements.txt') as f:
@@ -85,7 +85,7 @@ setup(name=PACKAGE_NAME,
       author='IBM',
       author_email='devexdev@us.ibm.com',
       long_description=read_md('README.md'),
-      url='https://github.ibm.com/ibmcloud/platform-services-python-sdk',
+      url='https://github.com/IBM/platform-services-python-sdk',
       packages=[PACKAGE_NAME],
       include_package_data=True,
       keywords=PACKAGE_NAME,

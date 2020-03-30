@@ -1,3 +1,3 @@
 #!/bin/bash
 
-pylint platform_services test
+pylint ibm_platform_services test
