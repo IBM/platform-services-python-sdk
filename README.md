@@ -2,7 +2,7 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-# IBM Cloud Platform Services Python SDK Version 0.0.0
+# IBM Cloud Platform Services Python SDK Version 0.1.0
 
 Python client library to interact with various [IBM Cloud Platform Service APIs](https://cloud.ibm.com/apidocs?category=platform_services).
 
@@ -58,13 +58,13 @@ Service Name | Imported Class Name
 To install, use `pip` or `easy_install`:
 
 ```bash
-pip install --upgrade "ibm_platform_services>=0.0.0"
+pip install --upgrade "ibm_platform_services>=0.1.0"
 ```
 
 or
 
 ```bash
-easy_install --upgrade "ibm_platform_services>=0.0.0"
+easy_install --upgrade "ibm_platform_services>=0.1.0"
 ```
 
 ## Using the SDK
