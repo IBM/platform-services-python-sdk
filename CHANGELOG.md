@@ -1,3 +1,10 @@
+## [0.1.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.1.1...v0.1.2) (2020-03-31)
+
+
+### Bug Fixes
+
+* use correct rendering of long_description in setup.py ([40f43fc](https://github.com/IBM/platform-services-python-sdk/commit/40f43fc7c46f644e9d05489171dcbda2c28d08fa))
+
 ## [0.1.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.1.0...v0.1.1) (2020-03-31)
 
 
