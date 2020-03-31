@@ -21,7 +21,7 @@ import pkg_resources
 
 __version__ = '0.1.0'
 PACKAGE_NAME = 'ibm_platform_services'
-PACKAGE_DESC = 'IBM Cloud Platform Services Python SDK client library'
+PACKAGE_DESC = 'Python client library for IBM Cloud Platform Services'
 
 with open('requirements.txt') as f:
     install_requires = [str(req) for req in pkg_resources.parse_requirements(f)]
@@ -75,7 +75,7 @@ class PyTestIntegration(PyTest):
         self.test_args = ['--strict', '--verbose', '--tb=long', 'test/integration']
 
         
-setup(name=PACKAGE_NAME,
+setup(name=PACKAGE_NAME.replace('_', '-'),
       version=__version__,
       description=PACKAGE_DESC,
       license='Apache 2.0',
@@ -92,13 +92,16 @@ setup(name=PACKAGE_NAME,
       classifiers=[
           'Programming Language :: Python',
           'Programming Language :: Python :: 3',
+          'Programming Language :: Python :: 3.5',
+          'Programming Language :: Python :: 3.6',
+          'Programming Language :: Python :: 3.7',
+          'Programming Language :: Python :: 3.8',
           'Development Status :: 4 - Beta',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: Apache Software License',
           'Operating System :: OS Independent',
           'Topic :: Software Development :: Libraries :: Python Modules',
-          'Topic :: Software Development :: Libraries :: Application '
-          'Frameworks',
+          'Topic :: Software Development :: Libraries :: Application Frameworks',
       ],
       zip_safe=True
      )
