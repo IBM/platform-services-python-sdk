@@ -41,7 +41,7 @@ deploy:
     branch: master
 
 - provider: pypi
-  user: $PYPI_USER
+  user: __token__
   password: $PYPI_TOKEN
   repository: https://upload.pypi.org/legacy
   skip_cleanup: true
