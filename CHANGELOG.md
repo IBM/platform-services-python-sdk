@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.1.0...v0.1.1) (2020-03-31)
+
+
+### Bug Fixes
+
+* add pypi deployment to build ([dcf0f97](https://github.com/IBM/platform-services-python-sdk/commit/dcf0f97e1c70231ace9c472892ad40199aa14f5c))
+
 # [0.1.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.0.0...v0.1.0) (2020-03-30)
 
 
