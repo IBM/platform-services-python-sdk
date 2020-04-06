@@ -36,7 +36,7 @@ def getRandomIntegerString(length=8):
     return res
 
 # Read config file
-configFile = '.ghostenv'
+configFile = 'ghost.env'
 config = {}
 configLoaded = None
 
@@ -51,7 +51,7 @@ try:
         config['GST_IAM_URL'] = p['GST_IAM_URL'].data
         config['GST_QUERY'] = p['GST_QUERY'].data
         config['GST_RESOURCE_CRN'] = p['GST_RESOURCE_CRN'].data
-        configLoaded = true
+        configLoaded = True
 except:
     print('External configuration was not found, skipping tests...')
 

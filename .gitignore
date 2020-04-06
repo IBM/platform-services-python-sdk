@@ -55,6 +55,7 @@ venv/
 python3/
 
 .env
+*.env
 
 # resources
 resources/output.wav

@@ -16,7 +16,7 @@ before_install:
 - sudo apt-get update
 - sudo apt-get install pandoc
 - pip install pypandoc
-# - '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $ghost_key -iv $ghost_iv -in .ghostenv.enc -out .ghostenv -d || true'
+- '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $encrypted_3058bc69cb40_key -iv $encrypted_3058bc69cb40_iv -in ghost.env.enc -out ghost.env -d || true'
 
 install:
 - pip install tox-travis

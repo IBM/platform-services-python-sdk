@@ -24,7 +24,7 @@ from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from jproperties import Properties
 
 # Read config file
-configFile = '.ghostenv'
+configFile = 'ghost.env'
 config = {}
 configLoaded = None
 
@@ -39,7 +39,7 @@ try:
         config['GST_IAM_URL'] = p['GST_IAM_URL'].data
         config['GST_QUERY'] = p['GST_QUERY'].data
         config['GST_RESOURCE_CRN'] = p['GST_RESOURCE_CRN'].data
-        configLoaded = true
+        configLoaded = True
 except:
     print('External configuration was not found, skipping tests...')
     
@@ -50,7 +50,12 @@ class TestGlobalSearchV2(unittest.TestCase):
           self.skipTest("External configuration not available, skipping...")
         
         # Create authenticator with IAM API key (it generates bearer token automatically)
-        authenticator = IAMAuthenticator(config['GST_IINTERNA_APIKEY'], url=config['GST_IAM_URL'])
+        apikey = config['GST_IINTERNA_APIKEY']
+        iam_url = config['GST_IAM_URL']
+        assert apikey is not None
+        assert iam_url is not None
+        authenticator = IAMAuthenticator(apikey, url=iam_url)
+        
         self.global_search = GlobalSearchV2(authenticator=authenticator)
         self.global_search.set_service_url(config['GST_API_URL'])
         self.items = set(config['GST_RESOURCE_NAMES'].split(','))
