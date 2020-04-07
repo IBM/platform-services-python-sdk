@@ -1,2 +1,1 @@
-# encrypted files are binary
-.enc binary
+*.enc binary
