@@ -18,5 +18,6 @@ from ibm_cloud_sdk_core import IAMTokenManager, DetailedResponse, BaseService, A
 from .common import get_sdk_headers
 from .version import __version__
 
+from .global_catalog_v1 import GlobalCatalogV1
 from .global_search_v2 import GlobalSearchV2
 from .global_tagging_v1 import GlobalTaggingV1

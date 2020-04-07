@@ -47,6 +47,7 @@ IBM Cloud services:
 
 Service Name | Imported Class Name
 --- | --- 
+[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | GlobalCatalogV1
 [Global Search](https://cloud.ibm.com/apidocs/search) | GlobalSearchV2
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | GlobalTaggingV1
 [IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | IamAccessGroupsV2
