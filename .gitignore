@@ -54,7 +54,7 @@ venv/
 # python 3 virtual env
 python3/
 
-.env
+# plain-text credentials files
 *.env
 
 # resources
