@@ -72,7 +72,8 @@ class TestListTags():
             limit=limit,
             order_by_name=order_by_name,
             timeout=timeout,
-            attached_only=attached_only
+            attached_only=attached_only,
+            headers={}
         )
 
         # Check for correct operation
@@ -138,7 +139,8 @@ class TestDeleteTagAll():
 
         # Invoke method
         response = service.delete_tag_all(
-            providers=providers
+            providers=providers,
+            headers={}
         )
 
         # Check for correct operation
@@ -199,7 +201,8 @@ class TestDeleteTag():
         # Invoke method
         response = service.delete_tag(
             tag_name,
-            providers=providers
+            providers=providers,
+            headers={}
         )
 
         # Check for correct operation
@@ -230,7 +233,8 @@ class TestDeleteTag():
 
         # Invoke method
         response = service.delete_tag(
-            tag_name
+            tag_name,
+            headers={}
         )
 
         # Check for correct operation
@@ -300,6 +304,7 @@ class TestAttachTag():
             resources,
             tag_name=tag_name,
             tag_names=tag_names,
+            headers={}
         )
 
         # Check for correct operation
@@ -307,9 +312,9 @@ class TestAttachTag():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['resources'] == resources
-        assert req_body['tag_name'] == tag_name
-        assert req_body['tag_names'] == tag_names
+        assert req_body['resources'] == [resource_model]
+        assert req_body['tag_name'] == 'testString'
+        assert req_body['tag_names'] == ['testString']
 
 
     #--------------------------------------------------------
@@ -381,6 +386,7 @@ class TestDetachTag():
             resources,
             tag_name=tag_name,
             tag_names=tag_names,
+            headers={}
         )
 
         # Check for correct operation
@@ -388,9 +394,9 @@ class TestDetachTag():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['resources'] == resources
-        assert req_body['tag_name'] == tag_name
-        assert req_body['tag_names'] == tag_names
+        assert req_body['resources'] == [resource_model]
+        assert req_body['tag_name'] == 'testString'
+        assert req_body['tag_names'] == ['testString']
 
 
     #--------------------------------------------------------
@@ -433,3 +439,308 @@ class TestDetachTag():
 # End of Service: Tags
 ##############################################################################
 
+
+##############################################################################
+# Start of Model Tests
+##############################################################################
+# region
+#-----------------------------------------------------------------------------
+# Test Class for DeleteTagResults
+#-----------------------------------------------------------------------------
+class TestDeleteTagResults():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for DeleteTagResults
+    #--------------------------------------------------------
+    def test_delete_tag_results_serialization(self):
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        delete_tag_results_item_model = {} # DeleteTagResultsItem
+        delete_tag_results_item_model['provider'] = 'ghost'
+        delete_tag_results_item_model['is_error'] = True
+        delete_tag_results_item_model['foo'] = { 'foo': 'bar' }
+
+        # Construct a json representation of a DeleteTagResults model
+        delete_tag_results_model_json = {}
+        delete_tag_results_model_json['results'] = [delete_tag_results_item_model]
+
+        # Construct a model instance of DeleteTagResults by calling from_dict on the json representation
+        delete_tag_results_model = DeleteTagResults.from_dict(delete_tag_results_model_json)
+        assert delete_tag_results_model != False
+
+        # Construct a model instance of DeleteTagResults by calling from_dict on the json representation
+        delete_tag_results_model_dict = DeleteTagResults.from_dict(delete_tag_results_model_json).__dict__
+        delete_tag_results_model2 = DeleteTagResults(**delete_tag_results_model_dict)
+
+        # Verify the model instances are equivalent
+        assert delete_tag_results_model == delete_tag_results_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        delete_tag_results_model_json2 = delete_tag_results_model.to_dict()
+        assert delete_tag_results_model_json2 == delete_tag_results_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for DeleteTagResultsItem
+#-----------------------------------------------------------------------------
+class TestDeleteTagResultsItem():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for DeleteTagResultsItem
+    #--------------------------------------------------------
+    def test_delete_tag_results_item_serialization(self):
+
+        # Construct a json representation of a DeleteTagResultsItem model
+        delete_tag_results_item_model_json = {}
+        delete_tag_results_item_model_json['provider'] = 'ghost'
+        delete_tag_results_item_model_json['is_error'] = True
+        delete_tag_results_item_model_json['foo'] = { 'foo': 'bar' }
+
+        # Construct a model instance of DeleteTagResultsItem by calling from_dict on the json representation
+        delete_tag_results_item_model = DeleteTagResultsItem.from_dict(delete_tag_results_item_model_json)
+        assert delete_tag_results_item_model != False
+
+        # Construct a model instance of DeleteTagResultsItem by calling from_dict on the json representation
+        delete_tag_results_item_model_dict = DeleteTagResultsItem.from_dict(delete_tag_results_item_model_json).__dict__
+        delete_tag_results_item_model2 = DeleteTagResultsItem(**delete_tag_results_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert delete_tag_results_item_model == delete_tag_results_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        delete_tag_results_item_model_json2 = delete_tag_results_item_model.to_dict()
+        assert delete_tag_results_item_model_json2 == delete_tag_results_item_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for DeleteTagsResult
+#-----------------------------------------------------------------------------
+class TestDeleteTagsResult():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for DeleteTagsResult
+    #--------------------------------------------------------
+    def test_delete_tags_result_serialization(self):
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        delete_tags_result_item_model = {} # DeleteTagsResultItem
+        delete_tags_result_item_model['tag_name'] = 'testString'
+        delete_tags_result_item_model['is_error'] = True
+
+        # Construct a json representation of a DeleteTagsResult model
+        delete_tags_result_model_json = {}
+        delete_tags_result_model_json['total_count'] = 38
+        delete_tags_result_model_json['errors'] = True
+        delete_tags_result_model_json['items'] = [delete_tags_result_item_model]
+
+        # Construct a model instance of DeleteTagsResult by calling from_dict on the json representation
+        delete_tags_result_model = DeleteTagsResult.from_dict(delete_tags_result_model_json)
+        assert delete_tags_result_model != False
+
+        # Construct a model instance of DeleteTagsResult by calling from_dict on the json representation
+        delete_tags_result_model_dict = DeleteTagsResult.from_dict(delete_tags_result_model_json).__dict__
+        delete_tags_result_model2 = DeleteTagsResult(**delete_tags_result_model_dict)
+
+        # Verify the model instances are equivalent
+        assert delete_tags_result_model == delete_tags_result_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        delete_tags_result_model_json2 = delete_tags_result_model.to_dict()
+        assert delete_tags_result_model_json2 == delete_tags_result_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for DeleteTagsResultItem
+#-----------------------------------------------------------------------------
+class TestDeleteTagsResultItem():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for DeleteTagsResultItem
+    #--------------------------------------------------------
+    def test_delete_tags_result_item_serialization(self):
+
+        # Construct a json representation of a DeleteTagsResultItem model
+        delete_tags_result_item_model_json = {}
+        delete_tags_result_item_model_json['tag_name'] = 'testString'
+        delete_tags_result_item_model_json['is_error'] = True
+
+        # Construct a model instance of DeleteTagsResultItem by calling from_dict on the json representation
+        delete_tags_result_item_model = DeleteTagsResultItem.from_dict(delete_tags_result_item_model_json)
+        assert delete_tags_result_item_model != False
+
+        # Construct a model instance of DeleteTagsResultItem by calling from_dict on the json representation
+        delete_tags_result_item_model_dict = DeleteTagsResultItem.from_dict(delete_tags_result_item_model_json).__dict__
+        delete_tags_result_item_model2 = DeleteTagsResultItem(**delete_tags_result_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert delete_tags_result_item_model == delete_tags_result_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        delete_tags_result_item_model_json2 = delete_tags_result_item_model.to_dict()
+        assert delete_tags_result_item_model_json2 == delete_tags_result_item_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for Resource
+#-----------------------------------------------------------------------------
+class TestResource():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for Resource
+    #--------------------------------------------------------
+    def test_resource_serialization(self):
+
+        # Construct a json representation of a Resource model
+        resource_model_json = {}
+        resource_model_json['resource_id'] = 'testString'
+        resource_model_json['resource_type'] = 'testString'
+
+        # Construct a model instance of Resource by calling from_dict on the json representation
+        resource_model = Resource.from_dict(resource_model_json)
+        assert resource_model != False
+
+        # Construct a model instance of Resource by calling from_dict on the json representation
+        resource_model_dict = Resource.from_dict(resource_model_json).__dict__
+        resource_model2 = Resource(**resource_model_dict)
+
+        # Verify the model instances are equivalent
+        assert resource_model == resource_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        resource_model_json2 = resource_model.to_dict()
+        assert resource_model_json2 == resource_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for Tag
+#-----------------------------------------------------------------------------
+class TestTag():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for Tag
+    #--------------------------------------------------------
+    def test_tag_serialization(self):
+
+        # Construct a json representation of a Tag model
+        tag_model_json = {}
+        tag_model_json['name'] = 'testString'
+
+        # Construct a model instance of Tag by calling from_dict on the json representation
+        tag_model = Tag.from_dict(tag_model_json)
+        assert tag_model != False
+
+        # Construct a model instance of Tag by calling from_dict on the json representation
+        tag_model_dict = Tag.from_dict(tag_model_json).__dict__
+        tag_model2 = Tag(**tag_model_dict)
+
+        # Verify the model instances are equivalent
+        assert tag_model == tag_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        tag_model_json2 = tag_model.to_dict()
+        assert tag_model_json2 == tag_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for TagList
+#-----------------------------------------------------------------------------
+class TestTagList():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for TagList
+    #--------------------------------------------------------
+    def test_tag_list_serialization(self):
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        tag_model = {} # Tag
+        tag_model['name'] = 'testString'
+
+        # Construct a json representation of a TagList model
+        tag_list_model_json = {}
+        tag_list_model_json['total_count'] = 38
+        tag_list_model_json['offset'] = 38
+        tag_list_model_json['limit'] = 38
+        tag_list_model_json['items'] = [tag_model]
+
+        # Construct a model instance of TagList by calling from_dict on the json representation
+        tag_list_model = TagList.from_dict(tag_list_model_json)
+        assert tag_list_model != False
+
+        # Construct a model instance of TagList by calling from_dict on the json representation
+        tag_list_model_dict = TagList.from_dict(tag_list_model_json).__dict__
+        tag_list_model2 = TagList(**tag_list_model_dict)
+
+        # Verify the model instances are equivalent
+        assert tag_list_model == tag_list_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        tag_list_model_json2 = tag_list_model.to_dict()
+        assert tag_list_model_json2 == tag_list_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for TagResults
+#-----------------------------------------------------------------------------
+class TestTagResults():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for TagResults
+    #--------------------------------------------------------
+    def test_tag_results_serialization(self):
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        tag_results_item_model = {} # TagResultsItem
+        tag_results_item_model['resource_id'] = 'testString'
+        tag_results_item_model['is_error'] = True
+
+        # Construct a json representation of a TagResults model
+        tag_results_model_json = {}
+        tag_results_model_json['results'] = [tag_results_item_model]
+
+        # Construct a model instance of TagResults by calling from_dict on the json representation
+        tag_results_model = TagResults.from_dict(tag_results_model_json)
+        assert tag_results_model != False
+
+        # Construct a model instance of TagResults by calling from_dict on the json representation
+        tag_results_model_dict = TagResults.from_dict(tag_results_model_json).__dict__
+        tag_results_model2 = TagResults(**tag_results_model_dict)
+
+        # Verify the model instances are equivalent
+        assert tag_results_model == tag_results_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        tag_results_model_json2 = tag_results_model.to_dict()
+        assert tag_results_model_json2 == tag_results_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for TagResultsItem
+#-----------------------------------------------------------------------------
+class TestTagResultsItem():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for TagResultsItem
+    #--------------------------------------------------------
+    def test_tag_results_item_serialization(self):
+
+        # Construct a json representation of a TagResultsItem model
+        tag_results_item_model_json = {}
+        tag_results_item_model_json['resource_id'] = 'testString'
+        tag_results_item_model_json['is_error'] = True
+
+        # Construct a model instance of TagResultsItem by calling from_dict on the json representation
+        tag_results_item_model = TagResultsItem.from_dict(tag_results_item_model_json)
+        assert tag_results_item_model != False
+
+        # Construct a model instance of TagResultsItem by calling from_dict on the json representation
+        tag_results_item_model_dict = TagResultsItem.from_dict(tag_results_item_model_json).__dict__
+        tag_results_item_model2 = TagResultsItem(**tag_results_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert tag_results_item_model == tag_results_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        tag_results_item_model_json2 = tag_results_item_model.to_dict()
+        assert tag_results_item_model_json2 == tag_results_item_model_json
+
+
+# endregion
+##############################################################################
+# End of Model Tests
+##############################################################################

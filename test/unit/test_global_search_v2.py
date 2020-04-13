@@ -72,7 +72,8 @@ class TestSearch():
             account_id=account_id,
             limit=limit,
             timeout=timeout,
-            sort=sort
+            sort=sort,
+            headers={}
         )
 
         # Check for correct operation
@@ -87,9 +88,9 @@ class TestSearch():
         assert 'sort={}'.format(','.join(sort)) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['query'] == query
-        assert req_body['fields'] == fields
-        assert req_body['search_cursor'] == search_cursor
+        assert req_body['query'] == 'testString'
+        assert req_body['fields'] == ['testString']
+        assert req_body['search_cursor'] == 'testString'
 
 
     #--------------------------------------------------------
@@ -116,6 +117,7 @@ class TestSearch():
             query=query,
             fields=fields,
             search_cursor=search_cursor,
+            headers={}
         )
 
         # Check for correct operation
@@ -123,9 +125,9 @@ class TestSearch():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['query'] == query
-        assert req_body['fields'] == fields
-        assert req_body['search_cursor'] == search_cursor
+        assert req_body['query'] == 'testString'
+        assert req_body['fields'] == ['testString']
+        assert req_body['search_cursor'] == 'testString'
 
 
 # endregion
@@ -171,3 +173,109 @@ class TestGetSupportedTypes():
 # End of Service: ResourceTypes
 ##############################################################################
 
+
+##############################################################################
+# Start of Model Tests
+##############################################################################
+# region
+#-----------------------------------------------------------------------------
+# Test Class for ResultItem
+#-----------------------------------------------------------------------------
+class TestResultItem():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for ResultItem
+    #--------------------------------------------------------
+    def test_result_item_serialization(self):
+
+        # Construct a json representation of a ResultItem model
+        result_item_model_json = {}
+        result_item_model_json['crn'] = 'testString'
+        result_item_model_json['foo'] = { 'foo': 'bar' }
+
+        # Construct a model instance of ResultItem by calling from_dict on the json representation
+        result_item_model = ResultItem.from_dict(result_item_model_json)
+        assert result_item_model != False
+
+        # Construct a model instance of ResultItem by calling from_dict on the json representation
+        result_item_model_dict = ResultItem.from_dict(result_item_model_json).__dict__
+        result_item_model2 = ResultItem(**result_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert result_item_model == result_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        result_item_model_json2 = result_item_model.to_dict()
+        assert result_item_model_json2 == result_item_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for ScanResult
+#-----------------------------------------------------------------------------
+class TestScanResult():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for ScanResult
+    #--------------------------------------------------------
+    def test_scan_result_serialization(self):
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        result_item_model = {} # ResultItem
+        result_item_model['crn'] = 'testString'
+        result_item_model['foo'] = { 'foo': 'bar' }
+
+        # Construct a json representation of a ScanResult model
+        scan_result_model_json = {}
+        scan_result_model_json['search_cursor'] = 'testString'
+        scan_result_model_json['limit'] = 36.0
+        scan_result_model_json['items'] = [result_item_model]
+
+        # Construct a model instance of ScanResult by calling from_dict on the json representation
+        scan_result_model = ScanResult.from_dict(scan_result_model_json)
+        assert scan_result_model != False
+
+        # Construct a model instance of ScanResult by calling from_dict on the json representation
+        scan_result_model_dict = ScanResult.from_dict(scan_result_model_json).__dict__
+        scan_result_model2 = ScanResult(**scan_result_model_dict)
+
+        # Verify the model instances are equivalent
+        assert scan_result_model == scan_result_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        scan_result_model_json2 = scan_result_model.to_dict()
+        assert scan_result_model_json2 == scan_result_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for SupportedTypesList
+#-----------------------------------------------------------------------------
+class TestSupportedTypesList():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for SupportedTypesList
+    #--------------------------------------------------------
+    def test_supported_types_list_serialization(self):
+
+        # Construct a json representation of a SupportedTypesList model
+        supported_types_list_model_json = {}
+        supported_types_list_model_json['supported_types'] = ['testString']
+
+        # Construct a model instance of SupportedTypesList by calling from_dict on the json representation
+        supported_types_list_model = SupportedTypesList.from_dict(supported_types_list_model_json)
+        assert supported_types_list_model != False
+
+        # Construct a model instance of SupportedTypesList by calling from_dict on the json representation
+        supported_types_list_model_dict = SupportedTypesList.from_dict(supported_types_list_model_json).__dict__
+        supported_types_list_model2 = SupportedTypesList(**supported_types_list_model_dict)
+
+        # Verify the model instances are equivalent
+        assert supported_types_list_model == supported_types_list_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        supported_types_list_model_json2 = supported_types_list_model.to_dict()
+        assert supported_types_list_model_json2 == supported_types_list_model_json
+
+
+# endregion
+##############################################################################
+# End of Model Tests
+##############################################################################
