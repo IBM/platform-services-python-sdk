@@ -151,7 +151,7 @@ class GlobalCatalogV1(BaseService):
         return response
 
 
-    def create_catalog_entry(self, name: str, overview_ui: 'OverviewUI', kind: str, images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', *, parent_id: str = None, parent_url: str = None, group: bool = None, metadata: 'ObjectMetaData' = None, active: bool = None, children: List['CatalogEntry'] = None, account: str = None, **kwargs) -> DetailedResponse:
+    def create_catalog_entry(self, id: str, name: str, overview_ui: 'OverviewUI', kind: str, images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', *, parent_id: str = None, group: bool = None, metadata: 'ObjectMetaData' = None, active: bool = None, account: str = None, **kwargs) -> DetailedResponse:
         """
         Create a catalog entry.
 
@@ -159,6 +159,8 @@ class GlobalCatalogV1(BaseService):
         or editor role in the scope of the provided token. This API will return an ETag
         that can be used for standard ETag processing, except when depth query is used.
 
+        :param str id: Catalog entry's unique ID. It's the same across all catalog
+               instances.
         :param str name: Programmatic name for this catalog entry, which must be
                formatted like a CRN segment. See the display name in OverviewUI for a
                user-readable name.
@@ -177,17 +179,12 @@ class GlobalCatalogV1(BaseService):
                with a catalog entry.
         :param str parent_id: (optional) The ID of the parent catalog entry if it
                exists.
-        :param str parent_url: (optional) The catalog URL of the parent catalog
-               entry.
         :param bool group: (optional) Boolean value that determines whether the
                catalog entry is a group.
         :param ObjectMetaData metadata: (optional) Metadata is not returned by
                default, and includes specific data depending on the object **kind**.
         :param bool active: (optional) Boolean value that describes whether the
                service is active.
-        :param List[CatalogEntry] children: (optional) The children of this catalog
-               entry. This is read-only and ignored on put or post. It is filled in when
-               `?depth=_value_` is used.
         :param str account: (optional) This changes the scope of the request
                regardless of the authorization header. Example scopes are `account` and
                `global`. `account=global` is reqired if operating with a service ID that
@@ -197,6 +194,8 @@ class GlobalCatalogV1(BaseService):
         :rtype: DetailedResponse
         """
 
+        if id is None:
+            raise ValueError('id must be provided')
         if name is None:
             raise ValueError('name must be provided')
         if overview_ui is None:
@@ -216,8 +215,6 @@ class GlobalCatalogV1(BaseService):
         provider = convert_model(provider)
         if metadata is not None:
             metadata = convert_model(metadata)
-        if children is not None:
-            children = [ convert_model(x) for x in children ]
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_catalog_entry')
         headers.update(sdk_headers)
@@ -227,6 +224,7 @@ class GlobalCatalogV1(BaseService):
         }
 
         data = {
+            'id': id,
             'name': name,
             'overview_ui': overview_ui,
             'kind': kind,
@@ -235,11 +233,9 @@ class GlobalCatalogV1(BaseService):
             'tags': tags,
             'provider': provider,
             'parent_id': parent_id,
-            'parent_url': parent_url,
             'group': group,
             'metadata': metadata,
-            'active': active,
-            'children': children
+            'active': active
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -441,11 +437,11 @@ class GlobalCatalogV1(BaseService):
         return response
 
 
-    def archive_catalog_entry(self, id: str, *, account: str = None, **kwargs) -> DetailedResponse:
+    def delete_catalog_entry(self, id: str, *, account: str = None, **kwargs) -> DetailedResponse:
         """
-        Archive a catalog entry.
+        Delete a catalog entry.
 
-        Archive a catalog entry. This will archive the catalog entry for a minimum of two
+        Delete a catalog entry. This will archive the catalog entry for a minimum of two
         weeks. While archived, it can be restored using the PUT restore API. After two
         weeks, it will be deleted and cannot be restored. You must have administrator role
         in the scope of the provided token to modify it. This endpoint is ETag enabled.
@@ -463,7 +459,7 @@ class GlobalCatalogV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='archive_catalog_entry')
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_catalog_entry')
         headers.update(sdk_headers)
 
         params = {
@@ -1394,8 +1390,8 @@ class CatalogEntry():
     """
     An entry in the global catalog.
 
-    :attr str id: (optional) Catalog entry's unique ID. It's the same across all
-          catalog instances.
+    :attr str id: Catalog entry's unique ID. It's the same across all catalog
+          instances.
     :attr str catalog_crn: (optional) The cloud resource name of the catalog entry.
     :attr str url: (optional) The catalog URL for the catalog entry.
     :attr str name: Programmatic name for this catalog entry, which must be
@@ -1433,10 +1429,12 @@ class CatalogEntry():
           `?depth=_value_` is used.
     """
 
-    def __init__(self, name: str, overview_ui: 'OverviewUI', kind: str, images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', *, id: str = None, catalog_crn: str = None, url: str = None, parent_id: str = None, children_url: str = None, parent_url: str = None, geo_tags: List[str] = None, pricing_tags: List[str] = None, group: bool = None, created: datetime = None, updated: datetime = None, metadata: 'ObjectMetaData' = None, active: bool = None, children: List['CatalogEntry'] = None) -> None:
+    def __init__(self, id: str, name: str, overview_ui: 'OverviewUI', kind: str, images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', *, catalog_crn: str = None, url: str = None, parent_id: str = None, children_url: str = None, parent_url: str = None, geo_tags: List[str] = None, pricing_tags: List[str] = None, group: bool = None, created: datetime = None, updated: datetime = None, metadata: 'ObjectMetaData' = None, active: bool = None, children: List['CatalogEntry'] = None) -> None:
         """
         Initialize a CatalogEntry object.
 
+        :param str id: Catalog entry's unique ID. It's the same across all catalog
+               instances.
         :param str name: Programmatic name for this catalog entry, which must be
                formatted like a CRN segment. See the display name in OverviewUI for a
                user-readable name.
@@ -1495,6 +1493,8 @@ class CatalogEntry():
         args = {}
         if 'id' in _dict:
             args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in CatalogEntry JSON')
         if 'catalog_crn' in _dict:
             args['catalog_crn'] = _dict.get('catalog_crn')
         if 'url' in _dict:

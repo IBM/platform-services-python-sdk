@@ -363,22 +363,8 @@ class TestCreateCatalogEntry():
         object_meta_data_model['original_name'] = 'testString'
         object_meta_data_model['other'] = { 'foo': 'bar' }
 
-        # Construct a dict representation of a CatalogEntry model
-        catalog_entry_model = {}
-        catalog_entry_model['name'] = 'testString'
-        catalog_entry_model['overview_ui'] = overview_ui_model
-        catalog_entry_model['kind'] = 'testString'
-        catalog_entry_model['images'] = image_model
-        catalog_entry_model['parent_id'] = 'testString'
-        catalog_entry_model['parent_url'] = 'testString'
-        catalog_entry_model['disabled'] = True
-        catalog_entry_model['tags'] = ['testString']
-        catalog_entry_model['group'] = True
-        catalog_entry_model['provider'] = provider_model
-        catalog_entry_model['metadata'] = object_meta_data_model
-        catalog_entry_model['active'] = True
-
         # Set up parameter values
+        id = 'testString'
         name = 'testString'
         overview_ui = overview_ui_model
         kind = 'testString'
@@ -387,15 +373,14 @@ class TestCreateCatalogEntry():
         tags = ['testString']
         provider = provider_model
         parent_id = 'testString'
-        parent_url = 'testString'
         group = True
         metadata = object_meta_data_model
         active = True
-        children = [catalog_entry_model]
         account = 'testString'
 
         # Invoke method
         response = service.create_catalog_entry(
+            id,
             name,
             overview_ui,
             kind,
@@ -404,11 +389,9 @@ class TestCreateCatalogEntry():
             tags,
             provider,
             parent_id=parent_id,
-            parent_url=parent_url,
             group=group,
             metadata=metadata,
             active=active,
-            children=children,
             account=account,
             headers={}
         )
@@ -422,6 +405,7 @@ class TestCreateCatalogEntry():
         assert 'account={}'.format(account) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['id'] == 'testString'
         assert req_body['name'] == 'testString'
         assert req_body['overview_ui'] == overview_ui_model
         assert req_body['kind'] == 'testString'
@@ -430,11 +414,9 @@ class TestCreateCatalogEntry():
         assert req_body['tags'] == ['testString']
         assert req_body['provider'] == provider_model
         assert req_body['parent_id'] == 'testString'
-        assert req_body['parent_url'] == 'testString'
         assert req_body['group'] == True
         assert req_body['metadata'] == object_meta_data_model
         assert req_body['active'] == True
-        assert req_body['children'] == [catalog_entry_model]
 
 
     #--------------------------------------------------------
@@ -682,22 +664,8 @@ class TestCreateCatalogEntry():
         object_meta_data_model['original_name'] = 'testString'
         object_meta_data_model['other'] = { 'foo': 'bar' }
 
-        # Construct a dict representation of a CatalogEntry model
-        catalog_entry_model = {}
-        catalog_entry_model['name'] = 'testString'
-        catalog_entry_model['overview_ui'] = overview_ui_model
-        catalog_entry_model['kind'] = 'testString'
-        catalog_entry_model['images'] = image_model
-        catalog_entry_model['parent_id'] = 'testString'
-        catalog_entry_model['parent_url'] = 'testString'
-        catalog_entry_model['disabled'] = True
-        catalog_entry_model['tags'] = ['testString']
-        catalog_entry_model['group'] = True
-        catalog_entry_model['provider'] = provider_model
-        catalog_entry_model['metadata'] = object_meta_data_model
-        catalog_entry_model['active'] = True
-
         # Set up parameter values
+        id = 'testString'
         name = 'testString'
         overview_ui = overview_ui_model
         kind = 'testString'
@@ -706,14 +674,13 @@ class TestCreateCatalogEntry():
         tags = ['testString']
         provider = provider_model
         parent_id = 'testString'
-        parent_url = 'testString'
         group = True
         metadata = object_meta_data_model
         active = True
-        children = [catalog_entry_model]
 
         # Invoke method
         response = service.create_catalog_entry(
+            id,
             name,
             overview_ui,
             kind,
@@ -722,11 +689,9 @@ class TestCreateCatalogEntry():
             tags,
             provider,
             parent_id=parent_id,
-            parent_url=parent_url,
             group=group,
             metadata=metadata,
             active=active,
-            children=children,
             headers={}
         )
 
@@ -735,6 +700,7 @@ class TestCreateCatalogEntry():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['id'] == 'testString'
         assert req_body['name'] == 'testString'
         assert req_body['overview_ui'] == overview_ui_model
         assert req_body['kind'] == 'testString'
@@ -743,11 +709,9 @@ class TestCreateCatalogEntry():
         assert req_body['tags'] == ['testString']
         assert req_body['provider'] == provider_model
         assert req_body['parent_id'] == 'testString'
-        assert req_body['parent_url'] == 'testString'
         assert req_body['group'] == True
         assert req_body['metadata'] == object_meta_data_model
         assert req_body['active'] == True
-        assert req_body['children'] == [catalog_entry_model]
 
 
     #--------------------------------------------------------
@@ -995,22 +959,8 @@ class TestCreateCatalogEntry():
         object_meta_data_model['original_name'] = 'testString'
         object_meta_data_model['other'] = { 'foo': 'bar' }
 
-        # Construct a dict representation of a CatalogEntry model
-        catalog_entry_model = {}
-        catalog_entry_model['name'] = 'testString'
-        catalog_entry_model['overview_ui'] = overview_ui_model
-        catalog_entry_model['kind'] = 'testString'
-        catalog_entry_model['images'] = image_model
-        catalog_entry_model['parent_id'] = 'testString'
-        catalog_entry_model['parent_url'] = 'testString'
-        catalog_entry_model['disabled'] = True
-        catalog_entry_model['tags'] = ['testString']
-        catalog_entry_model['group'] = True
-        catalog_entry_model['provider'] = provider_model
-        catalog_entry_model['metadata'] = object_meta_data_model
-        catalog_entry_model['active'] = True
-
         # Set up parameter values
+        id = 'testString'
         name = 'testString'
         overview_ui = overview_ui_model
         kind = 'testString'
@@ -1019,14 +969,13 @@ class TestCreateCatalogEntry():
         tags = ['testString']
         provider = provider_model
         parent_id = 'testString'
-        parent_url = 'testString'
         group = True
         metadata = object_meta_data_model
         active = True
-        children = [catalog_entry_model]
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
+            "id": id,
             "name": name,
             "overview_ui": overview_ui,
             "kind": kind,
@@ -2088,15 +2037,15 @@ class TestUpdateCatalogEntry():
 
 
 #-----------------------------------------------------------------------------
-# Test Class for archive_catalog_entry
+# Test Class for delete_catalog_entry
 #-----------------------------------------------------------------------------
-class TestArchiveCatalogEntry():
+class TestDeleteCatalogEntry():
 
     #--------------------------------------------------------
-    # archive_catalog_entry()
+    # delete_catalog_entry()
     #--------------------------------------------------------
     @responses.activate
-    def test_archive_catalog_entry_all_params(self):
+    def test_delete_catalog_entry_all_params(self):
         # Set up mock
         url = base_url + '/testString'
         responses.add(responses.DELETE,
@@ -2108,7 +2057,7 @@ class TestArchiveCatalogEntry():
         account = 'testString'
 
         # Invoke method
-        response = service.archive_catalog_entry(
+        response = service.delete_catalog_entry(
             id,
             account=account,
             headers={}
@@ -2124,10 +2073,10 @@ class TestArchiveCatalogEntry():
 
 
     #--------------------------------------------------------
-    # test_archive_catalog_entry_required_params()
+    # test_delete_catalog_entry_required_params()
     #--------------------------------------------------------
     @responses.activate
-    def test_archive_catalog_entry_required_params(self):
+    def test_delete_catalog_entry_required_params(self):
         # Set up mock
         url = base_url + '/testString'
         responses.add(responses.DELETE,
@@ -2138,7 +2087,7 @@ class TestArchiveCatalogEntry():
         id = 'testString'
 
         # Invoke method
-        response = service.archive_catalog_entry(
+        response = service.delete_catalog_entry(
             id,
             headers={}
         )
@@ -2149,10 +2098,10 @@ class TestArchiveCatalogEntry():
 
 
     #--------------------------------------------------------
-    # test_archive_catalog_entry_value_error()
+    # test_delete_catalog_entry_value_error()
     #--------------------------------------------------------
     @responses.activate
-    def test_archive_catalog_entry_value_error(self):
+    def test_delete_catalog_entry_value_error(self):
         # Set up mock
         url = base_url + '/testString'
         responses.add(responses.DELETE,
@@ -2169,7 +2118,7 @@ class TestArchiveCatalogEntry():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.archive_catalog_entry(**req_copy)
+                service.delete_catalog_entry(**req_copy)
 
 
 
