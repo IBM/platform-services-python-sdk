@@ -23,6 +23,7 @@ import unittest
 import os
 import os.path
 import datetime
+import random
 from ibm_cloud_sdk_core.authenticators import NoAuthAuthenticator
 from ibm_cloud_sdk_core import *
 from ibm_platform_services.iam_access_groups_v2 import *
@@ -57,7 +58,7 @@ class TestIamAccessGroupsV2(unittest.TestCase):
         cls.testGroupDescription = "This group is used for integration test purposes. It can be deleted at any time."
         cls.testGroupETag = ""
         cls.testGroupId = ""
-        cls.testUserId = "IBMid-1234"
+        cls.testUserId = "IBMid-" + str(random.randint(0, 99999))
         cls.testUserType = "user"
         cls.testClaimRuleId = ""
         cls.testClaimRuleETag = ""
