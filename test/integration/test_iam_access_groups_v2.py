@@ -41,9 +41,7 @@ class TestIamAccessGroupsV2(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         if not configLoaded:
-          TestIamAccessGroupsV2.skipTest(
-              self=__self__,
-              reason='External configuration not available, skipping...')
+            raise unittest.SkipTest('External configuration not available, skipping...')
           
         cls.service = IamAccessGroupsV2.new_instance()
         assert cls.service is not None
