@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.1.2...v0.2.0) (2020-04-20)
+
+
+### Features
+
+* **IAM Access Groups:** add service, unit test, and int test skeleton to project ([71d7a8e](https://github.com/IBM/platform-services-python-sdk/commit/71d7a8e916d53ec0a0ae161c6861befa26d37760))
+
 ## [0.1.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.1.1...v0.1.2) (2020-03-31)
 
 
