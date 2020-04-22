@@ -25,7 +25,8 @@ documentation](https://cloud.ibm.com/docs/overview/catalog.html#global-catalog-o
 """
 
 from datetime import datetime
-from typing import Dict, List
+from enum import Enum
+from typing import BinaryIO, Dict, List
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
@@ -151,7 +152,7 @@ class GlobalCatalogV1(BaseService):
         return response
 
 
-    def create_catalog_entry(self, id: str, name: str, overview_ui: 'OverviewUI', kind: str, images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', *, parent_id: str = None, group: bool = None, metadata: 'ObjectMetaData' = None, active: bool = None, account: str = None, **kwargs) -> DetailedResponse:
+    def create_catalog_entry(self, name: str, overview_ui: 'OverviewUI', images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', kind: str, id: str, *, parent_id: str = None, group: bool = None, metadata: 'ObjectMetaData' = None, active: bool = None, account: str = None, **kwargs) -> DetailedResponse:
         """
         Create a catalog entry.
 
@@ -159,15 +160,11 @@ class GlobalCatalogV1(BaseService):
         or editor role in the scope of the provided token. This API will return an ETag
         that can be used for standard ETag processing, except when depth query is used.
 
-        :param str id: Catalog entry's unique ID. It's the same across all catalog
-               instances.
         :param str name: Programmatic name for this catalog entry, which must be
                formatted like a CRN segment. See the display name in OverviewUI for a
                user-readable name.
         :param OverviewUI overview_ui: Overview is nested in the top level. The key
                value pair is `[_language_]overview_ui`.
-        :param str kind: The type of catalog entry, **service**, **template**,
-               **dashboard**, which determines the type and shape of the object.
         :param Image images: Image annotation for this catalog entry. The image is
                a URL.
         :param bool disabled: Boolean value that determines the global visibility
@@ -177,6 +174,10 @@ class GlobalCatalogV1(BaseService):
                GA, and Single Tenant.
         :param Provider provider: Information related to the provider associated
                with a catalog entry.
+        :param str kind: The type of catalog entry, **service**, **template**,
+               **dashboard**, which determines the type and shape of the object.
+        :param str id: Catalog entry's unique ID. It's the same across all catalog
+               instances.
         :param str parent_id: (optional) The ID of the parent catalog entry if it
                exists.
         :param bool group: (optional) Boolean value that determines whether the
@@ -194,14 +195,10 @@ class GlobalCatalogV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `CatalogEntry` object
         """
 
-        if id is None:
-            raise ValueError('id must be provided')
         if name is None:
             raise ValueError('name must be provided')
         if overview_ui is None:
             raise ValueError('overview_ui must be provided')
-        if kind is None:
-            raise ValueError('kind must be provided')
         if images is None:
             raise ValueError('images must be provided')
         if disabled is None:
@@ -210,6 +207,10 @@ class GlobalCatalogV1(BaseService):
             raise ValueError('tags must be provided')
         if provider is None:
             raise ValueError('provider must be provided')
+        if kind is None:
+            raise ValueError('kind must be provided')
+        if id is None:
+            raise ValueError('id must be provided')
         overview_ui = convert_model(overview_ui)
         images = convert_model(images)
         provider = convert_model(provider)
@@ -224,14 +225,14 @@ class GlobalCatalogV1(BaseService):
         }
 
         data = {
-            'id': id,
             'name': name,
             'overview_ui': overview_ui,
-            'kind': kind,
             'images': images,
             'disabled': disabled,
             'tags': tags,
             'provider': provider,
+            'kind': kind,
+            'id': id,
             'parent_id': parent_id,
             'group': group,
             'metadata': metadata,
@@ -319,7 +320,7 @@ class GlobalCatalogV1(BaseService):
         return response
 
 
-    def update_catalog_entry(self, id: str, new_id: str, new_name: str, new_overview_ui: 'OverviewUI', new_kind: str, new_images: 'Image', new_disabled: bool, new_tags: List[str], new_provider: 'Provider', *, new_parent_id: str = None, new_group: bool = None, new_metadata: 'ObjectMetaData' = None, new_active: bool = None, new_catalog_crn: str = None, new_url: str = None, new_children_url: str = None, new_parent_url: str = None, new_geo_tags: List[str] = None, new_pricing_tags: List[str] = None, new_created: datetime = None, new_updated: datetime = None, new_children: List['CatalogEntry'] = None, account: str = None, move: str = None, **kwargs) -> DetailedResponse:
+    def update_catalog_entry(self, id: str, name: str, overview_ui: 'OverviewUI', images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', *, parent_id: str = None, group: bool = None, metadata: 'ObjectMetaData' = None, active: bool = None, catalog_crn: str = None, url: str = None, children_url: str = None, parent_url: str = None, geo_tags: List[str] = None, pricing_tags: List[str] = None, created: datetime = None, updated: datetime = None, children: List['CatalogEntry'] = None, account: str = None, move: str = None, **kwargs) -> DetailedResponse:
         """
         Update a catalog entry.
 
@@ -328,50 +329,45 @@ class GlobalCatalogV1(BaseService):
         provided token. This endpoint is ETag enabled.
 
         :param str id: The object's unique ID.
-        :param str new_id: Catalog entry's unique ID. It's the same across all
-               catalog instances.
-        :param str new_name: Programmatic name for this catalog entry, which must
-               be formatted like a CRN segment. See the display name in OverviewUI for a
+        :param str name: Programmatic name for this catalog entry, which must be
+               formatted like a CRN segment. See the display name in OverviewUI for a
                user-readable name.
-        :param OverviewUI new_overview_ui: Overview is nested in the top level. The
-               key value pair is `[_language_]overview_ui`.
-        :param str new_kind: The type of catalog entry, **service**, **template**,
-               **dashboard**, which determines the type and shape of the object.
-        :param Image new_images: Image annotation for this catalog entry. The image
-               is a URL.
-        :param bool new_disabled: Boolean value that determines the global
-               visibility for the catalog entry, and its children. If it is not enabled,
-               all plans are disabled.
-        :param List[str] new_tags: A list of tags. For example, IBM, 3rd Party,
-               Beta, GA, and Single Tenant.
-        :param Provider new_provider: Information related to the provider
-               associated with a catalog entry.
-        :param str new_parent_id: (optional) The ID of the parent catalog entry if
-               it exists.
-        :param bool new_group: (optional) Boolean value that determines whether the
+        :param OverviewUI overview_ui: Overview is nested in the top level. The key
+               value pair is `[_language_]overview_ui`.
+        :param Image images: Image annotation for this catalog entry. The image is
+               a URL.
+        :param bool disabled: Boolean value that determines the global visibility
+               for the catalog entry, and its children. If it is not enabled, all plans
+               are disabled.
+        :param List[str] tags: A list of tags. For example, IBM, 3rd Party, Beta,
+               GA, and Single Tenant.
+        :param Provider provider: Information related to the provider associated
+               with a catalog entry.
+        :param str parent_id: (optional) The ID of the parent catalog entry if it
+               exists.
+        :param bool group: (optional) Boolean value that determines whether the
                catalog entry is a group.
-        :param ObjectMetaData new_metadata: (optional) Metadata is not returned by
+        :param ObjectMetaData metadata: (optional) Metadata is not returned by
                default, and includes specific data depending on the object **kind**.
-        :param bool new_active: (optional) Boolean value that describes whether the
+        :param bool active: (optional) Boolean value that describes whether the
                service is active.
-        :param str new_catalog_crn: (optional) The cloud resource name of the
-               catalog entry.
-        :param str new_url: (optional) The catalog URL for the catalog entry.
-        :param str new_children_url: (optional) The catalog URL of child elements
-               for the catalog entry.
-        :param str new_parent_url: (optional) The catalog URL of the parent catalog
+        :param str catalog_crn: (optional) The cloud resource name of the catalog
                entry.
-        :param List[str] new_geo_tags: (optional) A list of tags representing
+        :param str url: (optional) The catalog URL for the catalog entry.
+        :param str children_url: (optional) The catalog URL of child elements for
+               the catalog entry.
+        :param str parent_url: (optional) The catalog URL of the parent catalog
+               entry.
+        :param List[str] geo_tags: (optional) A list of tags representing
                deployment locations, for example, `us-south`, `eu-gb`, `us-south-dal10`.
-        :param List[str] new_pricing_tags: (optional) A list of tags representing
+        :param List[str] pricing_tags: (optional) A list of tags representing
                pricing types, for example, free lite, subscription, paid only.
-        :param datetime new_created: (optional) The date the catalog entry was
-               created.
-        :param datetime new_updated: (optional) The date the catalog entry was last
+        :param datetime created: (optional) The date the catalog entry was created.
+        :param datetime updated: (optional) The date the catalog entry was last
                updated.
-        :param List[CatalogEntry] new_children: (optional) The children of this
-               catalog entry. This is read-only and ignored on put or post. It is filled
-               in when `?depth=_value_` is used.
+        :param List[CatalogEntry] children: (optional) The children of this catalog
+               entry. This is read-only and ignored on put or post. It is filled in when
+               `?depth=_value_` is used.
         :param str account: (optional) This changes the scope of the request
                regardless of the authorization header. Example scopes are `account` and
                `global`. `account=global` is reqired if operating with a service ID that
@@ -389,29 +385,25 @@ class GlobalCatalogV1(BaseService):
 
         if id is None:
             raise ValueError('id must be provided')
-        if new_id is None:
-            raise ValueError('new_id must be provided')
-        if new_name is None:
-            raise ValueError('new_name must be provided')
-        if new_overview_ui is None:
-            raise ValueError('new_overview_ui must be provided')
-        if new_kind is None:
-            raise ValueError('new_kind must be provided')
-        if new_images is None:
-            raise ValueError('new_images must be provided')
-        if new_disabled is None:
-            raise ValueError('new_disabled must be provided')
-        if new_tags is None:
-            raise ValueError('new_tags must be provided')
-        if new_provider is None:
-            raise ValueError('new_provider must be provided')
-        new_overview_ui = convert_model(new_overview_ui)
-        new_images = convert_model(new_images)
-        new_provider = convert_model(new_provider)
-        if new_metadata is not None:
-            new_metadata = convert_model(new_metadata)
-        if new_children is not None:
-            new_children = [ convert_model(x) for x in new_children ]
+        if name is None:
+            raise ValueError('name must be provided')
+        if overview_ui is None:
+            raise ValueError('overview_ui must be provided')
+        if images is None:
+            raise ValueError('images must be provided')
+        if disabled is None:
+            raise ValueError('disabled must be provided')
+        if tags is None:
+            raise ValueError('tags must be provided')
+        if provider is None:
+            raise ValueError('provider must be provided')
+        overview_ui = convert_model(overview_ui)
+        images = convert_model(images)
+        provider = convert_model(provider)
+        if metadata is not None:
+            metadata = convert_model(metadata)
+        if children is not None:
+            children = [ convert_model(x) for x in children ]
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_catalog_entry')
         headers.update(sdk_headers)
@@ -422,27 +414,25 @@ class GlobalCatalogV1(BaseService):
         }
 
         data = {
-            'id': new_id,
-            'name': new_name,
-            'overview_ui': new_overview_ui,
-            'kind': new_kind,
-            'images': new_images,
-            'disabled': new_disabled,
-            'tags': new_tags,
-            'provider': new_provider,
-            'parent_id': new_parent_id,
-            'group': new_group,
-            'metadata': new_metadata,
-            'active': new_active,
-            'catalog_crn': new_catalog_crn,
-            'url': new_url,
-            'children_url': new_children_url,
-            'parent_url': new_parent_url,
-            'geo_tags': new_geo_tags,
-            'pricing_tags': new_pricing_tags,
-            'created': datetime_to_string(new_created),
-            'updated': datetime_to_string(new_updated),
-            'children': new_children
+            'name': name,
+            'overview_ui': overview_ui,
+            'images': images,
+            'disabled': disabled,
+            'tags': tags,
+            'provider': provider,
+            'parent_id': parent_id,
+            'group': group,
+            'metadata': metadata,
+            'active': active,
+            'catalog_crn': catalog_crn,
+            'url': url,
+            'children_url': children_url,
+            'parent_url': parent_url,
+            'geo_tags': geo_tags,
+            'pricing_tags': pricing_tags,
+            'created': datetime_to_string(created),
+            'updated': datetime_to_string(updated),
+            'children': children
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -910,7 +900,7 @@ class GlobalCatalogV1(BaseService):
         return response
 
 
-    def upload_artifact(self, object_id: str, artifact_id: str, *, account: str = None, **kwargs) -> DetailedResponse:
+    def upload_artifact(self, object_id: str, artifact_id: str, *, artifact: BinaryIO = None, content_type: str = None, account: str = None, **kwargs) -> DetailedResponse:
         """
         Upload artifact.
 
@@ -919,6 +909,8 @@ class GlobalCatalogV1(BaseService):
 
         :param str object_id: The object's unique ID.
         :param str artifact_id: The artifact's ID.
+        :param BinaryIO artifact: (optional)
+        :param str content_type: (optional) The type of the input.
         :param str account: (optional) This changes the scope of the request
                regardless of the authorization header. Example scopes are `account` and
                `global`. `account=global` is reqired if operating with a service ID that
@@ -932,13 +924,17 @@ class GlobalCatalogV1(BaseService):
             raise ValueError('object_id must be provided')
         if artifact_id is None:
             raise ValueError('artifact_id must be provided')
-        headers = {}
+        headers = {
+            'Content-Type': content_type
+        }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='upload_artifact')
         headers.update(sdk_headers)
 
         params = {
             'account': account
         }
+
+        data = artifact
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -947,7 +943,8 @@ class GlobalCatalogV1(BaseService):
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
-                                       params=params)
+                                       params=params,
+                                       data=data)
 
         response = self.send(request)
         return response
@@ -1415,15 +1412,11 @@ class CatalogEntry():
     """
     An entry in the global catalog.
 
-    :attr str id: Catalog entry's unique ID. It's the same across all catalog
-          instances.
     :attr str name: Programmatic name for this catalog entry, which must be
           formatted like a CRN segment. See the display name in OverviewUI for a
           user-readable name.
     :attr OverviewUI overview_ui: Overview is nested in the top level. The key value
           pair is `[_language_]overview_ui`.
-    :attr str kind: The type of catalog entry, **service**, **template**,
-          **dashboard**, which determines the type and shape of the object.
     :attr Image images: Image annotation for this catalog entry. The image is a URL.
     :attr str parent_id: (optional) The ID of the parent catalog entry if it exists.
     :attr bool disabled: Boolean value that determines the global visibility for the
@@ -1452,21 +1445,21 @@ class CatalogEntry():
     :attr List[CatalogEntry] children: (optional) The children of this catalog
           entry. This is read-only and ignored on put or post. It is filled in when
           `?depth=_value_` is used.
+    :attr str kind: The type of catalog entry, **service**, **template**,
+          **dashboard**, which determines the type and shape of the object.
+    :attr str id: (optional) Catalog entry's unique ID. It's the same across all
+          catalog instances.
     """
 
-    def __init__(self, id: str, name: str, overview_ui: 'OverviewUI', kind: str, images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', *, parent_id: str = None, group: bool = None, metadata: 'ObjectMetaData' = None, active: bool = None, catalog_crn: str = None, url: str = None, children_url: str = None, parent_url: str = None, geo_tags: List[str] = None, pricing_tags: List[str] = None, created: datetime = None, updated: datetime = None, children: List['CatalogEntry'] = None) -> None:
+    def __init__(self, name: str, overview_ui: 'OverviewUI', images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', kind: str, *, parent_id: str = None, group: bool = None, metadata: 'ObjectMetaData' = None, active: bool = None, catalog_crn: str = None, url: str = None, children_url: str = None, parent_url: str = None, geo_tags: List[str] = None, pricing_tags: List[str] = None, created: datetime = None, updated: datetime = None, children: List['CatalogEntry'] = None, id: str = None) -> None:
         """
         Initialize a CatalogEntry object.
 
-        :param str id: Catalog entry's unique ID. It's the same across all catalog
-               instances.
         :param str name: Programmatic name for this catalog entry, which must be
                formatted like a CRN segment. See the display name in OverviewUI for a
                user-readable name.
         :param OverviewUI overview_ui: Overview is nested in the top level. The key
                value pair is `[_language_]overview_ui`.
-        :param str kind: The type of catalog entry, **service**, **template**,
-               **dashboard**, which determines the type and shape of the object.
         :param Image images: Image annotation for this catalog entry. The image is
                a URL.
         :param bool disabled: Boolean value that determines the global visibility
@@ -1476,6 +1469,8 @@ class CatalogEntry():
                GA, and Single Tenant.
         :param Provider provider: Information related to the provider associated
                with a catalog entry.
+        :param str kind: The type of catalog entry, **service**, **template**,
+               **dashboard**, which determines the type and shape of the object.
         :param str parent_id: (optional) The ID of the parent catalog entry if it
                exists.
         :param bool group: (optional) Boolean value that determines whether the
@@ -1490,10 +1485,8 @@ class CatalogEntry():
                entry. This is read-only and ignored on put or post. It is filled in when
                `?depth=_value_` is used.
         """
-        self.id = id
         self.name = name
         self.overview_ui = overview_ui
-        self.kind = kind
         self.images = images
         self.parent_id = parent_id
         self.disabled = disabled
@@ -1511,15 +1504,13 @@ class CatalogEntry():
         self.created = created
         self.updated = updated
         self.children = children
+        self.kind = kind
+        self.id = id
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'CatalogEntry':
         """Initialize a CatalogEntry object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        else:
-            raise ValueError('Required property \'id\' not present in CatalogEntry JSON')
         if 'name' in _dict:
             args['name'] = _dict.get('name')
         else:
@@ -1528,10 +1519,6 @@ class CatalogEntry():
             args['overview_ui'] = OverviewUI.from_dict(_dict.get('overview_ui'))
         else:
             raise ValueError('Required property \'overview_ui\' not present in CatalogEntry JSON')
-        if 'kind' in _dict:
-            args['kind'] = _dict.get('kind')
-        else:
-            raise ValueError('Required property \'kind\' not present in CatalogEntry JSON')
         if 'images' in _dict:
             args['images'] = Image.from_dict(_dict.get('images'))
         else:
@@ -1574,6 +1561,12 @@ class CatalogEntry():
             args['updated'] = string_to_datetime(_dict.get('updated'))
         if 'children' in _dict:
             args['children'] = [CatalogEntry.from_dict(x) for x in _dict.get('children')]
+        if 'kind' in _dict:
+            args['kind'] = _dict.get('kind')
+        else:
+            raise ValueError('Required property \'kind\' not present in CatalogEntry JSON')
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
         return cls(**args)
 
     @classmethod
@@ -1584,14 +1577,10 @@ class CatalogEntry():
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'id') and getattr(self, 'id') is not None:
-            _dict['id'] = getattr(self, 'id')
         if hasattr(self, 'name') and self.name is not None:
             _dict['name'] = self.name
         if hasattr(self, 'overview_ui') and self.overview_ui is not None:
             _dict['overview_ui'] = self.overview_ui.to_dict()
-        if hasattr(self, 'kind') and self.kind is not None:
-            _dict['kind'] = self.kind
         if hasattr(self, 'images') and self.images is not None:
             _dict['images'] = self.images.to_dict()
         if hasattr(self, 'parent_id') and self.parent_id is not None:
@@ -1626,6 +1615,10 @@ class CatalogEntry():
             _dict['updated'] = datetime_to_string(getattr(self, 'updated'))
         if hasattr(self, 'children') and self.children is not None:
             _dict['children'] = [x.to_dict() for x in self.children]
+        if hasattr(self, 'kind') and self.kind is not None:
+            _dict['kind'] = self.kind
+        if hasattr(self, 'id') and getattr(self, 'id') is not None:
+            _dict['id'] = getattr(self, 'id')
         return _dict
 
     def _to_dict(self):
@@ -1645,6 +1638,16 @@ class CatalogEntry():
     def __ne__(self, other: 'CatalogEntry') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+    
+    class KindEnum(Enum):
+        """
+        The type of catalog entry, **service**, **template**, **dashboard**, which
+        determines the type and shape of the object.
+        """
+        SERVICE = "service"
+        TEMPLATE = "template"
+        DASHBOARD = "dashboard"
 
 
 class I18N():
