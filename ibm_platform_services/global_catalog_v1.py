@@ -152,7 +152,7 @@ class GlobalCatalogV1(BaseService):
         return response
 
 
-    def create_catalog_entry(self, name: str, overview_ui: 'OverviewUI', images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', kind: str, id: str, *, parent_id: str = None, group: bool = None, metadata: 'ObjectMetaData' = None, active: bool = None, account: str = None, **kwargs) -> DetailedResponse:
+    def create_catalog_entry(self, name: str, kind: str, overview_ui: 'OverviewUI', images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', id: str, *, parent_id: str = None, group: bool = None, active: bool = None, metadata: 'ObjectMetadataSet' = None, account: str = None, **kwargs) -> DetailedResponse:
         """
         Create a catalog entry.
 
@@ -163,6 +163,8 @@ class GlobalCatalogV1(BaseService):
         :param str name: Programmatic name for this catalog entry, which must be
                formatted like a CRN segment. See the display name in OverviewUI for a
                user-readable name.
+        :param str kind: The type of catalog entry, **service**, **template**,
+               **dashboard**, which determines the type and shape of the object.
         :param OverviewUI overview_ui: Overview is nested in the top level. The key
                value pair is `[_language_]overview_ui`.
         :param Image images: Image annotation for this catalog entry. The image is
@@ -174,18 +176,16 @@ class GlobalCatalogV1(BaseService):
                GA, and Single Tenant.
         :param Provider provider: Information related to the provider associated
                with a catalog entry.
-        :param str kind: The type of catalog entry, **service**, **template**,
-               **dashboard**, which determines the type and shape of the object.
         :param str id: Catalog entry's unique ID. It's the same across all catalog
                instances.
         :param str parent_id: (optional) The ID of the parent catalog entry if it
                exists.
         :param bool group: (optional) Boolean value that determines whether the
                catalog entry is a group.
-        :param ObjectMetaData metadata: (optional) Metadata is not returned by
-               default, and includes specific data depending on the object **kind**.
         :param bool active: (optional) Boolean value that describes whether the
                service is active.
+        :param ObjectMetadataSet metadata: (optional) Model used to describe
+               metadata object that can be set.
         :param str account: (optional) This changes the scope of the request
                regardless of the authorization header. Example scopes are `account` and
                `global`. `account=global` is reqired if operating with a service ID that
@@ -197,6 +197,8 @@ class GlobalCatalogV1(BaseService):
 
         if name is None:
             raise ValueError('name must be provided')
+        if kind is None:
+            raise ValueError('kind must be provided')
         if overview_ui is None:
             raise ValueError('overview_ui must be provided')
         if images is None:
@@ -207,8 +209,6 @@ class GlobalCatalogV1(BaseService):
             raise ValueError('tags must be provided')
         if provider is None:
             raise ValueError('provider must be provided')
-        if kind is None:
-            raise ValueError('kind must be provided')
         if id is None:
             raise ValueError('id must be provided')
         overview_ui = convert_model(overview_ui)
@@ -226,17 +226,17 @@ class GlobalCatalogV1(BaseService):
 
         data = {
             'name': name,
+            'kind': kind,
             'overview_ui': overview_ui,
             'images': images,
             'disabled': disabled,
             'tags': tags,
             'provider': provider,
-            'kind': kind,
             'id': id,
             'parent_id': parent_id,
             'group': group,
-            'metadata': metadata,
-            'active': active
+            'active': active,
+            'metadata': metadata
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -320,7 +320,7 @@ class GlobalCatalogV1(BaseService):
         return response
 
 
-    def update_catalog_entry(self, id: str, name: str, overview_ui: 'OverviewUI', images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', *, parent_id: str = None, group: bool = None, metadata: 'ObjectMetaData' = None, active: bool = None, catalog_crn: str = None, url: str = None, children_url: str = None, parent_url: str = None, geo_tags: List[str] = None, pricing_tags: List[str] = None, created: datetime = None, updated: datetime = None, children: List['CatalogEntry'] = None, account: str = None, move: str = None, **kwargs) -> DetailedResponse:
+    def update_catalog_entry(self, id: str, name: str, kind: str, overview_ui: 'OverviewUI', images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', *, parent_id: str = None, group: bool = None, active: bool = None, metadata: 'ObjectMetadataSet' = None, account: str = None, move: str = None, **kwargs) -> DetailedResponse:
         """
         Update a catalog entry.
 
@@ -332,6 +332,8 @@ class GlobalCatalogV1(BaseService):
         :param str name: Programmatic name for this catalog entry, which must be
                formatted like a CRN segment. See the display name in OverviewUI for a
                user-readable name.
+        :param str kind: The type of catalog entry, **service**, **template**,
+               **dashboard**, which determines the type and shape of the object.
         :param OverviewUI overview_ui: Overview is nested in the top level. The key
                value pair is `[_language_]overview_ui`.
         :param Image images: Image annotation for this catalog entry. The image is
@@ -347,27 +349,10 @@ class GlobalCatalogV1(BaseService):
                exists.
         :param bool group: (optional) Boolean value that determines whether the
                catalog entry is a group.
-        :param ObjectMetaData metadata: (optional) Metadata is not returned by
-               default, and includes specific data depending on the object **kind**.
         :param bool active: (optional) Boolean value that describes whether the
                service is active.
-        :param str catalog_crn: (optional) The cloud resource name of the catalog
-               entry.
-        :param str url: (optional) The catalog URL for the catalog entry.
-        :param str children_url: (optional) The catalog URL of child elements for
-               the catalog entry.
-        :param str parent_url: (optional) The catalog URL of the parent catalog
-               entry.
-        :param List[str] geo_tags: (optional) A list of tags representing
-               deployment locations, for example, `us-south`, `eu-gb`, `us-south-dal10`.
-        :param List[str] pricing_tags: (optional) A list of tags representing
-               pricing types, for example, free lite, subscription, paid only.
-        :param datetime created: (optional) The date the catalog entry was created.
-        :param datetime updated: (optional) The date the catalog entry was last
-               updated.
-        :param List[CatalogEntry] children: (optional) The children of this catalog
-               entry. This is read-only and ignored on put or post. It is filled in when
-               `?depth=_value_` is used.
+        :param ObjectMetadataSet metadata: (optional) Model used to describe
+               metadata object that can be set.
         :param str account: (optional) This changes the scope of the request
                regardless of the authorization header. Example scopes are `account` and
                `global`. `account=global` is reqired if operating with a service ID that
@@ -387,6 +372,8 @@ class GlobalCatalogV1(BaseService):
             raise ValueError('id must be provided')
         if name is None:
             raise ValueError('name must be provided')
+        if kind is None:
+            raise ValueError('kind must be provided')
         if overview_ui is None:
             raise ValueError('overview_ui must be provided')
         if images is None:
@@ -402,8 +389,6 @@ class GlobalCatalogV1(BaseService):
         provider = convert_model(provider)
         if metadata is not None:
             metadata = convert_model(metadata)
-        if children is not None:
-            children = [ convert_model(x) for x in children ]
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_catalog_entry')
         headers.update(sdk_headers)
@@ -415,6 +400,7 @@ class GlobalCatalogV1(BaseService):
 
         data = {
             'name': name,
+            'kind': kind,
             'overview_ui': overview_ui,
             'images': images,
             'disabled': disabled,
@@ -422,17 +408,8 @@ class GlobalCatalogV1(BaseService):
             'provider': provider,
             'parent_id': parent_id,
             'group': group,
-            'metadata': metadata,
             'active': active,
-            'catalog_crn': catalog_crn,
-            'url': url,
-            'children_url': children_url,
-            'parent_url': parent_url,
-            'geo_tags': geo_tags,
-            'pricing_tags': pricing_tags,
-            'created': datetime_to_string(created),
-            'updated': datetime_to_string(updated),
-            'children': children
+            'metadata': metadata
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -649,7 +626,7 @@ class GlobalCatalogV1(BaseService):
         return response
 
 
-    def update_visibility(self, id: str, *, owner: 'Scope' = None, include: 'VisibilityDetail' = None, exclude: 'VisibilityDetail' = None, account: str = None, **kwargs) -> DetailedResponse:
+    def update_visibility(self, id: str, *, include: 'VisibilityDetail' = None, exclude: 'VisibilityDetail' = None, account: str = None, **kwargs) -> DetailedResponse:
         """
         Update visibility.
 
@@ -657,8 +634,6 @@ class GlobalCatalogV1(BaseService):
         the provided token. This endpoint is ETag enabled.
 
         :param str id: The object's unique ID.
-        :param Scope owner: (optional) IAM Scope-related information associated
-               with a catalog entry.
         :param VisibilityDetail include: (optional) Visibility details related to a
                catalog entry.
         :param VisibilityDetail exclude: (optional) Visibility details related to a
@@ -674,8 +649,6 @@ class GlobalCatalogV1(BaseService):
 
         if id is None:
             raise ValueError('id must be provided')
-        if owner is not None:
-            owner = convert_model(owner)
         if include is not None:
             include = convert_model(include)
         if exclude is not None:
@@ -689,7 +662,6 @@ class GlobalCatalogV1(BaseService):
         }
 
         data = {
-            'owner': owner,
             'include': include,
             'exclude': exclude
         }
@@ -729,7 +701,7 @@ class GlobalCatalogV1(BaseService):
                has a global admin policy, for example `GET /?account=global`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `Pricing` object
+        :rtype: DetailedResponse with `dict` result representing a `PricingGet` object
         """
 
         if id is None:
@@ -1415,6 +1387,8 @@ class CatalogEntry():
     :attr str name: Programmatic name for this catalog entry, which must be
           formatted like a CRN segment. See the display name in OverviewUI for a
           user-readable name.
+    :attr str kind: The type of catalog entry, **service**, **template**,
+          **dashboard**, which determines the type and shape of the object.
     :attr OverviewUI overview_ui: Overview is nested in the top level. The key value
           pair is `[_language_]overview_ui`.
     :attr Image images: Image annotation for this catalog entry. The image is a URL.
@@ -1427,37 +1401,30 @@ class CatalogEntry():
           entry is a group.
     :attr Provider provider: Information related to the provider associated with a
           catalog entry.
-    :attr ObjectMetaData metadata: (optional) Metadata is not returned by default,
-          and includes specific data depending on the object **kind**.
     :attr bool active: (optional) Boolean value that describes whether the service
           is active.
-    :attr str catalog_crn: (optional) The cloud resource name of the catalog entry.
-    :attr str url: (optional) The catalog URL for the catalog entry.
-    :attr str children_url: (optional) The catalog URL of child elements for the
-          catalog entry.
-    :attr str parent_url: (optional) The catalog URL of the parent catalog entry.
-    :attr List[str] geo_tags: (optional) A list of tags representing deployment
-          locations, for example, `us-south`, `eu-gb`, `us-south-dal10`.
-    :attr List[str] pricing_tags: (optional) A list of tags representing pricing
-          types, for example, free lite, subscription, paid only.
-    :attr datetime created: (optional) The date the catalog entry was created.
-    :attr datetime updated: (optional) The date the catalog entry was last updated.
-    :attr List[CatalogEntry] children: (optional) The children of this catalog
-          entry. This is read-only and ignored on put or post. It is filled in when
-          `?depth=_value_` is used.
-    :attr str kind: The type of catalog entry, **service**, **template**,
-          **dashboard**, which determines the type and shape of the object.
+    :attr ObjectMetadataSet metadata: (optional) Model used to describe metadata
+          object that can be set.
     :attr str id: (optional) Catalog entry's unique ID. It's the same across all
           catalog instances.
+    :attr object catalog_crn: (optional)
+    :attr object url: (optional)
+    :attr object children_url: (optional)
+    :attr object geo_tags: (optional)
+    :attr object pricing_tags: (optional)
+    :attr object created: (optional)
+    :attr object updated: (optional)
     """
 
-    def __init__(self, name: str, overview_ui: 'OverviewUI', images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', kind: str, *, parent_id: str = None, group: bool = None, metadata: 'ObjectMetaData' = None, active: bool = None, catalog_crn: str = None, url: str = None, children_url: str = None, parent_url: str = None, geo_tags: List[str] = None, pricing_tags: List[str] = None, created: datetime = None, updated: datetime = None, children: List['CatalogEntry'] = None, id: str = None) -> None:
+    def __init__(self, name: str, kind: str, overview_ui: 'OverviewUI', images: 'Image', disabled: bool, tags: List[str], provider: 'Provider', *, parent_id: str = None, group: bool = None, active: bool = None, metadata: 'ObjectMetadataSet' = None, id: str = None, catalog_crn: object = None, url: object = None, children_url: object = None, geo_tags: object = None, pricing_tags: object = None, created: object = None, updated: object = None) -> None:
         """
         Initialize a CatalogEntry object.
 
         :param str name: Programmatic name for this catalog entry, which must be
                formatted like a CRN segment. See the display name in OverviewUI for a
                user-readable name.
+        :param str kind: The type of catalog entry, **service**, **template**,
+               **dashboard**, which determines the type and shape of the object.
         :param OverviewUI overview_ui: Overview is nested in the top level. The key
                value pair is `[_language_]overview_ui`.
         :param Image images: Image annotation for this catalog entry. The image is
@@ -1469,23 +1436,17 @@ class CatalogEntry():
                GA, and Single Tenant.
         :param Provider provider: Information related to the provider associated
                with a catalog entry.
-        :param str kind: The type of catalog entry, **service**, **template**,
-               **dashboard**, which determines the type and shape of the object.
         :param str parent_id: (optional) The ID of the parent catalog entry if it
                exists.
         :param bool group: (optional) Boolean value that determines whether the
                catalog entry is a group.
-        :param ObjectMetaData metadata: (optional) Metadata is not returned by
-               default, and includes specific data depending on the object **kind**.
         :param bool active: (optional) Boolean value that describes whether the
                service is active.
-        :param str parent_url: (optional) The catalog URL of the parent catalog
-               entry.
-        :param List[CatalogEntry] children: (optional) The children of this catalog
-               entry. This is read-only and ignored on put or post. It is filled in when
-               `?depth=_value_` is used.
+        :param ObjectMetadataSet metadata: (optional) Model used to describe
+               metadata object that can be set.
         """
         self.name = name
+        self.kind = kind
         self.overview_ui = overview_ui
         self.images = images
         self.parent_id = parent_id
@@ -1493,19 +1454,16 @@ class CatalogEntry():
         self.tags = tags
         self.group = group
         self.provider = provider
-        self.metadata = metadata
         self.active = active
+        self.metadata = metadata
+        self.id = id
         self.catalog_crn = catalog_crn
         self.url = url
         self.children_url = children_url
-        self.parent_url = parent_url
         self.geo_tags = geo_tags
         self.pricing_tags = pricing_tags
         self.created = created
         self.updated = updated
-        self.children = children
-        self.kind = kind
-        self.id = id
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'CatalogEntry':
@@ -1515,6 +1473,10 @@ class CatalogEntry():
             args['name'] = _dict.get('name')
         else:
             raise ValueError('Required property \'name\' not present in CatalogEntry JSON')
+        if 'kind' in _dict:
+            args['kind'] = _dict.get('kind')
+        else:
+            raise ValueError('Required property \'kind\' not present in CatalogEntry JSON')
         if 'overview_ui' in _dict:
             args['overview_ui'] = OverviewUI.from_dict(_dict.get('overview_ui'))
         else:
@@ -1539,34 +1501,26 @@ class CatalogEntry():
             args['provider'] = Provider.from_dict(_dict.get('provider'))
         else:
             raise ValueError('Required property \'provider\' not present in CatalogEntry JSON')
-        if 'metadata' in _dict:
-            args['metadata'] = ObjectMetaData.from_dict(_dict.get('metadata'))
         if 'active' in _dict:
             args['active'] = _dict.get('active')
+        if 'metadata' in _dict:
+            args['metadata'] = ObjectMetadataSet.from_dict(_dict.get('metadata'))
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
         if 'catalog_crn' in _dict:
             args['catalog_crn'] = _dict.get('catalog_crn')
         if 'url' in _dict:
             args['url'] = _dict.get('url')
         if 'children_url' in _dict:
             args['children_url'] = _dict.get('children_url')
-        if 'parent_url' in _dict:
-            args['parent_url'] = _dict.get('parent_url')
         if 'geo_tags' in _dict:
             args['geo_tags'] = _dict.get('geo_tags')
         if 'pricing_tags' in _dict:
             args['pricing_tags'] = _dict.get('pricing_tags')
         if 'created' in _dict:
-            args['created'] = string_to_datetime(_dict.get('created'))
+            args['created'] = _dict.get('created')
         if 'updated' in _dict:
-            args['updated'] = string_to_datetime(_dict.get('updated'))
-        if 'children' in _dict:
-            args['children'] = [CatalogEntry.from_dict(x) for x in _dict.get('children')]
-        if 'kind' in _dict:
-            args['kind'] = _dict.get('kind')
-        else:
-            raise ValueError('Required property \'kind\' not present in CatalogEntry JSON')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+            args['updated'] = _dict.get('updated')
         return cls(**args)
 
     @classmethod
@@ -1579,6 +1533,8 @@ class CatalogEntry():
         _dict = {}
         if hasattr(self, 'name') and self.name is not None:
             _dict['name'] = self.name
+        if hasattr(self, 'kind') and self.kind is not None:
+            _dict['kind'] = self.kind
         if hasattr(self, 'overview_ui') and self.overview_ui is not None:
             _dict['overview_ui'] = self.overview_ui.to_dict()
         if hasattr(self, 'images') and self.images is not None:
@@ -1593,32 +1549,26 @@ class CatalogEntry():
             _dict['group'] = self.group
         if hasattr(self, 'provider') and self.provider is not None:
             _dict['provider'] = self.provider.to_dict()
-        if hasattr(self, 'metadata') and self.metadata is not None:
-            _dict['metadata'] = self.metadata.to_dict()
         if hasattr(self, 'active') and self.active is not None:
             _dict['active'] = self.active
+        if hasattr(self, 'metadata') and self.metadata is not None:
+            _dict['metadata'] = self.metadata.to_dict()
+        if hasattr(self, 'id') and getattr(self, 'id') is not None:
+            _dict['id'] = getattr(self, 'id')
         if hasattr(self, 'catalog_crn') and getattr(self, 'catalog_crn') is not None:
             _dict['catalog_crn'] = getattr(self, 'catalog_crn')
         if hasattr(self, 'url') and getattr(self, 'url') is not None:
             _dict['url'] = getattr(self, 'url')
         if hasattr(self, 'children_url') and getattr(self, 'children_url') is not None:
             _dict['children_url'] = getattr(self, 'children_url')
-        if hasattr(self, 'parent_url') and self.parent_url is not None:
-            _dict['parent_url'] = self.parent_url
         if hasattr(self, 'geo_tags') and getattr(self, 'geo_tags') is not None:
             _dict['geo_tags'] = getattr(self, 'geo_tags')
         if hasattr(self, 'pricing_tags') and getattr(self, 'pricing_tags') is not None:
             _dict['pricing_tags'] = getattr(self, 'pricing_tags')
         if hasattr(self, 'created') and getattr(self, 'created') is not None:
-            _dict['created'] = datetime_to_string(getattr(self, 'created'))
+            _dict['created'] = getattr(self, 'created')
         if hasattr(self, 'updated') and getattr(self, 'updated') is not None:
-            _dict['updated'] = datetime_to_string(getattr(self, 'updated'))
-        if hasattr(self, 'children') and self.children is not None:
-            _dict['children'] = [x.to_dict() for x in self.children]
-        if hasattr(self, 'kind') and self.kind is not None:
-            _dict['kind'] = self.kind
-        if hasattr(self, 'id') and getattr(self, 'id') is not None:
-            _dict['id'] = getattr(self, 'id')
+            _dict['updated'] = getattr(self, 'updated')
         return _dict
 
     def _to_dict(self):
@@ -1648,6 +1598,158 @@ class CatalogEntry():
         SERVICE = "service"
         TEMPLATE = "template"
         DASHBOARD = "dashboard"
+
+
+class DeploymentBase():
+    """
+    Deployment-related metadata.
+
+    :attr str location: (optional) Describes the region where the service is
+          located.
+    :attr str target_crn: (optional) A CRN that describes the deployment.
+          crn:v1:[cname]:[ctype]:[location]:[scope]::[resource-type]:[resource].
+    :attr DeploymentBaseBroker broker: (optional) The broker associated with a
+          catalog entry.
+    :attr bool supports_rc_migration: (optional) This deployment not only supports
+          RC but is ready to migrate and support the RC broker for a location.
+    :attr str target_network: (optional) network to use during deployment.
+    """
+
+    def __init__(self, *, location: str = None, target_crn: str = None, broker: 'DeploymentBaseBroker' = None, supports_rc_migration: bool = None, target_network: str = None) -> None:
+        """
+        Initialize a DeploymentBase object.
+
+        :param str location: (optional) Describes the region where the service is
+               located.
+        :param str target_crn: (optional) A CRN that describes the deployment.
+               crn:v1:[cname]:[ctype]:[location]:[scope]::[resource-type]:[resource].
+        :param DeploymentBaseBroker broker: (optional) The broker associated with a
+               catalog entry.
+        :param bool supports_rc_migration: (optional) This deployment not only
+               supports RC but is ready to migrate and support the RC broker for a
+               location.
+        :param str target_network: (optional) network to use during deployment.
+        """
+        self.location = location
+        self.target_crn = target_crn
+        self.broker = broker
+        self.supports_rc_migration = supports_rc_migration
+        self.target_network = target_network
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DeploymentBase':
+        """Initialize a DeploymentBase object from a json dictionary."""
+        args = {}
+        if 'location' in _dict:
+            args['location'] = _dict.get('location')
+        if 'target_crn' in _dict:
+            args['target_crn'] = _dict.get('target_crn')
+        if 'broker' in _dict:
+            args['broker'] = DeploymentBaseBroker.from_dict(_dict.get('broker'))
+        if 'supports_rc_migration' in _dict:
+            args['supports_rc_migration'] = _dict.get('supports_rc_migration')
+        if 'target_network' in _dict:
+            args['target_network'] = _dict.get('target_network')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DeploymentBase object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'location') and self.location is not None:
+            _dict['location'] = self.location
+        if hasattr(self, 'target_crn') and self.target_crn is not None:
+            _dict['target_crn'] = self.target_crn
+        if hasattr(self, 'broker') and self.broker is not None:
+            _dict['broker'] = self.broker.to_dict()
+        if hasattr(self, 'supports_rc_migration') and self.supports_rc_migration is not None:
+            _dict['supports_rc_migration'] = self.supports_rc_migration
+        if hasattr(self, 'target_network') and self.target_network is not None:
+            _dict['target_network'] = self.target_network
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DeploymentBase object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DeploymentBase') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DeploymentBase') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class DeploymentBaseBroker():
+    """
+    The broker associated with a catalog entry.
+
+    :attr str name: (optional) Broker name.
+    :attr str guid: (optional) Broker guid.
+    """
+
+    def __init__(self, *, name: str = None, guid: str = None) -> None:
+        """
+        Initialize a DeploymentBaseBroker object.
+
+        :param str name: (optional) Broker name.
+        :param str guid: (optional) Broker guid.
+        """
+        self.name = name
+        self.guid = guid
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DeploymentBaseBroker':
+        """Initialize a DeploymentBaseBroker object from a json dictionary."""
+        args = {}
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        if 'guid' in _dict:
+            args['guid'] = _dict.get('guid')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DeploymentBaseBroker object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'guid') and self.guid is not None:
+            _dict['guid'] = self.guid
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DeploymentBaseBroker object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DeploymentBaseBroker') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DeploymentBaseBroker') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class I18N():
@@ -1881,165 +1983,7 @@ class Metrics():
         return not self == other
 
 
-class ObjectMetaData():
-    """
-    Metadata is not returned by default, and includes specific data depending on the
-    object **kind**.
-
-    :attr bool rc_compatible: (optional) Boolean value that describes whether the
-          service is compatible with the Resource Controller.
-    :attr UIMetaData ui: (optional) Information related to the UI presentation
-          associated with a catalog entry.
-    :attr Pricing pricing: (optional) Pricing-related information.
-    :attr List[str] compliance: (optional) Compliance information for HIPAA and PCI.
-    :attr ObjectMetaDataService service: (optional) Service-related metadata.
-    :attr ObjectMetaDataPlan plan: (optional) Plan-related metadata.
-    :attr ObjectMetaDataTemplate template: (optional) Template-related metadata.
-    :attr ObjectMetaDataDeployment deployment: (optional) Deployment-related
-          metadata.
-    :attr ObjectMetaDataAlias alias: (optional) Alias-related metadata.
-    :attr ObjectMetaDataSla sla: (optional) Service Level Agreement related
-          metadata.
-    :attr Callbacks callbacks: (optional) Callback-related information associated
-          with a catalog entry.
-    :attr str version: (optional) Optional version of the object.
-    :attr str original_name: (optional) The original name of the object.
-    :attr object other: (optional) Additional information.
-    """
-
-    def __init__(self, *, rc_compatible: bool = None, ui: 'UIMetaData' = None, pricing: 'Pricing' = None, compliance: List[str] = None, service: 'ObjectMetaDataService' = None, plan: 'ObjectMetaDataPlan' = None, template: 'ObjectMetaDataTemplate' = None, deployment: 'ObjectMetaDataDeployment' = None, alias: 'ObjectMetaDataAlias' = None, sla: 'ObjectMetaDataSla' = None, callbacks: 'Callbacks' = None, version: str = None, original_name: str = None, other: object = None) -> None:
-        """
-        Initialize a ObjectMetaData object.
-
-        :param bool rc_compatible: (optional) Boolean value that describes whether
-               the service is compatible with the Resource Controller.
-        :param UIMetaData ui: (optional) Information related to the UI presentation
-               associated with a catalog entry.
-        :param Pricing pricing: (optional) Pricing-related information.
-        :param List[str] compliance: (optional) Compliance information for HIPAA
-               and PCI.
-        :param ObjectMetaDataService service: (optional) Service-related metadata.
-        :param ObjectMetaDataPlan plan: (optional) Plan-related metadata.
-        :param ObjectMetaDataTemplate template: (optional) Template-related
-               metadata.
-        :param ObjectMetaDataDeployment deployment: (optional) Deployment-related
-               metadata.
-        :param ObjectMetaDataAlias alias: (optional) Alias-related metadata.
-        :param ObjectMetaDataSla sla: (optional) Service Level Agreement related
-               metadata.
-        :param Callbacks callbacks: (optional) Callback-related information
-               associated with a catalog entry.
-        :param str version: (optional) Optional version of the object.
-        :param str original_name: (optional) The original name of the object.
-        :param object other: (optional) Additional information.
-        """
-        self.rc_compatible = rc_compatible
-        self.ui = ui
-        self.pricing = pricing
-        self.compliance = compliance
-        self.service = service
-        self.plan = plan
-        self.template = template
-        self.deployment = deployment
-        self.alias = alias
-        self.sla = sla
-        self.callbacks = callbacks
-        self.version = version
-        self.original_name = original_name
-        self.other = other
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ObjectMetaData':
-        """Initialize a ObjectMetaData object from a json dictionary."""
-        args = {}
-        if 'rc_compatible' in _dict:
-            args['rc_compatible'] = _dict.get('rc_compatible')
-        if 'ui' in _dict:
-            args['ui'] = UIMetaData.from_dict(_dict.get('ui'))
-        if 'pricing' in _dict:
-            args['pricing'] = Pricing.from_dict(_dict.get('pricing'))
-        if 'compliance' in _dict:
-            args['compliance'] = _dict.get('compliance')
-        if 'service' in _dict:
-            args['service'] = ObjectMetaDataService.from_dict(_dict.get('service'))
-        if 'plan' in _dict:
-            args['plan'] = ObjectMetaDataPlan.from_dict(_dict.get('plan'))
-        if 'template' in _dict:
-            args['template'] = ObjectMetaDataTemplate.from_dict(_dict.get('template'))
-        if 'deployment' in _dict:
-            args['deployment'] = ObjectMetaDataDeployment.from_dict(_dict.get('deployment'))
-        if 'alias' in _dict:
-            args['alias'] = ObjectMetaDataAlias.from_dict(_dict.get('alias'))
-        if 'sla' in _dict:
-            args['sla'] = ObjectMetaDataSla.from_dict(_dict.get('sla'))
-        if 'callbacks' in _dict:
-            args['callbacks'] = Callbacks.from_dict(_dict.get('callbacks'))
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
-        if 'original_name' in _dict:
-            args['original_name'] = _dict.get('original_name')
-        if 'other' in _dict:
-            args['other'] = _dict.get('other')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a ObjectMetaData object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'rc_compatible') and self.rc_compatible is not None:
-            _dict['rc_compatible'] = self.rc_compatible
-        if hasattr(self, 'ui') and self.ui is not None:
-            _dict['ui'] = self.ui.to_dict()
-        if hasattr(self, 'pricing') and self.pricing is not None:
-            _dict['pricing'] = self.pricing.to_dict()
-        if hasattr(self, 'compliance') and self.compliance is not None:
-            _dict['compliance'] = self.compliance
-        if hasattr(self, 'service') and self.service is not None:
-            _dict['service'] = self.service.to_dict()
-        if hasattr(self, 'plan') and self.plan is not None:
-            _dict['plan'] = self.plan.to_dict()
-        if hasattr(self, 'template') and self.template is not None:
-            _dict['template'] = self.template.to_dict()
-        if hasattr(self, 'deployment') and self.deployment is not None:
-            _dict['deployment'] = self.deployment.to_dict()
-        if hasattr(self, 'alias') and self.alias is not None:
-            _dict['alias'] = self.alias.to_dict()
-        if hasattr(self, 'sla') and self.sla is not None:
-            _dict['sla'] = self.sla.to_dict()
-        if hasattr(self, 'callbacks') and self.callbacks is not None:
-            _dict['callbacks'] = self.callbacks.to_dict()
-        if hasattr(self, 'version') and self.version is not None:
-            _dict['version'] = self.version
-        if hasattr(self, 'original_name') and self.original_name is not None:
-            _dict['original_name'] = self.original_name
-        if hasattr(self, 'other') and self.other is not None:
-            _dict['other'] = self.other
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this ObjectMetaData object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'ObjectMetaData') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'ObjectMetaData') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
-class ObjectMetaDataAlias():
+class ObjectMetadataBaseAlias():
     """
     Alias-related metadata.
 
@@ -2050,7 +1994,7 @@ class ObjectMetaDataAlias():
 
     def __init__(self, *, type: str = None, plan_id: str = None) -> None:
         """
-        Initialize a ObjectMetaDataAlias object.
+        Initialize a ObjectMetadataBaseAlias object.
 
         :param str type: (optional) Type of alias.
         :param str plan_id: (optional) Points to the plan that this object is an
@@ -2060,8 +2004,8 @@ class ObjectMetaDataAlias():
         self.plan_id = plan_id
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ObjectMetaDataAlias':
-        """Initialize a ObjectMetaDataAlias object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'ObjectMetadataBaseAlias':
+        """Initialize a ObjectMetadataBaseAlias object from a json dictionary."""
         args = {}
         if 'type' in _dict:
             args['type'] = _dict.get('type')
@@ -2071,7 +2015,7 @@ class ObjectMetaDataAlias():
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a ObjectMetaDataAlias object from a json dictionary."""
+        """Initialize a ObjectMetadataBaseAlias object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -2088,250 +2032,21 @@ class ObjectMetaDataAlias():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this ObjectMetaDataAlias object."""
+        """Return a `str` version of this ObjectMetadataBaseAlias object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'ObjectMetaDataAlias') -> bool:
+    def __eq__(self, other: 'ObjectMetadataBaseAlias') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'ObjectMetaDataAlias') -> bool:
+    def __ne__(self, other: 'ObjectMetadataBaseAlias') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
 
-class ObjectMetaDataDeployment():
-    """
-    Deployment-related metadata.
-
-    :attr str location: (optional) Describes the region where the service is
-          located.
-    :attr str location_url: (optional) Pointer to the location resource in the
-          catalog.
-    :attr str target_crn: (optional) A CRN that describes the deployment.
-          crn:v1:[cname]:[ctype]:[location]:[scope]::[resource-type]:[resource].
-    :attr ObjectMetaDataDeploymentBroker broker: (optional) The broker associated
-          with a catalog entry.
-    :attr bool supports_rc_migration: (optional) This deployment not only supports
-          RC but is ready to migrate and support the RC broker for a location.
-    """
-
-    def __init__(self, *, location: str = None, location_url: str = None, target_crn: str = None, broker: 'ObjectMetaDataDeploymentBroker' = None, supports_rc_migration: bool = None) -> None:
-        """
-        Initialize a ObjectMetaDataDeployment object.
-
-        :param str location: (optional) Describes the region where the service is
-               located.
-        :param str target_crn: (optional) A CRN that describes the deployment.
-               crn:v1:[cname]:[ctype]:[location]:[scope]::[resource-type]:[resource].
-        :param ObjectMetaDataDeploymentBroker broker: (optional) The broker
-               associated with a catalog entry.
-        :param bool supports_rc_migration: (optional) This deployment not only
-               supports RC but is ready to migrate and support the RC broker for a
-               location.
-        """
-        self.location = location
-        self.location_url = location_url
-        self.target_crn = target_crn
-        self.broker = broker
-        self.supports_rc_migration = supports_rc_migration
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ObjectMetaDataDeployment':
-        """Initialize a ObjectMetaDataDeployment object from a json dictionary."""
-        args = {}
-        if 'location' in _dict:
-            args['location'] = _dict.get('location')
-        if 'location_url' in _dict:
-            args['location_url'] = _dict.get('location_url')
-        if 'target_crn' in _dict:
-            args['target_crn'] = _dict.get('target_crn')
-        if 'broker' in _dict:
-            args['broker'] = ObjectMetaDataDeploymentBroker.from_dict(_dict.get('broker'))
-        if 'supports_rc_migration' in _dict:
-            args['supports_rc_migration'] = _dict.get('supports_rc_migration')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a ObjectMetaDataDeployment object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'location') and self.location is not None:
-            _dict['location'] = self.location
-        if hasattr(self, 'location_url') and getattr(self, 'location_url') is not None:
-            _dict['location_url'] = getattr(self, 'location_url')
-        if hasattr(self, 'target_crn') and self.target_crn is not None:
-            _dict['target_crn'] = self.target_crn
-        if hasattr(self, 'broker') and self.broker is not None:
-            _dict['broker'] = self.broker.to_dict()
-        if hasattr(self, 'supports_rc_migration') and self.supports_rc_migration is not None:
-            _dict['supports_rc_migration'] = self.supports_rc_migration
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this ObjectMetaDataDeployment object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'ObjectMetaDataDeployment') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'ObjectMetaDataDeployment') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
-class ObjectMetaDataDeploymentBroker():
-    """
-    The broker associated with a catalog entry.
-
-    :attr str name: (optional) Broker name.
-    :attr str guid: (optional) Broker guid.
-    :attr ObjectMetaDataDeploymentBrokerPassword password: (optional) Broker
-          password.
-    """
-
-    def __init__(self, *, name: str = None, guid: str = None, password: 'ObjectMetaDataDeploymentBrokerPassword' = None) -> None:
-        """
-        Initialize a ObjectMetaDataDeploymentBroker object.
-
-        :param str name: (optional) Broker name.
-        :param str guid: (optional) Broker guid.
-        :param ObjectMetaDataDeploymentBrokerPassword password: (optional) Broker
-               password.
-        """
-        self.name = name
-        self.guid = guid
-        self.password = password
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ObjectMetaDataDeploymentBroker':
-        """Initialize a ObjectMetaDataDeploymentBroker object from a json dictionary."""
-        args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'guid' in _dict:
-            args['guid'] = _dict.get('guid')
-        if 'password' in _dict:
-            args['password'] = ObjectMetaDataDeploymentBrokerPassword.from_dict(_dict.get('password'))
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a ObjectMetaDataDeploymentBroker object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
-        if hasattr(self, 'guid') and self.guid is not None:
-            _dict['guid'] = self.guid
-        if hasattr(self, 'password') and self.password is not None:
-            _dict['password'] = self.password.to_dict()
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this ObjectMetaDataDeploymentBroker object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'ObjectMetaDataDeploymentBroker') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'ObjectMetaDataDeploymentBroker') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
-class ObjectMetaDataDeploymentBrokerPassword():
-    """
-    Broker password.
-
-    :attr str text: (optional) Broker password string.
-    :attr str key: (optional) Broker password key.
-    :attr str iv: (optional) Broker password IV.
-    """
-
-    def __init__(self, *, text: str = None, key: str = None, iv: str = None) -> None:
-        """
-        Initialize a ObjectMetaDataDeploymentBrokerPassword object.
-
-        :param str text: (optional) Broker password string.
-        :param str key: (optional) Broker password key.
-        :param str iv: (optional) Broker password IV.
-        """
-        self.text = text
-        self.key = key
-        self.iv = iv
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ObjectMetaDataDeploymentBrokerPassword':
-        """Initialize a ObjectMetaDataDeploymentBrokerPassword object from a json dictionary."""
-        args = {}
-        if 'text' in _dict:
-            args['text'] = _dict.get('text')
-        if 'key' in _dict:
-            args['key'] = _dict.get('key')
-        if 'iv' in _dict:
-            args['iv'] = _dict.get('iv')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a ObjectMetaDataDeploymentBrokerPassword object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'text') and self.text is not None:
-            _dict['text'] = self.text
-        if hasattr(self, 'key') and self.key is not None:
-            _dict['key'] = self.key
-        if hasattr(self, 'iv') and self.iv is not None:
-            _dict['iv'] = self.iv
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this ObjectMetaDataDeploymentBrokerPassword object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'ObjectMetaDataDeploymentBrokerPassword') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'ObjectMetaDataDeploymentBrokerPassword') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
-class ObjectMetaDataPlan():
+class ObjectMetadataBasePlan():
     """
     Plan-related metadata.
 
@@ -2356,7 +2071,7 @@ class ObjectMetaDataPlan():
 
     def __init__(self, *, bindable: bool = None, reservable: bool = None, allow_internal_users: bool = None, async_provisioning_supported: bool = None, async_unprovisioning_supported: bool = None, test_check_interval: int = None, single_scope_instance: str = None, service_check_enabled: bool = None, cf_guid: str = None) -> None:
         """
-        Initialize a ObjectMetaDataPlan object.
+        Initialize a ObjectMetadataBasePlan object.
 
         :param bool bindable: (optional) Boolean value that describes whether the
                service can be bound to an application.
@@ -2387,8 +2102,8 @@ class ObjectMetaDataPlan():
         self.cf_guid = cf_guid
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ObjectMetaDataPlan':
-        """Initialize a ObjectMetaDataPlan object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'ObjectMetadataBasePlan':
+        """Initialize a ObjectMetadataBasePlan object from a json dictionary."""
         args = {}
         if 'bindable' in _dict:
             args['bindable'] = _dict.get('bindable')
@@ -2412,7 +2127,7 @@ class ObjectMetaDataPlan():
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a ObjectMetaDataPlan object from a json dictionary."""
+        """Initialize a ObjectMetadataBasePlan object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -2443,21 +2158,21 @@ class ObjectMetaDataPlan():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this ObjectMetaDataPlan object."""
+        """Return a `str` version of this ObjectMetadataBasePlan object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'ObjectMetaDataPlan') -> bool:
+    def __eq__(self, other: 'ObjectMetadataBasePlan') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'ObjectMetaDataPlan') -> bool:
+    def __ne__(self, other: 'ObjectMetadataBasePlan') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
 
-class ObjectMetaDataService():
+class ObjectMetadataBaseService():
     """
     Service-related metadata.
 
@@ -2492,7 +2207,7 @@ class ObjectMetaDataService():
 
     def __init__(self, *, type: str = None, iam_compatible: bool = None, unique_api_key: bool = None, provisionable: bool = None, async_provisioning_supported: bool = None, async_unprovisioning_supported: bool = None, cf_guid: str = None, bindable: bool = None, requires: List[str] = None, plan_updateable: bool = None, state: str = None, service_check_enabled: bool = None, test_check_interval: int = None, service_key_supported: bool = None) -> None:
         """
-        Initialize a ObjectMetaDataService object.
+        Initialize a ObjectMetadataBaseService object.
 
         :param str type: (optional) Type of service.
         :param bool iam_compatible: (optional) Boolean value that describes whether
@@ -2538,8 +2253,8 @@ class ObjectMetaDataService():
         self.service_key_supported = service_key_supported
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ObjectMetaDataService':
-        """Initialize a ObjectMetaDataService object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'ObjectMetadataBaseService':
+        """Initialize a ObjectMetadataBaseService object from a json dictionary."""
         args = {}
         if 'type' in _dict:
             args['type'] = _dict.get('type')
@@ -2573,7 +2288,7 @@ class ObjectMetaDataService():
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a ObjectMetaDataService object from a json dictionary."""
+        """Initialize a ObjectMetadataBaseService object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -2614,21 +2329,21 @@ class ObjectMetaDataService():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this ObjectMetaDataService object."""
+        """Return a `str` version of this ObjectMetadataBaseService object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'ObjectMetaDataService') -> bool:
+    def __eq__(self, other: 'ObjectMetadataBaseService') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'ObjectMetaDataService') -> bool:
+    def __ne__(self, other: 'ObjectMetadataBaseService') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
 
-class ObjectMetaDataSla():
+class ObjectMetadataBaseSla():
     """
     Service Level Agreement related metadata.
 
@@ -2639,12 +2354,13 @@ class ObjectMetaDataSla():
     :attr str provisioning: (optional) Provisioning reliability, for example, 99.95.
     :attr str responsiveness: (optional) Uptime reliability of the service, for
           example, 99.95.
-    :attr ObjectMetaDataSlaDr dr: (optional) SLA Disaster Recovery-related metadata.
+    :attr ObjectMetadataBaseSlaDr dr: (optional) SLA Disaster Recovery-related
+          metadata.
     """
 
-    def __init__(self, *, terms: str = None, tenancy: str = None, provisioning: str = None, responsiveness: str = None, dr: 'ObjectMetaDataSlaDr' = None) -> None:
+    def __init__(self, *, terms: str = None, tenancy: str = None, provisioning: str = None, responsiveness: str = None, dr: 'ObjectMetadataBaseSlaDr' = None) -> None:
         """
-        Initialize a ObjectMetaDataSla object.
+        Initialize a ObjectMetadataBaseSla object.
 
         :param str terms: (optional) Required Service License Agreement Terms of
                Use.
@@ -2655,7 +2371,7 @@ class ObjectMetaDataSla():
                99.95.
         :param str responsiveness: (optional) Uptime reliability of the service,
                for example, 99.95.
-        :param ObjectMetaDataSlaDr dr: (optional) SLA Disaster Recovery-related
+        :param ObjectMetadataBaseSlaDr dr: (optional) SLA Disaster Recovery-related
                metadata.
         """
         self.terms = terms
@@ -2665,8 +2381,8 @@ class ObjectMetaDataSla():
         self.dr = dr
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ObjectMetaDataSla':
-        """Initialize a ObjectMetaDataSla object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'ObjectMetadataBaseSla':
+        """Initialize a ObjectMetadataBaseSla object from a json dictionary."""
         args = {}
         if 'terms' in _dict:
             args['terms'] = _dict.get('terms')
@@ -2677,12 +2393,12 @@ class ObjectMetaDataSla():
         if 'responsiveness' in _dict:
             args['responsiveness'] = _dict.get('responsiveness')
         if 'dr' in _dict:
-            args['dr'] = ObjectMetaDataSlaDr.from_dict(_dict.get('dr'))
+            args['dr'] = ObjectMetadataBaseSlaDr.from_dict(_dict.get('dr'))
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a ObjectMetaDataSla object from a json dictionary."""
+        """Initialize a ObjectMetadataBaseSla object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -2705,21 +2421,21 @@ class ObjectMetaDataSla():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this ObjectMetaDataSla object."""
+        """Return a `str` version of this ObjectMetadataBaseSla object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'ObjectMetaDataSla') -> bool:
+    def __eq__(self, other: 'ObjectMetadataBaseSla') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'ObjectMetaDataSla') -> bool:
+    def __ne__(self, other: 'ObjectMetadataBaseSla') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
 
-class ObjectMetaDataSlaDr():
+class ObjectMetadataBaseSlaDr():
     """
     SLA Disaster Recovery-related metadata.
 
@@ -2731,7 +2447,7 @@ class ObjectMetaDataSlaDr():
 
     def __init__(self, *, dr: bool = None, description: str = None) -> None:
         """
-        Initialize a ObjectMetaDataSlaDr object.
+        Initialize a ObjectMetadataBaseSlaDr object.
 
         :param bool dr: (optional) Required boolean value that describes whether
                disaster recovery is on.
@@ -2742,8 +2458,8 @@ class ObjectMetaDataSlaDr():
         self.description = description
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ObjectMetaDataSlaDr':
-        """Initialize a ObjectMetaDataSlaDr object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'ObjectMetadataBaseSlaDr':
+        """Initialize a ObjectMetadataBaseSlaDr object from a json dictionary."""
         args = {}
         if 'dr' in _dict:
             args['dr'] = _dict.get('dr')
@@ -2753,7 +2469,7 @@ class ObjectMetaDataSlaDr():
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a ObjectMetaDataSlaDr object from a json dictionary."""
+        """Initialize a ObjectMetadataBaseSlaDr object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -2770,28 +2486,28 @@ class ObjectMetaDataSlaDr():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this ObjectMetaDataSlaDr object."""
+        """Return a `str` version of this ObjectMetadataBaseSlaDr object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'ObjectMetaDataSlaDr') -> bool:
+    def __eq__(self, other: 'ObjectMetadataBaseSlaDr') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'ObjectMetaDataSlaDr') -> bool:
+    def __ne__(self, other: 'ObjectMetadataBaseSlaDr') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
 
-class ObjectMetaDataTemplate():
+class ObjectMetadataBaseTemplate():
     """
     Template-related metadata.
 
     :attr List[str] services: (optional) List of required offering or plan IDs.
     :attr int default_memory: (optional) Cloud Foundry instance memory value.
     :attr str start_cmd: (optional) Start Command.
-    :attr ObjectMetaDataTemplateSource source: (optional) Location of your
+    :attr ObjectMetadataBaseTemplateSource source: (optional) Location of your
           applications source files.
     :attr str runtime_catalog_id: (optional) ID of the runtime.
     :attr str cf_runtime_id: (optional) ID of the Cloud Foundry runtime.
@@ -2799,19 +2515,19 @@ class ObjectMetaDataTemplate():
     :attr str executable_file: (optional) File path to the executable file for the
           template.
     :attr str buildpack: (optional) ID of the buildpack used by the template.
-    :attr ObjectMetaDataTemplateEnvironmentVariables environment_variables:
+    :attr ObjectMetadataBaseTemplateEnvironmentVariables environment_variables:
           (optional) Environment variables for the template.
     """
 
-    def __init__(self, *, services: List[str] = None, default_memory: int = None, start_cmd: str = None, source: 'ObjectMetaDataTemplateSource' = None, runtime_catalog_id: str = None, cf_runtime_id: str = None, template_id: str = None, executable_file: str = None, buildpack: str = None, environment_variables: 'ObjectMetaDataTemplateEnvironmentVariables' = None) -> None:
+    def __init__(self, *, services: List[str] = None, default_memory: int = None, start_cmd: str = None, source: 'ObjectMetadataBaseTemplateSource' = None, runtime_catalog_id: str = None, cf_runtime_id: str = None, template_id: str = None, executable_file: str = None, buildpack: str = None, environment_variables: 'ObjectMetadataBaseTemplateEnvironmentVariables' = None) -> None:
         """
-        Initialize a ObjectMetaDataTemplate object.
+        Initialize a ObjectMetadataBaseTemplate object.
 
         :param List[str] services: (optional) List of required offering or plan
                IDs.
         :param int default_memory: (optional) Cloud Foundry instance memory value.
         :param str start_cmd: (optional) Start Command.
-        :param ObjectMetaDataTemplateSource source: (optional) Location of your
+        :param ObjectMetadataBaseTemplateSource source: (optional) Location of your
                applications source files.
         :param str runtime_catalog_id: (optional) ID of the runtime.
         :param str cf_runtime_id: (optional) ID of the Cloud Foundry runtime.
@@ -2819,8 +2535,8 @@ class ObjectMetaDataTemplate():
         :param str executable_file: (optional) File path to the executable file for
                the template.
         :param str buildpack: (optional) ID of the buildpack used by the template.
-        :param ObjectMetaDataTemplateEnvironmentVariables environment_variables:
-               (optional) Environment variables for the template.
+        :param ObjectMetadataBaseTemplateEnvironmentVariables
+               environment_variables: (optional) Environment variables for the template.
         """
         self.services = services
         self.default_memory = default_memory
@@ -2834,8 +2550,8 @@ class ObjectMetaDataTemplate():
         self.environment_variables = environment_variables
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ObjectMetaDataTemplate':
-        """Initialize a ObjectMetaDataTemplate object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'ObjectMetadataBaseTemplate':
+        """Initialize a ObjectMetadataBaseTemplate object from a json dictionary."""
         args = {}
         if 'services' in _dict:
             args['services'] = _dict.get('services')
@@ -2844,7 +2560,7 @@ class ObjectMetaDataTemplate():
         if 'start_cmd' in _dict:
             args['start_cmd'] = _dict.get('start_cmd')
         if 'source' in _dict:
-            args['source'] = ObjectMetaDataTemplateSource.from_dict(_dict.get('source'))
+            args['source'] = ObjectMetadataBaseTemplateSource.from_dict(_dict.get('source'))
         if 'runtime_catalog_id' in _dict:
             args['runtime_catalog_id'] = _dict.get('runtime_catalog_id')
         if 'cf_runtime_id' in _dict:
@@ -2856,12 +2572,12 @@ class ObjectMetaDataTemplate():
         if 'buildpack' in _dict:
             args['buildpack'] = _dict.get('buildpack')
         if 'environment_variables' in _dict:
-            args['environment_variables'] = ObjectMetaDataTemplateEnvironmentVariables.from_dict(_dict.get('environment_variables'))
+            args['environment_variables'] = ObjectMetadataBaseTemplateEnvironmentVariables.from_dict(_dict.get('environment_variables'))
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a ObjectMetaDataTemplate object from a json dictionary."""
+        """Initialize a ObjectMetadataBaseTemplate object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -2894,21 +2610,21 @@ class ObjectMetaDataTemplate():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this ObjectMetaDataTemplate object."""
+        """Return a `str` version of this ObjectMetadataBaseTemplate object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'ObjectMetaDataTemplate') -> bool:
+    def __eq__(self, other: 'ObjectMetadataBaseTemplate') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'ObjectMetaDataTemplate') -> bool:
+    def __ne__(self, other: 'ObjectMetadataBaseTemplate') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
 
-class ObjectMetaDataTemplateEnvironmentVariables():
+class ObjectMetadataBaseTemplateEnvironmentVariables():
     """
     Environment variables for the template.
 
@@ -2918,7 +2634,7 @@ class ObjectMetaDataTemplateEnvironmentVariables():
 
     def __init__(self, *, key: str = None) -> None:
         """
-        Initialize a ObjectMetaDataTemplateEnvironmentVariables object.
+        Initialize a ObjectMetadataBaseTemplateEnvironmentVariables object.
 
         :param str key: (optional) Key is the editable first string in a key:value
                pair of environment variables.
@@ -2926,8 +2642,8 @@ class ObjectMetaDataTemplateEnvironmentVariables():
         self.key = key
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ObjectMetaDataTemplateEnvironmentVariables':
-        """Initialize a ObjectMetaDataTemplateEnvironmentVariables object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'ObjectMetadataBaseTemplateEnvironmentVariables':
+        """Initialize a ObjectMetadataBaseTemplateEnvironmentVariables object from a json dictionary."""
         args = {}
         if '_key_' in _dict:
             args['key'] = _dict.get('_key_')
@@ -2935,7 +2651,7 @@ class ObjectMetaDataTemplateEnvironmentVariables():
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a ObjectMetaDataTemplateEnvironmentVariables object from a json dictionary."""
+        """Initialize a ObjectMetadataBaseTemplateEnvironmentVariables object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -2950,21 +2666,21 @@ class ObjectMetaDataTemplateEnvironmentVariables():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this ObjectMetaDataTemplateEnvironmentVariables object."""
+        """Return a `str` version of this ObjectMetadataBaseTemplateEnvironmentVariables object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'ObjectMetaDataTemplateEnvironmentVariables') -> bool:
+    def __eq__(self, other: 'ObjectMetadataBaseTemplateEnvironmentVariables') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'ObjectMetaDataTemplateEnvironmentVariables') -> bool:
+    def __ne__(self, other: 'ObjectMetadataBaseTemplateEnvironmentVariables') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
 
-class ObjectMetaDataTemplateSource():
+class ObjectMetadataBaseTemplateSource():
     """
     Location of your applications source files.
 
@@ -2975,7 +2691,7 @@ class ObjectMetaDataTemplateSource():
 
     def __init__(self, *, path: str = None, type: str = None, url: str = None) -> None:
         """
-        Initialize a ObjectMetaDataTemplateSource object.
+        Initialize a ObjectMetadataBaseTemplateSource object.
 
         :param str path: (optional) Path to your application.
         :param str type: (optional) Type of source, for example, git.
@@ -2986,8 +2702,8 @@ class ObjectMetaDataTemplateSource():
         self.url = url
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ObjectMetaDataTemplateSource':
-        """Initialize a ObjectMetaDataTemplateSource object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'ObjectMetadataBaseTemplateSource':
+        """Initialize a ObjectMetadataBaseTemplateSource object from a json dictionary."""
         args = {}
         if 'path' in _dict:
             args['path'] = _dict.get('path')
@@ -2999,7 +2715,7 @@ class ObjectMetaDataTemplateSource():
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a ObjectMetaDataTemplateSource object from a json dictionary."""
+        """Initialize a ObjectMetadataBaseTemplateSource object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -3018,16 +2734,172 @@ class ObjectMetaDataTemplateSource():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this ObjectMetaDataTemplateSource object."""
+        """Return a `str` version of this ObjectMetadataBaseTemplateSource object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'ObjectMetaDataTemplateSource') -> bool:
+    def __eq__(self, other: 'ObjectMetadataBaseTemplateSource') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'ObjectMetaDataTemplateSource') -> bool:
+    def __ne__(self, other: 'ObjectMetadataBaseTemplateSource') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ObjectMetadataSet():
+    """
+    Model used to describe metadata object that can be set.
+
+    :attr bool rc_compatible: (optional) Boolean value that describes whether the
+          service is compatible with the Resource Controller.
+    :attr UIMetaData ui: (optional) Information related to the UI presentation
+          associated with a catalog entry.
+    :attr List[str] compliance: (optional) Compliance information for HIPAA and PCI.
+    :attr ObjectMetadataBaseService service: (optional) Service-related metadata.
+    :attr ObjectMetadataBasePlan plan: (optional) Plan-related metadata.
+    :attr ObjectMetadataBaseTemplate template: (optional) Template-related metadata.
+    :attr ObjectMetadataBaseAlias alias: (optional) Alias-related metadata.
+    :attr ObjectMetadataBaseSla sla: (optional) Service Level Agreement related
+          metadata.
+    :attr Callbacks callbacks: (optional) Callback-related information associated
+          with a catalog entry.
+    :attr str version: (optional) Optional version of the object.
+    :attr str original_name: (optional) The original name of the object.
+    :attr object other: (optional) Additional information.
+    :attr PricingSet pricing: (optional) Pricing-related information.
+    :attr DeploymentBase deployment: (optional) Deployment-related metadata.
+    """
+
+    def __init__(self, *, rc_compatible: bool = None, ui: 'UIMetaData' = None, compliance: List[str] = None, service: 'ObjectMetadataBaseService' = None, plan: 'ObjectMetadataBasePlan' = None, template: 'ObjectMetadataBaseTemplate' = None, alias: 'ObjectMetadataBaseAlias' = None, sla: 'ObjectMetadataBaseSla' = None, callbacks: 'Callbacks' = None, version: str = None, original_name: str = None, other: object = None, pricing: 'PricingSet' = None, deployment: 'DeploymentBase' = None) -> None:
+        """
+        Initialize a ObjectMetadataSet object.
+
+        :param bool rc_compatible: (optional) Boolean value that describes whether
+               the service is compatible with the Resource Controller.
+        :param UIMetaData ui: (optional) Information related to the UI presentation
+               associated with a catalog entry.
+        :param List[str] compliance: (optional) Compliance information for HIPAA
+               and PCI.
+        :param ObjectMetadataBaseService service: (optional) Service-related
+               metadata.
+        :param ObjectMetadataBasePlan plan: (optional) Plan-related metadata.
+        :param ObjectMetadataBaseTemplate template: (optional) Template-related
+               metadata.
+        :param ObjectMetadataBaseAlias alias: (optional) Alias-related metadata.
+        :param ObjectMetadataBaseSla sla: (optional) Service Level Agreement
+               related metadata.
+        :param Callbacks callbacks: (optional) Callback-related information
+               associated with a catalog entry.
+        :param str version: (optional) Optional version of the object.
+        :param str original_name: (optional) The original name of the object.
+        :param object other: (optional) Additional information.
+        :param PricingSet pricing: (optional) Pricing-related information.
+        :param DeploymentBase deployment: (optional) Deployment-related metadata.
+        """
+        self.rc_compatible = rc_compatible
+        self.ui = ui
+        self.compliance = compliance
+        self.service = service
+        self.plan = plan
+        self.template = template
+        self.alias = alias
+        self.sla = sla
+        self.callbacks = callbacks
+        self.version = version
+        self.original_name = original_name
+        self.other = other
+        self.pricing = pricing
+        self.deployment = deployment
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ObjectMetadataSet':
+        """Initialize a ObjectMetadataSet object from a json dictionary."""
+        args = {}
+        if 'rc_compatible' in _dict:
+            args['rc_compatible'] = _dict.get('rc_compatible')
+        if 'ui' in _dict:
+            args['ui'] = UIMetaData.from_dict(_dict.get('ui'))
+        if 'compliance' in _dict:
+            args['compliance'] = _dict.get('compliance')
+        if 'service' in _dict:
+            args['service'] = ObjectMetadataBaseService.from_dict(_dict.get('service'))
+        if 'plan' in _dict:
+            args['plan'] = ObjectMetadataBasePlan.from_dict(_dict.get('plan'))
+        if 'template' in _dict:
+            args['template'] = ObjectMetadataBaseTemplate.from_dict(_dict.get('template'))
+        if 'alias' in _dict:
+            args['alias'] = ObjectMetadataBaseAlias.from_dict(_dict.get('alias'))
+        if 'sla' in _dict:
+            args['sla'] = ObjectMetadataBaseSla.from_dict(_dict.get('sla'))
+        if 'callbacks' in _dict:
+            args['callbacks'] = Callbacks.from_dict(_dict.get('callbacks'))
+        if 'version' in _dict:
+            args['version'] = _dict.get('version')
+        if 'original_name' in _dict:
+            args['original_name'] = _dict.get('original_name')
+        if 'other' in _dict:
+            args['other'] = _dict.get('other')
+        if 'pricing' in _dict:
+            args['pricing'] = PricingSet.from_dict(_dict.get('pricing'))
+        if 'deployment' in _dict:
+            args['deployment'] = DeploymentBase.from_dict(_dict.get('deployment'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ObjectMetadataSet object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'rc_compatible') and self.rc_compatible is not None:
+            _dict['rc_compatible'] = self.rc_compatible
+        if hasattr(self, 'ui') and self.ui is not None:
+            _dict['ui'] = self.ui.to_dict()
+        if hasattr(self, 'compliance') and self.compliance is not None:
+            _dict['compliance'] = self.compliance
+        if hasattr(self, 'service') and self.service is not None:
+            _dict['service'] = self.service.to_dict()
+        if hasattr(self, 'plan') and self.plan is not None:
+            _dict['plan'] = self.plan.to_dict()
+        if hasattr(self, 'template') and self.template is not None:
+            _dict['template'] = self.template.to_dict()
+        if hasattr(self, 'alias') and self.alias is not None:
+            _dict['alias'] = self.alias.to_dict()
+        if hasattr(self, 'sla') and self.sla is not None:
+            _dict['sla'] = self.sla.to_dict()
+        if hasattr(self, 'callbacks') and self.callbacks is not None:
+            _dict['callbacks'] = self.callbacks.to_dict()
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        if hasattr(self, 'original_name') and self.original_name is not None:
+            _dict['original_name'] = self.original_name
+        if hasattr(self, 'other') and self.other is not None:
+            _dict['other'] = self.other
+        if hasattr(self, 'pricing') and self.pricing is not None:
+            _dict['pricing'] = self.pricing.to_dict()
+        if hasattr(self, 'deployment') and self.deployment is not None:
+            _dict['deployment'] = self.deployment.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ObjectMetadataSet object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ObjectMetadataSet') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ObjectMetadataSet') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -3215,7 +3087,7 @@ class Price():
         return not self == other
 
 
-class Pricing():
+class PricingGet():
     """
     Pricing-related information.
 
@@ -3229,7 +3101,7 @@ class Pricing():
 
     def __init__(self, *, type: str = None, origin: str = None, starting_price: 'StartingPrice' = None, metrics: List['Metrics'] = None) -> None:
         """
-        Initialize a Pricing object.
+        Initialize a PricingGet object.
 
         :param str type: (optional) Type of plan. Valid values are `free`, `trial`,
                `paygo`, `bluemix-subscription`, and `ibm-subscription`.
@@ -3245,8 +3117,8 @@ class Pricing():
         self.metrics = metrics
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'Pricing':
-        """Initialize a Pricing object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'PricingGet':
+        """Initialize a PricingGet object from a json dictionary."""
         args = {}
         if 'type' in _dict:
             args['type'] = _dict.get('type')
@@ -3260,7 +3132,7 @@ class Pricing():
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a Pricing object from a json dictionary."""
+        """Initialize a PricingGet object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -3281,16 +3153,88 @@ class Pricing():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this Pricing object."""
+        """Return a `str` version of this PricingGet object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'Pricing') -> bool:
+    def __eq__(self, other: 'PricingGet') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'Pricing') -> bool:
+    def __ne__(self, other: 'PricingGet') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class PricingSet():
+    """
+    Pricing-related information.
+
+    :attr str type: (optional) Type of plan. Valid values are `free`, `trial`,
+          `paygo`, `bluemix-subscription`, and `ibm-subscription`.
+    :attr str origin: (optional) Defines where the pricing originates.
+    :attr StartingPrice starting_price: (optional) Plan-specific starting price
+          information.
+    """
+
+    def __init__(self, *, type: str = None, origin: str = None, starting_price: 'StartingPrice' = None) -> None:
+        """
+        Initialize a PricingSet object.
+
+        :param str type: (optional) Type of plan. Valid values are `free`, `trial`,
+               `paygo`, `bluemix-subscription`, and `ibm-subscription`.
+        :param str origin: (optional) Defines where the pricing originates.
+        :param StartingPrice starting_price: (optional) Plan-specific starting
+               price information.
+        """
+        self.type = type
+        self.origin = origin
+        self.starting_price = starting_price
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'PricingSet':
+        """Initialize a PricingSet object from a json dictionary."""
+        args = {}
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        if 'origin' in _dict:
+            args['origin'] = _dict.get('origin')
+        if 'starting_price' in _dict:
+            args['starting_price'] = StartingPrice.from_dict(_dict.get('starting_price'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a PricingSet object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'origin') and self.origin is not None:
+            _dict['origin'] = self.origin
+        if hasattr(self, 'starting_price') and self.starting_price is not None:
+            _dict['starting_price'] = self.starting_price.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this PricingSet object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'PricingSet') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'PricingSet') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -3377,69 +3321,6 @@ class Provider():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'Provider') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
-class Scope():
-    """
-    IAM Scope-related information associated with a catalog entry.
-
-    :attr str type: (optional) Type of IAM scope. Valid values are `global`,
-          `account`, or `org`.
-    :attr str value: (optional) Specific account or organization.
-    """
-
-    def __init__(self, *, type: str = None, value: str = None) -> None:
-        """
-        Initialize a Scope object.
-
-        :param str type: (optional) Type of IAM scope. Valid values are `global`,
-               `account`, or `org`.
-        :param str value: (optional) Specific account or organization.
-        """
-        self.type = type
-        self.value = value
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'Scope':
-        """Initialize a Scope object from a json dictionary."""
-        args = {}
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a Scope object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'type') and self.type is not None:
-            _dict['type'] = self.type
-        if hasattr(self, 'value') and self.value is not None:
-            _dict['value'] = self.value
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this Scope object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'Scope') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'Scope') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -4045,7 +3926,7 @@ class Visibility():
           an enum of *public*, *ibm_only*, and *private*. public means it is visible to
           all. ibm_only means it is visible to all IBM unless their account is explicitly
           excluded. private means it is visible only to the included accounts.
-    :attr Scope owner: (optional) IAM Scope-related information associated with a
+    :attr str owner: (optional) IAM Scope-related information associated with a
           catalog entry.
     :attr VisibilityDetail include: (optional) Visibility details related to a
           catalog entry.
@@ -4056,12 +3937,10 @@ class Visibility():
           whitelist and making entries `private`, `ibm_only` or `public`.
     """
 
-    def __init__(self, *, restrictions: str = None, owner: 'Scope' = None, include: 'VisibilityDetail' = None, exclude: 'VisibilityDetail' = None, approved: bool = None) -> None:
+    def __init__(self, *, restrictions: str = None, owner: str = None, include: 'VisibilityDetail' = None, exclude: 'VisibilityDetail' = None, approved: bool = None) -> None:
         """
         Initialize a Visibility object.
 
-        :param Scope owner: (optional) IAM Scope-related information associated
-               with a catalog entry.
         :param VisibilityDetail include: (optional) Visibility details related to a
                catalog entry.
         :param VisibilityDetail exclude: (optional) Visibility details related to a
@@ -4080,7 +3959,7 @@ class Visibility():
         if 'restrictions' in _dict:
             args['restrictions'] = _dict.get('restrictions')
         if 'owner' in _dict:
-            args['owner'] = Scope.from_dict(_dict.get('owner'))
+            args['owner'] = _dict.get('owner')
         if 'include' in _dict:
             args['include'] = VisibilityDetail.from_dict(_dict.get('include'))
         if 'exclude' in _dict:
@@ -4099,8 +3978,8 @@ class Visibility():
         _dict = {}
         if hasattr(self, 'restrictions') and getattr(self, 'restrictions') is not None:
             _dict['restrictions'] = getattr(self, 'restrictions')
-        if hasattr(self, 'owner') and self.owner is not None:
-            _dict['owner'] = self.owner.to_dict()
+        if hasattr(self, 'owner') and getattr(self, 'owner') is not None:
+            _dict['owner'] = getattr(self, 'owner')
         if hasattr(self, 'include') and self.include is not None:
             _dict['include'] = self.include.to_dict()
         if hasattr(self, 'exclude') and self.exclude is not None:
