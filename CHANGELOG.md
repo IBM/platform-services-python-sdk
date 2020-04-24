@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.2.0...v0.3.0) (2020-04-24)
+
+
+### Features
+
+* **Global Catalog:** add service and test code to project ([#6](https://github.com/IBM/platform-services-python-sdk/issues/6)) ([04c9f84](https://github.com/IBM/platform-services-python-sdk/commit/04c9f84b889ebc0897a67f723d08ca31645cf289))
+
 # [0.2.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.1.2...v0.2.0) (2020-04-20)
 
 
