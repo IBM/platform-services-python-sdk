@@ -244,7 +244,7 @@ class TestIamAccessGroupsV2(unittest.TestCase):
         try:
             response = self.service.is_member_of_access_group(
                 access_group_id=self.testGroupId, iam_id=self.testUserId)
-        except:
+        except ApiException as e:
             print(e)
 
     def test_08_list_group_members(self):
