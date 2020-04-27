@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+ This package provides a client library for accessing the IBM Cloud Platform Services.
+"""
+
 from ibm_cloud_sdk_core import IAMTokenManager, DetailedResponse, BaseService, ApiException
 
 from .common import get_sdk_headers
@@ -21,3 +25,4 @@ from .version import __version__
 from .global_catalog_v1 import GlobalCatalogV1
 from .global_search_v2 import GlobalSearchV2
 from .global_tagging_v1 import GlobalTaggingV1
+from .iam_access_groups_v2 import IamAccessGroupsV2
