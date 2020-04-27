@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.3.0...v0.3.1) (2020-04-27)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** add import to __init__.py ([f8df16b](https://github.com/IBM/platform-services-python-sdk/commit/f8df16b01c64230fe41d5784c8597373cc762384))
+
 # [0.3.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.2.0...v0.3.0) (2020-04-24)
 
 
