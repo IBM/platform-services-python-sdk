@@ -24,7 +24,6 @@ import os
 import os.path
 import datetime
 import random
-from ibm_cloud_sdk_core.authenticators import NoAuthAuthenticator
 from ibm_cloud_sdk_core import *
 from ibm_platform_services.iam_access_groups_v2 import *
 
