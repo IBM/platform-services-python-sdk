@@ -83,8 +83,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
         }
 
         self.defaultChildEntry = {
-            'name': 'someChildName',
-            'id': 'someChildId',
+            'name': 'someChildName{}'.format(timestamp),
+            'id': 'someChildId{}'.format(timestamp),
             'parent_id': self.defaultEntry['id'],
             'active': False,
             'kind': 'service',
@@ -429,25 +429,6 @@ class TestGlobalCatalogV1(unittest.TestCase):
         with pytest.raises(ApiException) as e:
             self.service.update_visibility('bogus')
         assert e.value.code == 404
-
-    def test_get_pricing(self):
-        env = self.service.create_catalog_entry(id=self.defaultEntry['id'],
-            name=self.defaultEntry['name'],
-            overview_ui=self.defaultEntry['overview_ui'],
-            kind=self.defaultEntry['kind'],
-            images=self.defaultEntry['images'],
-            disabled=self.defaultEntry['disabled'],
-            tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-            metadata=self.defaultEntry['metadata'])
-
-        env = self.service.get_visibility(self.defaultEntry['id'])
-        assert env is not None
-        assert env.get_status_code() == 200
-
-        results = env.get_result()
-        assert results is not None
-        assert results.get('restrictions') == self.defaultEntry['restrictions']
 
     def test_get_pricing_failure(self):
         self.service.create_catalog_entry(id=self.defaultEntry['id'],
