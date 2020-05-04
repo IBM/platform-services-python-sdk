@@ -136,10 +136,10 @@ class TestGlobalCatalogV1(unittest.TestCase):
         }
 
     def setUp(self):
-        self.service.delete_catalog_entry(id=self.defaultEntry['id'])
+        self.service.delete_catalog_entry(id=self.defaultEntry['id'], force=True)
 
     def tearDown(self):
-        self.service.delete_catalog_entry(id=self.defaultEntry['id'])
+        self.service.delete_catalog_entry(id=self.defaultEntry['id'], force=True)
 
     def test_create_catalog_entry(self):
         env = self.service.create_catalog_entry(id=self.defaultEntry['id'],
@@ -228,7 +228,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             tags=self.defaultEntry['tags'],
             provider=self.defaultEntry['provider'])
 
-        env = self.service.delete_catalog_entry(id=self.defaultEntry['id'])
+        env = self.service.delete_catalog_entry(id=self.defaultEntry['id'], force=True)
         assert env is not None
         assert env.get_status_code() == 200
 
