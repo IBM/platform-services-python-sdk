@@ -1,3 +1,10 @@
+## [0.3.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.3.1...v0.3.2) (2020-05-05)
+
+
+### Bug Fixes
+
+* **Global Catalog:** regen service with new API definition ([8cac822](https://github.com/IBM/platform-services-python-sdk/commit/8cac82231d0f486099af31a5441dd0001d6cb557))
+
 ## [0.3.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.3.0...v0.3.1) (2020-04-27)
 
 
