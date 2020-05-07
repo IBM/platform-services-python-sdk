@@ -121,6 +121,7 @@ class TestIamAccessGroupsV2(unittest.TestCase):
 
     def test_02_get_access_group(self):
         assert self.testGroupId
+        print("Group ID: ", self.testGroupId)
 
         response = self.service.get_access_group(access_group_id=self.testGroupId)
         assert response is not None
@@ -141,6 +142,7 @@ class TestIamAccessGroupsV2(unittest.TestCase):
     def test_03_update_access_group(self):
         assert self.testGroupId
         assert self.testGroupETag
+        print("Group ID: ", self.testGroupId)
 
         response = self.service.update_access_group(
             access_group_id=self.testGroupId, if_match=self.testGroupETag, description=self.testGroupDescription)
@@ -158,6 +160,8 @@ class TestIamAccessGroupsV2(unittest.TestCase):
         assert result.description == self.testGroupDescription
 
     def test_04_list_access_groups(self):
+        print("Group ID: ", self.testGroupId)
+
         response = self.service.list_access_groups(
             account_id=self.testAccountId,hide_public_access=True)
         assert response is not None
@@ -179,6 +183,8 @@ class TestIamAccessGroupsV2(unittest.TestCase):
 
     def test_05_add_members_to_access_group(self):
         assert self.testGroupId
+        print("Group ID: ", self.testGroupId)
+        print("User ID: ", self.testUserId)
 
         members = [AddGroupMembersRequestMembersItem(
             iam_id=self.testUserId, type=self.testUserType)]
@@ -204,6 +210,8 @@ class TestIamAccessGroupsV2(unittest.TestCase):
 
     def test_06_add_member_to_multiple_access_groups(self):
         assert self.testGroupId
+        print("Group ID: ", self.testGroupId)
+        print("User ID: ", self.testUserId)
 
         members = [AddGroupMembersRequestMembersItem(
             iam_id=self.testUserId, type=self.testUserType)]
@@ -228,81 +236,59 @@ class TestIamAccessGroupsV2(unittest.TestCase):
         assert foundTestGroup
 
     def test_07_check_group_membership(self):
-        # This test is temporarily disabled/changed
-        # (because it fails intermittently in parallel)
-
-        # assert self.testGroupId
-
-        # response = self.service.is_member_of_access_group(
-        #     access_group_id=self.testGroupId, iam_id=self.testUserId)
-        # assert response is not None
-        # assert response.get_status_code() == 204
-
-        # result_dict = response.get_result()
-        # assert result_dict is None
-
-        try:
-            response = self.service.is_member_of_access_group(
-                access_group_id=self.testGroupId, iam_id=self.testUserId)
-        except ApiException as e:
-            print(e)
-
-    def test_08_list_group_members(self):
-        # This test is temporarily disabled/changed
-        # (because it fails intermittently in parallel)
-
-        # assert self.testGroupId
-
-        # response = self.service.list_access_group_members(
-        #     access_group_id=self.testGroupId)
-        # assert response is not None
-        # assert response.get_status_code() == 200
-
-        # result_dict = response.get_result()
-        # assert result_dict is not None
-
-        # result = GroupMembersList.from_dict(result_dict)
-        # assert result is not None
-
-        # # Confirm the test user is present
-        # foundTestUser = False
-        # for member in result.members:
-        #     if member.iam_id == self.testUserId:
-        #         foundTestUser = True
-        #         break
-        # assert foundTestUser
-
-        try:
-            response = self.service.list_access_group_members(
-                access_group_id=self.testGroupId)
-        except ApiException as e:
-            print(e)
-
-    def test_09_delete_group_membership(self):
-        # This test is temporarily disabled/changed
-        # (because it fails intermittently in parallel)
-
-        # assert self.testGroupId
-
-        # response = self.service.remove_member_from_access_group(
-        #     access_group_id=self.testGroupId, iam_id=self.testUserId)
-        # assert response is not None
-        # assert response.get_status_code() == 204
-
-        # result_dict = response.get_result()
-        # assert result_dict is None
-
+        assert self.testGroupId
         print("Group ID: ", self.testGroupId)
         print("User ID: ", self.testUserId)
 
-        try:
-            response = self.service.remove_member_from_access_group(
-                access_group_id=self.testGroupId, iam_id=self.testUserId)
-        except ApiException as e:
-            print(e)
+        response = self.service.is_member_of_access_group(
+            access_group_id=self.testGroupId, iam_id=self.testUserId)
+        assert response is not None
+        assert response.get_status_code() == 204
+
+        result_dict = response.get_result()
+        assert result_dict is None
+
+    def test_08_list_group_members(self):
+        assert self.testGroupId
+        print("Group ID: ", self.testGroupId)
+        print("User ID: ", self.testUserId)
+
+        response = self.service.list_access_group_members(
+            access_group_id=self.testGroupId)
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = GroupMembersList.from_dict(result_dict)
+        assert result is not None
+
+        # Confirm the test user is present
+        foundTestUser = False
+        for member in result.members:
+            if member.iam_id == self.testUserId:
+                foundTestUser = True
+                break
+        assert foundTestUser
+
+    def test_09_delete_group_membership(self):
+        assert self.testGroupId
+        print("Group ID: ", self.testGroupId)
+        print("User ID: ", self.testUserId)
+
+        response = self.service.remove_member_from_access_group(
+            access_group_id=self.testGroupId, iam_id=self.testUserId)
+        assert response is not None
+        assert response.get_status_code() == 204
+
+        result_dict = response.get_result()
+        assert result_dict is None
 
     def test_10_delete_member_from_all_groups(self):
         assert self.testGroupId
+        print("Group ID: ", self.testGroupId)
+        print("User ID: ", self.testUserId)
 
         try:
             response = self.service.remove_member_from_all_access_groups(
@@ -314,6 +300,8 @@ class TestIamAccessGroupsV2(unittest.TestCase):
 
     def test_11_delete_bulk_members_from_access_group(self):
         assert self.testGroupId
+        print("Group ID: ", self.testGroupId)
+        print("User ID: ", self.testUserId)
 
         try:
             response = self.service.remove_members_from_access_group(
@@ -325,6 +313,7 @@ class TestIamAccessGroupsV2(unittest.TestCase):
 
     def test_12_create_access_group_rule(self):
         assert self.testGroupId
+        print("Group ID: ", self.testGroupId)
 
         testExpiration = 24
 
@@ -351,6 +340,8 @@ class TestIamAccessGroupsV2(unittest.TestCase):
     def test_13_get_access_group_rule(self):
         assert self.testGroupId
         assert self.testClaimRuleId
+        print("Group ID: ", self.testGroupId)
+        print("Rule ID: ", self.testClaimRuleId)
 
         response = self.service.get_access_group_rule(
             access_group_id=self.testGroupId, rule_id=self.testClaimRuleId)
@@ -370,6 +361,8 @@ class TestIamAccessGroupsV2(unittest.TestCase):
 
     def test_14_list_access_group_rules(self):
         assert self.testGroupId
+        print("Group ID: ", self.testGroupId)
+        print("Rule ID: ", self.testClaimRuleId)
 
         response = self.service.list_access_group_rules(access_group_id=self.testGroupId)
         assert response is not None
@@ -392,6 +385,8 @@ class TestIamAccessGroupsV2(unittest.TestCase):
     def test_15_update_access_group_rule(self):
         assert self.testGroupId
         assert self.testClaimRuleId
+        print("Group ID: ", self.testGroupId)
+        print("Rule ID: ", self.testClaimRuleId)
 
         testExpiration = 24
 
@@ -418,6 +413,8 @@ class TestIamAccessGroupsV2(unittest.TestCase):
     def test_16_delete_access_group_rule(self):
         assert self.testGroupId
         assert self.testClaimRuleId
+        print("Group ID: ", self.testGroupId)
+        print("Rule ID: ", self.testClaimRuleId)
 
         response = self.service.remove_access_group_rule(
             access_group_id=self.testGroupId, rule_id=self.testClaimRuleId)
