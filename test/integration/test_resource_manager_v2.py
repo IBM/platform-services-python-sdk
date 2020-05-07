@@ -15,7 +15,7 @@
 # limitations under the License.
 
 """
- This class contains an integration test for the IAM Access Groups service.
+ This class contains an integration test for Resource Manager service.
 """
 
 import pytest
@@ -25,14 +25,16 @@ import os.path
 import datetime
 import random
 from ibm_cloud_sdk_core import *
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_platform_services.resource_manager_v2 import *
+from dotenv import load_dotenv
 
 # Read config file
 configFile = 'resource_manager.env'
 configLoaded = None
 
 if os.path.exists(configFile):
-    os.environ['IBM_CREDENTIALS_FILE'] = configFile
+    load_dotenv(dotenv_path=configFile)
     configLoaded = True
 else:
     print('External configuration was not found, skipping tests...')
@@ -41,18 +43,34 @@ class TestResourceManagerV2(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         if not configLoaded:
-            raise unittest.SkipTest('External configuration not available, skipping...')
-          
+            raise unittest.SkipTest(
+                'External configuration not available, skipping...')
+
         cls.service = ResourceManagerV2.new_instance()
         assert cls.service is not None
 
-        cls.config = read_external_sources(
-            ResourceManagerV2.DEFAULT_SERVICE_NAME)
-        assert cls.config is not None
-        cls.my_test_prop = cls.config.get('MY_TEST_PROP')
-        assert cls.my_test_prop is not None
+        # Retrieve env variable values
+
+        cls.test_user_api_key = os.getenv('TEST_USER_API_KEY')
+        assert cls.test_user_api_key is not None
+
+        cls.auth_url = os.getenv('RESOURCE_MANAGER_AUTH_URL')
+        assert cls.auth_url is not None
+
+        # setup default values
+        cls.test_quota_id = '7ce89f4a-4381-4600-b814-3cd9a4f4bdf4'
+        cls.test_user_account_id = '60ce10d1d94749bf8dceff12065db1b0'
+        cls.new_resource_group_id = ''
+
+        # Instantiate service with authenticator
+        authenticator = IAMAuthenticator(
+            cls.test_user_api_key, url=cls.auth_url)
+        cls.service1 = ResourceManagerV2(authenticator=authenticator)
+        cls.service1.set_service_url(os.getenv('RESOURCE_MANAGER_URL'))
+        assert cls.service1 is not None
+
         print('\nSetup complete.')
-        
+
     @classmethod
     def tearDownClass(cls):
         # Perform any cleanup needed after all the test methods are finished.
@@ -60,3 +78,80 @@ class TestResourceManagerV2(unittest.TestCase):
 
     def test_00_check_service(self):
         assert self.service is not None
+
+    def test_01_list_quota_definitions(self):
+        response = self.service.list_quota_definitions()
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result = response.get_result()
+        assert result is not None
+        resources = result.get('resources')
+        assert resources is not None
+
+    def test_02_get_quota_definition(self):
+        response = self.service.get_quota_definition(id=self.test_quota_id)
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result = response.get_result()
+        assert result is not None
+
+    def test_03_list_resource_groups_in_an_account(self):
+        response = self.service.list_resource_groups(
+            account_id=self.test_user_account_id)
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result = response.get_result()
+        assert result is not None
+
+        resources = result.get('resources')[0]
+        assert resources is not None
+
+        # confirm fields
+        assert resources.get('id') is not None
+        assert resources.get('name') is not None
+        assert resources.get('crn') is not None
+        assert resources.get('account_id') is not None
+        assert resources.get('state') is not None
+        assert resources.get('quota_id') is not None
+        assert resources.get('quota_url') is not None
+        assert resources.get('created_at') is not None
+        assert resources.get('updated_at') is not None
+
+    def test_04_create_resource_group_in_an_account(self):
+        response = self.service.create_resource_group(
+            name='TestGroup', account_id=self.test_user_account_id)
+        assert response is not None
+        assert response.get_status_code() == 201
+
+        result = response.get_result()
+        assert result is not None
+        assert result.get('id') is not None
+
+        self.__class__.new_resource_group_id = result.get('id')
+
+    def test_05_get_resource_group_by_id(self):
+        response = self.service.get_resource_group(
+            id=self.new_resource_group_id)
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result = response.get_result()
+        assert result is not None
+
+    def test_06_update_resource_group_by_id(self):
+        response = self.service.update_resource_group(
+            id=self.new_resource_group_id, name='TestGroup2', state='ACTIVE')
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result = response.get_result()
+        assert result is not None
+
+    def test_07_delete_resource_group_by_id(self):
+        response = self.service1.delete_resource_group(
+            id=self.new_resource_group_id)
+        assert response is not None
+        assert response.get_status_code() == 204
