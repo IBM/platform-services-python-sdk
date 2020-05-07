@@ -25,7 +25,6 @@ import os.path
 import datetime
 import random
 from ibm_cloud_sdk_core import *
-from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_platform_services.resource_manager_v2 import *
 from dotenv import load_dotenv
 
@@ -46,28 +45,18 @@ class TestResourceManagerV2(unittest.TestCase):
             raise unittest.SkipTest(
                 'External configuration not available, skipping...')
 
-        cls.service = ResourceManagerV2.new_instance()
-        assert cls.service is not None
+        # Construct the first service instance.
+        cls.service1 = ResourceManagerV2.new_instance(service_name='RMGR1')
+        assert cls.service1 is not None
 
-        # Retrieve env variable values
-
-        cls.test_user_api_key = os.getenv('TEST_USER_API_KEY')
-        assert cls.test_user_api_key is not None
-
-        cls.auth_url = os.getenv('RESOURCE_MANAGER_AUTH_URL')
-        assert cls.auth_url is not None
+        # Construct the second service instance.
+        cls.service2 = ResourceManagerV2.new_instance(service_name='RMGR2')
+        assert cls.service2 is not None
 
         # setup default values
         cls.test_quota_id = '7ce89f4a-4381-4600-b814-3cd9a4f4bdf4'
         cls.test_user_account_id = '60ce10d1d94749bf8dceff12065db1b0'
         cls.new_resource_group_id = ''
-
-        # Instantiate service with authenticator
-        authenticator = IAMAuthenticator(
-            cls.test_user_api_key, url=cls.auth_url)
-        cls.service1 = ResourceManagerV2(authenticator=authenticator)
-        cls.service1.set_service_url(os.getenv('RESOURCE_MANAGER_URL'))
-        assert cls.service1 is not None
 
         print('\nSetup complete.')
 
@@ -77,10 +66,10 @@ class TestResourceManagerV2(unittest.TestCase):
         print('\nClean up complete.')
 
     def test_00_check_service(self):
-        assert self.service is not None
+        assert self.service1 is not None
 
     def test_01_list_quota_definitions(self):
-        response = self.service.list_quota_definitions()
+        response = self.service1.list_quota_definitions()
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -90,7 +79,7 @@ class TestResourceManagerV2(unittest.TestCase):
         assert resources is not None
 
     def test_02_get_quota_definition(self):
-        response = self.service.get_quota_definition(id=self.test_quota_id)
+        response = self.service1.get_quota_definition(id=self.test_quota_id)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -98,7 +87,7 @@ class TestResourceManagerV2(unittest.TestCase):
         assert result is not None
 
     def test_03_list_resource_groups_in_an_account(self):
-        response = self.service.list_resource_groups(
+        response = self.service1.list_resource_groups(
             account_id=self.test_user_account_id)
         assert response is not None
         assert response.get_status_code() == 200
@@ -121,7 +110,7 @@ class TestResourceManagerV2(unittest.TestCase):
         assert resources.get('updated_at') is not None
 
     def test_04_create_resource_group_in_an_account(self):
-        response = self.service.create_resource_group(
+        response = self.service1.create_resource_group(
             name='TestGroup', account_id=self.test_user_account_id)
         assert response is not None
         assert response.get_status_code() == 201
@@ -133,7 +122,7 @@ class TestResourceManagerV2(unittest.TestCase):
         self.__class__.new_resource_group_id = result.get('id')
 
     def test_05_get_resource_group_by_id(self):
-        response = self.service.get_resource_group(
+        response = self.service1.get_resource_group(
             id=self.new_resource_group_id)
         assert response is not None
         assert response.get_status_code() == 200
@@ -142,7 +131,7 @@ class TestResourceManagerV2(unittest.TestCase):
         assert result is not None
 
     def test_06_update_resource_group_by_id(self):
-        response = self.service.update_resource_group(
+        response = self.service1.update_resource_group(
             id=self.new_resource_group_id, name='TestGroup2', state='ACTIVE')
         assert response is not None
         assert response.get_status_code() == 200
@@ -151,7 +140,7 @@ class TestResourceManagerV2(unittest.TestCase):
         assert result is not None
 
     def test_07_delete_resource_group_by_id(self):
-        response = self.service1.delete_resource_group(
+        response = self.service2.delete_resource_group(
             id=self.new_resource_group_id)
         assert response is not None
         assert response.get_status_code() == 204
