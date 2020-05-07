@@ -1,3 +1,10 @@
+## [0.3.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.3.2...v0.3.3) (2020-05-07)
+
+
+### Bug Fixes
+
+* **Global Catalog:** re-generate service from latest API definition ([#18](https://github.com/IBM/platform-services-python-sdk/issues/18)) ([7edfbe3](https://github.com/IBM/platform-services-python-sdk/commit/7edfbe3d3ba2d5b300f3a07b9aab384467a28ec3))
+
 ## [0.3.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.3.1...v0.3.2) (2020-05-05)
 
 
