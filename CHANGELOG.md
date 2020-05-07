@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.3.3...v0.4.0) (2020-05-07)
+
+
+### Features
+
+* **Resource Manager:** add service to project ([#15](https://github.com/IBM/platform-services-python-sdk/issues/15)) ([2789fdb](https://github.com/IBM/platform-services-python-sdk/commit/2789fdb26c0ebaa0344777c9f1e286a2e11d116e))
+
 ## [0.3.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.3.2...v0.3.3) (2020-05-07)
 
 
