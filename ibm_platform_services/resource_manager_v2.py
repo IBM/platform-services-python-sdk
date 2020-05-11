@@ -36,7 +36,7 @@ from .common import get_sdk_headers
 class ResourceManagerV2(BaseService):
     """The Resource Manager V2 service."""
 
-    DEFAULT_SERVICE_URL = 'https://resource-controller.cloud.ibm.com'
+    DEFAULT_SERVICE_URL = 'https://resource-controller.cloud.ibm.com/v2'
     DEFAULT_SERVICE_NAME = 'resource_manager'
 
     @classmethod
@@ -70,84 +70,14 @@ class ResourceManagerV2(BaseService):
 
 
     #########################
-    # quotaDefinition
-    #########################
-
-
-    def list_quota_definitions(self,
-        **kwargs
-    ) -> DetailedResponse:
-        """
-        Get a list of all quota definitions.
-
-        Get a list of all quota definitions.
-
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `QuotaDefinitionList` object
-        """
-
-        headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='list_quota_definitions')
-        headers.update(sdk_headers)
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-
-        url = '/quota_definitions'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
-
-        response = self.send(request)
-        return response
-
-
-    def get_quota_definition(self,
-        id: str,
-        **kwargs
-    ) -> DetailedResponse:
-        """
-        Get a quota definition.
-
-        Get a quota definition.
-
-        :param str id: The id of the quota.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `QuotaDefinition` object
-        """
-
-        if id is None:
-            raise ValueError('id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='get_quota_definition')
-        headers.update(sdk_headers)
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-
-        url = '/quota_definitions/{0}'.format(
-            *self.encode_path_vars(id))
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
-
-        response = self.send(request)
-        return response
-
-    #########################
-    # resourceGroup
+    # Resource Group
     #########################
 
 
     def list_resource_groups(self,
         *,
         account_id: str = None,
+        date: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -157,6 +87,8 @@ class ResourceManagerV2(BaseService):
 
         :param str account_id: (optional) The ID of the account that contains the
                resource groups that you want to get.
+        :param str date: (optional) The date would be in a format of YYYY-MM which
+               returns resource groups exclude the deleted ones before this month.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceGroupList` object
@@ -169,7 +101,8 @@ class ResourceManagerV2(BaseService):
         headers.update(sdk_headers)
 
         params = {
-            'account_id': account_id
+            'account_id': account_id,
+            'date': date
         }
 
         if 'headers' in kwargs:
@@ -351,6 +284,77 @@ class ResourceManagerV2(BaseService):
         response = self.send(request)
         return response
 
+    #########################
+    # Quota Definition
+    #########################
+
+
+    def list_quota_definitions(self,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        List quota definitions.
+
+        Get a list of all quota definitions.
+
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `QuotaDefinitionList` object
+        """
+
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V2',
+                                      operation_id='list_quota_definitions')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        url = '/quota_definitions'
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request)
+        return response
+
+
+    def get_quota_definition(self,
+        id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get a quota definition.
+
+        Get a a quota definition.
+
+        :param str id: The id of the quota.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `QuotaDefinition` object
+        """
+
+        if id is None:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V2',
+                                      operation_id='get_quota_definition')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        url = '/quota_definitions/{0}'.format(
+            *self.encode_path_vars(id))
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request)
+        return response
+
 
 ##############################################################################
 # Models
@@ -373,7 +377,8 @@ class QuotaDefinition():
     :attr str instance_memory: (optional) The total memory of app instance.
     :attr str total_app_memory: (optional) The total app memory capacity.
     :attr float vsi_limit: (optional) The VSI limit.
-    :attr ResourceQuota resource_quotas: (optional) A resource quota.
+    :attr List[ResourceQuota] resource_quotas: (optional) The resource quotas
+          associated with a quota definition.
     :attr datetime created_at: (optional) The date when the quota was initially
           created.
     :attr datetime updated_at: (optional) The date when the quota was last updated.
@@ -391,7 +396,7 @@ class QuotaDefinition():
                  instance_memory: str = None,
                  total_app_memory: str = None,
                  vsi_limit: float = None,
-                 resource_quotas: 'ResourceQuota' = None,
+                 resource_quotas: List['ResourceQuota'] = None,
                  created_at: datetime = None,
                  updated_at: datetime = None) -> None:
         """
@@ -410,7 +415,8 @@ class QuotaDefinition():
         :param str instance_memory: (optional) The total memory of app instance.
         :param str total_app_memory: (optional) The total app memory capacity.
         :param float vsi_limit: (optional) The VSI limit.
-        :param ResourceQuota resource_quotas: (optional) A resource quota.
+        :param List[ResourceQuota] resource_quotas: (optional) The resource quotas
+               associated with a quota definition.
         :param datetime created_at: (optional) The date when the quota was
                initially created.
         :param datetime updated_at: (optional) The date when the quota was last
@@ -455,7 +461,7 @@ class QuotaDefinition():
         if 'vsi_limit' in _dict:
             args['vsi_limit'] = _dict.get('vsi_limit')
         if 'resource_quotas' in _dict:
-            args['resource_quotas'] = ResourceQuota.from_dict(_dict.get('resource_quotas'))
+            args['resource_quotas'] = [ResourceQuota.from_dict(x) for x in _dict.get('resource_quotas')]
         if 'created_at' in _dict:
             args['created_at'] = string_to_datetime(_dict.get('created_at'))
         if 'updated_at' in _dict:
@@ -491,7 +497,7 @@ class QuotaDefinition():
         if hasattr(self, 'vsi_limit') and self.vsi_limit is not None:
             _dict['vsi_limit'] = self.vsi_limit
         if hasattr(self, 'resource_quotas') and self.resource_quotas is not None:
-            _dict['resource_quotas'] = self.resource_quotas.to_dict()
+            _dict['resource_quotas'] = [x.to_dict() for x in self.resource_quotas]
         if hasattr(self, 'created_at') and self.created_at is not None:
             _dict['created_at'] = datetime_to_string(self.created_at)
         if hasattr(self, 'updated_at') and self.updated_at is not None:
