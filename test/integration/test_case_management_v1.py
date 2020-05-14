@@ -56,10 +56,6 @@ class TestCaseManagementV1(unittest.TestCase):
         self.test_api_key = self.config.get('APIKEY')
         assert self.test_api_key is not None
 
-        '''
-        # Create a new case for various testing instead of creating one for each test
-        self.create_case(self)
-        '''
         print('\nSetup complete.')
 
     @pytest.mark.depends(name='case_creation')
