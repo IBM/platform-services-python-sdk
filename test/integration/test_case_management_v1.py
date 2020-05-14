@@ -23,8 +23,6 @@ import unittest
 import os
 import os.path
 import io
-#import datetime
-#import random
 from ibm_cloud_sdk_core import *
 from ibm_platform_services.case_management_v1 import *
 
@@ -197,7 +195,7 @@ class TestCaseManagementV1(unittest.TestCase):
     def test_add_comment(self):
 
         case_number = TestCaseManagementV1.new_case_number
-        comment = 'This is a test comment 2!'
+        comment = 'This is a test comment!'
 
         response = self.service.add_comment(
             case_number,
@@ -211,7 +209,7 @@ class TestCaseManagementV1(unittest.TestCase):
     def test_add_comment_to_nonexisting_case(self):
 
         case_number = 'fake-case-number'
-        comment = 'This is a test comment 2!'
+        comment = 'This is a test comment!'
 
         with pytest.raises(ApiException) as e:
             self.service.add_comment(
