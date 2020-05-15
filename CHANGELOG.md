@@ -1,3 +1,10 @@
+## [0.4.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.4.1...v0.4.2) (2020-05-15)
+
+
+### Bug Fixes
+
+* **build:** disable integration tests during tagged-release builds ([39a31d5](https://github.com/IBM/platform-services-python-sdk/commit/39a31d53a3eaf6227ede204ba51066f8b8f90e94))
+
 ## [0.4.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.4.0...v0.4.1) (2020-05-12)
 
 
