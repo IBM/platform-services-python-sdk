@@ -289,6 +289,8 @@ class TestCaseManagementV1(unittest.TestCase):
         # Assert the file attachment list is empty
         assert len(response.result['attachments']) == 0
 
+    @pytest.mark.depends(on='file_download')
+    @pytest.mark.depends(name='add_resource')
     def test_add_resource(self):
 
         # Adding a resource requires a valid CRN (Cloud Resource Name)
@@ -308,3 +310,20 @@ class TestCaseManagementV1(unittest.TestCase):
                 headers={}
             )
         assert e.value.code == 500
+
+    @pytest.mark.depends(on='add_resource')
+    def test_resolve_case(self):
+
+        status_payload = {}
+        status_payload['action'] = 'resolve'
+        status_payload['comment'] = 'testString'
+        status_payload['resolution_code'] = 1
+
+        response = self.service.update_case_status(
+            TestCaseManagementV1.new_case_number,
+            status_payload,
+            headers={}
+        )
+
+        assert response.status_code == 200
+        assert TestCaseManagementV1.new_case_number == response.result["number"]
