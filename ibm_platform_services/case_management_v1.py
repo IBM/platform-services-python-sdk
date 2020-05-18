@@ -140,9 +140,9 @@ class CaseManagementV1(BaseService):
         *,
         severity: int = None,
         eu: 'CasePayloadEu' = None,
-        offering: 'OfferingPayload' = None,
+        offering: 'Offering' = None,
         resources: List['ResourcePayload'] = None,
-        watchlist: List['UserIdAndRealm'] = None,
+        watchlist: List['User'] = None,
         invoice_number: str = None,
         sla_credit_request: bool = None,
         **kwargs
@@ -152,22 +152,23 @@ class CaseManagementV1(BaseService):
 
         Create a case in the account.
 
-        :param str type:
+        :param str type: Case type.
         :param str subject: Subject of the case.
         :param str description: Detailed description of the issue.
-        :param int severity: (optional)
+        :param int severity: (optional) Severity of the case. Smaller values mean
+               higher severity.
         :param CasePayloadEu eu: (optional) Specify if the case should be treated
                as EU regulated. Only one of the following properties is required. Call EU
                support utility endpoint to determine which property must be specified for
                your account.
-        :param OfferingPayload offering: (optional)
+        :param Offering offering: (optional) Offering details.
         :param List[ResourcePayload] resources: (optional) List of resources to
                attach to case. If attaching Classic IaaS devices use type and id fields if
                Cloud Resource Name (CRN) is unavialable. Otherwise pass the resource CRN.
                The resource list must be consistent with the value selected for the
                resource offering.
-        :param List[UserIdAndRealm] watchlist: (optional) Array of user IDs to add
-               to the watchlist.
+        :param List[User] watchlist: (optional) Array of user IDs to add to the
+               watchlist.
         :param str invoice_number: (optional) Invoice number of "Billing and
                Invoice" case type.
         :param bool sla_credit_request: (optional) Flag to indicate if case is for
@@ -328,7 +329,7 @@ class CaseManagementV1(BaseService):
         Add a comment to a case.
 
         :param str case_number: Unique identifier of a case.
-        :param str comment:
+        :param str comment: Comment to add to the case.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Comment` object
@@ -368,7 +369,7 @@ class CaseManagementV1(BaseService):
     def add_watchlist(self,
         case_number: str,
         *,
-        watchlist: List['UserIdAndRealm'] = None,
+        watchlist: List['User'] = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -380,7 +381,7 @@ class CaseManagementV1(BaseService):
         account to be added to the watchlist.
 
         :param str case_number: Unique identifier of a case.
-        :param List[UserIdAndRealm] watchlist: (optional) Array of user ID objects.
+        :param List[User] watchlist: (optional) Array of user ID objects.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `WatchlistAddResponse` object
@@ -420,7 +421,7 @@ class CaseManagementV1(BaseService):
     def remove_watchlist(self,
         case_number: str,
         *,
-        watchlist: List['UserIdAndRealm'] = None,
+        watchlist: List['User'] = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -429,10 +430,10 @@ class CaseManagementV1(BaseService):
         Remove users from the watchlist of a case.
 
         :param str case_number: Unique identifier of a case.
-        :param List[UserIdAndRealm] watchlist: (optional) Array of user ID objects.
+        :param List[User] watchlist: (optional) Array of user ID objects.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `List[User]` result
+        :rtype: DetailedResponse with `dict` result representing a `Watchlist` object
         """
 
         if case_number is None:
@@ -660,7 +661,7 @@ class GetCasesEnums:
     Enums for get_cases parameters.
     """
 
-    class Status(Enum):
+    class Status(str, Enum):
         """
         Case status filter.
         """
@@ -670,7 +671,7 @@ class GetCasesEnums:
         RESOLUTION_PROVIDED = 'resolution_provided'
         RESOLVED = 'resolved'
         CLOSED = 'closed'
-    class Fields(Enum):
+    class Fields(str, Enum):
         """
         Seleted fields of interest instead of the entire case information.
         """
@@ -703,7 +704,7 @@ class GetCaseEnums:
     Enums for get_case parameters.
     """
 
-    class Fields(Enum):
+    class Fields(str, Enum):
         """
         Seleted fields of interest instead of the entire case information.
         """
@@ -825,7 +826,7 @@ class Attachment():
 
 class AttachmentList():
     """
-    AttachmentList.
+    List of attachments in the case.
 
     :attr List[Attachment] attachments: (optional) New attachments array.
     """
@@ -880,30 +881,30 @@ class AttachmentList():
 
 class Case():
     """
-    Case.
+    The support case.
 
     :attr str number: (optional) Number/ID of the case.
     :attr str short_description: (optional) A short description of what the case is
           about.
     :attr str description: (optional) A full description of what the case is about.
     :attr str created_at: (optional) Date time of case creation in UTC.
-    :attr User created_by: (optional)
+    :attr User created_by: (optional) User info in a case.
     :attr str updated_at: (optional) Date time of the last update on the case in
           UTC.
-    :attr User updated_by: (optional)
+    :attr User updated_by: (optional) User info in a case.
     :attr str contact_type: (optional) Name of the console to interact with the
           contact.
-    :attr User contact: (optional)
+    :attr User contact: (optional) User info in a case.
     :attr str status: (optional) Status of the case.
     :attr float severity: (optional) The severity of the case.
     :attr str support_tier: (optional) Support tier of the account.
     :attr str resolution: (optional) Standard reasons of resolving case.
     :attr str close_notes: (optional) Notes of case closing.
-    :attr CaseEu eu: (optional)
-    :attr List[User] watchlist: (optional) User IDs in the watchlist.
+    :attr CaseEu eu: (optional) EU support.
+    :attr List[User] watchlist: (optional) List of users in the case watchlist.
     :attr List[Attachment] attachments: (optional) List of attachments/files of the
           case.
-    :attr Offering offering: (optional)
+    :attr Offering offering: (optional) Offering details.
     :attr List[Resource] resources: (optional) List of attached resources.
     :attr List[Comment] comments: (optional) List of comments/updates sorted in
           chronological order.
@@ -940,23 +941,24 @@ class Case():
         :param str description: (optional) A full description of what the case is
                about.
         :param str created_at: (optional) Date time of case creation in UTC.
-        :param User created_by: (optional)
+        :param User created_by: (optional) User info in a case.
         :param str updated_at: (optional) Date time of the last update on the case
                in UTC.
-        :param User updated_by: (optional)
+        :param User updated_by: (optional) User info in a case.
         :param str contact_type: (optional) Name of the console to interact with
                the contact.
-        :param User contact: (optional)
+        :param User contact: (optional) User info in a case.
         :param str status: (optional) Status of the case.
         :param float severity: (optional) The severity of the case.
         :param str support_tier: (optional) Support tier of the account.
         :param str resolution: (optional) Standard reasons of resolving case.
         :param str close_notes: (optional) Notes of case closing.
-        :param CaseEu eu: (optional)
-        :param List[User] watchlist: (optional) User IDs in the watchlist.
+        :param CaseEu eu: (optional) EU support.
+        :param List[User] watchlist: (optional) List of users in the case
+               watchlist.
         :param List[Attachment] attachments: (optional) List of attachments/files
                of the case.
-        :param Offering offering: (optional)
+        :param Offering offering: (optional) Offering details.
         :param List[Resource] resources: (optional) List of attached resources.
         :param List[Comment] comments: (optional) List of comments/updates sorted
                in chronological order.
@@ -1096,27 +1098,27 @@ class Case():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-    class ContactTypeEnum(Enum):
+    class ContactTypeEnum(str, Enum):
         """
         Name of the console to interact with the contact.
         """
-        CLOUD_SUPPORT_CENTER = "Cloud Support Center"
-        IMS_CONSOLE = "IMS Console"
+        CLOUD_SUPPORT_CENTER = 'Cloud Support Center'
+        IMS_CONSOLE = 'IMS Console'
 
 
-    class SupportTierEnum(Enum):
+    class SupportTierEnum(str, Enum):
         """
         Support tier of the account.
         """
-        FREE = "Free"
-        BASIC = "Basic"
-        STANDARD = "Standard"
-        PREMIUM = "Premium"
+        FREE = 'Free'
+        BASIC = 'Basic'
+        STANDARD = 'Standard'
+        PREMIUM = 'Premium'
 
 
 class CaseEu():
     """
-    CaseEu.
+    EU support.
 
     :attr bool support: (optional) Identifying whether the case has EU Support.
     :attr str data_center: (optional) Information about the data center.
@@ -1180,14 +1182,18 @@ class CaseEu():
 
 class CaseList():
     """
-    CaseList.
+    Response of a GET /cases request.
 
     :attr int total_count: (optional) Total number of cases satisfying the query.
-    :attr PaginationLink first: (optional)
-    :attr PaginationLink next: (optional)
-    :attr PaginationLink previous: (optional)
-    :attr PaginationLink last: (optional)
-    :attr List[Case] cases: (optional)
+    :attr PaginationLink first: (optional) Container for URL pointer to related
+          pages of cases.
+    :attr PaginationLink next: (optional) Container for URL pointer to related pages
+          of cases.
+    :attr PaginationLink previous: (optional) Container for URL pointer to related
+          pages of cases.
+    :attr PaginationLink last: (optional) Container for URL pointer to related pages
+          of cases.
+    :attr List[Case] cases: (optional) List of cases.
     """
 
     def __init__(self,
@@ -1203,11 +1209,15 @@ class CaseList():
 
         :param int total_count: (optional) Total number of cases satisfying the
                query.
-        :param PaginationLink first: (optional)
-        :param PaginationLink next: (optional)
-        :param PaginationLink previous: (optional)
-        :param PaginationLink last: (optional)
-        :param List[Case] cases: (optional)
+        :param PaginationLink first: (optional) Container for URL pointer to
+               related pages of cases.
+        :param PaginationLink next: (optional) Container for URL pointer to related
+               pages of cases.
+        :param PaginationLink previous: (optional) Container for URL pointer to
+               related pages of cases.
+        :param PaginationLink last: (optional) Container for URL pointer to related
+               pages of cases.
+        :param List[Case] cases: (optional) List of cases.
         """
         self.total_count = total_count
         self.first = first
@@ -1280,7 +1290,7 @@ class CasePayloadEu():
     properties is required. Call EU support utility endpoint to determine which property
     must be specified for your account.
 
-    :attr bool supported: (optional)
+    :attr bool supported: (optional) indicating whether the case is EU supported.
     :attr int data_center: (optional) If EU supported utility endpoint specifies
           datacenter then pass the datacenter id to mark a case as EU supported.
     """
@@ -1292,7 +1302,8 @@ class CasePayloadEu():
         """
         Initialize a CasePayloadEu object.
 
-        :param bool supported: (optional)
+        :param bool supported: (optional) indicating whether the case is EU
+               supported.
         :param int data_center: (optional) If EU supported utility endpoint
                specifies datacenter then pass the datacenter id to mark a case as EU
                supported.
@@ -1344,11 +1355,11 @@ class CasePayloadEu():
 
 class Comment():
     """
-    Comment.
+    A comment in a case.
 
     :attr str value: (optional) The comment.
     :attr str added_at: (optional) Timestamp of when comment is added.
-    :attr User added_by: (optional)
+    :attr User added_by: (optional) User info in a case.
     """
 
     def __init__(self,
@@ -1361,7 +1372,7 @@ class Comment():
 
         :param str value: (optional) The comment.
         :param str added_at: (optional) Timestamp of when comment is added.
-        :param User added_by: (optional)
+        :param User added_by: (optional) User info in a case.
         """
         self.value = value
         self.added_at = added_at
@@ -1415,10 +1426,10 @@ class Comment():
 
 class Offering():
     """
-    Offering.
+    Offering details.
 
     :attr str name: Name of the offering.
-    :attr OfferingType type:
+    :attr OfferingType type: Offering type.
     """
 
     def __init__(self,
@@ -1428,7 +1439,7 @@ class Offering():
         Initialize a Offering object.
 
         :param str name: Name of the offering.
-        :param OfferingType type:
+        :param OfferingType type: Offering type.
         """
         self.name = name
         self.type = type
@@ -1479,79 +1490,14 @@ class Offering():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class OfferingPayload():
-    """
-    OfferingPayload.
-
-    :attr str name: Offering name.
-    :attr OfferingPayloadType type: Offering type.
-    """
-
-    def __init__(self,
-                 name: str,
-                 type: 'OfferingPayloadType') -> None:
-        """
-        Initialize a OfferingPayload object.
-
-        :param str name: Offering name.
-        :param OfferingPayloadType type: Offering type.
-        """
-        self.name = name
-        self.type = type
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'OfferingPayload':
-        """Initialize a OfferingPayload object from a json dictionary."""
-        args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        else:
-            raise ValueError('Required property \'name\' not present in OfferingPayload JSON')
-        if 'type' in _dict:
-            args['type'] = OfferingPayloadType.from_dict(_dict.get('type'))
-        else:
-            raise ValueError('Required property \'type\' not present in OfferingPayload JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a OfferingPayload object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
-        if hasattr(self, 'type') and self.type is not None:
-            _dict['type'] = self.type.to_dict()
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this OfferingPayload object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'OfferingPayload') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'OfferingPayload') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class OfferingPayloadType():
+class OfferingType():
     """
     Offering type.
 
-    :attr str group:
-    :attr str key: crn service name of the offering.
-    :attr str kind: (optional)
+    :attr str group: Offering type group. "crn_service_name" is strongly prefered
+          over "category" as the latter is legacy and will be deprecated in the future.
+    :attr str key: CRN service name of the offering.
+    :attr str kind: (optional) Optional. Platform kind of the offering.
     :attr str id: (optional) Offering id in the catalog. This alone is enough to
           identify the offering.
     """
@@ -1563,11 +1509,13 @@ class OfferingPayloadType():
                  kind: str = None,
                  id: str = None) -> None:
         """
-        Initialize a OfferingPayloadType object.
+        Initialize a OfferingType object.
 
-        :param str group:
-        :param str key: crn service name of the offering.
-        :param str kind: (optional)
+        :param str group: Offering type group. "crn_service_name" is strongly
+               prefered over "category" as the latter is legacy and will be deprecated in
+               the future.
+        :param str key: CRN service name of the offering.
+        :param str kind: (optional) Optional. Platform kind of the offering.
         :param str id: (optional) Offering id in the catalog. This alone is enough
                to identify the offering.
         """
@@ -1575,99 +1523,6 @@ class OfferingPayloadType():
         self.key = key
         self.kind = kind
         self.id = id
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'OfferingPayloadType':
-        """Initialize a OfferingPayloadType object from a json dictionary."""
-        args = {}
-        if 'group' in _dict:
-            args['group'] = _dict.get('group')
-        else:
-            raise ValueError('Required property \'group\' not present in OfferingPayloadType JSON')
-        if 'key' in _dict:
-            args['key'] = _dict.get('key')
-        else:
-            raise ValueError('Required property \'key\' not present in OfferingPayloadType JSON')
-        if 'kind' in _dict:
-            args['kind'] = _dict.get('kind')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a OfferingPayloadType object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'group') and self.group is not None:
-            _dict['group'] = self.group
-        if hasattr(self, 'key') and self.key is not None:
-            _dict['key'] = self.key
-        if hasattr(self, 'kind') and self.kind is not None:
-            _dict['kind'] = self.kind
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this OfferingPayloadType object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'OfferingPayloadType') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'OfferingPayloadType') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-    class GroupEnum(Enum):
-        """
-        group.
-        """
-        CRN_SERVICE_NAME = "crn_service_name"
-        CATEGORY = "category"
-
-
-class OfferingType():
-    """
-    OfferingType.
-
-    :attr str group: indicating whether this is an offering or a broad category.
-    :attr str key: crn service name of the offering or the value of the category.
-    :attr str id: (optional) catalog id of the offering.
-    :attr str kind: (optional) kind of the offering.
-    """
-
-    def __init__(self,
-                 group: str,
-                 key: str,
-                 *,
-                 id: str = None,
-                 kind: str = None) -> None:
-        """
-        Initialize a OfferingType object.
-
-        :param str group: indicating whether this is an offering or a broad
-               category.
-        :param str key: crn service name of the offering or the value of the
-               category.
-        :param str id: (optional) catalog id of the offering.
-        :param str kind: (optional) kind of the offering.
-        """
-        self.group = group
-        self.key = key
-        self.id = id
-        self.kind = kind
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'OfferingType':
@@ -1681,10 +1536,10 @@ class OfferingType():
             args['key'] = _dict.get('key')
         else:
             raise ValueError('Required property \'key\' not present in OfferingType JSON')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
         if 'kind' in _dict:
             args['kind'] = _dict.get('kind')
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
         return cls(**args)
 
     @classmethod
@@ -1699,10 +1554,10 @@ class OfferingType():
             _dict['group'] = self.group
         if hasattr(self, 'key') and self.key is not None:
             _dict['key'] = self.key
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
         if hasattr(self, 'kind') and self.kind is not None:
             _dict['kind'] = self.kind
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
         return _dict
 
     def _to_dict(self):
@@ -1723,11 +1578,20 @@ class OfferingType():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+    class GroupEnum(str, Enum):
+        """
+        Offering type group. "crn_service_name" is strongly prefered over "category" as
+        the latter is legacy and will be deprecated in the future.
+        """
+        CRN_SERVICE_NAME = 'crn_service_name'
+        CATEGORY = 'category'
+
+
 class PaginationLink():
     """
-    PaginationLink.
+    Container for URL pointer to related pages of cases.
 
-    :attr str href: (optional)
+    :attr str href: (optional) URL to related pages of cases.
     """
 
     def __init__(self,
@@ -1736,7 +1600,7 @@ class PaginationLink():
         """
         Initialize a PaginationLink object.
 
-        :param str href: (optional)
+        :param str href: (optional) URL to related pages of cases.
         """
         self.href = href
 
@@ -1780,7 +1644,7 @@ class PaginationLink():
 
 class Resource():
     """
-    Resource.
+    A resource record of a case.
 
     :attr str crn: (optional) ID of the resource.
     :attr str name: (optional) Name of the resource.
@@ -1867,7 +1731,7 @@ class Resource():
 
 class ResourcePayload():
     """
-    ResourcePayload.
+    Payload to add a resource to a case.
 
     :attr str crn: (optional) Cloud Resource Name of the resource.
     :attr str type: (optional) Only used to attach Classic IaaS devices which have
@@ -1951,7 +1815,7 @@ class ResourcePayload():
 
 class StatusPayload():
     """
-    StatusPayload.
+    Payload to update status of the case.
 
     :attr str action: action to perform on the case.
     """
@@ -1964,7 +1828,7 @@ class StatusPayload():
         :param str action: action to perform on the case.
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['StatusPayloadResolvePayload', 'StatusPayloadUnresolvePayload', 'StatusPayloadAcceptPayload']))
+                  ", ".join(['ResolvePayload', 'UnresolvePayload', 'AcceptPayload']))
         raise Exception(msg)
 
     @classmethod
@@ -1975,7 +1839,7 @@ class StatusPayload():
             return disc_class.from_dict(_dict)
         msg = ("Cannot convert dictionary into an instance of base class 'StatusPayload'. " +
                 "The discriminator value should map to a valid subclass: {1}").format(
-                  ", ".join(['StatusPayloadResolvePayload', 'StatusPayloadUnresolvePayload', 'StatusPayloadAcceptPayload']))
+                  ", ".join(['ResolvePayload', 'UnresolvePayload', 'AcceptPayload']))
         raise Exception(msg)
 
     @classmethod
@@ -1986,9 +1850,9 @@ class StatusPayload():
     @classmethod
     def _get_class_by_discriminator(cls, _dict: Dict) -> object:
         mapping = {}
-        mapping['resolve'] = 'StatusPayloadResolvePayload'
-        mapping['unresolve'] = 'StatusPayloadUnresolvePayload'
-        mapping['accept'] = 'StatusPayloadAcceptPayload'
+        mapping['resolve'] = 'ResolvePayload'
+        mapping['unresolve'] = 'UnresolvePayload'
+        mapping['accept'] = 'AcceptPayload'
         disc_value = _dict.get('action')
         if disc_value is None:
             raise ValueError('Discriminator property \'action\' not found in StatusPayload JSON')
@@ -2001,36 +1865,34 @@ class StatusPayload():
             return disc_class
         raise TypeError('%s is not a discriminator class' % class_name)
 
-    class ActionEnum(Enum):
+    class ActionEnum(str, Enum):
         """
         action to perform on the case.
         """
-        RESOLVE = "resolve"
-        UNRESOLVE = "unresolve"
-        ACCEPT = "accept"
+        RESOLVE = 'resolve'
+        UNRESOLVE = 'unresolve'
+        ACCEPT = 'accept'
 
 
 class User():
     """
-    User.
+    User info in a case.
 
     :attr str name: (optional) Full name of the user.
-    :attr str realm: (optional) the ID realm.
-    :attr str user_id: (optional) unique user ID in the realm specified by the type.
+    :attr str realm: the ID realm.
+    :attr str user_id: unique user ID in the realm specified by the type.
     """
 
     def __init__(self,
+                 realm: str,
+                 user_id: str,
                  *,
-                 name: str = None,
-                 realm: str = None,
-                 user_id: str = None) -> None:
+                 name: str = None) -> None:
         """
         Initialize a User object.
 
-        :param str name: (optional) Full name of the user.
-        :param str realm: (optional) the ID realm.
-        :param str user_id: (optional) unique user ID in the realm specified by the
-               type.
+        :param str realm: the ID realm.
+        :param str user_id: unique user ID in the realm specified by the type.
         """
         self.name = name
         self.realm = realm
@@ -2044,8 +1906,12 @@ class User():
             args['name'] = _dict.get('name')
         if 'realm' in _dict:
             args['realm'] = _dict.get('realm')
+        else:
+            raise ValueError('Required property \'realm\' not present in User JSON')
         if 'user_id' in _dict:
             args['user_id'] = _dict.get('user_id')
+        else:
+            raise ValueError('Required property \'user_id\' not present in User JSON')
         return cls(**args)
 
     @classmethod
@@ -2056,8 +1922,8 @@ class User():
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
+        if hasattr(self, 'name') and getattr(self, 'name') is not None:
+            _dict['name'] = getattr(self, 'name')
         if hasattr(self, 'realm') and self.realm is not None:
             _dict['realm'] = self.realm
         if hasattr(self, 'user_id') and self.user_id is not None:
@@ -2082,61 +1948,50 @@ class User():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-    class RealmEnum(Enum):
+    class RealmEnum(str, Enum):
         """
         the ID realm.
         """
-        IBMID = "IBMid"
-        SL = "SL"
-        BSS = "BSS"
+        IBMID = 'IBMid'
+        SL = 'SL'
+        BSS = 'BSS'
 
 
-class UserIdAndRealm():
+class Watchlist():
     """
-    UserIdAndRealm.
+    Payload to add/remove users to/from the case watchlist.
 
-    :attr str realm: the ID realm.
-    :attr str user_id: unique user ID in the realm specified by the type.
+    :attr List[User] watchlist: (optional) Array of user ID objects.
     """
 
     def __init__(self,
-                 realm: str,
-                 user_id: str) -> None:
+                 *,
+                 watchlist: List['User'] = None) -> None:
         """
-        Initialize a UserIdAndRealm object.
+        Initialize a Watchlist object.
 
-        :param str realm: the ID realm.
-        :param str user_id: unique user ID in the realm specified by the type.
+        :param List[User] watchlist: (optional) Array of user ID objects.
         """
-        self.realm = realm
-        self.user_id = user_id
+        self.watchlist = watchlist
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'UserIdAndRealm':
-        """Initialize a UserIdAndRealm object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'Watchlist':
+        """Initialize a Watchlist object from a json dictionary."""
         args = {}
-        if 'realm' in _dict:
-            args['realm'] = _dict.get('realm')
-        else:
-            raise ValueError('Required property \'realm\' not present in UserIdAndRealm JSON')
-        if 'user_id' in _dict:
-            args['user_id'] = _dict.get('user_id')
-        else:
-            raise ValueError('Required property \'user_id\' not present in UserIdAndRealm JSON')
+        if 'watchlist' in _dict:
+            args['watchlist'] = [User.from_dict(x) for x in _dict.get('watchlist')]
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a UserIdAndRealm object from a json dictionary."""
+        """Initialize a Watchlist object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'realm') and self.realm is not None:
-            _dict['realm'] = self.realm
-        if hasattr(self, 'user_id') and self.user_id is not None:
-            _dict['user_id'] = self.user_id
+        if hasattr(self, 'watchlist') and self.watchlist is not None:
+            _dict['watchlist'] = [x.to_dict() for x in self.watchlist]
         return _dict
 
     def _to_dict(self):
@@ -2144,34 +1999,25 @@ class UserIdAndRealm():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this UserIdAndRealm object."""
+        """Return a `str` version of this Watchlist object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'UserIdAndRealm') -> bool:
+    def __eq__(self, other: 'Watchlist') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'UserIdAndRealm') -> bool:
+    def __ne__(self, other: 'Watchlist') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-    class RealmEnum(Enum):
-        """
-        the ID realm.
-        """
-        IBMID = "IBMid"
-        SL = "SL"
-        BSS = "BSS"
-
-
 class WatchlistAddResponse():
     """
-    WatchlistAddResponse.
+    Response of a request adding to watchlist.
 
-    :attr List[User] added: (optional) User IDs in the watchlist.
-    :attr List[User] failed: (optional) User IDs in the watchlist.
+    :attr List[User] added: (optional) List of added user.
+    :attr List[User] failed: (optional) List of failed to add user.
     """
 
     def __init__(self,
@@ -2181,8 +2027,8 @@ class WatchlistAddResponse():
         """
         Initialize a WatchlistAddResponse object.
 
-        :param List[User] added: (optional) User IDs in the watchlist.
-        :param List[User] failed: (optional) User IDs in the watchlist.
+        :param List[User] added: (optional) List of added user.
+        :param List[User] failed: (optional) List of failed to add user.
         """
         self.added = added
         self.failed = failed
@@ -2229,12 +2075,12 @@ class WatchlistAddResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class StatusPayloadAcceptPayload(StatusPayload):
+class AcceptPayload(StatusPayload):
     """
-    StatusPayloadAcceptPayload.
+    Payload to accept the proposed resolution of the case.
 
     :attr str action: action to perform on the case.
-    :attr str comment: (optional) comment about accepting the proposed resolution.
+    :attr str comment: (optional) Comment about accepting the proposed resolution.
     """
 
     def __init__(self,
@@ -2242,10 +2088,10 @@ class StatusPayloadAcceptPayload(StatusPayload):
                  *,
                  comment: str = None) -> None:
         """
-        Initialize a StatusPayloadAcceptPayload object.
+        Initialize a AcceptPayload object.
 
         :param str action: action to perform on the case.
-        :param str comment: (optional) comment about accepting the proposed
+        :param str comment: (optional) Comment about accepting the proposed
                resolution.
         """
         # pylint: disable=super-init-not-called
@@ -2253,20 +2099,20 @@ class StatusPayloadAcceptPayload(StatusPayload):
         self.comment = comment
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'StatusPayloadAcceptPayload':
-        """Initialize a StatusPayloadAcceptPayload object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'AcceptPayload':
+        """Initialize a AcceptPayload object from a json dictionary."""
         args = {}
         if 'action' in _dict:
             args['action'] = _dict.get('action')
         else:
-            raise ValueError('Required property \'action\' not present in StatusPayloadAcceptPayload JSON')
+            raise ValueError('Required property \'action\' not present in AcceptPayload JSON')
         if 'comment' in _dict:
             args['comment'] = _dict.get('comment')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a StatusPayloadAcceptPayload object from a json dictionary."""
+        """Initialize a AcceptPayload object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -2283,31 +2129,31 @@ class StatusPayloadAcceptPayload(StatusPayload):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this StatusPayloadAcceptPayload object."""
+        """Return a `str` version of this AcceptPayload object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'StatusPayloadAcceptPayload') -> bool:
+    def __eq__(self, other: 'AcceptPayload') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'StatusPayloadAcceptPayload') -> bool:
+    def __ne__(self, other: 'AcceptPayload') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-    class ActionEnum(Enum):
+    class ActionEnum(str, Enum):
         """
         action to perform on the case.
         """
-        RESOLVE = "resolve"
-        UNRESOLVE = "unresolve"
-        ACCEPT = "accept"
+        RESOLVE = 'resolve'
+        UNRESOLVE = 'unresolve'
+        ACCEPT = 'accept'
 
 
-class StatusPayloadResolvePayload(StatusPayload):
+class ResolvePayload(StatusPayload):
     """
-    StatusPayloadResolvePayload.
+    Payload to resolve the case.
 
     :attr str action: action to perform on the case.
     :attr str comment: (optional) comment of resolution.
@@ -2327,7 +2173,7 @@ class StatusPayloadResolvePayload(StatusPayload):
                  *,
                  comment: str = None) -> None:
         """
-        Initialize a StatusPayloadResolvePayload object.
+        Initialize a ResolvePayload object.
 
         :param str action: action to perform on the case.
         :param int resolution_code: * 1: Client error
@@ -2346,24 +2192,24 @@ class StatusPayloadResolvePayload(StatusPayload):
         self.resolution_code = resolution_code
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'StatusPayloadResolvePayload':
-        """Initialize a StatusPayloadResolvePayload object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'ResolvePayload':
+        """Initialize a ResolvePayload object from a json dictionary."""
         args = {}
         if 'action' in _dict:
             args['action'] = _dict.get('action')
         else:
-            raise ValueError('Required property \'action\' not present in StatusPayloadResolvePayload JSON')
+            raise ValueError('Required property \'action\' not present in ResolvePayload JSON')
         if 'comment' in _dict:
             args['comment'] = _dict.get('comment')
         if 'resolution_code' in _dict:
             args['resolution_code'] = _dict.get('resolution_code')
         else:
-            raise ValueError('Required property \'resolution_code\' not present in StatusPayloadResolvePayload JSON')
+            raise ValueError('Required property \'resolution_code\' not present in ResolvePayload JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a StatusPayloadResolvePayload object from a json dictionary."""
+        """Initialize a ResolvePayload object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -2382,66 +2228,66 @@ class StatusPayloadResolvePayload(StatusPayload):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this StatusPayloadResolvePayload object."""
+        """Return a `str` version of this ResolvePayload object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'StatusPayloadResolvePayload') -> bool:
+    def __eq__(self, other: 'ResolvePayload') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'StatusPayloadResolvePayload') -> bool:
+    def __ne__(self, other: 'ResolvePayload') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-    class ActionEnum(Enum):
+    class ActionEnum(str, Enum):
         """
         action to perform on the case.
         """
-        RESOLVE = "resolve"
-        UNRESOLVE = "unresolve"
-        ACCEPT = "accept"
+        RESOLVE = 'resolve'
+        UNRESOLVE = 'unresolve'
+        ACCEPT = 'accept'
 
 
-class StatusPayloadUnresolvePayload(StatusPayload):
+class UnresolvePayload(StatusPayload):
     """
-    StatusPayloadUnresolvePayload.
+    Payload to unresolve the case.
 
     :attr str action: action to perform on the case.
-    :attr str comment: comment why the case should be unresolved.
+    :attr str comment: Comment why the case should be unresolved.
     """
 
     def __init__(self,
                  action: str,
                  comment: str) -> None:
         """
-        Initialize a StatusPayloadUnresolvePayload object.
+        Initialize a UnresolvePayload object.
 
         :param str action: action to perform on the case.
-        :param str comment: comment why the case should be unresolved.
+        :param str comment: Comment why the case should be unresolved.
         """
         # pylint: disable=super-init-not-called
         self.action = action
         self.comment = comment
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'StatusPayloadUnresolvePayload':
-        """Initialize a StatusPayloadUnresolvePayload object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'UnresolvePayload':
+        """Initialize a UnresolvePayload object from a json dictionary."""
         args = {}
         if 'action' in _dict:
             args['action'] = _dict.get('action')
         else:
-            raise ValueError('Required property \'action\' not present in StatusPayloadUnresolvePayload JSON')
+            raise ValueError('Required property \'action\' not present in UnresolvePayload JSON')
         if 'comment' in _dict:
             args['comment'] = _dict.get('comment')
         else:
-            raise ValueError('Required property \'comment\' not present in StatusPayloadUnresolvePayload JSON')
+            raise ValueError('Required property \'comment\' not present in UnresolvePayload JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a StatusPayloadUnresolvePayload object from a json dictionary."""
+        """Initialize a UnresolvePayload object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -2458,26 +2304,26 @@ class StatusPayloadUnresolvePayload(StatusPayload):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this StatusPayloadUnresolvePayload object."""
+        """Return a `str` version of this UnresolvePayload object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'StatusPayloadUnresolvePayload') -> bool:
+    def __eq__(self, other: 'UnresolvePayload') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'StatusPayloadUnresolvePayload') -> bool:
+    def __ne__(self, other: 'UnresolvePayload') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-    class ActionEnum(Enum):
+    class ActionEnum(str, Enum):
         """
         action to perform on the case.
         """
-        RESOLVE = "resolve"
-        UNRESOLVE = "unresolve"
-        ACCEPT = "accept"
+        RESOLVE = 'resolve'
+        UNRESOLVE = 'unresolve'
+        ACCEPT = 'accept'
 
 
 class FileWithMetadata():

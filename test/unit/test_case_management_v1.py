@@ -48,7 +48,7 @@ class TestGetCases():
     def test_get_cases_all_params(self):
         # Set up mock
         url = base_url + '/cases'
-        mock_response = '{"total_count": 11, "first": {"href": "href"}, "next": {"href": "href"}, "previous": {"href": "href"}, "last": {"href": "href"}, "cases": [{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "group", "key": "key", "id": "id", "kind": "kind"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}]}'
+        mock_response = '{"total_count": 11, "first": {"href": "href"}, "next": {"href": "href"}, "previous": {"href": "href"}, "last": {"href": "href"}, "cases": [{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -95,7 +95,7 @@ class TestGetCases():
     def test_get_cases_required_params(self):
         # Set up mock
         url = base_url + '/cases'
-        mock_response = '{"total_count": 11, "first": {"href": "href"}, "next": {"href": "href"}, "previous": {"href": "href"}, "last": {"href": "href"}, "cases": [{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "group", "key": "key", "id": "id", "kind": "kind"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}]}'
+        mock_response = '{"total_count": 11, "first": {"href": "href"}, "next": {"href": "href"}, "previous": {"href": "href"}, "last": {"href": "href"}, "cases": [{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -123,7 +123,7 @@ class TestCreateCase():
     def test_create_case_all_params(self):
         # Set up mock
         url = base_url + '/cases'
-        mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "group", "key": "key", "id": "id", "kind": "kind"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
+        mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -135,17 +135,17 @@ class TestCreateCase():
         case_payload_eu_model['supported'] = True
         case_payload_eu_model['data_center'] = 38
 
-        # Construct a dict representation of a OfferingPayloadType model
-        offering_payload_type_model = {}
-        offering_payload_type_model['group'] = 'crn_service_name'
-        offering_payload_type_model['key'] = 'testString'
-        offering_payload_type_model['kind'] = 'testString'
-        offering_payload_type_model['id'] = 'testString'
+        # Construct a dict representation of a OfferingType model
+        offering_type_model = {}
+        offering_type_model['group'] = 'crn_service_name'
+        offering_type_model['key'] = 'testString'
+        offering_type_model['kind'] = 'testString'
+        offering_type_model['id'] = 'testString'
 
-        # Construct a dict representation of a OfferingPayload model
-        offering_payload_model = {}
-        offering_payload_model['name'] = 'testString'
-        offering_payload_model['type'] = offering_payload_type_model
+        # Construct a dict representation of a Offering model
+        offering_model = {}
+        offering_model['name'] = 'testString'
+        offering_model['type'] = offering_type_model
 
         # Construct a dict representation of a ResourcePayload model
         resource_payload_model = {}
@@ -154,10 +154,10 @@ class TestCreateCase():
         resource_payload_model['id'] = 36.0
         resource_payload_model['note'] = 'testString'
 
-        # Construct a dict representation of a UserIdAndRealm model
-        user_id_and_realm_model = {}
-        user_id_and_realm_model['realm'] = 'IBMid'
-        user_id_and_realm_model['user_id'] = 'testString'
+        # Construct a dict representation of a User model
+        user_model = {}
+        user_model['realm'] = 'IBMid'
+        user_model['user_id'] = 'abc@ibm.com'
 
         # Set up parameter values
         type = 'technical'
@@ -165,9 +165,9 @@ class TestCreateCase():
         description = 'testString'
         severity = 1
         eu = case_payload_eu_model
-        offering = offering_payload_model
+        offering = offering_model
         resources = [resource_payload_model]
-        watchlist = [user_id_and_realm_model]
+        watchlist = [user_model]
         invoice_number = 'testString'
         sla_credit_request = True
 
@@ -196,9 +196,9 @@ class TestCreateCase():
         assert req_body['description'] == 'testString'
         assert req_body['severity'] == 1
         assert req_body['eu'] == case_payload_eu_model
-        assert req_body['offering'] == offering_payload_model
+        assert req_body['offering'] == offering_model
         assert req_body['resources'] == [resource_payload_model]
-        assert req_body['watchlist'] == [user_id_and_realm_model]
+        assert req_body['watchlist'] == [user_model]
         assert req_body['invoice_number'] == 'testString'
         assert req_body['sla_credit_request'] == True
 
@@ -210,7 +210,7 @@ class TestCreateCase():
     def test_create_case_value_error(self):
         # Set up mock
         url = base_url + '/cases'
-        mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "group", "key": "key", "id": "id", "kind": "kind"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
+        mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -222,17 +222,17 @@ class TestCreateCase():
         case_payload_eu_model['supported'] = True
         case_payload_eu_model['data_center'] = 38
 
-        # Construct a dict representation of a OfferingPayloadType model
-        offering_payload_type_model = {}
-        offering_payload_type_model['group'] = 'crn_service_name'
-        offering_payload_type_model['key'] = 'testString'
-        offering_payload_type_model['kind'] = 'testString'
-        offering_payload_type_model['id'] = 'testString'
+        # Construct a dict representation of a OfferingType model
+        offering_type_model = {}
+        offering_type_model['group'] = 'crn_service_name'
+        offering_type_model['key'] = 'testString'
+        offering_type_model['kind'] = 'testString'
+        offering_type_model['id'] = 'testString'
 
-        # Construct a dict representation of a OfferingPayload model
-        offering_payload_model = {}
-        offering_payload_model['name'] = 'testString'
-        offering_payload_model['type'] = offering_payload_type_model
+        # Construct a dict representation of a Offering model
+        offering_model = {}
+        offering_model['name'] = 'testString'
+        offering_model['type'] = offering_type_model
 
         # Construct a dict representation of a ResourcePayload model
         resource_payload_model = {}
@@ -241,10 +241,10 @@ class TestCreateCase():
         resource_payload_model['id'] = 36.0
         resource_payload_model['note'] = 'testString'
 
-        # Construct a dict representation of a UserIdAndRealm model
-        user_id_and_realm_model = {}
-        user_id_and_realm_model['realm'] = 'IBMid'
-        user_id_and_realm_model['user_id'] = 'testString'
+        # Construct a dict representation of a User model
+        user_model = {}
+        user_model['realm'] = 'IBMid'
+        user_model['user_id'] = 'abc@ibm.com'
 
         # Set up parameter values
         type = 'technical'
@@ -252,9 +252,9 @@ class TestCreateCase():
         description = 'testString'
         severity = 1
         eu = case_payload_eu_model
-        offering = offering_payload_model
+        offering = offering_model
         resources = [resource_payload_model]
-        watchlist = [user_id_and_realm_model]
+        watchlist = [user_model]
         invoice_number = 'testString'
         sla_credit_request = True
 
@@ -283,7 +283,7 @@ class TestGetCase():
     def test_get_case_all_params(self):
         # Set up mock
         url = base_url + '/cases/testString'
-        mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "group", "key": "key", "id": "id", "kind": "kind"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
+        mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -317,7 +317,7 @@ class TestGetCase():
     def test_get_case_required_params(self):
         # Set up mock
         url = base_url + '/cases/testString'
-        mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "group", "key": "key", "id": "id", "kind": "kind"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
+        mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -345,7 +345,7 @@ class TestGetCase():
     def test_get_case_value_error(self):
         # Set up mock
         url = base_url + '/cases/testString'
-        mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "group", "key": "key", "id": "id", "kind": "kind"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
+        mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -378,14 +378,14 @@ class TestUpdateCaseStatus():
     def test_update_case_status_all_params(self):
         # Set up mock
         url = base_url + '/cases/testString/status'
-        mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "group", "key": "key", "id": "id", "kind": "kind"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
+        mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
                       content_type='application/json',
                       status=200)
 
-        # Construct a dict representation of a StatusPayloadResolvePayload model
+        # Construct a dict representation of a ResolvePayload model
         status_payload_model = {}
         status_payload_model['action'] = 'resolve'
         status_payload_model['comment'] = 'testString'
@@ -417,14 +417,14 @@ class TestUpdateCaseStatus():
     def test_update_case_status_value_error(self):
         # Set up mock
         url = base_url + '/cases/testString/status'
-        mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "group", "key": "key", "id": "id", "kind": "kind"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
+        mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
                       content_type='application/json',
                       status=200)
 
-        # Construct a dict representation of a StatusPayloadResolvePayload model
+        # Construct a dict representation of a ResolvePayload model
         status_payload_model = {}
         status_payload_model['action'] = 'resolve'
         status_payload_model['comment'] = 'testString'
@@ -533,14 +533,14 @@ class TestAddWatchlist():
                       content_type='application/json',
                       status=200)
 
-        # Construct a dict representation of a UserIdAndRealm model
-        user_id_and_realm_model = {}
-        user_id_and_realm_model['realm'] = 'IBMid'
-        user_id_and_realm_model['user_id'] = 'testString'
+        # Construct a dict representation of a User model
+        user_model = {}
+        user_model['realm'] = 'IBMid'
+        user_model['user_id'] = 'abc@ibm.com'
 
         # Set up parameter values
         case_number = 'testString'
-        watchlist = [user_id_and_realm_model]
+        watchlist = [user_model]
 
         # Invoke method
         response = service.add_watchlist(
@@ -554,7 +554,7 @@ class TestAddWatchlist():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['watchlist'] == [user_id_and_realm_model]
+        assert req_body['watchlist'] == [user_model]
 
 
     #--------------------------------------------------------
@@ -571,14 +571,14 @@ class TestAddWatchlist():
                       content_type='application/json',
                       status=200)
 
-        # Construct a dict representation of a UserIdAndRealm model
-        user_id_and_realm_model = {}
-        user_id_and_realm_model['realm'] = 'IBMid'
-        user_id_and_realm_model['user_id'] = 'testString'
+        # Construct a dict representation of a User model
+        user_model = {}
+        user_model['realm'] = 'IBMid'
+        user_model['user_id'] = 'abc@ibm.com'
 
         # Set up parameter values
         case_number = 'testString'
-        watchlist = [user_id_and_realm_model]
+        watchlist = [user_model]
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -603,21 +603,21 @@ class TestRemoveWatchlist():
     def test_remove_watchlist_all_params(self):
         # Set up mock
         url = base_url + '/cases/testString/watchlist'
-        mock_response = '[{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]'
+        mock_response = '{"watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]}'
         responses.add(responses.DELETE,
                       url,
                       body=mock_response,
                       content_type='application/json',
                       status=200)
 
-        # Construct a dict representation of a UserIdAndRealm model
-        user_id_and_realm_model = {}
-        user_id_and_realm_model['realm'] = 'IBMid'
-        user_id_and_realm_model['user_id'] = 'testString'
+        # Construct a dict representation of a User model
+        user_model = {}
+        user_model['realm'] = 'IBMid'
+        user_model['user_id'] = 'abc@ibm.com'
 
         # Set up parameter values
         case_number = 'testString'
-        watchlist = [user_id_and_realm_model]
+        watchlist = [user_model]
 
         # Invoke method
         response = service.remove_watchlist(
@@ -631,7 +631,7 @@ class TestRemoveWatchlist():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['watchlist'] == [user_id_and_realm_model]
+        assert req_body['watchlist'] == [user_model]
 
 
     #--------------------------------------------------------
@@ -641,21 +641,21 @@ class TestRemoveWatchlist():
     def test_remove_watchlist_value_error(self):
         # Set up mock
         url = base_url + '/cases/testString/watchlist'
-        mock_response = '[{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]'
+        mock_response = '{"watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]}'
         responses.add(responses.DELETE,
                       url,
                       body=mock_response,
                       content_type='application/json',
                       status=200)
 
-        # Construct a dict representation of a UserIdAndRealm model
-        user_id_and_realm_model = {}
-        user_id_and_realm_model['realm'] = 'IBMid'
-        user_id_and_realm_model['user_id'] = 'testString'
+        # Construct a dict representation of a User model
+        user_model = {}
+        user_model['realm'] = 'IBMid'
+        user_model['user_id'] = 'abc@ibm.com'
 
         # Set up parameter values
         case_number = 'testString'
-        watchlist = [user_id_and_realm_model]
+        watchlist = [user_model]
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1048,10 +1048,10 @@ class TestCase():
         # Construct dict forms of any model objects needed in order to build this model.
 
         offering_type_model = {} # OfferingType
-        offering_type_model['group'] = 'testString'
+        offering_type_model['group'] = 'crn_service_name'
         offering_type_model['key'] = 'testString'
-        offering_type_model['id'] = 'testString'
         offering_type_model['kind'] = 'testString'
+        offering_type_model['id'] = 'testString'
 
         user_model = {} # User
         user_model['name'] = 'testString'
@@ -1166,10 +1166,10 @@ class TestCaseList():
         # Construct dict forms of any model objects needed in order to build this model.
 
         offering_type_model = {} # OfferingType
-        offering_type_model['group'] = 'testString'
+        offering_type_model['group'] = 'crn_service_name'
         offering_type_model['key'] = 'testString'
-        offering_type_model['id'] = 'testString'
         offering_type_model['kind'] = 'testString'
+        offering_type_model['id'] = 'testString'
 
         user_model = {} # User
         user_model['name'] = 'testString'
@@ -1333,10 +1333,10 @@ class TestOffering():
         # Construct dict forms of any model objects needed in order to build this model.
 
         offering_type_model = {} # OfferingType
-        offering_type_model['group'] = 'testString'
+        offering_type_model['group'] = 'crn_service_name'
         offering_type_model['key'] = 'testString'
-        offering_type_model['id'] = 'testString'
         offering_type_model['kind'] = 'testString'
+        offering_type_model['id'] = 'testString'
 
         # Construct a json representation of a Offering model
         offering_model_json = {}
@@ -1359,76 +1359,6 @@ class TestOffering():
         assert offering_model_json2 == offering_model_json
 
 #-----------------------------------------------------------------------------
-# Test Class for OfferingPayload
-#-----------------------------------------------------------------------------
-class TestOfferingPayload():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for OfferingPayload
-    #--------------------------------------------------------
-    def test_offering_payload_serialization(self):
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        offering_payload_type_model = {} # OfferingPayloadType
-        offering_payload_type_model['group'] = 'crn_service_name'
-        offering_payload_type_model['key'] = 'testString'
-        offering_payload_type_model['kind'] = 'testString'
-        offering_payload_type_model['id'] = 'testString'
-
-        # Construct a json representation of a OfferingPayload model
-        offering_payload_model_json = {}
-        offering_payload_model_json['name'] = 'testString'
-        offering_payload_model_json['type'] = offering_payload_type_model
-
-        # Construct a model instance of OfferingPayload by calling from_dict on the json representation
-        offering_payload_model = OfferingPayload.from_dict(offering_payload_model_json)
-        assert offering_payload_model != False
-
-        # Construct a model instance of OfferingPayload by calling from_dict on the json representation
-        offering_payload_model_dict = OfferingPayload.from_dict(offering_payload_model_json).__dict__
-        offering_payload_model2 = OfferingPayload(**offering_payload_model_dict)
-
-        # Verify the model instances are equivalent
-        assert offering_payload_model == offering_payload_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        offering_payload_model_json2 = offering_payload_model.to_dict()
-        assert offering_payload_model_json2 == offering_payload_model_json
-
-#-----------------------------------------------------------------------------
-# Test Class for OfferingPayloadType
-#-----------------------------------------------------------------------------
-class TestOfferingPayloadType():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for OfferingPayloadType
-    #--------------------------------------------------------
-    def test_offering_payload_type_serialization(self):
-
-        # Construct a json representation of a OfferingPayloadType model
-        offering_payload_type_model_json = {}
-        offering_payload_type_model_json['group'] = 'crn_service_name'
-        offering_payload_type_model_json['key'] = 'testString'
-        offering_payload_type_model_json['kind'] = 'testString'
-        offering_payload_type_model_json['id'] = 'testString'
-
-        # Construct a model instance of OfferingPayloadType by calling from_dict on the json representation
-        offering_payload_type_model = OfferingPayloadType.from_dict(offering_payload_type_model_json)
-        assert offering_payload_type_model != False
-
-        # Construct a model instance of OfferingPayloadType by calling from_dict on the json representation
-        offering_payload_type_model_dict = OfferingPayloadType.from_dict(offering_payload_type_model_json).__dict__
-        offering_payload_type_model2 = OfferingPayloadType(**offering_payload_type_model_dict)
-
-        # Verify the model instances are equivalent
-        assert offering_payload_type_model == offering_payload_type_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        offering_payload_type_model_json2 = offering_payload_type_model.to_dict()
-        assert offering_payload_type_model_json2 == offering_payload_type_model_json
-
-#-----------------------------------------------------------------------------
 # Test Class for OfferingType
 #-----------------------------------------------------------------------------
 class TestOfferingType():
@@ -1440,10 +1370,10 @@ class TestOfferingType():
 
         # Construct a json representation of a OfferingType model
         offering_type_model_json = {}
-        offering_type_model_json['group'] = 'testString'
+        offering_type_model_json['group'] = 'crn_service_name'
         offering_type_model_json['key'] = 'testString'
-        offering_type_model_json['id'] = 'testString'
         offering_type_model_json['kind'] = 'testString'
+        offering_type_model_json['id'] = 'testString'
 
         # Construct a model instance of OfferingType by calling from_dict on the json representation
         offering_type_model = OfferingType.from_dict(offering_type_model_json)
@@ -1586,34 +1516,40 @@ class TestUser():
         assert user_model_json2 == user_model_json
 
 #-----------------------------------------------------------------------------
-# Test Class for UserIdAndRealm
+# Test Class for Watchlist
 #-----------------------------------------------------------------------------
-class TestUserIdAndRealm():
+class TestWatchlist():
 
     #--------------------------------------------------------
-    # Test serialization/deserialization for UserIdAndRealm
+    # Test serialization/deserialization for Watchlist
     #--------------------------------------------------------
-    def test_user_id_and_realm_serialization(self):
+    def test_watchlist_serialization(self):
 
-        # Construct a json representation of a UserIdAndRealm model
-        user_id_and_realm_model_json = {}
-        user_id_and_realm_model_json['realm'] = 'IBMid'
-        user_id_and_realm_model_json['user_id'] = 'testString'
+        # Construct dict forms of any model objects needed in order to build this model.
 
-        # Construct a model instance of UserIdAndRealm by calling from_dict on the json representation
-        user_id_and_realm_model = UserIdAndRealm.from_dict(user_id_and_realm_model_json)
-        assert user_id_and_realm_model != False
+        user_model = {} # User
+        user_model['name'] = 'testString'
+        user_model['realm'] = 'IBMid'
+        user_model['user_id'] = 'abc@ibm.com'
 
-        # Construct a model instance of UserIdAndRealm by calling from_dict on the json representation
-        user_id_and_realm_model_dict = UserIdAndRealm.from_dict(user_id_and_realm_model_json).__dict__
-        user_id_and_realm_model2 = UserIdAndRealm(**user_id_and_realm_model_dict)
+        # Construct a json representation of a Watchlist model
+        watchlist_model_json = {}
+        watchlist_model_json['watchlist'] = [user_model]
+
+        # Construct a model instance of Watchlist by calling from_dict on the json representation
+        watchlist_model = Watchlist.from_dict(watchlist_model_json)
+        assert watchlist_model != False
+
+        # Construct a model instance of Watchlist by calling from_dict on the json representation
+        watchlist_model_dict = Watchlist.from_dict(watchlist_model_json).__dict__
+        watchlist_model2 = Watchlist(**watchlist_model_dict)
 
         # Verify the model instances are equivalent
-        assert user_id_and_realm_model == user_id_and_realm_model2
+        assert watchlist_model == watchlist_model2
 
         # Convert model instance back to dict and verify no loss of data
-        user_id_and_realm_model_json2 = user_id_and_realm_model.to_dict()
-        assert user_id_and_realm_model_json2 == user_id_and_realm_model_json
+        watchlist_model_json2 = watchlist_model.to_dict()
+        assert watchlist_model_json2 == watchlist_model_json
 
 #-----------------------------------------------------------------------------
 # Test Class for WatchlistAddResponse
@@ -1653,95 +1589,95 @@ class TestWatchlistAddResponse():
         assert watchlist_add_response_model_json2 == watchlist_add_response_model_json
 
 #-----------------------------------------------------------------------------
-# Test Class for StatusPayloadAcceptPayload
+# Test Class for AcceptPayload
 #-----------------------------------------------------------------------------
-class TestStatusPayloadAcceptPayload():
+class TestAcceptPayload():
 
     #--------------------------------------------------------
-    # Test serialization/deserialization for StatusPayloadAcceptPayload
+    # Test serialization/deserialization for AcceptPayload
     #--------------------------------------------------------
-    def test_status_payload_accept_payload_serialization(self):
+    def test_accept_payload_serialization(self):
 
-        # Construct a json representation of a StatusPayloadAcceptPayload model
-        status_payload_accept_payload_model_json = {}
-        status_payload_accept_payload_model_json['action'] = 'accept'
-        status_payload_accept_payload_model_json['comment'] = 'testString'
+        # Construct a json representation of a AcceptPayload model
+        accept_payload_model_json = {}
+        accept_payload_model_json['action'] = 'accept'
+        accept_payload_model_json['comment'] = 'testString'
 
-        # Construct a model instance of StatusPayloadAcceptPayload by calling from_dict on the json representation
-        status_payload_accept_payload_model = StatusPayloadAcceptPayload.from_dict(status_payload_accept_payload_model_json)
-        assert status_payload_accept_payload_model != False
+        # Construct a model instance of AcceptPayload by calling from_dict on the json representation
+        accept_payload_model = AcceptPayload.from_dict(accept_payload_model_json)
+        assert accept_payload_model != False
 
-        # Construct a model instance of StatusPayloadAcceptPayload by calling from_dict on the json representation
-        status_payload_accept_payload_model_dict = StatusPayloadAcceptPayload.from_dict(status_payload_accept_payload_model_json).__dict__
-        status_payload_accept_payload_model2 = StatusPayloadAcceptPayload(**status_payload_accept_payload_model_dict)
+        # Construct a model instance of AcceptPayload by calling from_dict on the json representation
+        accept_payload_model_dict = AcceptPayload.from_dict(accept_payload_model_json).__dict__
+        accept_payload_model2 = AcceptPayload(**accept_payload_model_dict)
 
         # Verify the model instances are equivalent
-        assert status_payload_accept_payload_model == status_payload_accept_payload_model2
+        assert accept_payload_model == accept_payload_model2
 
         # Convert model instance back to dict and verify no loss of data
-        status_payload_accept_payload_model_json2 = status_payload_accept_payload_model.to_dict()
-        assert status_payload_accept_payload_model_json2 == status_payload_accept_payload_model_json
+        accept_payload_model_json2 = accept_payload_model.to_dict()
+        assert accept_payload_model_json2 == accept_payload_model_json
 
 #-----------------------------------------------------------------------------
-# Test Class for StatusPayloadResolvePayload
+# Test Class for ResolvePayload
 #-----------------------------------------------------------------------------
-class TestStatusPayloadResolvePayload():
+class TestResolvePayload():
 
     #--------------------------------------------------------
-    # Test serialization/deserialization for StatusPayloadResolvePayload
+    # Test serialization/deserialization for ResolvePayload
     #--------------------------------------------------------
-    def test_status_payload_resolve_payload_serialization(self):
+    def test_resolve_payload_serialization(self):
 
-        # Construct a json representation of a StatusPayloadResolvePayload model
-        status_payload_resolve_payload_model_json = {}
-        status_payload_resolve_payload_model_json['action'] = 'resolve'
-        status_payload_resolve_payload_model_json['comment'] = 'testString'
-        status_payload_resolve_payload_model_json['resolution_code'] = 1
+        # Construct a json representation of a ResolvePayload model
+        resolve_payload_model_json = {}
+        resolve_payload_model_json['action'] = 'resolve'
+        resolve_payload_model_json['comment'] = 'testString'
+        resolve_payload_model_json['resolution_code'] = 1
 
-        # Construct a model instance of StatusPayloadResolvePayload by calling from_dict on the json representation
-        status_payload_resolve_payload_model = StatusPayloadResolvePayload.from_dict(status_payload_resolve_payload_model_json)
-        assert status_payload_resolve_payload_model != False
+        # Construct a model instance of ResolvePayload by calling from_dict on the json representation
+        resolve_payload_model = ResolvePayload.from_dict(resolve_payload_model_json)
+        assert resolve_payload_model != False
 
-        # Construct a model instance of StatusPayloadResolvePayload by calling from_dict on the json representation
-        status_payload_resolve_payload_model_dict = StatusPayloadResolvePayload.from_dict(status_payload_resolve_payload_model_json).__dict__
-        status_payload_resolve_payload_model2 = StatusPayloadResolvePayload(**status_payload_resolve_payload_model_dict)
+        # Construct a model instance of ResolvePayload by calling from_dict on the json representation
+        resolve_payload_model_dict = ResolvePayload.from_dict(resolve_payload_model_json).__dict__
+        resolve_payload_model2 = ResolvePayload(**resolve_payload_model_dict)
 
         # Verify the model instances are equivalent
-        assert status_payload_resolve_payload_model == status_payload_resolve_payload_model2
+        assert resolve_payload_model == resolve_payload_model2
 
         # Convert model instance back to dict and verify no loss of data
-        status_payload_resolve_payload_model_json2 = status_payload_resolve_payload_model.to_dict()
-        assert status_payload_resolve_payload_model_json2 == status_payload_resolve_payload_model_json
+        resolve_payload_model_json2 = resolve_payload_model.to_dict()
+        assert resolve_payload_model_json2 == resolve_payload_model_json
 
 #-----------------------------------------------------------------------------
-# Test Class for StatusPayloadUnresolvePayload
+# Test Class for UnresolvePayload
 #-----------------------------------------------------------------------------
-class TestStatusPayloadUnresolvePayload():
+class TestUnresolvePayload():
 
     #--------------------------------------------------------
-    # Test serialization/deserialization for StatusPayloadUnresolvePayload
+    # Test serialization/deserialization for UnresolvePayload
     #--------------------------------------------------------
-    def test_status_payload_unresolve_payload_serialization(self):
+    def test_unresolve_payload_serialization(self):
 
-        # Construct a json representation of a StatusPayloadUnresolvePayload model
-        status_payload_unresolve_payload_model_json = {}
-        status_payload_unresolve_payload_model_json['action'] = 'unresolve'
-        status_payload_unresolve_payload_model_json['comment'] = 'testString'
+        # Construct a json representation of a UnresolvePayload model
+        unresolve_payload_model_json = {}
+        unresolve_payload_model_json['action'] = 'unresolve'
+        unresolve_payload_model_json['comment'] = 'testString'
 
-        # Construct a model instance of StatusPayloadUnresolvePayload by calling from_dict on the json representation
-        status_payload_unresolve_payload_model = StatusPayloadUnresolvePayload.from_dict(status_payload_unresolve_payload_model_json)
-        assert status_payload_unresolve_payload_model != False
+        # Construct a model instance of UnresolvePayload by calling from_dict on the json representation
+        unresolve_payload_model = UnresolvePayload.from_dict(unresolve_payload_model_json)
+        assert unresolve_payload_model != False
 
-        # Construct a model instance of StatusPayloadUnresolvePayload by calling from_dict on the json representation
-        status_payload_unresolve_payload_model_dict = StatusPayloadUnresolvePayload.from_dict(status_payload_unresolve_payload_model_json).__dict__
-        status_payload_unresolve_payload_model2 = StatusPayloadUnresolvePayload(**status_payload_unresolve_payload_model_dict)
+        # Construct a model instance of UnresolvePayload by calling from_dict on the json representation
+        unresolve_payload_model_dict = UnresolvePayload.from_dict(unresolve_payload_model_json).__dict__
+        unresolve_payload_model2 = UnresolvePayload(**unresolve_payload_model_dict)
 
         # Verify the model instances are equivalent
-        assert status_payload_unresolve_payload_model == status_payload_unresolve_payload_model2
+        assert unresolve_payload_model == unresolve_payload_model2
 
         # Convert model instance back to dict and verify no loss of data
-        status_payload_unresolve_payload_model_json2 = status_payload_unresolve_payload_model.to_dict()
-        assert status_payload_unresolve_payload_model_json2 == status_payload_unresolve_payload_model_json
+        unresolve_payload_model_json2 = unresolve_payload_model.to_dict()
+        assert unresolve_payload_model_json2 == unresolve_payload_model_json
 
 #-----------------------------------------------------------------------------
 # Test Class for FileWithMetadata
