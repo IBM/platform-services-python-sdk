@@ -29,18 +29,13 @@ from ibm_platform_services.iam_access_groups_v2 import *
 
 # Read config file
 configFile = 'iam_access_groups.env'
-configLoaded = None
-
-if os.path.exists(configFile):
-    os.environ['IBM_CREDENTIALS_FILE'] = configFile
-    configLoaded = True
-else:
-    print('External configuration was not found, skipping tests...')
 
 class TestIamAccessGroupsV2(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        if not configLoaded:
+        if os.path.exists(configFile):
+            os.environ['IBM_CREDENTIALS_FILE'] = configFile
+        else:
             raise unittest.SkipTest('External configuration not available, skipping...')
           
         cls.service = IamAccessGroupsV2.new_instance()
