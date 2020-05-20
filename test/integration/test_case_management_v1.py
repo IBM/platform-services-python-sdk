@@ -52,13 +52,13 @@ class TestCaseManagementV1(unittest.TestCase):
 
         self.config = read_external_sources(CaseManagementV1.DEFAULT_SERVICE_NAME)
         assert self.config is not None
-        self.test_api_key = self.config.get('APIKEY')
-        assert self.test_api_key is not None
+        assert self.config['APIKEY'] is not None
+        assert self.config['AUTHTYPE'] is not None
+        assert self.config['AUTH_URL'] is not None
 
         print('\nSetup complete.')
 
-    @pytest.mark.depends(name='case_creation')
-    def test_create_case(self):
+    def test_01_create_case(self):
 
         # Offering info can be retrieved via /case-management/utilities/v1/offerings/technical
         offering_payload_type_model = {}
@@ -92,7 +92,7 @@ class TestCaseManagementV1(unittest.TestCase):
         assert subject == response.result['short_description']
         assert description == response.result['description']
 
-    def test_create_case_with_empty_offering(self):
+    def test_02_create_case_with_empty_offering(self):
 
         type = 'technical'
         subject = 'Python - Integration test'
@@ -109,7 +109,7 @@ class TestCaseManagementV1(unittest.TestCase):
                 )
         assert e.value.code == 400
 
-    def test_create_case_with_empty_subject_and_description(self):
+    def test_03_create_case_with_empty_subject_and_description(self):
 
         # Offering info can be retrieved via /case-management/utilities/v1/offerings/technical
         offering_payload_type_model = {}
@@ -139,8 +139,7 @@ class TestCaseManagementV1(unittest.TestCase):
             )
         assert e.value.code == 500
 
-    @pytest.mark.depends(on='case_creation')
-    def test_get_cases(self):
+    def test_04_get_cases(self):
 
         offset = 0
         limit = 2
@@ -158,8 +157,7 @@ class TestCaseManagementV1(unittest.TestCase):
         assert response.status_code == 200
         assert response.result['total_count'] > 0
 
-    @pytest.mark.depends(on='case_creation')
-    def test_get_case(self):
+    def test_05_get_case(self):
 
         fields = ['number', 'short_description']
         case_number = TestCaseManagementV1.new_case_number
@@ -173,7 +171,7 @@ class TestCaseManagementV1(unittest.TestCase):
         assert TestCaseManagementV1.new_case_number == response.result['number']
         assert response.result['short_description'] != ''
 
-    def test_get_case_with_invalid_field(self):
+    def test_06_get_case_with_invalid_field(self):
 
         fields = ['number', 'short_description', 'invalid_field']
         case_number = TestCaseManagementV1.new_case_number
@@ -186,8 +184,7 @@ class TestCaseManagementV1(unittest.TestCase):
             )
         assert e.value.code == 400
 
-    @pytest.mark.depends(on='case_creation')
-    def test_add_comment(self):
+    def test_07_add_comment(self):
 
         case_number = TestCaseManagementV1.new_case_number
         comment = 'This is a test comment!'
@@ -201,7 +198,7 @@ class TestCaseManagementV1(unittest.TestCase):
         assert response.status_code == 200
         assert comment == response.result["value"]
 
-    def test_add_comment_to_nonexisting_case(self):
+    def test_08_add_comment_to_nonexisting_case(self):
 
         case_number = 'fake-case-number'
         comment = 'This is a test comment!'
@@ -214,8 +211,7 @@ class TestCaseManagementV1(unittest.TestCase):
             )
         assert e.value.code == 404
 
-    @pytest.mark.depends(on='case_creation')
-    def test_add_watch_list_member(self):
+    def test_09_add_watch_list_member(self):
 
         # Users can be retrieved via the User Management API.
         user_id_and_realm_model = {}
@@ -239,9 +235,7 @@ class TestCaseManagementV1(unittest.TestCase):
             if user['user_id'] == user_id_and_realm_model['user_id']]
         assert len(found_users) == 1
 
-    @pytest.mark.depends(on='case_creation')
-    @pytest.mark.depends(name='file_upload')
-    def test_file_upload(self):
+    def test_10_file_upload(self):
 
         fileName = "test_file.txt"
 
@@ -262,9 +256,7 @@ class TestCaseManagementV1(unittest.TestCase):
         assert response.status_code == 200
         assert response.result['filename'] == fileName
 
-    @pytest.mark.depends(on='file_upload')
-    @pytest.mark.depends(name='file_download')
-    def test_download_file(self):
+    def test_11_download_file(self):
 
         response = self.service.download_file(
             TestCaseManagementV1.new_case_number,
@@ -275,8 +267,7 @@ class TestCaseManagementV1(unittest.TestCase):
         assert response.status_code == 200
         assert 'content-type' in response.headers
 
-    @pytest.mark.depends(on='file_download')
-    def test_delete_file(self):
+    def test_12_delete_file(self):
 
         response = self.service.delete_file(
             TestCaseManagementV1.new_case_number,
@@ -288,9 +279,7 @@ class TestCaseManagementV1(unittest.TestCase):
         # Assert the file attachment list is empty
         assert len(response.result['attachments']) == 0
 
-    @pytest.mark.depends(on='file_download')
-    @pytest.mark.depends(name='add_resource')
-    def test_add_resource(self):
+    def test_13_add_resource(self):
 
         # Adding a resource requires a valid CRN (Cloud Resource Name)
         # CRN's can be retrieved via the Search and Tagging API
@@ -310,8 +299,7 @@ class TestCaseManagementV1(unittest.TestCase):
             )
         assert e.value.code == 500
 
-    @pytest.mark.depends(on='add_resource')
-    def test_resolve_case(self):
+    def test_14_resolve_case(self):
 
         status_payload = {}
         status_payload['action'] = 'resolve'
