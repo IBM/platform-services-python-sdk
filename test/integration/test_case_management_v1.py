@@ -42,21 +42,22 @@ class TestCaseManagementV1(unittest.TestCase):
     file_attachment_id = ''
 
     @classmethod
-    def setUpClass(self):
+    def setUpClass(cls):
 
         if not configLoaded:
             raise unittest.SkipTest('External configuration not available, skipping...')
 
-        self.service = CaseManagementV1.new_instance()
-        assert self.service is not None
+        cls.service = CaseManagementV1.new_instance()
+        assert cls.service is not None
 
-        self.config = read_external_sources(CaseManagementV1.DEFAULT_SERVICE_NAME)
-        assert self.config is not None
-        assert self.config['APIKEY'] is not None
-        assert self.config['AUTHTYPE'] is not None
-        assert self.config['AUTH_URL'] is not None
+        cls.config = read_external_sources(CaseManagementV1.DEFAULT_SERVICE_NAME)
+        assert cls.config is not None
+        assert cls.config['APIKEY'] is not None
+        assert cls.config['AUTHTYPE'] is not None
+        assert cls.config['AUTH_URL'] is not None
 
         print('\nSetup complete.')
+        print('config: \n', cls.config)
 
     def test_01_create_case(self):
 
