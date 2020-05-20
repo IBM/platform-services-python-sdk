@@ -1,3 +1,15 @@
+# [0.5.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.4.2...v0.5.0) (2020-05-20)
+
+
+### Bug Fixes
+
+* remove pytest-depends from project ([#27](https://github.com/IBM/platform-services-python-sdk/issues/27)) ([aa5f109](https://github.com/IBM/platform-services-python-sdk/commit/aa5f109b98e4a6e42195093e12ea7a1d336ad481))
+
+
+### Features
+
+* **Case Management:** add service to project ([#22](https://github.com/IBM/platform-services-python-sdk/issues/22)) ([250756c](https://github.com/IBM/platform-services-python-sdk/commit/250756cef343c123f5a2eb2f1021e936ed7bccca))
+
 ## [0.4.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.4.1...v0.4.2) (2020-05-15)
 
 
