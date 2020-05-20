@@ -27,107 +27,8 @@ service = ResourceManagerV2(
     authenticator=NoAuthAuthenticator()
     )
 
-base_url = 'https://resource-controller.cloud.ibm.com'
+base_url = 'https://resource-controller.cloud.ibm.com/v2'
 service.set_service_url(base_url)
-
-##############################################################################
-# Start of Service: QuotaDefinition
-##############################################################################
-# region
-
-#-----------------------------------------------------------------------------
-# Test Class for list_quota_definitions
-#-----------------------------------------------------------------------------
-class TestListQuotaDefinitions():
-
-    #--------------------------------------------------------
-    # list_quota_definitions()
-    #--------------------------------------------------------
-    @responses.activate
-    def test_list_quota_definitions_all_params(self):
-        # Set up mock
-        url = base_url + '/quota_definitions'
-        mock_response = '{"resources": [{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": {"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}, "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Invoke method
-        response = service.list_quota_definitions()
-
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-
-#-----------------------------------------------------------------------------
-# Test Class for get_quota_definition
-#-----------------------------------------------------------------------------
-class TestGetQuotaDefinition():
-
-    #--------------------------------------------------------
-    # get_quota_definition()
-    #--------------------------------------------------------
-    @responses.activate
-    def test_get_quota_definition_all_params(self):
-        # Set up mock
-        url = base_url + '/quota_definitions/testString'
-        mock_response = '{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": {"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}, "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        id = 'testString'
-
-        # Invoke method
-        response = service.get_quota_definition(
-            id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-
-    #--------------------------------------------------------
-    # test_get_quota_definition_value_error()
-    #--------------------------------------------------------
-    @responses.activate
-    def test_get_quota_definition_value_error(self):
-        # Set up mock
-        url = base_url + '/quota_definitions/testString'
-        mock_response = '{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": {"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}, "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "id": id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.get_quota_definition(**req_copy)
-
-
-
-# endregion
-##############################################################################
-# End of Service: QuotaDefinition
-##############################################################################
 
 ##############################################################################
 # Start of Service: ResourceGroup
@@ -155,10 +56,12 @@ class TestListResourceGroups():
 
         # Set up parameter values
         account_id = 'testString'
+        date = 'testString'
 
         # Invoke method
         response = service.list_resource_groups(
             account_id=account_id,
+            date=date,
             headers={}
         )
 
@@ -169,6 +72,7 @@ class TestListResourceGroups():
         query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = requests.utils.unquote(query_string)
         assert 'account_id={}'.format(account_id) in query_string
+        assert 'date={}'.format(date) in query_string
 
 
     #--------------------------------------------------------
@@ -474,6 +378,105 @@ class TestDeleteResourceGroup():
 # End of Service: ResourceGroup
 ##############################################################################
 
+##############################################################################
+# Start of Service: QuotaDefinition
+##############################################################################
+# region
+
+#-----------------------------------------------------------------------------
+# Test Class for list_quota_definitions
+#-----------------------------------------------------------------------------
+class TestListQuotaDefinitions():
+
+    #--------------------------------------------------------
+    # list_quota_definitions()
+    #--------------------------------------------------------
+    @responses.activate
+    def test_list_quota_definitions_all_params(self):
+        # Set up mock
+        url = base_url + '/quota_definitions'
+        mock_response = '{"resources": [{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": [{"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}], "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Invoke method
+        response = service.list_quota_definitions()
+
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+
+#-----------------------------------------------------------------------------
+# Test Class for get_quota_definition
+#-----------------------------------------------------------------------------
+class TestGetQuotaDefinition():
+
+    #--------------------------------------------------------
+    # get_quota_definition()
+    #--------------------------------------------------------
+    @responses.activate
+    def test_get_quota_definition_all_params(self):
+        # Set up mock
+        url = base_url + '/quota_definitions/testString'
+        mock_response = '{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": [{"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}], "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Invoke method
+        response = service.get_quota_definition(
+            id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+
+    #--------------------------------------------------------
+    # test_get_quota_definition_value_error()
+    #--------------------------------------------------------
+    @responses.activate
+    def test_get_quota_definition_value_error(self):
+        # Set up mock
+        url = base_url + '/quota_definitions/testString'
+        mock_response = '{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": [{"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}], "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                service.get_quota_definition(**req_copy)
+
+
+
+# endregion
+##############################################################################
+# End of Service: QuotaDefinition
+##############################################################################
+
 
 ##############################################################################
 # Start of Model Tests
@@ -509,7 +512,7 @@ class TestQuotaDefinition():
         quota_definition_model_json['instance_memory'] = 'testString'
         quota_definition_model_json['total_app_memory'] = 'testString'
         quota_definition_model_json['vsi_limit'] = 36.0
-        quota_definition_model_json['resource_quotas'] = resource_quota_model
+        quota_definition_model_json['resource_quotas'] = [resource_quota_model]
         quota_definition_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
         quota_definition_model_json['updated_at'] = '2020-01-28T18:40:40.123456Z'
 
@@ -557,7 +560,7 @@ class TestQuotaDefinitionList():
         quota_definition_model['instance_memory'] = 'testString'
         quota_definition_model['total_app_memory'] = 'testString'
         quota_definition_model['vsi_limit'] = 36.0
-        quota_definition_model['resource_quotas'] = resource_quota_model
+        quota_definition_model['resource_quotas'] = [resource_quota_model]
         quota_definition_model['created_at'] = '2020-01-28T18:40:40.123456Z'
         quota_definition_model['updated_at'] = '2020-01-28T18:40:40.123456Z'
 
