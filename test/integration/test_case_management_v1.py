@@ -28,11 +28,6 @@ from ibm_platform_services.case_management_v1 import *
 
 # Read config file
 configFile = 'case_management.env'
-configLoaded = None
-
-if os.path.exists(configFile):
-    os.environ['IBM_CREDENTIALS_FILE'] = configFile
-    configLoaded = True
 
 class TestCaseManagementV1(unittest.TestCase):
 
@@ -42,21 +37,16 @@ class TestCaseManagementV1(unittest.TestCase):
     file_attachment_id = ''
 
     @classmethod
-    def setUpClass(self):
-
-        if not configLoaded:
+    def setUpClass(cls):
+        if os.path.exists(configFile):
+            os.environ['IBM_CREDENTIALS_FILE'] = configFile
+        else:
             raise unittest.SkipTest('External configuration not available, skipping...')
 
-        self.service = CaseManagementV1.new_instance()
-        assert self.service is not None
+        cls.service = CaseManagementV1.new_instance()
+        assert cls.service is not None
 
-        self.config = read_external_sources(CaseManagementV1.DEFAULT_SERVICE_NAME)
-        assert self.config is not None
-        assert self.config['APIKEY'] is not None
-        assert self.config['AUTHTYPE'] is not None
-        assert self.config['AUTH_URL'] is not None
-
-        print('\nSetup complete.')
+        print('Setup complete.')
 
     def test_01_create_case(self):
 
