@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 import inspect
 import json
@@ -26,7 +27,7 @@ service = EnterpriseManagementV1(
     authenticator=NoAuthAuthenticator()
     )
 
-base_url = 'https://enterprise.test.cloud.ibm.com/v1'
+base_url = 'https://enterprise.cloud.ibm.com/v1'
 service.set_service_url(base_url)
 
 ##############################################################################
@@ -120,7 +121,7 @@ class TestListAccountGroups():
     def test_list_account_groups_all_params(self):
         # Set up mock
         url = base_url + '/account-groups'
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "created_at", "created_by": "created_by", "updated_at": "updated_at", "updated_by": "updated_by"}]}'
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -161,7 +162,7 @@ class TestListAccountGroups():
     def test_list_account_groups_required_params(self):
         # Set up mock
         url = base_url + '/account-groups'
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "created_at", "created_by": "created_by", "updated_at": "updated_at", "updated_by": "updated_by"}]}'
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -178,18 +179,18 @@ class TestListAccountGroups():
 
 
 #-----------------------------------------------------------------------------
-# Test Class for get_account_group_by_id
+# Test Class for get_account_group
 #-----------------------------------------------------------------------------
-class TestGetAccountGroupById():
+class TestGetAccountGroup():
 
     #--------------------------------------------------------
-    # get_account_group_by_id()
+    # get_account_group()
     #--------------------------------------------------------
     @responses.activate
-    def test_get_account_group_by_id_all_params(self):
+    def test_get_account_group_all_params(self):
         # Set up mock
         url = base_url + '/account-groups/testString'
-        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "created_at", "created_by": "created_by", "updated_at": "updated_at", "updated_by": "updated_by"}'
+        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -200,7 +201,7 @@ class TestGetAccountGroupById():
         account_group_id = 'testString'
 
         # Invoke method
-        response = service.get_account_group_by_id(
+        response = service.get_account_group(
             account_group_id,
             headers={}
         )
@@ -211,13 +212,13 @@ class TestGetAccountGroupById():
 
 
     #--------------------------------------------------------
-    # test_get_account_group_by_id_value_error()
+    # test_get_account_group_value_error()
     #--------------------------------------------------------
     @responses.activate
-    def test_get_account_group_by_id_value_error(self):
+    def test_get_account_group_value_error(self):
         # Set up mock
         url = base_url + '/account-groups/testString'
-        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "created_at", "created_by": "created_by", "updated_at": "updated_at", "updated_by": "updated_by"}'
+        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -234,7 +235,7 @@ class TestGetAccountGroupById():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_account_group_by_id(**req_copy)
+                service.get_account_group(**req_copy)
 
 
 
@@ -300,67 +301,6 @@ class TestUpdateAccountGroup():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 service.update_account_group(**req_copy)
-
-
-
-#-----------------------------------------------------------------------------
-# Test Class for get_account_group_permissible_actions
-#-----------------------------------------------------------------------------
-class TestGetAccountGroupPermissibleActions():
-
-    #--------------------------------------------------------
-    # get_account_group_permissible_actions()
-    #--------------------------------------------------------
-    @responses.activate
-    def test_get_account_group_permissible_actions_all_params(self):
-        # Set up mock
-        url = base_url + '/account-groups/testString/permissible-actions'
-        responses.add(responses.POST,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        account_group_id = 'testString'
-        actions = ['testString']
-
-        # Invoke method
-        response = service.get_account_group_permissible_actions(
-            account_group_id,
-            actions=actions,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['actions'] == ['testString']
-
-
-    #--------------------------------------------------------
-    # test_get_account_group_permissible_actions_value_error()
-    #--------------------------------------------------------
-    @responses.activate
-    def test_get_account_group_permissible_actions_value_error(self):
-        # Set up mock
-        url = base_url + '/account-groups/testString/permissible-actions'
-        responses.add(responses.POST,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        account_group_id = 'testString'
-        actions = ['testString']
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "account_group_id": account_group_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.get_account_group_permissible_actions(**req_copy)
 
 
 
@@ -480,7 +420,7 @@ class TestCreateAccount():
     def test_create_account_all_params(self):
         # Set up mock
         url = base_url + '/accounts'
-        mock_response = '{"account_group_id": "account_group_id"}'
+        mock_response = '{"account_id": "account_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -517,7 +457,7 @@ class TestCreateAccount():
     def test_create_account_value_error(self):
         # Set up mock
         url = base_url + '/accounts'
-        mock_response = '{"account_group_id": "account_group_id"}'
+        mock_response = '{"account_id": "account_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -554,7 +494,7 @@ class TestListAccounts():
     def test_list_accounts_all_params(self):
         # Set up mock
         url = base_url + '/accounts'
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "created_at", "created_by": "created_by", "updated_at": "updated_at", "updated_by": "updated_by"}]}'
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -595,7 +535,7 @@ class TestListAccounts():
     def test_list_accounts_required_params(self):
         # Set up mock
         url = base_url + '/accounts'
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "created_at", "created_by": "created_by", "updated_at": "updated_at", "updated_by": "updated_by"}]}'
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -612,18 +552,18 @@ class TestListAccounts():
 
 
 #-----------------------------------------------------------------------------
-# Test Class for get_account_by_id
+# Test Class for get_account
 #-----------------------------------------------------------------------------
-class TestGetAccountById():
+class TestGetAccount():
 
     #--------------------------------------------------------
-    # get_account_by_id()
+    # get_account()
     #--------------------------------------------------------
     @responses.activate
-    def test_get_account_by_id_all_params(self):
+    def test_get_account_all_params(self):
         # Set up mock
         url = base_url + '/accounts/testString'
-        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "created_at", "created_by": "created_by", "updated_at": "updated_at", "updated_by": "updated_by"}'
+        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -634,7 +574,7 @@ class TestGetAccountById():
         account_id = 'testString'
 
         # Invoke method
-        response = service.get_account_by_id(
+        response = service.get_account(
             account_id,
             headers={}
         )
@@ -645,13 +585,13 @@ class TestGetAccountById():
 
 
     #--------------------------------------------------------
-    # test_get_account_by_id_value_error()
+    # test_get_account_value_error()
     #--------------------------------------------------------
     @responses.activate
-    def test_get_account_by_id_value_error(self):
+    def test_get_account_value_error(self):
         # Set up mock
         url = base_url + '/accounts/testString'
-        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "created_at", "created_by": "created_by", "updated_at": "updated_at", "updated_by": "updated_by"}'
+        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -668,7 +608,7 @@ class TestGetAccountById():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_account_by_id(**req_copy)
+                service.get_account(**req_copy)
 
 
 
@@ -731,67 +671,6 @@ class TestUpdateAccount():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 service.update_account(**req_copy)
-
-
-
-#-----------------------------------------------------------------------------
-# Test Class for get_account_permissible_actions
-#-----------------------------------------------------------------------------
-class TestGetAccountPermissibleActions():
-
-    #--------------------------------------------------------
-    # get_account_permissible_actions()
-    #--------------------------------------------------------
-    @responses.activate
-    def test_get_account_permissible_actions_all_params(self):
-        # Set up mock
-        url = base_url + '/accounts/testString/permissible-actions'
-        responses.add(responses.POST,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        account_id = 'testString'
-        actions = ['testString']
-
-        # Invoke method
-        response = service.get_account_permissible_actions(
-            account_id,
-            actions=actions,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['actions'] == ['testString']
-
-
-    #--------------------------------------------------------
-    # test_get_account_permissible_actions_value_error()
-    #--------------------------------------------------------
-    @responses.activate
-    def test_get_account_permissible_actions_value_error(self):
-        # Set up mock
-        url = base_url + '/accounts/testString/permissible-actions'
-        responses.add(responses.POST,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        account_id = 'testString'
-        actions = ['testString']
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "account_id": account_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.get_account_permissible_actions(**req_copy)
 
 
 
@@ -895,7 +774,7 @@ class TestListEnterprises():
     def test_list_enterprises_all_params(self):
         # Set up mock
         url = base_url + '/enterprises'
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "created_at", "created_by": "created_by", "updated_at": "updated_at", "updated_by": "updated_by"}]}'
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -936,7 +815,7 @@ class TestListEnterprises():
     def test_list_enterprises_required_params(self):
         # Set up mock
         url = base_url + '/enterprises'
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "created_at", "created_by": "created_by", "updated_at": "updated_at", "updated_by": "updated_by"}]}'
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -964,7 +843,7 @@ class TestGetEnterprise():
     def test_get_enterprise_all_params(self):
         # Set up mock
         url = base_url + '/enterprises/testString'
-        mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "created_at", "created_by": "created_by", "updated_at": "updated_at", "updated_by": "updated_by"}'
+        mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -992,7 +871,7 @@ class TestGetEnterprise():
     def test_get_enterprise_value_error(self):
         # Set up mock
         url = base_url + '/enterprises/testString'
-        mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "created_at", "created_by": "created_by", "updated_at": "updated_at", "updated_by": "updated_by"}'
+        mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1082,67 +961,6 @@ class TestUpdateEnterprise():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_enterprise_permissible_actions
-#-----------------------------------------------------------------------------
-class TestGetEnterprisePermissibleActions():
-
-    #--------------------------------------------------------
-    # get_enterprise_permissible_actions()
-    #--------------------------------------------------------
-    @responses.activate
-    def test_get_enterprise_permissible_actions_all_params(self):
-        # Set up mock
-        url = base_url + '/enterprises/testString/permissible-actions'
-        responses.add(responses.POST,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        enterprise_id = 'testString'
-        actions = ['testString']
-
-        # Invoke method
-        response = service.get_enterprise_permissible_actions(
-            enterprise_id,
-            actions=actions,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['actions'] == ['testString']
-
-
-    #--------------------------------------------------------
-    # test_get_enterprise_permissible_actions_value_error()
-    #--------------------------------------------------------
-    @responses.activate
-    def test_get_enterprise_permissible_actions_value_error(self):
-        # Set up mock
-        url = base_url + '/enterprises/testString/permissible-actions'
-        responses.add(responses.POST,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        enterprise_id = 'testString'
-        actions = ['testString']
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "enterprise_id": enterprise_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.get_enterprise_permissible_actions(**req_copy)
-
-
-
 # endregion
 ##############################################################################
 # End of Service: EnterpriseOperations
@@ -1154,92 +972,92 @@ class TestGetEnterprisePermissibleActions():
 ##############################################################################
 # region
 #-----------------------------------------------------------------------------
-# Test Class for AccountGroupResponse
+# Test Class for Account
 #-----------------------------------------------------------------------------
-class TestAccountGroupResponse():
+class TestAccount():
 
     #--------------------------------------------------------
-    # Test serialization/deserialization for AccountGroupResponse
+    # Test serialization/deserialization for Account
     #--------------------------------------------------------
-    def test_account_group_response_serialization(self):
+    def test_account_serialization(self):
 
-        # Construct a json representation of a AccountGroupResponse model
-        account_group_response_model_json = {}
-        account_group_response_model_json['url'] = 'testString'
-        account_group_response_model_json['id'] = 'testString'
-        account_group_response_model_json['crn'] = 'testString'
-        account_group_response_model_json['parent'] = 'testString'
-        account_group_response_model_json['enterprise_account_id'] = 'testString'
-        account_group_response_model_json['enterprise_id'] = 'testString'
-        account_group_response_model_json['enterprise_path'] = 'testString'
-        account_group_response_model_json['name'] = 'testString'
-        account_group_response_model_json['state'] = 'testString'
-        account_group_response_model_json['primary_contact_iam_id'] = 'testString'
-        account_group_response_model_json['primary_contact_email'] = 'testString'
-        account_group_response_model_json['created_at'] = 'testString'
-        account_group_response_model_json['created_by'] = 'testString'
-        account_group_response_model_json['updated_at'] = 'testString'
-        account_group_response_model_json['updated_by'] = 'testString'
+        # Construct a json representation of a Account model
+        account_model_json = {}
+        account_model_json['url'] = 'testString'
+        account_model_json['id'] = 'testString'
+        account_model_json['crn'] = 'testString'
+        account_model_json['parent'] = 'testString'
+        account_model_json['enterprise_account_id'] = 'testString'
+        account_model_json['enterprise_id'] = 'testString'
+        account_model_json['enterprise_path'] = 'testString'
+        account_model_json['name'] = 'testString'
+        account_model_json['state'] = 'testString'
+        account_model_json['owner_iam_id'] = 'testString'
+        account_model_json['paid'] = True
+        account_model_json['owner_email'] = 'testString'
+        account_model_json['is_enterprise_account'] = True
+        account_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
+        account_model_json['created_by'] = 'testString'
+        account_model_json['updated_at'] = '2020-01-28T18:40:40.123456Z'
+        account_model_json['updated_by'] = 'testString'
 
-        # Construct a model instance of AccountGroupResponse by calling from_dict on the json representation
-        account_group_response_model = AccountGroupResponse.from_dict(account_group_response_model_json)
-        assert account_group_response_model != False
+        # Construct a model instance of Account by calling from_dict on the json representation
+        account_model = Account.from_dict(account_model_json)
+        assert account_model != False
 
-        # Construct a model instance of AccountGroupResponse by calling from_dict on the json representation
-        account_group_response_model_dict = AccountGroupResponse.from_dict(account_group_response_model_json).__dict__
-        account_group_response_model2 = AccountGroupResponse(**account_group_response_model_dict)
+        # Construct a model instance of Account by calling from_dict on the json representation
+        account_model_dict = Account.from_dict(account_model_json).__dict__
+        account_model2 = Account(**account_model_dict)
 
         # Verify the model instances are equivalent
-        assert account_group_response_model == account_group_response_model2
+        assert account_model == account_model2
 
         # Convert model instance back to dict and verify no loss of data
-        account_group_response_model_json2 = account_group_response_model.to_dict()
-        assert account_group_response_model_json2 == account_group_response_model_json
+        account_model_json2 = account_model.to_dict()
+        assert account_model_json2 == account_model_json
 
 #-----------------------------------------------------------------------------
-# Test Class for AccountResponse
+# Test Class for AccountGroup
 #-----------------------------------------------------------------------------
-class TestAccountResponse():
+class TestAccountGroup():
 
     #--------------------------------------------------------
-    # Test serialization/deserialization for AccountResponse
+    # Test serialization/deserialization for AccountGroup
     #--------------------------------------------------------
-    def test_account_response_serialization(self):
+    def test_account_group_serialization(self):
 
-        # Construct a json representation of a AccountResponse model
-        account_response_model_json = {}
-        account_response_model_json['url'] = 'testString'
-        account_response_model_json['id'] = 'testString'
-        account_response_model_json['crn'] = 'testString'
-        account_response_model_json['parent'] = 'testString'
-        account_response_model_json['enterprise_account_id'] = 'testString'
-        account_response_model_json['enterprise_id'] = 'testString'
-        account_response_model_json['enterprise_path'] = 'testString'
-        account_response_model_json['name'] = 'testString'
-        account_response_model_json['state'] = 'testString'
-        account_response_model_json['owner_iam_id'] = 'testString'
-        account_response_model_json['paid'] = True
-        account_response_model_json['owner_email'] = 'testString'
-        account_response_model_json['is_enterprise_account'] = True
-        account_response_model_json['created_at'] = 'testString'
-        account_response_model_json['created_by'] = 'testString'
-        account_response_model_json['updated_at'] = 'testString'
-        account_response_model_json['updated_by'] = 'testString'
+        # Construct a json representation of a AccountGroup model
+        account_group_model_json = {}
+        account_group_model_json['url'] = 'testString'
+        account_group_model_json['id'] = 'testString'
+        account_group_model_json['crn'] = 'testString'
+        account_group_model_json['parent'] = 'testString'
+        account_group_model_json['enterprise_account_id'] = 'testString'
+        account_group_model_json['enterprise_id'] = 'testString'
+        account_group_model_json['enterprise_path'] = 'testString'
+        account_group_model_json['name'] = 'testString'
+        account_group_model_json['state'] = 'testString'
+        account_group_model_json['primary_contact_iam_id'] = 'testString'
+        account_group_model_json['primary_contact_email'] = 'testString'
+        account_group_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
+        account_group_model_json['created_by'] = 'testString'
+        account_group_model_json['updated_at'] = '2020-01-28T18:40:40.123456Z'
+        account_group_model_json['updated_by'] = 'testString'
 
-        # Construct a model instance of AccountResponse by calling from_dict on the json representation
-        account_response_model = AccountResponse.from_dict(account_response_model_json)
-        assert account_response_model != False
+        # Construct a model instance of AccountGroup by calling from_dict on the json representation
+        account_group_model = AccountGroup.from_dict(account_group_model_json)
+        assert account_group_model != False
 
-        # Construct a model instance of AccountResponse by calling from_dict on the json representation
-        account_response_model_dict = AccountResponse.from_dict(account_response_model_json).__dict__
-        account_response_model2 = AccountResponse(**account_response_model_dict)
+        # Construct a model instance of AccountGroup by calling from_dict on the json representation
+        account_group_model_dict = AccountGroup.from_dict(account_group_model_json).__dict__
+        account_group_model2 = AccountGroup(**account_group_model_dict)
 
         # Verify the model instances are equivalent
-        assert account_response_model == account_response_model2
+        assert account_group_model == account_group_model2
 
         # Convert model instance back to dict and verify no loss of data
-        account_response_model_json2 = account_response_model.to_dict()
-        assert account_response_model_json2 == account_response_model_json
+        account_group_model_json2 = account_group_model.to_dict()
+        assert account_group_model_json2 == account_group_model_json
 
 #-----------------------------------------------------------------------------
 # Test Class for CreateAccountGroupResponse
@@ -1282,7 +1100,7 @@ class TestCreateAccountResponse():
 
         # Construct a json representation of a CreateAccountResponse model
         create_account_response_model_json = {}
-        create_account_response_model_json['account_group_id'] = 'testString'
+        create_account_response_model_json['account_id'] = 'testString'
 
         # Construct a model instance of CreateAccountResponse by calling from_dict on the json representation
         create_account_response_model = CreateAccountResponse.from_dict(create_account_response_model_json)
@@ -1330,88 +1148,45 @@ class TestCreateEnterpriseResponse():
         assert create_enterprise_response_model_json2 == create_enterprise_response_model_json
 
 #-----------------------------------------------------------------------------
-# Test Class for EnterpriseResponse
+# Test Class for Enterprise
 #-----------------------------------------------------------------------------
-class TestEnterpriseResponse():
+class TestEnterprise():
 
     #--------------------------------------------------------
-    # Test serialization/deserialization for EnterpriseResponse
+    # Test serialization/deserialization for Enterprise
     #--------------------------------------------------------
-    def test_enterprise_response_serialization(self):
+    def test_enterprise_serialization(self):
 
-        # Construct a json representation of a EnterpriseResponse model
-        enterprise_response_model_json = {}
-        enterprise_response_model_json['url'] = 'testString'
-        enterprise_response_model_json['id'] = 'testString'
-        enterprise_response_model_json['enterprise_account_id'] = 'testString'
-        enterprise_response_model_json['crn'] = 'testString'
-        enterprise_response_model_json['name'] = 'testString'
-        enterprise_response_model_json['domain'] = 'testString'
-        enterprise_response_model_json['state'] = 'testString'
-        enterprise_response_model_json['primary_contact_iam_id'] = 'testString'
-        enterprise_response_model_json['primary_contact_email'] = 'testString'
-        enterprise_response_model_json['created_at'] = 'testString'
-        enterprise_response_model_json['created_by'] = 'testString'
-        enterprise_response_model_json['updated_at'] = 'testString'
-        enterprise_response_model_json['updated_by'] = 'testString'
+        # Construct a json representation of a Enterprise model
+        enterprise_model_json = {}
+        enterprise_model_json['url'] = 'testString'
+        enterprise_model_json['id'] = 'testString'
+        enterprise_model_json['enterprise_account_id'] = 'testString'
+        enterprise_model_json['crn'] = 'testString'
+        enterprise_model_json['name'] = 'testString'
+        enterprise_model_json['domain'] = 'testString'
+        enterprise_model_json['state'] = 'testString'
+        enterprise_model_json['primary_contact_iam_id'] = 'testString'
+        enterprise_model_json['primary_contact_email'] = 'testString'
+        enterprise_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
+        enterprise_model_json['created_by'] = 'testString'
+        enterprise_model_json['updated_at'] = '2020-01-28T18:40:40.123456Z'
+        enterprise_model_json['updated_by'] = 'testString'
 
-        # Construct a model instance of EnterpriseResponse by calling from_dict on the json representation
-        enterprise_response_model = EnterpriseResponse.from_dict(enterprise_response_model_json)
-        assert enterprise_response_model != False
+        # Construct a model instance of Enterprise by calling from_dict on the json representation
+        enterprise_model = Enterprise.from_dict(enterprise_model_json)
+        assert enterprise_model != False
 
-        # Construct a model instance of EnterpriseResponse by calling from_dict on the json representation
-        enterprise_response_model_dict = EnterpriseResponse.from_dict(enterprise_response_model_json).__dict__
-        enterprise_response_model2 = EnterpriseResponse(**enterprise_response_model_dict)
+        # Construct a model instance of Enterprise by calling from_dict on the json representation
+        enterprise_model_dict = Enterprise.from_dict(enterprise_model_json).__dict__
+        enterprise_model2 = Enterprise(**enterprise_model_dict)
 
         # Verify the model instances are equivalent
-        assert enterprise_response_model == enterprise_response_model2
+        assert enterprise_model == enterprise_model2
 
         # Convert model instance back to dict and verify no loss of data
-        enterprise_response_model_json2 = enterprise_response_model.to_dict()
-        assert enterprise_response_model_json2 == enterprise_response_model_json
-
-#-----------------------------------------------------------------------------
-# Test Class for ListAccountGroupsResources
-#-----------------------------------------------------------------------------
-class TestListAccountGroupsResources():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ListAccountGroupsResources
-    #--------------------------------------------------------
-    def test_list_account_groups_resources_serialization(self):
-
-        # Construct a json representation of a ListAccountGroupsResources model
-        list_account_groups_resources_model_json = {}
-        list_account_groups_resources_model_json['url'] = 'testString'
-        list_account_groups_resources_model_json['id'] = 'testString'
-        list_account_groups_resources_model_json['crn'] = 'testString'
-        list_account_groups_resources_model_json['parent'] = 'testString'
-        list_account_groups_resources_model_json['enterprise_account_id'] = 'testString'
-        list_account_groups_resources_model_json['enterprise_id'] = 'testString'
-        list_account_groups_resources_model_json['enterprise_path'] = 'testString'
-        list_account_groups_resources_model_json['name'] = 'testString'
-        list_account_groups_resources_model_json['state'] = 'testString'
-        list_account_groups_resources_model_json['primary_contact_iam_id'] = 'testString'
-        list_account_groups_resources_model_json['primary_contact_email'] = 'testString'
-        list_account_groups_resources_model_json['created_at'] = 'testString'
-        list_account_groups_resources_model_json['created_by'] = 'testString'
-        list_account_groups_resources_model_json['updated_at'] = 'testString'
-        list_account_groups_resources_model_json['updated_by'] = 'testString'
-
-        # Construct a model instance of ListAccountGroupsResources by calling from_dict on the json representation
-        list_account_groups_resources_model = ListAccountGroupsResources.from_dict(list_account_groups_resources_model_json)
-        assert list_account_groups_resources_model != False
-
-        # Construct a model instance of ListAccountGroupsResources by calling from_dict on the json representation
-        list_account_groups_resources_model_dict = ListAccountGroupsResources.from_dict(list_account_groups_resources_model_json).__dict__
-        list_account_groups_resources_model2 = ListAccountGroupsResources(**list_account_groups_resources_model_dict)
-
-        # Verify the model instances are equivalent
-        assert list_account_groups_resources_model == list_account_groups_resources_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        list_account_groups_resources_model_json2 = list_account_groups_resources_model.to_dict()
-        assert list_account_groups_resources_model_json2 == list_account_groups_resources_model_json
+        enterprise_model_json2 = enterprise_model.to_dict()
+        assert enterprise_model_json2 == enterprise_model_json
 
 #-----------------------------------------------------------------------------
 # Test Class for ListAccountGroupsResponse
@@ -1425,28 +1200,28 @@ class TestListAccountGroupsResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        list_account_groups_resources_model = {} # ListAccountGroupsResources
-        list_account_groups_resources_model['url'] = 'testString'
-        list_account_groups_resources_model['id'] = 'testString'
-        list_account_groups_resources_model['crn'] = 'testString'
-        list_account_groups_resources_model['parent'] = 'testString'
-        list_account_groups_resources_model['enterprise_account_id'] = 'testString'
-        list_account_groups_resources_model['enterprise_id'] = 'testString'
-        list_account_groups_resources_model['enterprise_path'] = 'testString'
-        list_account_groups_resources_model['name'] = 'testString'
-        list_account_groups_resources_model['state'] = 'testString'
-        list_account_groups_resources_model['primary_contact_iam_id'] = 'testString'
-        list_account_groups_resources_model['primary_contact_email'] = 'testString'
-        list_account_groups_resources_model['created_at'] = 'testString'
-        list_account_groups_resources_model['created_by'] = 'testString'
-        list_account_groups_resources_model['updated_at'] = 'testString'
-        list_account_groups_resources_model['updated_by'] = 'testString'
+        account_group_model = {} # AccountGroup
+        account_group_model['url'] = 'testString'
+        account_group_model['id'] = 'testString'
+        account_group_model['crn'] = 'testString'
+        account_group_model['parent'] = 'testString'
+        account_group_model['enterprise_account_id'] = 'testString'
+        account_group_model['enterprise_id'] = 'testString'
+        account_group_model['enterprise_path'] = 'testString'
+        account_group_model['name'] = 'testString'
+        account_group_model['state'] = 'testString'
+        account_group_model['primary_contact_iam_id'] = 'testString'
+        account_group_model['primary_contact_email'] = 'testString'
+        account_group_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        account_group_model['created_by'] = 'testString'
+        account_group_model['updated_at'] = '2020-01-28T18:40:40.123456Z'
+        account_group_model['updated_by'] = 'testString'
 
         # Construct a json representation of a ListAccountGroupsResponse model
         list_account_groups_response_model_json = {}
         list_account_groups_response_model_json['rows_count'] = 38
         list_account_groups_response_model_json['next_url'] = 'testString'
-        list_account_groups_response_model_json['resources'] = [list_account_groups_resources_model]
+        list_account_groups_response_model_json['resources'] = [account_group_model]
 
         # Construct a model instance of ListAccountGroupsResponse by calling from_dict on the json representation
         list_account_groups_response_model = ListAccountGroupsResponse.from_dict(list_account_groups_response_model_json)
@@ -1464,51 +1239,6 @@ class TestListAccountGroupsResponse():
         assert list_account_groups_response_model_json2 == list_account_groups_response_model_json
 
 #-----------------------------------------------------------------------------
-# Test Class for ListAccountResources
-#-----------------------------------------------------------------------------
-class TestListAccountResources():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ListAccountResources
-    #--------------------------------------------------------
-    def test_list_account_resources_serialization(self):
-
-        # Construct a json representation of a ListAccountResources model
-        list_account_resources_model_json = {}
-        list_account_resources_model_json['url'] = 'testString'
-        list_account_resources_model_json['id'] = 'testString'
-        list_account_resources_model_json['crn'] = 'testString'
-        list_account_resources_model_json['parent'] = 'testString'
-        list_account_resources_model_json['enterprise_account_id'] = 'testString'
-        list_account_resources_model_json['enterprise_id'] = 'testString'
-        list_account_resources_model_json['enterprise_path'] = 'testString'
-        list_account_resources_model_json['name'] = 'testString'
-        list_account_resources_model_json['state'] = 'testString'
-        list_account_resources_model_json['owner_iam_id'] = 'testString'
-        list_account_resources_model_json['paid'] = True
-        list_account_resources_model_json['owner_email'] = 'testString'
-        list_account_resources_model_json['is_enterprise_account'] = True
-        list_account_resources_model_json['created_at'] = 'testString'
-        list_account_resources_model_json['created_by'] = 'testString'
-        list_account_resources_model_json['updated_at'] = 'testString'
-        list_account_resources_model_json['updated_by'] = 'testString'
-
-        # Construct a model instance of ListAccountResources by calling from_dict on the json representation
-        list_account_resources_model = ListAccountResources.from_dict(list_account_resources_model_json)
-        assert list_account_resources_model != False
-
-        # Construct a model instance of ListAccountResources by calling from_dict on the json representation
-        list_account_resources_model_dict = ListAccountResources.from_dict(list_account_resources_model_json).__dict__
-        list_account_resources_model2 = ListAccountResources(**list_account_resources_model_dict)
-
-        # Verify the model instances are equivalent
-        assert list_account_resources_model == list_account_resources_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        list_account_resources_model_json2 = list_account_resources_model.to_dict()
-        assert list_account_resources_model_json2 == list_account_resources_model_json
-
-#-----------------------------------------------------------------------------
 # Test Class for ListAccountsResponse
 #-----------------------------------------------------------------------------
 class TestListAccountsResponse():
@@ -1520,30 +1250,30 @@ class TestListAccountsResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        list_account_resources_model = {} # ListAccountResources
-        list_account_resources_model['url'] = 'testString'
-        list_account_resources_model['id'] = 'testString'
-        list_account_resources_model['crn'] = 'testString'
-        list_account_resources_model['parent'] = 'testString'
-        list_account_resources_model['enterprise_account_id'] = 'testString'
-        list_account_resources_model['enterprise_id'] = 'testString'
-        list_account_resources_model['enterprise_path'] = 'testString'
-        list_account_resources_model['name'] = 'testString'
-        list_account_resources_model['state'] = 'testString'
-        list_account_resources_model['owner_iam_id'] = 'testString'
-        list_account_resources_model['paid'] = True
-        list_account_resources_model['owner_email'] = 'testString'
-        list_account_resources_model['is_enterprise_account'] = True
-        list_account_resources_model['created_at'] = 'testString'
-        list_account_resources_model['created_by'] = 'testString'
-        list_account_resources_model['updated_at'] = 'testString'
-        list_account_resources_model['updated_by'] = 'testString'
+        account_model = {} # Account
+        account_model['url'] = 'testString'
+        account_model['id'] = 'testString'
+        account_model['crn'] = 'testString'
+        account_model['parent'] = 'testString'
+        account_model['enterprise_account_id'] = 'testString'
+        account_model['enterprise_id'] = 'testString'
+        account_model['enterprise_path'] = 'testString'
+        account_model['name'] = 'testString'
+        account_model['state'] = 'testString'
+        account_model['owner_iam_id'] = 'testString'
+        account_model['paid'] = True
+        account_model['owner_email'] = 'testString'
+        account_model['is_enterprise_account'] = True
+        account_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        account_model['created_by'] = 'testString'
+        account_model['updated_at'] = '2020-01-28T18:40:40.123456Z'
+        account_model['updated_by'] = 'testString'
 
         # Construct a json representation of a ListAccountsResponse model
         list_accounts_response_model_json = {}
         list_accounts_response_model_json['rows_count'] = 38
         list_accounts_response_model_json['next_url'] = 'testString'
-        list_accounts_response_model_json['resources'] = [list_account_resources_model]
+        list_accounts_response_model_json['resources'] = [account_model]
 
         # Construct a model instance of ListAccountsResponse by calling from_dict on the json representation
         list_accounts_response_model = ListAccountsResponse.from_dict(list_accounts_response_model_json)
@@ -1561,47 +1291,6 @@ class TestListAccountsResponse():
         assert list_accounts_response_model_json2 == list_accounts_response_model_json
 
 #-----------------------------------------------------------------------------
-# Test Class for ListEnterpriseResources
-#-----------------------------------------------------------------------------
-class TestListEnterpriseResources():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ListEnterpriseResources
-    #--------------------------------------------------------
-    def test_list_enterprise_resources_serialization(self):
-
-        # Construct a json representation of a ListEnterpriseResources model
-        list_enterprise_resources_model_json = {}
-        list_enterprise_resources_model_json['url'] = 'testString'
-        list_enterprise_resources_model_json['id'] = 'testString'
-        list_enterprise_resources_model_json['enterprise_account_id'] = 'testString'
-        list_enterprise_resources_model_json['crn'] = 'testString'
-        list_enterprise_resources_model_json['name'] = 'testString'
-        list_enterprise_resources_model_json['domain'] = 'testString'
-        list_enterprise_resources_model_json['state'] = 'testString'
-        list_enterprise_resources_model_json['primary_contact_iam_id'] = 'testString'
-        list_enterprise_resources_model_json['primary_contact_email'] = 'testString'
-        list_enterprise_resources_model_json['created_at'] = 'testString'
-        list_enterprise_resources_model_json['created_by'] = 'testString'
-        list_enterprise_resources_model_json['updated_at'] = 'testString'
-        list_enterprise_resources_model_json['updated_by'] = 'testString'
-
-        # Construct a model instance of ListEnterpriseResources by calling from_dict on the json representation
-        list_enterprise_resources_model = ListEnterpriseResources.from_dict(list_enterprise_resources_model_json)
-        assert list_enterprise_resources_model != False
-
-        # Construct a model instance of ListEnterpriseResources by calling from_dict on the json representation
-        list_enterprise_resources_model_dict = ListEnterpriseResources.from_dict(list_enterprise_resources_model_json).__dict__
-        list_enterprise_resources_model2 = ListEnterpriseResources(**list_enterprise_resources_model_dict)
-
-        # Verify the model instances are equivalent
-        assert list_enterprise_resources_model == list_enterprise_resources_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        list_enterprise_resources_model_json2 = list_enterprise_resources_model.to_dict()
-        assert list_enterprise_resources_model_json2 == list_enterprise_resources_model_json
-
-#-----------------------------------------------------------------------------
 # Test Class for ListEnterprisesResponse
 #-----------------------------------------------------------------------------
 class TestListEnterprisesResponse():
@@ -1613,26 +1302,26 @@ class TestListEnterprisesResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        list_enterprise_resources_model = {} # ListEnterpriseResources
-        list_enterprise_resources_model['url'] = 'testString'
-        list_enterprise_resources_model['id'] = 'testString'
-        list_enterprise_resources_model['enterprise_account_id'] = 'testString'
-        list_enterprise_resources_model['crn'] = 'testString'
-        list_enterprise_resources_model['name'] = 'testString'
-        list_enterprise_resources_model['domain'] = 'testString'
-        list_enterprise_resources_model['state'] = 'testString'
-        list_enterprise_resources_model['primary_contact_iam_id'] = 'testString'
-        list_enterprise_resources_model['primary_contact_email'] = 'testString'
-        list_enterprise_resources_model['created_at'] = 'testString'
-        list_enterprise_resources_model['created_by'] = 'testString'
-        list_enterprise_resources_model['updated_at'] = 'testString'
-        list_enterprise_resources_model['updated_by'] = 'testString'
+        enterprise_model = {} # Enterprise
+        enterprise_model['url'] = 'testString'
+        enterprise_model['id'] = 'testString'
+        enterprise_model['enterprise_account_id'] = 'testString'
+        enterprise_model['crn'] = 'testString'
+        enterprise_model['name'] = 'testString'
+        enterprise_model['domain'] = 'testString'
+        enterprise_model['state'] = 'testString'
+        enterprise_model['primary_contact_iam_id'] = 'testString'
+        enterprise_model['primary_contact_email'] = 'testString'
+        enterprise_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        enterprise_model['created_by'] = 'testString'
+        enterprise_model['updated_at'] = '2020-01-28T18:40:40.123456Z'
+        enterprise_model['updated_by'] = 'testString'
 
         # Construct a json representation of a ListEnterprisesResponse model
         list_enterprises_response_model_json = {}
         list_enterprises_response_model_json['rows_count'] = 38
         list_enterprises_response_model_json['next_url'] = 'testString'
-        list_enterprises_response_model_json['resources'] = [list_enterprise_resources_model]
+        list_enterprises_response_model_json['resources'] = [enterprise_model]
 
         # Construct a model instance of ListEnterprisesResponse by calling from_dict on the json representation
         list_enterprises_response_model = ListEnterprisesResponse.from_dict(list_enterprises_response_model_json)

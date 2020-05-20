@@ -19,12 +19,14 @@ The Enterprise Management API enables you to create and manage an enterprise, ac
 groups, and accounts within the enterprise.
 """
 
+from datetime import datetime
 from typing import Dict, List
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
+from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 
 from .common import get_sdk_headers
 
@@ -35,7 +37,7 @@ from .common import get_sdk_headers
 class EnterpriseManagementV1(BaseService):
     """The Enterprise Management V1 service."""
 
-    DEFAULT_SERVICE_URL = 'https://enterprise.test.cloud.ibm.com/v1'
+    DEFAULT_SERVICE_URL = 'https://enterprise.cloud.ibm.com/v1'
     DEFAULT_SERVICE_NAME = 'enterprise_management'
 
     @classmethod
@@ -143,7 +145,7 @@ class EnterpriseManagementV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Get account groups by query parameter.
+        List account groups.
 
         Retrieve all account groups based on the values that are passed in the query
         parameters. If no query parameter is passed, all of the account groups in the
@@ -201,7 +203,7 @@ class EnterpriseManagementV1(BaseService):
         return response
 
 
-    def get_account_group_by_id(self,
+    def get_account_group(self,
         account_group_id: str,
         **kwargs
     ) -> DetailedResponse:
@@ -215,7 +217,7 @@ class EnterpriseManagementV1(BaseService):
         :param str account_group_id: The ID of the account group to retrieve.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `AccountGroupResponse` object
+        :rtype: DetailedResponse with `dict` result representing a `AccountGroup` object
         """
 
         if account_group_id is None:
@@ -223,7 +225,7 @@ class EnterpriseManagementV1(BaseService):
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='get_account_group_by_id')
+                                      operation_id='get_account_group')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -284,58 +286,6 @@ class EnterpriseManagementV1(BaseService):
         url = '/account-groups/{0}'.format(
             *self.encode_path_vars(account_group_id))
         request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
-
-        response = self.send(request)
-        return response
-
-
-    def get_account_group_permissible_actions(self,
-        account_group_id: str,
-        *,
-        actions: List[str] = None,
-        **kwargs
-    ) -> DetailedResponse:
-        """
-        Get permissible actions for an account group.
-
-        Return all the actions that are allowed on a particular account group. This method
-        takes an array of IAM actions in the body of the request and returns those actions
-        that can be performed by the caller. An authentication check is performed for each
-        action that is passed in the payload.
-
-        :param str account_group_id: The ID of the account group to check for
-               permissible actions.
-        :param List[str] actions: (optional) A list of names of permissible
-               actions.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
-        """
-
-        if account_group_id is None:
-            raise ValueError('account_group_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_account_group_permissible_actions')
-        headers.update(sdk_headers)
-
-        data = {
-            'actions': actions
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-
-        url = '/account-groups/{0}/permissible-actions'.format(
-            *self.encode_path_vars(account_group_id))
-        request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
                                        data=data)
@@ -487,7 +437,7 @@ class EnterpriseManagementV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Get accounts by query parameter.
+        List accounts.
 
         Retrieve all accounts based on the values that are passed in the query parameters.
         If no query parameter is passed, all of the accounts in the enterprise for which
@@ -543,7 +493,7 @@ class EnterpriseManagementV1(BaseService):
         return response
 
 
-    def get_account_by_id(self,
+    def get_account(self,
         account_id: str,
         **kwargs
     ) -> DetailedResponse:
@@ -556,7 +506,7 @@ class EnterpriseManagementV1(BaseService):
         :param str account_id: The ID of the account to retrieve.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `AccountResponse` object
+        :rtype: DetailedResponse with `dict` result representing a `Account` object
         """
 
         if account_id is None:
@@ -564,7 +514,7 @@ class EnterpriseManagementV1(BaseService):
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='get_account_by_id')
+                                      operation_id='get_account')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -586,7 +536,7 @@ class EnterpriseManagementV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Move an account with the enterprise.
+        Move an account within the enterprise.
 
         Move an account to a different parent within the same enterprise.
 
@@ -620,58 +570,6 @@ class EnterpriseManagementV1(BaseService):
         url = '/accounts/{0}'.format(
             *self.encode_path_vars(account_id))
         request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
-
-        response = self.send(request)
-        return response
-
-
-    def get_account_permissible_actions(self,
-        account_id: str,
-        *,
-        actions: List[str] = None,
-        **kwargs
-    ) -> DetailedResponse:
-        """
-        Get permissible actions for an account.
-
-        Return all the actions that are allowed on a particular account. This method takes
-        an array of IAM actions in the body of the request and returns those actions which
-        can be performed by the caller. An authentication check is performed for each
-        action that is passed in the payload.
-
-        :param str account_id: The ID of the account to check for permissible
-               actions.
-        :param List[str] actions: (optional) A list of names of permissible
-               actions.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
-        """
-
-        if account_id is None:
-            raise ValueError('account_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_account_permissible_actions')
-        headers.update(sdk_headers)
-
-        data = {
-            'actions': actions
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-
-        url = '/accounts/{0}/permissible-actions'.format(
-            *self.encode_path_vars(account_id))
-        request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
                                        data=data)
@@ -762,7 +660,7 @@ class EnterpriseManagementV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Get enterprise by query parameter.
+        List enterprises.
 
         Retrieve all enterprises for a given ID by passing the IDs on query parameters. If
         no ID is passed, the enterprises for which the calling identity is the primary
@@ -828,7 +726,7 @@ class EnterpriseManagementV1(BaseService):
         :param str enterprise_id: The ID of the enterprise to retrieve.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `EnterpriseResponse` object
+        :rtype: DetailedResponse with `dict` result representing a `Enterprise` object
         """
 
         if enterprise_id is None:
@@ -910,249 +808,14 @@ class EnterpriseManagementV1(BaseService):
         return response
 
 
-    def get_enterprise_permissible_actions(self,
-        enterprise_id: str,
-        *,
-        actions: List[str] = None,
-        **kwargs
-    ) -> DetailedResponse:
-        """
-        Get permissible actions for an enterprise.
-
-        Return all the actions that are allowed on a particular enterprise. This method
-        takes an array of IAM actions in the body of the request and returns those actions
-        which can be performed by the caller. An authentication check is performed for
-        each action that is passed in the payload.
-
-        :param str enterprise_id: The ID of the enterprise to check for permissible
-               actions.
-        :param List[str] actions: (optional) A list of names of permissible
-               actions.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
-        """
-
-        if enterprise_id is None:
-            raise ValueError('enterprise_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_enterprise_permissible_actions')
-        headers.update(sdk_headers)
-
-        data = {
-            'actions': actions
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-
-        url = '/enterprises/{0}/permissible-actions'.format(
-            *self.encode_path_vars(enterprise_id))
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
-
-        response = self.send(request)
-        return response
-
-
 ##############################################################################
 # Models
 ##############################################################################
 
 
-class AccountGroupResponse():
+class Account():
     """
-    An object that represents account group.
-
-    :attr str url: (optional) The URL of the account group.
-    :attr str id: (optional) The account group ID.
-    :attr str crn: (optional) The CRN of the account group.
-    :attr str parent: (optional) The CRN of the parent of the account group.
-    :attr str enterprise_account_id: (optional) The enterprise account ID.
-    :attr str enterprise_id: (optional) The enterprise ID that the account group is
-          a part of.
-    :attr str enterprise_path: (optional) The path from the enterprise to this
-          particular account group.
-    :attr str name: (optional) The name of the account group.
-    :attr str state: (optional) The state of the account group.
-    :attr str primary_contact_iam_id: (optional) The IAM ID of the primary contact
-          of the account group.
-    :attr str primary_contact_email: (optional) The email address of the primary
-          contact of the account group.
-    :attr str created_at: (optional) The time stamp at which the account group was
-          created.
-    :attr str created_by: (optional) The IAM ID of the user or service that created
-          the account group.
-    :attr str updated_at: (optional) The time stamp at which the account group was
-          last updated.
-    :attr str updated_by: (optional) The IAM ID of the user or service that updated
-          the account group.
-    """
-
-    def __init__(self,
-                 *,
-                 url: str = None,
-                 id: str = None,
-                 crn: str = None,
-                 parent: str = None,
-                 enterprise_account_id: str = None,
-                 enterprise_id: str = None,
-                 enterprise_path: str = None,
-                 name: str = None,
-                 state: str = None,
-                 primary_contact_iam_id: str = None,
-                 primary_contact_email: str = None,
-                 created_at: str = None,
-                 created_by: str = None,
-                 updated_at: str = None,
-                 updated_by: str = None) -> None:
-        """
-        Initialize a AccountGroupResponse object.
-
-        :param str url: (optional) The URL of the account group.
-        :param str id: (optional) The account group ID.
-        :param str crn: (optional) The CRN of the account group.
-        :param str parent: (optional) The CRN of the parent of the account group.
-        :param str enterprise_account_id: (optional) The enterprise account ID.
-        :param str enterprise_id: (optional) The enterprise ID that the account
-               group is a part of.
-        :param str enterprise_path: (optional) The path from the enterprise to this
-               particular account group.
-        :param str name: (optional) The name of the account group.
-        :param str state: (optional) The state of the account group.
-        :param str primary_contact_iam_id: (optional) The IAM ID of the primary
-               contact of the account group.
-        :param str primary_contact_email: (optional) The email address of the
-               primary contact of the account group.
-        :param str created_at: (optional) The time stamp at which the account group
-               was created.
-        :param str created_by: (optional) The IAM ID of the user or service that
-               created the account group.
-        :param str updated_at: (optional) The time stamp at which the account group
-               was last updated.
-        :param str updated_by: (optional) The IAM ID of the user or service that
-               updated the account group.
-        """
-        self.url = url
-        self.id = id
-        self.crn = crn
-        self.parent = parent
-        self.enterprise_account_id = enterprise_account_id
-        self.enterprise_id = enterprise_id
-        self.enterprise_path = enterprise_path
-        self.name = name
-        self.state = state
-        self.primary_contact_iam_id = primary_contact_iam_id
-        self.primary_contact_email = primary_contact_email
-        self.created_at = created_at
-        self.created_by = created_by
-        self.updated_at = updated_at
-        self.updated_by = updated_by
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'AccountGroupResponse':
-        """Initialize a AccountGroupResponse object from a json dictionary."""
-        args = {}
-        if 'url' in _dict:
-            args['url'] = _dict.get('url')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        if 'parent' in _dict:
-            args['parent'] = _dict.get('parent')
-        if 'enterprise_account_id' in _dict:
-            args['enterprise_account_id'] = _dict.get('enterprise_account_id')
-        if 'enterprise_id' in _dict:
-            args['enterprise_id'] = _dict.get('enterprise_id')
-        if 'enterprise_path' in _dict:
-            args['enterprise_path'] = _dict.get('enterprise_path')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'primary_contact_iam_id' in _dict:
-            args['primary_contact_iam_id'] = _dict.get('primary_contact_iam_id')
-        if 'primary_contact_email' in _dict:
-            args['primary_contact_email'] = _dict.get('primary_contact_email')
-        if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
-        if 'updated_at' in _dict:
-            args['updated_at'] = _dict.get('updated_at')
-        if 'updated_by' in _dict:
-            args['updated_by'] = _dict.get('updated_by')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a AccountGroupResponse object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'url') and self.url is not None:
-            _dict['url'] = self.url
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
-        if hasattr(self, 'crn') and self.crn is not None:
-            _dict['crn'] = self.crn
-        if hasattr(self, 'parent') and self.parent is not None:
-            _dict['parent'] = self.parent
-        if hasattr(self, 'enterprise_account_id') and self.enterprise_account_id is not None:
-            _dict['enterprise_account_id'] = self.enterprise_account_id
-        if hasattr(self, 'enterprise_id') and self.enterprise_id is not None:
-            _dict['enterprise_id'] = self.enterprise_id
-        if hasattr(self, 'enterprise_path') and self.enterprise_path is not None:
-            _dict['enterprise_path'] = self.enterprise_path
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
-        if hasattr(self, 'state') and self.state is not None:
-            _dict['state'] = self.state
-        if hasattr(self, 'primary_contact_iam_id') and self.primary_contact_iam_id is not None:
-            _dict['primary_contact_iam_id'] = self.primary_contact_iam_id
-        if hasattr(self, 'primary_contact_email') and self.primary_contact_email is not None:
-            _dict['primary_contact_email'] = self.primary_contact_email
-        if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = self.created_at
-        if hasattr(self, 'created_by') and self.created_by is not None:
-            _dict['created_by'] = self.created_by
-        if hasattr(self, 'updated_at') and self.updated_at is not None:
-            _dict['updated_at'] = self.updated_at
-        if hasattr(self, 'updated_by') and self.updated_by is not None:
-            _dict['updated_by'] = self.updated_by
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this AccountGroupResponse object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'AccountGroupResponse') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'AccountGroupResponse') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class AccountResponse():
-    """
-    The response from successfully calling get account.
+    An account resource.
 
     :attr str url: (optional) The URL of the account.
     :attr str id: (optional) The account ID.
@@ -1170,12 +833,12 @@ class AccountResponse():
     :attr str owner_email: (optional) The email address of the owner of the account.
     :attr bool is_enterprise_account: (optional) The flag to indicate whether the
           account is an enterprise account or not.
-    :attr str created_at: (optional) The time stamp at which the account was
+    :attr datetime created_at: (optional) The time stamp at which the account was
           created.
     :attr str created_by: (optional) The IAM ID of the user or service that created
           the account.
-    :attr str updated_at: (optional) The time stamp at which the account was last
-          updated.
+    :attr datetime updated_at: (optional) The time stamp at which the account was
+          last updated.
     :attr str updated_by: (optional) The IAM ID of the user or service that updated
           the account.
     """
@@ -1195,12 +858,12 @@ class AccountResponse():
                  paid: bool = None,
                  owner_email: str = None,
                  is_enterprise_account: bool = None,
-                 created_at: str = None,
+                 created_at: datetime = None,
                  created_by: str = None,
-                 updated_at: str = None,
+                 updated_at: datetime = None,
                  updated_by: str = None) -> None:
         """
-        Initialize a AccountResponse object.
+        Initialize a Account object.
 
         :param str url: (optional) The URL of the account.
         :param str id: (optional) The account ID.
@@ -1220,12 +883,12 @@ class AccountResponse():
                account.
         :param bool is_enterprise_account: (optional) The flag to indicate whether
                the account is an enterprise account or not.
-        :param str created_at: (optional) The time stamp at which the account was
-               created.
+        :param datetime created_at: (optional) The time stamp at which the account
+               was created.
         :param str created_by: (optional) The IAM ID of the user or service that
                created the account.
-        :param str updated_at: (optional) The time stamp at which the account was
-               last updated.
+        :param datetime updated_at: (optional) The time stamp at which the account
+               was last updated.
         :param str updated_by: (optional) The IAM ID of the user or service that
                updated the account.
         """
@@ -1248,8 +911,8 @@ class AccountResponse():
         self.updated_by = updated_by
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'AccountResponse':
-        """Initialize a AccountResponse object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'Account':
+        """Initialize a Account object from a json dictionary."""
         args = {}
         if 'url' in _dict:
             args['url'] = _dict.get('url')
@@ -1278,18 +941,18 @@ class AccountResponse():
         if 'is_enterprise_account' in _dict:
             args['is_enterprise_account'] = _dict.get('is_enterprise_account')
         if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
         if 'created_by' in _dict:
             args['created_by'] = _dict.get('created_by')
         if 'updated_at' in _dict:
-            args['updated_at'] = _dict.get('updated_at')
+            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
         if 'updated_by' in _dict:
             args['updated_by'] = _dict.get('updated_by')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a AccountResponse object from a json dictionary."""
+        """Initialize a Account object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -1322,11 +985,11 @@ class AccountResponse():
         if hasattr(self, 'is_enterprise_account') and self.is_enterprise_account is not None:
             _dict['is_enterprise_account'] = self.is_enterprise_account
         if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = self.created_at
+            _dict['created_at'] = datetime_to_string(self.created_at)
         if hasattr(self, 'created_by') and self.created_by is not None:
             _dict['created_by'] = self.created_by
         if hasattr(self, 'updated_at') and self.updated_at is not None:
-            _dict['updated_at'] = self.updated_at
+            _dict['updated_at'] = datetime_to_string(self.updated_at)
         if hasattr(self, 'updated_by') and self.updated_by is not None:
             _dict['updated_by'] = self.updated_by
         return _dict
@@ -1336,22 +999,206 @@ class AccountResponse():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this AccountResponse object."""
+        """Return a `str` version of this Account object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'AccountResponse') -> bool:
+    def __eq__(self, other: 'Account') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'AccountResponse') -> bool:
+    def __ne__(self, other: 'Account') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class AccountGroup():
+    """
+    An account group resource.
+
+    :attr str url: (optional) The URL of the account group.
+    :attr str id: (optional) The account group ID.
+    :attr str crn: (optional) The Cloud Resource Name (CRN) of the account group.
+    :attr str parent: (optional) The CRN of the parent of the account group.
+    :attr str enterprise_account_id: (optional) The enterprise account ID.
+    :attr str enterprise_id: (optional) The enterprise ID that the account group is
+          a part of.
+    :attr str enterprise_path: (optional) The path from the enterprise to this
+          particular account group.
+    :attr str name: (optional) The name of the account group.
+    :attr str state: (optional) The state of the account group.
+    :attr str primary_contact_iam_id: (optional) The IAM ID of the primary contact
+          of the account group.
+    :attr str primary_contact_email: (optional) The email address of the primary
+          contact of the account group.
+    :attr datetime created_at: (optional) The time stamp at which the account group
+          was created.
+    :attr str created_by: (optional) The IAM ID of the user or service that created
+          the account group.
+    :attr datetime updated_at: (optional) The time stamp at which the account group
+          was last updated.
+    :attr str updated_by: (optional) The IAM ID of the user or service that updated
+          the account group.
+    """
+
+    def __init__(self,
+                 *,
+                 url: str = None,
+                 id: str = None,
+                 crn: str = None,
+                 parent: str = None,
+                 enterprise_account_id: str = None,
+                 enterprise_id: str = None,
+                 enterprise_path: str = None,
+                 name: str = None,
+                 state: str = None,
+                 primary_contact_iam_id: str = None,
+                 primary_contact_email: str = None,
+                 created_at: datetime = None,
+                 created_by: str = None,
+                 updated_at: datetime = None,
+                 updated_by: str = None) -> None:
+        """
+        Initialize a AccountGroup object.
+
+        :param str url: (optional) The URL of the account group.
+        :param str id: (optional) The account group ID.
+        :param str crn: (optional) The Cloud Resource Name (CRN) of the account
+               group.
+        :param str parent: (optional) The CRN of the parent of the account group.
+        :param str enterprise_account_id: (optional) The enterprise account ID.
+        :param str enterprise_id: (optional) The enterprise ID that the account
+               group is a part of.
+        :param str enterprise_path: (optional) The path from the enterprise to this
+               particular account group.
+        :param str name: (optional) The name of the account group.
+        :param str state: (optional) The state of the account group.
+        :param str primary_contact_iam_id: (optional) The IAM ID of the primary
+               contact of the account group.
+        :param str primary_contact_email: (optional) The email address of the
+               primary contact of the account group.
+        :param datetime created_at: (optional) The time stamp at which the account
+               group was created.
+        :param str created_by: (optional) The IAM ID of the user or service that
+               created the account group.
+        :param datetime updated_at: (optional) The time stamp at which the account
+               group was last updated.
+        :param str updated_by: (optional) The IAM ID of the user or service that
+               updated the account group.
+        """
+        self.url = url
+        self.id = id
+        self.crn = crn
+        self.parent = parent
+        self.enterprise_account_id = enterprise_account_id
+        self.enterprise_id = enterprise_id
+        self.enterprise_path = enterprise_path
+        self.name = name
+        self.state = state
+        self.primary_contact_iam_id = primary_contact_iam_id
+        self.primary_contact_email = primary_contact_email
+        self.created_at = created_at
+        self.created_by = created_by
+        self.updated_at = updated_at
+        self.updated_by = updated_by
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccountGroup':
+        """Initialize a AccountGroup object from a json dictionary."""
+        args = {}
+        if 'url' in _dict:
+            args['url'] = _dict.get('url')
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        if 'crn' in _dict:
+            args['crn'] = _dict.get('crn')
+        if 'parent' in _dict:
+            args['parent'] = _dict.get('parent')
+        if 'enterprise_account_id' in _dict:
+            args['enterprise_account_id'] = _dict.get('enterprise_account_id')
+        if 'enterprise_id' in _dict:
+            args['enterprise_id'] = _dict.get('enterprise_id')
+        if 'enterprise_path' in _dict:
+            args['enterprise_path'] = _dict.get('enterprise_path')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        if 'state' in _dict:
+            args['state'] = _dict.get('state')
+        if 'primary_contact_iam_id' in _dict:
+            args['primary_contact_iam_id'] = _dict.get('primary_contact_iam_id')
+        if 'primary_contact_email' in _dict:
+            args['primary_contact_email'] = _dict.get('primary_contact_email')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if 'created_by' in _dict:
+            args['created_by'] = _dict.get('created_by')
+        if 'updated_at' in _dict:
+            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
+        if 'updated_by' in _dict:
+            args['updated_by'] = _dict.get('updated_by')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccountGroup object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'url') and self.url is not None:
+            _dict['url'] = self.url
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'parent') and self.parent is not None:
+            _dict['parent'] = self.parent
+        if hasattr(self, 'enterprise_account_id') and self.enterprise_account_id is not None:
+            _dict['enterprise_account_id'] = self.enterprise_account_id
+        if hasattr(self, 'enterprise_id') and self.enterprise_id is not None:
+            _dict['enterprise_id'] = self.enterprise_id
+        if hasattr(self, 'enterprise_path') and self.enterprise_path is not None:
+            _dict['enterprise_path'] = self.enterprise_path
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
+        if hasattr(self, 'primary_contact_iam_id') and self.primary_contact_iam_id is not None:
+            _dict['primary_contact_iam_id'] = self.primary_contact_iam_id
+        if hasattr(self, 'primary_contact_email') and self.primary_contact_email is not None:
+            _dict['primary_contact_email'] = self.primary_contact_email
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'created_by') and self.created_by is not None:
+            _dict['created_by'] = self.created_by
+        if hasattr(self, 'updated_at') and self.updated_at is not None:
+            _dict['updated_at'] = datetime_to_string(self.updated_at)
+        if hasattr(self, 'updated_by') and self.updated_by is not None:
+            _dict['updated_by'] = self.updated_by
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccountGroup object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccountGroup') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccountGroup') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
 class CreateAccountGroupResponse():
     """
-    Create account group request completed successfully.
+    A newly-created account group.
 
     :attr str account_group_id: (optional) The ID of the account group entity that
           was created.
@@ -1408,29 +1255,28 @@ class CreateAccountGroupResponse():
 
 class CreateAccountResponse():
     """
-    The create account request completed successfully.
+    A newly-created account.
 
-    :attr str account_group_id: (optional) The ID of the account group entity that
-          was created.
+    :attr str account_id: (optional) The ID of the account entity that was created.
     """
 
     def __init__(self,
                  *,
-                 account_group_id: str = None) -> None:
+                 account_id: str = None) -> None:
         """
         Initialize a CreateAccountResponse object.
 
-        :param str account_group_id: (optional) The ID of the account group entity
-               that was created.
+        :param str account_id: (optional) The ID of the account entity that was
+               created.
         """
-        self.account_group_id = account_group_id
+        self.account_id = account_id
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'CreateAccountResponse':
         """Initialize a CreateAccountResponse object from a json dictionary."""
         args = {}
-        if 'account_group_id' in _dict:
-            args['account_group_id'] = _dict.get('account_group_id')
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
         return cls(**args)
 
     @classmethod
@@ -1441,8 +1287,8 @@ class CreateAccountResponse():
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'account_group_id') and self.account_group_id is not None:
-            _dict['account_group_id'] = self.account_group_id
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
         return _dict
 
     def _to_dict(self):
@@ -1532,9 +1378,9 @@ class CreateEnterpriseResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class EnterpriseResponse():
+class Enterprise():
     """
-    The response from calling get enterprise.
+    An enterprise resource.
 
     :attr str url: (optional) The URL of the enterprise.
     :attr str id: (optional) The enterprise ID.
@@ -1547,12 +1393,12 @@ class EnterpriseResponse():
           of the enterprise, such as `IBMid-0123ABC`.
     :attr str primary_contact_email: (optional) The email of the primary contact of
           the enterprise.
-    :attr str created_at: (optional) The time stamp at which the enterprise was
+    :attr datetime created_at: (optional) The time stamp at which the enterprise was
           created.
     :attr str created_by: (optional) The IAM ID of the user or service that created
           the enterprise.
-    :attr str updated_at: (optional) The time stamp at which the enterprise was last
-          updated.
+    :attr datetime updated_at: (optional) The time stamp at which the enterprise was
+          last updated.
     :attr str updated_by: (optional) The IAM ID of the user or service that updated
           the enterprise.
     """
@@ -1568,12 +1414,12 @@ class EnterpriseResponse():
                  state: str = None,
                  primary_contact_iam_id: str = None,
                  primary_contact_email: str = None,
-                 created_at: str = None,
+                 created_at: datetime = None,
                  created_by: str = None,
-                 updated_at: str = None,
+                 updated_at: datetime = None,
                  updated_by: str = None) -> None:
         """
-        Initialize a EnterpriseResponse object.
+        Initialize a Enterprise object.
 
         :param str url: (optional) The URL of the enterprise.
         :param str id: (optional) The enterprise ID.
@@ -1586,12 +1432,12 @@ class EnterpriseResponse():
                contact of the enterprise, such as `IBMid-0123ABC`.
         :param str primary_contact_email: (optional) The email of the primary
                contact of the enterprise.
-        :param str created_at: (optional) The time stamp at which the enterprise
-               was created.
+        :param datetime created_at: (optional) The time stamp at which the
+               enterprise was created.
         :param str created_by: (optional) The IAM ID of the user or service that
                created the enterprise.
-        :param str updated_at: (optional) The time stamp at which the enterprise
-               was last updated.
+        :param datetime updated_at: (optional) The time stamp at which the
+               enterprise was last updated.
         :param str updated_by: (optional) The IAM ID of the user or service that
                updated the enterprise.
         """
@@ -1610,8 +1456,8 @@ class EnterpriseResponse():
         self.updated_by = updated_by
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'EnterpriseResponse':
-        """Initialize a EnterpriseResponse object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'Enterprise':
+        """Initialize a Enterprise object from a json dictionary."""
         args = {}
         if 'url' in _dict:
             args['url'] = _dict.get('url')
@@ -1632,18 +1478,18 @@ class EnterpriseResponse():
         if 'primary_contact_email' in _dict:
             args['primary_contact_email'] = _dict.get('primary_contact_email')
         if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
         if 'created_by' in _dict:
             args['created_by'] = _dict.get('created_by')
         if 'updated_at' in _dict:
-            args['updated_at'] = _dict.get('updated_at')
+            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
         if 'updated_by' in _dict:
             args['updated_by'] = _dict.get('updated_by')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a EnterpriseResponse object from a json dictionary."""
+        """Initialize a Enterprise object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -1668,11 +1514,11 @@ class EnterpriseResponse():
         if hasattr(self, 'primary_contact_email') and self.primary_contact_email is not None:
             _dict['primary_contact_email'] = self.primary_contact_email
         if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = self.created_at
+            _dict['created_at'] = datetime_to_string(self.created_at)
         if hasattr(self, 'created_by') and self.created_by is not None:
             _dict['created_by'] = self.created_by
         if hasattr(self, 'updated_at') and self.updated_at is not None:
-            _dict['updated_at'] = self.updated_at
+            _dict['updated_at'] = datetime_to_string(self.updated_at)
         if hasattr(self, 'updated_by') and self.updated_by is not None:
             _dict['updated_by'] = self.updated_by
         return _dict
@@ -1682,220 +1528,35 @@ class EnterpriseResponse():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this EnterpriseResponse object."""
+        """Return a `str` version of this Enterprise object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'EnterpriseResponse') -> bool:
+    def __eq__(self, other: 'Enterprise') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'EnterpriseResponse') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class ListAccountGroupsResources():
-    """
-    An object that represents account groups resource.
-
-    :attr str url: (optional) The URL of the account group.
-    :attr str id: (optional) The account group ID.
-    :attr str crn: (optional) The Cloud Resource Name (CRN) of the account group.
-    :attr str parent: (optional) The CRN of the parent of the account group.
-    :attr str enterprise_account_id: (optional) The enterprise account ID.
-    :attr str enterprise_id: (optional) The enterprise ID that the account group is
-          a part of.
-    :attr str enterprise_path: (optional) The path from the enterprise to this
-          particular account group.
-    :attr str name: (optional) The name of the account group.
-    :attr str state: (optional) The state of the account group.
-    :attr str primary_contact_iam_id: (optional) The IAM ID of the primary contact
-          of the account group.
-    :attr str primary_contact_email: (optional) The email address of the primary
-          contact of the account group.
-    :attr str created_at: (optional) The time stamp at which the account group was
-          created.
-    :attr str created_by: (optional) The IAM ID of the user or service that created
-          the account group.
-    :attr str updated_at: (optional) The time stamp at which the account group was
-          last updated.
-    :attr str updated_by: (optional) The IAM ID of the user or service that updated
-          the account group.
-    """
-
-    def __init__(self,
-                 *,
-                 url: str = None,
-                 id: str = None,
-                 crn: str = None,
-                 parent: str = None,
-                 enterprise_account_id: str = None,
-                 enterprise_id: str = None,
-                 enterprise_path: str = None,
-                 name: str = None,
-                 state: str = None,
-                 primary_contact_iam_id: str = None,
-                 primary_contact_email: str = None,
-                 created_at: str = None,
-                 created_by: str = None,
-                 updated_at: str = None,
-                 updated_by: str = None) -> None:
-        """
-        Initialize a ListAccountGroupsResources object.
-
-        :param str url: (optional) The URL of the account group.
-        :param str id: (optional) The account group ID.
-        :param str crn: (optional) The Cloud Resource Name (CRN) of the account
-               group.
-        :param str parent: (optional) The CRN of the parent of the account group.
-        :param str enterprise_account_id: (optional) The enterprise account ID.
-        :param str enterprise_id: (optional) The enterprise ID that the account
-               group is a part of.
-        :param str enterprise_path: (optional) The path from the enterprise to this
-               particular account group.
-        :param str name: (optional) The name of the account group.
-        :param str state: (optional) The state of the account group.
-        :param str primary_contact_iam_id: (optional) The IAM ID of the primary
-               contact of the account group.
-        :param str primary_contact_email: (optional) The email address of the
-               primary contact of the account group.
-        :param str created_at: (optional) The time stamp at which the account group
-               was created.
-        :param str created_by: (optional) The IAM ID of the user or service that
-               created the account group.
-        :param str updated_at: (optional) The time stamp at which the account group
-               was last updated.
-        :param str updated_by: (optional) The IAM ID of the user or service that
-               updated the account group.
-        """
-        self.url = url
-        self.id = id
-        self.crn = crn
-        self.parent = parent
-        self.enterprise_account_id = enterprise_account_id
-        self.enterprise_id = enterprise_id
-        self.enterprise_path = enterprise_path
-        self.name = name
-        self.state = state
-        self.primary_contact_iam_id = primary_contact_iam_id
-        self.primary_contact_email = primary_contact_email
-        self.created_at = created_at
-        self.created_by = created_by
-        self.updated_at = updated_at
-        self.updated_by = updated_by
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ListAccountGroupsResources':
-        """Initialize a ListAccountGroupsResources object from a json dictionary."""
-        args = {}
-        if 'url' in _dict:
-            args['url'] = _dict.get('url')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        if 'parent' in _dict:
-            args['parent'] = _dict.get('parent')
-        if 'enterprise_account_id' in _dict:
-            args['enterprise_account_id'] = _dict.get('enterprise_account_id')
-        if 'enterprise_id' in _dict:
-            args['enterprise_id'] = _dict.get('enterprise_id')
-        if 'enterprise_path' in _dict:
-            args['enterprise_path'] = _dict.get('enterprise_path')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'primary_contact_iam_id' in _dict:
-            args['primary_contact_iam_id'] = _dict.get('primary_contact_iam_id')
-        if 'primary_contact_email' in _dict:
-            args['primary_contact_email'] = _dict.get('primary_contact_email')
-        if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
-        if 'updated_at' in _dict:
-            args['updated_at'] = _dict.get('updated_at')
-        if 'updated_by' in _dict:
-            args['updated_by'] = _dict.get('updated_by')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a ListAccountGroupsResources object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'url') and self.url is not None:
-            _dict['url'] = self.url
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
-        if hasattr(self, 'crn') and self.crn is not None:
-            _dict['crn'] = self.crn
-        if hasattr(self, 'parent') and self.parent is not None:
-            _dict['parent'] = self.parent
-        if hasattr(self, 'enterprise_account_id') and self.enterprise_account_id is not None:
-            _dict['enterprise_account_id'] = self.enterprise_account_id
-        if hasattr(self, 'enterprise_id') and self.enterprise_id is not None:
-            _dict['enterprise_id'] = self.enterprise_id
-        if hasattr(self, 'enterprise_path') and self.enterprise_path is not None:
-            _dict['enterprise_path'] = self.enterprise_path
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
-        if hasattr(self, 'state') and self.state is not None:
-            _dict['state'] = self.state
-        if hasattr(self, 'primary_contact_iam_id') and self.primary_contact_iam_id is not None:
-            _dict['primary_contact_iam_id'] = self.primary_contact_iam_id
-        if hasattr(self, 'primary_contact_email') and self.primary_contact_email is not None:
-            _dict['primary_contact_email'] = self.primary_contact_email
-        if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = self.created_at
-        if hasattr(self, 'created_by') and self.created_by is not None:
-            _dict['created_by'] = self.created_by
-        if hasattr(self, 'updated_at') and self.updated_at is not None:
-            _dict['updated_at'] = self.updated_at
-        if hasattr(self, 'updated_by') and self.updated_by is not None:
-            _dict['updated_by'] = self.updated_by
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this ListAccountGroupsResources object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'ListAccountGroupsResources') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'ListAccountGroupsResources') -> bool:
+    def __ne__(self, other: 'Enterprise') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
 class ListAccountGroupsResponse():
     """
-    The response from successfully calling list account groups.
+    The list_account_groups operation response.
 
     :attr int rows_count: (optional) The number of enterprises returned from calling
           list account groups.
     :attr str next_url: (optional) A string that represents the link to the next
           page of results.
-    :attr List[ListAccountGroupsResources] resources: (optional) A list of account
-          groups.
+    :attr List[AccountGroup] resources: (optional) A list of account groups.
     """
 
     def __init__(self,
                  *,
                  rows_count: int = None,
                  next_url: str = None,
-                 resources: List['ListAccountGroupsResources'] = None) -> None:
+                 resources: List['AccountGroup'] = None) -> None:
         """
         Initialize a ListAccountGroupsResponse object.
 
@@ -1903,8 +1564,7 @@ class ListAccountGroupsResponse():
                calling list account groups.
         :param str next_url: (optional) A string that represents the link to the
                next page of results.
-        :param List[ListAccountGroupsResources] resources: (optional) A list of
-               account groups.
+        :param List[AccountGroup] resources: (optional) A list of account groups.
         """
         self.rows_count = rows_count
         self.next_url = next_url
@@ -1919,7 +1579,7 @@ class ListAccountGroupsResponse():
         if 'next_url' in _dict:
             args['next_url'] = _dict.get('next_url')
         if 'resources' in _dict:
-            args['resources'] = [ListAccountGroupsResources.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [AccountGroup.from_dict(x) for x in _dict.get('resources')]
         return cls(**args)
 
     @classmethod
@@ -1956,221 +1616,22 @@ class ListAccountGroupsResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ListAccountResources():
-    """
-    An object that represents account resource.
-
-    :attr str url: (optional) The URL of the account.
-    :attr str id: (optional) The account ID.
-    :attr str crn: (optional) The Cloud Resource Name (CRN) of the account.
-    :attr str parent: (optional) The CRN of the parent of the account.
-    :attr str enterprise_account_id: (optional) The enterprise account ID.
-    :attr str enterprise_id: (optional) The enterprise ID that the account is a part
-          of.
-    :attr str enterprise_path: (optional) The path from the enterprise to this
-          particular account.
-    :attr str name: (optional) The name of the account.
-    :attr str state: (optional) The state of the account.
-    :attr str owner_iam_id: (optional) The IAM ID of the owner of the account.
-    :attr bool paid: (optional) The type of account - whether it is free or paid.
-    :attr str owner_email: (optional) The email address of the owner of the account.
-    :attr bool is_enterprise_account: (optional) The flag to indicate whether the
-          account is an enterprise account or not.
-    :attr str created_at: (optional) The time stamp at which the account was
-          created.
-    :attr str created_by: (optional) The IAM ID of the user or service that created
-          the account.
-    :attr str updated_at: (optional) The time stamp at which the account was last
-          updated.
-    :attr str updated_by: (optional) The IAM ID of the user or service that updated
-          the account.
-    """
-
-    def __init__(self,
-                 *,
-                 url: str = None,
-                 id: str = None,
-                 crn: str = None,
-                 parent: str = None,
-                 enterprise_account_id: str = None,
-                 enterprise_id: str = None,
-                 enterprise_path: str = None,
-                 name: str = None,
-                 state: str = None,
-                 owner_iam_id: str = None,
-                 paid: bool = None,
-                 owner_email: str = None,
-                 is_enterprise_account: bool = None,
-                 created_at: str = None,
-                 created_by: str = None,
-                 updated_at: str = None,
-                 updated_by: str = None) -> None:
-        """
-        Initialize a ListAccountResources object.
-
-        :param str url: (optional) The URL of the account.
-        :param str id: (optional) The account ID.
-        :param str crn: (optional) The Cloud Resource Name (CRN) of the account.
-        :param str parent: (optional) The CRN of the parent of the account.
-        :param str enterprise_account_id: (optional) The enterprise account ID.
-        :param str enterprise_id: (optional) The enterprise ID that the account is
-               a part of.
-        :param str enterprise_path: (optional) The path from the enterprise to this
-               particular account.
-        :param str name: (optional) The name of the account.
-        :param str state: (optional) The state of the account.
-        :param str owner_iam_id: (optional) The IAM ID of the owner of the account.
-        :param bool paid: (optional) The type of account - whether it is free or
-               paid.
-        :param str owner_email: (optional) The email address of the owner of the
-               account.
-        :param bool is_enterprise_account: (optional) The flag to indicate whether
-               the account is an enterprise account or not.
-        :param str created_at: (optional) The time stamp at which the account was
-               created.
-        :param str created_by: (optional) The IAM ID of the user or service that
-               created the account.
-        :param str updated_at: (optional) The time stamp at which the account was
-               last updated.
-        :param str updated_by: (optional) The IAM ID of the user or service that
-               updated the account.
-        """
-        self.url = url
-        self.id = id
-        self.crn = crn
-        self.parent = parent
-        self.enterprise_account_id = enterprise_account_id
-        self.enterprise_id = enterprise_id
-        self.enterprise_path = enterprise_path
-        self.name = name
-        self.state = state
-        self.owner_iam_id = owner_iam_id
-        self.paid = paid
-        self.owner_email = owner_email
-        self.is_enterprise_account = is_enterprise_account
-        self.created_at = created_at
-        self.created_by = created_by
-        self.updated_at = updated_at
-        self.updated_by = updated_by
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ListAccountResources':
-        """Initialize a ListAccountResources object from a json dictionary."""
-        args = {}
-        if 'url' in _dict:
-            args['url'] = _dict.get('url')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        if 'parent' in _dict:
-            args['parent'] = _dict.get('parent')
-        if 'enterprise_account_id' in _dict:
-            args['enterprise_account_id'] = _dict.get('enterprise_account_id')
-        if 'enterprise_id' in _dict:
-            args['enterprise_id'] = _dict.get('enterprise_id')
-        if 'enterprise_path' in _dict:
-            args['enterprise_path'] = _dict.get('enterprise_path')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'owner_iam_id' in _dict:
-            args['owner_iam_id'] = _dict.get('owner_iam_id')
-        if 'paid' in _dict:
-            args['paid'] = _dict.get('paid')
-        if 'owner_email' in _dict:
-            args['owner_email'] = _dict.get('owner_email')
-        if 'is_enterprise_account' in _dict:
-            args['is_enterprise_account'] = _dict.get('is_enterprise_account')
-        if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
-        if 'updated_at' in _dict:
-            args['updated_at'] = _dict.get('updated_at')
-        if 'updated_by' in _dict:
-            args['updated_by'] = _dict.get('updated_by')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a ListAccountResources object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'url') and self.url is not None:
-            _dict['url'] = self.url
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
-        if hasattr(self, 'crn') and self.crn is not None:
-            _dict['crn'] = self.crn
-        if hasattr(self, 'parent') and self.parent is not None:
-            _dict['parent'] = self.parent
-        if hasattr(self, 'enterprise_account_id') and self.enterprise_account_id is not None:
-            _dict['enterprise_account_id'] = self.enterprise_account_id
-        if hasattr(self, 'enterprise_id') and self.enterprise_id is not None:
-            _dict['enterprise_id'] = self.enterprise_id
-        if hasattr(self, 'enterprise_path') and self.enterprise_path is not None:
-            _dict['enterprise_path'] = self.enterprise_path
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
-        if hasattr(self, 'state') and self.state is not None:
-            _dict['state'] = self.state
-        if hasattr(self, 'owner_iam_id') and self.owner_iam_id is not None:
-            _dict['owner_iam_id'] = self.owner_iam_id
-        if hasattr(self, 'paid') and self.paid is not None:
-            _dict['paid'] = self.paid
-        if hasattr(self, 'owner_email') and self.owner_email is not None:
-            _dict['owner_email'] = self.owner_email
-        if hasattr(self, 'is_enterprise_account') and self.is_enterprise_account is not None:
-            _dict['is_enterprise_account'] = self.is_enterprise_account
-        if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = self.created_at
-        if hasattr(self, 'created_by') and self.created_by is not None:
-            _dict['created_by'] = self.created_by
-        if hasattr(self, 'updated_at') and self.updated_at is not None:
-            _dict['updated_at'] = self.updated_at
-        if hasattr(self, 'updated_by') and self.updated_by is not None:
-            _dict['updated_by'] = self.updated_by
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this ListAccountResources object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'ListAccountResources') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'ListAccountResources') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
 class ListAccountsResponse():
     """
-    The response from successfully calling list accounts.
+    The list_accounts operation response.
 
     :attr int rows_count: (optional) The number of enterprises returned from calling
           list accounts.
     :attr str next_url: (optional) A string that represents the link to the next
           page of results.
-    :attr List[ListAccountResources] resources: (optional) A list of accounts.
+    :attr List[Account] resources: (optional) A list of accounts.
     """
 
     def __init__(self,
                  *,
                  rows_count: int = None,
                  next_url: str = None,
-                 resources: List['ListAccountResources'] = None) -> None:
+                 resources: List['Account'] = None) -> None:
         """
         Initialize a ListAccountsResponse object.
 
@@ -2178,7 +1639,7 @@ class ListAccountsResponse():
                calling list accounts.
         :param str next_url: (optional) A string that represents the link to the
                next page of results.
-        :param List[ListAccountResources] resources: (optional) A list of accounts.
+        :param List[Account] resources: (optional) A list of accounts.
         """
         self.rows_count = rows_count
         self.next_url = next_url
@@ -2193,7 +1654,7 @@ class ListAccountsResponse():
         if 'next_url' in _dict:
             args['next_url'] = _dict.get('next_url')
         if 'resources' in _dict:
-            args['resources'] = [ListAccountResources.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [Account.from_dict(x) for x in _dict.get('resources')]
         return cls(**args)
 
     @classmethod
@@ -2230,169 +1691,6 @@ class ListAccountsResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ListEnterpriseResources():
-    """
-    An object that represents an enterprise.
-
-    :attr str url: (optional) The URL of the enterprise.
-    :attr str id: (optional) The enterprise ID.
-    :attr str enterprise_account_id: (optional) The enterprise account ID.
-    :attr str crn: (optional) The Cloud Resource Name (CRN) of the enterprise.
-    :attr str name: (optional) The name of the enterprise.
-    :attr str domain: (optional) The domain of the enterprise.
-    :attr str state: (optional) The state of the enterprise.
-    :attr str primary_contact_iam_id: (optional) The IAM ID of the primary contact
-          of the enterprise, such as `IBMid-0123ABC`.
-    :attr str primary_contact_email: (optional) The email of the primary contact of
-          the enterprise.
-    :attr str created_at: (optional) The time stamp at which the enterprise was
-          created.
-    :attr str created_by: (optional) The IAM ID of the user or service that created
-          the enterprise.
-    :attr str updated_at: (optional) The time stamp at which the enterprise was last
-          updated.
-    :attr str updated_by: (optional) The IAM ID of the user or service that updated
-          the enterprise.
-    """
-
-    def __init__(self,
-                 *,
-                 url: str = None,
-                 id: str = None,
-                 enterprise_account_id: str = None,
-                 crn: str = None,
-                 name: str = None,
-                 domain: str = None,
-                 state: str = None,
-                 primary_contact_iam_id: str = None,
-                 primary_contact_email: str = None,
-                 created_at: str = None,
-                 created_by: str = None,
-                 updated_at: str = None,
-                 updated_by: str = None) -> None:
-        """
-        Initialize a ListEnterpriseResources object.
-
-        :param str url: (optional) The URL of the enterprise.
-        :param str id: (optional) The enterprise ID.
-        :param str enterprise_account_id: (optional) The enterprise account ID.
-        :param str crn: (optional) The Cloud Resource Name (CRN) of the enterprise.
-        :param str name: (optional) The name of the enterprise.
-        :param str domain: (optional) The domain of the enterprise.
-        :param str state: (optional) The state of the enterprise.
-        :param str primary_contact_iam_id: (optional) The IAM ID of the primary
-               contact of the enterprise, such as `IBMid-0123ABC`.
-        :param str primary_contact_email: (optional) The email of the primary
-               contact of the enterprise.
-        :param str created_at: (optional) The time stamp at which the enterprise
-               was created.
-        :param str created_by: (optional) The IAM ID of the user or service that
-               created the enterprise.
-        :param str updated_at: (optional) The time stamp at which the enterprise
-               was last updated.
-        :param str updated_by: (optional) The IAM ID of the user or service that
-               updated the enterprise.
-        """
-        self.url = url
-        self.id = id
-        self.enterprise_account_id = enterprise_account_id
-        self.crn = crn
-        self.name = name
-        self.domain = domain
-        self.state = state
-        self.primary_contact_iam_id = primary_contact_iam_id
-        self.primary_contact_email = primary_contact_email
-        self.created_at = created_at
-        self.created_by = created_by
-        self.updated_at = updated_at
-        self.updated_by = updated_by
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ListEnterpriseResources':
-        """Initialize a ListEnterpriseResources object from a json dictionary."""
-        args = {}
-        if 'url' in _dict:
-            args['url'] = _dict.get('url')
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'enterprise_account_id' in _dict:
-            args['enterprise_account_id'] = _dict.get('enterprise_account_id')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        if 'domain' in _dict:
-            args['domain'] = _dict.get('domain')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
-        if 'primary_contact_iam_id' in _dict:
-            args['primary_contact_iam_id'] = _dict.get('primary_contact_iam_id')
-        if 'primary_contact_email' in _dict:
-            args['primary_contact_email'] = _dict.get('primary_contact_email')
-        if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
-        if 'created_by' in _dict:
-            args['created_by'] = _dict.get('created_by')
-        if 'updated_at' in _dict:
-            args['updated_at'] = _dict.get('updated_at')
-        if 'updated_by' in _dict:
-            args['updated_by'] = _dict.get('updated_by')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a ListEnterpriseResources object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'url') and self.url is not None:
-            _dict['url'] = self.url
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
-        if hasattr(self, 'enterprise_account_id') and self.enterprise_account_id is not None:
-            _dict['enterprise_account_id'] = self.enterprise_account_id
-        if hasattr(self, 'crn') and self.crn is not None:
-            _dict['crn'] = self.crn
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
-        if hasattr(self, 'domain') and self.domain is not None:
-            _dict['domain'] = self.domain
-        if hasattr(self, 'state') and self.state is not None:
-            _dict['state'] = self.state
-        if hasattr(self, 'primary_contact_iam_id') and self.primary_contact_iam_id is not None:
-            _dict['primary_contact_iam_id'] = self.primary_contact_iam_id
-        if hasattr(self, 'primary_contact_email') and self.primary_contact_email is not None:
-            _dict['primary_contact_email'] = self.primary_contact_email
-        if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = self.created_at
-        if hasattr(self, 'created_by') and self.created_by is not None:
-            _dict['created_by'] = self.created_by
-        if hasattr(self, 'updated_at') and self.updated_at is not None:
-            _dict['updated_at'] = self.updated_at
-        if hasattr(self, 'updated_by') and self.updated_by is not None:
-            _dict['updated_by'] = self.updated_by
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this ListEnterpriseResources object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'ListEnterpriseResources') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'ListEnterpriseResources') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
 class ListEnterprisesResponse():
     """
     The response from calling list enterprises.
@@ -2401,15 +1699,14 @@ class ListEnterprisesResponse():
           list enterprise.
     :attr str next_url: (optional) A string that represents the link to the next
           page of results.
-    :attr List[ListEnterpriseResources] resources: (optional) A list of enterprise
-          objects.
+    :attr List[Enterprise] resources: (optional) A list of enterprise objects.
     """
 
     def __init__(self,
                  *,
                  rows_count: int = None,
                  next_url: str = None,
-                 resources: List['ListEnterpriseResources'] = None) -> None:
+                 resources: List['Enterprise'] = None) -> None:
         """
         Initialize a ListEnterprisesResponse object.
 
@@ -2417,8 +1714,7 @@ class ListEnterprisesResponse():
                calling list enterprise.
         :param str next_url: (optional) A string that represents the link to the
                next page of results.
-        :param List[ListEnterpriseResources] resources: (optional) A list of
-               enterprise objects.
+        :param List[Enterprise] resources: (optional) A list of enterprise objects.
         """
         self.rows_count = rows_count
         self.next_url = next_url
@@ -2433,7 +1729,7 @@ class ListEnterprisesResponse():
         if 'next_url' in _dict:
             args['next_url'] = _dict.get('next_url')
         if 'resources' in _dict:
-            args['resources'] = [ListEnterpriseResources.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [Enterprise.from_dict(x) for x in _dict.get('resources')]
         return cls(**args)
 
     @classmethod

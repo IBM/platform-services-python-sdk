@@ -47,7 +47,7 @@ if os.path.exists(configFile):
     configLoaded = True
 else:
     print('External configuration was not found, skipping tests...')
-
+    
 class TestEnterpriseManagementV1(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -71,7 +71,7 @@ class TestEnterpriseManagementV1(unittest.TestCase):
         cls.enterpriseId = ''
         cls.enterpriseAccountId = ''
         cls.parentAccountGroupId = ''
-        cls.am_service_iam_token = ''
+        cls.service_token = ''
         cls.owner_iam_id = ''
         cls.activation_token = ''
         cls.account_id = ''
@@ -138,7 +138,7 @@ class TestEnterpriseManagementV1(unittest.TestCase):
         }
         headers = {}
         headers['content-type'] = 'application/json'
-        headers['authorization'] = self.service_token
+        headers['authorization'] = self.__class__.service_token
         url = os.environ.get("EMTEST_CONFIG_AM_HOST")+ "/coe/v2/accounts"
         response = requests.post(url=url, headers=headers, json=jsonData)
         resp = response.json()
@@ -272,9 +272,9 @@ class TestEnterpriseManagementV1(unittest.TestCase):
         x = response.get_result()
 
 
-    def test_13_get_account_group_by_id(self):
+    def test_13_get_account_group(self):
         
-        response = self.service.get_account_group_by_id(account_group_id = self.account_group_id)
+        response = self.service.get_account_group(account_group_id = self.account_group_id)
         
         assert response is not None
         assert response.get_status_code() == 200
@@ -289,15 +289,6 @@ class TestEnterpriseManagementV1(unittest.TestCase):
         
         assert response is not None
         assert response.get_status_code() == 204
-        x = response.get_result()
-
-
-    def test_15_get_account_group_permissible_actions(self):
-        response = self.service.get_account_group_permissible_actions(account_group_id= self.account_group_id,
-        actions = ['testString'])
-        
-        assert response is not None
-        assert response.get_status_code() == 200
         x = response.get_result()
 
 
@@ -374,9 +365,9 @@ class TestEnterpriseManagementV1(unittest.TestCase):
         x = response.get_result()
       
 
-    def test_20_get_account_by_id(self):
+    def test_20_get_account(self):
         
-        response = self.service.get_account_by_id(account_id = self.enterprise_account_id)
+        response = self.service.get_account(account_id = self.enterprise_account_id)
         
         assert response is not None
         assert response.get_status_code() == 200
@@ -395,8 +386,8 @@ class TestEnterpriseManagementV1(unittest.TestCase):
         self.__class__.newAccount = x["account_id"];
 
 
-    def test_22_get_account_by_id(self):
-        response = self.service.get_account_by_id(account_id = self.newAccount)
+    def test_22_get_account(self):
+        response = self.service.get_account(account_id = self.newAccount)
         
         assert response is not None
         assert response.get_status_code() == 200
@@ -444,14 +435,4 @@ class TestEnterpriseManagementV1(unittest.TestCase):
         assert response is not None
         assert response.get_status_code() == 202
         x = response.get_result()
-
-    def test_27_get_account_permissible_actions(self):
-        response = self.service.get_account_permissible_actions(account_id= self.account_id,
-        actions = ['testString'],)
-        
-        assert response is not None
-        assert response.get_status_code() == 200
-        x = response.get_result()
-
-
 
