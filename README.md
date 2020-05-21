@@ -49,6 +49,7 @@ IBM Cloud services:
 Service Name | Imported Class Name
 --- | --- 
 [Case Management](https://cloud.ibm.com/apidocs/case-management) | CaseManagementV1
+[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | EnterpriseManagementV1
 [Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | GlobalCatalogV1
 [Global Search](https://cloud.ibm.com/apidocs/search) | GlobalSearchV2
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | GlobalTaggingV1
