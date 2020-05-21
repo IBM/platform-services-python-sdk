@@ -35,36 +35,49 @@ import random
 import couchdb
 import time
 
-
 # Read config file
 configFile = 'enterprise-management.env'
 config = {}
 configLoaded = None
 
-if os.path.exists(configFile):
-    env = load_dotenv(dotenv_path=configFile)
-    os.environ.get("EMTEST_CONFIG_IAM_API_KEY")
-    configLoaded = True
-else:
-    print('External configuration was not found, skipping tests...')
     
 class TestEnterpriseManagementV1(unittest.TestCase):
+    
     @classmethod
     def setUpClass(cls):
-        if not configLoaded:
-            raise unittest.SkipTest(
-                'External configuration not available, skipping...')
+        if os.path.exists(configFile):
+            os.environ['IBM_CREDENTIALS_FILE'] = configFile
+        else:
+            raise unittest.SkipTest('External configuration not available, skipping...')
 
-        # Construct the first service instance.
+        # Construct the service instance.
         cls.service = EnterpriseManagementV1.new_instance()
         assert cls.service is not None
 
-        cls.config = read_external_sources(
-        EnterpriseManagementV1.DEFAULT_SERVICE_NAME)
+        # Load the "EMTEST_CONFIG" properties.
+        cls.config = read_external_sources('EMTEST_CONFIG')
+        assert cls.config is not None
+        
+        cls.am_host = cls.config['AM_HOST']
+        cls.db_url = cls.config['DB_URL']
+        cls.db_user = cls.config['DB_USER']
+        cls.db_pass = cls.config['DB_PASS']
+        cls.activation_db_name = cls.config['ACTIVATION_DB_NAME']
+        cls.iam_host = cls.config['IAM_HOST']
+        cls.iam_basic_auth = cls.config['IAM_BASIC_AUTH']
+        cls.iam_api_key = cls.config['IAM_API_KEY']
+        assert cls.am_host is not None
+        assert cls.db_url is not None
+        assert cls.db_user is not None
+        assert cls.db_pass is not None
+        assert cls.activation_db_name is not None
+        assert cls.iam_host is not None
+        assert cls.iam_basic_auth is not None
+        assert cls.iam_api_key is not None
 
         # Construct the second service instance.
-        #cls.service2 = EnterpriseManagementV1.new_instance(service_name='RMGR2')
-        #assert cls.service2 is not None
+        # cls.service2 = EnterpriseManagementV1.new_instance(service_name='RMGR2')
+        # assert cls.service2 is not None
 
         # setup default values
         cls.parent = ''
@@ -79,10 +92,9 @@ class TestEnterpriseManagementV1(unittest.TestCase):
         cls.crn = ''
         cls.iEmail = ''
         cls.iAccountId = ''
-        cls.email = "aminttest+"+str(int(time.time() * 1000))+"_"+str(math.floor(random.random()* 10000))+"@mail.test.ibm.com"
+        cls.email = "aminttest+" + str(int(time.time() * 1000)) + "_" + str(math.floor(random.random() * 10000)) + "@mail.test.ibm.com"
 
         print('\nSetup complete.')
-
 
     @classmethod
     def tearDownClass(cls):
@@ -95,24 +107,18 @@ class TestEnterpriseManagementV1(unittest.TestCase):
     def test_01_generate_iam_service_token(self):
         
         data = {
-          'apikey': os.environ.get("EMTEST_CONFIG_IAM_API_KEY"),
+          'apikey': self.iam_api_key,
           'grant_type':'urn:ibm:params:oauth:grant-type:apikey'
         }
         headers = {}
         headers['content-type'] = 'application/x-www-form-urlencoded'
-        headers['authorization'] = os.environ.get("EMTEST_CONFIG_IAM_BASIC_AUTH")
+        headers['authorization'] = self.iam_basic_auth
 
-        url = os.environ.get("EMTEST_CONFIG_IAM_HOST")+ "/identity/token"
-        #request = self.prepare_request(method='POST',
-                                       #url=url,
-                                       #headers=headers,
-                                       #form=data)
-        #response = self.send(request)
-        response = requests.post(url = url, data = data, headers = headers) 
+        url = self.iam_host + "/identity/token"
+        response = requests.post(url=url, data=data, headers=headers) 
         
         resp = response.json()
-        self.__class__.service_token = "bearer "+resp["access_token"]
-        
+        self.__class__.service_token = "Bearer " + resp["access_token"]
 
     def test_03_create_standard_account(self):
         jsonData = {
@@ -139,41 +145,34 @@ class TestEnterpriseManagementV1(unittest.TestCase):
         headers = {}
         headers['content-type'] = 'application/json'
         headers['authorization'] = self.__class__.service_token
-        url = os.environ.get("EMTEST_CONFIG_AM_HOST")+ "/coe/v2/accounts"
+        url = self.am_host + "/coe/v2/accounts"
         response = requests.post(url=url, headers=headers, json=jsonData)
         resp = response.json()
         
         self.__class__.account_id = resp["id"]
-        
-
 
     def test_04_get_activation_code(self):
         headers = {}
         headers['content-type'] = 'application/json'
         headers['authorization'] = self.service_token
-        url = os.environ.get("EMTEST_CONFIG_AM_HOST")+ "/v1/activation-codes/"+self.email
+        url = self.am_host + "/v1/activation-codes/" + self.email
         time.sleep(20)
         response = requests.get(url=url, headers=headers)
-        
         resp = response.json()
         x = resp["resources"]
         y = x[0]
         self.__class__.activationToken = y["id"]
-        
-
 
     def test_05_get_am_coe_v2_accounts_verify(self):
-        url = os.environ.get("EMTEST_CONFIG_AM_HOST")+"/coe/v2/accounts/verify"
+        url = self.am_host + "/coe/v2/accounts/verify"
         params = {
             'token': self.activationToken,
             'email': self.email
         }
         response = requests.get(url=url, params=params)
-        
-
 
     def test_06_get_am_coe_v2_account_by_id(self):
-        url = os.environ.get("EMTEST_CONFIG_AM_HOST")+"/coe/v2/accounts/"+self.account_id
+        url = self.am_host + "/coe/v2/accounts/" + self.account_id
         headers = {}
         headers['content-type'] = 'application/json'
         headers['authorization'] = self.service_token
@@ -182,7 +181,6 @@ class TestEnterpriseManagementV1(unittest.TestCase):
         x = resp["entity"]
         self.__class__.ownerIamId = x["owner_iam_id"]
         self.__class__.subscriptionId = x["subscription_id"]
-        
 
     def test_07_get_activate_subscription_payload(self):
         jsonData = {
@@ -210,36 +208,31 @@ class TestEnterpriseManagementV1(unittest.TestCase):
         headers = {}
         headers['content-type'] = 'application/json'
         headers['authorization'] = self.service_token
-        url = os.environ.get("EMTEST_CONFIG_AM_HOST")+ "/coe/v2/accounts/"+ self.account_id+"/bluemix_subscriptions/"+self.subscriptionId
-        
+        url = self.am_host + "/coe/v2/accounts/" + self.account_id + "/bluemix_subscriptions/" + self.subscriptionId
         response = requests.patch(url=url, headers=headers, json=jsonData)
-        
 
     def test_08_get_am_coe_v2_account_by_id(self):
-        url = os.environ.get("EMTEST_CONFIG_AM_HOST")+"/coe/v2/accounts/"+self.account_id
+        url = self.am_host + "/coe/v2/accounts/" + self.account_id
         headers = {}
         headers['content-type'] = 'application/json'
         headers['authorization'] = self.service_token
         response = requests.get(url=url, headers=headers)
         resp = response.json()
-        
-
 
     def test_09_create_enterprise(self):
-        response = self.service.create_enterprise(source_account_id = self.account_id,
-        name = "IBM",
-        primary_contact_iam_id = self.ownerIamId,
-        domain= "IBM.com")
-
+        response = self.service.create_enterprise(
+            source_account_id=self.account_id,
+            name="IBM",
+            primary_contact_iam_id=self.ownerIamId,
+            domain="IBM.com")
         assert response is not None
         assert response.get_status_code() == 202
         x = response.get_result()
         self.__class__.enterprise_id = x["enterprise_id"]
         self.__class__.enterprise_account_id = x["enterprise_account_id"]
 
-
     def test_10_get_am_coe_v2_account_by_id(self):
-        url = os.environ.get("EMTEST_CONFIG_AM_HOST")+"/coe/v2/accounts/"+self.account_id
+        url = self.am_host + "/coe/v2/accounts/" + self.account_id
         headers = {}
         headers['content-type'] = 'application/json'
         headers['authorization'] = self.service_token
@@ -249,53 +242,44 @@ class TestEnterpriseManagementV1(unittest.TestCase):
         x = resp["entity"]
         self.__class__.parent = x["parent"]
 
-
     def test_11_create_account_group(self):
-        response = self.service.create_account_group(parent = self.parent,
-        name= "IBM",
-        primary_contact_iam_id = self.ownerIamId)
-        
+        response = self.service.create_account_group(
+            parent=self.parent,
+            name="IBM",
+            primary_contact_iam_id=self.ownerIamId)
         assert response is not None
         assert response.get_status_code() == 201
         x = response.get_result()
         self.__class__.account_group_id = x["account_group_id"]
 
-
     def test_12_list_account_groups(self):
-        response = self.service.list_account_groups(enterprise_id = self.enterprise_id,
-        parent_account_group_id = self.account_group_id,
-        parent = self.parent,
-        limit = 100)
-        
+        response = self.service.list_account_groups(
+            enterprise_id=self.enterprise_id,
+            parent_account_group_id=self.account_group_id,
+            parent=self.parent,
+            limit=100)
         assert response is not None
         assert response.get_status_code() == 200
         x = response.get_result()
 
-
     def test_13_get_account_group(self):
-        
-        response = self.service.get_account_group(account_group_id = self.account_group_id)
-        
+        response = self.service.get_account_group(account_group_id=self.account_group_id)
         assert response is not None
         assert response.get_status_code() == 200
         x = response.get_result()
         self.__class__.crn = x["crn"]
 
-
     def test_14_update_account_group(self):
-        response = self.service.update_account_group(account_group_id = self.account_group_id,
-        name = "IBM",
-        primary_contact_iam_id = self.ownerIamId)
-        
+        response = self.service.update_account_group(
+            account_group_id=self.account_group_id,
+            name="IBM",
+            primary_contact_iam_id=self.ownerIamId)
         assert response is not None
         assert response.get_status_code() == 204
         x = response.get_result()
 
-
     def test_16_create_standard_account(self):
-
-        self.__class__.standard_email = "aminttest+"+str(int(time.time() * 1000))+"_"+str(math.floor(random.random()* 10000))+"@mail.test.ibm.com"
-
+        self.__class__.standard_email = "aminttest+" + str(int(time.time() * 1000)) + "_" + str(math.floor(random.random() * 10000)) + "@mail.test.ibm.com"
         jsonData = {
             'owner_user_id': self.standard_email,
             'owner_email': self.standard_email,
@@ -320,19 +304,16 @@ class TestEnterpriseManagementV1(unittest.TestCase):
         headers = {}
         headers['content-type'] = 'application/json'
         headers['authorization'] = self.service_token
-        url = os.environ.get("EMTEST_CONFIG_AM_HOST")+ "/coe/v2/accounts"
+        url = self.am_host + "/coe/v2/accounts"
         response = requests.post(url=url, headers=headers, json=jsonData)
         resp = response.json()
-        
         self.__class__.standard_account_id = resp["id"]
-        
-
 
     def test_17_get_activation_code(self):
         headers = {}
         headers['content-type'] = 'application/json'
         headers['authorization'] = self.service_token
-        url = os.environ.get("EMTEST_CONFIG_AM_HOST")+ "/v1/activation-codes/"+self.standard_email
+        url = self.am_host + "/v1/activation-codes/" + self.standard_email
         time.sleep(20)
         response = requests.get(url=url, headers=headers)
         
@@ -340,98 +321,80 @@ class TestEnterpriseManagementV1(unittest.TestCase):
         x = resp["resources"]
         y = x[0]
         self.__class__.activation_token = y["id"]
-        
-
 
     def test_18_get_am_coe_v2_accounts_verify(self):
-        url = os.environ.get("EMTEST_CONFIG_AM_HOST")+"/coe/v2/accounts/verify"
+        url = self.am_host + "/coe/v2/accounts/verify"
         params = {
             'token': self.activation_token,
             'email': self.standard_email
         }
         response = requests.get(url=url, params=params)
-        
-
-
 
     def test_19_import_account_to_enterprise(self):
         response = self.service.import_account_to_enterprise(
-        enterprise_id = self.enterprise_id,
-        account_id = self.standard_account_id,
-        parent = self.parent)
-        
+            enterprise_id=self.enterprise_id,
+            account_id=self.standard_account_id,
+            parent=self.parent)
         assert response is not None
         assert response.get_status_code() == 202
         x = response.get_result()
-      
 
     def test_20_get_account(self):
-        
-        response = self.service.get_account(account_id = self.enterprise_account_id)
-        
+        response = self.service.get_account(account_id=self.enterprise_account_id)
         assert response is not None
         assert response.get_status_code() == 200
         x = response.get_result()
 
-
     def test_21_create_account(self):
         response = self.service.create_account(
-        parent= self.parent,
-        name= "IBM",
-        owner_iam_id= "IBMid-550006JKXX")
-        
+            parent=self.parent,
+            name="IBM",
+            owner_iam_id="IBMid-550006JKXX")
         assert response is not None
         assert response.get_status_code() == 202
         x = response.get_result()
         self.__class__.newAccount = x["account_id"];
 
-
     def test_22_get_account(self):
-        response = self.service.get_account(account_id = self.newAccount)
-        
+        response = self.service.get_account(account_id=self.newAccount)
         assert response is not None
         assert response.get_status_code() == 200
         x = response.get_result()
-
 
     def test_23_list_accounts(self):
-        
-        response = self.service.list_accounts(enterprise_id = self.enterprise_id,
-        account_group_id = self.account_group_id,
-        parent = self.parent,
-        limit = 100)
-        
+        response = self.service.list_accounts(
+            enterprise_id=self.enterprise_id,
+            account_group_id=self.account_group_id,
+            parent=self.parent,
+            limit=100)
         assert response is not None
         assert response.get_status_code() == 200
         x = response.get_result()
-
    
     def test_24_create_account_group(self): 
-        response = self.service.create_account_group(parent = self.parent,
-        name= "IBM",
-        primary_contact_iam_id = self.ownerIamId)
-        
+        response = self.service.create_account_group(
+            parent=self.parent,
+            name="IBM",
+            primary_contact_iam_id=self.ownerIamId)
         assert response is not None
         assert response.get_status_code() == 201
         x = response.get_result()
         self.__class__.account_group_id_2 = x["account_group_id"]  
 
-
     def test_25_list_account_groups(self):
-        response = self.service.list_account_groups(enterprise_id = self.enterprise_id,
-        parent_account_group_id = self.account_group_id,
-        parent = self.parent,
-        limit=100,)
-        
+        response = self.service.list_account_groups(
+            enterprise_id=self.enterprise_id,
+            parent_account_group_id=self.account_group_id,
+            parent=self.parent,
+            limit=100)
         assert response is not None
         assert response.get_status_code() == 200
         x = response.get_result()
 
     def test_26_update_account(self):
         response = self.service.update_account(
-        account_id= self.newAccount,
-        parent= self.crn)
-        
+            account_id=self.newAccount,
+            parent=self.crn)
         assert response is not None
         assert response.get_status_code() == 202
         x = response.get_result()
