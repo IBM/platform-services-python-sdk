@@ -188,7 +188,7 @@ class TestEnterpriseManagementV1(unittest.TestCase):
             'state': 'ACTIVE',
             'payment_method': {
               'start_date': '2020-03-01T07:00:00.000Z',
-              'end_date': '2020-11-30T08:00:00.000'
+              'end_date':   '2020-11-30T08:00:00.000Z'
             },
             'subscription_amount': 100,
             'quantity': 10,
