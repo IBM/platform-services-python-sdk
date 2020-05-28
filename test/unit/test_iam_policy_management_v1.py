@@ -165,34 +165,34 @@ class TestCreatePolicy():
                       content_type='application/json',
                       status=201)
 
-        # Construct a dict representation of a PolicyRequestSubjectsItemAttributesItem model
-        policy_request_subjects_item_attributes_item_model = {}
-        policy_request_subjects_item_attributes_item_model['name'] = 'testString'
-        policy_request_subjects_item_attributes_item_model['value'] = 'testString'
+        # Construct a dict representation of a SubjectAttribute model
+        subject_attribute_model = {}
+        subject_attribute_model['name'] = 'testString'
+        subject_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestSubjectsItem model
-        policy_request_subjects_item_model = {}
-        policy_request_subjects_item_model['attributes'] = [policy_request_subjects_item_attributes_item_model]
+        # Construct a dict representation of a PolicySubject model
+        policy_subject_model = {}
+        policy_subject_model['attributes'] = [subject_attribute_model]
 
-        # Construct a dict representation of a PolicyRequestRolesItem model
-        policy_request_roles_item_model = {}
-        policy_request_roles_item_model['role_id'] = 'testString'
+        # Construct a dict representation of a PolicyRole model
+        policy_role_model = {}
+        policy_role_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestResourcesItemAttributesItem model
-        policy_request_resources_item_attributes_item_model = {}
-        policy_request_resources_item_attributes_item_model['name'] = 'testString'
-        policy_request_resources_item_attributes_item_model['value'] = 'testString'
-        policy_request_resources_item_attributes_item_model['operator'] = 'testString'
+        # Construct a dict representation of a ResourceAttribute model
+        resource_attribute_model = {}
+        resource_attribute_model['name'] = 'testString'
+        resource_attribute_model['value'] = 'testString'
+        resource_attribute_model['operator'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestResourcesItem model
-        policy_request_resources_item_model = {}
-        policy_request_resources_item_model['attributes'] = [policy_request_resources_item_attributes_item_model]
+        # Construct a dict representation of a PolicyResource model
+        policy_resource_model = {}
+        policy_resource_model['attributes'] = [resource_attribute_model]
 
         # Set up parameter values
         type = 'testString'
-        subjects = [policy_request_subjects_item_model]
-        roles = [policy_request_roles_item_model]
-        resources = [policy_request_resources_item_model]
+        subjects = [policy_subject_model]
+        roles = [policy_role_model]
+        resources = [policy_resource_model]
         accept_language = 'testString'
 
         # Invoke method
@@ -211,9 +211,9 @@ class TestCreatePolicy():
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['type'] == 'testString'
-        assert req_body['subjects'] == [policy_request_subjects_item_model]
-        assert req_body['roles'] == [policy_request_roles_item_model]
-        assert req_body['resources'] == [policy_request_resources_item_model]
+        assert req_body['subjects'] == [policy_subject_model]
+        assert req_body['roles'] == [policy_role_model]
+        assert req_body['resources'] == [policy_resource_model]
 
 
     #--------------------------------------------------------
@@ -230,34 +230,34 @@ class TestCreatePolicy():
                       content_type='application/json',
                       status=201)
 
-        # Construct a dict representation of a PolicyRequestSubjectsItemAttributesItem model
-        policy_request_subjects_item_attributes_item_model = {}
-        policy_request_subjects_item_attributes_item_model['name'] = 'testString'
-        policy_request_subjects_item_attributes_item_model['value'] = 'testString'
+        # Construct a dict representation of a SubjectAttribute model
+        subject_attribute_model = {}
+        subject_attribute_model['name'] = 'testString'
+        subject_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestSubjectsItem model
-        policy_request_subjects_item_model = {}
-        policy_request_subjects_item_model['attributes'] = [policy_request_subjects_item_attributes_item_model]
+        # Construct a dict representation of a PolicySubject model
+        policy_subject_model = {}
+        policy_subject_model['attributes'] = [subject_attribute_model]
 
-        # Construct a dict representation of a PolicyRequestRolesItem model
-        policy_request_roles_item_model = {}
-        policy_request_roles_item_model['role_id'] = 'testString'
+        # Construct a dict representation of a PolicyRole model
+        policy_role_model = {}
+        policy_role_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestResourcesItemAttributesItem model
-        policy_request_resources_item_attributes_item_model = {}
-        policy_request_resources_item_attributes_item_model['name'] = 'testString'
-        policy_request_resources_item_attributes_item_model['value'] = 'testString'
-        policy_request_resources_item_attributes_item_model['operator'] = 'testString'
+        # Construct a dict representation of a ResourceAttribute model
+        resource_attribute_model = {}
+        resource_attribute_model['name'] = 'testString'
+        resource_attribute_model['value'] = 'testString'
+        resource_attribute_model['operator'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestResourcesItem model
-        policy_request_resources_item_model = {}
-        policy_request_resources_item_model['attributes'] = [policy_request_resources_item_attributes_item_model]
+        # Construct a dict representation of a PolicyResource model
+        policy_resource_model = {}
+        policy_resource_model['attributes'] = [resource_attribute_model]
 
         # Set up parameter values
         type = 'testString'
-        subjects = [policy_request_subjects_item_model]
-        roles = [policy_request_roles_item_model]
-        resources = [policy_request_resources_item_model]
+        subjects = [policy_subject_model]
+        roles = [policy_role_model]
+        resources = [policy_resource_model]
 
         # Invoke method
         response = service.create_policy(
@@ -274,9 +274,9 @@ class TestCreatePolicy():
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['type'] == 'testString'
-        assert req_body['subjects'] == [policy_request_subjects_item_model]
-        assert req_body['roles'] == [policy_request_roles_item_model]
-        assert req_body['resources'] == [policy_request_resources_item_model]
+        assert req_body['subjects'] == [policy_subject_model]
+        assert req_body['roles'] == [policy_role_model]
+        assert req_body['resources'] == [policy_resource_model]
 
 
     #--------------------------------------------------------
@@ -293,34 +293,34 @@ class TestCreatePolicy():
                       content_type='application/json',
                       status=201)
 
-        # Construct a dict representation of a PolicyRequestSubjectsItemAttributesItem model
-        policy_request_subjects_item_attributes_item_model = {}
-        policy_request_subjects_item_attributes_item_model['name'] = 'testString'
-        policy_request_subjects_item_attributes_item_model['value'] = 'testString'
+        # Construct a dict representation of a SubjectAttribute model
+        subject_attribute_model = {}
+        subject_attribute_model['name'] = 'testString'
+        subject_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestSubjectsItem model
-        policy_request_subjects_item_model = {}
-        policy_request_subjects_item_model['attributes'] = [policy_request_subjects_item_attributes_item_model]
+        # Construct a dict representation of a PolicySubject model
+        policy_subject_model = {}
+        policy_subject_model['attributes'] = [subject_attribute_model]
 
-        # Construct a dict representation of a PolicyRequestRolesItem model
-        policy_request_roles_item_model = {}
-        policy_request_roles_item_model['role_id'] = 'testString'
+        # Construct a dict representation of a PolicyRole model
+        policy_role_model = {}
+        policy_role_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestResourcesItemAttributesItem model
-        policy_request_resources_item_attributes_item_model = {}
-        policy_request_resources_item_attributes_item_model['name'] = 'testString'
-        policy_request_resources_item_attributes_item_model['value'] = 'testString'
-        policy_request_resources_item_attributes_item_model['operator'] = 'testString'
+        # Construct a dict representation of a ResourceAttribute model
+        resource_attribute_model = {}
+        resource_attribute_model['name'] = 'testString'
+        resource_attribute_model['value'] = 'testString'
+        resource_attribute_model['operator'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestResourcesItem model
-        policy_request_resources_item_model = {}
-        policy_request_resources_item_model['attributes'] = [policy_request_resources_item_attributes_item_model]
+        # Construct a dict representation of a PolicyResource model
+        policy_resource_model = {}
+        policy_resource_model['attributes'] = [resource_attribute_model]
 
         # Set up parameter values
         type = 'testString'
-        subjects = [policy_request_subjects_item_model]
-        roles = [policy_request_roles_item_model]
-        resources = [policy_request_resources_item_model]
+        subjects = [policy_subject_model]
+        roles = [policy_role_model]
+        resources = [policy_resource_model]
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -355,36 +355,36 @@ class TestUpdatePolicy():
                       content_type='application/json',
                       status=200)
 
-        # Construct a dict representation of a PolicyRequestSubjectsItemAttributesItem model
-        policy_request_subjects_item_attributes_item_model = {}
-        policy_request_subjects_item_attributes_item_model['name'] = 'testString'
-        policy_request_subjects_item_attributes_item_model['value'] = 'testString'
+        # Construct a dict representation of a SubjectAttribute model
+        subject_attribute_model = {}
+        subject_attribute_model['name'] = 'testString'
+        subject_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestSubjectsItem model
-        policy_request_subjects_item_model = {}
-        policy_request_subjects_item_model['attributes'] = [policy_request_subjects_item_attributes_item_model]
+        # Construct a dict representation of a PolicySubject model
+        policy_subject_model = {}
+        policy_subject_model['attributes'] = [subject_attribute_model]
 
-        # Construct a dict representation of a PolicyRequestRolesItem model
-        policy_request_roles_item_model = {}
-        policy_request_roles_item_model['role_id'] = 'testString'
+        # Construct a dict representation of a PolicyRole model
+        policy_role_model = {}
+        policy_role_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestResourcesItemAttributesItem model
-        policy_request_resources_item_attributes_item_model = {}
-        policy_request_resources_item_attributes_item_model['name'] = 'testString'
-        policy_request_resources_item_attributes_item_model['value'] = 'testString'
-        policy_request_resources_item_attributes_item_model['operator'] = 'testString'
+        # Construct a dict representation of a ResourceAttribute model
+        resource_attribute_model = {}
+        resource_attribute_model['name'] = 'testString'
+        resource_attribute_model['value'] = 'testString'
+        resource_attribute_model['operator'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestResourcesItem model
-        policy_request_resources_item_model = {}
-        policy_request_resources_item_model['attributes'] = [policy_request_resources_item_attributes_item_model]
+        # Construct a dict representation of a PolicyResource model
+        policy_resource_model = {}
+        policy_resource_model['attributes'] = [resource_attribute_model]
 
         # Set up parameter values
         policy_id = 'testString'
         if_match = 'testString'
         type = 'testString'
-        subjects = [policy_request_subjects_item_model]
-        roles = [policy_request_roles_item_model]
-        resources = [policy_request_resources_item_model]
+        subjects = [policy_subject_model]
+        roles = [policy_role_model]
+        resources = [policy_resource_model]
 
         # Invoke method
         response = service.update_policy(
@@ -403,9 +403,9 @@ class TestUpdatePolicy():
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['type'] == 'testString'
-        assert req_body['subjects'] == [policy_request_subjects_item_model]
-        assert req_body['roles'] == [policy_request_roles_item_model]
-        assert req_body['resources'] == [policy_request_resources_item_model]
+        assert req_body['subjects'] == [policy_subject_model]
+        assert req_body['roles'] == [policy_role_model]
+        assert req_body['resources'] == [policy_resource_model]
 
 
     #--------------------------------------------------------
@@ -422,36 +422,36 @@ class TestUpdatePolicy():
                       content_type='application/json',
                       status=200)
 
-        # Construct a dict representation of a PolicyRequestSubjectsItemAttributesItem model
-        policy_request_subjects_item_attributes_item_model = {}
-        policy_request_subjects_item_attributes_item_model['name'] = 'testString'
-        policy_request_subjects_item_attributes_item_model['value'] = 'testString'
+        # Construct a dict representation of a SubjectAttribute model
+        subject_attribute_model = {}
+        subject_attribute_model['name'] = 'testString'
+        subject_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestSubjectsItem model
-        policy_request_subjects_item_model = {}
-        policy_request_subjects_item_model['attributes'] = [policy_request_subjects_item_attributes_item_model]
+        # Construct a dict representation of a PolicySubject model
+        policy_subject_model = {}
+        policy_subject_model['attributes'] = [subject_attribute_model]
 
-        # Construct a dict representation of a PolicyRequestRolesItem model
-        policy_request_roles_item_model = {}
-        policy_request_roles_item_model['role_id'] = 'testString'
+        # Construct a dict representation of a PolicyRole model
+        policy_role_model = {}
+        policy_role_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestResourcesItemAttributesItem model
-        policy_request_resources_item_attributes_item_model = {}
-        policy_request_resources_item_attributes_item_model['name'] = 'testString'
-        policy_request_resources_item_attributes_item_model['value'] = 'testString'
-        policy_request_resources_item_attributes_item_model['operator'] = 'testString'
+        # Construct a dict representation of a ResourceAttribute model
+        resource_attribute_model = {}
+        resource_attribute_model['name'] = 'testString'
+        resource_attribute_model['value'] = 'testString'
+        resource_attribute_model['operator'] = 'testString'
 
-        # Construct a dict representation of a PolicyRequestResourcesItem model
-        policy_request_resources_item_model = {}
-        policy_request_resources_item_model['attributes'] = [policy_request_resources_item_attributes_item_model]
+        # Construct a dict representation of a PolicyResource model
+        policy_resource_model = {}
+        policy_resource_model['attributes'] = [resource_attribute_model]
 
         # Set up parameter values
         policy_id = 'testString'
         if_match = 'testString'
         type = 'testString'
-        subjects = [policy_request_subjects_item_model]
-        roles = [policy_request_roles_item_model]
-        resources = [policy_request_resources_item_model]
+        subjects = [policy_subject_model]
+        roles = [policy_role_model]
+        resources = [policy_resource_model]
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -607,7 +607,7 @@ class TestListRoles():
     def test_list_roles_all_params(self):
         # Set up mock
         url = base_url + '/v2/roles'
-        mock_response = '{"custom_roles": [{"id": "id", "name": "name", "account_id": "account_id", "service_name": "service_name", "display_name": "display_name", "description": "description", "crn": "crn", "actions": ["actions"], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}], "service_roles": [{"display_name": "display_name", "description": "description", "crn": "crn", "actions": ["actions"]}], "system_roles": [{"display_name": "display_name", "description": "description", "crn": "crn", "actions": ["actions"]}]}'
+        mock_response = '{"custom_roles": [{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}], "service_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}], "system_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -644,7 +644,7 @@ class TestListRoles():
     def test_list_roles_required_params(self):
         # Set up mock
         url = base_url + '/v2/roles'
-        mock_response = '{"custom_roles": [{"id": "id", "name": "name", "account_id": "account_id", "service_name": "service_name", "display_name": "display_name", "description": "description", "crn": "crn", "actions": ["actions"], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}], "service_roles": [{"display_name": "display_name", "description": "description", "crn": "crn", "actions": ["actions"]}], "system_roles": [{"display_name": "display_name", "description": "description", "crn": "crn", "actions": ["actions"]}]}'
+        mock_response = '{"custom_roles": [{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}], "service_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}], "system_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -672,7 +672,7 @@ class TestCreateRole():
     def test_create_role_all_params(self):
         # Set up mock
         url = base_url + '/v2/roles'
-        mock_response = '{"id": "id", "name": "name", "account_id": "account_id", "service_name": "service_name", "display_name": "display_name", "description": "description", "crn": "crn", "actions": ["actions"], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
+        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -680,21 +680,21 @@ class TestCreateRole():
                       status=201)
 
         # Set up parameter values
+        display_name = 'testString'
+        actions = ['testString']
         name = 'testString'
         account_id = 'testString'
         service_name = 'testString'
-        display_name = 'testString'
-        actions = ['testString']
         description = 'testString'
         accept_language = 'testString'
 
         # Invoke method
         response = service.create_role(
+            display_name,
+            actions,
             name,
             account_id,
             service_name,
-            display_name,
-            actions,
             description=description,
             accept_language=accept_language,
             headers={}
@@ -705,11 +705,11 @@ class TestCreateRole():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['display_name'] == 'testString'
+        assert req_body['actions'] == ['testString']
         assert req_body['name'] == 'testString'
         assert req_body['account_id'] == 'testString'
         assert req_body['service_name'] == 'testString'
-        assert req_body['display_name'] == 'testString'
-        assert req_body['actions'] == ['testString']
         assert req_body['description'] == 'testString'
 
 
@@ -720,7 +720,7 @@ class TestCreateRole():
     def test_create_role_required_params(self):
         # Set up mock
         url = base_url + '/v2/roles'
-        mock_response = '{"id": "id", "name": "name", "account_id": "account_id", "service_name": "service_name", "display_name": "display_name", "description": "description", "crn": "crn", "actions": ["actions"], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
+        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -728,20 +728,20 @@ class TestCreateRole():
                       status=201)
 
         # Set up parameter values
+        display_name = 'testString'
+        actions = ['testString']
         name = 'testString'
         account_id = 'testString'
         service_name = 'testString'
-        display_name = 'testString'
-        actions = ['testString']
         description = 'testString'
 
         # Invoke method
         response = service.create_role(
+            display_name,
+            actions,
             name,
             account_id,
             service_name,
-            display_name,
-            actions,
             description=description,
             headers={}
         )
@@ -751,11 +751,11 @@ class TestCreateRole():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['display_name'] == 'testString'
+        assert req_body['actions'] == ['testString']
         assert req_body['name'] == 'testString'
         assert req_body['account_id'] == 'testString'
         assert req_body['service_name'] == 'testString'
-        assert req_body['display_name'] == 'testString'
-        assert req_body['actions'] == ['testString']
         assert req_body['description'] == 'testString'
 
 
@@ -766,7 +766,7 @@ class TestCreateRole():
     def test_create_role_value_error(self):
         # Set up mock
         url = base_url + '/v2/roles'
-        mock_response = '{"id": "id", "name": "name", "account_id": "account_id", "service_name": "service_name", "display_name": "display_name", "description": "description", "crn": "crn", "actions": ["actions"], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
+        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -774,20 +774,20 @@ class TestCreateRole():
                       status=201)
 
         # Set up parameter values
+        display_name = 'testString'
+        actions = ['testString']
         name = 'testString'
         account_id = 'testString'
         service_name = 'testString'
-        display_name = 'testString'
-        actions = ['testString']
         description = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
+            "display_name": display_name,
+            "actions": actions,
             "name": name,
             "account_id": account_id,
             "service_name": service_name,
-            "display_name": display_name,
-            "actions": actions,
         }
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
@@ -808,7 +808,7 @@ class TestUpdateRole():
     def test_update_role_all_params(self):
         # Set up mock
         url = base_url + '/v2/roles/testString'
-        mock_response = '{"id": "id", "name": "name", "account_id": "account_id", "service_name": "service_name", "display_name": "display_name", "description": "description", "crn": "crn", "actions": ["actions"], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
+        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -849,7 +849,7 @@ class TestUpdateRole():
     def test_update_role_value_error(self):
         # Set up mock
         url = base_url + '/v2/roles/testString'
-        mock_response = '{"id": "id", "name": "name", "account_id": "account_id", "service_name": "service_name", "display_name": "display_name", "description": "description", "crn": "crn", "actions": ["actions"], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
+        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -887,7 +887,7 @@ class TestGetRole():
     def test_get_role_all_params(self):
         # Set up mock
         url = base_url + '/v2/roles/testString'
-        mock_response = '{"id": "id", "name": "name", "account_id": "account_id", "service_name": "service_name", "display_name": "display_name", "description": "description", "crn": "crn", "actions": ["actions"], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
+        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -915,7 +915,7 @@ class TestGetRole():
     def test_get_role_value_error(self):
         # Set up mock
         url = base_url + '/v2/roles/testString'
-        mock_response = '{"id": "id", "name": "name", "account_id": "account_id", "service_name": "service_name", "display_name": "display_name", "description": "description", "crn": "crn", "actions": ["actions"], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
+        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1002,435 +1002,6 @@ class TestDeleteRole():
 ##############################################################################
 # region
 #-----------------------------------------------------------------------------
-# Test Class for PolicyBaseResourcesItem
-#-----------------------------------------------------------------------------
-class TestPolicyBaseResourcesItem():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PolicyBaseResourcesItem
-    #--------------------------------------------------------
-    def test_policy_base_resources_item_serialization(self):
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        policy_base_resources_item_attributes_item_model = {} # PolicyBaseResourcesItemAttributesItem
-        policy_base_resources_item_attributes_item_model['name'] = 'testString'
-        policy_base_resources_item_attributes_item_model['value'] = 'testString'
-        policy_base_resources_item_attributes_item_model['operator'] = 'testString'
-
-        # Construct a json representation of a PolicyBaseResourcesItem model
-        policy_base_resources_item_model_json = {}
-        policy_base_resources_item_model_json['attributes'] = [policy_base_resources_item_attributes_item_model]
-
-        # Construct a model instance of PolicyBaseResourcesItem by calling from_dict on the json representation
-        policy_base_resources_item_model = PolicyBaseResourcesItem.from_dict(policy_base_resources_item_model_json)
-        assert policy_base_resources_item_model != False
-
-        # Construct a model instance of PolicyBaseResourcesItem by calling from_dict on the json representation
-        policy_base_resources_item_model_dict = PolicyBaseResourcesItem.from_dict(policy_base_resources_item_model_json).__dict__
-        policy_base_resources_item_model2 = PolicyBaseResourcesItem(**policy_base_resources_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_base_resources_item_model == policy_base_resources_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_base_resources_item_model_json2 = policy_base_resources_item_model.to_dict()
-        assert policy_base_resources_item_model_json2 == policy_base_resources_item_model_json
-
-#-----------------------------------------------------------------------------
-# Test Class for PolicyBaseResourcesItemAttributesItem
-#-----------------------------------------------------------------------------
-class TestPolicyBaseResourcesItemAttributesItem():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PolicyBaseResourcesItemAttributesItem
-    #--------------------------------------------------------
-    def test_policy_base_resources_item_attributes_item_serialization(self):
-
-        # Construct a json representation of a PolicyBaseResourcesItemAttributesItem model
-        policy_base_resources_item_attributes_item_model_json = {}
-        policy_base_resources_item_attributes_item_model_json['name'] = 'testString'
-        policy_base_resources_item_attributes_item_model_json['value'] = 'testString'
-        policy_base_resources_item_attributes_item_model_json['operator'] = 'testString'
-
-        # Construct a model instance of PolicyBaseResourcesItemAttributesItem by calling from_dict on the json representation
-        policy_base_resources_item_attributes_item_model = PolicyBaseResourcesItemAttributesItem.from_dict(policy_base_resources_item_attributes_item_model_json)
-        assert policy_base_resources_item_attributes_item_model != False
-
-        # Construct a model instance of PolicyBaseResourcesItemAttributesItem by calling from_dict on the json representation
-        policy_base_resources_item_attributes_item_model_dict = PolicyBaseResourcesItemAttributesItem.from_dict(policy_base_resources_item_attributes_item_model_json).__dict__
-        policy_base_resources_item_attributes_item_model2 = PolicyBaseResourcesItemAttributesItem(**policy_base_resources_item_attributes_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_base_resources_item_attributes_item_model == policy_base_resources_item_attributes_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_base_resources_item_attributes_item_model_json2 = policy_base_resources_item_attributes_item_model.to_dict()
-        assert policy_base_resources_item_attributes_item_model_json2 == policy_base_resources_item_attributes_item_model_json
-
-#-----------------------------------------------------------------------------
-# Test Class for PolicyBaseSubjectsItem
-#-----------------------------------------------------------------------------
-class TestPolicyBaseSubjectsItem():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PolicyBaseSubjectsItem
-    #--------------------------------------------------------
-    def test_policy_base_subjects_item_serialization(self):
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        policy_base_subjects_item_attributes_item_model = {} # PolicyBaseSubjectsItemAttributesItem
-        policy_base_subjects_item_attributes_item_model['name'] = 'testString'
-        policy_base_subjects_item_attributes_item_model['value'] = 'testString'
-
-        # Construct a json representation of a PolicyBaseSubjectsItem model
-        policy_base_subjects_item_model_json = {}
-        policy_base_subjects_item_model_json['attributes'] = [policy_base_subjects_item_attributes_item_model]
-
-        # Construct a model instance of PolicyBaseSubjectsItem by calling from_dict on the json representation
-        policy_base_subjects_item_model = PolicyBaseSubjectsItem.from_dict(policy_base_subjects_item_model_json)
-        assert policy_base_subjects_item_model != False
-
-        # Construct a model instance of PolicyBaseSubjectsItem by calling from_dict on the json representation
-        policy_base_subjects_item_model_dict = PolicyBaseSubjectsItem.from_dict(policy_base_subjects_item_model_json).__dict__
-        policy_base_subjects_item_model2 = PolicyBaseSubjectsItem(**policy_base_subjects_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_base_subjects_item_model == policy_base_subjects_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_base_subjects_item_model_json2 = policy_base_subjects_item_model.to_dict()
-        assert policy_base_subjects_item_model_json2 == policy_base_subjects_item_model_json
-
-#-----------------------------------------------------------------------------
-# Test Class for PolicyBaseSubjectsItemAttributesItem
-#-----------------------------------------------------------------------------
-class TestPolicyBaseSubjectsItemAttributesItem():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PolicyBaseSubjectsItemAttributesItem
-    #--------------------------------------------------------
-    def test_policy_base_subjects_item_attributes_item_serialization(self):
-
-        # Construct a json representation of a PolicyBaseSubjectsItemAttributesItem model
-        policy_base_subjects_item_attributes_item_model_json = {}
-        policy_base_subjects_item_attributes_item_model_json['name'] = 'testString'
-        policy_base_subjects_item_attributes_item_model_json['value'] = 'testString'
-
-        # Construct a model instance of PolicyBaseSubjectsItemAttributesItem by calling from_dict on the json representation
-        policy_base_subjects_item_attributes_item_model = PolicyBaseSubjectsItemAttributesItem.from_dict(policy_base_subjects_item_attributes_item_model_json)
-        assert policy_base_subjects_item_attributes_item_model != False
-
-        # Construct a model instance of PolicyBaseSubjectsItemAttributesItem by calling from_dict on the json representation
-        policy_base_subjects_item_attributes_item_model_dict = PolicyBaseSubjectsItemAttributesItem.from_dict(policy_base_subjects_item_attributes_item_model_json).__dict__
-        policy_base_subjects_item_attributes_item_model2 = PolicyBaseSubjectsItemAttributesItem(**policy_base_subjects_item_attributes_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_base_subjects_item_attributes_item_model == policy_base_subjects_item_attributes_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_base_subjects_item_attributes_item_model_json2 = policy_base_subjects_item_attributes_item_model.to_dict()
-        assert policy_base_subjects_item_attributes_item_model_json2 == policy_base_subjects_item_attributes_item_model_json
-
-#-----------------------------------------------------------------------------
-# Test Class for PolicyRequestResourcesItem
-#-----------------------------------------------------------------------------
-class TestPolicyRequestResourcesItem():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PolicyRequestResourcesItem
-    #--------------------------------------------------------
-    def test_policy_request_resources_item_serialization(self):
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        policy_request_resources_item_attributes_item_model = {} # PolicyRequestResourcesItemAttributesItem
-        policy_request_resources_item_attributes_item_model['name'] = 'testString'
-        policy_request_resources_item_attributes_item_model['value'] = 'testString'
-        policy_request_resources_item_attributes_item_model['operator'] = 'testString'
-
-        # Construct a json representation of a PolicyRequestResourcesItem model
-        policy_request_resources_item_model_json = {}
-        policy_request_resources_item_model_json['attributes'] = [policy_request_resources_item_attributes_item_model]
-
-        # Construct a model instance of PolicyRequestResourcesItem by calling from_dict on the json representation
-        policy_request_resources_item_model = PolicyRequestResourcesItem.from_dict(policy_request_resources_item_model_json)
-        assert policy_request_resources_item_model != False
-
-        # Construct a model instance of PolicyRequestResourcesItem by calling from_dict on the json representation
-        policy_request_resources_item_model_dict = PolicyRequestResourcesItem.from_dict(policy_request_resources_item_model_json).__dict__
-        policy_request_resources_item_model2 = PolicyRequestResourcesItem(**policy_request_resources_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_request_resources_item_model == policy_request_resources_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_request_resources_item_model_json2 = policy_request_resources_item_model.to_dict()
-        assert policy_request_resources_item_model_json2 == policy_request_resources_item_model_json
-
-#-----------------------------------------------------------------------------
-# Test Class for PolicyRequestResourcesItemAttributesItem
-#-----------------------------------------------------------------------------
-class TestPolicyRequestResourcesItemAttributesItem():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PolicyRequestResourcesItemAttributesItem
-    #--------------------------------------------------------
-    def test_policy_request_resources_item_attributes_item_serialization(self):
-
-        # Construct a json representation of a PolicyRequestResourcesItemAttributesItem model
-        policy_request_resources_item_attributes_item_model_json = {}
-        policy_request_resources_item_attributes_item_model_json['name'] = 'testString'
-        policy_request_resources_item_attributes_item_model_json['value'] = 'testString'
-        policy_request_resources_item_attributes_item_model_json['operator'] = 'testString'
-
-        # Construct a model instance of PolicyRequestResourcesItemAttributesItem by calling from_dict on the json representation
-        policy_request_resources_item_attributes_item_model = PolicyRequestResourcesItemAttributesItem.from_dict(policy_request_resources_item_attributes_item_model_json)
-        assert policy_request_resources_item_attributes_item_model != False
-
-        # Construct a model instance of PolicyRequestResourcesItemAttributesItem by calling from_dict on the json representation
-        policy_request_resources_item_attributes_item_model_dict = PolicyRequestResourcesItemAttributesItem.from_dict(policy_request_resources_item_attributes_item_model_json).__dict__
-        policy_request_resources_item_attributes_item_model2 = PolicyRequestResourcesItemAttributesItem(**policy_request_resources_item_attributes_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_request_resources_item_attributes_item_model == policy_request_resources_item_attributes_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_request_resources_item_attributes_item_model_json2 = policy_request_resources_item_attributes_item_model.to_dict()
-        assert policy_request_resources_item_attributes_item_model_json2 == policy_request_resources_item_attributes_item_model_json
-
-#-----------------------------------------------------------------------------
-# Test Class for PolicyRequestRolesItem
-#-----------------------------------------------------------------------------
-class TestPolicyRequestRolesItem():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PolicyRequestRolesItem
-    #--------------------------------------------------------
-    def test_policy_request_roles_item_serialization(self):
-
-        # Construct a json representation of a PolicyRequestRolesItem model
-        policy_request_roles_item_model_json = {}
-        policy_request_roles_item_model_json['role_id'] = 'testString'
-
-        # Construct a model instance of PolicyRequestRolesItem by calling from_dict on the json representation
-        policy_request_roles_item_model = PolicyRequestRolesItem.from_dict(policy_request_roles_item_model_json)
-        assert policy_request_roles_item_model != False
-
-        # Construct a model instance of PolicyRequestRolesItem by calling from_dict on the json representation
-        policy_request_roles_item_model_dict = PolicyRequestRolesItem.from_dict(policy_request_roles_item_model_json).__dict__
-        policy_request_roles_item_model2 = PolicyRequestRolesItem(**policy_request_roles_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_request_roles_item_model == policy_request_roles_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_request_roles_item_model_json2 = policy_request_roles_item_model.to_dict()
-        assert policy_request_roles_item_model_json2 == policy_request_roles_item_model_json
-
-#-----------------------------------------------------------------------------
-# Test Class for PolicyRequestSubjectsItem
-#-----------------------------------------------------------------------------
-class TestPolicyRequestSubjectsItem():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PolicyRequestSubjectsItem
-    #--------------------------------------------------------
-    def test_policy_request_subjects_item_serialization(self):
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        policy_request_subjects_item_attributes_item_model = {} # PolicyRequestSubjectsItemAttributesItem
-        policy_request_subjects_item_attributes_item_model['name'] = 'testString'
-        policy_request_subjects_item_attributes_item_model['value'] = 'testString'
-
-        # Construct a json representation of a PolicyRequestSubjectsItem model
-        policy_request_subjects_item_model_json = {}
-        policy_request_subjects_item_model_json['attributes'] = [policy_request_subjects_item_attributes_item_model]
-
-        # Construct a model instance of PolicyRequestSubjectsItem by calling from_dict on the json representation
-        policy_request_subjects_item_model = PolicyRequestSubjectsItem.from_dict(policy_request_subjects_item_model_json)
-        assert policy_request_subjects_item_model != False
-
-        # Construct a model instance of PolicyRequestSubjectsItem by calling from_dict on the json representation
-        policy_request_subjects_item_model_dict = PolicyRequestSubjectsItem.from_dict(policy_request_subjects_item_model_json).__dict__
-        policy_request_subjects_item_model2 = PolicyRequestSubjectsItem(**policy_request_subjects_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_request_subjects_item_model == policy_request_subjects_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_request_subjects_item_model_json2 = policy_request_subjects_item_model.to_dict()
-        assert policy_request_subjects_item_model_json2 == policy_request_subjects_item_model_json
-
-#-----------------------------------------------------------------------------
-# Test Class for PolicyRequestSubjectsItemAttributesItem
-#-----------------------------------------------------------------------------
-class TestPolicyRequestSubjectsItemAttributesItem():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PolicyRequestSubjectsItemAttributesItem
-    #--------------------------------------------------------
-    def test_policy_request_subjects_item_attributes_item_serialization(self):
-
-        # Construct a json representation of a PolicyRequestSubjectsItemAttributesItem model
-        policy_request_subjects_item_attributes_item_model_json = {}
-        policy_request_subjects_item_attributes_item_model_json['name'] = 'testString'
-        policy_request_subjects_item_attributes_item_model_json['value'] = 'testString'
-
-        # Construct a model instance of PolicyRequestSubjectsItemAttributesItem by calling from_dict on the json representation
-        policy_request_subjects_item_attributes_item_model = PolicyRequestSubjectsItemAttributesItem.from_dict(policy_request_subjects_item_attributes_item_model_json)
-        assert policy_request_subjects_item_attributes_item_model != False
-
-        # Construct a model instance of PolicyRequestSubjectsItemAttributesItem by calling from_dict on the json representation
-        policy_request_subjects_item_attributes_item_model_dict = PolicyRequestSubjectsItemAttributesItem.from_dict(policy_request_subjects_item_attributes_item_model_json).__dict__
-        policy_request_subjects_item_attributes_item_model2 = PolicyRequestSubjectsItemAttributesItem(**policy_request_subjects_item_attributes_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_request_subjects_item_attributes_item_model == policy_request_subjects_item_attributes_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_request_subjects_item_attributes_item_model_json2 = policy_request_subjects_item_attributes_item_model.to_dict()
-        assert policy_request_subjects_item_attributes_item_model_json2 == policy_request_subjects_item_attributes_item_model_json
-
-#-----------------------------------------------------------------------------
-# Test Class for PolicyRolesItem
-#-----------------------------------------------------------------------------
-class TestPolicyRolesItem():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PolicyRolesItem
-    #--------------------------------------------------------
-    def test_policy_roles_item_serialization(self):
-
-        # Construct a json representation of a PolicyRolesItem model
-        policy_roles_item_model_json = {}
-        policy_roles_item_model_json['role_id'] = 'testString'
-        policy_roles_item_model_json['display_name'] = 'testString'
-        policy_roles_item_model_json['description'] = 'testString'
-
-        # Construct a model instance of PolicyRolesItem by calling from_dict on the json representation
-        policy_roles_item_model = PolicyRolesItem.from_dict(policy_roles_item_model_json)
-        assert policy_roles_item_model != False
-
-        # Construct a model instance of PolicyRolesItem by calling from_dict on the json representation
-        policy_roles_item_model_dict = PolicyRolesItem.from_dict(policy_roles_item_model_json).__dict__
-        policy_roles_item_model2 = PolicyRolesItem(**policy_roles_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_roles_item_model == policy_roles_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_roles_item_model_json2 = policy_roles_item_model.to_dict()
-        assert policy_roles_item_model_json2 == policy_roles_item_model_json
-
-#-----------------------------------------------------------------------------
-# Test Class for RoleListCustomRolesItem
-#-----------------------------------------------------------------------------
-class TestRoleListCustomRolesItem():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for RoleListCustomRolesItem
-    #--------------------------------------------------------
-    def test_role_list_custom_roles_item_serialization(self):
-
-        # Construct a json representation of a RoleListCustomRolesItem model
-        role_list_custom_roles_item_model_json = {}
-        role_list_custom_roles_item_model_json['id'] = 'testString'
-        role_list_custom_roles_item_model_json['name'] = 'testString'
-        role_list_custom_roles_item_model_json['account_id'] = 'testString'
-        role_list_custom_roles_item_model_json['service_name'] = 'testString'
-        role_list_custom_roles_item_model_json['display_name'] = 'testString'
-        role_list_custom_roles_item_model_json['description'] = 'testString'
-        role_list_custom_roles_item_model_json['crn'] = 'testString'
-        role_list_custom_roles_item_model_json['actions'] = ['testString']
-        role_list_custom_roles_item_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
-        role_list_custom_roles_item_model_json['created_by_id'] = 'testString'
-        role_list_custom_roles_item_model_json['last_modified_at'] = '2020-01-28T18:40:40.123456Z'
-        role_list_custom_roles_item_model_json['last_modified_by_id'] = 'testString'
-        role_list_custom_roles_item_model_json['href'] = 'testString'
-
-        # Construct a model instance of RoleListCustomRolesItem by calling from_dict on the json representation
-        role_list_custom_roles_item_model = RoleListCustomRolesItem.from_dict(role_list_custom_roles_item_model_json)
-        assert role_list_custom_roles_item_model != False
-
-        # Construct a model instance of RoleListCustomRolesItem by calling from_dict on the json representation
-        role_list_custom_roles_item_model_dict = RoleListCustomRolesItem.from_dict(role_list_custom_roles_item_model_json).__dict__
-        role_list_custom_roles_item_model2 = RoleListCustomRolesItem(**role_list_custom_roles_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert role_list_custom_roles_item_model == role_list_custom_roles_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        role_list_custom_roles_item_model_json2 = role_list_custom_roles_item_model.to_dict()
-        assert role_list_custom_roles_item_model_json2 == role_list_custom_roles_item_model_json
-
-#-----------------------------------------------------------------------------
-# Test Class for RoleListServiceRolesItem
-#-----------------------------------------------------------------------------
-class TestRoleListServiceRolesItem():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for RoleListServiceRolesItem
-    #--------------------------------------------------------
-    def test_role_list_service_roles_item_serialization(self):
-
-        # Construct a json representation of a RoleListServiceRolesItem model
-        role_list_service_roles_item_model_json = {}
-        role_list_service_roles_item_model_json['display_name'] = 'testString'
-        role_list_service_roles_item_model_json['description'] = 'testString'
-        role_list_service_roles_item_model_json['crn'] = 'testString'
-        role_list_service_roles_item_model_json['actions'] = ['testString']
-
-        # Construct a model instance of RoleListServiceRolesItem by calling from_dict on the json representation
-        role_list_service_roles_item_model = RoleListServiceRolesItem.from_dict(role_list_service_roles_item_model_json)
-        assert role_list_service_roles_item_model != False
-
-        # Construct a model instance of RoleListServiceRolesItem by calling from_dict on the json representation
-        role_list_service_roles_item_model_dict = RoleListServiceRolesItem.from_dict(role_list_service_roles_item_model_json).__dict__
-        role_list_service_roles_item_model2 = RoleListServiceRolesItem(**role_list_service_roles_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert role_list_service_roles_item_model == role_list_service_roles_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        role_list_service_roles_item_model_json2 = role_list_service_roles_item_model.to_dict()
-        assert role_list_service_roles_item_model_json2 == role_list_service_roles_item_model_json
-
-#-----------------------------------------------------------------------------
-# Test Class for RoleListSystemRolesItem
-#-----------------------------------------------------------------------------
-class TestRoleListSystemRolesItem():
-
-    #--------------------------------------------------------
-    # Test serialization/deserialization for RoleListSystemRolesItem
-    #--------------------------------------------------------
-    def test_role_list_system_roles_item_serialization(self):
-
-        # Construct a json representation of a RoleListSystemRolesItem model
-        role_list_system_roles_item_model_json = {}
-        role_list_system_roles_item_model_json['display_name'] = 'testString'
-        role_list_system_roles_item_model_json['description'] = 'testString'
-        role_list_system_roles_item_model_json['crn'] = 'testString'
-        role_list_system_roles_item_model_json['actions'] = ['testString']
-
-        # Construct a model instance of RoleListSystemRolesItem by calling from_dict on the json representation
-        role_list_system_roles_item_model = RoleListSystemRolesItem.from_dict(role_list_system_roles_item_model_json)
-        assert role_list_system_roles_item_model != False
-
-        # Construct a model instance of RoleListSystemRolesItem by calling from_dict on the json representation
-        role_list_system_roles_item_model_dict = RoleListSystemRolesItem.from_dict(role_list_system_roles_item_model_json).__dict__
-        role_list_system_roles_item_model2 = RoleListSystemRolesItem(**role_list_system_roles_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert role_list_system_roles_item_model == role_list_system_roles_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        role_list_system_roles_item_model_json2 = role_list_system_roles_item_model.to_dict()
-        assert role_list_system_roles_item_model_json2 == role_list_system_roles_item_model_json
-
-#-----------------------------------------------------------------------------
 # Test Class for CustomRole
 #-----------------------------------------------------------------------------
 class TestCustomRole():
@@ -1443,13 +1014,13 @@ class TestCustomRole():
         # Construct a json representation of a CustomRole model
         custom_role_model_json = {}
         custom_role_model_json['id'] = 'testString'
+        custom_role_model_json['display_name'] = 'testString'
+        custom_role_model_json['description'] = 'testString'
+        custom_role_model_json['actions'] = ['testString']
+        custom_role_model_json['crn'] = 'testString'
         custom_role_model_json['name'] = 'testString'
         custom_role_model_json['account_id'] = 'testString'
         custom_role_model_json['service_name'] = 'testString'
-        custom_role_model_json['display_name'] = 'testString'
-        custom_role_model_json['description'] = 'testString'
-        custom_role_model_json['crn'] = 'testString'
-        custom_role_model_json['actions'] = ['testString']
         custom_role_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
         custom_role_model_json['created_by_id'] = 'testString'
         custom_role_model_json['last_modified_at'] = '2020-01-28T18:40:40.123456Z'
@@ -1483,33 +1054,33 @@ class TestPolicy():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        policy_base_resources_item_attributes_item_model = {} # PolicyBaseResourcesItemAttributesItem
-        policy_base_resources_item_attributes_item_model['name'] = 'testString'
-        policy_base_resources_item_attributes_item_model['value'] = 'testString'
-        policy_base_resources_item_attributes_item_model['operator'] = 'testString'
+        resource_attribute_model = {} # ResourceAttribute
+        resource_attribute_model['name'] = 'testString'
+        resource_attribute_model['value'] = 'testString'
+        resource_attribute_model['operator'] = 'testString'
 
-        policy_base_subjects_item_attributes_item_model = {} # PolicyBaseSubjectsItemAttributesItem
-        policy_base_subjects_item_attributes_item_model['name'] = 'testString'
-        policy_base_subjects_item_attributes_item_model['value'] = 'testString'
+        subject_attribute_model = {} # SubjectAttribute
+        subject_attribute_model['name'] = 'testString'
+        subject_attribute_model['value'] = 'testString'
 
-        policy_base_resources_item_model = {} # PolicyBaseResourcesItem
-        policy_base_resources_item_model['attributes'] = [policy_base_resources_item_attributes_item_model]
+        policy_resource_model = {} # PolicyResource
+        policy_resource_model['attributes'] = [resource_attribute_model]
 
-        policy_base_subjects_item_model = {} # PolicyBaseSubjectsItem
-        policy_base_subjects_item_model['attributes'] = [policy_base_subjects_item_attributes_item_model]
+        policy_role_model = {} # PolicyRole
+        policy_role_model['role_id'] = 'testString'
+        policy_role_model['display_name'] = 'testString'
+        policy_role_model['description'] = 'testString'
 
-        policy_roles_item_model = {} # PolicyRolesItem
-        policy_roles_item_model['role_id'] = 'testString'
-        policy_roles_item_model['display_name'] = 'testString'
-        policy_roles_item_model['description'] = 'testString'
+        policy_subject_model = {} # PolicySubject
+        policy_subject_model['attributes'] = [subject_attribute_model]
 
         # Construct a json representation of a Policy model
         policy_model_json = {}
         policy_model_json['id'] = 'testString'
         policy_model_json['type'] = 'testString'
-        policy_model_json['subjects'] = [policy_base_subjects_item_model]
-        policy_model_json['roles'] = [policy_roles_item_model]
-        policy_model_json['resources'] = [policy_base_resources_item_model]
+        policy_model_json['subjects'] = [policy_subject_model]
+        policy_model_json['roles'] = [policy_role_model]
+        policy_model_json['resources'] = [policy_resource_model]
         policy_model_json['href'] = 'testString'
         policy_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
         policy_model_json['created_by_id'] = 'testString'
@@ -1543,32 +1114,32 @@ class TestPolicyList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        policy_base_resources_item_attributes_item_model = {} # PolicyBaseResourcesItemAttributesItem
-        policy_base_resources_item_attributes_item_model['name'] = 'testString'
-        policy_base_resources_item_attributes_item_model['value'] = 'testString'
-        policy_base_resources_item_attributes_item_model['operator'] = 'testString'
+        resource_attribute_model = {} # ResourceAttribute
+        resource_attribute_model['name'] = 'testString'
+        resource_attribute_model['value'] = 'testString'
+        resource_attribute_model['operator'] = 'testString'
 
-        policy_base_subjects_item_attributes_item_model = {} # PolicyBaseSubjectsItemAttributesItem
-        policy_base_subjects_item_attributes_item_model['name'] = 'testString'
-        policy_base_subjects_item_attributes_item_model['value'] = 'testString'
+        subject_attribute_model = {} # SubjectAttribute
+        subject_attribute_model['name'] = 'testString'
+        subject_attribute_model['value'] = 'testString'
 
-        policy_base_resources_item_model = {} # PolicyBaseResourcesItem
-        policy_base_resources_item_model['attributes'] = [policy_base_resources_item_attributes_item_model]
+        policy_resource_model = {} # PolicyResource
+        policy_resource_model['attributes'] = [resource_attribute_model]
 
-        policy_base_subjects_item_model = {} # PolicyBaseSubjectsItem
-        policy_base_subjects_item_model['attributes'] = [policy_base_subjects_item_attributes_item_model]
+        policy_role_model = {} # PolicyRole
+        policy_role_model['role_id'] = 'testString'
+        policy_role_model['display_name'] = 'testString'
+        policy_role_model['description'] = 'testString'
 
-        policy_roles_item_model = {} # PolicyRolesItem
-        policy_roles_item_model['role_id'] = 'testString'
-        policy_roles_item_model['display_name'] = 'testString'
-        policy_roles_item_model['description'] = 'testString'
+        policy_subject_model = {} # PolicySubject
+        policy_subject_model['attributes'] = [subject_attribute_model]
 
         policy_model = {} # Policy
         policy_model['id'] = 'testString'
         policy_model['type'] = 'testString'
-        policy_model['subjects'] = [policy_base_subjects_item_model]
-        policy_model['roles'] = [policy_roles_item_model]
-        policy_model['resources'] = [policy_base_resources_item_model]
+        policy_model['subjects'] = [policy_subject_model]
+        policy_model['roles'] = [policy_role_model]
+        policy_model['resources'] = [policy_resource_model]
         policy_model['href'] = 'testString'
         policy_model['created_at'] = '2020-01-28T18:40:40.123456Z'
         policy_model['created_by_id'] = 'testString'
@@ -1595,6 +1166,171 @@ class TestPolicyList():
         assert policy_list_model_json2 == policy_list_model_json
 
 #-----------------------------------------------------------------------------
+# Test Class for PolicyResource
+#-----------------------------------------------------------------------------
+class TestPolicyResource():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for PolicyResource
+    #--------------------------------------------------------
+    def test_policy_resource_serialization(self):
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        resource_attribute_model = {} # ResourceAttribute
+        resource_attribute_model['name'] = 'testString'
+        resource_attribute_model['value'] = 'testString'
+        resource_attribute_model['operator'] = 'testString'
+
+        # Construct a json representation of a PolicyResource model
+        policy_resource_model_json = {}
+        policy_resource_model_json['attributes'] = [resource_attribute_model]
+
+        # Construct a model instance of PolicyResource by calling from_dict on the json representation
+        policy_resource_model = PolicyResource.from_dict(policy_resource_model_json)
+        assert policy_resource_model != False
+
+        # Construct a model instance of PolicyResource by calling from_dict on the json representation
+        policy_resource_model_dict = PolicyResource.from_dict(policy_resource_model_json).__dict__
+        policy_resource_model2 = PolicyResource(**policy_resource_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_resource_model == policy_resource_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_resource_model_json2 = policy_resource_model.to_dict()
+        assert policy_resource_model_json2 == policy_resource_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for PolicyRole
+#-----------------------------------------------------------------------------
+class TestPolicyRole():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for PolicyRole
+    #--------------------------------------------------------
+    def test_policy_role_serialization(self):
+
+        # Construct a json representation of a PolicyRole model
+        policy_role_model_json = {}
+        policy_role_model_json['role_id'] = 'testString'
+        policy_role_model_json['display_name'] = 'testString'
+        policy_role_model_json['description'] = 'testString'
+
+        # Construct a model instance of PolicyRole by calling from_dict on the json representation
+        policy_role_model = PolicyRole.from_dict(policy_role_model_json)
+        assert policy_role_model != False
+
+        # Construct a model instance of PolicyRole by calling from_dict on the json representation
+        policy_role_model_dict = PolicyRole.from_dict(policy_role_model_json).__dict__
+        policy_role_model2 = PolicyRole(**policy_role_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_role_model == policy_role_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_role_model_json2 = policy_role_model.to_dict()
+        assert policy_role_model_json2 == policy_role_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for PolicySubject
+#-----------------------------------------------------------------------------
+class TestPolicySubject():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for PolicySubject
+    #--------------------------------------------------------
+    def test_policy_subject_serialization(self):
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        subject_attribute_model = {} # SubjectAttribute
+        subject_attribute_model['name'] = 'testString'
+        subject_attribute_model['value'] = 'testString'
+
+        # Construct a json representation of a PolicySubject model
+        policy_subject_model_json = {}
+        policy_subject_model_json['attributes'] = [subject_attribute_model]
+
+        # Construct a model instance of PolicySubject by calling from_dict on the json representation
+        policy_subject_model = PolicySubject.from_dict(policy_subject_model_json)
+        assert policy_subject_model != False
+
+        # Construct a model instance of PolicySubject by calling from_dict on the json representation
+        policy_subject_model_dict = PolicySubject.from_dict(policy_subject_model_json).__dict__
+        policy_subject_model2 = PolicySubject(**policy_subject_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_subject_model == policy_subject_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_subject_model_json2 = policy_subject_model.to_dict()
+        assert policy_subject_model_json2 == policy_subject_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for ResourceAttribute
+#-----------------------------------------------------------------------------
+class TestResourceAttribute():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for ResourceAttribute
+    #--------------------------------------------------------
+    def test_resource_attribute_serialization(self):
+
+        # Construct a json representation of a ResourceAttribute model
+        resource_attribute_model_json = {}
+        resource_attribute_model_json['name'] = 'testString'
+        resource_attribute_model_json['value'] = 'testString'
+        resource_attribute_model_json['operator'] = 'testString'
+
+        # Construct a model instance of ResourceAttribute by calling from_dict on the json representation
+        resource_attribute_model = ResourceAttribute.from_dict(resource_attribute_model_json)
+        assert resource_attribute_model != False
+
+        # Construct a model instance of ResourceAttribute by calling from_dict on the json representation
+        resource_attribute_model_dict = ResourceAttribute.from_dict(resource_attribute_model_json).__dict__
+        resource_attribute_model2 = ResourceAttribute(**resource_attribute_model_dict)
+
+        # Verify the model instances are equivalent
+        assert resource_attribute_model == resource_attribute_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        resource_attribute_model_json2 = resource_attribute_model.to_dict()
+        assert resource_attribute_model_json2 == resource_attribute_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for Role
+#-----------------------------------------------------------------------------
+class TestRole():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for Role
+    #--------------------------------------------------------
+    def test_role_serialization(self):
+
+        # Construct a json representation of a Role model
+        role_model_json = {}
+        role_model_json['display_name'] = 'testString'
+        role_model_json['description'] = 'testString'
+        role_model_json['actions'] = ['testString']
+        role_model_json['crn'] = 'testString'
+
+        # Construct a model instance of Role by calling from_dict on the json representation
+        role_model = Role.from_dict(role_model_json)
+        assert role_model != False
+
+        # Construct a model instance of Role by calling from_dict on the json representation
+        role_model_dict = Role.from_dict(role_model_json).__dict__
+        role_model2 = Role(**role_model_dict)
+
+        # Verify the model instances are equivalent
+        assert role_model == role_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        role_model_json2 = role_model.to_dict()
+        assert role_model_json2 == role_model_json
+
+#-----------------------------------------------------------------------------
 # Test Class for RoleList
 #-----------------------------------------------------------------------------
 class TestRoleList():
@@ -1606,38 +1342,32 @@ class TestRoleList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        role_list_custom_roles_item_model = {} # RoleListCustomRolesItem
-        role_list_custom_roles_item_model['id'] = 'testString'
-        role_list_custom_roles_item_model['name'] = 'testString'
-        role_list_custom_roles_item_model['account_id'] = 'testString'
-        role_list_custom_roles_item_model['service_name'] = 'testString'
-        role_list_custom_roles_item_model['display_name'] = 'testString'
-        role_list_custom_roles_item_model['description'] = 'testString'
-        role_list_custom_roles_item_model['crn'] = 'testString'
-        role_list_custom_roles_item_model['actions'] = ['testString']
-        role_list_custom_roles_item_model['created_at'] = '2020-01-28T18:40:40.123456Z'
-        role_list_custom_roles_item_model['created_by_id'] = 'testString'
-        role_list_custom_roles_item_model['last_modified_at'] = '2020-01-28T18:40:40.123456Z'
-        role_list_custom_roles_item_model['last_modified_by_id'] = 'testString'
-        role_list_custom_roles_item_model['href'] = 'testString'
+        custom_role_model = {} # CustomRole
+        custom_role_model['id'] = 'testString'
+        custom_role_model['display_name'] = 'testString'
+        custom_role_model['description'] = 'testString'
+        custom_role_model['actions'] = ['testString']
+        custom_role_model['crn'] = 'testString'
+        custom_role_model['name'] = 'testString'
+        custom_role_model['account_id'] = 'testString'
+        custom_role_model['service_name'] = 'testString'
+        custom_role_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        custom_role_model['created_by_id'] = 'testString'
+        custom_role_model['last_modified_at'] = '2020-01-28T18:40:40.123456Z'
+        custom_role_model['last_modified_by_id'] = 'testString'
+        custom_role_model['href'] = 'testString'
 
-        role_list_service_roles_item_model = {} # RoleListServiceRolesItem
-        role_list_service_roles_item_model['display_name'] = 'testString'
-        role_list_service_roles_item_model['description'] = 'testString'
-        role_list_service_roles_item_model['crn'] = 'testString'
-        role_list_service_roles_item_model['actions'] = ['testString']
-
-        role_list_system_roles_item_model = {} # RoleListSystemRolesItem
-        role_list_system_roles_item_model['display_name'] = 'testString'
-        role_list_system_roles_item_model['description'] = 'testString'
-        role_list_system_roles_item_model['crn'] = 'testString'
-        role_list_system_roles_item_model['actions'] = ['testString']
+        role_model = {} # Role
+        role_model['display_name'] = 'testString'
+        role_model['description'] = 'testString'
+        role_model['actions'] = ['testString']
+        role_model['crn'] = 'testString'
 
         # Construct a json representation of a RoleList model
         role_list_model_json = {}
-        role_list_model_json['custom_roles'] = [role_list_custom_roles_item_model]
-        role_list_model_json['service_roles'] = [role_list_service_roles_item_model]
-        role_list_model_json['system_roles'] = [role_list_system_roles_item_model]
+        role_list_model_json['custom_roles'] = [custom_role_model]
+        role_list_model_json['service_roles'] = [role_model]
+        role_list_model_json['system_roles'] = [role_model]
 
         # Construct a model instance of RoleList by calling from_dict on the json representation
         role_list_model = RoleList.from_dict(role_list_model_json)
@@ -1653,6 +1383,36 @@ class TestRoleList():
         # Convert model instance back to dict and verify no loss of data
         role_list_model_json2 = role_list_model.to_dict()
         assert role_list_model_json2 == role_list_model_json
+
+#-----------------------------------------------------------------------------
+# Test Class for SubjectAttribute
+#-----------------------------------------------------------------------------
+class TestSubjectAttribute():
+
+    #--------------------------------------------------------
+    # Test serialization/deserialization for SubjectAttribute
+    #--------------------------------------------------------
+    def test_subject_attribute_serialization(self):
+
+        # Construct a json representation of a SubjectAttribute model
+        subject_attribute_model_json = {}
+        subject_attribute_model_json['name'] = 'testString'
+        subject_attribute_model_json['value'] = 'testString'
+
+        # Construct a model instance of SubjectAttribute by calling from_dict on the json representation
+        subject_attribute_model = SubjectAttribute.from_dict(subject_attribute_model_json)
+        assert subject_attribute_model != False
+
+        # Construct a model instance of SubjectAttribute by calling from_dict on the json representation
+        subject_attribute_model_dict = SubjectAttribute.from_dict(subject_attribute_model_json).__dict__
+        subject_attribute_model2 = SubjectAttribute(**subject_attribute_model_dict)
+
+        # Verify the model instances are equivalent
+        assert subject_attribute_model == subject_attribute_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        subject_attribute_model_json2 = subject_attribute_model.to_dict()
+        assert subject_attribute_model_json2 == subject_attribute_model_json
 
 
 # endregion
