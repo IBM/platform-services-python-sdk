@@ -31,23 +31,19 @@ from ibm_platform_services.iam_policy_management_v1 import *
 configFile = 'iam_policy_management.env'
 configLoaded = None
 
-if os.path.exists(configFile):
-    os.environ['IBM_CREDENTIALS_FILE'] = configFile
-    configLoaded = True
-else:
-    print('External configuration was not found, skipping tests...')
 
 class TestIamPolicyManagementV1(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        if not configLoaded:
+        if os.path.exists(configFile):
+            os.environ['IBM_CREDENTIALS_FILE'] = configFile
+        else:
             raise unittest.SkipTest('External configuration not available, skipping...')
 
         cls.service = IamPolicyManagementV1.new_instance()
         assert cls.service is not None
 
-        cls.config = read_external_sources(
-            IamPolicyManagementV1.DEFAULT_SERVICE_NAME)
+        cls.config = read_external_sources(IamPolicyManagementV1.DEFAULT_SERVICE_NAME)
         assert cls.config is not None
         cls.testAccountId = cls.config.get('TEST_ACCOUNT_ID')
         assert cls.testAccountId is not None
