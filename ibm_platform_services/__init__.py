@@ -28,4 +28,5 @@ from .global_catalog_v1 import GlobalCatalogV1
 from .global_search_v2 import GlobalSearchV2
 from .global_tagging_v1 import GlobalTaggingV1
 from .iam_access_groups_v2 import IamAccessGroupsV2
+from .resource_controller_v2 import ResourceControllerV2
 from .resource_manager_v2 import ResourceManagerV2
