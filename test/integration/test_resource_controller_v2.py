@@ -30,19 +30,15 @@ from dotenv import load_dotenv
 
 # Read config file
 configFile = 'resource_controller.env'
-if os.path.exists(configFile):
-    load_dotenv(dotenv_path=configFile)
-    configLoaded = True
-else:
-    print('External configuration was not found, skipping tests...')
 
 class TestResourceControllerV2(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        if not configLoaded:
-            raise unittest.SkipTest(
-                'External configuration not available, skipping...')
-
+        if os.path.exists(configFile):
+            os.environ['IBM_CREDENTIALS_FILE'] = configFile
+        else:
+            raise unittest.SkipTest('External configuration not available, skipping...')
+        
         cls.service = ResourceControllerV2.new_instance()
         assert cls.service is not None
 
