@@ -680,24 +680,45 @@ class TestResourceControllerV2(unittest.TestCase):
             assert response is not None
             assert response.get_status_code() == 400
 
-    def test_32_delete_resource_keys(self):
+    def test_32_delete_resource_binding(self):
         customHeaders = {}
         customHeaders["Transaction-Id"] = "rc-sdk-python-test32-" + str(uuid.uuid4())
+
+        response = self.service.delete_resource_binding(self.testBindingGuid, headers=customHeaders)
+        assert response is not None
+        assert response.get_status_code() == 204
+
+    def test_33_verify_resource_binding_was_deleted(self):
+        customHeaders = {}
+        customHeaders["Transaction-Id"] = "rc-sdk-python-test33-" + str(uuid.uuid4())
+
+        response = self.service.get_resource_binding(self.testBindingGuid, headers=customHeaders)
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result = response.get_result()
+        assert result is not None
+        assert result.get('id') == self.testBindingCrn
+        assert result.get('state') == "removed"
+
+    def test_34_delete_resource_keys(self):
+        customHeaders = {}
+        customHeaders["Transaction-Id"] = "rc-sdk-python-test34-" + str(uuid.uuid4())
 
         response = self.service.delete_resource_key(self.testInstanceKeyGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 204
 
         customHeaders2 = {}
-        customHeaders2["Transaction-Id"] = "rc-sdk-python-test32-" + str(uuid.uuid4())
+        customHeaders2["Transaction-Id"] = "rc-sdk-python-test34-" + str(uuid.uuid4())
 
         response2 = self.service.delete_resource_key(self.testAliasKeyGuid, headers=customHeaders2)
         assert response2 is not None
         assert response2.get_status_code() == 204
 
-    def test_33_verify_resource_keys_were_deleted(self):
+    def test_35_verify_resource_keys_were_deleted(self):
         customHeaders = {}
-        customHeaders["Transaction-Id"] = "rc-sdk-python-test33-" + str(uuid.uuid4())
+        customHeaders["Transaction-Id"] = "rc-sdk-python-test35-" + str(uuid.uuid4())
 
         response = self.service.get_resource_key(self.testInstanceKeyGuid, headers=customHeaders)
         assert response is not None
@@ -709,7 +730,7 @@ class TestResourceControllerV2(unittest.TestCase):
         assert result.get('state') == "removed"
 
         customHeaders2 = {}
-        customHeaders2["Transaction-Id"] = "rc-sdk-python-test33-" + str(uuid.uuid4())
+        customHeaders2["Transaction-Id"] = "rc-sdk-python-test35-" + str(uuid.uuid4())
 
         response2 = self.service.get_resource_key(self.testAliasKeyGuid, headers=customHeaders2)
         assert response2 is not None
@@ -719,27 +740,6 @@ class TestResourceControllerV2(unittest.TestCase):
         assert result2 is not None
         assert result2.get('id') == self.testAliasKeyCrn
         assert result2.get('state') == "removed"
-
-    def test_34_delete_resource_binding(self):
-        customHeaders = {}
-        customHeaders["Transaction-Id"] = "rc-sdk-python-test34-" + str(uuid.uuid4())
-
-        response = self.service.delete_resource_binding(self.testBindingGuid, headers=customHeaders)
-        assert response is not None
-        assert response.get_status_code() == 204
-
-    def test_35_verify_resource_binding_was_deleted(self):
-        customHeaders = {}
-        customHeaders["Transaction-Id"] = "rc-sdk-python-test35-" + str(uuid.uuid4())
-
-        response = self.service.get_resource_binding(self.testBindingGuid, headers=customHeaders)
-        assert response is not None
-        assert response.get_status_code() == 200
-
-        result = response.get_result()
-        assert result is not None
-        assert result.get('id') == self.testBindingCrn
-        assert result.get('state') == "removed"
 
     def test_36_delete_resource_alias(self):
         customHeaders = {}
