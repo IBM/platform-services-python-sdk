@@ -1481,7 +1481,7 @@ class Reclamation():
     :attr str entity_crn: (optional) The full Cloud Resource Name (CRN) associated
           with the binding. For more information about this format, see [Cloud Resource
           Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-    :attr object resource_instance_id: (optional) The short ID of the resource
+    :attr str resource_instance_id: (optional) The short ID of the resource
           instance.
     :attr str resource_group_id: (optional) The short ID of the resource group.
     :attr str account_id: (optional) An alpha-numeric value identifying the account
@@ -1505,7 +1505,7 @@ class Reclamation():
                  entity_id: str = None,
                  entity_type_id: str = None,
                  entity_crn: str = None,
-                 resource_instance_id: object = None,
+                 resource_instance_id: str = None,
                  resource_group_id: str = None,
                  account_id: str = None,
                  policy_id: str = None,
@@ -1528,7 +1528,7 @@ class Reclamation():
                associated with the binding. For more information about this format, see
                [Cloud Resource
                Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-        :param object resource_instance_id: (optional) The short ID of the resource
+        :param str resource_instance_id: (optional) The short ID of the resource
                instance.
         :param str resource_group_id: (optional) The short ID of the resource
                group.

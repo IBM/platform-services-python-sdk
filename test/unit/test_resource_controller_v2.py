@@ -1153,7 +1153,7 @@ class TestCreateResourceBinding():
 
         # Set up parameter values
         source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
-        target = 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
+        target = 'crn:v1:cf:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
         name = 'my-binding'
         parameters = resource_binding_post_parameters_model
         role = 'Writer'
@@ -1174,7 +1174,7 @@ class TestCreateResourceBinding():
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['source'] == '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
-        assert req_body['target'] == 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
+        assert req_body['target'] == 'crn:v1:cf:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
         assert req_body['name'] == 'my-binding'
         assert req_body['parameters'] == resource_binding_post_parameters_model
         assert req_body['role'] == 'Writer'
@@ -1200,7 +1200,7 @@ class TestCreateResourceBinding():
 
         # Set up parameter values
         source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
-        target = 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
+        target = 'crn:v1:cf:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
         name = 'my-binding'
         parameters = resource_binding_post_parameters_model
         role = 'Writer'
@@ -1552,7 +1552,7 @@ class TestCreateResourceAlias():
         # Set up parameter values
         name = 'my-alias'
         source = 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
-        target = 'crn:v1:staging:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
+        target = 'crn:v1:cf:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
 
         # Invoke method
         response = service.create_resource_alias(
@@ -1569,7 +1569,7 @@ class TestCreateResourceAlias():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['name'] == 'my-alias'
         assert req_body['source'] == 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
-        assert req_body['target'] == 'crn:v1:staging:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
+        assert req_body['target'] == 'crn:v1:cf:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
 
 
     #--------------------------------------------------------
@@ -1589,7 +1589,7 @@ class TestCreateResourceAlias():
         # Set up parameter values
         name = 'my-alias'
         source = 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
-        target = 'crn:v1:staging:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
+        target = 'crn:v1:cf:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1838,7 +1838,7 @@ class TestListReclamations():
     def test_list_reclamations_all_params(self):
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/reclamations')
-        mock_response = '{"resources": [{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": {"anyKey": "anyValue"}, "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
+        mock_response = '{"resources": [{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1873,7 +1873,7 @@ class TestListReclamations():
     def test_list_reclamations_required_params(self):
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/reclamations')
-        mock_response = '{"resources": [{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": {"anyKey": "anyValue"}, "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
+        mock_response = '{"resources": [{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1908,7 +1908,7 @@ class TestRunReclamationAction():
     def test_run_reclamation_action_all_params(self):
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/reclamations/testString/actions/testString')
-        mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": {"anyKey": "anyValue"}, "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
+        mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1946,7 +1946,7 @@ class TestRunReclamationAction():
     def test_run_reclamation_action_required_params(self):
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/reclamations/testString/actions/testString')
-        mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": {"anyKey": "anyValue"}, "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
+        mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1976,7 +1976,7 @@ class TestRunReclamationAction():
     def test_run_reclamation_action_value_error(self):
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/reclamations/testString/actions/testString')
-        mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": {"anyKey": "anyValue"}, "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
+        mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -2089,7 +2089,7 @@ class TestReclamation():
         reclamation_model_json['entity_id'] = 'testString'
         reclamation_model_json['entity_type_id'] = 'testString'
         reclamation_model_json['entity_crn'] = 'testString'
-        reclamation_model_json['resource_instance_id'] = { 'foo': 'bar' }
+        reclamation_model_json['resource_instance_id'] = 'testString'
         reclamation_model_json['resource_group_id'] = 'testString'
         reclamation_model_json['account_id'] = 'testString'
         reclamation_model_json['policy_id'] = 'testString'
@@ -2133,7 +2133,7 @@ class TestReclamationsList():
         reclamation_model['entity_id'] = 'testString'
         reclamation_model['entity_type_id'] = 'testString'
         reclamation_model['entity_crn'] = 'testString'
-        reclamation_model['resource_instance_id'] = { 'foo': 'bar' }
+        reclamation_model['resource_instance_id'] = 'testString'
         reclamation_model['resource_group_id'] = 'testString'
         reclamation_model['account_id'] = 'testString'
         reclamation_model['policy_id'] = 'testString'
