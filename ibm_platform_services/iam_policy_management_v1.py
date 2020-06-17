@@ -36,7 +36,7 @@ from .common import get_sdk_headers
 class IamPolicyManagementV1(BaseService):
     """The iam_policy_management V1 service."""
 
-    DEFAULT_SERVICE_URL = 'https://iam.test.cloud.ibm.com'
+    DEFAULT_SERVICE_URL = 'https://iam.cloud.ibm.com'
     DEFAULT_SERVICE_NAME = 'iam_policy_management'
 
     @classmethod

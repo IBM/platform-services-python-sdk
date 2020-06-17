@@ -18,6 +18,7 @@ from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthen
 import inspect
 import json
 import pytest
+import re
 import requests
 import responses
 from ibm_platform_services.iam_policy_management_v1 import *
@@ -27,7 +28,7 @@ service = IamPolicyManagementV1(
     authenticator=NoAuthAuthenticator()
     )
 
-base_url = 'https://iam.test.cloud.ibm.com'
+base_url = 'https://iam.cloud.ibm.com'
 service.set_service_url(base_url)
 
 ##############################################################################
@@ -40,13 +41,20 @@ service.set_service_url(base_url)
 #-----------------------------------------------------------------------------
 class TestListPolicies():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # list_policies()
     #--------------------------------------------------------
     @responses.activate
     def test_list_policies_all_params(self):
         # Set up mock
-        url = base_url + '/v1/policies'
+        url = self.preprocess_url(base_url + '/v1/policies')
         mock_response = '{"policies": [{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -92,7 +100,7 @@ class TestListPolicies():
     @responses.activate
     def test_list_policies_required_params(self):
         # Set up mock
-        url = base_url + '/v1/policies'
+        url = self.preprocess_url(base_url + '/v1/policies')
         mock_response = '{"policies": [{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -124,7 +132,7 @@ class TestListPolicies():
     @responses.activate
     def test_list_policies_value_error(self):
         # Set up mock
-        url = base_url + '/v1/policies'
+        url = self.preprocess_url(base_url + '/v1/policies')
         mock_response = '{"policies": [{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -151,13 +159,20 @@ class TestListPolicies():
 #-----------------------------------------------------------------------------
 class TestCreatePolicy():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # create_policy()
     #--------------------------------------------------------
     @responses.activate
     def test_create_policy_all_params(self):
         # Set up mock
-        url = base_url + '/v1/policies'
+        url = self.preprocess_url(base_url + '/v1/policies')
         mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
@@ -222,7 +237,7 @@ class TestCreatePolicy():
     @responses.activate
     def test_create_policy_required_params(self):
         # Set up mock
-        url = base_url + '/v1/policies'
+        url = self.preprocess_url(base_url + '/v1/policies')
         mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
@@ -285,7 +300,7 @@ class TestCreatePolicy():
     @responses.activate
     def test_create_policy_value_error(self):
         # Set up mock
-        url = base_url + '/v1/policies'
+        url = self.preprocess_url(base_url + '/v1/policies')
         mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
@@ -341,13 +356,20 @@ class TestCreatePolicy():
 #-----------------------------------------------------------------------------
 class TestUpdatePolicy():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # update_policy()
     #--------------------------------------------------------
     @responses.activate
     def test_update_policy_all_params(self):
         # Set up mock
-        url = base_url + '/v1/policies/testString'
+        url = self.preprocess_url(base_url + '/v1/policies/testString')
         mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
@@ -414,7 +436,7 @@ class TestUpdatePolicy():
     @responses.activate
     def test_update_policy_value_error(self):
         # Set up mock
-        url = base_url + '/v1/policies/testString'
+        url = self.preprocess_url(base_url + '/v1/policies/testString')
         mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
@@ -474,13 +496,20 @@ class TestUpdatePolicy():
 #-----------------------------------------------------------------------------
 class TestGetPolicy():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # get_policy()
     #--------------------------------------------------------
     @responses.activate
     def test_get_policy_all_params(self):
         # Set up mock
-        url = base_url + '/v1/policies/testString'
+        url = self.preprocess_url(base_url + '/v1/policies/testString')
         mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
@@ -508,7 +537,7 @@ class TestGetPolicy():
     @responses.activate
     def test_get_policy_value_error(self):
         # Set up mock
-        url = base_url + '/v1/policies/testString'
+        url = self.preprocess_url(base_url + '/v1/policies/testString')
         mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
@@ -535,13 +564,20 @@ class TestGetPolicy():
 #-----------------------------------------------------------------------------
 class TestDeletePolicy():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # delete_policy()
     #--------------------------------------------------------
     @responses.activate
     def test_delete_policy_all_params(self):
         # Set up mock
-        url = base_url + '/v1/policies/testString'
+        url = self.preprocess_url(base_url + '/v1/policies/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -566,7 +602,7 @@ class TestDeletePolicy():
     @responses.activate
     def test_delete_policy_value_error(self):
         # Set up mock
-        url = base_url + '/v1/policies/testString'
+        url = self.preprocess_url(base_url + '/v1/policies/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -600,13 +636,20 @@ class TestDeletePolicy():
 #-----------------------------------------------------------------------------
 class TestListRoles():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # list_roles()
     #--------------------------------------------------------
     @responses.activate
     def test_list_roles_all_params(self):
         # Set up mock
-        url = base_url + '/v2/roles'
+        url = self.preprocess_url(base_url + '/v2/roles')
         mock_response = '{"custom_roles": [{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}], "service_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}], "system_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}]}'
         responses.add(responses.GET,
                       url,
@@ -643,7 +686,7 @@ class TestListRoles():
     @responses.activate
     def test_list_roles_required_params(self):
         # Set up mock
-        url = base_url + '/v2/roles'
+        url = self.preprocess_url(base_url + '/v2/roles')
         mock_response = '{"custom_roles": [{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}], "service_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}], "system_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}]}'
         responses.add(responses.GET,
                       url,
@@ -665,13 +708,20 @@ class TestListRoles():
 #-----------------------------------------------------------------------------
 class TestCreateRole():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # create_role()
     #--------------------------------------------------------
     @responses.activate
     def test_create_role_all_params(self):
         # Set up mock
-        url = base_url + '/v2/roles'
+        url = self.preprocess_url(base_url + '/v2/roles')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.POST,
                       url,
@@ -719,7 +769,7 @@ class TestCreateRole():
     @responses.activate
     def test_create_role_required_params(self):
         # Set up mock
-        url = base_url + '/v2/roles'
+        url = self.preprocess_url(base_url + '/v2/roles')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.POST,
                       url,
@@ -765,7 +815,7 @@ class TestCreateRole():
     @responses.activate
     def test_create_role_value_error(self):
         # Set up mock
-        url = base_url + '/v2/roles'
+        url = self.preprocess_url(base_url + '/v2/roles')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.POST,
                       url,
@@ -801,13 +851,20 @@ class TestCreateRole():
 #-----------------------------------------------------------------------------
 class TestUpdateRole():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # update_role()
     #--------------------------------------------------------
     @responses.activate
     def test_update_role_all_params(self):
         # Set up mock
-        url = base_url + '/v2/roles/testString'
+        url = self.preprocess_url(base_url + '/v2/roles/testString')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.PUT,
                       url,
@@ -848,7 +905,7 @@ class TestUpdateRole():
     @responses.activate
     def test_update_role_value_error(self):
         # Set up mock
-        url = base_url + '/v2/roles/testString'
+        url = self.preprocess_url(base_url + '/v2/roles/testString')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.PUT,
                       url,
@@ -880,13 +937,20 @@ class TestUpdateRole():
 #-----------------------------------------------------------------------------
 class TestGetRole():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # get_role()
     #--------------------------------------------------------
     @responses.activate
     def test_get_role_all_params(self):
         # Set up mock
-        url = base_url + '/v2/roles/testString'
+        url = self.preprocess_url(base_url + '/v2/roles/testString')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.GET,
                       url,
@@ -914,7 +978,7 @@ class TestGetRole():
     @responses.activate
     def test_get_role_value_error(self):
         # Set up mock
-        url = base_url + '/v2/roles/testString'
+        url = self.preprocess_url(base_url + '/v2/roles/testString')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.GET,
                       url,
@@ -941,13 +1005,20 @@ class TestGetRole():
 #-----------------------------------------------------------------------------
 class TestDeleteRole():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # delete_role()
     #--------------------------------------------------------
     @responses.activate
     def test_delete_role_all_params(self):
         # Set up mock
-        url = base_url + '/v2/roles/testString'
+        url = self.preprocess_url(base_url + '/v2/roles/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -972,7 +1043,7 @@ class TestDeleteRole():
     @responses.activate
     def test_delete_role_value_error(self):
         # Set up mock
-        url = base_url + '/v2/roles/testString'
+        url = self.preprocess_url(base_url + '/v2/roles/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
