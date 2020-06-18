@@ -23,6 +23,7 @@ from .common import get_sdk_headers
 from .version import __version__
 
 from .case_management_v1 import CaseManagementV1
+from .catalog_management_v1 import CatalogManagementV1
 from .enterprise_management_v1 import EnterpriseManagementV1
 from .global_catalog_v1 import GlobalCatalogV1
 from .global_search_v2 import GlobalSearchV2
