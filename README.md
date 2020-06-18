@@ -7,7 +7,7 @@
 [![codecov](https://codecov.io/gh/IBM/platform-services-python-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/IBM/platform-services-python-sdk)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
-# IBM Cloud Platform Services Python SDK Version 0.6.0
+# IBM Cloud Platform Services Python SDK Version 0.7.0
 
 Python client library to interact with various 
 [IBM Cloud Platform Service APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services).
@@ -55,6 +55,7 @@ Service Name | Imported Class Name
 [Global Search](https://cloud.ibm.com/apidocs/search) | GlobalSearchV2
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | GlobalTaggingV1
 [IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | IamAccessGroupsV2
+[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | IamPolicyManagementV1
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | ResourceManagerV2
 
 ## Prerequisites
@@ -70,13 +71,13 @@ Service Name | Imported Class Name
 To install, use `pip` or `easy_install`:
 
 ```bash
-pip install --upgrade "ibm_platform_services>=0.6.0"
+pip install --upgrade "ibm_platform_services>=0.7.0"
 ```
 
 or
 
 ```bash
-easy_install --upgrade "ibm_platform_services>=0.6.0"
+easy_install --upgrade "ibm_platform_services>=0.7.0"
 ```
 
 ## Using the SDK
