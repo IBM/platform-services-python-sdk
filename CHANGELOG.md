@@ -1,3 +1,17 @@
+# [0.8.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.7.0...v0.8.0) (2020-06-18)
+
+
+### Features
+
+* **Catalog Management:** add Catalog Management service to project ([#33](https://github.com/IBM/platform-services-python-sdk/issues/33)) ([12bbbec](https://github.com/IBM/platform-services-python-sdk/commit/12bbbec4935141530b69c76a1df0f9db0dd2a43f))
+
+# [0.7.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.6.0...v0.7.0) (2020-06-17)
+
+
+### Features
+
+* **IAM Policy Management:** add service to project ([#24](https://github.com/IBM/platform-services-python-sdk/issues/24)) ([109c1dd](https://github.com/IBM/platform-services-python-sdk/commit/109c1dd39f229c6b9174ab4524e59a906dcf7d0f))
+
 # [0.6.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.5.0...v0.6.0) (2020-05-21)
 
 

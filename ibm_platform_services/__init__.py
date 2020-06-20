@@ -23,10 +23,12 @@ from .common import get_sdk_headers
 from .version import __version__
 
 from .case_management_v1 import CaseManagementV1
+from .catalog_management_v1 import CatalogManagementV1
 from .enterprise_management_v1 import EnterpriseManagementV1
 from .global_catalog_v1 import GlobalCatalogV1
 from .global_search_v2 import GlobalSearchV2
 from .global_tagging_v1 import GlobalTaggingV1
 from .iam_access_groups_v2 import IamAccessGroupsV2
+from .iam_policy_management_v1 import IamPolicyManagementV1
 from .resource_controller_v2 import ResourceControllerV2
 from .resource_manager_v2 import ResourceManagerV2
