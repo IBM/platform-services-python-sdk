@@ -112,6 +112,7 @@ class OpenServiceBrokerV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/bluemix_v1/service_instances/{0}'.format(
             *self.encode_path_vars(instance_id))
@@ -123,7 +124,7 @@ class OpenServiceBrokerV1(BaseService):
         return response
 
 
-    def replace_state(self,
+    def replace_service_instance_state(self,
         instance_id: str,
         *,
         enabled: bool = None,
@@ -174,7 +175,7 @@ class OpenServiceBrokerV1(BaseService):
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='replace_state')
+                                      operation_id='replace_service_instance_state')
         headers.update(sdk_headers)
 
         data = {
@@ -188,6 +189,7 @@ class OpenServiceBrokerV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/bluemix_v1/service_instances/{0}'.format(
             *self.encode_path_vars(instance_id))
@@ -211,8 +213,8 @@ class OpenServiceBrokerV1(BaseService):
         plan_id: str = None,
         service_id: str = None,
         space_guid: str = None,
-        context: List['Context'] = None,
-        parameters: List['Parameters'] = None,
+        context: 'Context' = None,
+        parameters: dict = None,
         accepts_incomplete: bool = None,
         **kwargs
     ) -> DetailedResponse:
@@ -254,10 +256,14 @@ class OpenServiceBrokerV1(BaseService):
                is to be provisioned. Although most brokers will not use this field, it
                might be helpful for executing operations on a user's behalf. It MUST be a
                non-empty string.
-        :param List[Context] context: (optional) Platform specific contextual
-               information under which the service instance is to be provisioned.
-        :param List[Parameters] parameters: (optional) A list of plans for this
-               service that must contain at least one plan.
+        :param Context context: (optional) Platform specific contextual information
+               under which the service instance is to be provisioned.
+        :param dict parameters: (optional) Configuration options for the service
+               instance. An opaque object, controller treats this as a blob. Brokers
+               should ensure that the client has provided valid configuration parameters
+               and values for the operation. If this field is not present in the request
+               message, then the broker MUST NOT change the parameters of the instance as
+               a result of this request.
         :param bool accepts_incomplete: (optional) A value of true indicates that
                both the IBM Cloud platform and the requesting client support asynchronous
                deprovisioning. If this parameter is not included in the request, and the
@@ -272,9 +278,7 @@ class OpenServiceBrokerV1(BaseService):
         if instance_id is None:
             raise ValueError('instance_id must be provided')
         if context is not None:
-            context = [convert_model(x) for x in context]
-        if parameters is not None:
-            parameters = [convert_model(x) for x in parameters]
+            context = convert_model(context)
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
@@ -299,6 +303,7 @@ class OpenServiceBrokerV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/service_instances/{0}'.format(
             *self.encode_path_vars(instance_id))
@@ -316,11 +321,11 @@ class OpenServiceBrokerV1(BaseService):
         instance_id: str,
         *,
         service_id: str = None,
-        context: List['Context'] = None,
-        parameters: 'Parameters' = None,
+        context: 'Context' = None,
+        parameters: dict = None,
         plan_id: str = None,
-        previous_values: List[str] = None,
-        accepts_incomplete: str = None,
+        previous_values: dict = None,
+        accepts_incomplete: bool = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -339,23 +344,23 @@ class OpenServiceBrokerV1(BaseService):
         :param str service_id: (optional) The ID of the service stored in the
                catalog.json of your broker. This value should be a GUID. It MUST be a
                non-empty string.
-        :param List[Context] context: (optional) Contextual data under which the
-               service instance is created.
-        :param Parameters parameters: (optional) Configuration options for the
-               service instance. An opaque object, controller treats this as a blob.
-               Brokers should ensure that the client has provided valid configuration
-               parameters and values for the operation. If this field is not present in
-               the request message, then the broker MUST NOT change the parameters of the
-               instance as a result of this request.
+        :param Context context: (optional) Platform specific contextual information
+               under which the service instance is to be provisioned.
+        :param dict parameters: (optional) Configuration options for the service
+               instance. An opaque object, controller treats this as a blob. Brokers
+               should ensure that the client has provided valid configuration parameters
+               and values for the operation. If this field is not present in the request
+               message, then the broker MUST NOT change the parameters of the instance as
+               a result of this request.
         :param str plan_id: (optional) The ID of the plan for which the service
                instance has been requested, which is stored in the catalog.json of your
                broker. This value should be a GUID. MUST be unique to a service. If
                present, MUST be a non-empty string. If this field is not present in the
                request message, then the broker MUST NOT change the plan of the instance
                as a result of this request.
-        :param List[str] previous_values: (optional) Information about the service
+        :param dict previous_values: (optional) Information about the service
                instance prior to the update.
-        :param str accepts_incomplete: (optional) A value of true indicates that
+        :param bool accepts_incomplete: (optional) A value of true indicates that
                both the IBM Cloud platform and the requesting client support asynchronous
                deprovisioning. If this parameter is not included in the request, and the
                broker can only deprovision a service instance of the requested plan
@@ -363,15 +368,13 @@ class OpenServiceBrokerV1(BaseService):
                Unprocessable Entity.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `str` result
+        :rtype: DetailedResponse with `dict` result representing a `Resp2079874Root` object
         """
 
         if instance_id is None:
             raise ValueError('instance_id must be provided')
         if context is not None:
-            context = [convert_model(x) for x in context]
-        if parameters is not None:
-            parameters = convert_model(parameters)
+            context = convert_model(context)
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
@@ -395,6 +398,7 @@ class OpenServiceBrokerV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/service_instances/{0}'.format(
             *self.encode_path_vars(instance_id))
@@ -439,7 +443,7 @@ class OpenServiceBrokerV1(BaseService):
                Unprocessable Entity.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `str` result
+        :rtype: DetailedResponse with `dict` result representing a `Resp2079874Root` object
         """
 
         if service_id is None:
@@ -462,6 +466,7 @@ class OpenServiceBrokerV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/service_instances/{0}'.format(
             *self.encode_path_vars(instance_id))
@@ -498,7 +503,7 @@ class OpenServiceBrokerV1(BaseService):
 
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `List[Services]` result
+        :rtype: DetailedResponse with `dict` result representing a `Resp1874650Root` object
         """
 
         headers = {}
@@ -509,6 +514,7 @@ class OpenServiceBrokerV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/catalog'
         request = self.prepare_request(method='GET',
@@ -523,7 +529,7 @@ class OpenServiceBrokerV1(BaseService):
     #########################
 
 
-    def list_last_operation(self,
+    def get_last_operation(self,
         instance_id: str,
         *,
         operation: str = None,
@@ -567,7 +573,7 @@ class OpenServiceBrokerV1(BaseService):
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='list_last_operation')
+                                      operation_id='get_last_operation')
         headers.update(sdk_headers)
 
         params = {
@@ -578,6 +584,7 @@ class OpenServiceBrokerV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/service_instances/{0}/last_operation'.format(
             *self.encode_path_vars(instance_id))
@@ -598,10 +605,10 @@ class OpenServiceBrokerV1(BaseService):
         binding_id: str,
         instance_id: str,
         *,
-        bind_resource: List['BindResource'] = None,
-        parameters: object = None,
         plan_id: str = None,
         service_id: str = None,
+        bind_resource: 'BindResource' = None,
+        parameters: dict = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -621,18 +628,21 @@ class OpenServiceBrokerV1(BaseService):
                can use it to correlate the resource it creates.
         :param str instance_id: The :`instance_id` is the ID of a previously
                provisioned service instance.
-        :param List[BindResource] bind_resource: (optional) A JSON object that
-               contains data for platform resources associated with the binding to be
-               created.
-        :param object parameters: (optional) Configuration options for the service
-               binding.
         :param str plan_id: (optional) The ID of the plan from the catalog.json in
                your broker. If present, it MUST be a non-empty string.
         :param str service_id: (optional) The ID of the service from the
                catalog.json in your broker. If present, it MUST be a non-empty string.
+        :param BindResource bind_resource: (optional) A JSON object that contains
+               data for platform resources associated with the binding to be created.
+        :param dict parameters: (optional) Configuration options for the service
+               instance. An opaque object, controller treats this as a blob. Brokers
+               should ensure that the client has provided valid configuration parameters
+               and values for the operation. If this field is not present in the request
+               message, then the broker MUST NOT change the parameters of the instance as
+               a result of this request.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `str` result
+        :rtype: DetailedResponse with `dict` result representing a `Resp2079876Root` object
         """
 
         if binding_id is None:
@@ -640,7 +650,7 @@ class OpenServiceBrokerV1(BaseService):
         if instance_id is None:
             raise ValueError('instance_id must be provided')
         if bind_resource is not None:
-            bind_resource = [convert_model(x) for x in bind_resource]
+            bind_resource = convert_model(bind_resource)
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
@@ -648,10 +658,10 @@ class OpenServiceBrokerV1(BaseService):
         headers.update(sdk_headers)
 
         data = {
-            'bind_resource': bind_resource,
-            'parameters': parameters,
             'plan_id': plan_id,
-            'service_id': service_id
+            'service_id': service_id,
+            'bind_resource': bind_resource,
+            'parameters': parameters
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -659,6 +669,7 @@ class OpenServiceBrokerV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/service_instances/{0}/service_bindings/{1}'.format(
             *self.encode_path_vars(binding_id, instance_id))
@@ -699,7 +710,7 @@ class OpenServiceBrokerV1(BaseService):
                broker. It MUST be a non-empty string and should be a GUID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `str` result
+        :rtype: DetailedResponse
         """
 
         if binding_id is None:
@@ -723,6 +734,7 @@ class OpenServiceBrokerV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/service_instances/{0}/service_bindings/{1}'.format(
             *self.encode_path_vars(binding_id, instance_id))
@@ -823,6 +835,61 @@ class Resp1874644Root():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class Resp1874650Root():
+    """
+    Resp1874650Root.
+
+    :attr List[Services] services: (optional) List of services.
+    """
+
+    def __init__(self,
+                 *,
+                 services: List['Services'] = None) -> None:
+        """
+        Initialize a Resp1874650Root object.
+
+        :param List[Services] services: (optional) List of services.
+        """
+        self.services = services
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Resp1874650Root':
+        """Initialize a Resp1874650Root object from a json dictionary."""
+        args = {}
+        if 'services' in _dict:
+            args['services'] = [Services.from_dict(x) for x in _dict.get('services')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Resp1874650Root object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'services') and self.services is not None:
+            _dict['services'] = [x.to_dict() for x in self.services]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Resp1874650Root object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Resp1874650Root') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Resp1874650Root') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class Resp2079872Root():
     """
     OK - MUST be returned if the service instance already exists, is fully provisioned,
@@ -903,6 +970,168 @@ class Resp2079872Root():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'Resp2079872Root') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class Resp2079874Root():
+    """
+    Accepted - MUST be returned if the service instance provisioning is in progress. This
+    triggers the IBM Cloud platform to poll the Service Instance `last_operation` Endpoint
+    for operation status. Note that a re-sent `PUT` request MUST return a `202 Accepted`,
+    not a `200 OK`, if the service instance is not yet fully provisioned.
+
+    :attr str operation: (optional) For asynchronous responses, service brokers MAY
+          return an identifier representing the operation. The value of this field MUST be
+          provided by the platform with requests to the Last Operation endpoint in a URL
+          encoded query parameter. If present, MUST be a non-empty string.
+    """
+
+    def __init__(self,
+                 *,
+                 operation: str = None) -> None:
+        """
+        Initialize a Resp2079874Root object.
+
+        :param str operation: (optional) For asynchronous responses, service
+               brokers MAY return an identifier representing the operation. The value of
+               this field MUST be provided by the platform with requests to the Last
+               Operation endpoint in a URL encoded query parameter. If present, MUST be a
+               non-empty string.
+        """
+        self.operation = operation
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Resp2079874Root':
+        """Initialize a Resp2079874Root object from a json dictionary."""
+        args = {}
+        if 'operation' in _dict:
+            args['operation'] = _dict.get('operation')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Resp2079874Root object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'operation') and self.operation is not None:
+            _dict['operation'] = self.operation
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Resp2079874Root object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Resp2079874Root') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Resp2079874Root') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class Resp2079876Root():
+    """
+    Resp2079876Root.
+
+    :attr object credentials: (optional) A free-form hash of credentials that can be
+          used by applications or users to access the service.
+    :attr str syslog_drain_url: (optional) A URL to which logs MUST be streamed.
+          'requires':['syslog_drain'] MUST be declared in the Catalog endpoint or the
+          platform MUST consider the response invalid.
+    :attr str route_service_url: (optional) A URL to which the platform MUST proxy
+          requests for the address sent with bind_resource.route in the request body.
+          'requires':['route_forwarding'] MUST be declared in the Catalog endpoint or the
+          platform can consider the response invalid.
+    :attr List[VolumeMount] volume_mounts: (optional) An array of configuration for
+          remote storage devices to be mounted into an application container filesystem.
+          'requires':['volume_mount'] MUST be declared in the Catalog endpoint or the
+          platform can consider the response invalid.
+    """
+
+    def __init__(self,
+                 *,
+                 credentials: object = None,
+                 syslog_drain_url: str = None,
+                 route_service_url: str = None,
+                 volume_mounts: List['VolumeMount'] = None) -> None:
+        """
+        Initialize a Resp2079876Root object.
+
+        :param object credentials: (optional) A free-form hash of credentials that
+               can be used by applications or users to access the service.
+        :param str syslog_drain_url: (optional) A URL to which logs MUST be
+               streamed. 'requires':['syslog_drain'] MUST be declared in the Catalog
+               endpoint or the platform MUST consider the response invalid.
+        :param str route_service_url: (optional) A URL to which the platform MUST
+               proxy requests for the address sent with bind_resource.route in the request
+               body. 'requires':['route_forwarding'] MUST be declared in the Catalog
+               endpoint or the platform can consider the response invalid.
+        :param List[VolumeMount] volume_mounts: (optional) An array of
+               configuration for remote storage devices to be mounted into an application
+               container filesystem. 'requires':['volume_mount'] MUST be declared in the
+               Catalog endpoint or the platform can consider the response invalid.
+        """
+        self.credentials = credentials
+        self.syslog_drain_url = syslog_drain_url
+        self.route_service_url = route_service_url
+        self.volume_mounts = volume_mounts
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Resp2079876Root':
+        """Initialize a Resp2079876Root object from a json dictionary."""
+        args = {}
+        if 'credentials' in _dict:
+            args['credentials'] = _dict.get('credentials')
+        if 'syslog_drain_url' in _dict:
+            args['syslog_drain_url'] = _dict.get('syslog_drain_url')
+        if 'route_service_url' in _dict:
+            args['route_service_url'] = _dict.get('route_service_url')
+        if 'volume_mounts' in _dict:
+            args['volume_mounts'] = [VolumeMount.from_dict(x) for x in _dict.get('volume_mounts')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Resp2079876Root object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'credentials') and self.credentials is not None:
+            _dict['credentials'] = self.credentials
+        if hasattr(self, 'syslog_drain_url') and self.syslog_drain_url is not None:
+            _dict['syslog_drain_url'] = self.syslog_drain_url
+        if hasattr(self, 'route_service_url') and self.route_service_url is not None:
+            _dict['route_service_url'] = self.route_service_url
+        if hasattr(self, 'volume_mounts') and self.volume_mounts is not None:
+            _dict['volume_mounts'] = [x.to_dict() for x in self.volume_mounts]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Resp2079876Root object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Resp2079876Root') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Resp2079876Root') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -1066,28 +1295,41 @@ class Resp2448145Root():
 
 class BindResource():
     """
-    Bind a resource.
+    A JSON object that contains data for platform resources associated with the binding to
+    be created.
 
     :attr str account_id: (optional) Account owner of resource to bind.
     :attr str serviceid_crn: (optional) Service ID of resource to bind.
     :attr str target_crn: (optional) Target ID of resource to bind.
+    :attr str app_guid: (optional) GUID of an application associated with the
+          binding. For credentials bindings.
+    :attr str route: (optional) URL of the application to be intermediated. For
+          route services bindings.
     """
 
     def __init__(self,
                  *,
                  account_id: str = None,
                  serviceid_crn: str = None,
-                 target_crn: str = None) -> None:
+                 target_crn: str = None,
+                 app_guid: str = None,
+                 route: str = None) -> None:
         """
         Initialize a BindResource object.
 
         :param str account_id: (optional) Account owner of resource to bind.
         :param str serviceid_crn: (optional) Service ID of resource to bind.
         :param str target_crn: (optional) Target ID of resource to bind.
+        :param str app_guid: (optional) GUID of an application associated with the
+               binding. For credentials bindings.
+        :param str route: (optional) URL of the application to be intermediated.
+               For route services bindings.
         """
         self.account_id = account_id
         self.serviceid_crn = serviceid_crn
         self.target_crn = target_crn
+        self.app_guid = app_guid
+        self.route = route
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'BindResource':
@@ -1099,6 +1341,10 @@ class BindResource():
             args['serviceid_crn'] = _dict.get('serviceid_crn')
         if 'target_crn' in _dict:
             args['target_crn'] = _dict.get('target_crn')
+        if 'app_guid' in _dict:
+            args['app_guid'] = _dict.get('app_guid')
+        if 'route' in _dict:
+            args['route'] = _dict.get('route')
         return cls(**args)
 
     @classmethod
@@ -1115,6 +1361,10 @@ class BindResource():
             _dict['serviceid_crn'] = self.serviceid_crn
         if hasattr(self, 'target_crn') and self.target_crn is not None:
             _dict['target_crn'] = self.target_crn
+        if hasattr(self, 'app_guid') and self.app_guid is not None:
+            _dict['app_guid'] = self.app_guid
+        if hasattr(self, 'route') and self.route is not None:
+            _dict['route'] = self.route
         return _dict
 
     def _to_dict(self):
@@ -1137,7 +1387,8 @@ class BindResource():
 
 class Context():
     """
-    Contextual data under which the service instance is created.
+    Platform specific contextual information under which the service instance is to be
+    provisioned.
 
     :attr str account_id: (optional) Returns the ID of the account in IBM Cloud that
           is provisioning the service instance.
@@ -1221,77 +1472,6 @@ class Context():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'Context') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class Parameters():
-    """
-    Configuration options for the service instance. An opaque object, controller treats
-    this as a blob. Brokers should ensure that the client has provided valid configuration
-    parameters and values for the operation. If this field is not present in the request
-    message, then the broker MUST NOT change the parameters of the instance as a result of
-    this request.
-
-    :attr int parameter1: (optional) a custom integer or string within the
-          parameters JSON object.
-    :attr str parameter2: (optional) a custom integer or string within the
-          parameters JSON object.
-    """
-
-    def __init__(self,
-                 *,
-                 parameter1: int = None,
-                 parameter2: str = None) -> None:
-        """
-        Initialize a Parameters object.
-
-        :param int parameter1: (optional) a custom integer or string within the
-               parameters JSON object.
-        :param str parameter2: (optional) a custom integer or string within the
-               parameters JSON object.
-        """
-        self.parameter1 = parameter1
-        self.parameter2 = parameter2
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'Parameters':
-        """Initialize a Parameters object from a json dictionary."""
-        args = {}
-        if 'parameter1' in _dict:
-            args['parameter1'] = _dict.get('parameter1')
-        if 'parameter2' in _dict:
-            args['parameter2'] = _dict.get('parameter2')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a Parameters object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'parameter1') and self.parameter1 is not None:
-            _dict['parameter1'] = self.parameter1
-        if hasattr(self, 'parameter2') and self.parameter2 is not None:
-            _dict['parameter2'] = self.parameter2
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this Parameters object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'Parameters') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'Parameters') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -1561,5 +1741,114 @@ class Services():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'Services') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class VolumeMount():
+    """
+    VolumeMount.
+
+    :attr str driver: A free-form hash of credentials that can be used by
+          applications or users to access the service.
+    :attr str container_dir: The path in the application container onto which the
+          volume will be mounted. This specification does not mandate what action the
+          platform is to take if the path specified already exists in the container.
+    :attr str mode: 'r' to mount the volume read-only or 'rw' to mount it
+          read-write.
+    :attr str device_type: A string specifying the type of device to mount.
+          Currently the only supported value is 'shared'.
+    :attr str device: Device object containing device_type specific details.
+          Currently only shared devices are supported.
+    """
+
+    def __init__(self,
+                 driver: str,
+                 container_dir: str,
+                 mode: str,
+                 device_type: str,
+                 device: str) -> None:
+        """
+        Initialize a VolumeMount object.
+
+        :param str driver: A free-form hash of credentials that can be used by
+               applications or users to access the service.
+        :param str container_dir: The path in the application container onto which
+               the volume will be mounted. This specification does not mandate what action
+               the platform is to take if the path specified already exists in the
+               container.
+        :param str mode: 'r' to mount the volume read-only or 'rw' to mount it
+               read-write.
+        :param str device_type: A string specifying the type of device to mount.
+               Currently the only supported value is 'shared'.
+        :param str device: Device object containing device_type specific details.
+               Currently only shared devices are supported.
+        """
+        self.driver = driver
+        self.container_dir = container_dir
+        self.mode = mode
+        self.device_type = device_type
+        self.device = device
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'VolumeMount':
+        """Initialize a VolumeMount object from a json dictionary."""
+        args = {}
+        if 'driver' in _dict:
+            args['driver'] = _dict.get('driver')
+        else:
+            raise ValueError('Required property \'driver\' not present in VolumeMount JSON')
+        if 'container_dir' in _dict:
+            args['container_dir'] = _dict.get('container_dir')
+        else:
+            raise ValueError('Required property \'container_dir\' not present in VolumeMount JSON')
+        if 'mode' in _dict:
+            args['mode'] = _dict.get('mode')
+        else:
+            raise ValueError('Required property \'mode\' not present in VolumeMount JSON')
+        if 'device_type' in _dict:
+            args['device_type'] = _dict.get('device_type')
+        else:
+            raise ValueError('Required property \'device_type\' not present in VolumeMount JSON')
+        if 'device' in _dict:
+            args['device'] = _dict.get('device')
+        else:
+            raise ValueError('Required property \'device\' not present in VolumeMount JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a VolumeMount object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'driver') and self.driver is not None:
+            _dict['driver'] = self.driver
+        if hasattr(self, 'container_dir') and self.container_dir is not None:
+            _dict['container_dir'] = self.container_dir
+        if hasattr(self, 'mode') and self.mode is not None:
+            _dict['mode'] = self.mode
+        if hasattr(self, 'device_type') and self.device_type is not None:
+            _dict['device_type'] = self.device_type
+        if hasattr(self, 'device') and self.device is not None:
+            _dict['device'] = self.device
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this VolumeMount object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'VolumeMount') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'VolumeMount') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
