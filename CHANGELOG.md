@@ -1,3 +1,10 @@
+# [0.9.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.8.0...v0.9.0) (2020-07-06)
+
+
+### Features
+
+* **Open Service Broker:** add service to project ([#34](https://github.com/IBM/platform-services-python-sdk/issues/34)) ([5854136](https://github.com/IBM/platform-services-python-sdk/commit/5854136e357f49bff2a811dfb2a96bdf23e3a775))
+
 # [0.8.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.7.0...v0.8.0) (2020-06-18)
 
 
