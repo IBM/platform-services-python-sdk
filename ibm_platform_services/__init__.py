@@ -30,4 +30,5 @@ from .global_search_v2 import GlobalSearchV2
 from .global_tagging_v1 import GlobalTaggingV1
 from .iam_access_groups_v2 import IamAccessGroupsV2
 from .iam_policy_management_v1 import IamPolicyManagementV1
+from .open_service_broker_v1 import OpenServiceBrokerV1
 from .resource_manager_v2 import ResourceManagerV2
