@@ -23,20 +23,20 @@ from ibm_cloud_sdk_core import *
 from ibm_platform_services.catalog_management_v1 import *
 import pytest
 from dotenv import load_dotenv
+import time
 
 configFile = 'catalog_mgmt.env'
 configLoaded = None
-config = {}
 
+timestamp = int(time.time())
 expectedAccount = '67d27f28d43948b2b3bda9138f251a13'
-expectedLabel = 'integration-test'
+expectedLabel = 'integration-test-{}'.format(timestamp)
 expectedShortDesc = 'test'
 expectedURL = 'https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/{}'
 expectedOfferingsURL = 'https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/{}/offerings'
 fakeName = 'bogus'
 fakeVersionLocator = 'bogus.bogus'
 expectedOfferingName = "test-offering"
-expectedLabel = "test"
 expectedOfferingURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/{}/offerings/{}"
 
 if os.path.exists(configFile):
@@ -54,13 +54,20 @@ class TestCatalogManagementV1(unittest.TestCase):
 
         self.service = CatalogManagementV1.new_instance()
 
+        self.config = read_external_sources(CatalogManagementV1.DEFAULT_SERVICE_NAME)
+        assert self.config is not None
+
+        self.gitToken = self.config.get('GIT_TOKEN')
+        assert self.gitToken is not None
+
     def setUp(self):
         result = self.service.list_catalogs().get_result()
 
         if result is not None:
             resources = result.get('resources')
             for resource in resources:
-                self.service.delete_catalog(catalog_identifier=resource.get('id'))
+                if resource.get('label') == expectedLabel:
+                    self.service.delete_catalog(catalog_identifier=resource.get('id'))
 
     def tearDown(self):
         result = self.service.list_catalogs().get_result()
@@ -68,7 +75,8 @@ class TestCatalogManagementV1(unittest.TestCase):
         if result is not None:
             resources = result.get('resources')
             for resource in resources:
-                self.service.delete_catalog(catalog_identifier=resource.get('id'))
+                if resource.get('label') == expectedLabel:
+                    self.service.delete_catalog(catalog_identifier=resource.get('id'))
 
     def test_get_catalog_account(self):
         response = self.service.get_catalog_account()
@@ -90,14 +98,15 @@ class TestCatalogManagementV1(unittest.TestCase):
         assert response.get_status_code() == 200
 
         result = response.get_result()
-        assert len(result.get('account_filters')) == 1
         assert result.get('account_filters')[0].get('include_all') is True
         assert result.get('account_filters')[0].get('category_filters') is None
         assert result.get('account_filters')[0].get('id_filters') .get('include') is None
         assert result.get('account_filters')[0].get('id_filters') .get('exclude') is None
-        assert result.get('catalog_filters') is None
 
     def test_list_catalogs(self):
+        catalogCount = 0
+        catalogIndex = -1
+
         createResponse = self.service.create_catalog(label=expectedLabel, short_description=expectedShortDesc)
         createResult = createResponse.get_result()
 
@@ -105,29 +114,34 @@ class TestCatalogManagementV1(unittest.TestCase):
 
         self.service.delete_catalog(catalog_identifier=createResult.get('id'))
 
+        if listResponse.get_result() is not None:
+            for i, resource in enumerate(listResponse.get_result().get('resources')):
+                if resource.get('label') == expectedLabel:
+                    catalogCount = catalogCount + 1
+                    catalogIndex = i
+
         assert listResponse is not None
         assert listResponse.get_status_code() == 200
 
         listResult = listResponse.get_result()
         assert listResult.get('offset') == 0
         assert listResult.get('limit') == 0
-        assert listResult.get('total_count') == 1
+        assert catalogCount == 1
         assert listResult.get('last') is None
         assert listResult.get('prev') is None
         assert listResult.get('next') is None
 
         resources = listResult.get('resources')
         assert resources is not None
-        assert len(resources) == 1
-        assert resources[0].get('label') == expectedLabel
-        assert resources[0].get('short_description') == expectedShortDesc
-        assert resources[0].get('url') == expectedURL.format(createResult.get('id'))
-        assert resources[0].get('offerings_url') == expectedOfferingsURL.format(createResult.get('id'))
-        assert resources[0].get('owning_account') == expectedAccount
-        assert resources[0].get('catalog_filters').get('include_all') is False
-        assert resources[0].get('catalog_filters').get('category_filters') is None
-        assert resources[0].get('catalog_filters').get('id_filters').get('include') is None
-        assert resources[0].get('catalog_filters').get('id_filters').get('exclude') is None
+        assert resources[catalogIndex].get('label') == expectedLabel
+        assert resources[catalogIndex].get('short_description') == expectedShortDesc
+        assert resources[catalogIndex].get('url') == expectedURL.format(createResult.get('id'))
+        assert resources[catalogIndex].get('offerings_url') == expectedOfferingsURL.format(createResult.get('id'))
+        assert resources[catalogIndex].get('owning_account') == expectedAccount
+        assert resources[catalogIndex].get('catalog_filters').get('include_all') is False
+        assert resources[catalogIndex].get('catalog_filters').get('category_filters') is None
+        assert resources[catalogIndex].get('catalog_filters').get('id_filters').get('include') is None
+        assert resources[catalogIndex].get('catalog_filters').get('id_filters').get('exclude') is None
 
     def test_create_catalog(self):
         response = self.service.create_catalog(label=expectedLabel, short_description=expectedShortDesc)
@@ -390,7 +404,7 @@ class TestCatalogManagementV1(unittest.TestCase):
         catalogResponse = self.service.create_catalog(label=expectedLabel, short_description=expectedShortDesc)
         catalogResult = catalogResponse.get_result()
 
-        offeringResponse = self.service.import_offering(catalog_identifier=catalogResult.get('id'), zipurl=expectedOfferingZipURL)
+        offeringResponse = self.service.import_offering(catalog_identifier=catalogResult.get('id'), zipurl=expectedOfferingZipURL, x_auth_token=self.gitToken)
         offeringResult = offeringResponse.get_result()
 
         self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
@@ -422,10 +436,10 @@ class TestCatalogManagementV1(unittest.TestCase):
         catalogResponse = self.service.create_catalog(label=expectedLabel, short_description=expectedShortDesc)
         catalogResult = catalogResponse.get_result()
 
-        offeringResponse = self.service.import_offering(catalog_identifier=catalogResult.get('id'), zipurl=expectedOfferingZipURL)
+        offeringResponse = self.service.import_offering(catalog_identifier=catalogResult.get('id'), zipurl=expectedOfferingZipURL, x_auth_token=self.gitToken)
         offeringResult = offeringResponse.get_result()
 
-        versionResponse = self.service.import_offering_version(catalog_identifier=catalogResult.get('id'), offering_id=offeringResult.get('id'), zipurl=expectedOfferingZipURLUpdate)
+        versionResponse = self.service.import_offering_version(catalog_identifier=catalogResult.get('id'), offering_id=offeringResult.get('id'), zipurl=expectedOfferingZipURLUpdate, x_auth_token=self.gitToken)
         versionResult = versionResponse.get_result()
 
         self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
@@ -453,13 +467,13 @@ class TestCatalogManagementV1(unittest.TestCase):
         createResult = createResponse.get_result()
 
         with pytest.raises(ApiException) as e:
-            self.service.import_offering_version(catalog_identifier=createResult.get('id'), offering_id=fakeName, zipurl=expectedOfferingZipURL)
+            self.service.import_offering_version(catalog_identifier=createResult.get('id'), offering_id=fakeName, zipurl=expectedOfferingZipURL, x_auth_token=self.gitToken)
         assert e.value.code == 404
 
         self.service.delete_catalog(catalog_identifier=createResult.get('id'))
 
         with pytest.raises(ApiException) as e:
-            self.service.import_offering_version(catalog_identifier=createResult.get('id'), offering_id=fakeName, zipurl=expectedOfferingZipURL)
+            self.service.import_offering_version(catalog_identifier=createResult.get('id'), offering_id=fakeName, zipurl=expectedOfferingZipURL, x_auth_token=self.gitToken)
         assert e.value.code == 403
 
     def test_reload_offering(self):
@@ -473,10 +487,10 @@ class TestCatalogManagementV1(unittest.TestCase):
         catalogResponse = self.service.create_catalog(label=expectedLabel, short_description=expectedShortDesc)
         catalogResult = catalogResponse.get_result()
 
-        offeringResponse = self.service.import_offering(catalog_identifier=catalogResult.get('id'), zipurl=expectedOfferingZipURL)
+        offeringResponse = self.service.import_offering(catalog_identifier=catalogResult.get('id'), zipurl=expectedOfferingZipURL, x_auth_token=self.gitToken)
         offeringResult = offeringResponse.get_result()
 
-        reloadResponse = self.service.reload_offering(catalog_identifier=catalogResult.get('id'), offering_id=offeringResult.get('id'), zipurl=expectedOfferingZipURL, target_version=expectedOfferingVersion)
+        reloadResponse = self.service.reload_offering(catalog_identifier=catalogResult.get('id'), offering_id=offeringResult.get('id'), zipurl=expectedOfferingZipURL, target_version=expectedOfferingVersion, x_auth_token=self.gitToken)
         reloadResult = reloadResponse.get_result()
 
         self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
@@ -523,7 +537,7 @@ class TestCatalogManagementV1(unittest.TestCase):
         catalogResponse = self.service.create_catalog(label=expectedLabel, short_description=expectedShortDesc)
         catalogResult = catalogResponse.get_result()
 
-        offeringResponse = self.service.import_offering(catalog_identifier=catalogResult.get('id'), zipurl=expectedOfferingZipURL)
+        offeringResponse = self.service.import_offering(catalog_identifier=catalogResult.get('id'), zipurl=expectedOfferingZipURL, x_auth_token=self.gitToken)
         offeringResult = offeringResponse.get_result()
 
         reloadResponse = self.service.get_version(version_loc_id=offeringResult.get('kinds')[0].get('versions')[0].get('version_locator'))
@@ -556,7 +570,7 @@ class TestCatalogManagementV1(unittest.TestCase):
         catalogResponse = self.service.create_catalog(label=expectedLabel, short_description=expectedShortDesc)
         catalogResult = catalogResponse.get_result()
 
-        offeringResponse = self.service.import_offering(catalog_identifier=catalogResult.get('id'), zipurl=expectedOfferingZipURL)
+        offeringResponse = self.service.import_offering(catalog_identifier=catalogResult.get('id'), zipurl=expectedOfferingZipURL, x_auth_token=self.gitToken)
         offeringResult = offeringResponse.get_result()
 
         reloadResponse = self.service.delete_version(version_loc_id=offeringResult.get('kinds')[0].get('versions')[0].get('version_locator'))
@@ -577,7 +591,7 @@ class TestCatalogManagementV1(unittest.TestCase):
         catalogResponse = self.service.create_catalog(label=expectedLabel, short_description=expectedShortDesc)
         catalogResult = catalogResponse.get_result()
 
-        offeringResponse = self.service.import_offering(catalog_identifier=catalogResult.get('id'), zipurl=expectedOfferingZipURL)
+        offeringResponse = self.service.import_offering(catalog_identifier=catalogResult.get('id'), zipurl=expectedOfferingZipURL, x_auth_token=self.gitToken)
         offeringResult = offeringResponse.get_result()
 
         getResponse = self.service.get_version_about(version_loc_id=offeringResult.get('kinds')[0].get('versions')[0].get('version_locator'))
@@ -602,10 +616,10 @@ class TestCatalogManagementV1(unittest.TestCase):
         catalogResponse = self.service.create_catalog(label=expectedLabel, short_description=expectedShortDesc)
         catalogResult = catalogResponse.get_result()
 
-        offeringResponse = self.service.import_offering(catalog_identifier=catalogResult.get('id'), zipurl=expectedOfferingZipURL)
+        offeringResponse = self.service.import_offering(catalog_identifier=catalogResult.get('id'), zipurl=expectedOfferingZipURL, x_auth_token=self.gitToken)
         offeringResult = offeringResponse.get_result()
 
-        versionResponse = self.service.import_offering_version(catalog_identifier=catalogResult.get('id'), offering_id=offeringResult.get('id'), zipurl=expectedOfferingZipURLUpdate)
+        versionResponse = self.service.import_offering_version(catalog_identifier=catalogResult.get('id'), offering_id=offeringResult.get('id'), zipurl=expectedOfferingZipURLUpdate, x_auth_token=self.gitToken)
         versionResult = versionResponse.get_result()
 
         updateResponse = self.service.get_version_updates(version_loc_id=offeringResult.get('kinds')[0].get('versions')[0].get('version_locator'))
