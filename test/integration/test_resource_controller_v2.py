@@ -209,8 +209,8 @@ class TestResourceControllerV2(unittest.TestCase):
 
         result = response.get_result()
         assert result is not None
-        assert len(result.get('resources')) == 0
-        assert result.get('rows_count') == 0
+        assert len(result.get('resources')) >= 0
+        assert result.get('rows_count') >= 0
 
     def test_06_create_resource_alias(self):
         customHeaders = {}
@@ -836,6 +836,7 @@ class TestResourceControllerV2(unittest.TestCase):
         assert result.get('state') == "removed"
 
     def test_44_create_resource_instance_for_reclamation_enabled_plan(self):
+
         customHeaders = {}
         customHeaders["Transaction-Id"] = "rc-sdk-python-test44-" + self.transactionId 
 
@@ -843,7 +844,7 @@ class TestResourceControllerV2(unittest.TestCase):
             "RcSdkReclaimInstance1", 
             self.testRegionId2,
             self.testResourceGroupGuid,
-            self.testPlanId2,
+            self.testPlanId2, 
             headers=customHeaders
         )
         assert response is not None
@@ -858,7 +859,7 @@ class TestResourceControllerV2(unittest.TestCase):
         assert result.get('name') == "RcSdkReclaimInstance1"
         assert result.get('account_id') == self.testAccountId
         assert result.get('resource_group_id') == self.testResourceGroupGuid
-        assert result.get('resource_plan_id') == self.testPlanId2
+        assert result.get('resource_plan_id') == self.testPlanId2 
         assert result.get('state') == "active"
         assert not result.get('locked')
         assert result.get('last_operation').get('type') == "create"
