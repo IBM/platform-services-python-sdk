@@ -1,3 +1,10 @@
+## [0.9.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.9.0...v0.9.1) (2020-07-08)
+
+
+### Bug Fixes
+
+* include additional required files in src dist ([7ba7ad5](https://github.com/IBM/platform-services-python-sdk/commit/7ba7ad522e1141214a4e4907d7156e4d61fb0d2e))
+
 # [0.9.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.8.0...v0.9.0) (2020-07-06)
 
 
