@@ -208,9 +208,10 @@ class TestResourceControllerV2(unittest.TestCase):
         assert response.get_status_code() == 200
 
         result = response.get_result()
+
         assert result is not None
-        assert len(result.get('resources')) >= 0
-        assert result.get('rows_count') >= 0
+        assert len(result.get('resources')) == 0
+        assert result.get('rows_count') == 0
 
     def test_06_create_resource_alias(self):
         customHeaders = {}
@@ -840,6 +841,8 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders = {}
         customHeaders["Transaction-Id"] = "rc-sdk-python-test44-" + self.transactionId 
 
+        self.service.set_http_config({'timeout': 120})
+        
         response = self.service.create_resource_instance(
             "RcSdkReclaimInstance1", 
             self.testRegionId2,
