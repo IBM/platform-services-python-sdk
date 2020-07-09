@@ -17,6 +17,7 @@ from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthen
 import inspect
 import json
 import pytest
+import re
 import requests
 import responses
 from ibm_platform_services.global_search_v2 import *
@@ -26,7 +27,7 @@ service = GlobalSearchV2(
     authenticator=NoAuthAuthenticator()
     )
 
-base_url = 'https://api.global-search-tagging.cloud.ibm.com/'
+base_url = 'https://api.global-search-tagging.cloud.ibm.com'
 service.set_service_url(base_url)
 
 ##############################################################################
@@ -39,13 +40,20 @@ service.set_service_url(base_url)
 #-----------------------------------------------------------------------------
 class TestSearch():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # search()
     #--------------------------------------------------------
     @responses.activate
     def test_search_all_params(self):
         # Set up mock
-        url = base_url + '/v3/resources/search'
+        url = self.preprocess_url(base_url + '/v3/resources/search')
         mock_response = '{"search_cursor": "search_cursor", "limit": 5, "items": [{"crn": "crn"}]}'
         responses.add(responses.POST,
                       url,
@@ -59,8 +67,8 @@ class TestSearch():
         search_cursor = 'testString'
         transaction_id = 'testString'
         account_id = 'testString'
-        limit = 38
-        timeout = 38
+        limit = 1
+        timeout = 0
         sort = ['testString']
 
         # Invoke method
@@ -99,7 +107,7 @@ class TestSearch():
     @responses.activate
     def test_search_required_params(self):
         # Set up mock
-        url = base_url + '/v3/resources/search'
+        url = self.preprocess_url(base_url + '/v3/resources/search')
         mock_response = '{"search_cursor": "search_cursor", "limit": 5, "items": [{"crn": "crn"}]}'
         responses.add(responses.POST,
                       url,
@@ -145,13 +153,20 @@ class TestSearch():
 #-----------------------------------------------------------------------------
 class TestGetSupportedTypes():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # get_supported_types()
     #--------------------------------------------------------
     @responses.activate
     def test_get_supported_types_all_params(self):
         # Set up mock
-        url = base_url + '/v2/resources/supported_types'
+        url = self.preprocess_url(base_url + '/v2/resources/supported_types')
         mock_response = '{"supported_types": ["supported_types"]}'
         responses.add(responses.GET,
                       url,

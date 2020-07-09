@@ -122,6 +122,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/cases'
         request = self.prepare_request(method='GET',
@@ -216,6 +217,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/cases'
         request = self.prepare_request(method='POST',
@@ -260,6 +262,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/cases/{0}'.format(
             *self.encode_path_vars(case_number))
@@ -306,6 +309,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/cases/{0}/status'.format(
             *self.encode_path_vars(case_number))
@@ -354,6 +358,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/cases/{0}/comments'.format(
             *self.encode_path_vars(case_number))
@@ -406,6 +411,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/cases/{0}/watchlist'.format(
             *self.encode_path_vars(case_number))
@@ -455,6 +461,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/cases/{0}/watchlist'.format(
             *self.encode_path_vars(case_number))
@@ -515,6 +522,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/cases/{0}/resources'.format(
             *self.encode_path_vars(case_number))
@@ -564,6 +572,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/cases/{0}/attachments'.format(
             *self.encode_path_vars(case_number))
@@ -605,6 +614,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/octet-stream'
 
         url = '/cases/{0}/attachments/{1}'.format(
             *self.encode_path_vars(case_number, file_id))
@@ -645,6 +655,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/cases/{0}/attachments/{1}'.format(
             *self.encode_path_vars(case_number, file_id))

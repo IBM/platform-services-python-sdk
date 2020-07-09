@@ -17,6 +17,7 @@ from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthen
 import inspect
 import json
 import pytest
+import re
 import requests
 import responses
 from ibm_platform_services.global_tagging_v1 import *
@@ -26,7 +27,7 @@ service = GlobalTaggingV1(
     authenticator=NoAuthAuthenticator()
     )
 
-base_url = 'https://tags.global-search-tagging.cloud.ibm.com/'
+base_url = 'https://tags.global-search-tagging.cloud.ibm.com'
 service.set_service_url(base_url)
 
 ##############################################################################
@@ -39,13 +40,20 @@ service.set_service_url(base_url)
 #-----------------------------------------------------------------------------
 class TestListTags():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # list_tags()
     #--------------------------------------------------------
     @responses.activate
     def test_list_tags_all_params(self):
         # Set up mock
-        url = base_url + '/v3/tags'
+        url = self.preprocess_url(base_url + '/v3/tags')
         mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "items": [{"name": "name"}]}'
         responses.add(responses.GET,
                       url,
@@ -57,8 +65,8 @@ class TestListTags():
         providers = ['ghost']
         attached_to = 'testString'
         full_data = True
-        offset = 38
-        limit = 38
+        offset = 0
+        limit = 1
         order_by_name = 'asc'
         timeout = 38
         attached_only = True
@@ -98,7 +106,7 @@ class TestListTags():
     @responses.activate
     def test_list_tags_required_params(self):
         # Set up mock
-        url = base_url + '/v3/tags'
+        url = self.preprocess_url(base_url + '/v3/tags')
         mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "items": [{"name": "name"}]}'
         responses.add(responses.GET,
                       url,
@@ -120,13 +128,20 @@ class TestListTags():
 #-----------------------------------------------------------------------------
 class TestDeleteTagAll():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # delete_tag_all()
     #--------------------------------------------------------
     @responses.activate
     def test_delete_tag_all_all_params(self):
         # Set up mock
-        url = base_url + '/v3/tags'
+        url = self.preprocess_url(base_url + '/v3/tags')
         mock_response = '{"total_count": 11, "errors": true, "items": [{"tag_name": "tag_name", "is_error": true}]}'
         responses.add(responses.DELETE,
                       url,
@@ -158,7 +173,7 @@ class TestDeleteTagAll():
     @responses.activate
     def test_delete_tag_all_required_params(self):
         # Set up mock
-        url = base_url + '/v3/tags'
+        url = self.preprocess_url(base_url + '/v3/tags')
         mock_response = '{"total_count": 11, "errors": true, "items": [{"tag_name": "tag_name", "is_error": true}]}'
         responses.add(responses.DELETE,
                       url,
@@ -180,13 +195,20 @@ class TestDeleteTagAll():
 #-----------------------------------------------------------------------------
 class TestDeleteTag():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # delete_tag()
     #--------------------------------------------------------
     @responses.activate
     def test_delete_tag_all_params(self):
         # Set up mock
-        url = base_url + '/v3/tags/testString'
+        url = self.preprocess_url(base_url + '/v3/tags/testString')
         mock_response = '{"results": [{"provider": "ghost", "is_error": true}]}'
         responses.add(responses.DELETE,
                       url,
@@ -220,7 +242,7 @@ class TestDeleteTag():
     @responses.activate
     def test_delete_tag_required_params(self):
         # Set up mock
-        url = base_url + '/v3/tags/testString'
+        url = self.preprocess_url(base_url + '/v3/tags/testString')
         mock_response = '{"results": [{"provider": "ghost", "is_error": true}]}'
         responses.add(responses.DELETE,
                       url,
@@ -248,7 +270,7 @@ class TestDeleteTag():
     @responses.activate
     def test_delete_tag_value_error(self):
         # Set up mock
-        url = base_url + '/v3/tags/testString'
+        url = self.preprocess_url(base_url + '/v3/tags/testString')
         mock_response = '{"results": [{"provider": "ghost", "is_error": true}]}'
         responses.add(responses.DELETE,
                       url,
@@ -275,13 +297,20 @@ class TestDeleteTag():
 #-----------------------------------------------------------------------------
 class TestAttachTag():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # attach_tag()
     #--------------------------------------------------------
     @responses.activate
     def test_attach_tag_all_params(self):
         # Set up mock
-        url = base_url + '/v3/tags/attach'
+        url = self.preprocess_url(base_url + '/v3/tags/attach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
         responses.add(responses.POST,
                       url,
@@ -323,7 +352,7 @@ class TestAttachTag():
     @responses.activate
     def test_attach_tag_value_error(self):
         # Set up mock
-        url = base_url + '/v3/tags/attach'
+        url = self.preprocess_url(base_url + '/v3/tags/attach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
         responses.add(responses.POST,
                       url,
@@ -357,13 +386,20 @@ class TestAttachTag():
 #-----------------------------------------------------------------------------
 class TestDetachTag():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # detach_tag()
     #--------------------------------------------------------
     @responses.activate
     def test_detach_tag_all_params(self):
         # Set up mock
-        url = base_url + '/v3/tags/detach'
+        url = self.preprocess_url(base_url + '/v3/tags/detach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
         responses.add(responses.POST,
                       url,
@@ -405,7 +441,7 @@ class TestDetachTag():
     @responses.activate
     def test_detach_tag_value_error(self):
         # Set up mock
-        url = base_url + '/v3/tags/detach'
+        url = self.preprocess_url(base_url + '/v3/tags/detach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
         responses.add(responses.POST,
                       url,

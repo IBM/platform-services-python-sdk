@@ -107,6 +107,7 @@ class ResourceManagerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/resource_groups'
         request = self.prepare_request(method='GET',
@@ -152,6 +153,7 @@ class ResourceManagerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/resource_groups'
         request = self.prepare_request(method='POST',
@@ -188,6 +190,7 @@ class ResourceManagerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/resource_groups/{0}'.format(
             *self.encode_path_vars(id))
@@ -237,6 +240,7 @@ class ResourceManagerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/resource_groups/{0}'.format(
             *self.encode_path_vars(id))
@@ -310,6 +314,7 @@ class ResourceManagerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/quota_definitions'
         request = self.prepare_request(method='GET',
@@ -345,6 +350,7 @@ class ResourceManagerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/quota_definitions/{0}'.format(
             *self.encode_path_vars(id))
