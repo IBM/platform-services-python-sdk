@@ -125,6 +125,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/account-groups'
         request = self.prepare_request(method='POST',
@@ -192,6 +193,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/account-groups'
         request = self.prepare_request(method='GET',
@@ -230,6 +232,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/account-groups/{0}'.format(
             *self.encode_path_vars(account_group_id))
@@ -417,6 +420,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/accounts'
         request = self.prepare_request(method='POST',
@@ -482,6 +486,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/accounts'
         request = self.prepare_request(method='GET',
@@ -519,6 +524,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/accounts/{0}'.format(
             *self.encode_path_vars(account_id))
@@ -640,6 +646,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/enterprises'
         request = self.prepare_request(method='POST',
@@ -702,6 +709,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/enterprises'
         request = self.prepare_request(method='GET',
@@ -739,6 +747,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/enterprises/{0}'.format(
             *self.encode_path_vars(enterprise_id))
