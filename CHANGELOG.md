@@ -1,3 +1,10 @@
+## [0.9.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.9.1...v0.9.2) (2020-07-09)
+
+
+### Bug Fixes
+
+* use absolute URLs in README.md ([08f7a3e](https://github.com/IBM/platform-services-python-sdk/commit/08f7a3ee2dd5f08239606ade1c35f3c25567e5f6))
+
 ## [0.9.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.9.0...v0.9.1) (2020-07-08)
 
 
