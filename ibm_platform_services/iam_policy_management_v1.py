@@ -126,6 +126,7 @@ class IamPolicyManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v1/policies'
         request = self.prepare_request(method='GET',
@@ -221,6 +222,7 @@ class IamPolicyManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v1/policies'
         request = self.prepare_request(method='POST',
@@ -320,6 +322,7 @@ class IamPolicyManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v1/policies/{0}'.format(
             *self.encode_path_vars(policy_id))
@@ -357,6 +360,7 @@ class IamPolicyManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v1/policies/{0}'.format(
             *self.encode_path_vars(policy_id))
@@ -450,6 +454,7 @@ class IamPolicyManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/roles'
         request = self.prepare_request(method='GET',
@@ -527,6 +532,7 @@ class IamPolicyManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/roles'
         request = self.prepare_request(method='POST',
@@ -590,6 +596,7 @@ class IamPolicyManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/roles/{0}'.format(
             *self.encode_path_vars(role_id))
@@ -627,6 +634,7 @@ class IamPolicyManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/roles/{0}'.format(
             *self.encode_path_vars(role_id))
