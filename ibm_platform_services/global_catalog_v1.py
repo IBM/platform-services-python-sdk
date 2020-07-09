@@ -153,6 +153,7 @@ class GlobalCatalogV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/'
         request = self.prepare_request(method='GET',
@@ -167,7 +168,7 @@ class GlobalCatalogV1(BaseService):
     def create_catalog_entry(self,
         name: str,
         kind: str,
-        overview_ui: 'OverviewUI',
+        overview_ui: dict,
         images: 'Image',
         disabled: bool,
         tags: List[str],
@@ -193,8 +194,8 @@ class GlobalCatalogV1(BaseService):
                user-readable name.
         :param str kind: The type of catalog entry, **service**, **template**,
                **dashboard**, which determines the type and shape of the object.
-        :param OverviewUI overview_ui: Overview is nested in the top level. The key
-               value pair is `[_language_]overview_ui`.
+        :param dict overview_ui: Overview is nested in the top level. The key value
+               pair is `[_language_]overview_ui`.
         :param Image images: Image annotation for this catalog entry. The image is
                a URL.
         :param bool disabled: Boolean value that determines the global visibility
@@ -239,7 +240,6 @@ class GlobalCatalogV1(BaseService):
             raise ValueError('provider must be provided')
         if id is None:
             raise ValueError('id must be provided')
-        overview_ui = convert_model(overview_ui)
         images = convert_model(images)
         provider = convert_model(provider)
         if metadata is not None:
@@ -274,6 +274,7 @@ class GlobalCatalogV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/'
         request = self.prepare_request(method='POST',
@@ -300,7 +301,7 @@ class GlobalCatalogV1(BaseService):
         Get a specific catalog object.
 
         This endpoint returns a specific catalog entry using the object's unique
-        identifier, for example `/_*service_name*?complete=true`. This endpoint is ETag
+        identifier, for example `/*service_name*?complete=true`. This endpoint is ETag
         enabled.
 
         :param str id: The catalog entry's unqiue ID.
@@ -350,6 +351,7 @@ class GlobalCatalogV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/{0}'.format(
             *self.encode_path_vars(id))
@@ -366,7 +368,7 @@ class GlobalCatalogV1(BaseService):
         id: str,
         name: str,
         kind: str,
-        overview_ui: 'OverviewUI',
+        overview_ui: dict,
         images: 'Image',
         disabled: bool,
         tags: List[str],
@@ -393,8 +395,8 @@ class GlobalCatalogV1(BaseService):
                user-readable name.
         :param str kind: The type of catalog entry, **service**, **template**,
                **dashboard**, which determines the type and shape of the object.
-        :param OverviewUI overview_ui: Overview is nested in the top level. The key
-               value pair is `[_language_]overview_ui`.
+        :param dict overview_ui: Overview is nested in the top level. The key value
+               pair is `[_language_]overview_ui`.
         :param Image images: Image annotation for this catalog entry. The image is
                a URL.
         :param bool disabled: Boolean value that determines the global visibility
@@ -443,7 +445,6 @@ class GlobalCatalogV1(BaseService):
             raise ValueError('tags must be provided')
         if provider is None:
             raise ValueError('provider must be provided')
-        overview_ui = convert_model(overview_ui)
         images = convert_model(images)
         provider = convert_model(provider)
         if metadata is not None:
@@ -478,6 +479,7 @@ class GlobalCatalogV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/{0}'.format(
             *self.encode_path_vars(id))
@@ -568,7 +570,7 @@ class GlobalCatalogV1(BaseService):
         :param str id: The parent catalog entry's ID.
         :param str kind: The **kind** of child catalog entries to search for. A
                wildcard (*) includes all child catalog entries for all kinds, for example
-               `GET /service_name/_*`.
+               `GET /service_name/*`.
         :param str account: (optional) This changes the scope of the request
                regardless of the authorization header. Example scopes are `account` and
                `global`. `account=global` is reqired if operating with a service ID that
@@ -618,6 +620,7 @@ class GlobalCatalogV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/{0}/{1}'.format(
             *self.encode_path_vars(id, kind))
@@ -720,6 +723,7 @@ class GlobalCatalogV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/{0}/visibility'.format(
             *self.encode_path_vars(id))
@@ -842,6 +846,7 @@ class GlobalCatalogV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/{0}/pricing'.format(
             *self.encode_path_vars(id))
@@ -914,6 +919,7 @@ class GlobalCatalogV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/{0}/logs'.format(
             *self.encode_path_vars(id))
@@ -965,6 +971,7 @@ class GlobalCatalogV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/{0}/artifacts'.format(
             *self.encode_path_vars(object_id))
@@ -1016,6 +1023,7 @@ class GlobalCatalogV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = '*/*'
 
         url = '/{0}/artifacts/{1}'.format(
             *self.encode_path_vars(object_id, artifact_id))
@@ -2038,8 +2046,8 @@ class CatalogEntry():
           user-readable name.
     :attr str kind: The type of catalog entry, **service**, **template**,
           **dashboard**, which determines the type and shape of the object.
-    :attr OverviewUI overview_ui: Overview is nested in the top level. The key value
-          pair is `[_language_]overview_ui`.
+    :attr dict overview_ui: Overview is nested in the top level. The key value pair
+          is `[_language_]overview_ui`.
     :attr Image images: Image annotation for this catalog entry. The image is a URL.
     :attr str parent_id: (optional) The ID of the parent catalog entry if it exists.
     :attr bool disabled: Boolean value that determines the global visibility for the
@@ -2057,18 +2065,21 @@ class CatalogEntry():
     :attr str id: (optional) Catalog entry's unique ID. It's the same across all
           catalog instances.
     :attr object catalog_crn: (optional)
-    :attr object url: (optional)
-    :attr object children_url: (optional)
-    :attr object geo_tags: (optional)
-    :attr object pricing_tags: (optional)
-    :attr object created: (optional)
-    :attr object updated: (optional)
+    :attr object url: (optional) URL to get details about this object.
+    :attr object children_url: (optional) URL to get details about children of this
+          object.
+    :attr object geo_tags: (optional) tags to indicate the locations this service is
+          deployable to.
+    :attr object pricing_tags: (optional) tags to indicate the type of pricing plans
+          this service supports.
+    :attr object created: (optional) Date created.
+    :attr object updated: (optional) Date last updated.
     """
 
     def __init__(self,
                  name: str,
                  kind: str,
-                 overview_ui: 'OverviewUI',
+                 overview_ui: dict,
                  images: 'Image',
                  disabled: bool,
                  tags: List[str],
@@ -2094,8 +2105,8 @@ class CatalogEntry():
                user-readable name.
         :param str kind: The type of catalog entry, **service**, **template**,
                **dashboard**, which determines the type and shape of the object.
-        :param OverviewUI overview_ui: Overview is nested in the top level. The key
-               value pair is `[_language_]overview_ui`.
+        :param dict overview_ui: Overview is nested in the top level. The key value
+               pair is `[_language_]overview_ui`.
         :param Image images: Image annotation for this catalog entry. The image is
                a URL.
         :param bool disabled: Boolean value that determines the global visibility
@@ -2147,7 +2158,7 @@ class CatalogEntry():
         else:
             raise ValueError('Required property \'kind\' not present in CatalogEntry JSON')
         if 'overview_ui' in _dict:
-            args['overview_ui'] = OverviewUI.from_dict(_dict.get('overview_ui'))
+            args['overview_ui'] = {k : Overview.from_dict(v) for k, v in _dict.get('overview_ui').items()}
         else:
             raise ValueError('Required property \'overview_ui\' not present in CatalogEntry JSON')
         if 'images' in _dict:
@@ -2205,7 +2216,7 @@ class CatalogEntry():
         if hasattr(self, 'kind') and self.kind is not None:
             _dict['kind'] = self.kind
         if hasattr(self, 'overview_ui') and self.overview_ui is not None:
-            _dict['overview_ui'] = self.overview_ui.to_dict()
+            _dict['overview_ui'] = {k : v.to_dict() for k, v in self.overview_ui.items()}
         if hasattr(self, 'images') and self.images is not None:
             _dict['images'] = self.images.to_dict()
         if hasattr(self, 'parent_id') and self.parent_id is not None:
@@ -2258,14 +2269,14 @@ class CatalogEntry():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-    class KindEnum(Enum):
+    class KindEnum(str, Enum):
         """
         The type of catalog entry, **service**, **template**, **dashboard**, which
         determines the type and shape of the object.
         """
-        SERVICE = "service"
-        TEMPLATE = "template"
-        DASHBOARD = "dashboard"
+        SERVICE = 'service'
+        TEMPLATE = 'template'
+        DASHBOARD = 'dashboard'
 
 
 class CatalogEntryMetadata():
@@ -2979,54 +2990,6 @@ class EntrySearchResult():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class I18N():
-    """
-    Language specific translation of translation properties, like label and description.
-
-    """
-
-    def __init__(self,
-                 **kwargs) -> None:
-        """
-        Initialize a I18N object.
-
-        :param **kwargs: (optional) Any additional properties.
-        """
-        for _key, _value in kwargs.items():
-            setattr(self, _key, _value)
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'I18N':
-        """Initialize a I18N object from a json dictionary."""
-        return cls(**_dict)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a I18N object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        return vars(self)
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this I18N object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'I18N') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'I18N') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
 class Image():
     """
     Image annotation for this catalog entry. The image is a URL.
@@ -3652,54 +3615,6 @@ class Overview():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'Overview') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class OverviewUI():
-    """
-    Overview is nested in the top level. The key value pair is `[_language_]overview_ui`.
-
-    """
-
-    def __init__(self,
-                 **kwargs) -> None:
-        """
-        Initialize a OverviewUI object.
-
-        :param **kwargs: (optional) Any additional properties.
-        """
-        for _key, _value in kwargs.items():
-            setattr(self, _key, _value)
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'OverviewUI':
-        """Initialize a OverviewUI object from a json dictionary."""
-        return cls(**_dict)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a OverviewUI object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        return vars(self)
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this OverviewUI object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'OverviewUI') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'OverviewUI') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -4647,7 +4562,7 @@ class UIMetaData():
     """
     Information related to the UI presentation associated with a catalog entry.
 
-    :attr I18N strings: (optional) Language specific translation of translation
+    :attr dict strings: (optional) Language specific translation of translation
           properties, like label and description.
     :attr URLS urls: (optional) UI based URLs.
     :attr str embeddable_dashboard: (optional) Describes how the embeddable
@@ -4675,7 +4590,7 @@ class UIMetaData():
 
     def __init__(self,
                  *,
-                 strings: 'I18N' = None,
+                 strings: dict = None,
                  urls: 'URLS' = None,
                  embeddable_dashboard: str = None,
                  embeddable_dashboard_full_width: bool = None,
@@ -4691,7 +4606,7 @@ class UIMetaData():
         """
         Initialize a UIMetaData object.
 
-        :param I18N strings: (optional) Language specific translation of
+        :param dict strings: (optional) Language specific translation of
                translation properties, like label and description.
         :param URLS urls: (optional) UI based URLs.
         :param str embeddable_dashboard: (optional) Describes how the embeddable
@@ -4736,7 +4651,7 @@ class UIMetaData():
         """Initialize a UIMetaData object from a json dictionary."""
         args = {}
         if 'strings' in _dict:
-            args['strings'] = I18N.from_dict(_dict.get('strings'))
+            args['strings'] = {k : Strings.from_dict(v) for k, v in _dict.get('strings').items()}
         if 'urls' in _dict:
             args['urls'] = URLS.from_dict(_dict.get('urls'))
         if 'embeddable_dashboard' in _dict:
@@ -4772,7 +4687,7 @@ class UIMetaData():
         """Return a json dictionary representing this model."""
         _dict = {}
         if hasattr(self, 'strings') and self.strings is not None:
-            _dict['strings'] = self.strings.to_dict()
+            _dict['strings'] = {k : v.to_dict() for k, v in self.strings.items()}
         if hasattr(self, 'urls') and self.urls is not None:
             _dict['urls'] = self.urls.to_dict()
         if hasattr(self, 'embeddable_dashboard') and self.embeddable_dashboard is not None:
