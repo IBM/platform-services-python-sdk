@@ -1,3 +1,10 @@
+## [0.9.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.9.2...v0.9.3) (2020-07-09)
+
+
+### Bug Fixes
+
+* regenerate services using latest SDK generator and API definitions ([#39](https://github.com/IBM/platform-services-python-sdk/issues/39)) ([728a2a8](https://github.com/IBM/platform-services-python-sdk/commit/728a2a828e60cee5c34c72dae710a9d029aed2aa))
+
 ## [0.9.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.9.1...v0.9.2) (2020-07-09)
 
 
