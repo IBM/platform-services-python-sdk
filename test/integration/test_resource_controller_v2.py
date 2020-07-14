@@ -906,7 +906,8 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test47-" + self.transactionId
 
         response = self.service.list_reclamations(
-            account_id=self.testAccountId,
+            # account_id=self.testAccountId,
+            resource_instance_id=self.testReclaimInstanceGuid, #checking reclamations with instance guid for more test reliability 
             headers=customHeaders
         )
         assert response is not None
