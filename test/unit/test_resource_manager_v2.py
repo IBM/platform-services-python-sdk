@@ -18,6 +18,7 @@ from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthen
 import inspect
 import json
 import pytest
+import re
 import requests
 import responses
 from ibm_platform_services.resource_manager_v2 import *
@@ -40,13 +41,20 @@ service.set_service_url(base_url)
 #-----------------------------------------------------------------------------
 class TestListResourceGroups():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # list_resource_groups()
     #--------------------------------------------------------
     @responses.activate
     def test_list_resource_groups_all_params(self):
         # Set up mock
-        url = base_url + '/resource_groups'
+        url = self.preprocess_url(base_url + '/resource_groups')
         mock_response = '{"resources": [{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}]}'
         responses.add(responses.GET,
                       url,
@@ -81,7 +89,7 @@ class TestListResourceGroups():
     @responses.activate
     def test_list_resource_groups_required_params(self):
         # Set up mock
-        url = base_url + '/resource_groups'
+        url = self.preprocess_url(base_url + '/resource_groups')
         mock_response = '{"resources": [{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}]}'
         responses.add(responses.GET,
                       url,
@@ -103,13 +111,20 @@ class TestListResourceGroups():
 #-----------------------------------------------------------------------------
 class TestCreateResourceGroup():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # create_resource_group()
     #--------------------------------------------------------
     @responses.activate
     def test_create_resource_group_all_params(self):
         # Set up mock
-        url = base_url + '/resource_groups'
+        url = self.preprocess_url(base_url + '/resource_groups')
         mock_response = '{"id": "id", "crn": "crn"}'
         responses.add(responses.POST,
                       url,
@@ -143,7 +158,7 @@ class TestCreateResourceGroup():
     @responses.activate
     def test_create_resource_group_required_params(self):
         # Set up mock
-        url = base_url + '/resource_groups'
+        url = self.preprocess_url(base_url + '/resource_groups')
         mock_response = '{"id": "id", "crn": "crn"}'
         responses.add(responses.POST,
                       url,
@@ -165,13 +180,20 @@ class TestCreateResourceGroup():
 #-----------------------------------------------------------------------------
 class TestGetResourceGroup():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # get_resource_group()
     #--------------------------------------------------------
     @responses.activate
     def test_get_resource_group_all_params(self):
         # Set up mock
-        url = base_url + '/resource_groups/testString'
+        url = self.preprocess_url(base_url + '/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
         responses.add(responses.GET,
                       url,
@@ -199,7 +221,7 @@ class TestGetResourceGroup():
     @responses.activate
     def test_get_resource_group_value_error(self):
         # Set up mock
-        url = base_url + '/resource_groups/testString'
+        url = self.preprocess_url(base_url + '/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
         responses.add(responses.GET,
                       url,
@@ -226,13 +248,20 @@ class TestGetResourceGroup():
 #-----------------------------------------------------------------------------
 class TestUpdateResourceGroup():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # update_resource_group()
     #--------------------------------------------------------
     @responses.activate
     def test_update_resource_group_all_params(self):
         # Set up mock
-        url = base_url + '/resource_groups/testString'
+        url = self.preprocess_url(base_url + '/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
         responses.add(responses.PATCH,
                       url,
@@ -268,7 +297,7 @@ class TestUpdateResourceGroup():
     @responses.activate
     def test_update_resource_group_required_params(self):
         # Set up mock
-        url = base_url + '/resource_groups/testString'
+        url = self.preprocess_url(base_url + '/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
         responses.add(responses.PATCH,
                       url,
@@ -296,7 +325,7 @@ class TestUpdateResourceGroup():
     @responses.activate
     def test_update_resource_group_value_error(self):
         # Set up mock
-        url = base_url + '/resource_groups/testString'
+        url = self.preprocess_url(base_url + '/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
         responses.add(responses.PATCH,
                       url,
@@ -323,13 +352,20 @@ class TestUpdateResourceGroup():
 #-----------------------------------------------------------------------------
 class TestDeleteResourceGroup():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # delete_resource_group()
     #--------------------------------------------------------
     @responses.activate
     def test_delete_resource_group_all_params(self):
         # Set up mock
-        url = base_url + '/resource_groups/testString'
+        url = self.preprocess_url(base_url + '/resource_groups/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -354,7 +390,7 @@ class TestDeleteResourceGroup():
     @responses.activate
     def test_delete_resource_group_value_error(self):
         # Set up mock
-        url = base_url + '/resource_groups/testString'
+        url = self.preprocess_url(base_url + '/resource_groups/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -388,13 +424,20 @@ class TestDeleteResourceGroup():
 #-----------------------------------------------------------------------------
 class TestListQuotaDefinitions():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # list_quota_definitions()
     #--------------------------------------------------------
     @responses.activate
     def test_list_quota_definitions_all_params(self):
         # Set up mock
-        url = base_url + '/quota_definitions'
+        url = self.preprocess_url(base_url + '/quota_definitions')
         mock_response = '{"resources": [{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": [{"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}], "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}]}'
         responses.add(responses.GET,
                       url,
@@ -416,13 +459,20 @@ class TestListQuotaDefinitions():
 #-----------------------------------------------------------------------------
 class TestGetQuotaDefinition():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # get_quota_definition()
     #--------------------------------------------------------
     @responses.activate
     def test_get_quota_definition_all_params(self):
         # Set up mock
-        url = base_url + '/quota_definitions/testString'
+        url = self.preprocess_url(base_url + '/quota_definitions/testString')
         mock_response = '{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": [{"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}], "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
         responses.add(responses.GET,
                       url,
@@ -450,7 +500,7 @@ class TestGetQuotaDefinition():
     @responses.activate
     def test_get_quota_definition_value_error(self):
         # Set up mock
-        url = base_url + '/quota_definitions/testString'
+        url = self.preprocess_url(base_url + '/quota_definitions/testString')
         mock_response = '{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": [{"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}], "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
         responses.add(responses.GET,
                       url,

@@ -17,6 +17,7 @@ from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthen
 import inspect
 import json
 import pytest
+import re
 import requests
 import responses
 from ibm_platform_services.iam_access_groups_v2 import *
@@ -39,13 +40,20 @@ service.set_service_url(base_url)
 #-----------------------------------------------------------------------------
 class TestCreateAccessGroup():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # create_access_group()
     #--------------------------------------------------------
     @responses.activate
     def test_create_access_group_all_params(self):
         # Set up mock
-        url = base_url + '/groups'
+        url = self.preprocess_url(base_url + '/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
@@ -87,7 +95,7 @@ class TestCreateAccessGroup():
     @responses.activate
     def test_create_access_group_required_params(self):
         # Set up mock
-        url = base_url + '/groups'
+        url = self.preprocess_url(base_url + '/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
@@ -127,7 +135,7 @@ class TestCreateAccessGroup():
     @responses.activate
     def test_create_access_group_value_error(self):
         # Set up mock
-        url = base_url + '/groups'
+        url = self.preprocess_url(base_url + '/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
@@ -157,13 +165,20 @@ class TestCreateAccessGroup():
 #-----------------------------------------------------------------------------
 class TestListAccessGroups():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # list_access_groups()
     #--------------------------------------------------------
     @responses.activate
     def test_list_access_groups_all_params(self):
         # Set up mock
-        url = base_url + '/groups'
+        url = self.preprocess_url(base_url + '/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
@@ -215,7 +230,7 @@ class TestListAccessGroups():
     @responses.activate
     def test_list_access_groups_required_params(self):
         # Set up mock
-        url = base_url + '/groups'
+        url = self.preprocess_url(base_url + '/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
@@ -247,7 +262,7 @@ class TestListAccessGroups():
     @responses.activate
     def test_list_access_groups_value_error(self):
         # Set up mock
-        url = base_url + '/groups'
+        url = self.preprocess_url(base_url + '/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
@@ -274,13 +289,20 @@ class TestListAccessGroups():
 #-----------------------------------------------------------------------------
 class TestGetAccessGroup():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # get_access_group()
     #--------------------------------------------------------
     @responses.activate
     def test_get_access_group_all_params(self):
         # Set up mock
-        url = base_url + '/groups/testString'
+        url = self.preprocess_url(base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
@@ -316,7 +338,7 @@ class TestGetAccessGroup():
     @responses.activate
     def test_get_access_group_required_params(self):
         # Set up mock
-        url = base_url + '/groups/testString'
+        url = self.preprocess_url(base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
@@ -344,7 +366,7 @@ class TestGetAccessGroup():
     @responses.activate
     def test_get_access_group_value_error(self):
         # Set up mock
-        url = base_url + '/groups/testString'
+        url = self.preprocess_url(base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
@@ -371,13 +393,20 @@ class TestGetAccessGroup():
 #-----------------------------------------------------------------------------
 class TestUpdateAccessGroup():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # update_access_group()
     #--------------------------------------------------------
     @responses.activate
     def test_update_access_group_all_params(self):
         # Set up mock
-        url = base_url + '/groups/testString'
+        url = self.preprocess_url(base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
@@ -417,7 +446,7 @@ class TestUpdateAccessGroup():
     @responses.activate
     def test_update_access_group_required_params(self):
         # Set up mock
-        url = base_url + '/groups/testString'
+        url = self.preprocess_url(base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
@@ -455,7 +484,7 @@ class TestUpdateAccessGroup():
     @responses.activate
     def test_update_access_group_value_error(self):
         # Set up mock
-        url = base_url + '/groups/testString'
+        url = self.preprocess_url(base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
@@ -486,13 +515,20 @@ class TestUpdateAccessGroup():
 #-----------------------------------------------------------------------------
 class TestDeleteAccessGroup():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # delete_access_group()
     #--------------------------------------------------------
     @responses.activate
     def test_delete_access_group_all_params(self):
         # Set up mock
-        url = base_url + '/groups/testString'
+        url = self.preprocess_url(base_url + '/groups/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -525,7 +561,7 @@ class TestDeleteAccessGroup():
     @responses.activate
     def test_delete_access_group_required_params(self):
         # Set up mock
-        url = base_url + '/groups/testString'
+        url = self.preprocess_url(base_url + '/groups/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -550,7 +586,7 @@ class TestDeleteAccessGroup():
     @responses.activate
     def test_delete_access_group_value_error(self):
         # Set up mock
-        url = base_url + '/groups/testString'
+        url = self.preprocess_url(base_url + '/groups/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -584,13 +620,20 @@ class TestDeleteAccessGroup():
 #-----------------------------------------------------------------------------
 class TestGetAccountSettings():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # get_account_settings()
     #--------------------------------------------------------
     @responses.activate
     def test_get_account_settings_all_params(self):
         # Set up mock
-        url = base_url + '/groups/settings'
+        url = self.preprocess_url(base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.GET,
                       url,
@@ -624,7 +667,7 @@ class TestGetAccountSettings():
     @responses.activate
     def test_get_account_settings_required_params(self):
         # Set up mock
-        url = base_url + '/groups/settings'
+        url = self.preprocess_url(base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.GET,
                       url,
@@ -656,7 +699,7 @@ class TestGetAccountSettings():
     @responses.activate
     def test_get_account_settings_value_error(self):
         # Set up mock
-        url = base_url + '/groups/settings'
+        url = self.preprocess_url(base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.GET,
                       url,
@@ -683,13 +726,20 @@ class TestGetAccountSettings():
 #-----------------------------------------------------------------------------
 class TestUpdateAccountSettings():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # update_account_settings()
     #--------------------------------------------------------
     @responses.activate
     def test_update_account_settings_all_params(self):
         # Set up mock
-        url = base_url + '/groups/settings'
+        url = self.preprocess_url(base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.PATCH,
                       url,
@@ -728,7 +778,7 @@ class TestUpdateAccountSettings():
     @responses.activate
     def test_update_account_settings_required_params(self):
         # Set up mock
-        url = base_url + '/groups/settings'
+        url = self.preprocess_url(base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.PATCH,
                       url,
@@ -765,7 +815,7 @@ class TestUpdateAccountSettings():
     @responses.activate
     def test_update_account_settings_value_error(self):
         # Set up mock
-        url = base_url + '/groups/settings'
+        url = self.preprocess_url(base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.PATCH,
                       url,
@@ -803,13 +853,20 @@ class TestUpdateAccountSettings():
 #-----------------------------------------------------------------------------
 class TestIsMemberOfAccessGroup():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # is_member_of_access_group()
     #--------------------------------------------------------
     @responses.activate
     def test_is_member_of_access_group_all_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/members/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/members/testString')
         responses.add(responses.HEAD,
                       url,
                       status=204)
@@ -838,7 +895,7 @@ class TestIsMemberOfAccessGroup():
     @responses.activate
     def test_is_member_of_access_group_required_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/members/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/members/testString')
         responses.add(responses.HEAD,
                       url,
                       status=204)
@@ -865,7 +922,7 @@ class TestIsMemberOfAccessGroup():
     @responses.activate
     def test_is_member_of_access_group_value_error(self):
         # Set up mock
-        url = base_url + '/groups/testString/members/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/members/testString')
         responses.add(responses.HEAD,
                       url,
                       status=204)
@@ -891,13 +948,20 @@ class TestIsMemberOfAccessGroup():
 #-----------------------------------------------------------------------------
 class TestAddMembersToAccessGroup():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # add_members_to_access_group()
     #--------------------------------------------------------
     @responses.activate
     def test_add_members_to_access_group_all_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/members'
+        url = self.preprocess_url(base_url + '/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "created_at", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -937,7 +1001,7 @@ class TestAddMembersToAccessGroup():
     @responses.activate
     def test_add_members_to_access_group_required_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/members'
+        url = self.preprocess_url(base_url + '/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "created_at", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -975,7 +1039,7 @@ class TestAddMembersToAccessGroup():
     @responses.activate
     def test_add_members_to_access_group_value_error(self):
         # Set up mock
-        url = base_url + '/groups/testString/members'
+        url = self.preprocess_url(base_url + '/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "created_at", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -1008,13 +1072,20 @@ class TestAddMembersToAccessGroup():
 #-----------------------------------------------------------------------------
 class TestListAccessGroupMembers():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # list_access_group_members()
     #--------------------------------------------------------
     @responses.activate
     def test_list_access_group_members_all_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/members'
+        url = self.preprocess_url(base_url + '/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "created_at", "created_by_id": "created_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -1062,7 +1133,7 @@ class TestListAccessGroupMembers():
     @responses.activate
     def test_list_access_group_members_required_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/members'
+        url = self.preprocess_url(base_url + '/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "created_at", "created_by_id": "created_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -1090,7 +1161,7 @@ class TestListAccessGroupMembers():
     @responses.activate
     def test_list_access_group_members_value_error(self):
         # Set up mock
-        url = base_url + '/groups/testString/members'
+        url = self.preprocess_url(base_url + '/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "created_at", "created_by_id": "created_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -1117,13 +1188,20 @@ class TestListAccessGroupMembers():
 #-----------------------------------------------------------------------------
 class TestRemoveMemberFromAccessGroup():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # remove_member_from_access_group()
     #--------------------------------------------------------
     @responses.activate
     def test_remove_member_from_access_group_all_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/members/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/members/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1152,7 +1230,7 @@ class TestRemoveMemberFromAccessGroup():
     @responses.activate
     def test_remove_member_from_access_group_required_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/members/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/members/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1179,7 +1257,7 @@ class TestRemoveMemberFromAccessGroup():
     @responses.activate
     def test_remove_member_from_access_group_value_error(self):
         # Set up mock
-        url = base_url + '/groups/testString/members/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/members/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1205,13 +1283,20 @@ class TestRemoveMemberFromAccessGroup():
 #-----------------------------------------------------------------------------
 class TestRemoveMembersFromAccessGroup():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # remove_members_from_access_group()
     #--------------------------------------------------------
     @responses.activate
     def test_remove_members_from_access_group_all_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/members/delete'
+        url = self.preprocess_url(base_url + '/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.POST,
                       url,
@@ -1246,7 +1331,7 @@ class TestRemoveMembersFromAccessGroup():
     @responses.activate
     def test_remove_members_from_access_group_required_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/members/delete'
+        url = self.preprocess_url(base_url + '/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.POST,
                       url,
@@ -1279,7 +1364,7 @@ class TestRemoveMembersFromAccessGroup():
     @responses.activate
     def test_remove_members_from_access_group_value_error(self):
         # Set up mock
-        url = base_url + '/groups/testString/members/delete'
+        url = self.preprocess_url(base_url + '/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.POST,
                       url,
@@ -1307,13 +1392,20 @@ class TestRemoveMembersFromAccessGroup():
 #-----------------------------------------------------------------------------
 class TestRemoveMemberFromAllAccessGroups():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # remove_member_from_all_access_groups()
     #--------------------------------------------------------
     @responses.activate
     def test_remove_member_from_all_access_groups_all_params(self):
         # Set up mock
-        url = base_url + '/groups/_allgroups/members/testString'
+        url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.DELETE,
                       url,
@@ -1349,7 +1441,7 @@ class TestRemoveMemberFromAllAccessGroups():
     @responses.activate
     def test_remove_member_from_all_access_groups_required_params(self):
         # Set up mock
-        url = base_url + '/groups/_allgroups/members/testString'
+        url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.DELETE,
                       url,
@@ -1383,7 +1475,7 @@ class TestRemoveMemberFromAllAccessGroups():
     @responses.activate
     def test_remove_member_from_all_access_groups_value_error(self):
         # Set up mock
-        url = base_url + '/groups/_allgroups/members/testString'
+        url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.DELETE,
                       url,
@@ -1412,13 +1504,20 @@ class TestRemoveMemberFromAllAccessGroups():
 #-----------------------------------------------------------------------------
 class TestAddMemberToMultipleAccessGroups():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # add_member_to_multiple_access_groups()
     #--------------------------------------------------------
     @responses.activate
     def test_add_member_to_multiple_access_groups_all_params(self):
         # Set up mock
-        url = base_url + '/groups/_allgroups/members/testString'
+        url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -1462,7 +1561,7 @@ class TestAddMemberToMultipleAccessGroups():
     @responses.activate
     def test_add_member_to_multiple_access_groups_required_params(self):
         # Set up mock
-        url = base_url + '/groups/_allgroups/members/testString'
+        url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -1504,7 +1603,7 @@ class TestAddMemberToMultipleAccessGroups():
     @responses.activate
     def test_add_member_to_multiple_access_groups_value_error(self):
         # Set up mock
-        url = base_url + '/groups/_allgroups/members/testString'
+        url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -1545,13 +1644,20 @@ class TestAddMemberToMultipleAccessGroups():
 #-----------------------------------------------------------------------------
 class TestAddAccessGroupRule():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # add_access_group_rule()
     #--------------------------------------------------------
     @responses.activate
     def test_add_access_group_rule_all_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules'
+        url = self.preprocess_url(base_url + '/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
@@ -1601,7 +1707,7 @@ class TestAddAccessGroupRule():
     @responses.activate
     def test_add_access_group_rule_required_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules'
+        url = self.preprocess_url(base_url + '/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
@@ -1649,7 +1755,7 @@ class TestAddAccessGroupRule():
     @responses.activate
     def test_add_access_group_rule_value_error(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules'
+        url = self.preprocess_url(base_url + '/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
@@ -1689,13 +1795,20 @@ class TestAddAccessGroupRule():
 #-----------------------------------------------------------------------------
 class TestListAccessGroupRules():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # list_access_group_rules()
     #--------------------------------------------------------
     @responses.activate
     def test_list_access_group_rules_all_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules'
+        url = self.preprocess_url(base_url + '/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -1725,7 +1838,7 @@ class TestListAccessGroupRules():
     @responses.activate
     def test_list_access_group_rules_required_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules'
+        url = self.preprocess_url(base_url + '/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -1753,7 +1866,7 @@ class TestListAccessGroupRules():
     @responses.activate
     def test_list_access_group_rules_value_error(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules'
+        url = self.preprocess_url(base_url + '/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -1780,13 +1893,20 @@ class TestListAccessGroupRules():
 #-----------------------------------------------------------------------------
 class TestGetAccessGroupRule():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # get_access_group_rule()
     #--------------------------------------------------------
     @responses.activate
     def test_get_access_group_rule_all_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
@@ -1818,7 +1938,7 @@ class TestGetAccessGroupRule():
     @responses.activate
     def test_get_access_group_rule_required_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
@@ -1848,7 +1968,7 @@ class TestGetAccessGroupRule():
     @responses.activate
     def test_get_access_group_rule_value_error(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
@@ -1877,13 +1997,20 @@ class TestGetAccessGroupRule():
 #-----------------------------------------------------------------------------
 class TestReplaceAccessGroupRule():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # replace_access_group_rule()
     #--------------------------------------------------------
     @responses.activate
     def test_replace_access_group_rule_all_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
@@ -1937,7 +2064,7 @@ class TestReplaceAccessGroupRule():
     @responses.activate
     def test_replace_access_group_rule_required_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
@@ -1989,7 +2116,7 @@ class TestReplaceAccessGroupRule():
     @responses.activate
     def test_replace_access_group_rule_value_error(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
@@ -2033,13 +2160,20 @@ class TestReplaceAccessGroupRule():
 #-----------------------------------------------------------------------------
 class TestRemoveAccessGroupRule():
 
+    # Preprocess the request URL to ensure the mock response will be found.
+    def preprocess_url(self, request_url: str):
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
     #--------------------------------------------------------
     # remove_access_group_rule()
     #--------------------------------------------------------
     @responses.activate
     def test_remove_access_group_rule_all_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2068,7 +2202,7 @@ class TestRemoveAccessGroupRule():
     @responses.activate
     def test_remove_access_group_rule_required_params(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2095,7 +2229,7 @@ class TestRemoveAccessGroupRule():
     @responses.activate
     def test_remove_access_group_rule_value_error(self):
         # Set up mock
-        url = base_url + '/groups/testString/rules/testString'
+        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)

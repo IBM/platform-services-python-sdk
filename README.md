@@ -7,7 +7,7 @@
 [![codecov](https://codecov.io/gh/IBM/platform-services-python-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/IBM/platform-services-python-sdk)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
-# IBM Cloud Platform Services Python SDK Version 0.9.0
+# IBM Cloud Platform Services Python SDK Version 0.9.3
 
 Python client library to interact with various 
 [IBM Cloud Platform Service APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services).
@@ -72,13 +72,13 @@ Service Name | Imported Class Name
 To install, use `pip` or `easy_install`:
 
 ```bash
-pip install --upgrade "ibm_platform_services>=0.9.0"
+pip install --upgrade "ibm_platform_services>=0.9.3"
 ```
 
 or
 
 ```bash
-easy_install --upgrade "ibm_platform_services>=0.9.0"
+easy_install --upgrade "ibm_platform_services>=0.9.3"
 ```
 
 ## Using the SDK
@@ -98,9 +98,9 @@ Before that, please search for similar issues. It's possible that someone has al
 Find more open source projects on the [IBM Github Page](http://ibm.github.io/)
 
 ## Contributing
-See [CONTRIBUTING](CONTRIBUTING.md).
+See [CONTRIBUTING.md](https://github.com/IBM/platform-services-python-sdk/blob/master/CONTRIBUTING.md).
 
 ## License
 
-The IBM Cloud Platform Services Python SDK is released under the Apache 2.0 license.
-The license's full text can be found in [LICENSE](LICENSE).
+This SDK is released under the Apache 2.0 license.
+The license's full text can be found in [LICENSE](https://github.com/IBM/platform-services-python-sdk/blob/master/LICENSE).

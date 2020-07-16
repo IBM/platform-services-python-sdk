@@ -1,3 +1,24 @@
+## [0.9.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.9.2...v0.9.3) (2020-07-09)
+
+
+### Bug Fixes
+
+* regenerate services using latest SDK generator and API definitions ([#39](https://github.com/IBM/platform-services-python-sdk/issues/39)) ([728a2a8](https://github.com/IBM/platform-services-python-sdk/commit/728a2a828e60cee5c34c72dae710a9d029aed2aa))
+
+## [0.9.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.9.1...v0.9.2) (2020-07-09)
+
+
+### Bug Fixes
+
+* use absolute URLs in README.md ([08f7a3e](https://github.com/IBM/platform-services-python-sdk/commit/08f7a3ee2dd5f08239606ade1c35f3c25567e5f6))
+
+## [0.9.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.9.0...v0.9.1) (2020-07-08)
+
+
+### Bug Fixes
+
+* include additional required files in src dist ([7ba7ad5](https://github.com/IBM/platform-services-python-sdk/commit/7ba7ad522e1141214a4e4907d7156e4d61fb0d2e))
+
 # [0.9.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.8.0...v0.9.0) (2020-07-06)
 
 

@@ -43,7 +43,7 @@ from .common import get_sdk_headers
 class GlobalSearchV2(BaseService):
     """The global_search V2 service."""
 
-    DEFAULT_SERVICE_URL = 'https://api.global-search-tagging.cloud.ibm.com/'
+    DEFAULT_SERVICE_URL = 'https://api.global-search-tagging.cloud.ibm.com'
     DEFAULT_SERVICE_NAME = 'global_search'
 
     @classmethod
@@ -81,7 +81,18 @@ class GlobalSearchV2(BaseService):
     #########################
 
 
-    def search(self, *, query: str = None, fields: List[str] = None, search_cursor: str = None, transaction_id: str = None, account_id: str = None, limit: int = None, timeout: int = None, sort: List[str] = None, **kwargs) -> DetailedResponse:
+    def search(self,
+        *,
+        query: str = None,
+        fields: List[str] = None,
+        search_cursor: str = None,
+        transaction_id: str = None,
+        account_id: str = None,
+        limit: int = None,
+        timeout: int = None,
+        sort: List[str] = None,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Find instances of resources.
 
@@ -127,7 +138,9 @@ class GlobalSearchV2(BaseService):
         headers = {
             'transaction-id': transaction_id
         }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='search')
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V2',
+                                      operation_id='search')
         headers.update(sdk_headers)
 
         params = {
@@ -148,6 +161,7 @@ class GlobalSearchV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v3/resources/search'
         request = self.prepare_request(method='POST',
@@ -164,7 +178,9 @@ class GlobalSearchV2(BaseService):
     #########################
 
 
-    def get_supported_types(self, **kwargs) -> DetailedResponse:
+    def get_supported_types(self,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Get all supported resource types.
 
@@ -176,11 +192,14 @@ class GlobalSearchV2(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_supported_types')
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V2',
+                                      operation_id='get_supported_types')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/resources/supported_types'
         request = self.prepare_request(method='GET',
@@ -206,7 +225,10 @@ class ResultItem():
     # The set of defined properties for the class
     _properties = frozenset(['crn'])
 
-    def __init__(self, *, crn: str = None, **kwargs) -> None:
+    def __init__(self,
+                 *,
+                 crn: str = None,
+                 **kwargs) -> None:
         """
         Initialize a ResultItem object.
 
@@ -223,7 +245,7 @@ class ResultItem():
         args = {}
         if 'crn' in _dict:
             args['crn'] = _dict.get('crn')
-        args.update({k:v for (k,v) in _dict.items() if k not in cls._properties})
+        args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
     @classmethod
@@ -259,7 +281,6 @@ class ResultItem():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
 class ScanResult():
     """
     The search scan response.
@@ -273,7 +294,11 @@ class ScanResult():
           hits to fetch.
     """
 
-    def __init__(self, search_cursor: str, items: List['ResultItem'], *, limit: float = None) -> None:
+    def __init__(self,
+                 search_cursor: str,
+                 items: List['ResultItem'],
+                 *,
+                 limit: float = None) -> None:
         """
         Initialize a ScanResult object.
 
@@ -339,7 +364,6 @@ class ScanResult():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
 class SupportedTypesList():
     """
     A list of resource types supported by GhoST.
@@ -348,7 +372,9 @@ class SupportedTypesList():
           by GhoST.
     """
 
-    def __init__(self, *, supported_types: List[str] = None) -> None:
+    def __init__(self,
+                 *,
+                 supported_types: List[str] = None) -> None:
         """
         Initialize a SupportedTypesList object.
 
@@ -394,5 +420,3 @@ class SupportedTypesList():
     def __ne__(self, other: 'SupportedTypesList') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
-
-
