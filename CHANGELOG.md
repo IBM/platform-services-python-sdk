@@ -1,3 +1,10 @@
+# [0.10.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.9.3...v0.10.0) (2020-07-17)
+
+
+### Features
+
+* **Resource Controller:** add service to project ([#30](https://github.com/IBM/platform-services-python-sdk/issues/30)) ([6f03ac0](https://github.com/IBM/platform-services-python-sdk/commit/6f03ac02d6912377605444df30da12e1120a2c4a))
+
 ## [0.9.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.9.2...v0.9.3) (2020-07-09)
 
 
