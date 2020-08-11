@@ -127,7 +127,7 @@ class TestCaseManagementV1(unittest.TestCase):
                 offering=offering,
                 headers={}
             )
-        assert e.value.code == 500
+        assert e.value.code == 400
 
     def test_04_get_cases(self):
 

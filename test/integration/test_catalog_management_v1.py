@@ -386,11 +386,11 @@ class TestCatalogManagementV1(unittest.TestCase):
 
         getResult = getResponse.get_result()
         assert getResult.get('offset') == 0
-        assert getResult.get('limit') == 0
-        assert getResult.get('total_count') != 0
-        assert getResult.get('last') is None
+        assert getResult.get('limit') > 0
+        assert getResult.get('total_count') > 0
+        assert getResult.get('last') is not None
         assert getResult.get('prev') is None
-        assert getResult.get('next') is None
+        assert getResult.get('next') is not None
         assert getResult.get('resources') is not None
 
     def test_import_offering(self):
