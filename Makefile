@@ -12,3 +12,11 @@ dev_deps:
 
 install_project:
 	pip install -e .
+
+test: test-unit test-int
+
+test-unit:
+	pytest test/unit
+
+test-int:
+	pytest test/integration
