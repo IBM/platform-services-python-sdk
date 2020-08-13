@@ -59,6 +59,7 @@ Service Name | Imported Class Name
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | OpenServiceBrokerV1
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | ResourceControllerV2
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | ResourceManagerV2
+[User Management](https://cloud.ibm.com/apidocs/user-management) | UserManagementV1
 
 ## Prerequisites
 
