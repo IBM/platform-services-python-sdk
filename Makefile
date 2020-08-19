@@ -5,18 +5,21 @@
 setup: deps dev_deps install_project
 
 deps:
-	pip install -r requirements.txt
+	python -m pip install -r requirements.txt
 
 dev_deps:
-	pip install -r requirements-dev.txt
+	python -m pip install -r requirements-dev.txt
 
 install_project:
-	pip install -e .
+	python -m pip install -e .
 
 test: test-unit test-int
 
 test-unit:
-	pytest test/unit
+	python -m pytest test/unit
 
 test-int:
-	pytest test/integration
+	python -m pytest test/integration
+
+lint:
+	./pylint.sh
