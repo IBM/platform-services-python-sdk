@@ -1,3 +1,3 @@
 #!/bin/bash
 
-pylint ibm_platform_services test
+python -m pylint ibm_platform_services test
