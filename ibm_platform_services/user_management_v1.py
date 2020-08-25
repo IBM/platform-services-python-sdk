@@ -37,7 +37,7 @@ from .common import get_sdk_headers
 class UserManagementV1(BaseService):
     """The User Management V1 service."""
 
-    DEFAULT_SERVICE_URL = 'https://user-management.cloud.ibm.com'
+    DEFAULT_SERVICE_URL = 'https://user-management.test.cloud.ibm.com'
     DEFAULT_SERVICE_NAME = 'user_management'
 
     @classmethod
