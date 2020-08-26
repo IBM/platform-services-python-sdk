@@ -33,3 +33,4 @@ from .iam_policy_management_v1 import IamPolicyManagementV1
 from .open_service_broker_v1 import OpenServiceBrokerV1
 from .resource_controller_v2 import ResourceControllerV2
 from .resource_manager_v2 import ResourceManagerV2
+from .user_management_v1 import UserManagementV1
