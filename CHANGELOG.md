@@ -1,3 +1,10 @@
+# [0.11.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.10.0...v0.11.0) (2020-08-26)
+
+
+### Features
+
+* **User Management:** add service to project ([#43](https://github.com/IBM/platform-services-python-sdk/issues/43)) ([32eebb5](https://github.com/IBM/platform-services-python-sdk/commit/32eebb5013e0f0c505bedec9f78153473948e855))
+
 # [0.10.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.9.3...v0.10.0) (2020-07-17)
 
 
