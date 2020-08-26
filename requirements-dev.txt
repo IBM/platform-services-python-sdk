@@ -1,4 +1,5 @@
 # test dependencies
+jproperties
 pytest>=2.8.2
 responses>=0.10
 python_dotenv>=0.1.5
