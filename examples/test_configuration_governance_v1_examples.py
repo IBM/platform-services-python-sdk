@@ -70,9 +70,11 @@ class TestConfigurationGovernanceV1Examples():
             config = read_external_sources(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME)
 
             account_id = config['ACCOUNT_ID']
-            service_name = config['TEST_SERVICE_NAME']
+            service_name = config['EXAMPLE_SERVICE_NAME']
             enterprise_scope_id = config['ENTERPRISE_SCOPE_ID']
             subacct_scope_id = config['SUBACCT_SCOPE_ID']
+
+            cls.clean_rules()
 
         print('Setup complete.')
 
@@ -139,16 +141,16 @@ class TestConfigurationGovernanceV1Examples():
         try:
             # begin-create_attachments
 
-            rule_scope_model = {
-                'note': 'My enterprise',
-                'scope_id': enterprise_scope_id,
-                'scope_type': 'enterprise'
+            excluded_scope_model = {
+                'note': 'Development account',
+                'scope_id': subacct_scope_id,
+                'scope_type': 'enterprise.account'
             }
 
             attachment_request_model = {
                 'account_id': account_id,
                 'included_scope': {'note':'My enterprise','scope_id':enterprise_scope_id,'scope_type':'enterprise'},
-                'excluded_scopes': [rule_scope_model]
+                'excluded_scopes': [excluded_scope_model]
             }
 
             create_attachments_response = configuration_governance_service.create_attachments(
@@ -183,7 +185,8 @@ class TestConfigurationGovernanceV1Examples():
             # end-get_attachment
 
             global attachment_etag_link
-            attachment_etag_link = attachment[''];
+            attachment_etag_link = configuration_governance_service.get_attachment(
+                rule_id=rule_id_link, attachment_id=attachment_id_link).get_headers().get('Etag')
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -204,7 +207,7 @@ class TestConfigurationGovernanceV1Examples():
             # end-get_rule
 
             global rule_etag_link
-            rule_etag_link = rule[''];
+            rule_etag_link = configuration_governance_service.get_rule(rule_id=rule_id_link).get_headers().get('etag')
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -257,7 +260,7 @@ class TestConfigurationGovernanceV1Examples():
 
             rule = configuration_governance_service.update_rule(
                 rule_id=rule_id_link,
-                if_match='testString',
+                if_match=rule_etag_link,
                 name='Disable public access',
                 description='Ensure that public access to account resources is disabled.',
                 target={'service_name':service_name,'resource_kind':'service','additional_target_attributes':[]},
@@ -303,19 +306,19 @@ class TestConfigurationGovernanceV1Examples():
         try:
             # begin-update_attachment
 
-            rule_scope_model = {
-                'note': 'My enterprise',
-                'scope_id': enterprise_scope_id,
-                'scope_type': 'enterprise'
+            excluded_scope_model = {
+                'note': 'Development account',
+                'scope_id': subacct_scope_id,
+                'scope_type': 'enterprise.account'
             }
 
             attachment = configuration_governance_service.update_attachment(
                 rule_id=rule_id_link,
                 attachment_id=attachment_id_link,
-                if_match='testString',
+                if_match=attachment_etag_link,
                 account_id=account_id,
                 included_scope={'note':'My enterprise','scope_id':enterprise_scope_id,'scope_type':'enterprise'},
-                excluded_scopes=[rule_scope_model]
+                excluded_scopes=[excluded_scope_model]
             ).get_result()
 
             print(json.dumps(attachment, indent=2))
@@ -363,6 +366,25 @@ class TestConfigurationGovernanceV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
+
+    @classmethod
+    def clean_rules(cls):
+        """
+        Clean up rules from prior test runs
+        """
+        try:
+            rule_list = configuration_governance_service.list_rules(
+                account_id=account_id,
+                labels=test_label
+            ).get_result()
+
+            for rule in rule_list['rules']:
+                rule_id = rule['rule_id']
+                print(f'deleting rule {rule_id}')
+                configuration_governance_service.delete_rule(rule_id)
+
+        except ApiException as e:
+            print(str(e))
 
 # endregion
 ##############################################################################
