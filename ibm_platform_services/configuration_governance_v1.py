@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-106e48e3-20200827-100723
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-68ee7c8f-20200829-062726
  
 """
 API specification for the Configuration Governance service.
@@ -271,9 +271,7 @@ class ConfigurationGovernanceV1(BaseService):
         enforcement_actions: List['EnforcementAction'],
         *,
         account_id: str = None,
-        version: str = None,
         rule_type: str = None,
-        imports: List['RuleImport'] = None,
         labels: List[str] = None,
         transaction_id: str = None,
         **kwargs
@@ -299,13 +297,8 @@ class ConfigurationGovernanceV1(BaseService):
                service must run on your behalf when a request to create or modify the
                target resource does not comply with your conditions.
         :param str account_id: (optional) Your IBM Cloud account ID.
-        :param str version: (optional) A field that you can use to store and manage
-               a custom version for this rule.
         :param str rule_type: (optional) The type of rule. Rules that you create
-               are `user_defined`. Rules that are created by IBM are `service_defined`.
-        :param List[RuleImport] imports: (optional) Parameters that are imported by
-               IBM as metadata to create
-               `service_defined` rules.
+               are `user_defined`.
         :param List[str] labels: (optional) Labels that you can use to group and
                search for similar rules, such as those that help you to meet a specific
                organization guideline.
@@ -337,8 +330,6 @@ class ConfigurationGovernanceV1(BaseService):
         target = convert_model(target)
         required_config = convert_model(required_config)
         enforcement_actions = [convert_model(x) for x in enforcement_actions]
-        if imports is not None:
-            imports = [convert_model(x) for x in imports]
         headers = {
             'If-Match': if_match,
             'Transaction-Id': transaction_id
@@ -355,9 +346,7 @@ class ConfigurationGovernanceV1(BaseService):
             'required_config': required_config,
             'enforcement_actions': enforcement_actions,
             'account_id': account_id,
-            'version': version,
             'rule_type': rule_type,
-            'imports': imports,
             'labels': labels
         }
         data = {k: v for (k, v) in data.items() if v is not None}
@@ -633,7 +622,8 @@ class ConfigurationGovernanceV1(BaseService):
         :param str account_id: Your IBM Cloud account ID.
         :param RuleScope included_scope: The extent at which the rule can be
                attached across your accounts.
-        :param List[RuleScope] excluded_scopes: (optional)
+        :param List[RuleScope] excluded_scopes: (optional) The extent at which the
+               rule can be excluded from the included scope.
         :param str transaction_id: (optional) The unique identifier that is used to
                trace an entire request. If you omit this field, the service generates and
                sends a transaction ID in the
@@ -755,7 +745,8 @@ class Attachment():
     :attr str account_id: Your IBM Cloud account ID.
     :attr RuleScope included_scope: The extent at which the rule can be attached
           across your accounts.
-    :attr List[RuleScope] excluded_scopes: (optional)
+    :attr List[RuleScope] excluded_scopes: (optional) The extent at which the rule
+          can be excluded from the included scope.
     """
 
     def __init__(self,
@@ -773,7 +764,8 @@ class Attachment():
         :param str account_id: Your IBM Cloud account ID.
         :param RuleScope included_scope: The extent at which the rule can be
                attached across your accounts.
-        :param List[RuleScope] excluded_scopes: (optional)
+        :param List[RuleScope] excluded_scopes: (optional) The extent at which the
+               rule can be excluded from the included scope.
         """
         self.attachment_id = attachment_id
         self.rule_id = rule_id
@@ -956,7 +948,8 @@ class AttachmentRequest():
     :attr str account_id: Your IBM Cloud account ID.
     :attr RuleScope included_scope: The extent at which the rule can be attached
           across your accounts.
-    :attr List[RuleScope] excluded_scopes: (optional)
+    :attr List[RuleScope] excluded_scopes: (optional) The extent at which the rule
+          can be excluded from the included scope.
     """
 
     def __init__(self,
@@ -970,7 +963,8 @@ class AttachmentRequest():
         :param str account_id: Your IBM Cloud account ID.
         :param RuleScope included_scope: The extent at which the rule can be
                attached across your accounts.
-        :param List[RuleScope] excluded_scopes: (optional)
+        :param List[RuleScope] excluded_scopes: (optional) The extent at which the
+               rule can be excluded from the included scope.
         """
         self.account_id = account_id
         self.included_scope = included_scope
@@ -1455,13 +1449,8 @@ class Rule():
     :attr str account_id: (optional) Your IBM Cloud account ID.
     :attr str name: A human-readable alias to assign to your rule.
     :attr str description: An extended description of your rule.
-    :attr str version: (optional) A field that you can use to store and manage a
-          custom version for this rule.
     :attr str rule_type: (optional) The type of rule. Rules that you create are
-          `user_defined`. Rules that are created by IBM are `service_defined`.
-    :attr List[RuleImport] imports: (optional) Parameters that are imported by IBM
-          as metadata to create
-          `service_defined` rules.
+          `user_defined`.
     :attr TargetResource target: The properties that describe the resource that you
           want to target
           with the rule.
@@ -1491,9 +1480,7 @@ class Rule():
                  enforcement_actions: List['EnforcementAction'],
                  *,
                  account_id: str = None,
-                 version: str = None,
                  rule_type: str = None,
-                 imports: List['RuleImport'] = None,
                  labels: List[str] = None,
                  rule_id: str = None,
                  creation_date: str = None,
@@ -1514,13 +1501,8 @@ class Rule():
                service must run on your behalf when a request to create or modify the
                target resource does not comply with your conditions.
         :param str account_id: (optional) Your IBM Cloud account ID.
-        :param str version: (optional) A field that you can use to store and manage
-               a custom version for this rule.
         :param str rule_type: (optional) The type of rule. Rules that you create
-               are `user_defined`. Rules that are created by IBM are `service_defined`.
-        :param List[RuleImport] imports: (optional) Parameters that are imported by
-               IBM as metadata to create
-               `service_defined` rules.
+               are `user_defined`.
         :param List[str] labels: (optional) Labels that you can use to group and
                search for similar rules, such as those that help you to meet a specific
                organization guideline.
@@ -1528,9 +1510,7 @@ class Rule():
         self.account_id = account_id
         self.name = name
         self.description = description
-        self.version = version
         self.rule_type = rule_type
-        self.imports = imports
         self.target = target
         self.required_config = required_config
         self.enforcement_actions = enforcement_actions
@@ -1556,12 +1536,8 @@ class Rule():
             args['description'] = _dict.get('description')
         else:
             raise ValueError('Required property \'description\' not present in Rule JSON')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
         if 'rule_type' in _dict:
             args['rule_type'] = _dict.get('rule_type')
-        if 'imports' in _dict:
-            args['imports'] = [RuleImport.from_dict(x) for x in _dict.get('imports')]
         if 'target' in _dict:
             args['target'] = TargetResource.from_dict(_dict.get('target'))
         else:
@@ -1604,12 +1580,8 @@ class Rule():
             _dict['name'] = self.name
         if hasattr(self, 'description') and self.description is not None:
             _dict['description'] = self.description
-        if hasattr(self, 'version') and self.version is not None:
-            _dict['version'] = self.version
         if hasattr(self, 'rule_type') and self.rule_type is not None:
             _dict['rule_type'] = self.rule_type
-        if hasattr(self, 'imports') and self.imports is not None:
-            _dict['imports'] = [x.to_dict() for x in self.imports]
         if hasattr(self, 'target') and self.target is not None:
             _dict['target'] = self.target.to_dict()
         if hasattr(self, 'required_config') and self.required_config is not None:
@@ -1655,11 +1627,9 @@ class Rule():
 
     class RuleTypeEnum(str, Enum):
         """
-        The type of rule. Rules that you create are `user_defined`. Rules that are created
-        by IBM are `service_defined`.
+        The type of rule. Rules that you create are `user_defined`.
         """
         USER_DEFINED = 'user_defined'
-        SERVICE_DEFINED = 'service_defined'
 
 
 class RuleCondition():
@@ -1676,73 +1646,6 @@ class RuleCondition():
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
                   ", ".join(['RuleConditionSingleProperty', 'RuleConditionOrLvl2', 'RuleConditionAndLvl2']))
         raise Exception(msg)
-
-class RuleImport():
-    """
-    RuleImport.
-
-    :attr str name: The imported name for a rule.
-    :attr UISupport ui_support: (optional) Imported metadata that displays in the
-          dashboard.
-    """
-
-    def __init__(self,
-                 name: str,
-                 *,
-                 ui_support: 'UISupport' = None) -> None:
-        """
-        Initialize a RuleImport object.
-
-        :param str name: The imported name for a rule.
-        :param UISupport ui_support: (optional) Imported metadata that displays in
-               the dashboard.
-        """
-        self.name = name
-        self.ui_support = ui_support
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'RuleImport':
-        """Initialize a RuleImport object from a json dictionary."""
-        args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        else:
-            raise ValueError('Required property \'name\' not present in RuleImport JSON')
-        if 'ui_support' in _dict:
-            args['ui_support'] = UISupport.from_dict(_dict.get('ui_support'))
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a RuleImport object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
-        if hasattr(self, 'ui_support') and self.ui_support is not None:
-            _dict['ui_support'] = self.ui_support.to_dict()
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this RuleImport object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'RuleImport') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'RuleImport') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
 
 class RuleList():
     """
@@ -1857,13 +1760,8 @@ class RuleRequest():
     :attr str account_id: (optional) Your IBM Cloud account ID.
     :attr str name: A human-readable alias to assign to your rule.
     :attr str description: An extended description of your rule.
-    :attr str version: (optional) A field that you can use to store and manage a
-          custom version for this rule.
     :attr str rule_type: (optional) The type of rule. Rules that you create are
-          `user_defined`. Rules that are created by IBM are `service_defined`.
-    :attr List[RuleImport] imports: (optional) Parameters that are imported by IBM
-          as metadata to create
-          `service_defined` rules.
+          `user_defined`.
     :attr TargetResource target: The properties that describe the resource that you
           want to target
           with the rule.
@@ -1884,9 +1782,7 @@ class RuleRequest():
                  enforcement_actions: List['EnforcementAction'],
                  *,
                  account_id: str = None,
-                 version: str = None,
                  rule_type: str = None,
-                 imports: List['RuleImport'] = None,
                  labels: List[str] = None) -> None:
         """
         Initialize a RuleRequest object.
@@ -1901,13 +1797,8 @@ class RuleRequest():
                service must run on your behalf when a request to create or modify the
                target resource does not comply with your conditions.
         :param str account_id: (optional) Your IBM Cloud account ID.
-        :param str version: (optional) A field that you can use to store and manage
-               a custom version for this rule.
         :param str rule_type: (optional) The type of rule. Rules that you create
-               are `user_defined`. Rules that are created by IBM are `service_defined`.
-        :param List[RuleImport] imports: (optional) Parameters that are imported by
-               IBM as metadata to create
-               `service_defined` rules.
+               are `user_defined`.
         :param List[str] labels: (optional) Labels that you can use to group and
                search for similar rules, such as those that help you to meet a specific
                organization guideline.
@@ -1915,9 +1806,7 @@ class RuleRequest():
         self.account_id = account_id
         self.name = name
         self.description = description
-        self.version = version
         self.rule_type = rule_type
-        self.imports = imports
         self.target = target
         self.required_config = required_config
         self.enforcement_actions = enforcement_actions
@@ -1937,12 +1826,8 @@ class RuleRequest():
             args['description'] = _dict.get('description')
         else:
             raise ValueError('Required property \'description\' not present in RuleRequest JSON')
-        if 'version' in _dict:
-            args['version'] = _dict.get('version')
         if 'rule_type' in _dict:
             args['rule_type'] = _dict.get('rule_type')
-        if 'imports' in _dict:
-            args['imports'] = [RuleImport.from_dict(x) for x in _dict.get('imports')]
         if 'target' in _dict:
             args['target'] = TargetResource.from_dict(_dict.get('target'))
         else:
@@ -1973,12 +1858,8 @@ class RuleRequest():
             _dict['name'] = self.name
         if hasattr(self, 'description') and self.description is not None:
             _dict['description'] = self.description
-        if hasattr(self, 'version') and self.version is not None:
-            _dict['version'] = self.version
         if hasattr(self, 'rule_type') and self.rule_type is not None:
             _dict['rule_type'] = self.rule_type
-        if hasattr(self, 'imports') and self.imports is not None:
-            _dict['imports'] = [x.to_dict() for x in self.imports]
         if hasattr(self, 'target') and self.target is not None:
             _dict['target'] = self.target.to_dict()
         if hasattr(self, 'required_config') and self.required_config is not None:
@@ -2012,11 +1893,9 @@ class RuleRequest():
 
     class RuleTypeEnum(str, Enum):
         """
-        The type of rule. Rules that you create are `user_defined`. Rules that are created
-        by IBM are `service_defined`.
+        The type of rule. Rules that you create are `user_defined`.
         """
         USER_DEFINED = 'user_defined'
-        SERVICE_DEFINED = 'service_defined'
 
 
 class RuleRequiredConfig():
@@ -2498,72 +2377,6 @@ class TargetResource():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'TargetResource') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class UISupport():
-    """
-    Imported metadata that displays in the dashboard.
-
-    :attr str display_name: The display name for a rule.
-    :attr str description: An extended description of a rule.
-    """
-
-    def __init__(self,
-                 display_name: str,
-                 description: str) -> None:
-        """
-        Initialize a UISupport object.
-
-        :param str display_name: The display name for a rule.
-        :param str description: An extended description of a rule.
-        """
-        self.display_name = display_name
-        self.description = description
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'UISupport':
-        """Initialize a UISupport object from a json dictionary."""
-        args = {}
-        if 'display_name' in _dict:
-            args['display_name'] = _dict.get('display_name')
-        else:
-            raise ValueError('Required property \'display_name\' not present in UISupport JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        else:
-            raise ValueError('Required property \'description\' not present in UISupport JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a UISupport object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'display_name') and self.display_name is not None:
-            _dict['display_name'] = self.display_name
-        if hasattr(self, 'description') and self.description is not None:
-            _dict['description'] = self.description
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this UISupport object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'UISupport') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'UISupport') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 

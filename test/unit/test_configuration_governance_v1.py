@@ -62,54 +62,42 @@ class TestCreateRules():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/config/v1/rules')
-        mock_response = '{"rules": [{"request_id": "3cebc877-58e7-44a5-a292-32114fa73558", "status_code": 201, "rule": {"account_id": "account_id", "name": "name", "description": "description", "version": "1.0.0", "rule_type": "user_defined", "imports": [{"name": "name", "ui_support": {"display_name": "display_name", "description": "description"}}], "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}, "errors": [{"code": "bad_request", "message": "The rule is missing an account ID"}], "trace": "861263b4-cee3-4514-8d8c-05d17308e6eb"}]}'
+        mock_response = '{"rules": [{"request_id": "3cebc877-58e7-44a5-a292-32114fa73558", "status_code": 201, "rule": {"account_id": "account_id", "name": "name", "description": "description", "rule_type": "user_defined", "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}, "errors": [{"code": "bad_request", "message": "The rule is missing an account ID"}], "trace": "861263b4-cee3-4514-8d8c-05d17308e6eb"}]}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
                       content_type='application/json',
                       status=201)
 
-        # Construct a dict representation of a UISupport model
-        ui_support_model = {}
-        ui_support_model['display_name'] = 'testString'
-        ui_support_model['description'] = 'testString'
-
-        # Construct a dict representation of a RuleImport model
-        rule_import_model = {}
-        rule_import_model['name'] = 'testString'
-        rule_import_model['ui_support'] = ui_support_model
-
         # Construct a dict representation of a RuleTargetAttribute model
         rule_target_attribute_model = {}
-        rule_target_attribute_model['name'] = 'resource_id'
+        rule_target_attribute_model['name'] = 'testString'
         rule_target_attribute_model['operator'] = 'string_equals'
-        rule_target_attribute_model['value'] = 'f0f8f7994e754ff38f9d370201966561'
+        rule_target_attribute_model['value'] = 'testString'
 
         # Construct a dict representation of a TargetResource model
         target_resource_model = {}
         target_resource_model['service_name'] = 'iam-groups'
-        target_resource_model['resource_kind'] = 'zone'
+        target_resource_model['resource_kind'] = 'service'
         target_resource_model['additional_target_attributes'] = [rule_target_attribute_model]
 
         # Construct a dict representation of a RuleRequiredConfigSingleProperty model
         rule_required_config_model = {}
-        rule_required_config_model['description'] = 'testString'
+        rule_required_config_model['description'] = 'Public access check'
         rule_required_config_model['property'] = 'public_access_enabled'
         rule_required_config_model['operator'] = 'is_true'
         rule_required_config_model['value'] = 'testString'
 
         # Construct a dict representation of a EnforcementAction model
         enforcement_action_model = {}
-        enforcement_action_model['action'] = 'disallow'
+        enforcement_action_model['action'] = 'audit_log'
 
         # Construct a dict representation of a RuleRequest model
         rule_request_model = {}
-        rule_request_model['account_id'] = 'testString'
-        rule_request_model['name'] = 'testString'
-        rule_request_model['description'] = 'testString'
-        rule_request_model['version'] = '1.0.0'
+        rule_request_model['account_id'] = '531fc3e28bfc43c5a2cea07786d93f5c'
+        rule_request_model['name'] = 'Disable public access'
+        rule_request_model['description'] = 'Ensure that public access to account resources is disabled.'
         rule_request_model['rule_type'] = 'user_defined'
-        rule_request_model['imports'] = [rule_import_model]
         rule_request_model['target'] = target_resource_model
         rule_request_model['required_config'] = rule_required_config_model
         rule_request_model['enforcement_actions'] = [enforcement_action_model]
@@ -146,54 +134,42 @@ class TestCreateRules():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/config/v1/rules')
-        mock_response = '{"rules": [{"request_id": "3cebc877-58e7-44a5-a292-32114fa73558", "status_code": 201, "rule": {"account_id": "account_id", "name": "name", "description": "description", "version": "1.0.0", "rule_type": "user_defined", "imports": [{"name": "name", "ui_support": {"display_name": "display_name", "description": "description"}}], "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}, "errors": [{"code": "bad_request", "message": "The rule is missing an account ID"}], "trace": "861263b4-cee3-4514-8d8c-05d17308e6eb"}]}'
+        mock_response = '{"rules": [{"request_id": "3cebc877-58e7-44a5-a292-32114fa73558", "status_code": 201, "rule": {"account_id": "account_id", "name": "name", "description": "description", "rule_type": "user_defined", "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}, "errors": [{"code": "bad_request", "message": "The rule is missing an account ID"}], "trace": "861263b4-cee3-4514-8d8c-05d17308e6eb"}]}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
                       content_type='application/json',
                       status=201)
 
-        # Construct a dict representation of a UISupport model
-        ui_support_model = {}
-        ui_support_model['display_name'] = 'testString'
-        ui_support_model['description'] = 'testString'
-
-        # Construct a dict representation of a RuleImport model
-        rule_import_model = {}
-        rule_import_model['name'] = 'testString'
-        rule_import_model['ui_support'] = ui_support_model
-
         # Construct a dict representation of a RuleTargetAttribute model
         rule_target_attribute_model = {}
-        rule_target_attribute_model['name'] = 'resource_id'
+        rule_target_attribute_model['name'] = 'testString'
         rule_target_attribute_model['operator'] = 'string_equals'
-        rule_target_attribute_model['value'] = 'f0f8f7994e754ff38f9d370201966561'
+        rule_target_attribute_model['value'] = 'testString'
 
         # Construct a dict representation of a TargetResource model
         target_resource_model = {}
         target_resource_model['service_name'] = 'iam-groups'
-        target_resource_model['resource_kind'] = 'zone'
+        target_resource_model['resource_kind'] = 'service'
         target_resource_model['additional_target_attributes'] = [rule_target_attribute_model]
 
         # Construct a dict representation of a RuleRequiredConfigSingleProperty model
         rule_required_config_model = {}
-        rule_required_config_model['description'] = 'testString'
+        rule_required_config_model['description'] = 'Public access check'
         rule_required_config_model['property'] = 'public_access_enabled'
         rule_required_config_model['operator'] = 'is_true'
         rule_required_config_model['value'] = 'testString'
 
         # Construct a dict representation of a EnforcementAction model
         enforcement_action_model = {}
-        enforcement_action_model['action'] = 'disallow'
+        enforcement_action_model['action'] = 'audit_log'
 
         # Construct a dict representation of a RuleRequest model
         rule_request_model = {}
-        rule_request_model['account_id'] = 'testString'
-        rule_request_model['name'] = 'testString'
-        rule_request_model['description'] = 'testString'
-        rule_request_model['version'] = '1.0.0'
+        rule_request_model['account_id'] = '531fc3e28bfc43c5a2cea07786d93f5c'
+        rule_request_model['name'] = 'Disable public access'
+        rule_request_model['description'] = 'Ensure that public access to account resources is disabled.'
         rule_request_model['rule_type'] = 'user_defined'
-        rule_request_model['imports'] = [rule_import_model]
         rule_request_model['target'] = target_resource_model
         rule_request_model['required_config'] = rule_required_config_model
         rule_request_model['enforcement_actions'] = [enforcement_action_model]
@@ -228,54 +204,42 @@ class TestCreateRules():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/config/v1/rules')
-        mock_response = '{"rules": [{"request_id": "3cebc877-58e7-44a5-a292-32114fa73558", "status_code": 201, "rule": {"account_id": "account_id", "name": "name", "description": "description", "version": "1.0.0", "rule_type": "user_defined", "imports": [{"name": "name", "ui_support": {"display_name": "display_name", "description": "description"}}], "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}, "errors": [{"code": "bad_request", "message": "The rule is missing an account ID"}], "trace": "861263b4-cee3-4514-8d8c-05d17308e6eb"}]}'
+        mock_response = '{"rules": [{"request_id": "3cebc877-58e7-44a5-a292-32114fa73558", "status_code": 201, "rule": {"account_id": "account_id", "name": "name", "description": "description", "rule_type": "user_defined", "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}, "errors": [{"code": "bad_request", "message": "The rule is missing an account ID"}], "trace": "861263b4-cee3-4514-8d8c-05d17308e6eb"}]}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
                       content_type='application/json',
                       status=201)
 
-        # Construct a dict representation of a UISupport model
-        ui_support_model = {}
-        ui_support_model['display_name'] = 'testString'
-        ui_support_model['description'] = 'testString'
-
-        # Construct a dict representation of a RuleImport model
-        rule_import_model = {}
-        rule_import_model['name'] = 'testString'
-        rule_import_model['ui_support'] = ui_support_model
-
         # Construct a dict representation of a RuleTargetAttribute model
         rule_target_attribute_model = {}
-        rule_target_attribute_model['name'] = 'resource_id'
+        rule_target_attribute_model['name'] = 'testString'
         rule_target_attribute_model['operator'] = 'string_equals'
-        rule_target_attribute_model['value'] = 'f0f8f7994e754ff38f9d370201966561'
+        rule_target_attribute_model['value'] = 'testString'
 
         # Construct a dict representation of a TargetResource model
         target_resource_model = {}
         target_resource_model['service_name'] = 'iam-groups'
-        target_resource_model['resource_kind'] = 'zone'
+        target_resource_model['resource_kind'] = 'service'
         target_resource_model['additional_target_attributes'] = [rule_target_attribute_model]
 
         # Construct a dict representation of a RuleRequiredConfigSingleProperty model
         rule_required_config_model = {}
-        rule_required_config_model['description'] = 'testString'
+        rule_required_config_model['description'] = 'Public access check'
         rule_required_config_model['property'] = 'public_access_enabled'
         rule_required_config_model['operator'] = 'is_true'
         rule_required_config_model['value'] = 'testString'
 
         # Construct a dict representation of a EnforcementAction model
         enforcement_action_model = {}
-        enforcement_action_model['action'] = 'disallow'
+        enforcement_action_model['action'] = 'audit_log'
 
         # Construct a dict representation of a RuleRequest model
         rule_request_model = {}
-        rule_request_model['account_id'] = 'testString'
-        rule_request_model['name'] = 'testString'
-        rule_request_model['description'] = 'testString'
-        rule_request_model['version'] = '1.0.0'
+        rule_request_model['account_id'] = '531fc3e28bfc43c5a2cea07786d93f5c'
+        rule_request_model['name'] = 'Disable public access'
+        rule_request_model['description'] = 'Ensure that public access to account resources is disabled.'
         rule_request_model['rule_type'] = 'user_defined'
-        rule_request_model['imports'] = [rule_import_model]
         rule_request_model['target'] = target_resource_model
         rule_request_model['required_config'] = rule_required_config_model
         rule_request_model['enforcement_actions'] = [enforcement_action_model]
@@ -322,7 +286,7 @@ class TestListRules():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/config/v1/rules')
-        mock_response = '{"offset": 6, "limit": 1000, "total_count": 11, "first": {"href": "href"}, "last": {"href": "href"}, "rules": [{"account_id": "account_id", "name": "name", "description": "description", "version": "1.0.0", "rule_type": "user_defined", "imports": [{"name": "name", "ui_support": {"display_name": "display_name", "description": "description"}}], "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}]}'
+        mock_response = '{"offset": 6, "limit": 1000, "total_count": 11, "first": {"href": "href"}, "last": {"href": "href"}, "rules": [{"account_id": "account_id", "name": "name", "description": "description", "rule_type": "user_defined", "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -330,7 +294,7 @@ class TestListRules():
                       status=200)
 
         # Set up parameter values
-        account_id = 'testString'
+        account_id = '531fc3e28bfc43c5a2cea07786d93f5c'
         transaction_id = 'testString'
         attached = True
         labels = 'SOC2,ITCS300'
@@ -371,7 +335,7 @@ class TestListRules():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/config/v1/rules')
-        mock_response = '{"offset": 6, "limit": 1000, "total_count": 11, "first": {"href": "href"}, "last": {"href": "href"}, "rules": [{"account_id": "account_id", "name": "name", "description": "description", "version": "1.0.0", "rule_type": "user_defined", "imports": [{"name": "name", "ui_support": {"display_name": "display_name", "description": "description"}}], "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}]}'
+        mock_response = '{"offset": 6, "limit": 1000, "total_count": 11, "first": {"href": "href"}, "last": {"href": "href"}, "rules": [{"account_id": "account_id", "name": "name", "description": "description", "rule_type": "user_defined", "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -379,7 +343,7 @@ class TestListRules():
                       status=200)
 
         # Set up parameter values
-        account_id = 'testString'
+        account_id = '531fc3e28bfc43c5a2cea07786d93f5c'
 
         # Invoke method
         response = service.list_rules(
@@ -403,7 +367,7 @@ class TestListRules():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/config/v1/rules')
-        mock_response = '{"offset": 6, "limit": 1000, "total_count": 11, "first": {"href": "href"}, "last": {"href": "href"}, "rules": [{"account_id": "account_id", "name": "name", "description": "description", "version": "1.0.0", "rule_type": "user_defined", "imports": [{"name": "name", "ui_support": {"display_name": "display_name", "description": "description"}}], "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}]}'
+        mock_response = '{"offset": 6, "limit": 1000, "total_count": 11, "first": {"href": "href"}, "last": {"href": "href"}, "rules": [{"account_id": "account_id", "name": "name", "description": "description", "rule_type": "user_defined", "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -411,7 +375,7 @@ class TestListRules():
                       status=200)
 
         # Set up parameter values
-        account_id = 'testString'
+        account_id = '531fc3e28bfc43c5a2cea07786d93f5c'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -446,7 +410,7 @@ class TestGetRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/config/v1/rules/testString')
-        mock_response = '{"account_id": "account_id", "name": "name", "description": "description", "version": "1.0.0", "rule_type": "user_defined", "imports": [{"name": "name", "ui_support": {"display_name": "display_name", "description": "description"}}], "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}'
+        mock_response = '{"account_id": "account_id", "name": "name", "description": "description", "rule_type": "user_defined", "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -476,7 +440,7 @@ class TestGetRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/config/v1/rules/testString')
-        mock_response = '{"account_id": "account_id", "name": "name", "description": "description", "version": "1.0.0", "rule_type": "user_defined", "imports": [{"name": "name", "ui_support": {"display_name": "display_name", "description": "description"}}], "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}'
+        mock_response = '{"account_id": "account_id", "name": "name", "description": "description", "rule_type": "user_defined", "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -504,7 +468,7 @@ class TestGetRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/config/v1/rules/testString')
-        mock_response = '{"account_id": "account_id", "name": "name", "description": "description", "version": "1.0.0", "rule_type": "user_defined", "imports": [{"name": "name", "ui_support": {"display_name": "display_name", "description": "description"}}], "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}'
+        mock_response = '{"account_id": "account_id", "name": "name", "description": "description", "rule_type": "user_defined", "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -547,7 +511,7 @@ class TestUpdateRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/config/v1/rules/testString')
-        mock_response = '{"account_id": "account_id", "name": "name", "description": "description", "version": "1.0.0", "rule_type": "user_defined", "imports": [{"name": "name", "ui_support": {"display_name": "display_name", "description": "description"}}], "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}'
+        mock_response = '{"account_id": "account_id", "name": "name", "description": "description", "rule_type": "user_defined", "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -556,49 +520,37 @@ class TestUpdateRule():
 
         # Construct a dict representation of a RuleTargetAttribute model
         rule_target_attribute_model = {}
-        rule_target_attribute_model['name'] = 'resource_id'
+        rule_target_attribute_model['name'] = 'testString'
         rule_target_attribute_model['operator'] = 'string_equals'
-        rule_target_attribute_model['value'] = 'f0f8f7994e754ff38f9d370201966561'
+        rule_target_attribute_model['value'] = 'testString'
 
         # Construct a dict representation of a TargetResource model
         target_resource_model = {}
         target_resource_model['service_name'] = 'iam-groups'
-        target_resource_model['resource_kind'] = 'zone'
+        target_resource_model['resource_kind'] = 'service'
         target_resource_model['additional_target_attributes'] = [rule_target_attribute_model]
 
         # Construct a dict representation of a RuleRequiredConfigSingleProperty model
         rule_required_config_model = {}
         rule_required_config_model['description'] = 'testString'
         rule_required_config_model['property'] = 'public_access_enabled'
-        rule_required_config_model['operator'] = 'is_true'
+        rule_required_config_model['operator'] = 'is_false'
         rule_required_config_model['value'] = 'testString'
 
         # Construct a dict representation of a EnforcementAction model
         enforcement_action_model = {}
         enforcement_action_model['action'] = 'audit_log'
 
-        # Construct a dict representation of a UISupport model
-        ui_support_model = {}
-        ui_support_model['display_name'] = 'testString'
-        ui_support_model['description'] = 'testString'
-
-        # Construct a dict representation of a RuleImport model
-        rule_import_model = {}
-        rule_import_model['name'] = 'testString'
-        rule_import_model['ui_support'] = ui_support_model
-
         # Set up parameter values
         rule_id = 'testString'
         if_match = 'testString'
         name = 'Disable public access'
         description = 'Ensure that public access to account resources is disabled.'
-        target = {"service_name":"iam-groups","resource_kind":"service","additional_target_attributes":[]}
-        required_config = {"property":"public_access_enabled","operator":"is_false"}
+        target = target_resource_model
+        required_config = rule_required_config_model
         enforcement_actions = [enforcement_action_model]
         account_id = '531fc3e28bfc43c5a2cea07786d93f5c'
-        version = '1.0.0'
         rule_type = 'user_defined'
-        imports = [rule_import_model]
         labels = ['testString']
         transaction_id = 'testString'
 
@@ -612,9 +564,7 @@ class TestUpdateRule():
             required_config,
             enforcement_actions,
             account_id=account_id,
-            version=version,
             rule_type=rule_type,
-            imports=imports,
             labels=labels,
             transaction_id=transaction_id,
             headers={}
@@ -627,13 +577,11 @@ class TestUpdateRule():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['name'] == 'Disable public access'
         assert req_body['description'] == 'Ensure that public access to account resources is disabled.'
-        assert req_body['target'] == {"service_name":"iam-groups","resource_kind":"service","additional_target_attributes":[]}
-        assert req_body['required_config'] == {"property":"public_access_enabled","operator":"is_false"}
+        assert req_body['target'] == target_resource_model
+        assert req_body['required_config'] == rule_required_config_model
         assert req_body['enforcement_actions'] == [enforcement_action_model]
         assert req_body['account_id'] == '531fc3e28bfc43c5a2cea07786d93f5c'
-        assert req_body['version'] == '1.0.0'
         assert req_body['rule_type'] == 'user_defined'
-        assert req_body['imports'] == [rule_import_model]
         assert req_body['labels'] == ['testString']
 
 
@@ -644,7 +592,7 @@ class TestUpdateRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/config/v1/rules/testString')
-        mock_response = '{"account_id": "account_id", "name": "name", "description": "description", "version": "1.0.0", "rule_type": "user_defined", "imports": [{"name": "name", "ui_support": {"display_name": "display_name", "description": "description"}}], "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}'
+        mock_response = '{"account_id": "account_id", "name": "name", "description": "description", "rule_type": "user_defined", "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -653,49 +601,37 @@ class TestUpdateRule():
 
         # Construct a dict representation of a RuleTargetAttribute model
         rule_target_attribute_model = {}
-        rule_target_attribute_model['name'] = 'resource_id'
+        rule_target_attribute_model['name'] = 'testString'
         rule_target_attribute_model['operator'] = 'string_equals'
-        rule_target_attribute_model['value'] = 'f0f8f7994e754ff38f9d370201966561'
+        rule_target_attribute_model['value'] = 'testString'
 
         # Construct a dict representation of a TargetResource model
         target_resource_model = {}
         target_resource_model['service_name'] = 'iam-groups'
-        target_resource_model['resource_kind'] = 'zone'
+        target_resource_model['resource_kind'] = 'service'
         target_resource_model['additional_target_attributes'] = [rule_target_attribute_model]
 
         # Construct a dict representation of a RuleRequiredConfigSingleProperty model
         rule_required_config_model = {}
         rule_required_config_model['description'] = 'testString'
         rule_required_config_model['property'] = 'public_access_enabled'
-        rule_required_config_model['operator'] = 'is_true'
+        rule_required_config_model['operator'] = 'is_false'
         rule_required_config_model['value'] = 'testString'
 
         # Construct a dict representation of a EnforcementAction model
         enforcement_action_model = {}
         enforcement_action_model['action'] = 'audit_log'
 
-        # Construct a dict representation of a UISupport model
-        ui_support_model = {}
-        ui_support_model['display_name'] = 'testString'
-        ui_support_model['description'] = 'testString'
-
-        # Construct a dict representation of a RuleImport model
-        rule_import_model = {}
-        rule_import_model['name'] = 'testString'
-        rule_import_model['ui_support'] = ui_support_model
-
         # Set up parameter values
         rule_id = 'testString'
         if_match = 'testString'
         name = 'Disable public access'
         description = 'Ensure that public access to account resources is disabled.'
-        target = {"service_name":"iam-groups","resource_kind":"service","additional_target_attributes":[]}
-        required_config = {"property":"public_access_enabled","operator":"is_false"}
+        target = target_resource_model
+        required_config = rule_required_config_model
         enforcement_actions = [enforcement_action_model]
         account_id = '531fc3e28bfc43c5a2cea07786d93f5c'
-        version = '1.0.0'
         rule_type = 'user_defined'
-        imports = [rule_import_model]
         labels = ['testString']
 
         # Invoke method
@@ -708,9 +644,7 @@ class TestUpdateRule():
             required_config,
             enforcement_actions,
             account_id=account_id,
-            version=version,
             rule_type=rule_type,
-            imports=imports,
             labels=labels,
             headers={}
         )
@@ -722,13 +656,11 @@ class TestUpdateRule():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['name'] == 'Disable public access'
         assert req_body['description'] == 'Ensure that public access to account resources is disabled.'
-        assert req_body['target'] == {"service_name":"iam-groups","resource_kind":"service","additional_target_attributes":[]}
-        assert req_body['required_config'] == {"property":"public_access_enabled","operator":"is_false"}
+        assert req_body['target'] == target_resource_model
+        assert req_body['required_config'] == rule_required_config_model
         assert req_body['enforcement_actions'] == [enforcement_action_model]
         assert req_body['account_id'] == '531fc3e28bfc43c5a2cea07786d93f5c'
-        assert req_body['version'] == '1.0.0'
         assert req_body['rule_type'] == 'user_defined'
-        assert req_body['imports'] == [rule_import_model]
         assert req_body['labels'] == ['testString']
 
 
@@ -739,7 +671,7 @@ class TestUpdateRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/config/v1/rules/testString')
-        mock_response = '{"account_id": "account_id", "name": "name", "description": "description", "version": "1.0.0", "rule_type": "user_defined", "imports": [{"name": "name", "ui_support": {"display_name": "display_name", "description": "description"}}], "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}'
+        mock_response = '{"account_id": "account_id", "name": "name", "description": "description", "rule_type": "user_defined", "target": {"service_name": "iam-groups", "resource_kind": "zone", "additional_target_attributes": [{"name": "name", "operator": "string_equals", "value": "value"}]}, "required_config": {"description": "description", "property": "public_access_enabled", "operator": "is_true", "value": "value"}, "enforcement_actions": [{"action": "audit_log"}], "labels": ["label"], "rule_id": "rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf", "creation_date": "2020-01-10T05:23:19+0000", "created_by": "created_by", "modification_date": "modification_date", "modified_by": "modified_by", "number_of_attachments": 3}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -748,49 +680,37 @@ class TestUpdateRule():
 
         # Construct a dict representation of a RuleTargetAttribute model
         rule_target_attribute_model = {}
-        rule_target_attribute_model['name'] = 'resource_id'
+        rule_target_attribute_model['name'] = 'testString'
         rule_target_attribute_model['operator'] = 'string_equals'
-        rule_target_attribute_model['value'] = 'f0f8f7994e754ff38f9d370201966561'
+        rule_target_attribute_model['value'] = 'testString'
 
         # Construct a dict representation of a TargetResource model
         target_resource_model = {}
         target_resource_model['service_name'] = 'iam-groups'
-        target_resource_model['resource_kind'] = 'zone'
+        target_resource_model['resource_kind'] = 'service'
         target_resource_model['additional_target_attributes'] = [rule_target_attribute_model]
 
         # Construct a dict representation of a RuleRequiredConfigSingleProperty model
         rule_required_config_model = {}
         rule_required_config_model['description'] = 'testString'
         rule_required_config_model['property'] = 'public_access_enabled'
-        rule_required_config_model['operator'] = 'is_true'
+        rule_required_config_model['operator'] = 'is_false'
         rule_required_config_model['value'] = 'testString'
 
         # Construct a dict representation of a EnforcementAction model
         enforcement_action_model = {}
         enforcement_action_model['action'] = 'audit_log'
 
-        # Construct a dict representation of a UISupport model
-        ui_support_model = {}
-        ui_support_model['display_name'] = 'testString'
-        ui_support_model['description'] = 'testString'
-
-        # Construct a dict representation of a RuleImport model
-        rule_import_model = {}
-        rule_import_model['name'] = 'testString'
-        rule_import_model['ui_support'] = ui_support_model
-
         # Set up parameter values
         rule_id = 'testString'
         if_match = 'testString'
         name = 'Disable public access'
         description = 'Ensure that public access to account resources is disabled.'
-        target = {"service_name":"iam-groups","resource_kind":"service","additional_target_attributes":[]}
-        required_config = {"property":"public_access_enabled","operator":"is_false"}
+        target = target_resource_model
+        required_config = rule_required_config_model
         enforcement_actions = [enforcement_action_model]
         account_id = '531fc3e28bfc43c5a2cea07786d93f5c'
-        version = '1.0.0'
         rule_type = 'user_defined'
-        imports = [rule_import_model]
         labels = ['testString']
 
         # Pass in all but one required param and check for a ValueError
@@ -933,13 +853,13 @@ class TestCreateAttachments():
 
         # Construct a dict representation of a RuleScope model
         rule_scope_model = {}
-        rule_scope_model['note'] = 'testString'
-        rule_scope_model['scope_id'] = 'testString'
+        rule_scope_model['note'] = 'My enterprise'
+        rule_scope_model['scope_id'] = '282cf433ac91493ba860480d92519990'
         rule_scope_model['scope_type'] = 'enterprise'
 
         # Construct a dict representation of a AttachmentRequest model
         attachment_request_model = {}
-        attachment_request_model['account_id'] = 'testString'
+        attachment_request_model['account_id'] = '531fc3e28bfc43c5a2cea07786d93f5c'
         attachment_request_model['included_scope'] = rule_scope_model
         attachment_request_model['excluded_scopes'] = [rule_scope_model]
 
@@ -980,13 +900,13 @@ class TestCreateAttachments():
 
         # Construct a dict representation of a RuleScope model
         rule_scope_model = {}
-        rule_scope_model['note'] = 'testString'
-        rule_scope_model['scope_id'] = 'testString'
+        rule_scope_model['note'] = 'My enterprise'
+        rule_scope_model['scope_id'] = '282cf433ac91493ba860480d92519990'
         rule_scope_model['scope_type'] = 'enterprise'
 
         # Construct a dict representation of a AttachmentRequest model
         attachment_request_model = {}
-        attachment_request_model['account_id'] = 'testString'
+        attachment_request_model['account_id'] = '531fc3e28bfc43c5a2cea07786d93f5c'
         attachment_request_model['included_scope'] = rule_scope_model
         attachment_request_model['excluded_scopes'] = [rule_scope_model]
 
@@ -1025,13 +945,13 @@ class TestCreateAttachments():
 
         # Construct a dict representation of a RuleScope model
         rule_scope_model = {}
-        rule_scope_model['note'] = 'testString'
-        rule_scope_model['scope_id'] = 'testString'
+        rule_scope_model['note'] = 'My enterprise'
+        rule_scope_model['scope_id'] = '282cf433ac91493ba860480d92519990'
         rule_scope_model['scope_type'] = 'enterprise'
 
         # Construct a dict representation of a AttachmentRequest model
         attachment_request_model = {}
-        attachment_request_model['account_id'] = 'testString'
+        attachment_request_model['account_id'] = '531fc3e28bfc43c5a2cea07786d93f5c'
         attachment_request_model['included_scope'] = rule_scope_model
         attachment_request_model['excluded_scopes'] = [rule_scope_model]
 
@@ -1299,15 +1219,15 @@ class TestUpdateAttachment():
 
         # Construct a dict representation of a RuleScope model
         rule_scope_model = {}
-        rule_scope_model['note'] = 'testString'
-        rule_scope_model['scope_id'] = 'testString'
+        rule_scope_model['note'] = 'My enterprise'
+        rule_scope_model['scope_id'] = '282cf433ac91493ba860480d92519990'
         rule_scope_model['scope_type'] = 'enterprise'
 
         # Set up parameter values
         rule_id = 'testString'
         attachment_id = 'testString'
         if_match = 'testString'
-        account_id = 'testString'
+        account_id = '531fc3e28bfc43c5a2cea07786d93f5c'
         included_scope = rule_scope_model
         excluded_scopes = [rule_scope_model]
         transaction_id = 'testString'
@@ -1329,7 +1249,7 @@ class TestUpdateAttachment():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['account_id'] == 'testString'
+        assert req_body['account_id'] == '531fc3e28bfc43c5a2cea07786d93f5c'
         assert req_body['included_scope'] == rule_scope_model
         assert req_body['excluded_scopes'] == [rule_scope_model]
 
@@ -1350,15 +1270,15 @@ class TestUpdateAttachment():
 
         # Construct a dict representation of a RuleScope model
         rule_scope_model = {}
-        rule_scope_model['note'] = 'testString'
-        rule_scope_model['scope_id'] = 'testString'
+        rule_scope_model['note'] = 'My enterprise'
+        rule_scope_model['scope_id'] = '282cf433ac91493ba860480d92519990'
         rule_scope_model['scope_type'] = 'enterprise'
 
         # Set up parameter values
         rule_id = 'testString'
         attachment_id = 'testString'
         if_match = 'testString'
-        account_id = 'testString'
+        account_id = '531fc3e28bfc43c5a2cea07786d93f5c'
         included_scope = rule_scope_model
         excluded_scopes = [rule_scope_model]
 
@@ -1378,7 +1298,7 @@ class TestUpdateAttachment():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['account_id'] == 'testString'
+        assert req_body['account_id'] == '531fc3e28bfc43c5a2cea07786d93f5c'
         assert req_body['included_scope'] == rule_scope_model
         assert req_body['excluded_scopes'] == [rule_scope_model]
 
@@ -1399,15 +1319,15 @@ class TestUpdateAttachment():
 
         # Construct a dict representation of a RuleScope model
         rule_scope_model = {}
-        rule_scope_model['note'] = 'testString'
-        rule_scope_model['scope_id'] = 'testString'
+        rule_scope_model['note'] = 'My enterprise'
+        rule_scope_model['scope_id'] = '282cf433ac91493ba860480d92519990'
         rule_scope_model['scope_type'] = 'enterprise'
 
         # Set up parameter values
         rule_id = 'testString'
         attachment_id = 'testString'
         if_match = 'testString'
-        account_id = 'testString'
+        account_id = '531fc3e28bfc43c5a2cea07786d93f5c'
         included_scope = rule_scope_model
         excluded_scopes = [rule_scope_model]
 
@@ -1718,14 +1638,6 @@ class TestCreateRuleRequest():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        ui_support_model = {} # UISupport
-        ui_support_model['display_name'] = 'testString'
-        ui_support_model['description'] = 'testString'
-
-        rule_import_model = {} # RuleImport
-        rule_import_model['name'] = 'testString'
-        rule_import_model['ui_support'] = ui_support_model
-
         rule_target_attribute_model = {} # RuleTargetAttribute
         rule_target_attribute_model['name'] = 'resource_id'
         rule_target_attribute_model['operator'] = 'string_equals'
@@ -1749,9 +1661,7 @@ class TestCreateRuleRequest():
         rule_request_model['account_id'] = 'testString'
         rule_request_model['name'] = 'testString'
         rule_request_model['description'] = 'testString'
-        rule_request_model['version'] = '1.0.0'
         rule_request_model['rule_type'] = 'user_defined'
-        rule_request_model['imports'] = [rule_import_model]
         rule_request_model['target'] = target_resource_model
         rule_request_model['required_config'] = rule_required_config_model
         rule_request_model['enforcement_actions'] = [enforcement_action_model]
@@ -1789,14 +1699,6 @@ class TestCreateRuleResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        ui_support_model = {} # UISupport
-        ui_support_model['display_name'] = 'testString'
-        ui_support_model['description'] = 'testString'
-
-        rule_import_model = {} # RuleImport
-        rule_import_model['name'] = 'testString'
-        rule_import_model['ui_support'] = ui_support_model
-
         rule_target_attribute_model = {} # RuleTargetAttribute
         rule_target_attribute_model['name'] = 'resource_id'
         rule_target_attribute_model['operator'] = 'string_equals'
@@ -1820,9 +1722,7 @@ class TestCreateRuleResponse():
         rule_model['account_id'] = 'testString'
         rule_model['name'] = 'testString'
         rule_model['description'] = 'testString'
-        rule_model['version'] = '1.0.0'
         rule_model['rule_type'] = 'user_defined'
-        rule_model['imports'] = [rule_import_model]
         rule_model['target'] = target_resource_model
         rule_model['required_config'] = rule_required_config_model
         rule_model['enforcement_actions'] = [enforcement_action_model]
@@ -1873,14 +1773,6 @@ class TestCreateRulesResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        ui_support_model = {} # UISupport
-        ui_support_model['display_name'] = 'testString'
-        ui_support_model['description'] = 'testString'
-
-        rule_import_model = {} # RuleImport
-        rule_import_model['name'] = 'testString'
-        rule_import_model['ui_support'] = ui_support_model
-
         rule_target_attribute_model = {} # RuleTargetAttribute
         rule_target_attribute_model['name'] = 'resource_id'
         rule_target_attribute_model['operator'] = 'string_equals'
@@ -1904,9 +1796,7 @@ class TestCreateRulesResponse():
         rule_model['account_id'] = 'testString'
         rule_model['name'] = 'testString'
         rule_model['description'] = 'testString'
-        rule_model['version'] = '1.0.0'
         rule_model['rule_type'] = 'user_defined'
-        rule_model['imports'] = [rule_import_model]
         rule_model['target'] = target_resource_model
         rule_model['required_config'] = rule_required_config_model
         rule_model['enforcement_actions'] = [enforcement_action_model]
@@ -2018,14 +1908,6 @@ class TestRule():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        ui_support_model = {} # UISupport
-        ui_support_model['display_name'] = 'testString'
-        ui_support_model['description'] = 'testString'
-
-        rule_import_model = {} # RuleImport
-        rule_import_model['name'] = 'testString'
-        rule_import_model['ui_support'] = ui_support_model
-
         rule_target_attribute_model = {} # RuleTargetAttribute
         rule_target_attribute_model['name'] = 'resource_id'
         rule_target_attribute_model['operator'] = 'string_equals'
@@ -2050,9 +1932,7 @@ class TestRule():
         rule_model_json['account_id'] = 'testString'
         rule_model_json['name'] = 'testString'
         rule_model_json['description'] = 'testString'
-        rule_model_json['version'] = '1.0.0'
         rule_model_json['rule_type'] = 'user_defined'
-        rule_model_json['imports'] = [rule_import_model]
         rule_model_json['target'] = target_resource_model
         rule_model_json['required_config'] = rule_required_config_model
         rule_model_json['enforcement_actions'] = [enforcement_action_model]
@@ -2079,42 +1959,6 @@ class TestRule():
         rule_model_json2 = rule_model.to_dict()
         assert rule_model_json2 == rule_model_json
 
-class TestRuleImport():
-    """
-    Test Class for RuleImport
-    """
-
-    def test_rule_import_serialization(self):
-        """
-        Test serialization/deserialization for RuleImport
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        ui_support_model = {} # UISupport
-        ui_support_model['display_name'] = 'testString'
-        ui_support_model['description'] = 'testString'
-
-        # Construct a json representation of a RuleImport model
-        rule_import_model_json = {}
-        rule_import_model_json['name'] = 'testString'
-        rule_import_model_json['ui_support'] = ui_support_model
-
-        # Construct a model instance of RuleImport by calling from_dict on the json representation
-        rule_import_model = RuleImport.from_dict(rule_import_model_json)
-        assert rule_import_model != False
-
-        # Construct a model instance of RuleImport by calling from_dict on the json representation
-        rule_import_model_dict = RuleImport.from_dict(rule_import_model_json).__dict__
-        rule_import_model2 = RuleImport(**rule_import_model_dict)
-
-        # Verify the model instances are equivalent
-        assert rule_import_model == rule_import_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        rule_import_model_json2 = rule_import_model.to_dict()
-        assert rule_import_model_json2 == rule_import_model_json
-
 class TestRuleList():
     """
     Test Class for RuleList
@@ -2129,14 +1973,6 @@ class TestRuleList():
 
         link_model = {} # Link
         link_model['href'] = 'testString'
-
-        ui_support_model = {} # UISupport
-        ui_support_model['display_name'] = 'testString'
-        ui_support_model['description'] = 'testString'
-
-        rule_import_model = {} # RuleImport
-        rule_import_model['name'] = 'testString'
-        rule_import_model['ui_support'] = ui_support_model
 
         rule_target_attribute_model = {} # RuleTargetAttribute
         rule_target_attribute_model['name'] = 'resource_id'
@@ -2161,9 +1997,7 @@ class TestRuleList():
         rule_model['account_id'] = 'testString'
         rule_model['name'] = 'testString'
         rule_model['description'] = 'testString'
-        rule_model['version'] = '1.0.0'
         rule_model['rule_type'] = 'user_defined'
-        rule_model['imports'] = [rule_import_model]
         rule_model['target'] = target_resource_model
         rule_model['required_config'] = rule_required_config_model
         rule_model['enforcement_actions'] = [enforcement_action_model]
@@ -2211,14 +2045,6 @@ class TestRuleRequest():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        ui_support_model = {} # UISupport
-        ui_support_model['display_name'] = 'testString'
-        ui_support_model['description'] = 'testString'
-
-        rule_import_model = {} # RuleImport
-        rule_import_model['name'] = 'testString'
-        rule_import_model['ui_support'] = ui_support_model
-
         rule_target_attribute_model = {} # RuleTargetAttribute
         rule_target_attribute_model['name'] = 'resource_id'
         rule_target_attribute_model['operator'] = 'string_equals'
@@ -2243,9 +2069,7 @@ class TestRuleRequest():
         rule_request_model_json['account_id'] = 'testString'
         rule_request_model_json['name'] = 'testString'
         rule_request_model_json['description'] = 'testString'
-        rule_request_model_json['version'] = '1.0.0'
         rule_request_model_json['rule_type'] = 'user_defined'
-        rule_request_model_json['imports'] = [rule_import_model]
         rule_request_model_json['target'] = target_resource_model
         rule_request_model_json['required_config'] = rule_required_config_model
         rule_request_model_json['enforcement_actions'] = [enforcement_action_model]
@@ -2427,36 +2251,6 @@ class TestTargetResource():
         # Convert model instance back to dict and verify no loss of data
         target_resource_model_json2 = target_resource_model.to_dict()
         assert target_resource_model_json2 == target_resource_model_json
-
-class TestUISupport():
-    """
-    Test Class for UISupport
-    """
-
-    def test_ui_support_serialization(self):
-        """
-        Test serialization/deserialization for UISupport
-        """
-
-        # Construct a json representation of a UISupport model
-        ui_support_model_json = {}
-        ui_support_model_json['display_name'] = 'testString'
-        ui_support_model_json['description'] = 'testString'
-
-        # Construct a model instance of UISupport by calling from_dict on the json representation
-        ui_support_model = UISupport.from_dict(ui_support_model_json)
-        assert ui_support_model != False
-
-        # Construct a model instance of UISupport by calling from_dict on the json representation
-        ui_support_model_dict = UISupport.from_dict(ui_support_model_json).__dict__
-        ui_support_model2 = UISupport(**ui_support_model_dict)
-
-        # Verify the model instances are equivalent
-        assert ui_support_model == ui_support_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        ui_support_model_json2 = ui_support_model.to_dict()
-        assert ui_support_model_json2 == ui_support_model_json
 
 class TestRuleConditionAndLvl2():
     """

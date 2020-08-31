@@ -36,18 +36,6 @@ class TestConfigurationGovernanceV1():
 
     def init_sample_data(self):
 
-        # Construct a dict representation of a UISupport model
-        ui_support_model = {
-            'display_name': 'Bogus Rule',
-            'description': 'Sample rule used for testing'
-        }
-
-        # Construct a dict representation of a RuleImport model
-        rule_import_model = {
-            'name': 'sampleImport',
-            'ui_support': ui_support_model
-        }
-
         # Construct a dict representation of a RuleTargetAttribute model
         rule_target_attribute_model = {
             'name': 'resource_id',
@@ -99,9 +87,7 @@ class TestConfigurationGovernanceV1():
             'account_id': self.ACCOUNT_ID,
             'name': 'Java Test Rule #1',
             'description': 'This is the description for Java Test Rule #1.',
-            'version': '0.0.1',
             'rule_type': Rule.RuleTypeEnum.USER_DEFINED,
-            'imports': [rule_import_model],
             'target': target_resource_model,
             'required_config': rule_required_config_model_1,
             'enforcement_actions': [enforcement_action_model],
@@ -113,9 +99,7 @@ class TestConfigurationGovernanceV1():
             'account_id': self.ACCOUNT_ID,
             'name': 'Java Test Rule #2',
             'description': 'This is the description for Java Test Rule #2.',
-            'version': '0.1.3',
             'rule_type': Rule.RuleTypeEnum.USER_DEFINED,
-            'imports': [rule_import_model],
             'target': target_resource_model,
             'required_config': rule_required_config_model_2,
             'enforcement_actions': [enforcement_action_model],
@@ -127,8 +111,7 @@ class TestConfigurationGovernanceV1():
             'account_id': self.ACCOUNT_ID,
             'name': 'Java Test Rule #2',
             'description': 'This is the description for Java Test Rule #2.',
-            'version': '0.1.3',
-            'rule_type': Rule.RuleTypeEnum.SERVICE_DEFINED,
+            'rule_type': 'service_defined',
             'target': target_resource_model,
             'required_config': rule_required_config_model_2,
             'enforcement_actions': [enforcement_action_model],
@@ -174,12 +157,10 @@ class TestConfigurationGovernanceV1():
         # Now walk through the returned rules and delete each one.
         if rule_list['total_count'] > 0:
             for rule in rule_list['rules']:
+                print("Deleting rule: name='%s' id='%s'" % (rule['name'], rule['rule_id']))
                 delete_rule_response = self.service.delete_rule(
                     rule_id=rule['rule_id']
                 )
-
-                print("Deleting rule: name='%s' id='%s'" % (rule['name'], rule['rule_id']))
-
                 assert delete_rule_response.get_status_code() == 204
         print("Finished cleaning rules...")
 
@@ -413,7 +394,6 @@ class TestConfigurationGovernanceV1():
         assert RULE_ETAG_1 is not None
 
         # Starting with "rule1" (result of a get), modify the description, then call the update operation.
-        # Note: we also update the version, but that is currently NOT being stored by the server :(
         update_rule_response = self.service.update_rule(
             rule_id=RULE_ID_1,
             if_match=RULE_ETAG_1,
@@ -423,11 +403,7 @@ class TestConfigurationGovernanceV1():
             required_config=RULE_1['required_config'],
             enforcement_actions=RULE_1['enforcement_actions'],
             account_id=RULE_1['account_id'],
-            # MISSING
-            # version=RULE_1['version'] + " - Updated!",
             rule_type=RULE_1['rule_type'],
-            # MISSING
-            # imports=RULE_1['imports'],
             labels=RULE_1['labels'],
             transaction_id=TRANSACTION_ID
         )
@@ -445,7 +421,7 @@ class TestConfigurationGovernanceV1():
             assert RULE_ID_1 is not None
             assert RULE_ETAG_1 is not None
 
-            # Starting with "rule1" (result of a get), modify the version, then call the update operation.
+            # Starting with "rule1" (result of a get), modify the description, then call the update operation.
             update_rule_response = self.service.update_rule(
                 rule_id=RULE_ID_1,
                 if_match=RULE_ETAG_1 + "just-foolin'",
@@ -455,11 +431,7 @@ class TestConfigurationGovernanceV1():
                 required_config=RULE_1['required_config'],
                 enforcement_actions=RULE_1['enforcement_actions'],
                 account_id=RULE_1['account_id'],
-                # MISSING
-                # version=RULE_1['version'] + " - Updated!",
                 rule_type=RULE_1['rule_type'],
-                # MISSING
-                # imports=RULE_1['imports'],
                 labels=RULE_1['labels'],
                 transaction_id=TRANSACTION_ID
             )

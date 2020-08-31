@@ -120,9 +120,14 @@ class TestConfigurationGovernanceV1Examples():
                 'rule': {'account_id':account_id,'name':'Disable public access','description':'Ensure that public access to account resources is disabled.','labels':[test_label],'target':{'service_name':service_name,'resource_kind':'service'},'required_config':{'description':'Public access check','and':[{'property':'public_access_enabled','operator':'is_false'}]},'enforcement_actions':[{'action':'disallow'},{'action':'audit_log'}]}
             }
 
-            create_rules_response = configuration_governance_service.create_rules(
+            detailed_response = configuration_governance_service.create_rules(
                 rules=[create_rule_request_model]
-            ).get_result()
+            )
+            create_rules_response = detailed_response.get_result()
+            if detailed_response.status_code == 207:
+                for responseEntry in create_rules_response['rules']:
+                    if responseEntry['status_code'] > 299:
+                        raise ApiException(code=responseEntry['errors'][0]['code'], message=responseEntry['errors'][0]['message'])
 
             print(json.dumps(create_rules_response, indent=2))
 
