@@ -50,6 +50,7 @@ Service Name | Imported Class Name
 --- | --- 
 [Case Management](https://cloud.ibm.com/apidocs/case-management) | CaseManagementV1
 [Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog) | CatalogManagementV1
+[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | ConfigurationGovernanceV1
 [Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | EnterpriseManagementV1
 [Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | GlobalCatalogV1
 [Global Search](https://cloud.ibm.com/apidocs/search) | GlobalSearchV2
@@ -74,13 +75,13 @@ Service Name | Imported Class Name
 To install, use `pip` or `easy_install`:
 
 ```bash
-pip install --upgrade "ibm_platform_services>=0.11.0"
+pip install --upgrade "ibm-platform-services>=0.11.0"
 ```
 
 or
 
 ```bash
-easy_install --upgrade "ibm_platform_services>=0.11.0"
+easy_install --upgrade "ibm-platform-services>=0.11.0"
 ```
 
 ## Using the SDK
