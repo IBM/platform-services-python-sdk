@@ -75,13 +75,13 @@ Service Name | Imported Class Name
 To install, use `pip` or `easy_install`:
 
 ```bash
-pip install --upgrade "ibm_platform_services>=0.11.0"
+pip install --upgrade "ibm-platform-services>=0.11.0"
 ```
 
 or
 
 ```bash
-easy_install --upgrade "ibm_platform_services>=0.11.0"
+easy_install --upgrade "ibm-platform-services>=0.11.0"
 ```
 
 ## Using the SDK
