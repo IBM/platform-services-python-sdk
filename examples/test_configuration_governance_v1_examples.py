@@ -267,7 +267,6 @@ class TestConfigurationGovernanceV1Examples():
                 required_config={'property':'public_access_enabled','operator':'is_false'},
                 enforcement_actions=[enforcement_action_model],
                 account_id=account_id,
-                version='1.0.0',
                 rule_type='user_defined',
                 labels=['testString']
             ).get_result()
