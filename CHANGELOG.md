@@ -1,3 +1,10 @@
+# [0.12.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.11.0...v0.12.0) (2020-08-31)
+
+
+### Features
+
+* **Configuration Governance:** add service to project ([#45](https://github.com/IBM/platform-services-python-sdk/issues/45)) ([1b950c6](https://github.com/IBM/platform-services-python-sdk/commit/1b950c61d17a04a060ad39a2f0aaa96768db655f))
+
 # [0.11.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.10.0...v0.11.0) (2020-08-26)
 
 
