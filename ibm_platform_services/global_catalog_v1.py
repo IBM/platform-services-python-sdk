@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ 
 """
 The catalog service manages offerings across geographies as the system of record. The
 catalog supports a RESTful API where users can retrieve information about existing
@@ -353,8 +355,10 @@ class GlobalCatalogV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -481,8 +485,10 @@ class GlobalCatalogV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -537,8 +543,10 @@ class GlobalCatalogV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers,
@@ -622,8 +630,10 @@ class GlobalCatalogV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/{0}/{1}'.format(
-            *self.encode_path_vars(id, kind))
+        path_param_keys = ['id', 'kind']
+        path_param_values = self.encode_path_vars(id, kind)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/{id}/{kind}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -670,8 +680,10 @@ class GlobalCatalogV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/{0}/restore'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/{id}/restore'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -725,8 +737,10 @@ class GlobalCatalogV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/{0}/visibility'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/{id}/visibility'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -794,8 +808,10 @@ class GlobalCatalogV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/{0}/visibility'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/{id}/visibility'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -848,8 +864,10 @@ class GlobalCatalogV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/{0}/pricing'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/{id}/pricing'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -921,8 +939,10 @@ class GlobalCatalogV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/{0}/logs'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/{id}/logs'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -973,8 +993,10 @@ class GlobalCatalogV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/{0}/artifacts'.format(
-            *self.encode_path_vars(object_id))
+        path_param_keys = ['object_id']
+        path_param_values = self.encode_path_vars(object_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/{object_id}/artifacts'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -1025,8 +1047,10 @@ class GlobalCatalogV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = '*/*'
 
-        url = '/{0}/artifacts/{1}'.format(
-            *self.encode_path_vars(object_id, artifact_id))
+        path_param_keys = ['object_id', 'artifact_id']
+        path_param_values = self.encode_path_vars(object_id, artifact_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/{object_id}/artifacts/{artifact_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -1085,8 +1109,10 @@ class GlobalCatalogV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/{0}/artifacts/{1}'.format(
-            *self.encode_path_vars(object_id, artifact_id))
+        path_param_keys = ['object_id', 'artifact_id']
+        path_param_values = self.encode_path_vars(object_id, artifact_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/{object_id}/artifacts/{artifact_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -1138,8 +1164,10 @@ class GlobalCatalogV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/{0}/artifacts/{1}'.format(
-            *self.encode_path_vars(object_id, artifact_id))
+        path_param_keys = ['object_id', 'artifact_id']
+        path_param_values = self.encode_path_vars(object_id, artifact_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/{object_id}/artifacts/{artifact_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers,

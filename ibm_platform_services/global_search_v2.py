@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ 
 """
 Search for resources with the global and shared resource properties repository integrated
 in the IBM Cloud Platform. The search repository stores and searches cloud resources

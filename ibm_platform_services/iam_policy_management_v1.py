@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ 
 """
 IAM Policy Management API
 """
@@ -324,8 +326,10 @@ class IamPolicyManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v1/policies/{0}'.format(
-            *self.encode_path_vars(policy_id))
+        path_param_keys = ['policy_id']
+        path_param_values = self.encode_path_vars(policy_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/policies/{policy_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -362,8 +366,10 @@ class IamPolicyManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v1/policies/{0}'.format(
-            *self.encode_path_vars(policy_id))
+        path_param_keys = ['policy_id']
+        path_param_values = self.encode_path_vars(policy_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/policies/{policy_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -400,8 +406,10 @@ class IamPolicyManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/v1/policies/{0}'.format(
-            *self.encode_path_vars(policy_id))
+        path_param_keys = ['policy_id']
+        path_param_values = self.encode_path_vars(policy_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/policies/{policy_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
@@ -598,8 +606,10 @@ class IamPolicyManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v2/roles/{0}'.format(
-            *self.encode_path_vars(role_id))
+        path_param_keys = ['role_id']
+        path_param_values = self.encode_path_vars(role_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/roles/{role_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -636,8 +646,10 @@ class IamPolicyManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v2/roles/{0}'.format(
-            *self.encode_path_vars(role_id))
+        path_param_keys = ['role_id']
+        path_param_values = self.encode_path_vars(role_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/roles/{role_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -672,8 +684,10 @@ class IamPolicyManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/v2/roles/{0}'.format(
-            *self.encode_path_vars(role_id))
+        path_param_keys = ['role_id']
+        path_param_values = self.encode_path_vars(role_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/roles/{role_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)

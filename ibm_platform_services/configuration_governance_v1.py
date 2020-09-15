@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-68ee7c8f-20200829-062726
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
  
 """
 API specification for the Configuration Governance service.
@@ -251,8 +251,10 @@ class ConfigurationGovernanceV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/config/v1/rules/{0}'.format(
-            *self.encode_path_vars(rule_id))
+        path_param_keys = ['rule_id']
+        path_param_values = self.encode_path_vars(rule_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/config/v1/rules/{rule_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -357,8 +359,10 @@ class ConfigurationGovernanceV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/config/v1/rules/{0}'.format(
-            *self.encode_path_vars(rule_id))
+        path_param_keys = ['rule_id']
+        path_param_values = self.encode_path_vars(rule_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/config/v1/rules/{rule_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -404,8 +408,10 @@ class ConfigurationGovernanceV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/config/v1/rules/{0}'.format(
-            *self.encode_path_vars(rule_id))
+        path_param_keys = ['rule_id']
+        path_param_values = self.encode_path_vars(rule_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/config/v1/rules/{rule_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
@@ -467,8 +473,10 @@ class ConfigurationGovernanceV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/config/v1/rules/{0}/attachments'.format(
-            *self.encode_path_vars(rule_id))
+        path_param_keys = ['rule_id']
+        path_param_values = self.encode_path_vars(rule_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/config/v1/rules/{rule_id}/attachments'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
@@ -534,8 +542,10 @@ class ConfigurationGovernanceV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/config/v1/rules/{0}/attachments'.format(
-            *self.encode_path_vars(rule_id))
+        path_param_keys = ['rule_id']
+        path_param_values = self.encode_path_vars(rule_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/config/v1/rules/{rule_id}/attachments'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -586,8 +596,10 @@ class ConfigurationGovernanceV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/config/v1/rules/{0}/attachments/{1}'.format(
-            *self.encode_path_vars(rule_id, attachment_id))
+        path_param_keys = ['rule_id', 'attachment_id']
+        path_param_values = self.encode_path_vars(rule_id, attachment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/config/v1/rules/{rule_id}/attachments/{attachment_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -670,8 +682,10 @@ class ConfigurationGovernanceV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/config/v1/rules/{0}/attachments/{1}'.format(
-            *self.encode_path_vars(rule_id, attachment_id))
+        path_param_keys = ['rule_id', 'attachment_id']
+        path_param_values = self.encode_path_vars(rule_id, attachment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/config/v1/rules/{rule_id}/attachments/{attachment_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -721,8 +735,10 @@ class ConfigurationGovernanceV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/config/v1/rules/{0}/attachments/{1}'.format(
-            *self.encode_path_vars(rule_id, attachment_id))
+        path_param_keys = ['rule_id', 'attachment_id']
+        path_param_values = self.encode_path_vars(rule_id, attachment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/config/v1/rules/{rule_id}/attachments/{attachment_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)

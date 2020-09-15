@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Unit Tests for EnterpriseManagementV1
+"""
+
 from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 import inspect
@@ -21,6 +25,7 @@ import pytest
 import re
 import requests
 import responses
+import urllib
 from ibm_platform_services.enterprise_management_v1 import *
 
 
@@ -36,23 +41,25 @@ service.set_service_url(base_url)
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for create_account_group
-#-----------------------------------------------------------------------------
 class TestCreateAccountGroup():
+    """
+    Test Class for create_account_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # create_account_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_account_group_all_params(self):
+        """
+        create_account_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/account-groups')
         mock_response = '{"account_group_id": "account_group_id"}'
@@ -85,11 +92,11 @@ class TestCreateAccountGroup():
         assert req_body['primary_contact_iam_id'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_create_account_group_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_account_group_value_error(self):
+        """
+        test_create_account_group_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/account-groups')
         mock_response = '{"account_group_id": "account_group_id"}'
@@ -117,23 +124,25 @@ class TestCreateAccountGroup():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for list_account_groups
-#-----------------------------------------------------------------------------
 class TestListAccountGroups():
+    """
+    Test Class for list_account_groups
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_account_groups()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_account_groups_all_params(self):
+        """
+        list_account_groups()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/account-groups')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
@@ -163,18 +172,18 @@ class TestListAccountGroups():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'enterprise_id={}'.format(enterprise_id) in query_string
         assert 'parent_account_group_id={}'.format(parent_account_group_id) in query_string
         assert 'parent={}'.format(parent) in query_string
         assert 'limit={}'.format(limit) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_account_groups_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_account_groups_required_params(self):
+        """
+        test_list_account_groups_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/account-groups')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
@@ -193,23 +202,25 @@ class TestListAccountGroups():
         assert response.status_code == 200
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_account_group
-#-----------------------------------------------------------------------------
 class TestGetAccountGroup():
+    """
+    Test Class for get_account_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_account_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_account_group_all_params(self):
+        """
+        get_account_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/account-groups/testString')
         mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
@@ -233,11 +244,11 @@ class TestGetAccountGroup():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_account_group_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_account_group_value_error(self):
+        """
+        test_get_account_group_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/account-groups/testString')
         mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
@@ -261,23 +272,25 @@ class TestGetAccountGroup():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_account_group
-#-----------------------------------------------------------------------------
 class TestUpdateAccountGroup():
+    """
+    Test Class for update_account_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_account_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_account_group_all_params(self):
+        """
+        update_account_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/account-groups/testString')
         responses.add(responses.PATCH,
@@ -306,11 +319,11 @@ class TestUpdateAccountGroup():
         assert req_body['primary_contact_iam_id'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_update_account_group_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_account_group_value_error(self):
+        """
+        test_update_account_group_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/account-groups/testString')
         responses.add(responses.PATCH,
@@ -343,23 +356,25 @@ class TestUpdateAccountGroup():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for import_account_to_enterprise
-#-----------------------------------------------------------------------------
 class TestImportAccountToEnterprise():
+    """
+    Test Class for import_account_to_enterprise
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # import_account_to_enterprise()
-    #--------------------------------------------------------
     @responses.activate
     def test_import_account_to_enterprise_all_params(self):
+        """
+        import_account_to_enterprise()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises/testString/import/accounts/testString')
         responses.add(responses.PUT,
@@ -390,11 +405,11 @@ class TestImportAccountToEnterprise():
         assert req_body['billing_unit_id'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_import_account_to_enterprise_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_import_account_to_enterprise_required_params(self):
+        """
+        test_import_account_to_enterprise_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises/testString/import/accounts/testString')
         responses.add(responses.PUT,
@@ -417,11 +432,11 @@ class TestImportAccountToEnterprise():
         assert response.status_code == 202
 
 
-    #--------------------------------------------------------
-    # test_import_account_to_enterprise_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_import_account_to_enterprise_value_error(self):
+        """
+        test_import_account_to_enterprise_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises/testString/import/accounts/testString')
         responses.add(responses.PUT,
@@ -444,23 +459,25 @@ class TestImportAccountToEnterprise():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for create_account
-#-----------------------------------------------------------------------------
 class TestCreateAccount():
+    """
+    Test Class for create_account
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # create_account()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_account_all_params(self):
+        """
+        create_account()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/accounts')
         mock_response = '{"account_id": "account_id"}'
@@ -493,11 +510,11 @@ class TestCreateAccount():
         assert req_body['owner_iam_id'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_create_account_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_account_value_error(self):
+        """
+        test_create_account_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/accounts')
         mock_response = '{"account_id": "account_id"}'
@@ -525,23 +542,25 @@ class TestCreateAccount():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for list_accounts
-#-----------------------------------------------------------------------------
 class TestListAccounts():
+    """
+    Test Class for list_accounts
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_accounts()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_accounts_all_params(self):
+        """
+        list_accounts()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/accounts')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
@@ -571,18 +590,18 @@ class TestListAccounts():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'enterprise_id={}'.format(enterprise_id) in query_string
         assert 'account_group_id={}'.format(account_group_id) in query_string
         assert 'parent={}'.format(parent) in query_string
         assert 'limit={}'.format(limit) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_accounts_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_accounts_required_params(self):
+        """
+        test_list_accounts_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/accounts')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
@@ -601,23 +620,25 @@ class TestListAccounts():
         assert response.status_code == 200
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_account
-#-----------------------------------------------------------------------------
 class TestGetAccount():
+    """
+    Test Class for get_account
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_account()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_account_all_params(self):
+        """
+        get_account()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/accounts/testString')
         mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
@@ -641,11 +662,11 @@ class TestGetAccount():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_account_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_account_value_error(self):
+        """
+        test_get_account_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/accounts/testString')
         mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
@@ -669,23 +690,25 @@ class TestGetAccount():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_account
-#-----------------------------------------------------------------------------
 class TestUpdateAccount():
+    """
+    Test Class for update_account
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_account()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_account_all_params(self):
+        """
+        update_account()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/accounts/testString')
         responses.add(responses.PATCH,
@@ -711,11 +734,11 @@ class TestUpdateAccount():
         assert req_body['parent'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_update_account_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_account_value_error(self):
+        """
+        test_update_account_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/accounts/testString')
         responses.add(responses.PATCH,
@@ -748,23 +771,25 @@ class TestUpdateAccount():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for create_enterprise
-#-----------------------------------------------------------------------------
 class TestCreateEnterprise():
+    """
+    Test Class for create_enterprise
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # create_enterprise()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_enterprise_all_params(self):
+        """
+        create_enterprise()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises')
         mock_response = '{"enterprise_id": "enterprise_id", "enterprise_account_id": "enterprise_account_id"}'
@@ -800,11 +825,11 @@ class TestCreateEnterprise():
         assert req_body['domain'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_create_enterprise_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_enterprise_value_error(self):
+        """
+        test_create_enterprise_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises')
         mock_response = '{"enterprise_id": "enterprise_id", "enterprise_account_id": "enterprise_account_id"}'
@@ -833,23 +858,25 @@ class TestCreateEnterprise():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for list_enterprises
-#-----------------------------------------------------------------------------
 class TestListEnterprises():
+    """
+    Test Class for list_enterprises
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_enterprises()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_enterprises_all_params(self):
+        """
+        list_enterprises()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
@@ -879,18 +906,18 @@ class TestListEnterprises():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'enterprise_account_id={}'.format(enterprise_account_id) in query_string
         assert 'account_group_id={}'.format(account_group_id) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'limit={}'.format(limit) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_enterprises_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_enterprises_required_params(self):
+        """
+        test_list_enterprises_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
@@ -909,23 +936,25 @@ class TestListEnterprises():
         assert response.status_code == 200
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_enterprise
-#-----------------------------------------------------------------------------
 class TestGetEnterprise():
+    """
+    Test Class for get_enterprise
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_enterprise()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_enterprise_all_params(self):
+        """
+        get_enterprise()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises/testString')
         mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
@@ -949,11 +978,11 @@ class TestGetEnterprise():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_enterprise_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_enterprise_value_error(self):
+        """
+        test_get_enterprise_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises/testString')
         mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
@@ -977,23 +1006,25 @@ class TestGetEnterprise():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_enterprise
-#-----------------------------------------------------------------------------
 class TestUpdateEnterprise():
+    """
+    Test Class for update_enterprise
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_enterprise()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_enterprise_all_params(self):
+        """
+        update_enterprise()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises/testString')
         responses.add(responses.PATCH,
@@ -1025,11 +1056,11 @@ class TestUpdateEnterprise():
         assert req_body['primary_contact_iam_id'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_update_enterprise_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_enterprise_value_error(self):
+        """
+        test_update_enterprise_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises/testString')
         responses.add(responses.PATCH,
@@ -1063,15 +1094,15 @@ class TestUpdateEnterprise():
 # Start of Model Tests
 ##############################################################################
 # region
-#-----------------------------------------------------------------------------
-# Test Class for Account
-#-----------------------------------------------------------------------------
 class TestAccount():
+    """
+    Test Class for Account
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Account
-    #--------------------------------------------------------
     def test_account_serialization(self):
+        """
+        Test serialization/deserialization for Account
+        """
 
         # Construct a json representation of a Account model
         account_model_json = {}
@@ -1108,15 +1139,15 @@ class TestAccount():
         account_model_json2 = account_model.to_dict()
         assert account_model_json2 == account_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for AccountGroup
-#-----------------------------------------------------------------------------
 class TestAccountGroup():
+    """
+    Test Class for AccountGroup
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for AccountGroup
-    #--------------------------------------------------------
     def test_account_group_serialization(self):
+        """
+        Test serialization/deserialization for AccountGroup
+        """
 
         # Construct a json representation of a AccountGroup model
         account_group_model_json = {}
@@ -1151,15 +1182,15 @@ class TestAccountGroup():
         account_group_model_json2 = account_group_model.to_dict()
         assert account_group_model_json2 == account_group_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for CreateAccountGroupResponse
-#-----------------------------------------------------------------------------
 class TestCreateAccountGroupResponse():
+    """
+    Test Class for CreateAccountGroupResponse
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for CreateAccountGroupResponse
-    #--------------------------------------------------------
     def test_create_account_group_response_serialization(self):
+        """
+        Test serialization/deserialization for CreateAccountGroupResponse
+        """
 
         # Construct a json representation of a CreateAccountGroupResponse model
         create_account_group_response_model_json = {}
@@ -1180,15 +1211,15 @@ class TestCreateAccountGroupResponse():
         create_account_group_response_model_json2 = create_account_group_response_model.to_dict()
         assert create_account_group_response_model_json2 == create_account_group_response_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for CreateAccountResponse
-#-----------------------------------------------------------------------------
 class TestCreateAccountResponse():
+    """
+    Test Class for CreateAccountResponse
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for CreateAccountResponse
-    #--------------------------------------------------------
     def test_create_account_response_serialization(self):
+        """
+        Test serialization/deserialization for CreateAccountResponse
+        """
 
         # Construct a json representation of a CreateAccountResponse model
         create_account_response_model_json = {}
@@ -1209,15 +1240,15 @@ class TestCreateAccountResponse():
         create_account_response_model_json2 = create_account_response_model.to_dict()
         assert create_account_response_model_json2 == create_account_response_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for CreateEnterpriseResponse
-#-----------------------------------------------------------------------------
 class TestCreateEnterpriseResponse():
+    """
+    Test Class for CreateEnterpriseResponse
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for CreateEnterpriseResponse
-    #--------------------------------------------------------
     def test_create_enterprise_response_serialization(self):
+        """
+        Test serialization/deserialization for CreateEnterpriseResponse
+        """
 
         # Construct a json representation of a CreateEnterpriseResponse model
         create_enterprise_response_model_json = {}
@@ -1239,15 +1270,15 @@ class TestCreateEnterpriseResponse():
         create_enterprise_response_model_json2 = create_enterprise_response_model.to_dict()
         assert create_enterprise_response_model_json2 == create_enterprise_response_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Enterprise
-#-----------------------------------------------------------------------------
 class TestEnterprise():
+    """
+    Test Class for Enterprise
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Enterprise
-    #--------------------------------------------------------
     def test_enterprise_serialization(self):
+        """
+        Test serialization/deserialization for Enterprise
+        """
 
         # Construct a json representation of a Enterprise model
         enterprise_model_json = {}
@@ -1280,15 +1311,15 @@ class TestEnterprise():
         enterprise_model_json2 = enterprise_model.to_dict()
         assert enterprise_model_json2 == enterprise_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ListAccountGroupsResponse
-#-----------------------------------------------------------------------------
 class TestListAccountGroupsResponse():
+    """
+    Test Class for ListAccountGroupsResponse
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ListAccountGroupsResponse
-    #--------------------------------------------------------
     def test_list_account_groups_response_serialization(self):
+        """
+        Test serialization/deserialization for ListAccountGroupsResponse
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -1330,15 +1361,15 @@ class TestListAccountGroupsResponse():
         list_account_groups_response_model_json2 = list_account_groups_response_model.to_dict()
         assert list_account_groups_response_model_json2 == list_account_groups_response_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ListAccountsResponse
-#-----------------------------------------------------------------------------
 class TestListAccountsResponse():
+    """
+    Test Class for ListAccountsResponse
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ListAccountsResponse
-    #--------------------------------------------------------
     def test_list_accounts_response_serialization(self):
+        """
+        Test serialization/deserialization for ListAccountsResponse
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -1382,15 +1413,15 @@ class TestListAccountsResponse():
         list_accounts_response_model_json2 = list_accounts_response_model.to_dict()
         assert list_accounts_response_model_json2 == list_accounts_response_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ListEnterprisesResponse
-#-----------------------------------------------------------------------------
 class TestListEnterprisesResponse():
+    """
+    Test Class for ListEnterprisesResponse
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ListEnterprisesResponse
-    #--------------------------------------------------------
     def test_list_enterprises_response_serialization(self):
+        """
+        Test serialization/deserialization for ListEnterprisesResponse
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 

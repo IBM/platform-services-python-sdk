@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ 
 """
 Case management API for creating cases, getting case statuses, adding comments to a case,
 adding and removing users from a case watchlist, downloading and adding attachments, and
@@ -264,8 +266,10 @@ class CaseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/cases/{0}'.format(
-            *self.encode_path_vars(case_number))
+        path_param_keys = ['case_number']
+        path_param_values = self.encode_path_vars(case_number)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/cases/{case_number}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -311,8 +315,10 @@ class CaseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/cases/{0}/status'.format(
-            *self.encode_path_vars(case_number))
+        path_param_keys = ['case_number']
+        path_param_values = self.encode_path_vars(case_number)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/cases/{case_number}/status'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -360,8 +366,10 @@ class CaseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/cases/{0}/comments'.format(
-            *self.encode_path_vars(case_number))
+        path_param_keys = ['case_number']
+        path_param_values = self.encode_path_vars(case_number)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/cases/{case_number}/comments'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -413,8 +421,10 @@ class CaseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/cases/{0}/watchlist'.format(
-            *self.encode_path_vars(case_number))
+        path_param_keys = ['case_number']
+        path_param_values = self.encode_path_vars(case_number)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/cases/{case_number}/watchlist'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -463,8 +473,10 @@ class CaseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/cases/{0}/watchlist'.format(
-            *self.encode_path_vars(case_number))
+        path_param_keys = ['case_number']
+        path_param_values = self.encode_path_vars(case_number)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/cases/{case_number}/watchlist'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers,
@@ -524,8 +536,10 @@ class CaseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/cases/{0}/resources'.format(
-            *self.encode_path_vars(case_number))
+        path_param_keys = ['case_number']
+        path_param_values = self.encode_path_vars(case_number)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/cases/{case_number}/resources'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -574,8 +588,10 @@ class CaseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/cases/{0}/attachments'.format(
-            *self.encode_path_vars(case_number))
+        path_param_keys = ['case_number']
+        path_param_values = self.encode_path_vars(case_number)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/cases/{case_number}/attachments'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -616,8 +632,10 @@ class CaseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/octet-stream'
 
-        url = '/cases/{0}/attachments/{1}'.format(
-            *self.encode_path_vars(case_number, file_id))
+        path_param_keys = ['case_number', 'file_id']
+        path_param_values = self.encode_path_vars(case_number, file_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/cases/{case_number}/attachments/{file_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -657,8 +675,10 @@ class CaseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/cases/{0}/attachments/{1}'.format(
-            *self.encode_path_vars(case_number, file_id))
+        path_param_keys = ['case_number', 'file_id']
+        path_param_values = self.encode_path_vars(case_number, file_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/cases/{case_number}/attachments/{file_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)

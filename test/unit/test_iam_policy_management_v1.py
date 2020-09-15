@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Unit Tests for IamPolicyManagementV1
+"""
+
 from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 import inspect
@@ -21,6 +25,7 @@ import pytest
 import re
 import requests
 import responses
+import urllib
 from ibm_platform_services.iam_policy_management_v1 import *
 
 
@@ -36,23 +41,25 @@ service.set_service_url(base_url)
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for list_policies
-#-----------------------------------------------------------------------------
 class TestListPolicies():
+    """
+    Test Class for list_policies
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_policies()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_policies_all_params(self):
+        """
+        list_policies()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies')
         mock_response = '{"policies": [{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
@@ -86,7 +93,7 @@ class TestListPolicies():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'iam_id={}'.format(iam_id) in query_string
         assert 'access_group_id={}'.format(access_group_id) in query_string
@@ -94,11 +101,11 @@ class TestListPolicies():
         assert 'service_type={}'.format(service_type) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_policies_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_policies_required_params(self):
+        """
+        test_list_policies_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies')
         mock_response = '{"policies": [{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
@@ -122,15 +129,15 @@ class TestListPolicies():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_policies_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_policies_value_error(self):
+        """
+        test_list_policies_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies')
         mock_response = '{"policies": [{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
@@ -154,23 +161,25 @@ class TestListPolicies():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for create_policy
-#-----------------------------------------------------------------------------
 class TestCreatePolicy():
+    """
+    Test Class for create_policy
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # create_policy()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_policy_all_params(self):
+        """
+        create_policy()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies')
         mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
@@ -231,11 +240,11 @@ class TestCreatePolicy():
         assert req_body['resources'] == [policy_resource_model]
 
 
-    #--------------------------------------------------------
-    # test_create_policy_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_policy_required_params(self):
+        """
+        test_create_policy_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies')
         mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
@@ -294,11 +303,11 @@ class TestCreatePolicy():
         assert req_body['resources'] == [policy_resource_model]
 
 
-    #--------------------------------------------------------
-    # test_create_policy_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_policy_value_error(self):
+        """
+        test_create_policy_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies')
         mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
@@ -351,23 +360,25 @@ class TestCreatePolicy():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_policy
-#-----------------------------------------------------------------------------
 class TestUpdatePolicy():
+    """
+    Test Class for update_policy
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_policy()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_policy_all_params(self):
+        """
+        update_policy()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies/testString')
         mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
@@ -430,11 +441,11 @@ class TestUpdatePolicy():
         assert req_body['resources'] == [policy_resource_model]
 
 
-    #--------------------------------------------------------
-    # test_update_policy_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_policy_value_error(self):
+        """
+        test_update_policy_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies/testString')
         mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
@@ -491,23 +502,25 @@ class TestUpdatePolicy():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_policy
-#-----------------------------------------------------------------------------
 class TestGetPolicy():
+    """
+    Test Class for get_policy
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_policy()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_policy_all_params(self):
+        """
+        get_policy()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies/testString')
         mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
@@ -531,11 +544,11 @@ class TestGetPolicy():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_policy_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_policy_value_error(self):
+        """
+        test_get_policy_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies/testString')
         mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
@@ -559,23 +572,25 @@ class TestGetPolicy():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for delete_policy
-#-----------------------------------------------------------------------------
 class TestDeletePolicy():
+    """
+    Test Class for delete_policy
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # delete_policy()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_policy_all_params(self):
+        """
+        delete_policy()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies/testString')
         responses.add(responses.DELETE,
@@ -596,11 +611,11 @@ class TestDeletePolicy():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_delete_policy_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_policy_value_error(self):
+        """
+        test_delete_policy_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies/testString')
         responses.add(responses.DELETE,
@@ -631,23 +646,25 @@ class TestDeletePolicy():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for list_roles
-#-----------------------------------------------------------------------------
 class TestListRoles():
+    """
+    Test Class for list_roles
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_roles()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_roles_all_params(self):
+        """
+        list_roles()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/roles')
         mock_response = '{"custom_roles": [{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}], "service_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}], "system_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}]}'
@@ -675,16 +692,16 @@ class TestListRoles():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'service_name={}'.format(service_name) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_roles_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_roles_required_params(self):
+        """
+        test_list_roles_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/roles')
         mock_response = '{"custom_roles": [{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}], "service_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}], "system_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}]}'
@@ -703,23 +720,25 @@ class TestListRoles():
         assert response.status_code == 200
 
 
-#-----------------------------------------------------------------------------
-# Test Class for create_role
-#-----------------------------------------------------------------------------
 class TestCreateRole():
+    """
+    Test Class for create_role
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # create_role()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_role_all_params(self):
+        """
+        create_role()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/roles')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
@@ -763,11 +782,11 @@ class TestCreateRole():
         assert req_body['description'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_create_role_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_role_required_params(self):
+        """
+        test_create_role_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/roles')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
@@ -809,11 +828,11 @@ class TestCreateRole():
         assert req_body['description'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_create_role_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_role_value_error(self):
+        """
+        test_create_role_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/roles')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
@@ -846,23 +865,25 @@ class TestCreateRole():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_role
-#-----------------------------------------------------------------------------
 class TestUpdateRole():
+    """
+    Test Class for update_role
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_role()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_role_all_params(self):
+        """
+        update_role()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/roles/testString')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
@@ -899,11 +920,11 @@ class TestUpdateRole():
         assert req_body['actions'] == ['testString']
 
 
-    #--------------------------------------------------------
-    # test_update_role_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_role_value_error(self):
+        """
+        test_update_role_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/roles/testString')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
@@ -932,23 +953,25 @@ class TestUpdateRole():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_role
-#-----------------------------------------------------------------------------
 class TestGetRole():
+    """
+    Test Class for get_role
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_role()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_role_all_params(self):
+        """
+        get_role()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/roles/testString')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
@@ -972,11 +995,11 @@ class TestGetRole():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_role_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_role_value_error(self):
+        """
+        test_get_role_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/roles/testString')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
@@ -1000,23 +1023,25 @@ class TestGetRole():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for delete_role
-#-----------------------------------------------------------------------------
 class TestDeleteRole():
+    """
+    Test Class for delete_role
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # delete_role()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_role_all_params(self):
+        """
+        delete_role()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/roles/testString')
         responses.add(responses.DELETE,
@@ -1037,11 +1062,11 @@ class TestDeleteRole():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_delete_role_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_role_value_error(self):
+        """
+        test_delete_role_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/roles/testString')
         responses.add(responses.DELETE,
@@ -1072,15 +1097,15 @@ class TestDeleteRole():
 # Start of Model Tests
 ##############################################################################
 # region
-#-----------------------------------------------------------------------------
-# Test Class for CustomRole
-#-----------------------------------------------------------------------------
 class TestCustomRole():
+    """
+    Test Class for CustomRole
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for CustomRole
-    #--------------------------------------------------------
     def test_custom_role_serialization(self):
+        """
+        Test serialization/deserialization for CustomRole
+        """
 
         # Construct a json representation of a CustomRole model
         custom_role_model_json = {}
@@ -1113,37 +1138,37 @@ class TestCustomRole():
         custom_role_model_json2 = custom_role_model.to_dict()
         assert custom_role_model_json2 == custom_role_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Policy
-#-----------------------------------------------------------------------------
 class TestPolicy():
+    """
+    Test Class for Policy
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Policy
-    #--------------------------------------------------------
     def test_policy_serialization(self):
+        """
+        Test serialization/deserialization for Policy
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
-
-        resource_attribute_model = {} # ResourceAttribute
-        resource_attribute_model['name'] = 'testString'
-        resource_attribute_model['value'] = 'testString'
-        resource_attribute_model['operator'] = 'testString'
 
         subject_attribute_model = {} # SubjectAttribute
         subject_attribute_model['name'] = 'testString'
         subject_attribute_model['value'] = 'testString'
 
-        policy_resource_model = {} # PolicyResource
-        policy_resource_model['attributes'] = [resource_attribute_model]
+        policy_subject_model = {} # PolicySubject
+        policy_subject_model['attributes'] = [subject_attribute_model]
 
         policy_role_model = {} # PolicyRole
         policy_role_model['role_id'] = 'testString'
         policy_role_model['display_name'] = 'testString'
         policy_role_model['description'] = 'testString'
 
-        policy_subject_model = {} # PolicySubject
-        policy_subject_model['attributes'] = [subject_attribute_model]
+        resource_attribute_model = {} # ResourceAttribute
+        resource_attribute_model['name'] = 'testString'
+        resource_attribute_model['value'] = 'testString'
+        resource_attribute_model['operator'] = 'testString'
+
+        policy_resource_model = {} # PolicyResource
+        policy_resource_model['attributes'] = [resource_attribute_model]
 
         # Construct a json representation of a Policy model
         policy_model_json = {}
@@ -1173,37 +1198,37 @@ class TestPolicy():
         policy_model_json2 = policy_model.to_dict()
         assert policy_model_json2 == policy_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for PolicyList
-#-----------------------------------------------------------------------------
 class TestPolicyList():
+    """
+    Test Class for PolicyList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PolicyList
-    #--------------------------------------------------------
     def test_policy_list_serialization(self):
+        """
+        Test serialization/deserialization for PolicyList
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
-
-        resource_attribute_model = {} # ResourceAttribute
-        resource_attribute_model['name'] = 'testString'
-        resource_attribute_model['value'] = 'testString'
-        resource_attribute_model['operator'] = 'testString'
 
         subject_attribute_model = {} # SubjectAttribute
         subject_attribute_model['name'] = 'testString'
         subject_attribute_model['value'] = 'testString'
 
-        policy_resource_model = {} # PolicyResource
-        policy_resource_model['attributes'] = [resource_attribute_model]
+        policy_subject_model = {} # PolicySubject
+        policy_subject_model['attributes'] = [subject_attribute_model]
 
         policy_role_model = {} # PolicyRole
         policy_role_model['role_id'] = 'testString'
         policy_role_model['display_name'] = 'testString'
         policy_role_model['description'] = 'testString'
 
-        policy_subject_model = {} # PolicySubject
-        policy_subject_model['attributes'] = [subject_attribute_model]
+        resource_attribute_model = {} # ResourceAttribute
+        resource_attribute_model['name'] = 'testString'
+        resource_attribute_model['value'] = 'testString'
+        resource_attribute_model['operator'] = 'testString'
+
+        policy_resource_model = {} # PolicyResource
+        policy_resource_model['attributes'] = [resource_attribute_model]
 
         policy_model = {} # Policy
         policy_model['id'] = 'testString'
@@ -1236,15 +1261,15 @@ class TestPolicyList():
         policy_list_model_json2 = policy_list_model.to_dict()
         assert policy_list_model_json2 == policy_list_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for PolicyResource
-#-----------------------------------------------------------------------------
 class TestPolicyResource():
+    """
+    Test Class for PolicyResource
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PolicyResource
-    #--------------------------------------------------------
     def test_policy_resource_serialization(self):
+        """
+        Test serialization/deserialization for PolicyResource
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -1272,15 +1297,15 @@ class TestPolicyResource():
         policy_resource_model_json2 = policy_resource_model.to_dict()
         assert policy_resource_model_json2 == policy_resource_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for PolicyRole
-#-----------------------------------------------------------------------------
 class TestPolicyRole():
+    """
+    Test Class for PolicyRole
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PolicyRole
-    #--------------------------------------------------------
     def test_policy_role_serialization(self):
+        """
+        Test serialization/deserialization for PolicyRole
+        """
 
         # Construct a json representation of a PolicyRole model
         policy_role_model_json = {}
@@ -1303,15 +1328,15 @@ class TestPolicyRole():
         policy_role_model_json2 = policy_role_model.to_dict()
         assert policy_role_model_json2 == policy_role_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for PolicySubject
-#-----------------------------------------------------------------------------
 class TestPolicySubject():
+    """
+    Test Class for PolicySubject
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PolicySubject
-    #--------------------------------------------------------
     def test_policy_subject_serialization(self):
+        """
+        Test serialization/deserialization for PolicySubject
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -1338,15 +1363,15 @@ class TestPolicySubject():
         policy_subject_model_json2 = policy_subject_model.to_dict()
         assert policy_subject_model_json2 == policy_subject_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourceAttribute
-#-----------------------------------------------------------------------------
 class TestResourceAttribute():
+    """
+    Test Class for ResourceAttribute
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourceAttribute
-    #--------------------------------------------------------
     def test_resource_attribute_serialization(self):
+        """
+        Test serialization/deserialization for ResourceAttribute
+        """
 
         # Construct a json representation of a ResourceAttribute model
         resource_attribute_model_json = {}
@@ -1369,15 +1394,15 @@ class TestResourceAttribute():
         resource_attribute_model_json2 = resource_attribute_model.to_dict()
         assert resource_attribute_model_json2 == resource_attribute_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Role
-#-----------------------------------------------------------------------------
 class TestRole():
+    """
+    Test Class for Role
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Role
-    #--------------------------------------------------------
     def test_role_serialization(self):
+        """
+        Test serialization/deserialization for Role
+        """
 
         # Construct a json representation of a Role model
         role_model_json = {}
@@ -1401,15 +1426,15 @@ class TestRole():
         role_model_json2 = role_model.to_dict()
         assert role_model_json2 == role_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for RoleList
-#-----------------------------------------------------------------------------
 class TestRoleList():
+    """
+    Test Class for RoleList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for RoleList
-    #--------------------------------------------------------
     def test_role_list_serialization(self):
+        """
+        Test serialization/deserialization for RoleList
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -1455,15 +1480,15 @@ class TestRoleList():
         role_list_model_json2 = role_list_model.to_dict()
         assert role_list_model_json2 == role_list_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for SubjectAttribute
-#-----------------------------------------------------------------------------
 class TestSubjectAttribute():
+    """
+    Test Class for SubjectAttribute
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for SubjectAttribute
-    #--------------------------------------------------------
     def test_subject_attribute_serialization(self):
+        """
+        Test serialization/deserialization for SubjectAttribute
+        """
 
         # Construct a json representation of a SubjectAttribute model
         subject_attribute_model_json = {}

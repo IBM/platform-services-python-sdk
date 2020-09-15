@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ 
 """
 The Enterprise Management API enables you to create and manage an enterprise, account
 groups, and accounts within the enterprise.
@@ -234,8 +236,10 @@ class EnterpriseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/account-groups/{0}'.format(
-            *self.encode_path_vars(account_group_id))
+        path_param_keys = ['account_group_id']
+        path_param_values = self.encode_path_vars(account_group_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/account-groups/{account_group_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -286,8 +290,10 @@ class EnterpriseManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/account-groups/{0}'.format(
-            *self.encode_path_vars(account_group_id))
+        path_param_keys = ['account_group_id']
+        path_param_values = self.encode_path_vars(account_group_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/account-groups/{account_group_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
@@ -359,8 +365,10 @@ class EnterpriseManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/enterprises/{0}/import/accounts/{1}'.format(
-            *self.encode_path_vars(enterprise_id, account_id))
+        path_param_keys = ['enterprise_id', 'account_id']
+        path_param_values = self.encode_path_vars(enterprise_id, account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/enterprises/{enterprise_id}/import/accounts/{account_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -526,8 +534,10 @@ class EnterpriseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/accounts/{0}'.format(
-            *self.encode_path_vars(account_id))
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/accounts/{account_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -573,8 +583,10 @@ class EnterpriseManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/accounts/{0}'.format(
-            *self.encode_path_vars(account_id))
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/accounts/{account_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
@@ -749,8 +761,10 @@ class EnterpriseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/enterprises/{0}'.format(
-            *self.encode_path_vars(enterprise_id))
+        path_param_keys = ['enterprise_id']
+        path_param_values = self.encode_path_vars(enterprise_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/enterprises/{enterprise_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -806,8 +820,10 @@ class EnterpriseManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/enterprises/{0}'.format(
-            *self.encode_path_vars(enterprise_id))
+        path_param_keys = ['enterprise_id']
+        path_param_values = self.encode_path_vars(enterprise_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/enterprises/{enterprise_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,

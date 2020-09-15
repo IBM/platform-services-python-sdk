@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Unit Tests for CaseManagementV1
+"""
+
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 import inspect
 import io
@@ -22,6 +26,7 @@ import re
 import requests
 import responses
 import tempfile
+import urllib
 from ibm_platform_services.case_management_v1 import *
 
 
@@ -37,23 +42,25 @@ service.set_service_url(base_url)
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for get_cases
-#-----------------------------------------------------------------------------
 class TestGetCases():
+    """
+    Test Class for get_cases
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_cases()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_cases_all_params(self):
+        """
+        get_cases()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases')
         mock_response = '{"total_count": 11, "first": {"href": "href"}, "next": {"href": "href"}, "previous": {"href": "href"}, "last": {"href": "href"}, "cases": [{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}]}'
@@ -87,7 +94,7 @@ class TestGetCases():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'offset={}'.format(offset) in query_string
         assert 'limit={}'.format(limit) in query_string
         assert 'search={}'.format(search) in query_string
@@ -96,11 +103,11 @@ class TestGetCases():
         assert 'fields={}'.format(','.join(fields)) in query_string
 
 
-    #--------------------------------------------------------
-    # test_get_cases_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_cases_required_params(self):
+        """
+        test_get_cases_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases')
         mock_response = '{"total_count": 11, "first": {"href": "href"}, "next": {"href": "href"}, "previous": {"href": "href"}, "last": {"href": "href"}, "cases": [{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}]}'
@@ -119,23 +126,25 @@ class TestGetCases():
         assert response.status_code == 200
 
 
-#-----------------------------------------------------------------------------
-# Test Class for create_case
-#-----------------------------------------------------------------------------
 class TestCreateCase():
+    """
+    Test Class for create_case
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # create_case()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_case_all_params(self):
+        """
+        create_case()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
@@ -166,7 +175,7 @@ class TestCreateCase():
         resource_payload_model = {}
         resource_payload_model['crn'] = 'testString'
         resource_payload_model['type'] = 'testString'
-        resource_payload_model['id'] = 36.0
+        resource_payload_model['id'] = 72.5
         resource_payload_model['note'] = 'testString'
 
         # Construct a dict representation of a User model
@@ -218,11 +227,11 @@ class TestCreateCase():
         assert req_body['sla_credit_request'] == True
 
 
-    #--------------------------------------------------------
-    # test_create_case_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_case_value_error(self):
+        """
+        test_create_case_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
@@ -253,7 +262,7 @@ class TestCreateCase():
         resource_payload_model = {}
         resource_payload_model['crn'] = 'testString'
         resource_payload_model['type'] = 'testString'
-        resource_payload_model['id'] = 36.0
+        resource_payload_model['id'] = 72.5
         resource_payload_model['note'] = 'testString'
 
         # Construct a dict representation of a User model
@@ -286,23 +295,25 @@ class TestCreateCase():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_case
-#-----------------------------------------------------------------------------
 class TestGetCase():
+    """
+    Test Class for get_case
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_case()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_case_all_params(self):
+        """
+        get_case()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
@@ -328,15 +339,15 @@ class TestGetCase():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'fields={}'.format(','.join(fields)) in query_string
 
 
-    #--------------------------------------------------------
-    # test_get_case_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_case_required_params(self):
+        """
+        test_get_case_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
@@ -360,11 +371,11 @@ class TestGetCase():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_case_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_case_value_error(self):
+        """
+        test_get_case_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
@@ -388,23 +399,25 @@ class TestGetCase():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_case_status
-#-----------------------------------------------------------------------------
 class TestUpdateCaseStatus():
+    """
+    Test Class for update_case_status
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_case_status()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_case_status_all_params(self):
+        """
+        update_case_status()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/status')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
@@ -417,12 +430,12 @@ class TestUpdateCaseStatus():
         # Construct a dict representation of a ResolvePayload model
         status_payload_model = {}
         status_payload_model['action'] = 'resolve'
-        status_payload_model['comment'] = 'testString'
+        status_payload_model['comment'] = 'It was actually a mistake'
         status_payload_model['resolution_code'] = 1
 
         # Set up parameter values
         case_number = 'testString'
-        status_payload = {"action":"resolve","comment":"It was actually a mistake","resolution_code":1}
+        status_payload = status_payload_model
 
         # Invoke method
         response = service.update_case_status(
@@ -439,11 +452,11 @@ class TestUpdateCaseStatus():
         assert req_body == status_payload
 
 
-    #--------------------------------------------------------
-    # test_update_case_status_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_case_status_value_error(self):
+        """
+        test_update_case_status_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/status')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
@@ -456,12 +469,12 @@ class TestUpdateCaseStatus():
         # Construct a dict representation of a ResolvePayload model
         status_payload_model = {}
         status_payload_model['action'] = 'resolve'
-        status_payload_model['comment'] = 'testString'
+        status_payload_model['comment'] = 'It was actually a mistake'
         status_payload_model['resolution_code'] = 1
 
         # Set up parameter values
         case_number = 'testString'
-        status_payload = {"action":"resolve","comment":"It was actually a mistake","resolution_code":1}
+        status_payload = status_payload_model
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -475,23 +488,25 @@ class TestUpdateCaseStatus():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for add_comment
-#-----------------------------------------------------------------------------
 class TestAddComment():
+    """
+    Test Class for add_comment
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # add_comment()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_comment_all_params(self):
+        """
+        add_comment()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/comments')
         mock_response = '{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}'
@@ -520,11 +535,11 @@ class TestAddComment():
         assert req_body['comment'] == 'This is a test comment'
 
 
-    #--------------------------------------------------------
-    # test_add_comment_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_comment_value_error(self):
+        """
+        test_add_comment_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/comments')
         mock_response = '{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}'
@@ -550,23 +565,25 @@ class TestAddComment():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for add_watchlist
-#-----------------------------------------------------------------------------
 class TestAddWatchlist():
+    """
+    Test Class for add_watchlist
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # add_watchlist()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_watchlist_all_params(self):
+        """
+        add_watchlist()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/watchlist')
         mock_response = '{"added": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "failed": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]}'
@@ -600,11 +617,11 @@ class TestAddWatchlist():
         assert req_body['watchlist'] == [user_model]
 
 
-    #--------------------------------------------------------
-    # test_add_watchlist_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_watchlist_value_error(self):
+        """
+        test_add_watchlist_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/watchlist')
         mock_response = '{"added": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "failed": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]}'
@@ -634,23 +651,25 @@ class TestAddWatchlist():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for remove_watchlist
-#-----------------------------------------------------------------------------
 class TestRemoveWatchlist():
+    """
+    Test Class for remove_watchlist
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # remove_watchlist()
-    #--------------------------------------------------------
     @responses.activate
     def test_remove_watchlist_all_params(self):
+        """
+        remove_watchlist()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/watchlist')
         mock_response = '{"watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]}'
@@ -684,11 +703,11 @@ class TestRemoveWatchlist():
         assert req_body['watchlist'] == [user_model]
 
 
-    #--------------------------------------------------------
-    # test_remove_watchlist_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_remove_watchlist_value_error(self):
+        """
+        test_remove_watchlist_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/watchlist')
         mock_response = '{"watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]}'
@@ -718,23 +737,25 @@ class TestRemoveWatchlist():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for add_resource
-#-----------------------------------------------------------------------------
 class TestAddResource():
+    """
+    Test Class for add_resource
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # add_resource()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_resource_all_params(self):
+        """
+        add_resource()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/resources')
         mock_response = '{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}'
@@ -748,7 +769,7 @@ class TestAddResource():
         case_number = 'testString'
         crn = 'testString'
         type = 'testString'
-        id = 36.0
+        id = 72.5
         note = 'testString'
 
         # Invoke method
@@ -768,15 +789,15 @@ class TestAddResource():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['crn'] == 'testString'
         assert req_body['type'] == 'testString'
-        assert req_body['id'] == 36.0
+        assert req_body['id'] == 72.5
         assert req_body['note'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_add_resource_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_resource_value_error(self):
+        """
+        test_add_resource_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/resources')
         mock_response = '{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}'
@@ -790,7 +811,7 @@ class TestAddResource():
         case_number = 'testString'
         crn = 'testString'
         type = 'testString'
-        id = 36.0
+        id = 72.5
         note = 'testString'
 
         # Pass in all but one required param and check for a ValueError
@@ -804,23 +825,25 @@ class TestAddResource():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for upload_file
-#-----------------------------------------------------------------------------
 class TestUploadFile():
+    """
+    Test Class for upload_file
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # upload_file()
-    #--------------------------------------------------------
     @responses.activate
     def test_upload_file_all_params(self):
+        """
+        upload_file()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/attachments')
         mock_response = '{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}'
@@ -852,11 +875,11 @@ class TestUploadFile():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_upload_file_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_upload_file_value_error(self):
+        """
+        test_upload_file_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/attachments')
         mock_response = '{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}'
@@ -888,23 +911,25 @@ class TestUploadFile():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for download_file
-#-----------------------------------------------------------------------------
 class TestDownloadFile():
+    """
+    Test Class for download_file
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # download_file()
-    #--------------------------------------------------------
     @responses.activate
     def test_download_file_all_params(self):
+        """
+        download_file()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/attachments/testString')
         mock_response = 'This is a mock binary response.'
@@ -930,11 +955,11 @@ class TestDownloadFile():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_download_file_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_download_file_value_error(self):
+        """
+        test_download_file_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/attachments/testString')
         mock_response = 'This is a mock binary response.'
@@ -960,23 +985,25 @@ class TestDownloadFile():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for delete_file
-#-----------------------------------------------------------------------------
 class TestDeleteFile():
+    """
+    Test Class for delete_file
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # delete_file()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_file_all_params(self):
+        """
+        delete_file()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/attachments/testString')
         mock_response = '{"attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}]}'
@@ -1002,11 +1029,11 @@ class TestDeleteFile():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_delete_file_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_file_value_error(self):
+        """
+        test_delete_file_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/cases/testString/attachments/testString')
         mock_response = '{"attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}]}'
@@ -1042,15 +1069,15 @@ class TestDeleteFile():
 # Start of Model Tests
 ##############################################################################
 # region
-#-----------------------------------------------------------------------------
-# Test Class for Attachment
-#-----------------------------------------------------------------------------
 class TestAttachment():
+    """
+    Test Class for Attachment
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Attachment
-    #--------------------------------------------------------
     def test_attachment_serialization(self):
+        """
+        Test serialization/deserialization for Attachment
+        """
 
         # Construct a json representation of a Attachment model
         attachment_model_json = {}
@@ -1075,24 +1102,24 @@ class TestAttachment():
         attachment_model_json2 = attachment_model.to_dict()
         assert attachment_model_json2 == attachment_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for AttachmentList
-#-----------------------------------------------------------------------------
 class TestAttachmentList():
+    """
+    Test Class for AttachmentList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for AttachmentList
-    #--------------------------------------------------------
     def test_attachment_list_serialization(self):
+        """
+        Test serialization/deserialization for AttachmentList
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
         attachment_model = {} # Attachment
-        attachment_model['id'] = 'testString'
-        attachment_model['filename'] = 'testString'
-        attachment_model['size_in_bytes'] = 38
-        attachment_model['created_at'] = 'testString'
-        attachment_model['url'] = 'testString'
+        attachment_model['id'] = 'string'
+        attachment_model['filename'] = 'string'
+        attachment_model['size_in_bytes'] = 0
+        attachment_model['created_at'] = 'string'
+        attachment_model['url'] = 'string'
 
         # Construct a json representation of a AttachmentList model
         attachment_list_model_json = {}
@@ -1113,28 +1140,26 @@ class TestAttachmentList():
         attachment_list_model_json2 = attachment_list_model.to_dict()
         assert attachment_list_model_json2 == attachment_list_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Case
-#-----------------------------------------------------------------------------
 class TestCase():
+    """
+    Test Class for Case
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Case
-    #--------------------------------------------------------
     def test_case_serialization(self):
+        """
+        Test serialization/deserialization for Case
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
-
-        offering_type_model = {} # OfferingType
-        offering_type_model['group'] = 'crn_service_name'
-        offering_type_model['key'] = 'testString'
-        offering_type_model['kind'] = 'testString'
-        offering_type_model['id'] = 'testString'
 
         user_model = {} # User
         user_model['name'] = 'testString'
         user_model['realm'] = 'IBMid'
         user_model['user_id'] = 'abc@ibm.com'
+
+        case_eu_model = {} # CaseEu
+        case_eu_model['support'] = True
+        case_eu_model['data_center'] = 'testString'
 
         attachment_model = {} # Attachment
         attachment_model['id'] = 'testString'
@@ -1143,14 +1168,11 @@ class TestCase():
         attachment_model['created_at'] = 'testString'
         attachment_model['url'] = 'testString'
 
-        case_eu_model = {} # CaseEu
-        case_eu_model['support'] = True
-        case_eu_model['data_center'] = 'testString'
-
-        comment_model = {} # Comment
-        comment_model['value'] = 'testString'
-        comment_model['added_at'] = 'testString'
-        comment_model['added_by'] = user_model
+        offering_type_model = {} # OfferingType
+        offering_type_model['group'] = 'crn_service_name'
+        offering_type_model['key'] = 'testString'
+        offering_type_model['kind'] = 'testString'
+        offering_type_model['id'] = 'testString'
 
         offering_model = {} # Offering
         offering_model['name'] = 'testString'
@@ -1162,6 +1184,11 @@ class TestCase():
         resource_model['type'] = 'testString'
         resource_model['url'] = 'testString'
         resource_model['note'] = 'testString'
+
+        comment_model = {} # Comment
+        comment_model['value'] = 'testString'
+        comment_model['added_at'] = 'testString'
+        comment_model['added_by'] = user_model
 
         # Construct a json representation of a Case model
         case_model_json = {}
@@ -1175,7 +1202,7 @@ class TestCase():
         case_model_json['contact_type'] = 'Cloud Support Center'
         case_model_json['contact'] = user_model
         case_model_json['status'] = 'testString'
-        case_model_json['severity'] = 36.0
+        case_model_json['severity'] = 72.5
         case_model_json['support_tier'] = 'Free'
         case_model_json['resolution'] = 'testString'
         case_model_json['close_notes'] = 'testString'
@@ -1201,15 +1228,15 @@ class TestCase():
         case_model_json2 = case_model.to_dict()
         assert case_model_json2 == case_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for CaseEu
-#-----------------------------------------------------------------------------
 class TestCaseEu():
+    """
+    Test Class for CaseEu
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for CaseEu
-    #--------------------------------------------------------
     def test_case_eu_serialization(self):
+        """
+        Test serialization/deserialization for CaseEu
+        """
 
         # Construct a json representation of a CaseEu model
         case_eu_model_json = {}
@@ -1231,28 +1258,29 @@ class TestCaseEu():
         case_eu_model_json2 = case_eu_model.to_dict()
         assert case_eu_model_json2 == case_eu_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for CaseList
-#-----------------------------------------------------------------------------
 class TestCaseList():
+    """
+    Test Class for CaseList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for CaseList
-    #--------------------------------------------------------
     def test_case_list_serialization(self):
+        """
+        Test serialization/deserialization for CaseList
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        offering_type_model = {} # OfferingType
-        offering_type_model['group'] = 'crn_service_name'
-        offering_type_model['key'] = 'testString'
-        offering_type_model['kind'] = 'testString'
-        offering_type_model['id'] = 'testString'
+        pagination_link_model = {} # PaginationLink
+        pagination_link_model['href'] = 'testString'
 
         user_model = {} # User
         user_model['name'] = 'testString'
         user_model['realm'] = 'IBMid'
         user_model['user_id'] = 'abc@ibm.com'
+
+        case_eu_model = {} # CaseEu
+        case_eu_model['support'] = True
+        case_eu_model['data_center'] = 'testString'
 
         attachment_model = {} # Attachment
         attachment_model['id'] = 'testString'
@@ -1261,14 +1289,11 @@ class TestCaseList():
         attachment_model['created_at'] = 'testString'
         attachment_model['url'] = 'testString'
 
-        case_eu_model = {} # CaseEu
-        case_eu_model['support'] = True
-        case_eu_model['data_center'] = 'testString'
-
-        comment_model = {} # Comment
-        comment_model['value'] = 'testString'
-        comment_model['added_at'] = 'testString'
-        comment_model['added_by'] = user_model
+        offering_type_model = {} # OfferingType
+        offering_type_model['group'] = 'crn_service_name'
+        offering_type_model['key'] = 'testString'
+        offering_type_model['kind'] = 'testString'
+        offering_type_model['id'] = 'testString'
 
         offering_model = {} # Offering
         offering_model['name'] = 'testString'
@@ -1281,6 +1306,11 @@ class TestCaseList():
         resource_model['url'] = 'testString'
         resource_model['note'] = 'testString'
 
+        comment_model = {} # Comment
+        comment_model['value'] = 'testString'
+        comment_model['added_at'] = 'testString'
+        comment_model['added_by'] = user_model
+
         case_model = {} # Case
         case_model['number'] = 'testString'
         case_model['short_description'] = 'testString'
@@ -1292,7 +1322,7 @@ class TestCaseList():
         case_model['contact_type'] = 'Cloud Support Center'
         case_model['contact'] = user_model
         case_model['status'] = 'testString'
-        case_model['severity'] = 36.0
+        case_model['severity'] = 72.5
         case_model['support_tier'] = 'Free'
         case_model['resolution'] = 'testString'
         case_model['close_notes'] = 'testString'
@@ -1302,9 +1332,6 @@ class TestCaseList():
         case_model['offering'] = offering_model
         case_model['resources'] = [resource_model]
         case_model['comments'] = [comment_model]
-
-        pagination_link_model = {} # PaginationLink
-        pagination_link_model['href'] = 'testString'
 
         # Construct a json representation of a CaseList model
         case_list_model_json = {}
@@ -1330,15 +1357,15 @@ class TestCaseList():
         case_list_model_json2 = case_list_model.to_dict()
         assert case_list_model_json2 == case_list_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for CasePayloadEu
-#-----------------------------------------------------------------------------
 class TestCasePayloadEu():
+    """
+    Test Class for CasePayloadEu
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for CasePayloadEu
-    #--------------------------------------------------------
     def test_case_payload_eu_serialization(self):
+        """
+        Test serialization/deserialization for CasePayloadEu
+        """
 
         # Construct a json representation of a CasePayloadEu model
         case_payload_eu_model_json = {}
@@ -1360,15 +1387,15 @@ class TestCasePayloadEu():
         case_payload_eu_model_json2 = case_payload_eu_model.to_dict()
         assert case_payload_eu_model_json2 == case_payload_eu_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Comment
-#-----------------------------------------------------------------------------
 class TestComment():
+    """
+    Test Class for Comment
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Comment
-    #--------------------------------------------------------
     def test_comment_serialization(self):
+        """
+        Test serialization/deserialization for Comment
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -1398,15 +1425,15 @@ class TestComment():
         comment_model_json2 = comment_model.to_dict()
         assert comment_model_json2 == comment_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Offering
-#-----------------------------------------------------------------------------
 class TestOffering():
+    """
+    Test Class for Offering
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Offering
-    #--------------------------------------------------------
     def test_offering_serialization(self):
+        """
+        Test serialization/deserialization for Offering
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -1436,15 +1463,15 @@ class TestOffering():
         offering_model_json2 = offering_model.to_dict()
         assert offering_model_json2 == offering_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for OfferingType
-#-----------------------------------------------------------------------------
 class TestOfferingType():
+    """
+    Test Class for OfferingType
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for OfferingType
-    #--------------------------------------------------------
     def test_offering_type_serialization(self):
+        """
+        Test serialization/deserialization for OfferingType
+        """
 
         # Construct a json representation of a OfferingType model
         offering_type_model_json = {}
@@ -1468,15 +1495,15 @@ class TestOfferingType():
         offering_type_model_json2 = offering_type_model.to_dict()
         assert offering_type_model_json2 == offering_type_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for PaginationLink
-#-----------------------------------------------------------------------------
 class TestPaginationLink():
+    """
+    Test Class for PaginationLink
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PaginationLink
-    #--------------------------------------------------------
     def test_pagination_link_serialization(self):
+        """
+        Test serialization/deserialization for PaginationLink
+        """
 
         # Construct a json representation of a PaginationLink model
         pagination_link_model_json = {}
@@ -1497,15 +1524,15 @@ class TestPaginationLink():
         pagination_link_model_json2 = pagination_link_model.to_dict()
         assert pagination_link_model_json2 == pagination_link_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Resource
-#-----------------------------------------------------------------------------
 class TestResource():
+    """
+    Test Class for Resource
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Resource
-    #--------------------------------------------------------
     def test_resource_serialization(self):
+        """
+        Test serialization/deserialization for Resource
+        """
 
         # Construct a json representation of a Resource model
         resource_model_json = {}
@@ -1530,21 +1557,21 @@ class TestResource():
         resource_model_json2 = resource_model.to_dict()
         assert resource_model_json2 == resource_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourcePayload
-#-----------------------------------------------------------------------------
 class TestResourcePayload():
+    """
+    Test Class for ResourcePayload
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourcePayload
-    #--------------------------------------------------------
     def test_resource_payload_serialization(self):
+        """
+        Test serialization/deserialization for ResourcePayload
+        """
 
         # Construct a json representation of a ResourcePayload model
         resource_payload_model_json = {}
         resource_payload_model_json['crn'] = 'testString'
         resource_payload_model_json['type'] = 'testString'
-        resource_payload_model_json['id'] = 36.0
+        resource_payload_model_json['id'] = 72.5
         resource_payload_model_json['note'] = 'testString'
 
         # Construct a model instance of ResourcePayload by calling from_dict on the json representation
@@ -1562,15 +1589,15 @@ class TestResourcePayload():
         resource_payload_model_json2 = resource_payload_model.to_dict()
         assert resource_payload_model_json2 == resource_payload_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for User
-#-----------------------------------------------------------------------------
 class TestUser():
+    """
+    Test Class for User
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for User
-    #--------------------------------------------------------
     def test_user_serialization(self):
+        """
+        Test serialization/deserialization for User
+        """
 
         # Construct a json representation of a User model
         user_model_json = {}
@@ -1593,15 +1620,15 @@ class TestUser():
         user_model_json2 = user_model.to_dict()
         assert user_model_json2 == user_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Watchlist
-#-----------------------------------------------------------------------------
 class TestWatchlist():
+    """
+    Test Class for Watchlist
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Watchlist
-    #--------------------------------------------------------
     def test_watchlist_serialization(self):
+        """
+        Test serialization/deserialization for Watchlist
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -1629,22 +1656,22 @@ class TestWatchlist():
         watchlist_model_json2 = watchlist_model.to_dict()
         assert watchlist_model_json2 == watchlist_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for WatchlistAddResponse
-#-----------------------------------------------------------------------------
 class TestWatchlistAddResponse():
+    """
+    Test Class for WatchlistAddResponse
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for WatchlistAddResponse
-    #--------------------------------------------------------
     def test_watchlist_add_response_serialization(self):
+        """
+        Test serialization/deserialization for WatchlistAddResponse
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
         user_model = {} # User
-        user_model['name'] = 'testString'
+        user_model['name'] = 'John Doe'
         user_model['realm'] = 'IBMid'
-        user_model['user_id'] = 'abc@ibm.com'
+        user_model['user_id'] = 'johndoe@ibm.com'
 
         # Construct a json representation of a WatchlistAddResponse model
         watchlist_add_response_model_json = {}
@@ -1666,15 +1693,15 @@ class TestWatchlistAddResponse():
         watchlist_add_response_model_json2 = watchlist_add_response_model.to_dict()
         assert watchlist_add_response_model_json2 == watchlist_add_response_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for AcceptPayload
-#-----------------------------------------------------------------------------
 class TestAcceptPayload():
+    """
+    Test Class for AcceptPayload
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for AcceptPayload
-    #--------------------------------------------------------
     def test_accept_payload_serialization(self):
+        """
+        Test serialization/deserialization for AcceptPayload
+        """
 
         # Construct a json representation of a AcceptPayload model
         accept_payload_model_json = {}
@@ -1696,15 +1723,15 @@ class TestAcceptPayload():
         accept_payload_model_json2 = accept_payload_model.to_dict()
         assert accept_payload_model_json2 == accept_payload_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResolvePayload
-#-----------------------------------------------------------------------------
 class TestResolvePayload():
+    """
+    Test Class for ResolvePayload
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResolvePayload
-    #--------------------------------------------------------
     def test_resolve_payload_serialization(self):
+        """
+        Test serialization/deserialization for ResolvePayload
+        """
 
         # Construct a json representation of a ResolvePayload model
         resolve_payload_model_json = {}
@@ -1727,15 +1754,15 @@ class TestResolvePayload():
         resolve_payload_model_json2 = resolve_payload_model.to_dict()
         assert resolve_payload_model_json2 == resolve_payload_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for UnresolvePayload
-#-----------------------------------------------------------------------------
 class TestUnresolvePayload():
+    """
+    Test Class for UnresolvePayload
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for UnresolvePayload
-    #--------------------------------------------------------
     def test_unresolve_payload_serialization(self):
+        """
+        Test serialization/deserialization for UnresolvePayload
+        """
 
         # Construct a json representation of a UnresolvePayload model
         unresolve_payload_model_json = {}
@@ -1757,15 +1784,15 @@ class TestUnresolvePayload():
         unresolve_payload_model_json2 = unresolve_payload_model.to_dict()
         assert unresolve_payload_model_json2 == unresolve_payload_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for FileWithMetadata
-#-----------------------------------------------------------------------------
 class TestFileWithMetadata():
+    """
+    Test Class for FileWithMetadata
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for FileWithMetadata
-    #--------------------------------------------------------
     def test_file_with_metadata_serialization(self):
+        """
+        Test serialization/deserialization for FileWithMetadata
+        """
 
         # Construct a json representation of a FileWithMetadata model
         file_with_metadata_model_json = {}
