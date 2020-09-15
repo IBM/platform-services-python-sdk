@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Unit Tests for GlobalCatalogV1
+"""
+
 from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 import inspect
@@ -23,6 +27,7 @@ import re
 import requests
 import responses
 import tempfile
+import urllib
 from ibm_platform_services.global_catalog_v1 import *
 
 
@@ -38,23 +43,25 @@ service.set_service_url(base_url)
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for list_catalog_entries
-#-----------------------------------------------------------------------------
 class TestListCatalogEntries():
+    """
+    Test Class for list_catalog_entries
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_catalog_entries()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_catalog_entries_all_params(self):
+        """
+        list_catalog_entries()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/')
         mock_response = '{"offset": 6, "limit": 5, "count": 5, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"name": "name", "kind": "service", "overview_ui": {"mapKey": {"display_name": "display_name", "long_description": "long_description", "description": "description", "featured_description": "featured_description"}}, "images": {"image": "image", "small_image": "small_image", "medium_image": "medium_image", "feature_image": "feature_image"}, "parent_id": "parent_id", "disabled": true, "tags": ["tags"], "group": false, "provider": {"email": "email", "name": "name", "contact": "contact", "support_email": "support_email", "phone": "phone"}, "active": true, "metadata": {"rc_compatible": false, "service": {"type": "type", "iam_compatible": true, "unique_api_key": true, "provisionable": false, "bindable": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "requires": ["requires"], "plan_updateable": false, "state": "state", "service_check_enabled": false, "test_check_interval": 19, "service_key_supported": false, "cf_guid": {"mapKey": "inner"}}, "plan": {"bindable": true, "reservable": true, "allow_internal_users": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "test_check_interval": 19, "single_scope_instance": "single_scope_instance", "service_check_enabled": false, "cf_guid": {"mapKey": "inner"}}, "alias": {"type": "type", "plan_id": "plan_id"}, "template": {"services": ["services"], "default_memory": 14, "start_cmd": "start_cmd", "source": {"path": "path", "type": "type", "url": "url"}, "runtime_catalog_id": "runtime_catalog_id", "cf_runtime_id": "cf_runtime_id", "template_id": "template_id", "executable_file": "executable_file", "buildpack": "buildpack", "environment_variables": {"mapKey": "inner"}}, "ui": {"strings": {"mapKey": {"bullets": [{"title": "title", "description": "description", "icon": "icon", "quantity": 8}], "media": [{"caption": "caption", "thumbnail_url": "thumbnail_url", "type": "type", "URL": "url", "source": {"title": "title", "description": "description", "icon": "icon", "quantity": 8}}], "not_creatable_msg": "not_creatable_msg", "not_creatable__robot_msg": "not_creatable_robot_msg", "deprecation_warning": "deprecation_warning", "popup_warning_message": "popup_warning_message", "instruction": "instruction"}}, "urls": {"doc_url": "doc_url", "instructions_url": "instructions_url", "api_url": "api_url", "create_url": "create_url", "sdk_download_url": "sdk_download_url", "terms_url": "terms_url", "custom_create_page_url": "custom_create_page_url", "catalog_details_url": "catalog_details_url", "deprecation_doc_url": "deprecation_doc_url", "dashboard_url": "dashboard_url", "registration_url": "registration_url", "apidocsurl": "apidocsurl"}, "embeddable_dashboard": "embeddable_dashboard", "embeddable_dashboard_full_width": false, "navigation_order": ["navigation_order"], "not_creatable": false, "primary_offering_id": "primary_offering_id", "accessible_during_provision": false, "side_by_side_index": 18, "end_of_service_time": "2019-01-01T12:00:00", "hidden": true, "hide_lite_metering": true, "no_upgrade_next_step": true}, "compliance": ["compliance"], "sla": {"terms": "terms", "tenancy": "tenancy", "provisioning": "provisioning", "responsiveness": "responsiveness", "dr": {"dr": true, "description": "description"}}, "callbacks": {"controller_url": "controller_url", "broker_url": "broker_url", "broker_proxy_url": "broker_proxy_url", "dashboard_url": "dashboard_url", "dashboard_data_url": "dashboard_data_url", "dashboard_detail_tab_url": "dashboard_detail_tab_url", "dashboard_detail_tab_ext_url": "dashboard_detail_tab_ext_url", "service_monitor_api": "service_monitor_api", "service_monitor_app": "service_monitor_app", "api_endpoint": {"mapKey": "inner"}}, "original_name": "original_name", "version": "version", "other": {"mapKey": {"anyKey": "anyValue"}}, "pricing": {"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}, "deployment": {"location": "location", "location_url": "location_url", "original_location": "original_location", "target_crn": "target_crn", "service_crn": "service_crn", "mccp_id": "mccp_id", "broker": {"name": "name", "guid": "guid"}, "supports_rc_migration": false, "target_network": "target_network"}}, "id": "id", "catalog_crn": {"anyKey": "anyValue"}, "url": {"anyKey": "anyValue"}, "children_url": {"anyKey": "anyValue"}, "geo_tags": {"anyKey": "anyValue"}, "pricing_tags": {"anyKey": "anyValue"}, "created": {"anyKey": "anyValue"}, "updated": {"anyKey": "anyValue"}}]}'
@@ -90,7 +97,7 @@ class TestListCatalogEntries():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
         assert 'include={}'.format(include) in query_string
         assert 'q={}'.format(q) in query_string
@@ -100,11 +107,11 @@ class TestListCatalogEntries():
         assert 'complete={}'.format(complete) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_catalog_entries_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_catalog_entries_required_params(self):
+        """
+        test_list_catalog_entries_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/')
         mock_response = '{"offset": 6, "limit": 5, "count": 5, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"name": "name", "kind": "service", "overview_ui": {"mapKey": {"display_name": "display_name", "long_description": "long_description", "description": "description", "featured_description": "featured_description"}}, "images": {"image": "image", "small_image": "small_image", "medium_image": "medium_image", "feature_image": "feature_image"}, "parent_id": "parent_id", "disabled": true, "tags": ["tags"], "group": false, "provider": {"email": "email", "name": "name", "contact": "contact", "support_email": "support_email", "phone": "phone"}, "active": true, "metadata": {"rc_compatible": false, "service": {"type": "type", "iam_compatible": true, "unique_api_key": true, "provisionable": false, "bindable": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "requires": ["requires"], "plan_updateable": false, "state": "state", "service_check_enabled": false, "test_check_interval": 19, "service_key_supported": false, "cf_guid": {"mapKey": "inner"}}, "plan": {"bindable": true, "reservable": true, "allow_internal_users": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "test_check_interval": 19, "single_scope_instance": "single_scope_instance", "service_check_enabled": false, "cf_guid": {"mapKey": "inner"}}, "alias": {"type": "type", "plan_id": "plan_id"}, "template": {"services": ["services"], "default_memory": 14, "start_cmd": "start_cmd", "source": {"path": "path", "type": "type", "url": "url"}, "runtime_catalog_id": "runtime_catalog_id", "cf_runtime_id": "cf_runtime_id", "template_id": "template_id", "executable_file": "executable_file", "buildpack": "buildpack", "environment_variables": {"mapKey": "inner"}}, "ui": {"strings": {"mapKey": {"bullets": [{"title": "title", "description": "description", "icon": "icon", "quantity": 8}], "media": [{"caption": "caption", "thumbnail_url": "thumbnail_url", "type": "type", "URL": "url", "source": {"title": "title", "description": "description", "icon": "icon", "quantity": 8}}], "not_creatable_msg": "not_creatable_msg", "not_creatable__robot_msg": "not_creatable_robot_msg", "deprecation_warning": "deprecation_warning", "popup_warning_message": "popup_warning_message", "instruction": "instruction"}}, "urls": {"doc_url": "doc_url", "instructions_url": "instructions_url", "api_url": "api_url", "create_url": "create_url", "sdk_download_url": "sdk_download_url", "terms_url": "terms_url", "custom_create_page_url": "custom_create_page_url", "catalog_details_url": "catalog_details_url", "deprecation_doc_url": "deprecation_doc_url", "dashboard_url": "dashboard_url", "registration_url": "registration_url", "apidocsurl": "apidocsurl"}, "embeddable_dashboard": "embeddable_dashboard", "embeddable_dashboard_full_width": false, "navigation_order": ["navigation_order"], "not_creatable": false, "primary_offering_id": "primary_offering_id", "accessible_during_provision": false, "side_by_side_index": 18, "end_of_service_time": "2019-01-01T12:00:00", "hidden": true, "hide_lite_metering": true, "no_upgrade_next_step": true}, "compliance": ["compliance"], "sla": {"terms": "terms", "tenancy": "tenancy", "provisioning": "provisioning", "responsiveness": "responsiveness", "dr": {"dr": true, "description": "description"}}, "callbacks": {"controller_url": "controller_url", "broker_url": "broker_url", "broker_proxy_url": "broker_proxy_url", "dashboard_url": "dashboard_url", "dashboard_data_url": "dashboard_data_url", "dashboard_detail_tab_url": "dashboard_detail_tab_url", "dashboard_detail_tab_ext_url": "dashboard_detail_tab_ext_url", "service_monitor_api": "service_monitor_api", "service_monitor_app": "service_monitor_app", "api_endpoint": {"mapKey": "inner"}}, "original_name": "original_name", "version": "version", "other": {"mapKey": {"anyKey": "anyValue"}}, "pricing": {"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}, "deployment": {"location": "location", "location_url": "location_url", "original_location": "original_location", "target_crn": "target_crn", "service_crn": "service_crn", "mccp_id": "mccp_id", "broker": {"name": "name", "guid": "guid"}, "supports_rc_migration": false, "target_network": "target_network"}}, "id": "id", "catalog_crn": {"anyKey": "anyValue"}, "url": {"anyKey": "anyValue"}, "children_url": {"anyKey": "anyValue"}, "geo_tags": {"anyKey": "anyValue"}, "pricing_tags": {"anyKey": "anyValue"}, "created": {"anyKey": "anyValue"}, "updated": {"anyKey": "anyValue"}}]}'
@@ -123,23 +130,25 @@ class TestListCatalogEntries():
         assert response.status_code == 200
 
 
-#-----------------------------------------------------------------------------
-# Test Class for create_catalog_entry
-#-----------------------------------------------------------------------------
 class TestCreateCatalogEntry():
+    """
+    Test Class for create_catalog_entry
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # create_catalog_entry()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_catalog_entry_all_params(self):
+        """
+        create_catalog_entry()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/')
         mock_response = '{"name": "name", "kind": "service", "overview_ui": {"mapKey": {"display_name": "display_name", "long_description": "long_description", "description": "description", "featured_description": "featured_description"}}, "images": {"image": "image", "small_image": "small_image", "medium_image": "medium_image", "feature_image": "feature_image"}, "parent_id": "parent_id", "disabled": true, "tags": ["tags"], "group": false, "provider": {"email": "email", "name": "name", "contact": "contact", "support_email": "support_email", "phone": "phone"}, "active": true, "metadata": {"rc_compatible": false, "service": {"type": "type", "iam_compatible": true, "unique_api_key": true, "provisionable": false, "bindable": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "requires": ["requires"], "plan_updateable": false, "state": "state", "service_check_enabled": false, "test_check_interval": 19, "service_key_supported": false, "cf_guid": {"mapKey": "inner"}}, "plan": {"bindable": true, "reservable": true, "allow_internal_users": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "test_check_interval": 19, "single_scope_instance": "single_scope_instance", "service_check_enabled": false, "cf_guid": {"mapKey": "inner"}}, "alias": {"type": "type", "plan_id": "plan_id"}, "template": {"services": ["services"], "default_memory": 14, "start_cmd": "start_cmd", "source": {"path": "path", "type": "type", "url": "url"}, "runtime_catalog_id": "runtime_catalog_id", "cf_runtime_id": "cf_runtime_id", "template_id": "template_id", "executable_file": "executable_file", "buildpack": "buildpack", "environment_variables": {"mapKey": "inner"}}, "ui": {"strings": {"mapKey": {"bullets": [{"title": "title", "description": "description", "icon": "icon", "quantity": 8}], "media": [{"caption": "caption", "thumbnail_url": "thumbnail_url", "type": "type", "URL": "url", "source": {"title": "title", "description": "description", "icon": "icon", "quantity": 8}}], "not_creatable_msg": "not_creatable_msg", "not_creatable__robot_msg": "not_creatable_robot_msg", "deprecation_warning": "deprecation_warning", "popup_warning_message": "popup_warning_message", "instruction": "instruction"}}, "urls": {"doc_url": "doc_url", "instructions_url": "instructions_url", "api_url": "api_url", "create_url": "create_url", "sdk_download_url": "sdk_download_url", "terms_url": "terms_url", "custom_create_page_url": "custom_create_page_url", "catalog_details_url": "catalog_details_url", "deprecation_doc_url": "deprecation_doc_url", "dashboard_url": "dashboard_url", "registration_url": "registration_url", "apidocsurl": "apidocsurl"}, "embeddable_dashboard": "embeddable_dashboard", "embeddable_dashboard_full_width": false, "navigation_order": ["navigation_order"], "not_creatable": false, "primary_offering_id": "primary_offering_id", "accessible_during_provision": false, "side_by_side_index": 18, "end_of_service_time": "2019-01-01T12:00:00", "hidden": true, "hide_lite_metering": true, "no_upgrade_next_step": true}, "compliance": ["compliance"], "sla": {"terms": "terms", "tenancy": "tenancy", "provisioning": "provisioning", "responsiveness": "responsiveness", "dr": {"dr": true, "description": "description"}}, "callbacks": {"controller_url": "controller_url", "broker_url": "broker_url", "broker_proxy_url": "broker_proxy_url", "dashboard_url": "dashboard_url", "dashboard_data_url": "dashboard_data_url", "dashboard_detail_tab_url": "dashboard_detail_tab_url", "dashboard_detail_tab_ext_url": "dashboard_detail_tab_ext_url", "service_monitor_api": "service_monitor_api", "service_monitor_app": "service_monitor_app", "api_endpoint": {"mapKey": "inner"}}, "original_name": "original_name", "version": "version", "other": {"mapKey": {"anyKey": "anyValue"}}, "pricing": {"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}, "deployment": {"location": "location", "location_url": "location_url", "original_location": "original_location", "target_crn": "target_crn", "service_crn": "service_crn", "mccp_id": "mccp_id", "broker": {"name": "name", "guid": "guid"}, "supports_rc_migration": false, "target_network": "target_network"}}, "id": "id", "catalog_crn": {"anyKey": "anyValue"}, "url": {"anyKey": "anyValue"}, "children_url": {"anyKey": "anyValue"}, "geo_tags": {"anyKey": "anyValue"}, "pricing_tags": {"anyKey": "anyValue"}, "created": {"anyKey": "anyValue"}, "updated": {"anyKey": "anyValue"}}'
@@ -171,23 +180,65 @@ class TestCreateCatalogEntry():
         provider_model['support_email'] = 'testString'
         provider_model['phone'] = 'testString'
 
+        # Construct a dict representation of a CFMetaData model
+        cf_meta_data_model = {}
+        cf_meta_data_model['type'] = 'testString'
+        cf_meta_data_model['iam_compatible'] = True
+        cf_meta_data_model['unique_api_key'] = True
+        cf_meta_data_model['provisionable'] = True
+        cf_meta_data_model['bindable'] = True
+        cf_meta_data_model['async_provisioning_supported'] = True
+        cf_meta_data_model['async_unprovisioning_supported'] = True
+        cf_meta_data_model['requires'] = ['testString']
+        cf_meta_data_model['plan_updateable'] = True
+        cf_meta_data_model['state'] = 'testString'
+        cf_meta_data_model['service_check_enabled'] = True
+        cf_meta_data_model['test_check_interval'] = 38
+        cf_meta_data_model['service_key_supported'] = True
+        cf_meta_data_model['cf_guid'] = {}
+
+        # Construct a dict representation of a PlanMetaData model
+        plan_meta_data_model = {}
+        plan_meta_data_model['bindable'] = True
+        plan_meta_data_model['reservable'] = True
+        plan_meta_data_model['allow_internal_users'] = True
+        plan_meta_data_model['async_provisioning_supported'] = True
+        plan_meta_data_model['async_unprovisioning_supported'] = True
+        plan_meta_data_model['test_check_interval'] = 38
+        plan_meta_data_model['single_scope_instance'] = 'testString'
+        plan_meta_data_model['service_check_enabled'] = True
+        plan_meta_data_model['cf_guid'] = {}
+
+        # Construct a dict representation of a AliasMetaData model
+        alias_meta_data_model = {}
+        alias_meta_data_model['type'] = 'testString'
+        alias_meta_data_model['plan_id'] = 'testString'
+
+        # Construct a dict representation of a SourceMetaData model
+        source_meta_data_model = {}
+        source_meta_data_model['path'] = 'testString'
+        source_meta_data_model['type'] = 'testString'
+        source_meta_data_model['url'] = 'testString'
+
+        # Construct a dict representation of a TemplateMetaData model
+        template_meta_data_model = {}
+        template_meta_data_model['services'] = ['testString']
+        template_meta_data_model['default_memory'] = 38
+        template_meta_data_model['start_cmd'] = 'testString'
+        template_meta_data_model['source'] = source_meta_data_model
+        template_meta_data_model['runtime_catalog_id'] = 'testString'
+        template_meta_data_model['cf_runtime_id'] = 'testString'
+        template_meta_data_model['template_id'] = 'testString'
+        template_meta_data_model['executable_file'] = 'testString'
+        template_meta_data_model['buildpack'] = 'testString'
+        template_meta_data_model['environment_variables'] = {}
+
         # Construct a dict representation of a Bullets model
         bullets_model = {}
         bullets_model['title'] = 'testString'
         bullets_model['description'] = 'testString'
         bullets_model['icon'] = 'testString'
         bullets_model['quantity'] = 38
-
-        # Construct a dict representation of a Price model
-        price_model = {}
-        price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
-
-        # Construct a dict representation of a Amount model
-        amount_model = {}
-        amount_model['country'] = 'testString'
-        amount_model['currency'] = 'testString'
-        amount_model['prices'] = [price_model]
 
         # Construct a dict representation of a UIMetaMedia model
         ui_meta_media_model = {}
@@ -196,29 +247,6 @@ class TestCreateCatalogEntry():
         ui_meta_media_model['type'] = 'testString'
         ui_meta_media_model['URL'] = 'testString'
         ui_meta_media_model['source'] = bullets_model
-
-        # Construct a dict representation of a Broker model
-        broker_model = {}
-        broker_model['name'] = 'testString'
-        broker_model['guid'] = 'testString'
-
-        # Construct a dict representation of a DRMetaData model
-        dr_meta_data_model = {}
-        dr_meta_data_model['dr'] = True
-        dr_meta_data_model['description'] = 'testString'
-
-        # Construct a dict representation of a SourceMetaData model
-        source_meta_data_model = {}
-        source_meta_data_model['path'] = 'testString'
-        source_meta_data_model['type'] = 'testString'
-        source_meta_data_model['url'] = 'testString'
-
-        # Construct a dict representation of a StartingPrice model
-        starting_price_model = {}
-        starting_price_model['plan_id'] = 'testString'
-        starting_price_model['deployment_id'] = 'testString'
-        starting_price_model['unit'] = 'testString'
-        starting_price_model['amount'] = [amount_model]
 
         # Construct a dict representation of a Strings model
         strings_model = {}
@@ -245,92 +273,6 @@ class TestCreateCatalogEntry():
         urls_model['registration_url'] = 'testString'
         urls_model['apidocsurl'] = 'testString'
 
-        # Construct a dict representation of a AliasMetaData model
-        alias_meta_data_model = {}
-        alias_meta_data_model['type'] = 'testString'
-        alias_meta_data_model['plan_id'] = 'testString'
-
-        # Construct a dict representation of a CFMetaData model
-        cf_meta_data_model = {}
-        cf_meta_data_model['type'] = 'testString'
-        cf_meta_data_model['iam_compatible'] = True
-        cf_meta_data_model['unique_api_key'] = True
-        cf_meta_data_model['provisionable'] = True
-        cf_meta_data_model['bindable'] = True
-        cf_meta_data_model['async_provisioning_supported'] = True
-        cf_meta_data_model['async_unprovisioning_supported'] = True
-        cf_meta_data_model['requires'] = ['testString']
-        cf_meta_data_model['plan_updateable'] = True
-        cf_meta_data_model['state'] = 'testString'
-        cf_meta_data_model['service_check_enabled'] = True
-        cf_meta_data_model['test_check_interval'] = 38
-        cf_meta_data_model['service_key_supported'] = True
-        cf_meta_data_model['cf_guid'] = {}
-
-        # Construct a dict representation of a Callbacks model
-        callbacks_model = {}
-        callbacks_model['controller_url'] = 'testString'
-        callbacks_model['broker_url'] = 'testString'
-        callbacks_model['broker_proxy_url'] = 'testString'
-        callbacks_model['dashboard_url'] = 'testString'
-        callbacks_model['dashboard_data_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
-        callbacks_model['service_monitor_api'] = 'testString'
-        callbacks_model['service_monitor_app'] = 'testString'
-        callbacks_model['api_endpoint'] = {}
-
-        # Construct a dict representation of a DeploymentBase model
-        deployment_base_model = {}
-        deployment_base_model['location'] = 'testString'
-        deployment_base_model['location_url'] = 'testString'
-        deployment_base_model['original_location'] = 'testString'
-        deployment_base_model['target_crn'] = 'testString'
-        deployment_base_model['service_crn'] = 'testString'
-        deployment_base_model['mccp_id'] = 'testString'
-        deployment_base_model['broker'] = broker_model
-        deployment_base_model['supports_rc_migration'] = True
-        deployment_base_model['target_network'] = 'testString'
-
-        # Construct a dict representation of a PlanMetaData model
-        plan_meta_data_model = {}
-        plan_meta_data_model['bindable'] = True
-        plan_meta_data_model['reservable'] = True
-        plan_meta_data_model['allow_internal_users'] = True
-        plan_meta_data_model['async_provisioning_supported'] = True
-        plan_meta_data_model['async_unprovisioning_supported'] = True
-        plan_meta_data_model['test_check_interval'] = 38
-        plan_meta_data_model['single_scope_instance'] = 'testString'
-        plan_meta_data_model['service_check_enabled'] = True
-        plan_meta_data_model['cf_guid'] = {}
-
-        # Construct a dict representation of a PricingSet model
-        pricing_set_model = {}
-        pricing_set_model['type'] = 'testString'
-        pricing_set_model['origin'] = 'testString'
-        pricing_set_model['starting_price'] = starting_price_model
-
-        # Construct a dict representation of a SLAMetaData model
-        sla_meta_data_model = {}
-        sla_meta_data_model['terms'] = 'testString'
-        sla_meta_data_model['tenancy'] = 'testString'
-        sla_meta_data_model['provisioning'] = 'testString'
-        sla_meta_data_model['responsiveness'] = 'testString'
-        sla_meta_data_model['dr'] = dr_meta_data_model
-
-        # Construct a dict representation of a TemplateMetaData model
-        template_meta_data_model = {}
-        template_meta_data_model['services'] = ['testString']
-        template_meta_data_model['default_memory'] = 38
-        template_meta_data_model['start_cmd'] = 'testString'
-        template_meta_data_model['source'] = source_meta_data_model
-        template_meta_data_model['runtime_catalog_id'] = 'testString'
-        template_meta_data_model['cf_runtime_id'] = 'testString'
-        template_meta_data_model['template_id'] = 'testString'
-        template_meta_data_model['executable_file'] = 'testString'
-        template_meta_data_model['buildpack'] = 'testString'
-        template_meta_data_model['environment_variables'] = {}
-
         # Construct a dict representation of a UIMetaData model
         ui_meta_data_model = {}
         ui_meta_data_model['strings'] = {}
@@ -346,6 +288,73 @@ class TestCreateCatalogEntry():
         ui_meta_data_model['hidden'] = True
         ui_meta_data_model['hide_lite_metering'] = True
         ui_meta_data_model['no_upgrade_next_step'] = True
+
+        # Construct a dict representation of a DRMetaData model
+        dr_meta_data_model = {}
+        dr_meta_data_model['dr'] = True
+        dr_meta_data_model['description'] = 'testString'
+
+        # Construct a dict representation of a SLAMetaData model
+        sla_meta_data_model = {}
+        sla_meta_data_model['terms'] = 'testString'
+        sla_meta_data_model['tenancy'] = 'testString'
+        sla_meta_data_model['provisioning'] = 'testString'
+        sla_meta_data_model['responsiveness'] = 'testString'
+        sla_meta_data_model['dr'] = dr_meta_data_model
+
+        # Construct a dict representation of a Callbacks model
+        callbacks_model = {}
+        callbacks_model['controller_url'] = 'testString'
+        callbacks_model['broker_url'] = 'testString'
+        callbacks_model['broker_proxy_url'] = 'testString'
+        callbacks_model['dashboard_url'] = 'testString'
+        callbacks_model['dashboard_data_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
+        callbacks_model['service_monitor_api'] = 'testString'
+        callbacks_model['service_monitor_app'] = 'testString'
+        callbacks_model['api_endpoint'] = {}
+
+        # Construct a dict representation of a Price model
+        price_model = {}
+        price_model['quantity_tier'] = 38
+        price_model['Price'] = 72.5
+
+        # Construct a dict representation of a Amount model
+        amount_model = {}
+        amount_model['country'] = 'testString'
+        amount_model['currency'] = 'testString'
+        amount_model['prices'] = [price_model]
+
+        # Construct a dict representation of a StartingPrice model
+        starting_price_model = {}
+        starting_price_model['plan_id'] = 'testString'
+        starting_price_model['deployment_id'] = 'testString'
+        starting_price_model['unit'] = 'testString'
+        starting_price_model['amount'] = [amount_model]
+
+        # Construct a dict representation of a PricingSet model
+        pricing_set_model = {}
+        pricing_set_model['type'] = 'testString'
+        pricing_set_model['origin'] = 'testString'
+        pricing_set_model['starting_price'] = starting_price_model
+
+        # Construct a dict representation of a Broker model
+        broker_model = {}
+        broker_model['name'] = 'testString'
+        broker_model['guid'] = 'testString'
+
+        # Construct a dict representation of a DeploymentBase model
+        deployment_base_model = {}
+        deployment_base_model['location'] = 'testString'
+        deployment_base_model['location_url'] = 'testString'
+        deployment_base_model['original_location'] = 'testString'
+        deployment_base_model['target_crn'] = 'testString'
+        deployment_base_model['service_crn'] = 'testString'
+        deployment_base_model['mccp_id'] = 'testString'
+        deployment_base_model['broker'] = broker_model
+        deployment_base_model['supports_rc_migration'] = True
+        deployment_base_model['target_network'] = 'testString'
 
         # Construct a dict representation of a ObjectMetadataSet model
         object_metadata_set_model = {}
@@ -402,7 +411,7 @@ class TestCreateCatalogEntry():
         assert response.status_code == 201
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
@@ -420,11 +429,11 @@ class TestCreateCatalogEntry():
         assert req_body['metadata'] == object_metadata_set_model
 
 
-    #--------------------------------------------------------
-    # test_create_catalog_entry_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_catalog_entry_required_params(self):
+        """
+        test_create_catalog_entry_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/')
         mock_response = '{"name": "name", "kind": "service", "overview_ui": {"mapKey": {"display_name": "display_name", "long_description": "long_description", "description": "description", "featured_description": "featured_description"}}, "images": {"image": "image", "small_image": "small_image", "medium_image": "medium_image", "feature_image": "feature_image"}, "parent_id": "parent_id", "disabled": true, "tags": ["tags"], "group": false, "provider": {"email": "email", "name": "name", "contact": "contact", "support_email": "support_email", "phone": "phone"}, "active": true, "metadata": {"rc_compatible": false, "service": {"type": "type", "iam_compatible": true, "unique_api_key": true, "provisionable": false, "bindable": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "requires": ["requires"], "plan_updateable": false, "state": "state", "service_check_enabled": false, "test_check_interval": 19, "service_key_supported": false, "cf_guid": {"mapKey": "inner"}}, "plan": {"bindable": true, "reservable": true, "allow_internal_users": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "test_check_interval": 19, "single_scope_instance": "single_scope_instance", "service_check_enabled": false, "cf_guid": {"mapKey": "inner"}}, "alias": {"type": "type", "plan_id": "plan_id"}, "template": {"services": ["services"], "default_memory": 14, "start_cmd": "start_cmd", "source": {"path": "path", "type": "type", "url": "url"}, "runtime_catalog_id": "runtime_catalog_id", "cf_runtime_id": "cf_runtime_id", "template_id": "template_id", "executable_file": "executable_file", "buildpack": "buildpack", "environment_variables": {"mapKey": "inner"}}, "ui": {"strings": {"mapKey": {"bullets": [{"title": "title", "description": "description", "icon": "icon", "quantity": 8}], "media": [{"caption": "caption", "thumbnail_url": "thumbnail_url", "type": "type", "URL": "url", "source": {"title": "title", "description": "description", "icon": "icon", "quantity": 8}}], "not_creatable_msg": "not_creatable_msg", "not_creatable__robot_msg": "not_creatable_robot_msg", "deprecation_warning": "deprecation_warning", "popup_warning_message": "popup_warning_message", "instruction": "instruction"}}, "urls": {"doc_url": "doc_url", "instructions_url": "instructions_url", "api_url": "api_url", "create_url": "create_url", "sdk_download_url": "sdk_download_url", "terms_url": "terms_url", "custom_create_page_url": "custom_create_page_url", "catalog_details_url": "catalog_details_url", "deprecation_doc_url": "deprecation_doc_url", "dashboard_url": "dashboard_url", "registration_url": "registration_url", "apidocsurl": "apidocsurl"}, "embeddable_dashboard": "embeddable_dashboard", "embeddable_dashboard_full_width": false, "navigation_order": ["navigation_order"], "not_creatable": false, "primary_offering_id": "primary_offering_id", "accessible_during_provision": false, "side_by_side_index": 18, "end_of_service_time": "2019-01-01T12:00:00", "hidden": true, "hide_lite_metering": true, "no_upgrade_next_step": true}, "compliance": ["compliance"], "sla": {"terms": "terms", "tenancy": "tenancy", "provisioning": "provisioning", "responsiveness": "responsiveness", "dr": {"dr": true, "description": "description"}}, "callbacks": {"controller_url": "controller_url", "broker_url": "broker_url", "broker_proxy_url": "broker_proxy_url", "dashboard_url": "dashboard_url", "dashboard_data_url": "dashboard_data_url", "dashboard_detail_tab_url": "dashboard_detail_tab_url", "dashboard_detail_tab_ext_url": "dashboard_detail_tab_ext_url", "service_monitor_api": "service_monitor_api", "service_monitor_app": "service_monitor_app", "api_endpoint": {"mapKey": "inner"}}, "original_name": "original_name", "version": "version", "other": {"mapKey": {"anyKey": "anyValue"}}, "pricing": {"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}, "deployment": {"location": "location", "location_url": "location_url", "original_location": "original_location", "target_crn": "target_crn", "service_crn": "service_crn", "mccp_id": "mccp_id", "broker": {"name": "name", "guid": "guid"}, "supports_rc_migration": false, "target_network": "target_network"}}, "id": "id", "catalog_crn": {"anyKey": "anyValue"}, "url": {"anyKey": "anyValue"}, "children_url": {"anyKey": "anyValue"}, "geo_tags": {"anyKey": "anyValue"}, "pricing_tags": {"anyKey": "anyValue"}, "created": {"anyKey": "anyValue"}, "updated": {"anyKey": "anyValue"}}'
@@ -456,23 +465,65 @@ class TestCreateCatalogEntry():
         provider_model['support_email'] = 'testString'
         provider_model['phone'] = 'testString'
 
+        # Construct a dict representation of a CFMetaData model
+        cf_meta_data_model = {}
+        cf_meta_data_model['type'] = 'testString'
+        cf_meta_data_model['iam_compatible'] = True
+        cf_meta_data_model['unique_api_key'] = True
+        cf_meta_data_model['provisionable'] = True
+        cf_meta_data_model['bindable'] = True
+        cf_meta_data_model['async_provisioning_supported'] = True
+        cf_meta_data_model['async_unprovisioning_supported'] = True
+        cf_meta_data_model['requires'] = ['testString']
+        cf_meta_data_model['plan_updateable'] = True
+        cf_meta_data_model['state'] = 'testString'
+        cf_meta_data_model['service_check_enabled'] = True
+        cf_meta_data_model['test_check_interval'] = 38
+        cf_meta_data_model['service_key_supported'] = True
+        cf_meta_data_model['cf_guid'] = {}
+
+        # Construct a dict representation of a PlanMetaData model
+        plan_meta_data_model = {}
+        plan_meta_data_model['bindable'] = True
+        plan_meta_data_model['reservable'] = True
+        plan_meta_data_model['allow_internal_users'] = True
+        plan_meta_data_model['async_provisioning_supported'] = True
+        plan_meta_data_model['async_unprovisioning_supported'] = True
+        plan_meta_data_model['test_check_interval'] = 38
+        plan_meta_data_model['single_scope_instance'] = 'testString'
+        plan_meta_data_model['service_check_enabled'] = True
+        plan_meta_data_model['cf_guid'] = {}
+
+        # Construct a dict representation of a AliasMetaData model
+        alias_meta_data_model = {}
+        alias_meta_data_model['type'] = 'testString'
+        alias_meta_data_model['plan_id'] = 'testString'
+
+        # Construct a dict representation of a SourceMetaData model
+        source_meta_data_model = {}
+        source_meta_data_model['path'] = 'testString'
+        source_meta_data_model['type'] = 'testString'
+        source_meta_data_model['url'] = 'testString'
+
+        # Construct a dict representation of a TemplateMetaData model
+        template_meta_data_model = {}
+        template_meta_data_model['services'] = ['testString']
+        template_meta_data_model['default_memory'] = 38
+        template_meta_data_model['start_cmd'] = 'testString'
+        template_meta_data_model['source'] = source_meta_data_model
+        template_meta_data_model['runtime_catalog_id'] = 'testString'
+        template_meta_data_model['cf_runtime_id'] = 'testString'
+        template_meta_data_model['template_id'] = 'testString'
+        template_meta_data_model['executable_file'] = 'testString'
+        template_meta_data_model['buildpack'] = 'testString'
+        template_meta_data_model['environment_variables'] = {}
+
         # Construct a dict representation of a Bullets model
         bullets_model = {}
         bullets_model['title'] = 'testString'
         bullets_model['description'] = 'testString'
         bullets_model['icon'] = 'testString'
         bullets_model['quantity'] = 38
-
-        # Construct a dict representation of a Price model
-        price_model = {}
-        price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
-
-        # Construct a dict representation of a Amount model
-        amount_model = {}
-        amount_model['country'] = 'testString'
-        amount_model['currency'] = 'testString'
-        amount_model['prices'] = [price_model]
 
         # Construct a dict representation of a UIMetaMedia model
         ui_meta_media_model = {}
@@ -481,29 +532,6 @@ class TestCreateCatalogEntry():
         ui_meta_media_model['type'] = 'testString'
         ui_meta_media_model['URL'] = 'testString'
         ui_meta_media_model['source'] = bullets_model
-
-        # Construct a dict representation of a Broker model
-        broker_model = {}
-        broker_model['name'] = 'testString'
-        broker_model['guid'] = 'testString'
-
-        # Construct a dict representation of a DRMetaData model
-        dr_meta_data_model = {}
-        dr_meta_data_model['dr'] = True
-        dr_meta_data_model['description'] = 'testString'
-
-        # Construct a dict representation of a SourceMetaData model
-        source_meta_data_model = {}
-        source_meta_data_model['path'] = 'testString'
-        source_meta_data_model['type'] = 'testString'
-        source_meta_data_model['url'] = 'testString'
-
-        # Construct a dict representation of a StartingPrice model
-        starting_price_model = {}
-        starting_price_model['plan_id'] = 'testString'
-        starting_price_model['deployment_id'] = 'testString'
-        starting_price_model['unit'] = 'testString'
-        starting_price_model['amount'] = [amount_model]
 
         # Construct a dict representation of a Strings model
         strings_model = {}
@@ -530,92 +558,6 @@ class TestCreateCatalogEntry():
         urls_model['registration_url'] = 'testString'
         urls_model['apidocsurl'] = 'testString'
 
-        # Construct a dict representation of a AliasMetaData model
-        alias_meta_data_model = {}
-        alias_meta_data_model['type'] = 'testString'
-        alias_meta_data_model['plan_id'] = 'testString'
-
-        # Construct a dict representation of a CFMetaData model
-        cf_meta_data_model = {}
-        cf_meta_data_model['type'] = 'testString'
-        cf_meta_data_model['iam_compatible'] = True
-        cf_meta_data_model['unique_api_key'] = True
-        cf_meta_data_model['provisionable'] = True
-        cf_meta_data_model['bindable'] = True
-        cf_meta_data_model['async_provisioning_supported'] = True
-        cf_meta_data_model['async_unprovisioning_supported'] = True
-        cf_meta_data_model['requires'] = ['testString']
-        cf_meta_data_model['plan_updateable'] = True
-        cf_meta_data_model['state'] = 'testString'
-        cf_meta_data_model['service_check_enabled'] = True
-        cf_meta_data_model['test_check_interval'] = 38
-        cf_meta_data_model['service_key_supported'] = True
-        cf_meta_data_model['cf_guid'] = {}
-
-        # Construct a dict representation of a Callbacks model
-        callbacks_model = {}
-        callbacks_model['controller_url'] = 'testString'
-        callbacks_model['broker_url'] = 'testString'
-        callbacks_model['broker_proxy_url'] = 'testString'
-        callbacks_model['dashboard_url'] = 'testString'
-        callbacks_model['dashboard_data_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
-        callbacks_model['service_monitor_api'] = 'testString'
-        callbacks_model['service_monitor_app'] = 'testString'
-        callbacks_model['api_endpoint'] = {}
-
-        # Construct a dict representation of a DeploymentBase model
-        deployment_base_model = {}
-        deployment_base_model['location'] = 'testString'
-        deployment_base_model['location_url'] = 'testString'
-        deployment_base_model['original_location'] = 'testString'
-        deployment_base_model['target_crn'] = 'testString'
-        deployment_base_model['service_crn'] = 'testString'
-        deployment_base_model['mccp_id'] = 'testString'
-        deployment_base_model['broker'] = broker_model
-        deployment_base_model['supports_rc_migration'] = True
-        deployment_base_model['target_network'] = 'testString'
-
-        # Construct a dict representation of a PlanMetaData model
-        plan_meta_data_model = {}
-        plan_meta_data_model['bindable'] = True
-        plan_meta_data_model['reservable'] = True
-        plan_meta_data_model['allow_internal_users'] = True
-        plan_meta_data_model['async_provisioning_supported'] = True
-        plan_meta_data_model['async_unprovisioning_supported'] = True
-        plan_meta_data_model['test_check_interval'] = 38
-        plan_meta_data_model['single_scope_instance'] = 'testString'
-        plan_meta_data_model['service_check_enabled'] = True
-        plan_meta_data_model['cf_guid'] = {}
-
-        # Construct a dict representation of a PricingSet model
-        pricing_set_model = {}
-        pricing_set_model['type'] = 'testString'
-        pricing_set_model['origin'] = 'testString'
-        pricing_set_model['starting_price'] = starting_price_model
-
-        # Construct a dict representation of a SLAMetaData model
-        sla_meta_data_model = {}
-        sla_meta_data_model['terms'] = 'testString'
-        sla_meta_data_model['tenancy'] = 'testString'
-        sla_meta_data_model['provisioning'] = 'testString'
-        sla_meta_data_model['responsiveness'] = 'testString'
-        sla_meta_data_model['dr'] = dr_meta_data_model
-
-        # Construct a dict representation of a TemplateMetaData model
-        template_meta_data_model = {}
-        template_meta_data_model['services'] = ['testString']
-        template_meta_data_model['default_memory'] = 38
-        template_meta_data_model['start_cmd'] = 'testString'
-        template_meta_data_model['source'] = source_meta_data_model
-        template_meta_data_model['runtime_catalog_id'] = 'testString'
-        template_meta_data_model['cf_runtime_id'] = 'testString'
-        template_meta_data_model['template_id'] = 'testString'
-        template_meta_data_model['executable_file'] = 'testString'
-        template_meta_data_model['buildpack'] = 'testString'
-        template_meta_data_model['environment_variables'] = {}
-
         # Construct a dict representation of a UIMetaData model
         ui_meta_data_model = {}
         ui_meta_data_model['strings'] = {}
@@ -631,6 +573,73 @@ class TestCreateCatalogEntry():
         ui_meta_data_model['hidden'] = True
         ui_meta_data_model['hide_lite_metering'] = True
         ui_meta_data_model['no_upgrade_next_step'] = True
+
+        # Construct a dict representation of a DRMetaData model
+        dr_meta_data_model = {}
+        dr_meta_data_model['dr'] = True
+        dr_meta_data_model['description'] = 'testString'
+
+        # Construct a dict representation of a SLAMetaData model
+        sla_meta_data_model = {}
+        sla_meta_data_model['terms'] = 'testString'
+        sla_meta_data_model['tenancy'] = 'testString'
+        sla_meta_data_model['provisioning'] = 'testString'
+        sla_meta_data_model['responsiveness'] = 'testString'
+        sla_meta_data_model['dr'] = dr_meta_data_model
+
+        # Construct a dict representation of a Callbacks model
+        callbacks_model = {}
+        callbacks_model['controller_url'] = 'testString'
+        callbacks_model['broker_url'] = 'testString'
+        callbacks_model['broker_proxy_url'] = 'testString'
+        callbacks_model['dashboard_url'] = 'testString'
+        callbacks_model['dashboard_data_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
+        callbacks_model['service_monitor_api'] = 'testString'
+        callbacks_model['service_monitor_app'] = 'testString'
+        callbacks_model['api_endpoint'] = {}
+
+        # Construct a dict representation of a Price model
+        price_model = {}
+        price_model['quantity_tier'] = 38
+        price_model['Price'] = 72.5
+
+        # Construct a dict representation of a Amount model
+        amount_model = {}
+        amount_model['country'] = 'testString'
+        amount_model['currency'] = 'testString'
+        amount_model['prices'] = [price_model]
+
+        # Construct a dict representation of a StartingPrice model
+        starting_price_model = {}
+        starting_price_model['plan_id'] = 'testString'
+        starting_price_model['deployment_id'] = 'testString'
+        starting_price_model['unit'] = 'testString'
+        starting_price_model['amount'] = [amount_model]
+
+        # Construct a dict representation of a PricingSet model
+        pricing_set_model = {}
+        pricing_set_model['type'] = 'testString'
+        pricing_set_model['origin'] = 'testString'
+        pricing_set_model['starting_price'] = starting_price_model
+
+        # Construct a dict representation of a Broker model
+        broker_model = {}
+        broker_model['name'] = 'testString'
+        broker_model['guid'] = 'testString'
+
+        # Construct a dict representation of a DeploymentBase model
+        deployment_base_model = {}
+        deployment_base_model['location'] = 'testString'
+        deployment_base_model['location_url'] = 'testString'
+        deployment_base_model['original_location'] = 'testString'
+        deployment_base_model['target_crn'] = 'testString'
+        deployment_base_model['service_crn'] = 'testString'
+        deployment_base_model['mccp_id'] = 'testString'
+        deployment_base_model['broker'] = broker_model
+        deployment_base_model['supports_rc_migration'] = True
+        deployment_base_model['target_network'] = 'testString'
 
         # Construct a dict representation of a ObjectMetadataSet model
         object_metadata_set_model = {}
@@ -699,11 +708,11 @@ class TestCreateCatalogEntry():
         assert req_body['metadata'] == object_metadata_set_model
 
 
-    #--------------------------------------------------------
-    # test_create_catalog_entry_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_catalog_entry_value_error(self):
+        """
+        test_create_catalog_entry_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/')
         mock_response = '{"name": "name", "kind": "service", "overview_ui": {"mapKey": {"display_name": "display_name", "long_description": "long_description", "description": "description", "featured_description": "featured_description"}}, "images": {"image": "image", "small_image": "small_image", "medium_image": "medium_image", "feature_image": "feature_image"}, "parent_id": "parent_id", "disabled": true, "tags": ["tags"], "group": false, "provider": {"email": "email", "name": "name", "contact": "contact", "support_email": "support_email", "phone": "phone"}, "active": true, "metadata": {"rc_compatible": false, "service": {"type": "type", "iam_compatible": true, "unique_api_key": true, "provisionable": false, "bindable": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "requires": ["requires"], "plan_updateable": false, "state": "state", "service_check_enabled": false, "test_check_interval": 19, "service_key_supported": false, "cf_guid": {"mapKey": "inner"}}, "plan": {"bindable": true, "reservable": true, "allow_internal_users": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "test_check_interval": 19, "single_scope_instance": "single_scope_instance", "service_check_enabled": false, "cf_guid": {"mapKey": "inner"}}, "alias": {"type": "type", "plan_id": "plan_id"}, "template": {"services": ["services"], "default_memory": 14, "start_cmd": "start_cmd", "source": {"path": "path", "type": "type", "url": "url"}, "runtime_catalog_id": "runtime_catalog_id", "cf_runtime_id": "cf_runtime_id", "template_id": "template_id", "executable_file": "executable_file", "buildpack": "buildpack", "environment_variables": {"mapKey": "inner"}}, "ui": {"strings": {"mapKey": {"bullets": [{"title": "title", "description": "description", "icon": "icon", "quantity": 8}], "media": [{"caption": "caption", "thumbnail_url": "thumbnail_url", "type": "type", "URL": "url", "source": {"title": "title", "description": "description", "icon": "icon", "quantity": 8}}], "not_creatable_msg": "not_creatable_msg", "not_creatable__robot_msg": "not_creatable_robot_msg", "deprecation_warning": "deprecation_warning", "popup_warning_message": "popup_warning_message", "instruction": "instruction"}}, "urls": {"doc_url": "doc_url", "instructions_url": "instructions_url", "api_url": "api_url", "create_url": "create_url", "sdk_download_url": "sdk_download_url", "terms_url": "terms_url", "custom_create_page_url": "custom_create_page_url", "catalog_details_url": "catalog_details_url", "deprecation_doc_url": "deprecation_doc_url", "dashboard_url": "dashboard_url", "registration_url": "registration_url", "apidocsurl": "apidocsurl"}, "embeddable_dashboard": "embeddable_dashboard", "embeddable_dashboard_full_width": false, "navigation_order": ["navigation_order"], "not_creatable": false, "primary_offering_id": "primary_offering_id", "accessible_during_provision": false, "side_by_side_index": 18, "end_of_service_time": "2019-01-01T12:00:00", "hidden": true, "hide_lite_metering": true, "no_upgrade_next_step": true}, "compliance": ["compliance"], "sla": {"terms": "terms", "tenancy": "tenancy", "provisioning": "provisioning", "responsiveness": "responsiveness", "dr": {"dr": true, "description": "description"}}, "callbacks": {"controller_url": "controller_url", "broker_url": "broker_url", "broker_proxy_url": "broker_proxy_url", "dashboard_url": "dashboard_url", "dashboard_data_url": "dashboard_data_url", "dashboard_detail_tab_url": "dashboard_detail_tab_url", "dashboard_detail_tab_ext_url": "dashboard_detail_tab_ext_url", "service_monitor_api": "service_monitor_api", "service_monitor_app": "service_monitor_app", "api_endpoint": {"mapKey": "inner"}}, "original_name": "original_name", "version": "version", "other": {"mapKey": {"anyKey": "anyValue"}}, "pricing": {"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}, "deployment": {"location": "location", "location_url": "location_url", "original_location": "original_location", "target_crn": "target_crn", "service_crn": "service_crn", "mccp_id": "mccp_id", "broker": {"name": "name", "guid": "guid"}, "supports_rc_migration": false, "target_network": "target_network"}}, "id": "id", "catalog_crn": {"anyKey": "anyValue"}, "url": {"anyKey": "anyValue"}, "children_url": {"anyKey": "anyValue"}, "geo_tags": {"anyKey": "anyValue"}, "pricing_tags": {"anyKey": "anyValue"}, "created": {"anyKey": "anyValue"}, "updated": {"anyKey": "anyValue"}}'
@@ -735,23 +744,65 @@ class TestCreateCatalogEntry():
         provider_model['support_email'] = 'testString'
         provider_model['phone'] = 'testString'
 
+        # Construct a dict representation of a CFMetaData model
+        cf_meta_data_model = {}
+        cf_meta_data_model['type'] = 'testString'
+        cf_meta_data_model['iam_compatible'] = True
+        cf_meta_data_model['unique_api_key'] = True
+        cf_meta_data_model['provisionable'] = True
+        cf_meta_data_model['bindable'] = True
+        cf_meta_data_model['async_provisioning_supported'] = True
+        cf_meta_data_model['async_unprovisioning_supported'] = True
+        cf_meta_data_model['requires'] = ['testString']
+        cf_meta_data_model['plan_updateable'] = True
+        cf_meta_data_model['state'] = 'testString'
+        cf_meta_data_model['service_check_enabled'] = True
+        cf_meta_data_model['test_check_interval'] = 38
+        cf_meta_data_model['service_key_supported'] = True
+        cf_meta_data_model['cf_guid'] = {}
+
+        # Construct a dict representation of a PlanMetaData model
+        plan_meta_data_model = {}
+        plan_meta_data_model['bindable'] = True
+        plan_meta_data_model['reservable'] = True
+        plan_meta_data_model['allow_internal_users'] = True
+        plan_meta_data_model['async_provisioning_supported'] = True
+        plan_meta_data_model['async_unprovisioning_supported'] = True
+        plan_meta_data_model['test_check_interval'] = 38
+        plan_meta_data_model['single_scope_instance'] = 'testString'
+        plan_meta_data_model['service_check_enabled'] = True
+        plan_meta_data_model['cf_guid'] = {}
+
+        # Construct a dict representation of a AliasMetaData model
+        alias_meta_data_model = {}
+        alias_meta_data_model['type'] = 'testString'
+        alias_meta_data_model['plan_id'] = 'testString'
+
+        # Construct a dict representation of a SourceMetaData model
+        source_meta_data_model = {}
+        source_meta_data_model['path'] = 'testString'
+        source_meta_data_model['type'] = 'testString'
+        source_meta_data_model['url'] = 'testString'
+
+        # Construct a dict representation of a TemplateMetaData model
+        template_meta_data_model = {}
+        template_meta_data_model['services'] = ['testString']
+        template_meta_data_model['default_memory'] = 38
+        template_meta_data_model['start_cmd'] = 'testString'
+        template_meta_data_model['source'] = source_meta_data_model
+        template_meta_data_model['runtime_catalog_id'] = 'testString'
+        template_meta_data_model['cf_runtime_id'] = 'testString'
+        template_meta_data_model['template_id'] = 'testString'
+        template_meta_data_model['executable_file'] = 'testString'
+        template_meta_data_model['buildpack'] = 'testString'
+        template_meta_data_model['environment_variables'] = {}
+
         # Construct a dict representation of a Bullets model
         bullets_model = {}
         bullets_model['title'] = 'testString'
         bullets_model['description'] = 'testString'
         bullets_model['icon'] = 'testString'
         bullets_model['quantity'] = 38
-
-        # Construct a dict representation of a Price model
-        price_model = {}
-        price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
-
-        # Construct a dict representation of a Amount model
-        amount_model = {}
-        amount_model['country'] = 'testString'
-        amount_model['currency'] = 'testString'
-        amount_model['prices'] = [price_model]
 
         # Construct a dict representation of a UIMetaMedia model
         ui_meta_media_model = {}
@@ -760,29 +811,6 @@ class TestCreateCatalogEntry():
         ui_meta_media_model['type'] = 'testString'
         ui_meta_media_model['URL'] = 'testString'
         ui_meta_media_model['source'] = bullets_model
-
-        # Construct a dict representation of a Broker model
-        broker_model = {}
-        broker_model['name'] = 'testString'
-        broker_model['guid'] = 'testString'
-
-        # Construct a dict representation of a DRMetaData model
-        dr_meta_data_model = {}
-        dr_meta_data_model['dr'] = True
-        dr_meta_data_model['description'] = 'testString'
-
-        # Construct a dict representation of a SourceMetaData model
-        source_meta_data_model = {}
-        source_meta_data_model['path'] = 'testString'
-        source_meta_data_model['type'] = 'testString'
-        source_meta_data_model['url'] = 'testString'
-
-        # Construct a dict representation of a StartingPrice model
-        starting_price_model = {}
-        starting_price_model['plan_id'] = 'testString'
-        starting_price_model['deployment_id'] = 'testString'
-        starting_price_model['unit'] = 'testString'
-        starting_price_model['amount'] = [amount_model]
 
         # Construct a dict representation of a Strings model
         strings_model = {}
@@ -809,92 +837,6 @@ class TestCreateCatalogEntry():
         urls_model['registration_url'] = 'testString'
         urls_model['apidocsurl'] = 'testString'
 
-        # Construct a dict representation of a AliasMetaData model
-        alias_meta_data_model = {}
-        alias_meta_data_model['type'] = 'testString'
-        alias_meta_data_model['plan_id'] = 'testString'
-
-        # Construct a dict representation of a CFMetaData model
-        cf_meta_data_model = {}
-        cf_meta_data_model['type'] = 'testString'
-        cf_meta_data_model['iam_compatible'] = True
-        cf_meta_data_model['unique_api_key'] = True
-        cf_meta_data_model['provisionable'] = True
-        cf_meta_data_model['bindable'] = True
-        cf_meta_data_model['async_provisioning_supported'] = True
-        cf_meta_data_model['async_unprovisioning_supported'] = True
-        cf_meta_data_model['requires'] = ['testString']
-        cf_meta_data_model['plan_updateable'] = True
-        cf_meta_data_model['state'] = 'testString'
-        cf_meta_data_model['service_check_enabled'] = True
-        cf_meta_data_model['test_check_interval'] = 38
-        cf_meta_data_model['service_key_supported'] = True
-        cf_meta_data_model['cf_guid'] = {}
-
-        # Construct a dict representation of a Callbacks model
-        callbacks_model = {}
-        callbacks_model['controller_url'] = 'testString'
-        callbacks_model['broker_url'] = 'testString'
-        callbacks_model['broker_proxy_url'] = 'testString'
-        callbacks_model['dashboard_url'] = 'testString'
-        callbacks_model['dashboard_data_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
-        callbacks_model['service_monitor_api'] = 'testString'
-        callbacks_model['service_monitor_app'] = 'testString'
-        callbacks_model['api_endpoint'] = {}
-
-        # Construct a dict representation of a DeploymentBase model
-        deployment_base_model = {}
-        deployment_base_model['location'] = 'testString'
-        deployment_base_model['location_url'] = 'testString'
-        deployment_base_model['original_location'] = 'testString'
-        deployment_base_model['target_crn'] = 'testString'
-        deployment_base_model['service_crn'] = 'testString'
-        deployment_base_model['mccp_id'] = 'testString'
-        deployment_base_model['broker'] = broker_model
-        deployment_base_model['supports_rc_migration'] = True
-        deployment_base_model['target_network'] = 'testString'
-
-        # Construct a dict representation of a PlanMetaData model
-        plan_meta_data_model = {}
-        plan_meta_data_model['bindable'] = True
-        plan_meta_data_model['reservable'] = True
-        plan_meta_data_model['allow_internal_users'] = True
-        plan_meta_data_model['async_provisioning_supported'] = True
-        plan_meta_data_model['async_unprovisioning_supported'] = True
-        plan_meta_data_model['test_check_interval'] = 38
-        plan_meta_data_model['single_scope_instance'] = 'testString'
-        plan_meta_data_model['service_check_enabled'] = True
-        plan_meta_data_model['cf_guid'] = {}
-
-        # Construct a dict representation of a PricingSet model
-        pricing_set_model = {}
-        pricing_set_model['type'] = 'testString'
-        pricing_set_model['origin'] = 'testString'
-        pricing_set_model['starting_price'] = starting_price_model
-
-        # Construct a dict representation of a SLAMetaData model
-        sla_meta_data_model = {}
-        sla_meta_data_model['terms'] = 'testString'
-        sla_meta_data_model['tenancy'] = 'testString'
-        sla_meta_data_model['provisioning'] = 'testString'
-        sla_meta_data_model['responsiveness'] = 'testString'
-        sla_meta_data_model['dr'] = dr_meta_data_model
-
-        # Construct a dict representation of a TemplateMetaData model
-        template_meta_data_model = {}
-        template_meta_data_model['services'] = ['testString']
-        template_meta_data_model['default_memory'] = 38
-        template_meta_data_model['start_cmd'] = 'testString'
-        template_meta_data_model['source'] = source_meta_data_model
-        template_meta_data_model['runtime_catalog_id'] = 'testString'
-        template_meta_data_model['cf_runtime_id'] = 'testString'
-        template_meta_data_model['template_id'] = 'testString'
-        template_meta_data_model['executable_file'] = 'testString'
-        template_meta_data_model['buildpack'] = 'testString'
-        template_meta_data_model['environment_variables'] = {}
-
         # Construct a dict representation of a UIMetaData model
         ui_meta_data_model = {}
         ui_meta_data_model['strings'] = {}
@@ -910,6 +852,73 @@ class TestCreateCatalogEntry():
         ui_meta_data_model['hidden'] = True
         ui_meta_data_model['hide_lite_metering'] = True
         ui_meta_data_model['no_upgrade_next_step'] = True
+
+        # Construct a dict representation of a DRMetaData model
+        dr_meta_data_model = {}
+        dr_meta_data_model['dr'] = True
+        dr_meta_data_model['description'] = 'testString'
+
+        # Construct a dict representation of a SLAMetaData model
+        sla_meta_data_model = {}
+        sla_meta_data_model['terms'] = 'testString'
+        sla_meta_data_model['tenancy'] = 'testString'
+        sla_meta_data_model['provisioning'] = 'testString'
+        sla_meta_data_model['responsiveness'] = 'testString'
+        sla_meta_data_model['dr'] = dr_meta_data_model
+
+        # Construct a dict representation of a Callbacks model
+        callbacks_model = {}
+        callbacks_model['controller_url'] = 'testString'
+        callbacks_model['broker_url'] = 'testString'
+        callbacks_model['broker_proxy_url'] = 'testString'
+        callbacks_model['dashboard_url'] = 'testString'
+        callbacks_model['dashboard_data_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
+        callbacks_model['service_monitor_api'] = 'testString'
+        callbacks_model['service_monitor_app'] = 'testString'
+        callbacks_model['api_endpoint'] = {}
+
+        # Construct a dict representation of a Price model
+        price_model = {}
+        price_model['quantity_tier'] = 38
+        price_model['Price'] = 72.5
+
+        # Construct a dict representation of a Amount model
+        amount_model = {}
+        amount_model['country'] = 'testString'
+        amount_model['currency'] = 'testString'
+        amount_model['prices'] = [price_model]
+
+        # Construct a dict representation of a StartingPrice model
+        starting_price_model = {}
+        starting_price_model['plan_id'] = 'testString'
+        starting_price_model['deployment_id'] = 'testString'
+        starting_price_model['unit'] = 'testString'
+        starting_price_model['amount'] = [amount_model]
+
+        # Construct a dict representation of a PricingSet model
+        pricing_set_model = {}
+        pricing_set_model['type'] = 'testString'
+        pricing_set_model['origin'] = 'testString'
+        pricing_set_model['starting_price'] = starting_price_model
+
+        # Construct a dict representation of a Broker model
+        broker_model = {}
+        broker_model['name'] = 'testString'
+        broker_model['guid'] = 'testString'
+
+        # Construct a dict representation of a DeploymentBase model
+        deployment_base_model = {}
+        deployment_base_model['location'] = 'testString'
+        deployment_base_model['location_url'] = 'testString'
+        deployment_base_model['original_location'] = 'testString'
+        deployment_base_model['target_crn'] = 'testString'
+        deployment_base_model['service_crn'] = 'testString'
+        deployment_base_model['mccp_id'] = 'testString'
+        deployment_base_model['broker'] = broker_model
+        deployment_base_model['supports_rc_migration'] = True
+        deployment_base_model['target_network'] = 'testString'
 
         # Construct a dict representation of a ObjectMetadataSet model
         object_metadata_set_model = {}
@@ -960,23 +969,25 @@ class TestCreateCatalogEntry():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_catalog_entry
-#-----------------------------------------------------------------------------
 class TestGetCatalogEntry():
+    """
+    Test Class for get_catalog_entry
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_catalog_entry()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_catalog_entry_all_params(self):
+        """
+        get_catalog_entry()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString')
         mock_response = '{"name": "name", "kind": "service", "overview_ui": {"mapKey": {"display_name": "display_name", "long_description": "long_description", "description": "description", "featured_description": "featured_description"}}, "images": {"image": "image", "small_image": "small_image", "medium_image": "medium_image", "feature_image": "feature_image"}, "parent_id": "parent_id", "disabled": true, "tags": ["tags"], "group": false, "provider": {"email": "email", "name": "name", "contact": "contact", "support_email": "support_email", "phone": "phone"}, "active": true, "metadata": {"rc_compatible": false, "service": {"type": "type", "iam_compatible": true, "unique_api_key": true, "provisionable": false, "bindable": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "requires": ["requires"], "plan_updateable": false, "state": "state", "service_check_enabled": false, "test_check_interval": 19, "service_key_supported": false, "cf_guid": {"mapKey": "inner"}}, "plan": {"bindable": true, "reservable": true, "allow_internal_users": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "test_check_interval": 19, "single_scope_instance": "single_scope_instance", "service_check_enabled": false, "cf_guid": {"mapKey": "inner"}}, "alias": {"type": "type", "plan_id": "plan_id"}, "template": {"services": ["services"], "default_memory": 14, "start_cmd": "start_cmd", "source": {"path": "path", "type": "type", "url": "url"}, "runtime_catalog_id": "runtime_catalog_id", "cf_runtime_id": "cf_runtime_id", "template_id": "template_id", "executable_file": "executable_file", "buildpack": "buildpack", "environment_variables": {"mapKey": "inner"}}, "ui": {"strings": {"mapKey": {"bullets": [{"title": "title", "description": "description", "icon": "icon", "quantity": 8}], "media": [{"caption": "caption", "thumbnail_url": "thumbnail_url", "type": "type", "URL": "url", "source": {"title": "title", "description": "description", "icon": "icon", "quantity": 8}}], "not_creatable_msg": "not_creatable_msg", "not_creatable__robot_msg": "not_creatable_robot_msg", "deprecation_warning": "deprecation_warning", "popup_warning_message": "popup_warning_message", "instruction": "instruction"}}, "urls": {"doc_url": "doc_url", "instructions_url": "instructions_url", "api_url": "api_url", "create_url": "create_url", "sdk_download_url": "sdk_download_url", "terms_url": "terms_url", "custom_create_page_url": "custom_create_page_url", "catalog_details_url": "catalog_details_url", "deprecation_doc_url": "deprecation_doc_url", "dashboard_url": "dashboard_url", "registration_url": "registration_url", "apidocsurl": "apidocsurl"}, "embeddable_dashboard": "embeddable_dashboard", "embeddable_dashboard_full_width": false, "navigation_order": ["navigation_order"], "not_creatable": false, "primary_offering_id": "primary_offering_id", "accessible_during_provision": false, "side_by_side_index": 18, "end_of_service_time": "2019-01-01T12:00:00", "hidden": true, "hide_lite_metering": true, "no_upgrade_next_step": true}, "compliance": ["compliance"], "sla": {"terms": "terms", "tenancy": "tenancy", "provisioning": "provisioning", "responsiveness": "responsiveness", "dr": {"dr": true, "description": "description"}}, "callbacks": {"controller_url": "controller_url", "broker_url": "broker_url", "broker_proxy_url": "broker_proxy_url", "dashboard_url": "dashboard_url", "dashboard_data_url": "dashboard_data_url", "dashboard_detail_tab_url": "dashboard_detail_tab_url", "dashboard_detail_tab_ext_url": "dashboard_detail_tab_ext_url", "service_monitor_api": "service_monitor_api", "service_monitor_app": "service_monitor_app", "api_endpoint": {"mapKey": "inner"}}, "original_name": "original_name", "version": "version", "other": {"mapKey": {"anyKey": "anyValue"}}, "pricing": {"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}, "deployment": {"location": "location", "location_url": "location_url", "original_location": "original_location", "target_crn": "target_crn", "service_crn": "service_crn", "mccp_id": "mccp_id", "broker": {"name": "name", "guid": "guid"}, "supports_rc_migration": false, "target_network": "target_network"}}, "id": "id", "catalog_crn": {"anyKey": "anyValue"}, "url": {"anyKey": "anyValue"}, "children_url": {"anyKey": "anyValue"}, "geo_tags": {"anyKey": "anyValue"}, "pricing_tags": {"anyKey": "anyValue"}, "created": {"anyKey": "anyValue"}, "updated": {"anyKey": "anyValue"}}'
@@ -1010,7 +1021,7 @@ class TestGetCatalogEntry():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
         assert 'include={}'.format(include) in query_string
         assert 'languages={}'.format(languages) in query_string
@@ -1018,11 +1029,11 @@ class TestGetCatalogEntry():
         assert 'depth={}'.format(depth) in query_string
 
 
-    #--------------------------------------------------------
-    # test_get_catalog_entry_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_catalog_entry_required_params(self):
+        """
+        test_get_catalog_entry_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString')
         mock_response = '{"name": "name", "kind": "service", "overview_ui": {"mapKey": {"display_name": "display_name", "long_description": "long_description", "description": "description", "featured_description": "featured_description"}}, "images": {"image": "image", "small_image": "small_image", "medium_image": "medium_image", "feature_image": "feature_image"}, "parent_id": "parent_id", "disabled": true, "tags": ["tags"], "group": false, "provider": {"email": "email", "name": "name", "contact": "contact", "support_email": "support_email", "phone": "phone"}, "active": true, "metadata": {"rc_compatible": false, "service": {"type": "type", "iam_compatible": true, "unique_api_key": true, "provisionable": false, "bindable": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "requires": ["requires"], "plan_updateable": false, "state": "state", "service_check_enabled": false, "test_check_interval": 19, "service_key_supported": false, "cf_guid": {"mapKey": "inner"}}, "plan": {"bindable": true, "reservable": true, "allow_internal_users": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "test_check_interval": 19, "single_scope_instance": "single_scope_instance", "service_check_enabled": false, "cf_guid": {"mapKey": "inner"}}, "alias": {"type": "type", "plan_id": "plan_id"}, "template": {"services": ["services"], "default_memory": 14, "start_cmd": "start_cmd", "source": {"path": "path", "type": "type", "url": "url"}, "runtime_catalog_id": "runtime_catalog_id", "cf_runtime_id": "cf_runtime_id", "template_id": "template_id", "executable_file": "executable_file", "buildpack": "buildpack", "environment_variables": {"mapKey": "inner"}}, "ui": {"strings": {"mapKey": {"bullets": [{"title": "title", "description": "description", "icon": "icon", "quantity": 8}], "media": [{"caption": "caption", "thumbnail_url": "thumbnail_url", "type": "type", "URL": "url", "source": {"title": "title", "description": "description", "icon": "icon", "quantity": 8}}], "not_creatable_msg": "not_creatable_msg", "not_creatable__robot_msg": "not_creatable_robot_msg", "deprecation_warning": "deprecation_warning", "popup_warning_message": "popup_warning_message", "instruction": "instruction"}}, "urls": {"doc_url": "doc_url", "instructions_url": "instructions_url", "api_url": "api_url", "create_url": "create_url", "sdk_download_url": "sdk_download_url", "terms_url": "terms_url", "custom_create_page_url": "custom_create_page_url", "catalog_details_url": "catalog_details_url", "deprecation_doc_url": "deprecation_doc_url", "dashboard_url": "dashboard_url", "registration_url": "registration_url", "apidocsurl": "apidocsurl"}, "embeddable_dashboard": "embeddable_dashboard", "embeddable_dashboard_full_width": false, "navigation_order": ["navigation_order"], "not_creatable": false, "primary_offering_id": "primary_offering_id", "accessible_during_provision": false, "side_by_side_index": 18, "end_of_service_time": "2019-01-01T12:00:00", "hidden": true, "hide_lite_metering": true, "no_upgrade_next_step": true}, "compliance": ["compliance"], "sla": {"terms": "terms", "tenancy": "tenancy", "provisioning": "provisioning", "responsiveness": "responsiveness", "dr": {"dr": true, "description": "description"}}, "callbacks": {"controller_url": "controller_url", "broker_url": "broker_url", "broker_proxy_url": "broker_proxy_url", "dashboard_url": "dashboard_url", "dashboard_data_url": "dashboard_data_url", "dashboard_detail_tab_url": "dashboard_detail_tab_url", "dashboard_detail_tab_ext_url": "dashboard_detail_tab_ext_url", "service_monitor_api": "service_monitor_api", "service_monitor_app": "service_monitor_app", "api_endpoint": {"mapKey": "inner"}}, "original_name": "original_name", "version": "version", "other": {"mapKey": {"anyKey": "anyValue"}}, "pricing": {"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}, "deployment": {"location": "location", "location_url": "location_url", "original_location": "original_location", "target_crn": "target_crn", "service_crn": "service_crn", "mccp_id": "mccp_id", "broker": {"name": "name", "guid": "guid"}, "supports_rc_migration": false, "target_network": "target_network"}}, "id": "id", "catalog_crn": {"anyKey": "anyValue"}, "url": {"anyKey": "anyValue"}, "children_url": {"anyKey": "anyValue"}, "geo_tags": {"anyKey": "anyValue"}, "pricing_tags": {"anyKey": "anyValue"}, "created": {"anyKey": "anyValue"}, "updated": {"anyKey": "anyValue"}}'
@@ -1046,11 +1057,11 @@ class TestGetCatalogEntry():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_catalog_entry_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_catalog_entry_value_error(self):
+        """
+        test_get_catalog_entry_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString')
         mock_response = '{"name": "name", "kind": "service", "overview_ui": {"mapKey": {"display_name": "display_name", "long_description": "long_description", "description": "description", "featured_description": "featured_description"}}, "images": {"image": "image", "small_image": "small_image", "medium_image": "medium_image", "feature_image": "feature_image"}, "parent_id": "parent_id", "disabled": true, "tags": ["tags"], "group": false, "provider": {"email": "email", "name": "name", "contact": "contact", "support_email": "support_email", "phone": "phone"}, "active": true, "metadata": {"rc_compatible": false, "service": {"type": "type", "iam_compatible": true, "unique_api_key": true, "provisionable": false, "bindable": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "requires": ["requires"], "plan_updateable": false, "state": "state", "service_check_enabled": false, "test_check_interval": 19, "service_key_supported": false, "cf_guid": {"mapKey": "inner"}}, "plan": {"bindable": true, "reservable": true, "allow_internal_users": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "test_check_interval": 19, "single_scope_instance": "single_scope_instance", "service_check_enabled": false, "cf_guid": {"mapKey": "inner"}}, "alias": {"type": "type", "plan_id": "plan_id"}, "template": {"services": ["services"], "default_memory": 14, "start_cmd": "start_cmd", "source": {"path": "path", "type": "type", "url": "url"}, "runtime_catalog_id": "runtime_catalog_id", "cf_runtime_id": "cf_runtime_id", "template_id": "template_id", "executable_file": "executable_file", "buildpack": "buildpack", "environment_variables": {"mapKey": "inner"}}, "ui": {"strings": {"mapKey": {"bullets": [{"title": "title", "description": "description", "icon": "icon", "quantity": 8}], "media": [{"caption": "caption", "thumbnail_url": "thumbnail_url", "type": "type", "URL": "url", "source": {"title": "title", "description": "description", "icon": "icon", "quantity": 8}}], "not_creatable_msg": "not_creatable_msg", "not_creatable__robot_msg": "not_creatable_robot_msg", "deprecation_warning": "deprecation_warning", "popup_warning_message": "popup_warning_message", "instruction": "instruction"}}, "urls": {"doc_url": "doc_url", "instructions_url": "instructions_url", "api_url": "api_url", "create_url": "create_url", "sdk_download_url": "sdk_download_url", "terms_url": "terms_url", "custom_create_page_url": "custom_create_page_url", "catalog_details_url": "catalog_details_url", "deprecation_doc_url": "deprecation_doc_url", "dashboard_url": "dashboard_url", "registration_url": "registration_url", "apidocsurl": "apidocsurl"}, "embeddable_dashboard": "embeddable_dashboard", "embeddable_dashboard_full_width": false, "navigation_order": ["navigation_order"], "not_creatable": false, "primary_offering_id": "primary_offering_id", "accessible_during_provision": false, "side_by_side_index": 18, "end_of_service_time": "2019-01-01T12:00:00", "hidden": true, "hide_lite_metering": true, "no_upgrade_next_step": true}, "compliance": ["compliance"], "sla": {"terms": "terms", "tenancy": "tenancy", "provisioning": "provisioning", "responsiveness": "responsiveness", "dr": {"dr": true, "description": "description"}}, "callbacks": {"controller_url": "controller_url", "broker_url": "broker_url", "broker_proxy_url": "broker_proxy_url", "dashboard_url": "dashboard_url", "dashboard_data_url": "dashboard_data_url", "dashboard_detail_tab_url": "dashboard_detail_tab_url", "dashboard_detail_tab_ext_url": "dashboard_detail_tab_ext_url", "service_monitor_api": "service_monitor_api", "service_monitor_app": "service_monitor_app", "api_endpoint": {"mapKey": "inner"}}, "original_name": "original_name", "version": "version", "other": {"mapKey": {"anyKey": "anyValue"}}, "pricing": {"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}, "deployment": {"location": "location", "location_url": "location_url", "original_location": "original_location", "target_crn": "target_crn", "service_crn": "service_crn", "mccp_id": "mccp_id", "broker": {"name": "name", "guid": "guid"}, "supports_rc_migration": false, "target_network": "target_network"}}, "id": "id", "catalog_crn": {"anyKey": "anyValue"}, "url": {"anyKey": "anyValue"}, "children_url": {"anyKey": "anyValue"}, "geo_tags": {"anyKey": "anyValue"}, "pricing_tags": {"anyKey": "anyValue"}, "created": {"anyKey": "anyValue"}, "updated": {"anyKey": "anyValue"}}'
@@ -1074,23 +1085,25 @@ class TestGetCatalogEntry():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_catalog_entry
-#-----------------------------------------------------------------------------
 class TestUpdateCatalogEntry():
+    """
+    Test Class for update_catalog_entry
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_catalog_entry()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_catalog_entry_all_params(self):
+        """
+        update_catalog_entry()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString')
         mock_response = '{"name": "name", "kind": "service", "overview_ui": {"mapKey": {"display_name": "display_name", "long_description": "long_description", "description": "description", "featured_description": "featured_description"}}, "images": {"image": "image", "small_image": "small_image", "medium_image": "medium_image", "feature_image": "feature_image"}, "parent_id": "parent_id", "disabled": true, "tags": ["tags"], "group": false, "provider": {"email": "email", "name": "name", "contact": "contact", "support_email": "support_email", "phone": "phone"}, "active": true, "metadata": {"rc_compatible": false, "service": {"type": "type", "iam_compatible": true, "unique_api_key": true, "provisionable": false, "bindable": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "requires": ["requires"], "plan_updateable": false, "state": "state", "service_check_enabled": false, "test_check_interval": 19, "service_key_supported": false, "cf_guid": {"mapKey": "inner"}}, "plan": {"bindable": true, "reservable": true, "allow_internal_users": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "test_check_interval": 19, "single_scope_instance": "single_scope_instance", "service_check_enabled": false, "cf_guid": {"mapKey": "inner"}}, "alias": {"type": "type", "plan_id": "plan_id"}, "template": {"services": ["services"], "default_memory": 14, "start_cmd": "start_cmd", "source": {"path": "path", "type": "type", "url": "url"}, "runtime_catalog_id": "runtime_catalog_id", "cf_runtime_id": "cf_runtime_id", "template_id": "template_id", "executable_file": "executable_file", "buildpack": "buildpack", "environment_variables": {"mapKey": "inner"}}, "ui": {"strings": {"mapKey": {"bullets": [{"title": "title", "description": "description", "icon": "icon", "quantity": 8}], "media": [{"caption": "caption", "thumbnail_url": "thumbnail_url", "type": "type", "URL": "url", "source": {"title": "title", "description": "description", "icon": "icon", "quantity": 8}}], "not_creatable_msg": "not_creatable_msg", "not_creatable__robot_msg": "not_creatable_robot_msg", "deprecation_warning": "deprecation_warning", "popup_warning_message": "popup_warning_message", "instruction": "instruction"}}, "urls": {"doc_url": "doc_url", "instructions_url": "instructions_url", "api_url": "api_url", "create_url": "create_url", "sdk_download_url": "sdk_download_url", "terms_url": "terms_url", "custom_create_page_url": "custom_create_page_url", "catalog_details_url": "catalog_details_url", "deprecation_doc_url": "deprecation_doc_url", "dashboard_url": "dashboard_url", "registration_url": "registration_url", "apidocsurl": "apidocsurl"}, "embeddable_dashboard": "embeddable_dashboard", "embeddable_dashboard_full_width": false, "navigation_order": ["navigation_order"], "not_creatable": false, "primary_offering_id": "primary_offering_id", "accessible_during_provision": false, "side_by_side_index": 18, "end_of_service_time": "2019-01-01T12:00:00", "hidden": true, "hide_lite_metering": true, "no_upgrade_next_step": true}, "compliance": ["compliance"], "sla": {"terms": "terms", "tenancy": "tenancy", "provisioning": "provisioning", "responsiveness": "responsiveness", "dr": {"dr": true, "description": "description"}}, "callbacks": {"controller_url": "controller_url", "broker_url": "broker_url", "broker_proxy_url": "broker_proxy_url", "dashboard_url": "dashboard_url", "dashboard_data_url": "dashboard_data_url", "dashboard_detail_tab_url": "dashboard_detail_tab_url", "dashboard_detail_tab_ext_url": "dashboard_detail_tab_ext_url", "service_monitor_api": "service_monitor_api", "service_monitor_app": "service_monitor_app", "api_endpoint": {"mapKey": "inner"}}, "original_name": "original_name", "version": "version", "other": {"mapKey": {"anyKey": "anyValue"}}, "pricing": {"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}, "deployment": {"location": "location", "location_url": "location_url", "original_location": "original_location", "target_crn": "target_crn", "service_crn": "service_crn", "mccp_id": "mccp_id", "broker": {"name": "name", "guid": "guid"}, "supports_rc_migration": false, "target_network": "target_network"}}, "id": "id", "catalog_crn": {"anyKey": "anyValue"}, "url": {"anyKey": "anyValue"}, "children_url": {"anyKey": "anyValue"}, "geo_tags": {"anyKey": "anyValue"}, "pricing_tags": {"anyKey": "anyValue"}, "created": {"anyKey": "anyValue"}, "updated": {"anyKey": "anyValue"}}'
@@ -1122,23 +1135,65 @@ class TestUpdateCatalogEntry():
         provider_model['support_email'] = 'testString'
         provider_model['phone'] = 'testString'
 
+        # Construct a dict representation of a CFMetaData model
+        cf_meta_data_model = {}
+        cf_meta_data_model['type'] = 'testString'
+        cf_meta_data_model['iam_compatible'] = True
+        cf_meta_data_model['unique_api_key'] = True
+        cf_meta_data_model['provisionable'] = True
+        cf_meta_data_model['bindable'] = True
+        cf_meta_data_model['async_provisioning_supported'] = True
+        cf_meta_data_model['async_unprovisioning_supported'] = True
+        cf_meta_data_model['requires'] = ['testString']
+        cf_meta_data_model['plan_updateable'] = True
+        cf_meta_data_model['state'] = 'testString'
+        cf_meta_data_model['service_check_enabled'] = True
+        cf_meta_data_model['test_check_interval'] = 38
+        cf_meta_data_model['service_key_supported'] = True
+        cf_meta_data_model['cf_guid'] = {}
+
+        # Construct a dict representation of a PlanMetaData model
+        plan_meta_data_model = {}
+        plan_meta_data_model['bindable'] = True
+        plan_meta_data_model['reservable'] = True
+        plan_meta_data_model['allow_internal_users'] = True
+        plan_meta_data_model['async_provisioning_supported'] = True
+        plan_meta_data_model['async_unprovisioning_supported'] = True
+        plan_meta_data_model['test_check_interval'] = 38
+        plan_meta_data_model['single_scope_instance'] = 'testString'
+        plan_meta_data_model['service_check_enabled'] = True
+        plan_meta_data_model['cf_guid'] = {}
+
+        # Construct a dict representation of a AliasMetaData model
+        alias_meta_data_model = {}
+        alias_meta_data_model['type'] = 'testString'
+        alias_meta_data_model['plan_id'] = 'testString'
+
+        # Construct a dict representation of a SourceMetaData model
+        source_meta_data_model = {}
+        source_meta_data_model['path'] = 'testString'
+        source_meta_data_model['type'] = 'testString'
+        source_meta_data_model['url'] = 'testString'
+
+        # Construct a dict representation of a TemplateMetaData model
+        template_meta_data_model = {}
+        template_meta_data_model['services'] = ['testString']
+        template_meta_data_model['default_memory'] = 38
+        template_meta_data_model['start_cmd'] = 'testString'
+        template_meta_data_model['source'] = source_meta_data_model
+        template_meta_data_model['runtime_catalog_id'] = 'testString'
+        template_meta_data_model['cf_runtime_id'] = 'testString'
+        template_meta_data_model['template_id'] = 'testString'
+        template_meta_data_model['executable_file'] = 'testString'
+        template_meta_data_model['buildpack'] = 'testString'
+        template_meta_data_model['environment_variables'] = {}
+
         # Construct a dict representation of a Bullets model
         bullets_model = {}
         bullets_model['title'] = 'testString'
         bullets_model['description'] = 'testString'
         bullets_model['icon'] = 'testString'
         bullets_model['quantity'] = 38
-
-        # Construct a dict representation of a Price model
-        price_model = {}
-        price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
-
-        # Construct a dict representation of a Amount model
-        amount_model = {}
-        amount_model['country'] = 'testString'
-        amount_model['currency'] = 'testString'
-        amount_model['prices'] = [price_model]
 
         # Construct a dict representation of a UIMetaMedia model
         ui_meta_media_model = {}
@@ -1147,29 +1202,6 @@ class TestUpdateCatalogEntry():
         ui_meta_media_model['type'] = 'testString'
         ui_meta_media_model['URL'] = 'testString'
         ui_meta_media_model['source'] = bullets_model
-
-        # Construct a dict representation of a Broker model
-        broker_model = {}
-        broker_model['name'] = 'testString'
-        broker_model['guid'] = 'testString'
-
-        # Construct a dict representation of a DRMetaData model
-        dr_meta_data_model = {}
-        dr_meta_data_model['dr'] = True
-        dr_meta_data_model['description'] = 'testString'
-
-        # Construct a dict representation of a SourceMetaData model
-        source_meta_data_model = {}
-        source_meta_data_model['path'] = 'testString'
-        source_meta_data_model['type'] = 'testString'
-        source_meta_data_model['url'] = 'testString'
-
-        # Construct a dict representation of a StartingPrice model
-        starting_price_model = {}
-        starting_price_model['plan_id'] = 'testString'
-        starting_price_model['deployment_id'] = 'testString'
-        starting_price_model['unit'] = 'testString'
-        starting_price_model['amount'] = [amount_model]
 
         # Construct a dict representation of a Strings model
         strings_model = {}
@@ -1196,92 +1228,6 @@ class TestUpdateCatalogEntry():
         urls_model['registration_url'] = 'testString'
         urls_model['apidocsurl'] = 'testString'
 
-        # Construct a dict representation of a AliasMetaData model
-        alias_meta_data_model = {}
-        alias_meta_data_model['type'] = 'testString'
-        alias_meta_data_model['plan_id'] = 'testString'
-
-        # Construct a dict representation of a CFMetaData model
-        cf_meta_data_model = {}
-        cf_meta_data_model['type'] = 'testString'
-        cf_meta_data_model['iam_compatible'] = True
-        cf_meta_data_model['unique_api_key'] = True
-        cf_meta_data_model['provisionable'] = True
-        cf_meta_data_model['bindable'] = True
-        cf_meta_data_model['async_provisioning_supported'] = True
-        cf_meta_data_model['async_unprovisioning_supported'] = True
-        cf_meta_data_model['requires'] = ['testString']
-        cf_meta_data_model['plan_updateable'] = True
-        cf_meta_data_model['state'] = 'testString'
-        cf_meta_data_model['service_check_enabled'] = True
-        cf_meta_data_model['test_check_interval'] = 38
-        cf_meta_data_model['service_key_supported'] = True
-        cf_meta_data_model['cf_guid'] = {}
-
-        # Construct a dict representation of a Callbacks model
-        callbacks_model = {}
-        callbacks_model['controller_url'] = 'testString'
-        callbacks_model['broker_url'] = 'testString'
-        callbacks_model['broker_proxy_url'] = 'testString'
-        callbacks_model['dashboard_url'] = 'testString'
-        callbacks_model['dashboard_data_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
-        callbacks_model['service_monitor_api'] = 'testString'
-        callbacks_model['service_monitor_app'] = 'testString'
-        callbacks_model['api_endpoint'] = {}
-
-        # Construct a dict representation of a DeploymentBase model
-        deployment_base_model = {}
-        deployment_base_model['location'] = 'testString'
-        deployment_base_model['location_url'] = 'testString'
-        deployment_base_model['original_location'] = 'testString'
-        deployment_base_model['target_crn'] = 'testString'
-        deployment_base_model['service_crn'] = 'testString'
-        deployment_base_model['mccp_id'] = 'testString'
-        deployment_base_model['broker'] = broker_model
-        deployment_base_model['supports_rc_migration'] = True
-        deployment_base_model['target_network'] = 'testString'
-
-        # Construct a dict representation of a PlanMetaData model
-        plan_meta_data_model = {}
-        plan_meta_data_model['bindable'] = True
-        plan_meta_data_model['reservable'] = True
-        plan_meta_data_model['allow_internal_users'] = True
-        plan_meta_data_model['async_provisioning_supported'] = True
-        plan_meta_data_model['async_unprovisioning_supported'] = True
-        plan_meta_data_model['test_check_interval'] = 38
-        plan_meta_data_model['single_scope_instance'] = 'testString'
-        plan_meta_data_model['service_check_enabled'] = True
-        plan_meta_data_model['cf_guid'] = {}
-
-        # Construct a dict representation of a PricingSet model
-        pricing_set_model = {}
-        pricing_set_model['type'] = 'testString'
-        pricing_set_model['origin'] = 'testString'
-        pricing_set_model['starting_price'] = starting_price_model
-
-        # Construct a dict representation of a SLAMetaData model
-        sla_meta_data_model = {}
-        sla_meta_data_model['terms'] = 'testString'
-        sla_meta_data_model['tenancy'] = 'testString'
-        sla_meta_data_model['provisioning'] = 'testString'
-        sla_meta_data_model['responsiveness'] = 'testString'
-        sla_meta_data_model['dr'] = dr_meta_data_model
-
-        # Construct a dict representation of a TemplateMetaData model
-        template_meta_data_model = {}
-        template_meta_data_model['services'] = ['testString']
-        template_meta_data_model['default_memory'] = 38
-        template_meta_data_model['start_cmd'] = 'testString'
-        template_meta_data_model['source'] = source_meta_data_model
-        template_meta_data_model['runtime_catalog_id'] = 'testString'
-        template_meta_data_model['cf_runtime_id'] = 'testString'
-        template_meta_data_model['template_id'] = 'testString'
-        template_meta_data_model['executable_file'] = 'testString'
-        template_meta_data_model['buildpack'] = 'testString'
-        template_meta_data_model['environment_variables'] = {}
-
         # Construct a dict representation of a UIMetaData model
         ui_meta_data_model = {}
         ui_meta_data_model['strings'] = {}
@@ -1297,6 +1243,73 @@ class TestUpdateCatalogEntry():
         ui_meta_data_model['hidden'] = True
         ui_meta_data_model['hide_lite_metering'] = True
         ui_meta_data_model['no_upgrade_next_step'] = True
+
+        # Construct a dict representation of a DRMetaData model
+        dr_meta_data_model = {}
+        dr_meta_data_model['dr'] = True
+        dr_meta_data_model['description'] = 'testString'
+
+        # Construct a dict representation of a SLAMetaData model
+        sla_meta_data_model = {}
+        sla_meta_data_model['terms'] = 'testString'
+        sla_meta_data_model['tenancy'] = 'testString'
+        sla_meta_data_model['provisioning'] = 'testString'
+        sla_meta_data_model['responsiveness'] = 'testString'
+        sla_meta_data_model['dr'] = dr_meta_data_model
+
+        # Construct a dict representation of a Callbacks model
+        callbacks_model = {}
+        callbacks_model['controller_url'] = 'testString'
+        callbacks_model['broker_url'] = 'testString'
+        callbacks_model['broker_proxy_url'] = 'testString'
+        callbacks_model['dashboard_url'] = 'testString'
+        callbacks_model['dashboard_data_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
+        callbacks_model['service_monitor_api'] = 'testString'
+        callbacks_model['service_monitor_app'] = 'testString'
+        callbacks_model['api_endpoint'] = {}
+
+        # Construct a dict representation of a Price model
+        price_model = {}
+        price_model['quantity_tier'] = 38
+        price_model['Price'] = 72.5
+
+        # Construct a dict representation of a Amount model
+        amount_model = {}
+        amount_model['country'] = 'testString'
+        amount_model['currency'] = 'testString'
+        amount_model['prices'] = [price_model]
+
+        # Construct a dict representation of a StartingPrice model
+        starting_price_model = {}
+        starting_price_model['plan_id'] = 'testString'
+        starting_price_model['deployment_id'] = 'testString'
+        starting_price_model['unit'] = 'testString'
+        starting_price_model['amount'] = [amount_model]
+
+        # Construct a dict representation of a PricingSet model
+        pricing_set_model = {}
+        pricing_set_model['type'] = 'testString'
+        pricing_set_model['origin'] = 'testString'
+        pricing_set_model['starting_price'] = starting_price_model
+
+        # Construct a dict representation of a Broker model
+        broker_model = {}
+        broker_model['name'] = 'testString'
+        broker_model['guid'] = 'testString'
+
+        # Construct a dict representation of a DeploymentBase model
+        deployment_base_model = {}
+        deployment_base_model['location'] = 'testString'
+        deployment_base_model['location_url'] = 'testString'
+        deployment_base_model['original_location'] = 'testString'
+        deployment_base_model['target_crn'] = 'testString'
+        deployment_base_model['service_crn'] = 'testString'
+        deployment_base_model['mccp_id'] = 'testString'
+        deployment_base_model['broker'] = broker_model
+        deployment_base_model['supports_rc_migration'] = True
+        deployment_base_model['target_network'] = 'testString'
 
         # Construct a dict representation of a ObjectMetadataSet model
         object_metadata_set_model = {}
@@ -1355,7 +1368,7 @@ class TestUpdateCatalogEntry():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
         assert 'move={}'.format(move) in query_string
         # Validate body params
@@ -1373,11 +1386,11 @@ class TestUpdateCatalogEntry():
         assert req_body['metadata'] == object_metadata_set_model
 
 
-    #--------------------------------------------------------
-    # test_update_catalog_entry_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_catalog_entry_required_params(self):
+        """
+        test_update_catalog_entry_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString')
         mock_response = '{"name": "name", "kind": "service", "overview_ui": {"mapKey": {"display_name": "display_name", "long_description": "long_description", "description": "description", "featured_description": "featured_description"}}, "images": {"image": "image", "small_image": "small_image", "medium_image": "medium_image", "feature_image": "feature_image"}, "parent_id": "parent_id", "disabled": true, "tags": ["tags"], "group": false, "provider": {"email": "email", "name": "name", "contact": "contact", "support_email": "support_email", "phone": "phone"}, "active": true, "metadata": {"rc_compatible": false, "service": {"type": "type", "iam_compatible": true, "unique_api_key": true, "provisionable": false, "bindable": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "requires": ["requires"], "plan_updateable": false, "state": "state", "service_check_enabled": false, "test_check_interval": 19, "service_key_supported": false, "cf_guid": {"mapKey": "inner"}}, "plan": {"bindable": true, "reservable": true, "allow_internal_users": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "test_check_interval": 19, "single_scope_instance": "single_scope_instance", "service_check_enabled": false, "cf_guid": {"mapKey": "inner"}}, "alias": {"type": "type", "plan_id": "plan_id"}, "template": {"services": ["services"], "default_memory": 14, "start_cmd": "start_cmd", "source": {"path": "path", "type": "type", "url": "url"}, "runtime_catalog_id": "runtime_catalog_id", "cf_runtime_id": "cf_runtime_id", "template_id": "template_id", "executable_file": "executable_file", "buildpack": "buildpack", "environment_variables": {"mapKey": "inner"}}, "ui": {"strings": {"mapKey": {"bullets": [{"title": "title", "description": "description", "icon": "icon", "quantity": 8}], "media": [{"caption": "caption", "thumbnail_url": "thumbnail_url", "type": "type", "URL": "url", "source": {"title": "title", "description": "description", "icon": "icon", "quantity": 8}}], "not_creatable_msg": "not_creatable_msg", "not_creatable__robot_msg": "not_creatable_robot_msg", "deprecation_warning": "deprecation_warning", "popup_warning_message": "popup_warning_message", "instruction": "instruction"}}, "urls": {"doc_url": "doc_url", "instructions_url": "instructions_url", "api_url": "api_url", "create_url": "create_url", "sdk_download_url": "sdk_download_url", "terms_url": "terms_url", "custom_create_page_url": "custom_create_page_url", "catalog_details_url": "catalog_details_url", "deprecation_doc_url": "deprecation_doc_url", "dashboard_url": "dashboard_url", "registration_url": "registration_url", "apidocsurl": "apidocsurl"}, "embeddable_dashboard": "embeddable_dashboard", "embeddable_dashboard_full_width": false, "navigation_order": ["navigation_order"], "not_creatable": false, "primary_offering_id": "primary_offering_id", "accessible_during_provision": false, "side_by_side_index": 18, "end_of_service_time": "2019-01-01T12:00:00", "hidden": true, "hide_lite_metering": true, "no_upgrade_next_step": true}, "compliance": ["compliance"], "sla": {"terms": "terms", "tenancy": "tenancy", "provisioning": "provisioning", "responsiveness": "responsiveness", "dr": {"dr": true, "description": "description"}}, "callbacks": {"controller_url": "controller_url", "broker_url": "broker_url", "broker_proxy_url": "broker_proxy_url", "dashboard_url": "dashboard_url", "dashboard_data_url": "dashboard_data_url", "dashboard_detail_tab_url": "dashboard_detail_tab_url", "dashboard_detail_tab_ext_url": "dashboard_detail_tab_ext_url", "service_monitor_api": "service_monitor_api", "service_monitor_app": "service_monitor_app", "api_endpoint": {"mapKey": "inner"}}, "original_name": "original_name", "version": "version", "other": {"mapKey": {"anyKey": "anyValue"}}, "pricing": {"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}, "deployment": {"location": "location", "location_url": "location_url", "original_location": "original_location", "target_crn": "target_crn", "service_crn": "service_crn", "mccp_id": "mccp_id", "broker": {"name": "name", "guid": "guid"}, "supports_rc_migration": false, "target_network": "target_network"}}, "id": "id", "catalog_crn": {"anyKey": "anyValue"}, "url": {"anyKey": "anyValue"}, "children_url": {"anyKey": "anyValue"}, "geo_tags": {"anyKey": "anyValue"}, "pricing_tags": {"anyKey": "anyValue"}, "created": {"anyKey": "anyValue"}, "updated": {"anyKey": "anyValue"}}'
@@ -1409,23 +1422,65 @@ class TestUpdateCatalogEntry():
         provider_model['support_email'] = 'testString'
         provider_model['phone'] = 'testString'
 
+        # Construct a dict representation of a CFMetaData model
+        cf_meta_data_model = {}
+        cf_meta_data_model['type'] = 'testString'
+        cf_meta_data_model['iam_compatible'] = True
+        cf_meta_data_model['unique_api_key'] = True
+        cf_meta_data_model['provisionable'] = True
+        cf_meta_data_model['bindable'] = True
+        cf_meta_data_model['async_provisioning_supported'] = True
+        cf_meta_data_model['async_unprovisioning_supported'] = True
+        cf_meta_data_model['requires'] = ['testString']
+        cf_meta_data_model['plan_updateable'] = True
+        cf_meta_data_model['state'] = 'testString'
+        cf_meta_data_model['service_check_enabled'] = True
+        cf_meta_data_model['test_check_interval'] = 38
+        cf_meta_data_model['service_key_supported'] = True
+        cf_meta_data_model['cf_guid'] = {}
+
+        # Construct a dict representation of a PlanMetaData model
+        plan_meta_data_model = {}
+        plan_meta_data_model['bindable'] = True
+        plan_meta_data_model['reservable'] = True
+        plan_meta_data_model['allow_internal_users'] = True
+        plan_meta_data_model['async_provisioning_supported'] = True
+        plan_meta_data_model['async_unprovisioning_supported'] = True
+        plan_meta_data_model['test_check_interval'] = 38
+        plan_meta_data_model['single_scope_instance'] = 'testString'
+        plan_meta_data_model['service_check_enabled'] = True
+        plan_meta_data_model['cf_guid'] = {}
+
+        # Construct a dict representation of a AliasMetaData model
+        alias_meta_data_model = {}
+        alias_meta_data_model['type'] = 'testString'
+        alias_meta_data_model['plan_id'] = 'testString'
+
+        # Construct a dict representation of a SourceMetaData model
+        source_meta_data_model = {}
+        source_meta_data_model['path'] = 'testString'
+        source_meta_data_model['type'] = 'testString'
+        source_meta_data_model['url'] = 'testString'
+
+        # Construct a dict representation of a TemplateMetaData model
+        template_meta_data_model = {}
+        template_meta_data_model['services'] = ['testString']
+        template_meta_data_model['default_memory'] = 38
+        template_meta_data_model['start_cmd'] = 'testString'
+        template_meta_data_model['source'] = source_meta_data_model
+        template_meta_data_model['runtime_catalog_id'] = 'testString'
+        template_meta_data_model['cf_runtime_id'] = 'testString'
+        template_meta_data_model['template_id'] = 'testString'
+        template_meta_data_model['executable_file'] = 'testString'
+        template_meta_data_model['buildpack'] = 'testString'
+        template_meta_data_model['environment_variables'] = {}
+
         # Construct a dict representation of a Bullets model
         bullets_model = {}
         bullets_model['title'] = 'testString'
         bullets_model['description'] = 'testString'
         bullets_model['icon'] = 'testString'
         bullets_model['quantity'] = 38
-
-        # Construct a dict representation of a Price model
-        price_model = {}
-        price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
-
-        # Construct a dict representation of a Amount model
-        amount_model = {}
-        amount_model['country'] = 'testString'
-        amount_model['currency'] = 'testString'
-        amount_model['prices'] = [price_model]
 
         # Construct a dict representation of a UIMetaMedia model
         ui_meta_media_model = {}
@@ -1434,29 +1489,6 @@ class TestUpdateCatalogEntry():
         ui_meta_media_model['type'] = 'testString'
         ui_meta_media_model['URL'] = 'testString'
         ui_meta_media_model['source'] = bullets_model
-
-        # Construct a dict representation of a Broker model
-        broker_model = {}
-        broker_model['name'] = 'testString'
-        broker_model['guid'] = 'testString'
-
-        # Construct a dict representation of a DRMetaData model
-        dr_meta_data_model = {}
-        dr_meta_data_model['dr'] = True
-        dr_meta_data_model['description'] = 'testString'
-
-        # Construct a dict representation of a SourceMetaData model
-        source_meta_data_model = {}
-        source_meta_data_model['path'] = 'testString'
-        source_meta_data_model['type'] = 'testString'
-        source_meta_data_model['url'] = 'testString'
-
-        # Construct a dict representation of a StartingPrice model
-        starting_price_model = {}
-        starting_price_model['plan_id'] = 'testString'
-        starting_price_model['deployment_id'] = 'testString'
-        starting_price_model['unit'] = 'testString'
-        starting_price_model['amount'] = [amount_model]
 
         # Construct a dict representation of a Strings model
         strings_model = {}
@@ -1483,92 +1515,6 @@ class TestUpdateCatalogEntry():
         urls_model['registration_url'] = 'testString'
         urls_model['apidocsurl'] = 'testString'
 
-        # Construct a dict representation of a AliasMetaData model
-        alias_meta_data_model = {}
-        alias_meta_data_model['type'] = 'testString'
-        alias_meta_data_model['plan_id'] = 'testString'
-
-        # Construct a dict representation of a CFMetaData model
-        cf_meta_data_model = {}
-        cf_meta_data_model['type'] = 'testString'
-        cf_meta_data_model['iam_compatible'] = True
-        cf_meta_data_model['unique_api_key'] = True
-        cf_meta_data_model['provisionable'] = True
-        cf_meta_data_model['bindable'] = True
-        cf_meta_data_model['async_provisioning_supported'] = True
-        cf_meta_data_model['async_unprovisioning_supported'] = True
-        cf_meta_data_model['requires'] = ['testString']
-        cf_meta_data_model['plan_updateable'] = True
-        cf_meta_data_model['state'] = 'testString'
-        cf_meta_data_model['service_check_enabled'] = True
-        cf_meta_data_model['test_check_interval'] = 38
-        cf_meta_data_model['service_key_supported'] = True
-        cf_meta_data_model['cf_guid'] = {}
-
-        # Construct a dict representation of a Callbacks model
-        callbacks_model = {}
-        callbacks_model['controller_url'] = 'testString'
-        callbacks_model['broker_url'] = 'testString'
-        callbacks_model['broker_proxy_url'] = 'testString'
-        callbacks_model['dashboard_url'] = 'testString'
-        callbacks_model['dashboard_data_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
-        callbacks_model['service_monitor_api'] = 'testString'
-        callbacks_model['service_monitor_app'] = 'testString'
-        callbacks_model['api_endpoint'] = {}
-
-        # Construct a dict representation of a DeploymentBase model
-        deployment_base_model = {}
-        deployment_base_model['location'] = 'testString'
-        deployment_base_model['location_url'] = 'testString'
-        deployment_base_model['original_location'] = 'testString'
-        deployment_base_model['target_crn'] = 'testString'
-        deployment_base_model['service_crn'] = 'testString'
-        deployment_base_model['mccp_id'] = 'testString'
-        deployment_base_model['broker'] = broker_model
-        deployment_base_model['supports_rc_migration'] = True
-        deployment_base_model['target_network'] = 'testString'
-
-        # Construct a dict representation of a PlanMetaData model
-        plan_meta_data_model = {}
-        plan_meta_data_model['bindable'] = True
-        plan_meta_data_model['reservable'] = True
-        plan_meta_data_model['allow_internal_users'] = True
-        plan_meta_data_model['async_provisioning_supported'] = True
-        plan_meta_data_model['async_unprovisioning_supported'] = True
-        plan_meta_data_model['test_check_interval'] = 38
-        plan_meta_data_model['single_scope_instance'] = 'testString'
-        plan_meta_data_model['service_check_enabled'] = True
-        plan_meta_data_model['cf_guid'] = {}
-
-        # Construct a dict representation of a PricingSet model
-        pricing_set_model = {}
-        pricing_set_model['type'] = 'testString'
-        pricing_set_model['origin'] = 'testString'
-        pricing_set_model['starting_price'] = starting_price_model
-
-        # Construct a dict representation of a SLAMetaData model
-        sla_meta_data_model = {}
-        sla_meta_data_model['terms'] = 'testString'
-        sla_meta_data_model['tenancy'] = 'testString'
-        sla_meta_data_model['provisioning'] = 'testString'
-        sla_meta_data_model['responsiveness'] = 'testString'
-        sla_meta_data_model['dr'] = dr_meta_data_model
-
-        # Construct a dict representation of a TemplateMetaData model
-        template_meta_data_model = {}
-        template_meta_data_model['services'] = ['testString']
-        template_meta_data_model['default_memory'] = 38
-        template_meta_data_model['start_cmd'] = 'testString'
-        template_meta_data_model['source'] = source_meta_data_model
-        template_meta_data_model['runtime_catalog_id'] = 'testString'
-        template_meta_data_model['cf_runtime_id'] = 'testString'
-        template_meta_data_model['template_id'] = 'testString'
-        template_meta_data_model['executable_file'] = 'testString'
-        template_meta_data_model['buildpack'] = 'testString'
-        template_meta_data_model['environment_variables'] = {}
-
         # Construct a dict representation of a UIMetaData model
         ui_meta_data_model = {}
         ui_meta_data_model['strings'] = {}
@@ -1584,6 +1530,73 @@ class TestUpdateCatalogEntry():
         ui_meta_data_model['hidden'] = True
         ui_meta_data_model['hide_lite_metering'] = True
         ui_meta_data_model['no_upgrade_next_step'] = True
+
+        # Construct a dict representation of a DRMetaData model
+        dr_meta_data_model = {}
+        dr_meta_data_model['dr'] = True
+        dr_meta_data_model['description'] = 'testString'
+
+        # Construct a dict representation of a SLAMetaData model
+        sla_meta_data_model = {}
+        sla_meta_data_model['terms'] = 'testString'
+        sla_meta_data_model['tenancy'] = 'testString'
+        sla_meta_data_model['provisioning'] = 'testString'
+        sla_meta_data_model['responsiveness'] = 'testString'
+        sla_meta_data_model['dr'] = dr_meta_data_model
+
+        # Construct a dict representation of a Callbacks model
+        callbacks_model = {}
+        callbacks_model['controller_url'] = 'testString'
+        callbacks_model['broker_url'] = 'testString'
+        callbacks_model['broker_proxy_url'] = 'testString'
+        callbacks_model['dashboard_url'] = 'testString'
+        callbacks_model['dashboard_data_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
+        callbacks_model['service_monitor_api'] = 'testString'
+        callbacks_model['service_monitor_app'] = 'testString'
+        callbacks_model['api_endpoint'] = {}
+
+        # Construct a dict representation of a Price model
+        price_model = {}
+        price_model['quantity_tier'] = 38
+        price_model['Price'] = 72.5
+
+        # Construct a dict representation of a Amount model
+        amount_model = {}
+        amount_model['country'] = 'testString'
+        amount_model['currency'] = 'testString'
+        amount_model['prices'] = [price_model]
+
+        # Construct a dict representation of a StartingPrice model
+        starting_price_model = {}
+        starting_price_model['plan_id'] = 'testString'
+        starting_price_model['deployment_id'] = 'testString'
+        starting_price_model['unit'] = 'testString'
+        starting_price_model['amount'] = [amount_model]
+
+        # Construct a dict representation of a PricingSet model
+        pricing_set_model = {}
+        pricing_set_model['type'] = 'testString'
+        pricing_set_model['origin'] = 'testString'
+        pricing_set_model['starting_price'] = starting_price_model
+
+        # Construct a dict representation of a Broker model
+        broker_model = {}
+        broker_model['name'] = 'testString'
+        broker_model['guid'] = 'testString'
+
+        # Construct a dict representation of a DeploymentBase model
+        deployment_base_model = {}
+        deployment_base_model['location'] = 'testString'
+        deployment_base_model['location_url'] = 'testString'
+        deployment_base_model['original_location'] = 'testString'
+        deployment_base_model['target_crn'] = 'testString'
+        deployment_base_model['service_crn'] = 'testString'
+        deployment_base_model['mccp_id'] = 'testString'
+        deployment_base_model['broker'] = broker_model
+        deployment_base_model['supports_rc_migration'] = True
+        deployment_base_model['target_network'] = 'testString'
 
         # Construct a dict representation of a ObjectMetadataSet model
         object_metadata_set_model = {}
@@ -1651,11 +1664,11 @@ class TestUpdateCatalogEntry():
         assert req_body['metadata'] == object_metadata_set_model
 
 
-    #--------------------------------------------------------
-    # test_update_catalog_entry_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_catalog_entry_value_error(self):
+        """
+        test_update_catalog_entry_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString')
         mock_response = '{"name": "name", "kind": "service", "overview_ui": {"mapKey": {"display_name": "display_name", "long_description": "long_description", "description": "description", "featured_description": "featured_description"}}, "images": {"image": "image", "small_image": "small_image", "medium_image": "medium_image", "feature_image": "feature_image"}, "parent_id": "parent_id", "disabled": true, "tags": ["tags"], "group": false, "provider": {"email": "email", "name": "name", "contact": "contact", "support_email": "support_email", "phone": "phone"}, "active": true, "metadata": {"rc_compatible": false, "service": {"type": "type", "iam_compatible": true, "unique_api_key": true, "provisionable": false, "bindable": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "requires": ["requires"], "plan_updateable": false, "state": "state", "service_check_enabled": false, "test_check_interval": 19, "service_key_supported": false, "cf_guid": {"mapKey": "inner"}}, "plan": {"bindable": true, "reservable": true, "allow_internal_users": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "test_check_interval": 19, "single_scope_instance": "single_scope_instance", "service_check_enabled": false, "cf_guid": {"mapKey": "inner"}}, "alias": {"type": "type", "plan_id": "plan_id"}, "template": {"services": ["services"], "default_memory": 14, "start_cmd": "start_cmd", "source": {"path": "path", "type": "type", "url": "url"}, "runtime_catalog_id": "runtime_catalog_id", "cf_runtime_id": "cf_runtime_id", "template_id": "template_id", "executable_file": "executable_file", "buildpack": "buildpack", "environment_variables": {"mapKey": "inner"}}, "ui": {"strings": {"mapKey": {"bullets": [{"title": "title", "description": "description", "icon": "icon", "quantity": 8}], "media": [{"caption": "caption", "thumbnail_url": "thumbnail_url", "type": "type", "URL": "url", "source": {"title": "title", "description": "description", "icon": "icon", "quantity": 8}}], "not_creatable_msg": "not_creatable_msg", "not_creatable__robot_msg": "not_creatable_robot_msg", "deprecation_warning": "deprecation_warning", "popup_warning_message": "popup_warning_message", "instruction": "instruction"}}, "urls": {"doc_url": "doc_url", "instructions_url": "instructions_url", "api_url": "api_url", "create_url": "create_url", "sdk_download_url": "sdk_download_url", "terms_url": "terms_url", "custom_create_page_url": "custom_create_page_url", "catalog_details_url": "catalog_details_url", "deprecation_doc_url": "deprecation_doc_url", "dashboard_url": "dashboard_url", "registration_url": "registration_url", "apidocsurl": "apidocsurl"}, "embeddable_dashboard": "embeddable_dashboard", "embeddable_dashboard_full_width": false, "navigation_order": ["navigation_order"], "not_creatable": false, "primary_offering_id": "primary_offering_id", "accessible_during_provision": false, "side_by_side_index": 18, "end_of_service_time": "2019-01-01T12:00:00", "hidden": true, "hide_lite_metering": true, "no_upgrade_next_step": true}, "compliance": ["compliance"], "sla": {"terms": "terms", "tenancy": "tenancy", "provisioning": "provisioning", "responsiveness": "responsiveness", "dr": {"dr": true, "description": "description"}}, "callbacks": {"controller_url": "controller_url", "broker_url": "broker_url", "broker_proxy_url": "broker_proxy_url", "dashboard_url": "dashboard_url", "dashboard_data_url": "dashboard_data_url", "dashboard_detail_tab_url": "dashboard_detail_tab_url", "dashboard_detail_tab_ext_url": "dashboard_detail_tab_ext_url", "service_monitor_api": "service_monitor_api", "service_monitor_app": "service_monitor_app", "api_endpoint": {"mapKey": "inner"}}, "original_name": "original_name", "version": "version", "other": {"mapKey": {"anyKey": "anyValue"}}, "pricing": {"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}, "deployment": {"location": "location", "location_url": "location_url", "original_location": "original_location", "target_crn": "target_crn", "service_crn": "service_crn", "mccp_id": "mccp_id", "broker": {"name": "name", "guid": "guid"}, "supports_rc_migration": false, "target_network": "target_network"}}, "id": "id", "catalog_crn": {"anyKey": "anyValue"}, "url": {"anyKey": "anyValue"}, "children_url": {"anyKey": "anyValue"}, "geo_tags": {"anyKey": "anyValue"}, "pricing_tags": {"anyKey": "anyValue"}, "created": {"anyKey": "anyValue"}, "updated": {"anyKey": "anyValue"}}'
@@ -1687,23 +1700,65 @@ class TestUpdateCatalogEntry():
         provider_model['support_email'] = 'testString'
         provider_model['phone'] = 'testString'
 
+        # Construct a dict representation of a CFMetaData model
+        cf_meta_data_model = {}
+        cf_meta_data_model['type'] = 'testString'
+        cf_meta_data_model['iam_compatible'] = True
+        cf_meta_data_model['unique_api_key'] = True
+        cf_meta_data_model['provisionable'] = True
+        cf_meta_data_model['bindable'] = True
+        cf_meta_data_model['async_provisioning_supported'] = True
+        cf_meta_data_model['async_unprovisioning_supported'] = True
+        cf_meta_data_model['requires'] = ['testString']
+        cf_meta_data_model['plan_updateable'] = True
+        cf_meta_data_model['state'] = 'testString'
+        cf_meta_data_model['service_check_enabled'] = True
+        cf_meta_data_model['test_check_interval'] = 38
+        cf_meta_data_model['service_key_supported'] = True
+        cf_meta_data_model['cf_guid'] = {}
+
+        # Construct a dict representation of a PlanMetaData model
+        plan_meta_data_model = {}
+        plan_meta_data_model['bindable'] = True
+        plan_meta_data_model['reservable'] = True
+        plan_meta_data_model['allow_internal_users'] = True
+        plan_meta_data_model['async_provisioning_supported'] = True
+        plan_meta_data_model['async_unprovisioning_supported'] = True
+        plan_meta_data_model['test_check_interval'] = 38
+        plan_meta_data_model['single_scope_instance'] = 'testString'
+        plan_meta_data_model['service_check_enabled'] = True
+        plan_meta_data_model['cf_guid'] = {}
+
+        # Construct a dict representation of a AliasMetaData model
+        alias_meta_data_model = {}
+        alias_meta_data_model['type'] = 'testString'
+        alias_meta_data_model['plan_id'] = 'testString'
+
+        # Construct a dict representation of a SourceMetaData model
+        source_meta_data_model = {}
+        source_meta_data_model['path'] = 'testString'
+        source_meta_data_model['type'] = 'testString'
+        source_meta_data_model['url'] = 'testString'
+
+        # Construct a dict representation of a TemplateMetaData model
+        template_meta_data_model = {}
+        template_meta_data_model['services'] = ['testString']
+        template_meta_data_model['default_memory'] = 38
+        template_meta_data_model['start_cmd'] = 'testString'
+        template_meta_data_model['source'] = source_meta_data_model
+        template_meta_data_model['runtime_catalog_id'] = 'testString'
+        template_meta_data_model['cf_runtime_id'] = 'testString'
+        template_meta_data_model['template_id'] = 'testString'
+        template_meta_data_model['executable_file'] = 'testString'
+        template_meta_data_model['buildpack'] = 'testString'
+        template_meta_data_model['environment_variables'] = {}
+
         # Construct a dict representation of a Bullets model
         bullets_model = {}
         bullets_model['title'] = 'testString'
         bullets_model['description'] = 'testString'
         bullets_model['icon'] = 'testString'
         bullets_model['quantity'] = 38
-
-        # Construct a dict representation of a Price model
-        price_model = {}
-        price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
-
-        # Construct a dict representation of a Amount model
-        amount_model = {}
-        amount_model['country'] = 'testString'
-        amount_model['currency'] = 'testString'
-        amount_model['prices'] = [price_model]
 
         # Construct a dict representation of a UIMetaMedia model
         ui_meta_media_model = {}
@@ -1712,29 +1767,6 @@ class TestUpdateCatalogEntry():
         ui_meta_media_model['type'] = 'testString'
         ui_meta_media_model['URL'] = 'testString'
         ui_meta_media_model['source'] = bullets_model
-
-        # Construct a dict representation of a Broker model
-        broker_model = {}
-        broker_model['name'] = 'testString'
-        broker_model['guid'] = 'testString'
-
-        # Construct a dict representation of a DRMetaData model
-        dr_meta_data_model = {}
-        dr_meta_data_model['dr'] = True
-        dr_meta_data_model['description'] = 'testString'
-
-        # Construct a dict representation of a SourceMetaData model
-        source_meta_data_model = {}
-        source_meta_data_model['path'] = 'testString'
-        source_meta_data_model['type'] = 'testString'
-        source_meta_data_model['url'] = 'testString'
-
-        # Construct a dict representation of a StartingPrice model
-        starting_price_model = {}
-        starting_price_model['plan_id'] = 'testString'
-        starting_price_model['deployment_id'] = 'testString'
-        starting_price_model['unit'] = 'testString'
-        starting_price_model['amount'] = [amount_model]
 
         # Construct a dict representation of a Strings model
         strings_model = {}
@@ -1761,92 +1793,6 @@ class TestUpdateCatalogEntry():
         urls_model['registration_url'] = 'testString'
         urls_model['apidocsurl'] = 'testString'
 
-        # Construct a dict representation of a AliasMetaData model
-        alias_meta_data_model = {}
-        alias_meta_data_model['type'] = 'testString'
-        alias_meta_data_model['plan_id'] = 'testString'
-
-        # Construct a dict representation of a CFMetaData model
-        cf_meta_data_model = {}
-        cf_meta_data_model['type'] = 'testString'
-        cf_meta_data_model['iam_compatible'] = True
-        cf_meta_data_model['unique_api_key'] = True
-        cf_meta_data_model['provisionable'] = True
-        cf_meta_data_model['bindable'] = True
-        cf_meta_data_model['async_provisioning_supported'] = True
-        cf_meta_data_model['async_unprovisioning_supported'] = True
-        cf_meta_data_model['requires'] = ['testString']
-        cf_meta_data_model['plan_updateable'] = True
-        cf_meta_data_model['state'] = 'testString'
-        cf_meta_data_model['service_check_enabled'] = True
-        cf_meta_data_model['test_check_interval'] = 38
-        cf_meta_data_model['service_key_supported'] = True
-        cf_meta_data_model['cf_guid'] = {}
-
-        # Construct a dict representation of a Callbacks model
-        callbacks_model = {}
-        callbacks_model['controller_url'] = 'testString'
-        callbacks_model['broker_url'] = 'testString'
-        callbacks_model['broker_proxy_url'] = 'testString'
-        callbacks_model['dashboard_url'] = 'testString'
-        callbacks_model['dashboard_data_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
-        callbacks_model['service_monitor_api'] = 'testString'
-        callbacks_model['service_monitor_app'] = 'testString'
-        callbacks_model['api_endpoint'] = {}
-
-        # Construct a dict representation of a DeploymentBase model
-        deployment_base_model = {}
-        deployment_base_model['location'] = 'testString'
-        deployment_base_model['location_url'] = 'testString'
-        deployment_base_model['original_location'] = 'testString'
-        deployment_base_model['target_crn'] = 'testString'
-        deployment_base_model['service_crn'] = 'testString'
-        deployment_base_model['mccp_id'] = 'testString'
-        deployment_base_model['broker'] = broker_model
-        deployment_base_model['supports_rc_migration'] = True
-        deployment_base_model['target_network'] = 'testString'
-
-        # Construct a dict representation of a PlanMetaData model
-        plan_meta_data_model = {}
-        plan_meta_data_model['bindable'] = True
-        plan_meta_data_model['reservable'] = True
-        plan_meta_data_model['allow_internal_users'] = True
-        plan_meta_data_model['async_provisioning_supported'] = True
-        plan_meta_data_model['async_unprovisioning_supported'] = True
-        plan_meta_data_model['test_check_interval'] = 38
-        plan_meta_data_model['single_scope_instance'] = 'testString'
-        plan_meta_data_model['service_check_enabled'] = True
-        plan_meta_data_model['cf_guid'] = {}
-
-        # Construct a dict representation of a PricingSet model
-        pricing_set_model = {}
-        pricing_set_model['type'] = 'testString'
-        pricing_set_model['origin'] = 'testString'
-        pricing_set_model['starting_price'] = starting_price_model
-
-        # Construct a dict representation of a SLAMetaData model
-        sla_meta_data_model = {}
-        sla_meta_data_model['terms'] = 'testString'
-        sla_meta_data_model['tenancy'] = 'testString'
-        sla_meta_data_model['provisioning'] = 'testString'
-        sla_meta_data_model['responsiveness'] = 'testString'
-        sla_meta_data_model['dr'] = dr_meta_data_model
-
-        # Construct a dict representation of a TemplateMetaData model
-        template_meta_data_model = {}
-        template_meta_data_model['services'] = ['testString']
-        template_meta_data_model['default_memory'] = 38
-        template_meta_data_model['start_cmd'] = 'testString'
-        template_meta_data_model['source'] = source_meta_data_model
-        template_meta_data_model['runtime_catalog_id'] = 'testString'
-        template_meta_data_model['cf_runtime_id'] = 'testString'
-        template_meta_data_model['template_id'] = 'testString'
-        template_meta_data_model['executable_file'] = 'testString'
-        template_meta_data_model['buildpack'] = 'testString'
-        template_meta_data_model['environment_variables'] = {}
-
         # Construct a dict representation of a UIMetaData model
         ui_meta_data_model = {}
         ui_meta_data_model['strings'] = {}
@@ -1862,6 +1808,73 @@ class TestUpdateCatalogEntry():
         ui_meta_data_model['hidden'] = True
         ui_meta_data_model['hide_lite_metering'] = True
         ui_meta_data_model['no_upgrade_next_step'] = True
+
+        # Construct a dict representation of a DRMetaData model
+        dr_meta_data_model = {}
+        dr_meta_data_model['dr'] = True
+        dr_meta_data_model['description'] = 'testString'
+
+        # Construct a dict representation of a SLAMetaData model
+        sla_meta_data_model = {}
+        sla_meta_data_model['terms'] = 'testString'
+        sla_meta_data_model['tenancy'] = 'testString'
+        sla_meta_data_model['provisioning'] = 'testString'
+        sla_meta_data_model['responsiveness'] = 'testString'
+        sla_meta_data_model['dr'] = dr_meta_data_model
+
+        # Construct a dict representation of a Callbacks model
+        callbacks_model = {}
+        callbacks_model['controller_url'] = 'testString'
+        callbacks_model['broker_url'] = 'testString'
+        callbacks_model['broker_proxy_url'] = 'testString'
+        callbacks_model['dashboard_url'] = 'testString'
+        callbacks_model['dashboard_data_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
+        callbacks_model['service_monitor_api'] = 'testString'
+        callbacks_model['service_monitor_app'] = 'testString'
+        callbacks_model['api_endpoint'] = {}
+
+        # Construct a dict representation of a Price model
+        price_model = {}
+        price_model['quantity_tier'] = 38
+        price_model['Price'] = 72.5
+
+        # Construct a dict representation of a Amount model
+        amount_model = {}
+        amount_model['country'] = 'testString'
+        amount_model['currency'] = 'testString'
+        amount_model['prices'] = [price_model]
+
+        # Construct a dict representation of a StartingPrice model
+        starting_price_model = {}
+        starting_price_model['plan_id'] = 'testString'
+        starting_price_model['deployment_id'] = 'testString'
+        starting_price_model['unit'] = 'testString'
+        starting_price_model['amount'] = [amount_model]
+
+        # Construct a dict representation of a PricingSet model
+        pricing_set_model = {}
+        pricing_set_model['type'] = 'testString'
+        pricing_set_model['origin'] = 'testString'
+        pricing_set_model['starting_price'] = starting_price_model
+
+        # Construct a dict representation of a Broker model
+        broker_model = {}
+        broker_model['name'] = 'testString'
+        broker_model['guid'] = 'testString'
+
+        # Construct a dict representation of a DeploymentBase model
+        deployment_base_model = {}
+        deployment_base_model['location'] = 'testString'
+        deployment_base_model['location_url'] = 'testString'
+        deployment_base_model['original_location'] = 'testString'
+        deployment_base_model['target_crn'] = 'testString'
+        deployment_base_model['service_crn'] = 'testString'
+        deployment_base_model['mccp_id'] = 'testString'
+        deployment_base_model['broker'] = broker_model
+        deployment_base_model['supports_rc_migration'] = True
+        deployment_base_model['target_network'] = 'testString'
 
         # Construct a dict representation of a ObjectMetadataSet model
         object_metadata_set_model = {}
@@ -1912,23 +1925,25 @@ class TestUpdateCatalogEntry():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for delete_catalog_entry
-#-----------------------------------------------------------------------------
 class TestDeleteCatalogEntry():
+    """
+    Test Class for delete_catalog_entry
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # delete_catalog_entry()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_catalog_entry_all_params(self):
+        """
+        delete_catalog_entry()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString')
         responses.add(responses.DELETE,
@@ -1953,16 +1968,16 @@ class TestDeleteCatalogEntry():
         assert response.status_code == 204
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
         assert 'force={}'.format('true' if force else 'false') in query_string
 
 
-    #--------------------------------------------------------
-    # test_delete_catalog_entry_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_catalog_entry_required_params(self):
+        """
+        test_delete_catalog_entry_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString')
         responses.add(responses.DELETE,
@@ -1983,11 +1998,11 @@ class TestDeleteCatalogEntry():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_delete_catalog_entry_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_catalog_entry_value_error(self):
+        """
+        test_delete_catalog_entry_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString')
         responses.add(responses.DELETE,
@@ -2008,23 +2023,25 @@ class TestDeleteCatalogEntry():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_child_objects
-#-----------------------------------------------------------------------------
 class TestGetChildObjects():
+    """
+    Test Class for get_child_objects
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_child_objects()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_child_objects_all_params(self):
+        """
+        get_child_objects()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/testString')
         mock_response = '{"offset": 6, "limit": 5, "count": 5, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"name": "name", "kind": "service", "overview_ui": {"mapKey": {"display_name": "display_name", "long_description": "long_description", "description": "description", "featured_description": "featured_description"}}, "images": {"image": "image", "small_image": "small_image", "medium_image": "medium_image", "feature_image": "feature_image"}, "parent_id": "parent_id", "disabled": true, "tags": ["tags"], "group": false, "provider": {"email": "email", "name": "name", "contact": "contact", "support_email": "support_email", "phone": "phone"}, "active": true, "metadata": {"rc_compatible": false, "service": {"type": "type", "iam_compatible": true, "unique_api_key": true, "provisionable": false, "bindable": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "requires": ["requires"], "plan_updateable": false, "state": "state", "service_check_enabled": false, "test_check_interval": 19, "service_key_supported": false, "cf_guid": {"mapKey": "inner"}}, "plan": {"bindable": true, "reservable": true, "allow_internal_users": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "test_check_interval": 19, "single_scope_instance": "single_scope_instance", "service_check_enabled": false, "cf_guid": {"mapKey": "inner"}}, "alias": {"type": "type", "plan_id": "plan_id"}, "template": {"services": ["services"], "default_memory": 14, "start_cmd": "start_cmd", "source": {"path": "path", "type": "type", "url": "url"}, "runtime_catalog_id": "runtime_catalog_id", "cf_runtime_id": "cf_runtime_id", "template_id": "template_id", "executable_file": "executable_file", "buildpack": "buildpack", "environment_variables": {"mapKey": "inner"}}, "ui": {"strings": {"mapKey": {"bullets": [{"title": "title", "description": "description", "icon": "icon", "quantity": 8}], "media": [{"caption": "caption", "thumbnail_url": "thumbnail_url", "type": "type", "URL": "url", "source": {"title": "title", "description": "description", "icon": "icon", "quantity": 8}}], "not_creatable_msg": "not_creatable_msg", "not_creatable__robot_msg": "not_creatable_robot_msg", "deprecation_warning": "deprecation_warning", "popup_warning_message": "popup_warning_message", "instruction": "instruction"}}, "urls": {"doc_url": "doc_url", "instructions_url": "instructions_url", "api_url": "api_url", "create_url": "create_url", "sdk_download_url": "sdk_download_url", "terms_url": "terms_url", "custom_create_page_url": "custom_create_page_url", "catalog_details_url": "catalog_details_url", "deprecation_doc_url": "deprecation_doc_url", "dashboard_url": "dashboard_url", "registration_url": "registration_url", "apidocsurl": "apidocsurl"}, "embeddable_dashboard": "embeddable_dashboard", "embeddable_dashboard_full_width": false, "navigation_order": ["navigation_order"], "not_creatable": false, "primary_offering_id": "primary_offering_id", "accessible_during_provision": false, "side_by_side_index": 18, "end_of_service_time": "2019-01-01T12:00:00", "hidden": true, "hide_lite_metering": true, "no_upgrade_next_step": true}, "compliance": ["compliance"], "sla": {"terms": "terms", "tenancy": "tenancy", "provisioning": "provisioning", "responsiveness": "responsiveness", "dr": {"dr": true, "description": "description"}}, "callbacks": {"controller_url": "controller_url", "broker_url": "broker_url", "broker_proxy_url": "broker_proxy_url", "dashboard_url": "dashboard_url", "dashboard_data_url": "dashboard_data_url", "dashboard_detail_tab_url": "dashboard_detail_tab_url", "dashboard_detail_tab_ext_url": "dashboard_detail_tab_ext_url", "service_monitor_api": "service_monitor_api", "service_monitor_app": "service_monitor_app", "api_endpoint": {"mapKey": "inner"}}, "original_name": "original_name", "version": "version", "other": {"mapKey": {"anyKey": "anyValue"}}, "pricing": {"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}, "deployment": {"location": "location", "location_url": "location_url", "original_location": "original_location", "target_crn": "target_crn", "service_crn": "service_crn", "mccp_id": "mccp_id", "broker": {"name": "name", "guid": "guid"}, "supports_rc_migration": false, "target_network": "target_network"}}, "id": "id", "catalog_crn": {"anyKey": "anyValue"}, "url": {"anyKey": "anyValue"}, "children_url": {"anyKey": "anyValue"}, "geo_tags": {"anyKey": "anyValue"}, "pricing_tags": {"anyKey": "anyValue"}, "created": {"anyKey": "anyValue"}, "updated": {"anyKey": "anyValue"}}]}'
@@ -2064,7 +2081,7 @@ class TestGetChildObjects():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
         assert 'include={}'.format(include) in query_string
         assert 'q={}'.format(q) in query_string
@@ -2074,11 +2091,11 @@ class TestGetChildObjects():
         assert 'complete={}'.format(complete) in query_string
 
 
-    #--------------------------------------------------------
-    # test_get_child_objects_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_child_objects_required_params(self):
+        """
+        test_get_child_objects_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/testString')
         mock_response = '{"offset": 6, "limit": 5, "count": 5, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"name": "name", "kind": "service", "overview_ui": {"mapKey": {"display_name": "display_name", "long_description": "long_description", "description": "description", "featured_description": "featured_description"}}, "images": {"image": "image", "small_image": "small_image", "medium_image": "medium_image", "feature_image": "feature_image"}, "parent_id": "parent_id", "disabled": true, "tags": ["tags"], "group": false, "provider": {"email": "email", "name": "name", "contact": "contact", "support_email": "support_email", "phone": "phone"}, "active": true, "metadata": {"rc_compatible": false, "service": {"type": "type", "iam_compatible": true, "unique_api_key": true, "provisionable": false, "bindable": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "requires": ["requires"], "plan_updateable": false, "state": "state", "service_check_enabled": false, "test_check_interval": 19, "service_key_supported": false, "cf_guid": {"mapKey": "inner"}}, "plan": {"bindable": true, "reservable": true, "allow_internal_users": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "test_check_interval": 19, "single_scope_instance": "single_scope_instance", "service_check_enabled": false, "cf_guid": {"mapKey": "inner"}}, "alias": {"type": "type", "plan_id": "plan_id"}, "template": {"services": ["services"], "default_memory": 14, "start_cmd": "start_cmd", "source": {"path": "path", "type": "type", "url": "url"}, "runtime_catalog_id": "runtime_catalog_id", "cf_runtime_id": "cf_runtime_id", "template_id": "template_id", "executable_file": "executable_file", "buildpack": "buildpack", "environment_variables": {"mapKey": "inner"}}, "ui": {"strings": {"mapKey": {"bullets": [{"title": "title", "description": "description", "icon": "icon", "quantity": 8}], "media": [{"caption": "caption", "thumbnail_url": "thumbnail_url", "type": "type", "URL": "url", "source": {"title": "title", "description": "description", "icon": "icon", "quantity": 8}}], "not_creatable_msg": "not_creatable_msg", "not_creatable__robot_msg": "not_creatable_robot_msg", "deprecation_warning": "deprecation_warning", "popup_warning_message": "popup_warning_message", "instruction": "instruction"}}, "urls": {"doc_url": "doc_url", "instructions_url": "instructions_url", "api_url": "api_url", "create_url": "create_url", "sdk_download_url": "sdk_download_url", "terms_url": "terms_url", "custom_create_page_url": "custom_create_page_url", "catalog_details_url": "catalog_details_url", "deprecation_doc_url": "deprecation_doc_url", "dashboard_url": "dashboard_url", "registration_url": "registration_url", "apidocsurl": "apidocsurl"}, "embeddable_dashboard": "embeddable_dashboard", "embeddable_dashboard_full_width": false, "navigation_order": ["navigation_order"], "not_creatable": false, "primary_offering_id": "primary_offering_id", "accessible_during_provision": false, "side_by_side_index": 18, "end_of_service_time": "2019-01-01T12:00:00", "hidden": true, "hide_lite_metering": true, "no_upgrade_next_step": true}, "compliance": ["compliance"], "sla": {"terms": "terms", "tenancy": "tenancy", "provisioning": "provisioning", "responsiveness": "responsiveness", "dr": {"dr": true, "description": "description"}}, "callbacks": {"controller_url": "controller_url", "broker_url": "broker_url", "broker_proxy_url": "broker_proxy_url", "dashboard_url": "dashboard_url", "dashboard_data_url": "dashboard_data_url", "dashboard_detail_tab_url": "dashboard_detail_tab_url", "dashboard_detail_tab_ext_url": "dashboard_detail_tab_ext_url", "service_monitor_api": "service_monitor_api", "service_monitor_app": "service_monitor_app", "api_endpoint": {"mapKey": "inner"}}, "original_name": "original_name", "version": "version", "other": {"mapKey": {"anyKey": "anyValue"}}, "pricing": {"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}, "deployment": {"location": "location", "location_url": "location_url", "original_location": "original_location", "target_crn": "target_crn", "service_crn": "service_crn", "mccp_id": "mccp_id", "broker": {"name": "name", "guid": "guid"}, "supports_rc_migration": false, "target_network": "target_network"}}, "id": "id", "catalog_crn": {"anyKey": "anyValue"}, "url": {"anyKey": "anyValue"}, "children_url": {"anyKey": "anyValue"}, "geo_tags": {"anyKey": "anyValue"}, "pricing_tags": {"anyKey": "anyValue"}, "created": {"anyKey": "anyValue"}, "updated": {"anyKey": "anyValue"}}]}'
@@ -2104,11 +2121,11 @@ class TestGetChildObjects():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_child_objects_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_child_objects_value_error(self):
+        """
+        test_get_child_objects_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/testString')
         mock_response = '{"offset": 6, "limit": 5, "count": 5, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"name": "name", "kind": "service", "overview_ui": {"mapKey": {"display_name": "display_name", "long_description": "long_description", "description": "description", "featured_description": "featured_description"}}, "images": {"image": "image", "small_image": "small_image", "medium_image": "medium_image", "feature_image": "feature_image"}, "parent_id": "parent_id", "disabled": true, "tags": ["tags"], "group": false, "provider": {"email": "email", "name": "name", "contact": "contact", "support_email": "support_email", "phone": "phone"}, "active": true, "metadata": {"rc_compatible": false, "service": {"type": "type", "iam_compatible": true, "unique_api_key": true, "provisionable": false, "bindable": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "requires": ["requires"], "plan_updateable": false, "state": "state", "service_check_enabled": false, "test_check_interval": 19, "service_key_supported": false, "cf_guid": {"mapKey": "inner"}}, "plan": {"bindable": true, "reservable": true, "allow_internal_users": true, "async_provisioning_supported": true, "async_unprovisioning_supported": true, "test_check_interval": 19, "single_scope_instance": "single_scope_instance", "service_check_enabled": false, "cf_guid": {"mapKey": "inner"}}, "alias": {"type": "type", "plan_id": "plan_id"}, "template": {"services": ["services"], "default_memory": 14, "start_cmd": "start_cmd", "source": {"path": "path", "type": "type", "url": "url"}, "runtime_catalog_id": "runtime_catalog_id", "cf_runtime_id": "cf_runtime_id", "template_id": "template_id", "executable_file": "executable_file", "buildpack": "buildpack", "environment_variables": {"mapKey": "inner"}}, "ui": {"strings": {"mapKey": {"bullets": [{"title": "title", "description": "description", "icon": "icon", "quantity": 8}], "media": [{"caption": "caption", "thumbnail_url": "thumbnail_url", "type": "type", "URL": "url", "source": {"title": "title", "description": "description", "icon": "icon", "quantity": 8}}], "not_creatable_msg": "not_creatable_msg", "not_creatable__robot_msg": "not_creatable_robot_msg", "deprecation_warning": "deprecation_warning", "popup_warning_message": "popup_warning_message", "instruction": "instruction"}}, "urls": {"doc_url": "doc_url", "instructions_url": "instructions_url", "api_url": "api_url", "create_url": "create_url", "sdk_download_url": "sdk_download_url", "terms_url": "terms_url", "custom_create_page_url": "custom_create_page_url", "catalog_details_url": "catalog_details_url", "deprecation_doc_url": "deprecation_doc_url", "dashboard_url": "dashboard_url", "registration_url": "registration_url", "apidocsurl": "apidocsurl"}, "embeddable_dashboard": "embeddable_dashboard", "embeddable_dashboard_full_width": false, "navigation_order": ["navigation_order"], "not_creatable": false, "primary_offering_id": "primary_offering_id", "accessible_during_provision": false, "side_by_side_index": 18, "end_of_service_time": "2019-01-01T12:00:00", "hidden": true, "hide_lite_metering": true, "no_upgrade_next_step": true}, "compliance": ["compliance"], "sla": {"terms": "terms", "tenancy": "tenancy", "provisioning": "provisioning", "responsiveness": "responsiveness", "dr": {"dr": true, "description": "description"}}, "callbacks": {"controller_url": "controller_url", "broker_url": "broker_url", "broker_proxy_url": "broker_proxy_url", "dashboard_url": "dashboard_url", "dashboard_data_url": "dashboard_data_url", "dashboard_detail_tab_url": "dashboard_detail_tab_url", "dashboard_detail_tab_ext_url": "dashboard_detail_tab_ext_url", "service_monitor_api": "service_monitor_api", "service_monitor_app": "service_monitor_app", "api_endpoint": {"mapKey": "inner"}}, "original_name": "original_name", "version": "version", "other": {"mapKey": {"anyKey": "anyValue"}}, "pricing": {"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}, "deployment": {"location": "location", "location_url": "location_url", "original_location": "original_location", "target_crn": "target_crn", "service_crn": "service_crn", "mccp_id": "mccp_id", "broker": {"name": "name", "guid": "guid"}, "supports_rc_migration": false, "target_network": "target_network"}}, "id": "id", "catalog_crn": {"anyKey": "anyValue"}, "url": {"anyKey": "anyValue"}, "children_url": {"anyKey": "anyValue"}, "geo_tags": {"anyKey": "anyValue"}, "pricing_tags": {"anyKey": "anyValue"}, "created": {"anyKey": "anyValue"}, "updated": {"anyKey": "anyValue"}}]}'
@@ -2134,23 +2151,25 @@ class TestGetChildObjects():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for restore_catalog_entry
-#-----------------------------------------------------------------------------
 class TestRestoreCatalogEntry():
+    """
+    Test Class for restore_catalog_entry
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # restore_catalog_entry()
-    #--------------------------------------------------------
     @responses.activate
     def test_restore_catalog_entry_all_params(self):
+        """
+        restore_catalog_entry()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/restore')
         responses.add(responses.PUT,
@@ -2173,15 +2192,15 @@ class TestRestoreCatalogEntry():
         assert response.status_code == 204
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
 
 
-    #--------------------------------------------------------
-    # test_restore_catalog_entry_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_restore_catalog_entry_required_params(self):
+        """
+        test_restore_catalog_entry_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/restore')
         responses.add(responses.PUT,
@@ -2202,11 +2221,11 @@ class TestRestoreCatalogEntry():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_restore_catalog_entry_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_restore_catalog_entry_value_error(self):
+        """
+        test_restore_catalog_entry_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/restore')
         responses.add(responses.PUT,
@@ -2237,23 +2256,25 @@ class TestRestoreCatalogEntry():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for get_visibility
-#-----------------------------------------------------------------------------
 class TestGetVisibility():
+    """
+    Test Class for get_visibility
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_visibility()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_visibility_all_params(self):
+        """
+        get_visibility()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/visibility')
         mock_response = '{"restrictions": "restrictions", "owner": "owner", "extendable": true, "include": {"accounts": {"_accountid_": "accountid"}}, "exclude": {"accounts": {"_accountid_": "accountid"}}, "approved": true}'
@@ -2279,15 +2300,15 @@ class TestGetVisibility():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
 
 
-    #--------------------------------------------------------
-    # test_get_visibility_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_visibility_required_params(self):
+        """
+        test_get_visibility_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/visibility')
         mock_response = '{"restrictions": "restrictions", "owner": "owner", "extendable": true, "include": {"accounts": {"_accountid_": "accountid"}}, "exclude": {"accounts": {"_accountid_": "accountid"}}, "approved": true}'
@@ -2311,11 +2332,11 @@ class TestGetVisibility():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_visibility_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_visibility_value_error(self):
+        """
+        test_get_visibility_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/visibility')
         mock_response = '{"restrictions": "restrictions", "owner": "owner", "extendable": true, "include": {"accounts": {"_accountid_": "accountid"}}, "exclude": {"accounts": {"_accountid_": "accountid"}}, "approved": true}'
@@ -2339,23 +2360,25 @@ class TestGetVisibility():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_visibility
-#-----------------------------------------------------------------------------
 class TestUpdateVisibility():
+    """
+    Test Class for update_visibility
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_visibility()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_visibility_all_params(self):
+        """
+        update_visibility()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/visibility')
         responses.add(responses.PUT,
@@ -2392,7 +2415,7 @@ class TestUpdateVisibility():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
@@ -2401,11 +2424,11 @@ class TestUpdateVisibility():
         assert req_body['exclude'] == visibility_detail_model
 
 
-    #--------------------------------------------------------
-    # test_update_visibility_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_visibility_required_params(self):
+        """
+        test_update_visibility_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/visibility')
         responses.add(responses.PUT,
@@ -2445,11 +2468,11 @@ class TestUpdateVisibility():
         assert req_body['exclude'] == visibility_detail_model
 
 
-    #--------------------------------------------------------
-    # test_update_visibility_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_visibility_value_error(self):
+        """
+        test_update_visibility_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/visibility')
         responses.add(responses.PUT,
@@ -2491,23 +2514,25 @@ class TestUpdateVisibility():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for get_pricing
-#-----------------------------------------------------------------------------
 class TestGetPricing():
+    """
+    Test Class for get_pricing
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_pricing()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_pricing_all_params(self):
+        """
+        get_pricing()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/pricing')
         mock_response = '{"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}'
@@ -2533,15 +2558,15 @@ class TestGetPricing():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
 
 
-    #--------------------------------------------------------
-    # test_get_pricing_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_pricing_required_params(self):
+        """
+        test_get_pricing_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/pricing')
         mock_response = '{"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}'
@@ -2565,11 +2590,11 @@ class TestGetPricing():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_pricing_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_pricing_value_error(self):
+        """
+        test_get_pricing_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/pricing')
         mock_response = '{"type": "type", "origin": "origin", "starting_price": {"plan_id": "plan_id", "deployment_id": "deployment_id", "unit": "unit", "amount": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}, "metrics": [{"part_ref": "part_ref", "metric_id": "metric_id", "tier_model": "tier_model", "charge_unit": "charge_unit", "charge_unit_name": "charge_unit_name", "charge_unit_quantity": "charge_unit_quantity", "resource_display_name": "resource_display_name", "charge_unit_display_name": "charge_unit_display_name", "usage_cap_qty": 13, "display_cap": 11, "effective_from": "2019-01-01T12:00:00", "effective_until": "2019-01-01T12:00:00", "amounts": [{"country": "country", "currency": "currency", "prices": [{"quantity_tier": 13, "Price": 5}]}]}]}'
@@ -2603,23 +2628,25 @@ class TestGetPricing():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for get_audit_logs
-#-----------------------------------------------------------------------------
 class TestGetAuditLogs():
+    """
+    Test Class for get_audit_logs
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_audit_logs()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_audit_logs_all_params(self):
+        """
+        get_audit_logs()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/logs')
         mock_response = '{"offset": 6, "limit": 5, "count": 5, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "effective": {"restrictions": "restrictions", "owner": "owner", "extendable": true, "include": {"accounts": {"_accountid_": "accountid"}}, "exclude": {"accounts": {"_accountid_": "accountid"}}, "approved": true}, "time": "2019-01-01T12:00:00", "who_id": "who_id", "who_name": "who_name", "who_email": "who_email", "instance": "instance", "gid": "gid", "type": "type", "message": "message", "data": {"anyKey": "anyValue"}}]}'
@@ -2653,7 +2680,7 @@ class TestGetAuditLogs():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
         assert 'ascending={}'.format(ascending) in query_string
         assert 'startat={}'.format(startat) in query_string
@@ -2661,11 +2688,11 @@ class TestGetAuditLogs():
         assert '_limit={}'.format(limit) in query_string
 
 
-    #--------------------------------------------------------
-    # test_get_audit_logs_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_audit_logs_required_params(self):
+        """
+        test_get_audit_logs_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/logs')
         mock_response = '{"offset": 6, "limit": 5, "count": 5, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "effective": {"restrictions": "restrictions", "owner": "owner", "extendable": true, "include": {"accounts": {"_accountid_": "accountid"}}, "exclude": {"accounts": {"_accountid_": "accountid"}}, "approved": true}, "time": "2019-01-01T12:00:00", "who_id": "who_id", "who_name": "who_name", "who_email": "who_email", "instance": "instance", "gid": "gid", "type": "type", "message": "message", "data": {"anyKey": "anyValue"}}]}'
@@ -2689,11 +2716,11 @@ class TestGetAuditLogs():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_audit_logs_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_audit_logs_value_error(self):
+        """
+        test_get_audit_logs_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/logs')
         mock_response = '{"offset": 6, "limit": 5, "count": 5, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "effective": {"restrictions": "restrictions", "owner": "owner", "extendable": true, "include": {"accounts": {"_accountid_": "accountid"}}, "exclude": {"accounts": {"_accountid_": "accountid"}}, "approved": true}, "time": "2019-01-01T12:00:00", "who_id": "who_id", "who_name": "who_name", "who_email": "who_email", "instance": "instance", "gid": "gid", "type": "type", "message": "message", "data": {"anyKey": "anyValue"}}]}'
@@ -2727,23 +2754,25 @@ class TestGetAuditLogs():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for list_artifacts
-#-----------------------------------------------------------------------------
 class TestListArtifacts():
+    """
+    Test Class for list_artifacts
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_artifacts()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_artifacts_all_params(self):
+        """
+        list_artifacts()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/artifacts')
         mock_response = '{"count": 5, "resources": [{"name": "name", "updated": "2019-01-01T12:00:00", "url": "url", "etag": "etag", "size": 4}]}'
@@ -2769,15 +2798,15 @@ class TestListArtifacts():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_artifacts_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_artifacts_required_params(self):
+        """
+        test_list_artifacts_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/artifacts')
         mock_response = '{"count": 5, "resources": [{"name": "name", "updated": "2019-01-01T12:00:00", "url": "url", "etag": "etag", "size": 4}]}'
@@ -2801,11 +2830,11 @@ class TestListArtifacts():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_list_artifacts_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_artifacts_value_error(self):
+        """
+        test_list_artifacts_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/artifacts')
         mock_response = '{"count": 5, "resources": [{"name": "name", "updated": "2019-01-01T12:00:00", "url": "url", "etag": "etag", "size": 4}]}'
@@ -2829,23 +2858,25 @@ class TestListArtifacts():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_artifact
-#-----------------------------------------------------------------------------
 class TestGetArtifact():
+    """
+    Test Class for get_artifact
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_artifact()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_artifact_all_params(self):
+        """
+        get_artifact()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/artifacts/testString')
         mock_response = 'This is a mock binary response.'
@@ -2873,15 +2904,15 @@ class TestGetArtifact():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
 
 
-    #--------------------------------------------------------
-    # test_get_artifact_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_artifact_required_params(self):
+        """
+        test_get_artifact_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/artifacts/testString')
         mock_response = 'This is a mock binary response.'
@@ -2907,11 +2938,11 @@ class TestGetArtifact():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_artifact_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_artifact_value_error(self):
+        """
+        test_get_artifact_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/artifacts/testString')
         mock_response = 'This is a mock binary response.'
@@ -2937,23 +2968,25 @@ class TestGetArtifact():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for upload_artifact
-#-----------------------------------------------------------------------------
 class TestUploadArtifact():
+    """
+    Test Class for upload_artifact
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # upload_artifact()
-    #--------------------------------------------------------
     @responses.activate
     def test_upload_artifact_all_params(self):
+        """
+        upload_artifact()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/artifacts/testString')
         responses.add(responses.PUT,
@@ -2982,16 +3015,16 @@ class TestUploadArtifact():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
         # Validate body params
 
 
-    #--------------------------------------------------------
-    # test_upload_artifact_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_upload_artifact_required_params(self):
+        """
+        test_upload_artifact_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/artifacts/testString')
         responses.add(responses.PUT,
@@ -3014,11 +3047,11 @@ class TestUploadArtifact():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_upload_artifact_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_upload_artifact_value_error(self):
+        """
+        test_upload_artifact_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/artifacts/testString')
         responses.add(responses.PUT,
@@ -3041,23 +3074,25 @@ class TestUploadArtifact():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for delete_artifact
-#-----------------------------------------------------------------------------
 class TestDeleteArtifact():
+    """
+    Test Class for delete_artifact
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # delete_artifact()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_artifact_all_params(self):
+        """
+        delete_artifact()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/artifacts/testString')
         responses.add(responses.DELETE,
@@ -3082,15 +3117,15 @@ class TestDeleteArtifact():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account={}'.format(account) in query_string
 
 
-    #--------------------------------------------------------
-    # test_delete_artifact_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_artifact_required_params(self):
+        """
+        test_delete_artifact_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/artifacts/testString')
         responses.add(responses.DELETE,
@@ -3113,11 +3148,11 @@ class TestDeleteArtifact():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_delete_artifact_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_artifact_value_error(self):
+        """
+        test_delete_artifact_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/testString/artifacts/testString')
         responses.add(responses.DELETE,
@@ -3150,15 +3185,15 @@ class TestDeleteArtifact():
 # Start of Model Tests
 ##############################################################################
 # region
-#-----------------------------------------------------------------------------
-# Test Class for AliasMetaData
-#-----------------------------------------------------------------------------
 class TestAliasMetaData():
+    """
+    Test Class for AliasMetaData
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for AliasMetaData
-    #--------------------------------------------------------
     def test_alias_meta_data_serialization(self):
+        """
+        Test serialization/deserialization for AliasMetaData
+        """
 
         # Construct a json representation of a AliasMetaData model
         alias_meta_data_model_json = {}
@@ -3180,21 +3215,21 @@ class TestAliasMetaData():
         alias_meta_data_model_json2 = alias_meta_data_model.to_dict()
         assert alias_meta_data_model_json2 == alias_meta_data_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Amount
-#-----------------------------------------------------------------------------
 class TestAmount():
+    """
+    Test Class for Amount
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Amount
-    #--------------------------------------------------------
     def test_amount_serialization(self):
+        """
+        Test serialization/deserialization for Amount
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
         price_model = {} # Price
         price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
+        price_model['Price'] = 72.5
 
         # Construct a json representation of a Amount model
         amount_model_json = {}
@@ -3217,15 +3252,15 @@ class TestAmount():
         amount_model_json2 = amount_model.to_dict()
         assert amount_model_json2 == amount_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Artifact
-#-----------------------------------------------------------------------------
 class TestArtifact():
+    """
+    Test Class for Artifact
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Artifact
-    #--------------------------------------------------------
     def test_artifact_serialization(self):
+        """
+        Test serialization/deserialization for Artifact
+        """
 
         # Construct a json representation of a Artifact model
         artifact_model_json = {}
@@ -3250,15 +3285,15 @@ class TestArtifact():
         artifact_model_json2 = artifact_model.to_dict()
         assert artifact_model_json2 == artifact_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Artifacts
-#-----------------------------------------------------------------------------
 class TestArtifacts():
+    """
+    Test Class for Artifacts
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Artifacts
-    #--------------------------------------------------------
     def test_artifacts_serialization(self):
+        """
+        Test serialization/deserialization for Artifacts
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -3289,15 +3324,15 @@ class TestArtifacts():
         artifacts_model_json2 = artifacts_model.to_dict()
         assert artifacts_model_json2 == artifacts_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for AuditSearchResult
-#-----------------------------------------------------------------------------
 class TestAuditSearchResult():
+    """
+    Test Class for AuditSearchResult
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for AuditSearchResult
-    #--------------------------------------------------------
     def test_audit_search_result_serialization(self):
+        """
+        Test serialization/deserialization for AuditSearchResult
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -3355,15 +3390,15 @@ class TestAuditSearchResult():
         audit_search_result_model_json2 = audit_search_result_model.to_dict()
         assert audit_search_result_model_json2 == audit_search_result_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Broker
-#-----------------------------------------------------------------------------
 class TestBroker():
+    """
+    Test Class for Broker
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Broker
-    #--------------------------------------------------------
     def test_broker_serialization(self):
+        """
+        Test serialization/deserialization for Broker
+        """
 
         # Construct a json representation of a Broker model
         broker_model_json = {}
@@ -3385,15 +3420,15 @@ class TestBroker():
         broker_model_json2 = broker_model.to_dict()
         assert broker_model_json2 == broker_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Bullets
-#-----------------------------------------------------------------------------
 class TestBullets():
+    """
+    Test Class for Bullets
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Bullets
-    #--------------------------------------------------------
     def test_bullets_serialization(self):
+        """
+        Test serialization/deserialization for Bullets
+        """
 
         # Construct a json representation of a Bullets model
         bullets_model_json = {}
@@ -3417,15 +3452,15 @@ class TestBullets():
         bullets_model_json2 = bullets_model.to_dict()
         assert bullets_model_json2 == bullets_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for CFMetaData
-#-----------------------------------------------------------------------------
 class TestCFMetaData():
+    """
+    Test Class for CFMetaData
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for CFMetaData
-    #--------------------------------------------------------
     def test_cf_meta_data_serialization(self):
+        """
+        Test serialization/deserialization for CFMetaData
+        """
 
         # Construct a json representation of a CFMetaData model
         cf_meta_data_model_json = {}
@@ -3459,15 +3494,15 @@ class TestCFMetaData():
         cf_meta_data_model_json2 = cf_meta_data_model.to_dict()
         assert cf_meta_data_model_json2 == cf_meta_data_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Callbacks
-#-----------------------------------------------------------------------------
 class TestCallbacks():
+    """
+    Test Class for Callbacks
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Callbacks
-    #--------------------------------------------------------
     def test_callbacks_serialization(self):
+        """
+        Test serialization/deserialization for Callbacks
+        """
 
         # Construct a json representation of a Callbacks model
         callbacks_model_json = {}
@@ -3497,17 +3532,84 @@ class TestCallbacks():
         callbacks_model_json2 = callbacks_model.to_dict()
         assert callbacks_model_json2 == callbacks_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for CatalogEntry
-#-----------------------------------------------------------------------------
 class TestCatalogEntry():
+    """
+    Test Class for CatalogEntry
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for CatalogEntry
-    #--------------------------------------------------------
     def test_catalog_entry_serialization(self):
+        """
+        Test serialization/deserialization for CatalogEntry
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
+
+        overview_model = {} # Overview
+        overview_model['display_name'] = 'testString'
+        overview_model['long_description'] = 'testString'
+        overview_model['description'] = 'testString'
+        overview_model['featured_description'] = 'testString'
+
+        image_model = {} # Image
+        image_model['image'] = 'testString'
+        image_model['small_image'] = 'testString'
+        image_model['medium_image'] = 'testString'
+        image_model['feature_image'] = 'testString'
+
+        provider_model = {} # Provider
+        provider_model['email'] = 'testString'
+        provider_model['name'] = 'testString'
+        provider_model['contact'] = 'testString'
+        provider_model['support_email'] = 'testString'
+        provider_model['phone'] = 'testString'
+
+        cf_meta_data_model = {} # CFMetaData
+        cf_meta_data_model['type'] = 'testString'
+        cf_meta_data_model['iam_compatible'] = True
+        cf_meta_data_model['unique_api_key'] = True
+        cf_meta_data_model['provisionable'] = True
+        cf_meta_data_model['bindable'] = True
+        cf_meta_data_model['async_provisioning_supported'] = True
+        cf_meta_data_model['async_unprovisioning_supported'] = True
+        cf_meta_data_model['requires'] = ['testString']
+        cf_meta_data_model['plan_updateable'] = True
+        cf_meta_data_model['state'] = 'testString'
+        cf_meta_data_model['service_check_enabled'] = True
+        cf_meta_data_model['test_check_interval'] = 38
+        cf_meta_data_model['service_key_supported'] = True
+        cf_meta_data_model['cf_guid'] = {}
+
+        plan_meta_data_model = {} # PlanMetaData
+        plan_meta_data_model['bindable'] = True
+        plan_meta_data_model['reservable'] = True
+        plan_meta_data_model['allow_internal_users'] = True
+        plan_meta_data_model['async_provisioning_supported'] = True
+        plan_meta_data_model['async_unprovisioning_supported'] = True
+        plan_meta_data_model['test_check_interval'] = 38
+        plan_meta_data_model['single_scope_instance'] = 'testString'
+        plan_meta_data_model['service_check_enabled'] = True
+        plan_meta_data_model['cf_guid'] = {}
+
+        alias_meta_data_model = {} # AliasMetaData
+        alias_meta_data_model['type'] = 'testString'
+        alias_meta_data_model['plan_id'] = 'testString'
+
+        source_meta_data_model = {} # SourceMetaData
+        source_meta_data_model['path'] = 'testString'
+        source_meta_data_model['type'] = 'testString'
+        source_meta_data_model['url'] = 'testString'
+
+        template_meta_data_model = {} # TemplateMetaData
+        template_meta_data_model['services'] = ['testString']
+        template_meta_data_model['default_memory'] = 38
+        template_meta_data_model['start_cmd'] = 'testString'
+        template_meta_data_model['source'] = source_meta_data_model
+        template_meta_data_model['runtime_catalog_id'] = 'testString'
+        template_meta_data_model['cf_runtime_id'] = 'testString'
+        template_meta_data_model['template_id'] = 'testString'
+        template_meta_data_model['executable_file'] = 'testString'
+        template_meta_data_model['buildpack'] = 'testString'
+        template_meta_data_model['environment_variables'] = {}
 
         bullets_model = {} # Bullets
         bullets_model['title'] = 'testString'
@@ -3515,55 +3617,12 @@ class TestCatalogEntry():
         bullets_model['icon'] = 'testString'
         bullets_model['quantity'] = 38
 
-        price_model = {} # Price
-        price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
-
-        amount_model = {} # Amount
-        amount_model['country'] = 'testString'
-        amount_model['currency'] = 'testString'
-        amount_model['prices'] = [price_model]
-
         ui_meta_media_model = {} # UIMetaMedia
         ui_meta_media_model['caption'] = 'testString'
         ui_meta_media_model['thumbnail_url'] = 'testString'
         ui_meta_media_model['type'] = 'testString'
         ui_meta_media_model['URL'] = 'testString'
         ui_meta_media_model['source'] = bullets_model
-
-        broker_model = {} # Broker
-        broker_model['name'] = 'testString'
-        broker_model['guid'] = 'testString'
-
-        dr_meta_data_model = {} # DRMetaData
-        dr_meta_data_model['dr'] = True
-        dr_meta_data_model['description'] = 'testString'
-
-        metrics_model = {} # Metrics
-        metrics_model['part_ref'] = 'testString'
-        metrics_model['metric_id'] = 'testString'
-        metrics_model['tier_model'] = 'testString'
-        metrics_model['charge_unit'] = 'testString'
-        metrics_model['charge_unit_name'] = 'testString'
-        metrics_model['charge_unit_quantity'] = 'testString'
-        metrics_model['resource_display_name'] = 'testString'
-        metrics_model['charge_unit_display_name'] = 'testString'
-        metrics_model['usage_cap_qty'] = 38
-        metrics_model['display_cap'] = 38
-        metrics_model['effective_from'] = '2020-01-28T18:40:40.123456Z'
-        metrics_model['effective_until'] = '2020-01-28T18:40:40.123456Z'
-        metrics_model['amounts'] = [amount_model]
-
-        source_meta_data_model = {} # SourceMetaData
-        source_meta_data_model['path'] = 'testString'
-        source_meta_data_model['type'] = 'testString'
-        source_meta_data_model['url'] = 'testString'
-
-        starting_price_model = {} # StartingPrice
-        starting_price_model['plan_id'] = 'testString'
-        starting_price_model['deployment_id'] = 'testString'
-        starting_price_model['unit'] = 'testString'
-        starting_price_model['amount'] = [amount_model]
 
         strings_model = {} # Strings
         strings_model['bullets'] = [bullets_model]
@@ -3588,85 +3647,6 @@ class TestCatalogEntry():
         urls_model['registration_url'] = 'testString'
         urls_model['apidocsurl'] = 'testString'
 
-        alias_meta_data_model = {} # AliasMetaData
-        alias_meta_data_model['type'] = 'testString'
-        alias_meta_data_model['plan_id'] = 'testString'
-
-        cf_meta_data_model = {} # CFMetaData
-        cf_meta_data_model['type'] = 'testString'
-        cf_meta_data_model['iam_compatible'] = True
-        cf_meta_data_model['unique_api_key'] = True
-        cf_meta_data_model['provisionable'] = True
-        cf_meta_data_model['bindable'] = True
-        cf_meta_data_model['async_provisioning_supported'] = True
-        cf_meta_data_model['async_unprovisioning_supported'] = True
-        cf_meta_data_model['requires'] = ['testString']
-        cf_meta_data_model['plan_updateable'] = True
-        cf_meta_data_model['state'] = 'testString'
-        cf_meta_data_model['service_check_enabled'] = True
-        cf_meta_data_model['test_check_interval'] = 38
-        cf_meta_data_model['service_key_supported'] = True
-        cf_meta_data_model['cf_guid'] = {}
-
-        callbacks_model = {} # Callbacks
-        callbacks_model['controller_url'] = 'testString'
-        callbacks_model['broker_url'] = 'testString'
-        callbacks_model['broker_proxy_url'] = 'testString'
-        callbacks_model['dashboard_url'] = 'testString'
-        callbacks_model['dashboard_data_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
-        callbacks_model['service_monitor_api'] = 'testString'
-        callbacks_model['service_monitor_app'] = 'testString'
-        callbacks_model['api_endpoint'] = {}
-
-        catalog_entry_metadata_deployment_model = {} # CatalogEntryMetadataDeployment
-        catalog_entry_metadata_deployment_model['location'] = 'testString'
-        catalog_entry_metadata_deployment_model['location_url'] = 'testString'
-        catalog_entry_metadata_deployment_model['original_location'] = 'testString'
-        catalog_entry_metadata_deployment_model['target_crn'] = 'testString'
-        catalog_entry_metadata_deployment_model['service_crn'] = 'testString'
-        catalog_entry_metadata_deployment_model['mccp_id'] = 'testString'
-        catalog_entry_metadata_deployment_model['broker'] = broker_model
-        catalog_entry_metadata_deployment_model['supports_rc_migration'] = True
-        catalog_entry_metadata_deployment_model['target_network'] = 'testString'
-
-        catalog_entry_metadata_pricing_model = {} # CatalogEntryMetadataPricing
-        catalog_entry_metadata_pricing_model['type'] = 'testString'
-        catalog_entry_metadata_pricing_model['origin'] = 'testString'
-        catalog_entry_metadata_pricing_model['starting_price'] = starting_price_model
-        catalog_entry_metadata_pricing_model['metrics'] = [metrics_model]
-
-        plan_meta_data_model = {} # PlanMetaData
-        plan_meta_data_model['bindable'] = True
-        plan_meta_data_model['reservable'] = True
-        plan_meta_data_model['allow_internal_users'] = True
-        plan_meta_data_model['async_provisioning_supported'] = True
-        plan_meta_data_model['async_unprovisioning_supported'] = True
-        plan_meta_data_model['test_check_interval'] = 38
-        plan_meta_data_model['single_scope_instance'] = 'testString'
-        plan_meta_data_model['service_check_enabled'] = True
-        plan_meta_data_model['cf_guid'] = {}
-
-        sla_meta_data_model = {} # SLAMetaData
-        sla_meta_data_model['terms'] = 'testString'
-        sla_meta_data_model['tenancy'] = 'testString'
-        sla_meta_data_model['provisioning'] = 'testString'
-        sla_meta_data_model['responsiveness'] = 'testString'
-        sla_meta_data_model['dr'] = dr_meta_data_model
-
-        template_meta_data_model = {} # TemplateMetaData
-        template_meta_data_model['services'] = ['testString']
-        template_meta_data_model['default_memory'] = 38
-        template_meta_data_model['start_cmd'] = 'testString'
-        template_meta_data_model['source'] = source_meta_data_model
-        template_meta_data_model['runtime_catalog_id'] = 'testString'
-        template_meta_data_model['cf_runtime_id'] = 'testString'
-        template_meta_data_model['template_id'] = 'testString'
-        template_meta_data_model['executable_file'] = 'testString'
-        template_meta_data_model['buildpack'] = 'testString'
-        template_meta_data_model['environment_variables'] = {}
-
         ui_meta_data_model = {} # UIMetaData
         ui_meta_data_model['strings'] = {}
         ui_meta_data_model['urls'] = urls_model
@@ -3681,6 +3661,80 @@ class TestCatalogEntry():
         ui_meta_data_model['hidden'] = True
         ui_meta_data_model['hide_lite_metering'] = True
         ui_meta_data_model['no_upgrade_next_step'] = True
+
+        dr_meta_data_model = {} # DRMetaData
+        dr_meta_data_model['dr'] = True
+        dr_meta_data_model['description'] = 'testString'
+
+        sla_meta_data_model = {} # SLAMetaData
+        sla_meta_data_model['terms'] = 'testString'
+        sla_meta_data_model['tenancy'] = 'testString'
+        sla_meta_data_model['provisioning'] = 'testString'
+        sla_meta_data_model['responsiveness'] = 'testString'
+        sla_meta_data_model['dr'] = dr_meta_data_model
+
+        callbacks_model = {} # Callbacks
+        callbacks_model['controller_url'] = 'testString'
+        callbacks_model['broker_url'] = 'testString'
+        callbacks_model['broker_proxy_url'] = 'testString'
+        callbacks_model['dashboard_url'] = 'testString'
+        callbacks_model['dashboard_data_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
+        callbacks_model['service_monitor_api'] = 'testString'
+        callbacks_model['service_monitor_app'] = 'testString'
+        callbacks_model['api_endpoint'] = {}
+
+        price_model = {} # Price
+        price_model['quantity_tier'] = 38
+        price_model['Price'] = 72.5
+
+        amount_model = {} # Amount
+        amount_model['country'] = 'testString'
+        amount_model['currency'] = 'testString'
+        amount_model['prices'] = [price_model]
+
+        starting_price_model = {} # StartingPrice
+        starting_price_model['plan_id'] = 'testString'
+        starting_price_model['deployment_id'] = 'testString'
+        starting_price_model['unit'] = 'testString'
+        starting_price_model['amount'] = [amount_model]
+
+        metrics_model = {} # Metrics
+        metrics_model['part_ref'] = 'testString'
+        metrics_model['metric_id'] = 'testString'
+        metrics_model['tier_model'] = 'testString'
+        metrics_model['charge_unit'] = 'testString'
+        metrics_model['charge_unit_name'] = 'testString'
+        metrics_model['charge_unit_quantity'] = 'testString'
+        metrics_model['resource_display_name'] = 'testString'
+        metrics_model['charge_unit_display_name'] = 'testString'
+        metrics_model['usage_cap_qty'] = 38
+        metrics_model['display_cap'] = 38
+        metrics_model['effective_from'] = '2020-01-28T18:40:40.123456Z'
+        metrics_model['effective_until'] = '2020-01-28T18:40:40.123456Z'
+        metrics_model['amounts'] = [amount_model]
+
+        catalog_entry_metadata_pricing_model = {} # CatalogEntryMetadataPricing
+        catalog_entry_metadata_pricing_model['type'] = 'testString'
+        catalog_entry_metadata_pricing_model['origin'] = 'testString'
+        catalog_entry_metadata_pricing_model['starting_price'] = starting_price_model
+        catalog_entry_metadata_pricing_model['metrics'] = [metrics_model]
+
+        broker_model = {} # Broker
+        broker_model['name'] = 'testString'
+        broker_model['guid'] = 'testString'
+
+        catalog_entry_metadata_deployment_model = {} # CatalogEntryMetadataDeployment
+        catalog_entry_metadata_deployment_model['location'] = 'testString'
+        catalog_entry_metadata_deployment_model['location_url'] = 'testString'
+        catalog_entry_metadata_deployment_model['original_location'] = 'testString'
+        catalog_entry_metadata_deployment_model['target_crn'] = 'testString'
+        catalog_entry_metadata_deployment_model['service_crn'] = 'testString'
+        catalog_entry_metadata_deployment_model['mccp_id'] = 'testString'
+        catalog_entry_metadata_deployment_model['broker'] = broker_model
+        catalog_entry_metadata_deployment_model['supports_rc_migration'] = True
+        catalog_entry_metadata_deployment_model['target_network'] = 'testString'
 
         catalog_entry_metadata_model = {} # CatalogEntryMetadata
         catalog_entry_metadata_model['rc_compatible'] = True
@@ -3697,25 +3751,6 @@ class TestCatalogEntry():
         catalog_entry_metadata_model['other'] = {}
         catalog_entry_metadata_model['pricing'] = catalog_entry_metadata_pricing_model
         catalog_entry_metadata_model['deployment'] = catalog_entry_metadata_deployment_model
-
-        image_model = {} # Image
-        image_model['image'] = 'testString'
-        image_model['small_image'] = 'testString'
-        image_model['medium_image'] = 'testString'
-        image_model['feature_image'] = 'testString'
-
-        overview_model = {} # Overview
-        overview_model['display_name'] = 'testString'
-        overview_model['long_description'] = 'testString'
-        overview_model['description'] = 'testString'
-        overview_model['featured_description'] = 'testString'
-
-        provider_model = {} # Provider
-        provider_model['email'] = 'testString'
-        provider_model['name'] = 'testString'
-        provider_model['contact'] = 'testString'
-        provider_model['support_email'] = 'testString'
-        provider_model['phone'] = 'testString'
 
         # Construct a json representation of a CatalogEntry model
         catalog_entry_model_json = {}
@@ -3754,17 +3789,65 @@ class TestCatalogEntry():
         catalog_entry_model_json2 = catalog_entry_model.to_dict()
         assert catalog_entry_model_json2 == catalog_entry_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for CatalogEntryMetadata
-#-----------------------------------------------------------------------------
 class TestCatalogEntryMetadata():
+    """
+    Test Class for CatalogEntryMetadata
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for CatalogEntryMetadata
-    #--------------------------------------------------------
     def test_catalog_entry_metadata_serialization(self):
+        """
+        Test serialization/deserialization for CatalogEntryMetadata
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
+
+        cf_meta_data_model = {} # CFMetaData
+        cf_meta_data_model['type'] = 'testString'
+        cf_meta_data_model['iam_compatible'] = True
+        cf_meta_data_model['unique_api_key'] = True
+        cf_meta_data_model['provisionable'] = True
+        cf_meta_data_model['bindable'] = True
+        cf_meta_data_model['async_provisioning_supported'] = True
+        cf_meta_data_model['async_unprovisioning_supported'] = True
+        cf_meta_data_model['requires'] = ['testString']
+        cf_meta_data_model['plan_updateable'] = True
+        cf_meta_data_model['state'] = 'testString'
+        cf_meta_data_model['service_check_enabled'] = True
+        cf_meta_data_model['test_check_interval'] = 38
+        cf_meta_data_model['service_key_supported'] = True
+        cf_meta_data_model['cf_guid'] = {}
+
+        plan_meta_data_model = {} # PlanMetaData
+        plan_meta_data_model['bindable'] = True
+        plan_meta_data_model['reservable'] = True
+        plan_meta_data_model['allow_internal_users'] = True
+        plan_meta_data_model['async_provisioning_supported'] = True
+        plan_meta_data_model['async_unprovisioning_supported'] = True
+        plan_meta_data_model['test_check_interval'] = 38
+        plan_meta_data_model['single_scope_instance'] = 'testString'
+        plan_meta_data_model['service_check_enabled'] = True
+        plan_meta_data_model['cf_guid'] = {}
+
+        alias_meta_data_model = {} # AliasMetaData
+        alias_meta_data_model['type'] = 'testString'
+        alias_meta_data_model['plan_id'] = 'testString'
+
+        source_meta_data_model = {} # SourceMetaData
+        source_meta_data_model['path'] = 'testString'
+        source_meta_data_model['type'] = 'testString'
+        source_meta_data_model['url'] = 'testString'
+
+        template_meta_data_model = {} # TemplateMetaData
+        template_meta_data_model['services'] = ['testString']
+        template_meta_data_model['default_memory'] = 38
+        template_meta_data_model['start_cmd'] = 'testString'
+        template_meta_data_model['source'] = source_meta_data_model
+        template_meta_data_model['runtime_catalog_id'] = 'testString'
+        template_meta_data_model['cf_runtime_id'] = 'testString'
+        template_meta_data_model['template_id'] = 'testString'
+        template_meta_data_model['executable_file'] = 'testString'
+        template_meta_data_model['buildpack'] = 'testString'
+        template_meta_data_model['environment_variables'] = {}
 
         bullets_model = {} # Bullets
         bullets_model['title'] = 'testString'
@@ -3772,55 +3855,12 @@ class TestCatalogEntryMetadata():
         bullets_model['icon'] = 'testString'
         bullets_model['quantity'] = 38
 
-        price_model = {} # Price
-        price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
-
-        amount_model = {} # Amount
-        amount_model['country'] = 'testString'
-        amount_model['currency'] = 'testString'
-        amount_model['prices'] = [price_model]
-
         ui_meta_media_model = {} # UIMetaMedia
         ui_meta_media_model['caption'] = 'testString'
         ui_meta_media_model['thumbnail_url'] = 'testString'
         ui_meta_media_model['type'] = 'testString'
         ui_meta_media_model['URL'] = 'testString'
         ui_meta_media_model['source'] = bullets_model
-
-        broker_model = {} # Broker
-        broker_model['name'] = 'testString'
-        broker_model['guid'] = 'testString'
-
-        dr_meta_data_model = {} # DRMetaData
-        dr_meta_data_model['dr'] = True
-        dr_meta_data_model['description'] = 'testString'
-
-        metrics_model = {} # Metrics
-        metrics_model['part_ref'] = 'testString'
-        metrics_model['metric_id'] = 'testString'
-        metrics_model['tier_model'] = 'testString'
-        metrics_model['charge_unit'] = 'testString'
-        metrics_model['charge_unit_name'] = 'testString'
-        metrics_model['charge_unit_quantity'] = 'testString'
-        metrics_model['resource_display_name'] = 'testString'
-        metrics_model['charge_unit_display_name'] = 'testString'
-        metrics_model['usage_cap_qty'] = 38
-        metrics_model['display_cap'] = 38
-        metrics_model['effective_from'] = '2020-01-28T18:40:40.123456Z'
-        metrics_model['effective_until'] = '2020-01-28T18:40:40.123456Z'
-        metrics_model['amounts'] = [amount_model]
-
-        source_meta_data_model = {} # SourceMetaData
-        source_meta_data_model['path'] = 'testString'
-        source_meta_data_model['type'] = 'testString'
-        source_meta_data_model['url'] = 'testString'
-
-        starting_price_model = {} # StartingPrice
-        starting_price_model['plan_id'] = 'testString'
-        starting_price_model['deployment_id'] = 'testString'
-        starting_price_model['unit'] = 'testString'
-        starting_price_model['amount'] = [amount_model]
 
         strings_model = {} # Strings
         strings_model['bullets'] = [bullets_model]
@@ -3845,85 +3885,6 @@ class TestCatalogEntryMetadata():
         urls_model['registration_url'] = 'testString'
         urls_model['apidocsurl'] = 'testString'
 
-        alias_meta_data_model = {} # AliasMetaData
-        alias_meta_data_model['type'] = 'testString'
-        alias_meta_data_model['plan_id'] = 'testString'
-
-        cf_meta_data_model = {} # CFMetaData
-        cf_meta_data_model['type'] = 'testString'
-        cf_meta_data_model['iam_compatible'] = True
-        cf_meta_data_model['unique_api_key'] = True
-        cf_meta_data_model['provisionable'] = True
-        cf_meta_data_model['bindable'] = True
-        cf_meta_data_model['async_provisioning_supported'] = True
-        cf_meta_data_model['async_unprovisioning_supported'] = True
-        cf_meta_data_model['requires'] = ['testString']
-        cf_meta_data_model['plan_updateable'] = True
-        cf_meta_data_model['state'] = 'testString'
-        cf_meta_data_model['service_check_enabled'] = True
-        cf_meta_data_model['test_check_interval'] = 38
-        cf_meta_data_model['service_key_supported'] = True
-        cf_meta_data_model['cf_guid'] = {}
-
-        callbacks_model = {} # Callbacks
-        callbacks_model['controller_url'] = 'testString'
-        callbacks_model['broker_url'] = 'testString'
-        callbacks_model['broker_proxy_url'] = 'testString'
-        callbacks_model['dashboard_url'] = 'testString'
-        callbacks_model['dashboard_data_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
-        callbacks_model['service_monitor_api'] = 'testString'
-        callbacks_model['service_monitor_app'] = 'testString'
-        callbacks_model['api_endpoint'] = {}
-
-        catalog_entry_metadata_deployment_model = {} # CatalogEntryMetadataDeployment
-        catalog_entry_metadata_deployment_model['location'] = 'testString'
-        catalog_entry_metadata_deployment_model['location_url'] = 'testString'
-        catalog_entry_metadata_deployment_model['original_location'] = 'testString'
-        catalog_entry_metadata_deployment_model['target_crn'] = 'testString'
-        catalog_entry_metadata_deployment_model['service_crn'] = 'testString'
-        catalog_entry_metadata_deployment_model['mccp_id'] = 'testString'
-        catalog_entry_metadata_deployment_model['broker'] = broker_model
-        catalog_entry_metadata_deployment_model['supports_rc_migration'] = True
-        catalog_entry_metadata_deployment_model['target_network'] = 'testString'
-
-        catalog_entry_metadata_pricing_model = {} # CatalogEntryMetadataPricing
-        catalog_entry_metadata_pricing_model['type'] = 'testString'
-        catalog_entry_metadata_pricing_model['origin'] = 'testString'
-        catalog_entry_metadata_pricing_model['starting_price'] = starting_price_model
-        catalog_entry_metadata_pricing_model['metrics'] = [metrics_model]
-
-        plan_meta_data_model = {} # PlanMetaData
-        plan_meta_data_model['bindable'] = True
-        plan_meta_data_model['reservable'] = True
-        plan_meta_data_model['allow_internal_users'] = True
-        plan_meta_data_model['async_provisioning_supported'] = True
-        plan_meta_data_model['async_unprovisioning_supported'] = True
-        plan_meta_data_model['test_check_interval'] = 38
-        plan_meta_data_model['single_scope_instance'] = 'testString'
-        plan_meta_data_model['service_check_enabled'] = True
-        plan_meta_data_model['cf_guid'] = {}
-
-        sla_meta_data_model = {} # SLAMetaData
-        sla_meta_data_model['terms'] = 'testString'
-        sla_meta_data_model['tenancy'] = 'testString'
-        sla_meta_data_model['provisioning'] = 'testString'
-        sla_meta_data_model['responsiveness'] = 'testString'
-        sla_meta_data_model['dr'] = dr_meta_data_model
-
-        template_meta_data_model = {} # TemplateMetaData
-        template_meta_data_model['services'] = ['testString']
-        template_meta_data_model['default_memory'] = 38
-        template_meta_data_model['start_cmd'] = 'testString'
-        template_meta_data_model['source'] = source_meta_data_model
-        template_meta_data_model['runtime_catalog_id'] = 'testString'
-        template_meta_data_model['cf_runtime_id'] = 'testString'
-        template_meta_data_model['template_id'] = 'testString'
-        template_meta_data_model['executable_file'] = 'testString'
-        template_meta_data_model['buildpack'] = 'testString'
-        template_meta_data_model['environment_variables'] = {}
-
         ui_meta_data_model = {} # UIMetaData
         ui_meta_data_model['strings'] = {}
         ui_meta_data_model['urls'] = urls_model
@@ -3938,6 +3899,80 @@ class TestCatalogEntryMetadata():
         ui_meta_data_model['hidden'] = True
         ui_meta_data_model['hide_lite_metering'] = True
         ui_meta_data_model['no_upgrade_next_step'] = True
+
+        dr_meta_data_model = {} # DRMetaData
+        dr_meta_data_model['dr'] = True
+        dr_meta_data_model['description'] = 'testString'
+
+        sla_meta_data_model = {} # SLAMetaData
+        sla_meta_data_model['terms'] = 'testString'
+        sla_meta_data_model['tenancy'] = 'testString'
+        sla_meta_data_model['provisioning'] = 'testString'
+        sla_meta_data_model['responsiveness'] = 'testString'
+        sla_meta_data_model['dr'] = dr_meta_data_model
+
+        callbacks_model = {} # Callbacks
+        callbacks_model['controller_url'] = 'testString'
+        callbacks_model['broker_url'] = 'testString'
+        callbacks_model['broker_proxy_url'] = 'testString'
+        callbacks_model['dashboard_url'] = 'testString'
+        callbacks_model['dashboard_data_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
+        callbacks_model['service_monitor_api'] = 'testString'
+        callbacks_model['service_monitor_app'] = 'testString'
+        callbacks_model['api_endpoint'] = {}
+
+        price_model = {} # Price
+        price_model['quantity_tier'] = 38
+        price_model['Price'] = 72.5
+
+        amount_model = {} # Amount
+        amount_model['country'] = 'testString'
+        amount_model['currency'] = 'testString'
+        amount_model['prices'] = [price_model]
+
+        starting_price_model = {} # StartingPrice
+        starting_price_model['plan_id'] = 'testString'
+        starting_price_model['deployment_id'] = 'testString'
+        starting_price_model['unit'] = 'testString'
+        starting_price_model['amount'] = [amount_model]
+
+        metrics_model = {} # Metrics
+        metrics_model['part_ref'] = 'testString'
+        metrics_model['metric_id'] = 'testString'
+        metrics_model['tier_model'] = 'testString'
+        metrics_model['charge_unit'] = 'testString'
+        metrics_model['charge_unit_name'] = 'testString'
+        metrics_model['charge_unit_quantity'] = 'testString'
+        metrics_model['resource_display_name'] = 'testString'
+        metrics_model['charge_unit_display_name'] = 'testString'
+        metrics_model['usage_cap_qty'] = 38
+        metrics_model['display_cap'] = 38
+        metrics_model['effective_from'] = '2020-01-28T18:40:40.123456Z'
+        metrics_model['effective_until'] = '2020-01-28T18:40:40.123456Z'
+        metrics_model['amounts'] = [amount_model]
+
+        catalog_entry_metadata_pricing_model = {} # CatalogEntryMetadataPricing
+        catalog_entry_metadata_pricing_model['type'] = 'testString'
+        catalog_entry_metadata_pricing_model['origin'] = 'testString'
+        catalog_entry_metadata_pricing_model['starting_price'] = starting_price_model
+        catalog_entry_metadata_pricing_model['metrics'] = [metrics_model]
+
+        broker_model = {} # Broker
+        broker_model['name'] = 'testString'
+        broker_model['guid'] = 'testString'
+
+        catalog_entry_metadata_deployment_model = {} # CatalogEntryMetadataDeployment
+        catalog_entry_metadata_deployment_model['location'] = 'testString'
+        catalog_entry_metadata_deployment_model['location_url'] = 'testString'
+        catalog_entry_metadata_deployment_model['original_location'] = 'testString'
+        catalog_entry_metadata_deployment_model['target_crn'] = 'testString'
+        catalog_entry_metadata_deployment_model['service_crn'] = 'testString'
+        catalog_entry_metadata_deployment_model['mccp_id'] = 'testString'
+        catalog_entry_metadata_deployment_model['broker'] = broker_model
+        catalog_entry_metadata_deployment_model['supports_rc_migration'] = True
+        catalog_entry_metadata_deployment_model['target_network'] = 'testString'
 
         # Construct a json representation of a CatalogEntryMetadata model
         catalog_entry_metadata_model_json = {}
@@ -3971,15 +4006,15 @@ class TestCatalogEntryMetadata():
         catalog_entry_metadata_model_json2 = catalog_entry_metadata_model.to_dict()
         assert catalog_entry_metadata_model_json2 == catalog_entry_metadata_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for CatalogEntryMetadataDeployment
-#-----------------------------------------------------------------------------
 class TestCatalogEntryMetadataDeployment():
+    """
+    Test Class for CatalogEntryMetadataDeployment
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for CatalogEntryMetadataDeployment
-    #--------------------------------------------------------
     def test_catalog_entry_metadata_deployment_serialization(self):
+        """
+        Test serialization/deserialization for CatalogEntryMetadataDeployment
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -4014,26 +4049,32 @@ class TestCatalogEntryMetadataDeployment():
         catalog_entry_metadata_deployment_model_json2 = catalog_entry_metadata_deployment_model.to_dict()
         assert catalog_entry_metadata_deployment_model_json2 == catalog_entry_metadata_deployment_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for CatalogEntryMetadataPricing
-#-----------------------------------------------------------------------------
 class TestCatalogEntryMetadataPricing():
+    """
+    Test Class for CatalogEntryMetadataPricing
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for CatalogEntryMetadataPricing
-    #--------------------------------------------------------
     def test_catalog_entry_metadata_pricing_serialization(self):
+        """
+        Test serialization/deserialization for CatalogEntryMetadataPricing
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
         price_model = {} # Price
         price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
+        price_model['Price'] = 72.5
 
         amount_model = {} # Amount
         amount_model['country'] = 'testString'
         amount_model['currency'] = 'testString'
         amount_model['prices'] = [price_model]
+
+        starting_price_model = {} # StartingPrice
+        starting_price_model['plan_id'] = 'testString'
+        starting_price_model['deployment_id'] = 'testString'
+        starting_price_model['unit'] = 'testString'
+        starting_price_model['amount'] = [amount_model]
 
         metrics_model = {} # Metrics
         metrics_model['part_ref'] = 'testString'
@@ -4049,12 +4090,6 @@ class TestCatalogEntryMetadataPricing():
         metrics_model['effective_from'] = '2020-01-28T18:40:40.123456Z'
         metrics_model['effective_until'] = '2020-01-28T18:40:40.123456Z'
         metrics_model['amounts'] = [amount_model]
-
-        starting_price_model = {} # StartingPrice
-        starting_price_model['plan_id'] = 'testString'
-        starting_price_model['deployment_id'] = 'testString'
-        starting_price_model['unit'] = 'testString'
-        starting_price_model['amount'] = [amount_model]
 
         # Construct a json representation of a CatalogEntryMetadataPricing model
         catalog_entry_metadata_pricing_model_json = {}
@@ -4078,15 +4113,15 @@ class TestCatalogEntryMetadataPricing():
         catalog_entry_metadata_pricing_model_json2 = catalog_entry_metadata_pricing_model.to_dict()
         assert catalog_entry_metadata_pricing_model_json2 == catalog_entry_metadata_pricing_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for DRMetaData
-#-----------------------------------------------------------------------------
 class TestDRMetaData():
+    """
+    Test Class for DRMetaData
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for DRMetaData
-    #--------------------------------------------------------
     def test_dr_meta_data_serialization(self):
+        """
+        Test serialization/deserialization for DRMetaData
+        """
 
         # Construct a json representation of a DRMetaData model
         dr_meta_data_model_json = {}
@@ -4108,15 +4143,15 @@ class TestDRMetaData():
         dr_meta_data_model_json2 = dr_meta_data_model.to_dict()
         assert dr_meta_data_model_json2 == dr_meta_data_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for DeploymentBase
-#-----------------------------------------------------------------------------
 class TestDeploymentBase():
+    """
+    Test Class for DeploymentBase
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for DeploymentBase
-    #--------------------------------------------------------
     def test_deployment_base_serialization(self):
+        """
+        Test serialization/deserialization for DeploymentBase
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -4151,17 +4186,84 @@ class TestDeploymentBase():
         deployment_base_model_json2 = deployment_base_model.to_dict()
         assert deployment_base_model_json2 == deployment_base_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for EntrySearchResult
-#-----------------------------------------------------------------------------
 class TestEntrySearchResult():
+    """
+    Test Class for EntrySearchResult
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for EntrySearchResult
-    #--------------------------------------------------------
     def test_entry_search_result_serialization(self):
+        """
+        Test serialization/deserialization for EntrySearchResult
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
+
+        overview_model = {} # Overview
+        overview_model['display_name'] = 'testString'
+        overview_model['long_description'] = 'testString'
+        overview_model['description'] = 'testString'
+        overview_model['featured_description'] = 'testString'
+
+        image_model = {} # Image
+        image_model['image'] = 'testString'
+        image_model['small_image'] = 'testString'
+        image_model['medium_image'] = 'testString'
+        image_model['feature_image'] = 'testString'
+
+        provider_model = {} # Provider
+        provider_model['email'] = 'testString'
+        provider_model['name'] = 'testString'
+        provider_model['contact'] = 'testString'
+        provider_model['support_email'] = 'testString'
+        provider_model['phone'] = 'testString'
+
+        cf_meta_data_model = {} # CFMetaData
+        cf_meta_data_model['type'] = 'testString'
+        cf_meta_data_model['iam_compatible'] = True
+        cf_meta_data_model['unique_api_key'] = True
+        cf_meta_data_model['provisionable'] = True
+        cf_meta_data_model['bindable'] = True
+        cf_meta_data_model['async_provisioning_supported'] = True
+        cf_meta_data_model['async_unprovisioning_supported'] = True
+        cf_meta_data_model['requires'] = ['testString']
+        cf_meta_data_model['plan_updateable'] = True
+        cf_meta_data_model['state'] = 'testString'
+        cf_meta_data_model['service_check_enabled'] = True
+        cf_meta_data_model['test_check_interval'] = 38
+        cf_meta_data_model['service_key_supported'] = True
+        cf_meta_data_model['cf_guid'] = {}
+
+        plan_meta_data_model = {} # PlanMetaData
+        plan_meta_data_model['bindable'] = True
+        plan_meta_data_model['reservable'] = True
+        plan_meta_data_model['allow_internal_users'] = True
+        plan_meta_data_model['async_provisioning_supported'] = True
+        plan_meta_data_model['async_unprovisioning_supported'] = True
+        plan_meta_data_model['test_check_interval'] = 38
+        plan_meta_data_model['single_scope_instance'] = 'testString'
+        plan_meta_data_model['service_check_enabled'] = True
+        plan_meta_data_model['cf_guid'] = {}
+
+        alias_meta_data_model = {} # AliasMetaData
+        alias_meta_data_model['type'] = 'testString'
+        alias_meta_data_model['plan_id'] = 'testString'
+
+        source_meta_data_model = {} # SourceMetaData
+        source_meta_data_model['path'] = 'testString'
+        source_meta_data_model['type'] = 'testString'
+        source_meta_data_model['url'] = 'testString'
+
+        template_meta_data_model = {} # TemplateMetaData
+        template_meta_data_model['services'] = ['testString']
+        template_meta_data_model['default_memory'] = 38
+        template_meta_data_model['start_cmd'] = 'testString'
+        template_meta_data_model['source'] = source_meta_data_model
+        template_meta_data_model['runtime_catalog_id'] = 'testString'
+        template_meta_data_model['cf_runtime_id'] = 'testString'
+        template_meta_data_model['template_id'] = 'testString'
+        template_meta_data_model['executable_file'] = 'testString'
+        template_meta_data_model['buildpack'] = 'testString'
+        template_meta_data_model['environment_variables'] = {}
 
         bullets_model = {} # Bullets
         bullets_model['title'] = 'testString'
@@ -4169,55 +4271,12 @@ class TestEntrySearchResult():
         bullets_model['icon'] = 'testString'
         bullets_model['quantity'] = 38
 
-        price_model = {} # Price
-        price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
-
-        amount_model = {} # Amount
-        amount_model['country'] = 'testString'
-        amount_model['currency'] = 'testString'
-        amount_model['prices'] = [price_model]
-
         ui_meta_media_model = {} # UIMetaMedia
         ui_meta_media_model['caption'] = 'testString'
         ui_meta_media_model['thumbnail_url'] = 'testString'
         ui_meta_media_model['type'] = 'testString'
         ui_meta_media_model['URL'] = 'testString'
         ui_meta_media_model['source'] = bullets_model
-
-        broker_model = {} # Broker
-        broker_model['name'] = 'testString'
-        broker_model['guid'] = 'testString'
-
-        dr_meta_data_model = {} # DRMetaData
-        dr_meta_data_model['dr'] = True
-        dr_meta_data_model['description'] = 'testString'
-
-        metrics_model = {} # Metrics
-        metrics_model['part_ref'] = 'testString'
-        metrics_model['metric_id'] = 'testString'
-        metrics_model['tier_model'] = 'testString'
-        metrics_model['charge_unit'] = 'testString'
-        metrics_model['charge_unit_name'] = 'testString'
-        metrics_model['charge_unit_quantity'] = 'testString'
-        metrics_model['resource_display_name'] = 'testString'
-        metrics_model['charge_unit_display_name'] = 'testString'
-        metrics_model['usage_cap_qty'] = 38
-        metrics_model['display_cap'] = 38
-        metrics_model['effective_from'] = '2020-01-28T18:40:40.123456Z'
-        metrics_model['effective_until'] = '2020-01-28T18:40:40.123456Z'
-        metrics_model['amounts'] = [amount_model]
-
-        source_meta_data_model = {} # SourceMetaData
-        source_meta_data_model['path'] = 'testString'
-        source_meta_data_model['type'] = 'testString'
-        source_meta_data_model['url'] = 'testString'
-
-        starting_price_model = {} # StartingPrice
-        starting_price_model['plan_id'] = 'testString'
-        starting_price_model['deployment_id'] = 'testString'
-        starting_price_model['unit'] = 'testString'
-        starting_price_model['amount'] = [amount_model]
 
         strings_model = {} # Strings
         strings_model['bullets'] = [bullets_model]
@@ -4242,85 +4301,6 @@ class TestEntrySearchResult():
         urls_model['registration_url'] = 'testString'
         urls_model['apidocsurl'] = 'testString'
 
-        alias_meta_data_model = {} # AliasMetaData
-        alias_meta_data_model['type'] = 'testString'
-        alias_meta_data_model['plan_id'] = 'testString'
-
-        cf_meta_data_model = {} # CFMetaData
-        cf_meta_data_model['type'] = 'testString'
-        cf_meta_data_model['iam_compatible'] = True
-        cf_meta_data_model['unique_api_key'] = True
-        cf_meta_data_model['provisionable'] = True
-        cf_meta_data_model['bindable'] = True
-        cf_meta_data_model['async_provisioning_supported'] = True
-        cf_meta_data_model['async_unprovisioning_supported'] = True
-        cf_meta_data_model['requires'] = ['testString']
-        cf_meta_data_model['plan_updateable'] = True
-        cf_meta_data_model['state'] = 'testString'
-        cf_meta_data_model['service_check_enabled'] = True
-        cf_meta_data_model['test_check_interval'] = 38
-        cf_meta_data_model['service_key_supported'] = True
-        cf_meta_data_model['cf_guid'] = {}
-
-        callbacks_model = {} # Callbacks
-        callbacks_model['controller_url'] = 'testString'
-        callbacks_model['broker_url'] = 'testString'
-        callbacks_model['broker_proxy_url'] = 'testString'
-        callbacks_model['dashboard_url'] = 'testString'
-        callbacks_model['dashboard_data_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
-        callbacks_model['service_monitor_api'] = 'testString'
-        callbacks_model['service_monitor_app'] = 'testString'
-        callbacks_model['api_endpoint'] = {}
-
-        catalog_entry_metadata_deployment_model = {} # CatalogEntryMetadataDeployment
-        catalog_entry_metadata_deployment_model['location'] = 'testString'
-        catalog_entry_metadata_deployment_model['location_url'] = 'testString'
-        catalog_entry_metadata_deployment_model['original_location'] = 'testString'
-        catalog_entry_metadata_deployment_model['target_crn'] = 'testString'
-        catalog_entry_metadata_deployment_model['service_crn'] = 'testString'
-        catalog_entry_metadata_deployment_model['mccp_id'] = 'testString'
-        catalog_entry_metadata_deployment_model['broker'] = broker_model
-        catalog_entry_metadata_deployment_model['supports_rc_migration'] = True
-        catalog_entry_metadata_deployment_model['target_network'] = 'testString'
-
-        catalog_entry_metadata_pricing_model = {} # CatalogEntryMetadataPricing
-        catalog_entry_metadata_pricing_model['type'] = 'testString'
-        catalog_entry_metadata_pricing_model['origin'] = 'testString'
-        catalog_entry_metadata_pricing_model['starting_price'] = starting_price_model
-        catalog_entry_metadata_pricing_model['metrics'] = [metrics_model]
-
-        plan_meta_data_model = {} # PlanMetaData
-        plan_meta_data_model['bindable'] = True
-        plan_meta_data_model['reservable'] = True
-        plan_meta_data_model['allow_internal_users'] = True
-        plan_meta_data_model['async_provisioning_supported'] = True
-        plan_meta_data_model['async_unprovisioning_supported'] = True
-        plan_meta_data_model['test_check_interval'] = 38
-        plan_meta_data_model['single_scope_instance'] = 'testString'
-        plan_meta_data_model['service_check_enabled'] = True
-        plan_meta_data_model['cf_guid'] = {}
-
-        sla_meta_data_model = {} # SLAMetaData
-        sla_meta_data_model['terms'] = 'testString'
-        sla_meta_data_model['tenancy'] = 'testString'
-        sla_meta_data_model['provisioning'] = 'testString'
-        sla_meta_data_model['responsiveness'] = 'testString'
-        sla_meta_data_model['dr'] = dr_meta_data_model
-
-        template_meta_data_model = {} # TemplateMetaData
-        template_meta_data_model['services'] = ['testString']
-        template_meta_data_model['default_memory'] = 38
-        template_meta_data_model['start_cmd'] = 'testString'
-        template_meta_data_model['source'] = source_meta_data_model
-        template_meta_data_model['runtime_catalog_id'] = 'testString'
-        template_meta_data_model['cf_runtime_id'] = 'testString'
-        template_meta_data_model['template_id'] = 'testString'
-        template_meta_data_model['executable_file'] = 'testString'
-        template_meta_data_model['buildpack'] = 'testString'
-        template_meta_data_model['environment_variables'] = {}
-
         ui_meta_data_model = {} # UIMetaData
         ui_meta_data_model['strings'] = {}
         ui_meta_data_model['urls'] = urls_model
@@ -4335,6 +4315,80 @@ class TestEntrySearchResult():
         ui_meta_data_model['hidden'] = True
         ui_meta_data_model['hide_lite_metering'] = True
         ui_meta_data_model['no_upgrade_next_step'] = True
+
+        dr_meta_data_model = {} # DRMetaData
+        dr_meta_data_model['dr'] = True
+        dr_meta_data_model['description'] = 'testString'
+
+        sla_meta_data_model = {} # SLAMetaData
+        sla_meta_data_model['terms'] = 'testString'
+        sla_meta_data_model['tenancy'] = 'testString'
+        sla_meta_data_model['provisioning'] = 'testString'
+        sla_meta_data_model['responsiveness'] = 'testString'
+        sla_meta_data_model['dr'] = dr_meta_data_model
+
+        callbacks_model = {} # Callbacks
+        callbacks_model['controller_url'] = 'testString'
+        callbacks_model['broker_url'] = 'testString'
+        callbacks_model['broker_proxy_url'] = 'testString'
+        callbacks_model['dashboard_url'] = 'testString'
+        callbacks_model['dashboard_data_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
+        callbacks_model['service_monitor_api'] = 'testString'
+        callbacks_model['service_monitor_app'] = 'testString'
+        callbacks_model['api_endpoint'] = {}
+
+        price_model = {} # Price
+        price_model['quantity_tier'] = 38
+        price_model['Price'] = 72.5
+
+        amount_model = {} # Amount
+        amount_model['country'] = 'testString'
+        amount_model['currency'] = 'testString'
+        amount_model['prices'] = [price_model]
+
+        starting_price_model = {} # StartingPrice
+        starting_price_model['plan_id'] = 'testString'
+        starting_price_model['deployment_id'] = 'testString'
+        starting_price_model['unit'] = 'testString'
+        starting_price_model['amount'] = [amount_model]
+
+        metrics_model = {} # Metrics
+        metrics_model['part_ref'] = 'testString'
+        metrics_model['metric_id'] = 'testString'
+        metrics_model['tier_model'] = 'testString'
+        metrics_model['charge_unit'] = 'testString'
+        metrics_model['charge_unit_name'] = 'testString'
+        metrics_model['charge_unit_quantity'] = 'testString'
+        metrics_model['resource_display_name'] = 'testString'
+        metrics_model['charge_unit_display_name'] = 'testString'
+        metrics_model['usage_cap_qty'] = 38
+        metrics_model['display_cap'] = 38
+        metrics_model['effective_from'] = '2020-01-28T18:40:40.123456Z'
+        metrics_model['effective_until'] = '2020-01-28T18:40:40.123456Z'
+        metrics_model['amounts'] = [amount_model]
+
+        catalog_entry_metadata_pricing_model = {} # CatalogEntryMetadataPricing
+        catalog_entry_metadata_pricing_model['type'] = 'testString'
+        catalog_entry_metadata_pricing_model['origin'] = 'testString'
+        catalog_entry_metadata_pricing_model['starting_price'] = starting_price_model
+        catalog_entry_metadata_pricing_model['metrics'] = [metrics_model]
+
+        broker_model = {} # Broker
+        broker_model['name'] = 'testString'
+        broker_model['guid'] = 'testString'
+
+        catalog_entry_metadata_deployment_model = {} # CatalogEntryMetadataDeployment
+        catalog_entry_metadata_deployment_model['location'] = 'testString'
+        catalog_entry_metadata_deployment_model['location_url'] = 'testString'
+        catalog_entry_metadata_deployment_model['original_location'] = 'testString'
+        catalog_entry_metadata_deployment_model['target_crn'] = 'testString'
+        catalog_entry_metadata_deployment_model['service_crn'] = 'testString'
+        catalog_entry_metadata_deployment_model['mccp_id'] = 'testString'
+        catalog_entry_metadata_deployment_model['broker'] = broker_model
+        catalog_entry_metadata_deployment_model['supports_rc_migration'] = True
+        catalog_entry_metadata_deployment_model['target_network'] = 'testString'
 
         catalog_entry_metadata_model = {} # CatalogEntryMetadata
         catalog_entry_metadata_model['rc_compatible'] = True
@@ -4351,25 +4405,6 @@ class TestEntrySearchResult():
         catalog_entry_metadata_model['other'] = {}
         catalog_entry_metadata_model['pricing'] = catalog_entry_metadata_pricing_model
         catalog_entry_metadata_model['deployment'] = catalog_entry_metadata_deployment_model
-
-        image_model = {} # Image
-        image_model['image'] = 'testString'
-        image_model['small_image'] = 'testString'
-        image_model['medium_image'] = 'testString'
-        image_model['feature_image'] = 'testString'
-
-        overview_model = {} # Overview
-        overview_model['display_name'] = 'testString'
-        overview_model['long_description'] = 'testString'
-        overview_model['description'] = 'testString'
-        overview_model['featured_description'] = 'testString'
-
-        provider_model = {} # Provider
-        provider_model['email'] = 'testString'
-        provider_model['name'] = 'testString'
-        provider_model['contact'] = 'testString'
-        provider_model['support_email'] = 'testString'
-        provider_model['phone'] = 'testString'
 
         catalog_entry_model = {} # CatalogEntry
         catalog_entry_model['name'] = 'testString'
@@ -4419,15 +4454,15 @@ class TestEntrySearchResult():
         entry_search_result_model_json2 = entry_search_result_model.to_dict()
         assert entry_search_result_model_json2 == entry_search_result_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Image
-#-----------------------------------------------------------------------------
 class TestImage():
+    """
+    Test Class for Image
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Image
-    #--------------------------------------------------------
     def test_image_serialization(self):
+        """
+        Test serialization/deserialization for Image
+        """
 
         # Construct a json representation of a Image model
         image_model_json = {}
@@ -4451,15 +4486,15 @@ class TestImage():
         image_model_json2 = image_model.to_dict()
         assert image_model_json2 == image_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Message
-#-----------------------------------------------------------------------------
 class TestMessage():
+    """
+    Test Class for Message
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Message
-    #--------------------------------------------------------
     def test_message_serialization(self):
+        """
+        Test serialization/deserialization for Message
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -4506,21 +4541,21 @@ class TestMessage():
         message_model_json2 = message_model.to_dict()
         assert message_model_json2 == message_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Metrics
-#-----------------------------------------------------------------------------
 class TestMetrics():
+    """
+    Test Class for Metrics
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Metrics
-    #--------------------------------------------------------
     def test_metrics_serialization(self):
+        """
+        Test serialization/deserialization for Metrics
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
         price_model = {} # Price
         price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
+        price_model['Price'] = 72.5
 
         amount_model = {} # Amount
         amount_model['country'] = 'testString'
@@ -4558,17 +4593,65 @@ class TestMetrics():
         metrics_model_json2 = metrics_model.to_dict()
         assert metrics_model_json2 == metrics_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ObjectMetadataSet
-#-----------------------------------------------------------------------------
 class TestObjectMetadataSet():
+    """
+    Test Class for ObjectMetadataSet
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ObjectMetadataSet
-    #--------------------------------------------------------
     def test_object_metadata_set_serialization(self):
+        """
+        Test serialization/deserialization for ObjectMetadataSet
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
+
+        cf_meta_data_model = {} # CFMetaData
+        cf_meta_data_model['type'] = 'testString'
+        cf_meta_data_model['iam_compatible'] = True
+        cf_meta_data_model['unique_api_key'] = True
+        cf_meta_data_model['provisionable'] = True
+        cf_meta_data_model['bindable'] = True
+        cf_meta_data_model['async_provisioning_supported'] = True
+        cf_meta_data_model['async_unprovisioning_supported'] = True
+        cf_meta_data_model['requires'] = ['testString']
+        cf_meta_data_model['plan_updateable'] = True
+        cf_meta_data_model['state'] = 'testString'
+        cf_meta_data_model['service_check_enabled'] = True
+        cf_meta_data_model['test_check_interval'] = 38
+        cf_meta_data_model['service_key_supported'] = True
+        cf_meta_data_model['cf_guid'] = {}
+
+        plan_meta_data_model = {} # PlanMetaData
+        plan_meta_data_model['bindable'] = True
+        plan_meta_data_model['reservable'] = True
+        plan_meta_data_model['allow_internal_users'] = True
+        plan_meta_data_model['async_provisioning_supported'] = True
+        plan_meta_data_model['async_unprovisioning_supported'] = True
+        plan_meta_data_model['test_check_interval'] = 38
+        plan_meta_data_model['single_scope_instance'] = 'testString'
+        plan_meta_data_model['service_check_enabled'] = True
+        plan_meta_data_model['cf_guid'] = {}
+
+        alias_meta_data_model = {} # AliasMetaData
+        alias_meta_data_model['type'] = 'testString'
+        alias_meta_data_model['plan_id'] = 'testString'
+
+        source_meta_data_model = {} # SourceMetaData
+        source_meta_data_model['path'] = 'testString'
+        source_meta_data_model['type'] = 'testString'
+        source_meta_data_model['url'] = 'testString'
+
+        template_meta_data_model = {} # TemplateMetaData
+        template_meta_data_model['services'] = ['testString']
+        template_meta_data_model['default_memory'] = 38
+        template_meta_data_model['start_cmd'] = 'testString'
+        template_meta_data_model['source'] = source_meta_data_model
+        template_meta_data_model['runtime_catalog_id'] = 'testString'
+        template_meta_data_model['cf_runtime_id'] = 'testString'
+        template_meta_data_model['template_id'] = 'testString'
+        template_meta_data_model['executable_file'] = 'testString'
+        template_meta_data_model['buildpack'] = 'testString'
+        template_meta_data_model['environment_variables'] = {}
 
         bullets_model = {} # Bullets
         bullets_model['title'] = 'testString'
@@ -4576,40 +4659,12 @@ class TestObjectMetadataSet():
         bullets_model['icon'] = 'testString'
         bullets_model['quantity'] = 38
 
-        price_model = {} # Price
-        price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
-
-        amount_model = {} # Amount
-        amount_model['country'] = 'testString'
-        amount_model['currency'] = 'testString'
-        amount_model['prices'] = [price_model]
-
         ui_meta_media_model = {} # UIMetaMedia
         ui_meta_media_model['caption'] = 'testString'
         ui_meta_media_model['thumbnail_url'] = 'testString'
         ui_meta_media_model['type'] = 'testString'
         ui_meta_media_model['URL'] = 'testString'
         ui_meta_media_model['source'] = bullets_model
-
-        broker_model = {} # Broker
-        broker_model['name'] = 'testString'
-        broker_model['guid'] = 'testString'
-
-        dr_meta_data_model = {} # DRMetaData
-        dr_meta_data_model['dr'] = True
-        dr_meta_data_model['description'] = 'testString'
-
-        source_meta_data_model = {} # SourceMetaData
-        source_meta_data_model['path'] = 'testString'
-        source_meta_data_model['type'] = 'testString'
-        source_meta_data_model['url'] = 'testString'
-
-        starting_price_model = {} # StartingPrice
-        starting_price_model['plan_id'] = 'testString'
-        starting_price_model['deployment_id'] = 'testString'
-        starting_price_model['unit'] = 'testString'
-        starting_price_model['amount'] = [amount_model]
 
         strings_model = {} # Strings
         strings_model['bullets'] = [bullets_model]
@@ -4634,84 +4689,6 @@ class TestObjectMetadataSet():
         urls_model['registration_url'] = 'testString'
         urls_model['apidocsurl'] = 'testString'
 
-        alias_meta_data_model = {} # AliasMetaData
-        alias_meta_data_model['type'] = 'testString'
-        alias_meta_data_model['plan_id'] = 'testString'
-
-        cf_meta_data_model = {} # CFMetaData
-        cf_meta_data_model['type'] = 'testString'
-        cf_meta_data_model['iam_compatible'] = True
-        cf_meta_data_model['unique_api_key'] = True
-        cf_meta_data_model['provisionable'] = True
-        cf_meta_data_model['bindable'] = True
-        cf_meta_data_model['async_provisioning_supported'] = True
-        cf_meta_data_model['async_unprovisioning_supported'] = True
-        cf_meta_data_model['requires'] = ['testString']
-        cf_meta_data_model['plan_updateable'] = True
-        cf_meta_data_model['state'] = 'testString'
-        cf_meta_data_model['service_check_enabled'] = True
-        cf_meta_data_model['test_check_interval'] = 38
-        cf_meta_data_model['service_key_supported'] = True
-        cf_meta_data_model['cf_guid'] = {}
-
-        callbacks_model = {} # Callbacks
-        callbacks_model['controller_url'] = 'testString'
-        callbacks_model['broker_url'] = 'testString'
-        callbacks_model['broker_proxy_url'] = 'testString'
-        callbacks_model['dashboard_url'] = 'testString'
-        callbacks_model['dashboard_data_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_url'] = 'testString'
-        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
-        callbacks_model['service_monitor_api'] = 'testString'
-        callbacks_model['service_monitor_app'] = 'testString'
-        callbacks_model['api_endpoint'] = {}
-
-        deployment_base_model = {} # DeploymentBase
-        deployment_base_model['location'] = 'testString'
-        deployment_base_model['location_url'] = 'testString'
-        deployment_base_model['original_location'] = 'testString'
-        deployment_base_model['target_crn'] = 'testString'
-        deployment_base_model['service_crn'] = 'testString'
-        deployment_base_model['mccp_id'] = 'testString'
-        deployment_base_model['broker'] = broker_model
-        deployment_base_model['supports_rc_migration'] = True
-        deployment_base_model['target_network'] = 'testString'
-
-        plan_meta_data_model = {} # PlanMetaData
-        plan_meta_data_model['bindable'] = True
-        plan_meta_data_model['reservable'] = True
-        plan_meta_data_model['allow_internal_users'] = True
-        plan_meta_data_model['async_provisioning_supported'] = True
-        plan_meta_data_model['async_unprovisioning_supported'] = True
-        plan_meta_data_model['test_check_interval'] = 38
-        plan_meta_data_model['single_scope_instance'] = 'testString'
-        plan_meta_data_model['service_check_enabled'] = True
-        plan_meta_data_model['cf_guid'] = {}
-
-        pricing_set_model = {} # PricingSet
-        pricing_set_model['type'] = 'testString'
-        pricing_set_model['origin'] = 'testString'
-        pricing_set_model['starting_price'] = starting_price_model
-
-        sla_meta_data_model = {} # SLAMetaData
-        sla_meta_data_model['terms'] = 'testString'
-        sla_meta_data_model['tenancy'] = 'testString'
-        sla_meta_data_model['provisioning'] = 'testString'
-        sla_meta_data_model['responsiveness'] = 'testString'
-        sla_meta_data_model['dr'] = dr_meta_data_model
-
-        template_meta_data_model = {} # TemplateMetaData
-        template_meta_data_model['services'] = ['testString']
-        template_meta_data_model['default_memory'] = 38
-        template_meta_data_model['start_cmd'] = 'testString'
-        template_meta_data_model['source'] = source_meta_data_model
-        template_meta_data_model['runtime_catalog_id'] = 'testString'
-        template_meta_data_model['cf_runtime_id'] = 'testString'
-        template_meta_data_model['template_id'] = 'testString'
-        template_meta_data_model['executable_file'] = 'testString'
-        template_meta_data_model['buildpack'] = 'testString'
-        template_meta_data_model['environment_variables'] = {}
-
         ui_meta_data_model = {} # UIMetaData
         ui_meta_data_model['strings'] = {}
         ui_meta_data_model['urls'] = urls_model
@@ -4726,6 +4703,64 @@ class TestObjectMetadataSet():
         ui_meta_data_model['hidden'] = True
         ui_meta_data_model['hide_lite_metering'] = True
         ui_meta_data_model['no_upgrade_next_step'] = True
+
+        dr_meta_data_model = {} # DRMetaData
+        dr_meta_data_model['dr'] = True
+        dr_meta_data_model['description'] = 'testString'
+
+        sla_meta_data_model = {} # SLAMetaData
+        sla_meta_data_model['terms'] = 'testString'
+        sla_meta_data_model['tenancy'] = 'testString'
+        sla_meta_data_model['provisioning'] = 'testString'
+        sla_meta_data_model['responsiveness'] = 'testString'
+        sla_meta_data_model['dr'] = dr_meta_data_model
+
+        callbacks_model = {} # Callbacks
+        callbacks_model['controller_url'] = 'testString'
+        callbacks_model['broker_url'] = 'testString'
+        callbacks_model['broker_proxy_url'] = 'testString'
+        callbacks_model['dashboard_url'] = 'testString'
+        callbacks_model['dashboard_data_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_url'] = 'testString'
+        callbacks_model['dashboard_detail_tab_ext_url'] = 'testString'
+        callbacks_model['service_monitor_api'] = 'testString'
+        callbacks_model['service_monitor_app'] = 'testString'
+        callbacks_model['api_endpoint'] = {}
+
+        price_model = {} # Price
+        price_model['quantity_tier'] = 38
+        price_model['Price'] = 72.5
+
+        amount_model = {} # Amount
+        amount_model['country'] = 'testString'
+        amount_model['currency'] = 'testString'
+        amount_model['prices'] = [price_model]
+
+        starting_price_model = {} # StartingPrice
+        starting_price_model['plan_id'] = 'testString'
+        starting_price_model['deployment_id'] = 'testString'
+        starting_price_model['unit'] = 'testString'
+        starting_price_model['amount'] = [amount_model]
+
+        pricing_set_model = {} # PricingSet
+        pricing_set_model['type'] = 'testString'
+        pricing_set_model['origin'] = 'testString'
+        pricing_set_model['starting_price'] = starting_price_model
+
+        broker_model = {} # Broker
+        broker_model['name'] = 'testString'
+        broker_model['guid'] = 'testString'
+
+        deployment_base_model = {} # DeploymentBase
+        deployment_base_model['location'] = 'testString'
+        deployment_base_model['location_url'] = 'testString'
+        deployment_base_model['original_location'] = 'testString'
+        deployment_base_model['target_crn'] = 'testString'
+        deployment_base_model['service_crn'] = 'testString'
+        deployment_base_model['mccp_id'] = 'testString'
+        deployment_base_model['broker'] = broker_model
+        deployment_base_model['supports_rc_migration'] = True
+        deployment_base_model['target_network'] = 'testString'
 
         # Construct a json representation of a ObjectMetadataSet model
         object_metadata_set_model_json = {}
@@ -4759,15 +4794,15 @@ class TestObjectMetadataSet():
         object_metadata_set_model_json2 = object_metadata_set_model.to_dict()
         assert object_metadata_set_model_json2 == object_metadata_set_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Overview
-#-----------------------------------------------------------------------------
 class TestOverview():
+    """
+    Test Class for Overview
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Overview
-    #--------------------------------------------------------
     def test_overview_serialization(self):
+        """
+        Test serialization/deserialization for Overview
+        """
 
         # Construct a json representation of a Overview model
         overview_model_json = {}
@@ -4791,15 +4826,15 @@ class TestOverview():
         overview_model_json2 = overview_model.to_dict()
         assert overview_model_json2 == overview_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for PlanMetaData
-#-----------------------------------------------------------------------------
 class TestPlanMetaData():
+    """
+    Test Class for PlanMetaData
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PlanMetaData
-    #--------------------------------------------------------
     def test_plan_meta_data_serialization(self):
+        """
+        Test serialization/deserialization for PlanMetaData
+        """
 
         # Construct a json representation of a PlanMetaData model
         plan_meta_data_model_json = {}
@@ -4828,20 +4863,20 @@ class TestPlanMetaData():
         plan_meta_data_model_json2 = plan_meta_data_model.to_dict()
         assert plan_meta_data_model_json2 == plan_meta_data_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Price
-#-----------------------------------------------------------------------------
 class TestPrice():
+    """
+    Test Class for Price
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Price
-    #--------------------------------------------------------
     def test_price_serialization(self):
+        """
+        Test serialization/deserialization for Price
+        """
 
         # Construct a json representation of a Price model
         price_model_json = {}
         price_model_json['quantity_tier'] = 38
-        price_model_json['Price'] = 36.0
+        price_model_json['Price'] = 72.5
 
         # Construct a model instance of Price by calling from_dict on the json representation
         price_model = Price.from_dict(price_model_json)
@@ -4858,26 +4893,32 @@ class TestPrice():
         price_model_json2 = price_model.to_dict()
         assert price_model_json2 == price_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for PricingGet
-#-----------------------------------------------------------------------------
 class TestPricingGet():
+    """
+    Test Class for PricingGet
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PricingGet
-    #--------------------------------------------------------
     def test_pricing_get_serialization(self):
+        """
+        Test serialization/deserialization for PricingGet
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
         price_model = {} # Price
         price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
+        price_model['Price'] = 72.5
 
         amount_model = {} # Amount
         amount_model['country'] = 'testString'
         amount_model['currency'] = 'testString'
         amount_model['prices'] = [price_model]
+
+        starting_price_model = {} # StartingPrice
+        starting_price_model['plan_id'] = 'testString'
+        starting_price_model['deployment_id'] = 'testString'
+        starting_price_model['unit'] = 'testString'
+        starting_price_model['amount'] = [amount_model]
 
         metrics_model = {} # Metrics
         metrics_model['part_ref'] = 'testString'
@@ -4893,12 +4934,6 @@ class TestPricingGet():
         metrics_model['effective_from'] = '2020-01-28T18:40:40.123456Z'
         metrics_model['effective_until'] = '2020-01-28T18:40:40.123456Z'
         metrics_model['amounts'] = [amount_model]
-
-        starting_price_model = {} # StartingPrice
-        starting_price_model['plan_id'] = 'testString'
-        starting_price_model['deployment_id'] = 'testString'
-        starting_price_model['unit'] = 'testString'
-        starting_price_model['amount'] = [amount_model]
 
         # Construct a json representation of a PricingGet model
         pricing_get_model_json = {}
@@ -4922,21 +4957,21 @@ class TestPricingGet():
         pricing_get_model_json2 = pricing_get_model.to_dict()
         assert pricing_get_model_json2 == pricing_get_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for PricingSet
-#-----------------------------------------------------------------------------
 class TestPricingSet():
+    """
+    Test Class for PricingSet
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PricingSet
-    #--------------------------------------------------------
     def test_pricing_set_serialization(self):
+        """
+        Test serialization/deserialization for PricingSet
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
         price_model = {} # Price
         price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
+        price_model['Price'] = 72.5
 
         amount_model = {} # Amount
         amount_model['country'] = 'testString'
@@ -4970,15 +5005,15 @@ class TestPricingSet():
         pricing_set_model_json2 = pricing_set_model.to_dict()
         assert pricing_set_model_json2 == pricing_set_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Provider
-#-----------------------------------------------------------------------------
 class TestProvider():
+    """
+    Test Class for Provider
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Provider
-    #--------------------------------------------------------
     def test_provider_serialization(self):
+        """
+        Test serialization/deserialization for Provider
+        """
 
         # Construct a json representation of a Provider model
         provider_model_json = {}
@@ -5003,15 +5038,15 @@ class TestProvider():
         provider_model_json2 = provider_model.to_dict()
         assert provider_model_json2 == provider_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for SLAMetaData
-#-----------------------------------------------------------------------------
 class TestSLAMetaData():
+    """
+    Test Class for SLAMetaData
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for SLAMetaData
-    #--------------------------------------------------------
     def test_sla_meta_data_serialization(self):
+        """
+        Test serialization/deserialization for SLAMetaData
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -5042,15 +5077,15 @@ class TestSLAMetaData():
         sla_meta_data_model_json2 = sla_meta_data_model.to_dict()
         assert sla_meta_data_model_json2 == sla_meta_data_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for SourceMetaData
-#-----------------------------------------------------------------------------
 class TestSourceMetaData():
+    """
+    Test Class for SourceMetaData
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for SourceMetaData
-    #--------------------------------------------------------
     def test_source_meta_data_serialization(self):
+        """
+        Test serialization/deserialization for SourceMetaData
+        """
 
         # Construct a json representation of a SourceMetaData model
         source_meta_data_model_json = {}
@@ -5073,21 +5108,21 @@ class TestSourceMetaData():
         source_meta_data_model_json2 = source_meta_data_model.to_dict()
         assert source_meta_data_model_json2 == source_meta_data_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for StartingPrice
-#-----------------------------------------------------------------------------
 class TestStartingPrice():
+    """
+    Test Class for StartingPrice
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for StartingPrice
-    #--------------------------------------------------------
     def test_starting_price_serialization(self):
+        """
+        Test serialization/deserialization for StartingPrice
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
         price_model = {} # Price
         price_model['quantity_tier'] = 38
-        price_model['Price'] = 36.0
+        price_model['Price'] = 72.5
 
         amount_model = {} # Amount
         amount_model['country'] = 'testString'
@@ -5116,15 +5151,15 @@ class TestStartingPrice():
         starting_price_model_json2 = starting_price_model.to_dict()
         assert starting_price_model_json2 == starting_price_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Strings
-#-----------------------------------------------------------------------------
 class TestStrings():
+    """
+    Test Class for Strings
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Strings
-    #--------------------------------------------------------
     def test_strings_serialization(self):
+        """
+        Test serialization/deserialization for Strings
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -5166,15 +5201,15 @@ class TestStrings():
         strings_model_json2 = strings_model.to_dict()
         assert strings_model_json2 == strings_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for TemplateMetaData
-#-----------------------------------------------------------------------------
 class TestTemplateMetaData():
+    """
+    Test Class for TemplateMetaData
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for TemplateMetaData
-    #--------------------------------------------------------
     def test_template_meta_data_serialization(self):
+        """
+        Test serialization/deserialization for TemplateMetaData
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -5211,15 +5246,15 @@ class TestTemplateMetaData():
         template_meta_data_model_json2 = template_meta_data_model.to_dict()
         assert template_meta_data_model_json2 == template_meta_data_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for UIMetaData
-#-----------------------------------------------------------------------------
 class TestUIMetaData():
+    """
+    Test Class for UIMetaData
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for UIMetaData
-    #--------------------------------------------------------
     def test_ui_meta_data_serialization(self):
+        """
+        Test serialization/deserialization for UIMetaData
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -5290,15 +5325,15 @@ class TestUIMetaData():
         ui_meta_data_model_json2 = ui_meta_data_model.to_dict()
         assert ui_meta_data_model_json2 == ui_meta_data_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for UIMetaMedia
-#-----------------------------------------------------------------------------
 class TestUIMetaMedia():
+    """
+    Test Class for UIMetaMedia
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for UIMetaMedia
-    #--------------------------------------------------------
     def test_ui_meta_media_serialization(self):
+        """
+        Test serialization/deserialization for UIMetaMedia
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -5331,15 +5366,15 @@ class TestUIMetaMedia():
         ui_meta_media_model_json2 = ui_meta_media_model.to_dict()
         assert ui_meta_media_model_json2 == ui_meta_media_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for URLS
-#-----------------------------------------------------------------------------
 class TestURLS():
+    """
+    Test Class for URLS
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for URLS
-    #--------------------------------------------------------
     def test_urls_serialization(self):
+        """
+        Test serialization/deserialization for URLS
+        """
 
         # Construct a json representation of a URLS model
         urls_model_json = {}
@@ -5371,15 +5406,15 @@ class TestURLS():
         urls_model_json2 = urls_model.to_dict()
         assert urls_model_json2 == urls_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Visibility
-#-----------------------------------------------------------------------------
 class TestVisibility():
+    """
+    Test Class for Visibility
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Visibility
-    #--------------------------------------------------------
     def test_visibility_serialization(self):
+        """
+        Test serialization/deserialization for Visibility
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -5413,15 +5448,15 @@ class TestVisibility():
         visibility_model_json2 = visibility_model.to_dict()
         assert visibility_model_json2 == visibility_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for VisibilityDetail
-#-----------------------------------------------------------------------------
 class TestVisibilityDetail():
+    """
+    Test Class for VisibilityDetail
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for VisibilityDetail
-    #--------------------------------------------------------
     def test_visibility_detail_serialization(self):
+        """
+        Test serialization/deserialization for VisibilityDetail
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -5447,15 +5482,15 @@ class TestVisibilityDetail():
         visibility_detail_model_json2 = visibility_detail_model.to_dict()
         assert visibility_detail_model_json2 == visibility_detail_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for VisibilityDetailAccounts
-#-----------------------------------------------------------------------------
 class TestVisibilityDetailAccounts():
+    """
+    Test Class for VisibilityDetailAccounts
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for VisibilityDetailAccounts
-    #--------------------------------------------------------
     def test_visibility_detail_accounts_serialization(self):
+        """
+        Test serialization/deserialization for VisibilityDetailAccounts
+        """
 
         # Construct a json representation of a VisibilityDetailAccounts model
         visibility_detail_accounts_model_json = {}

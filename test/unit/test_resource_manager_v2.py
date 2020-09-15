@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Unit Tests for ResourceManagerV2
+"""
+
 from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 import inspect
@@ -21,6 +25,7 @@ import pytest
 import re
 import requests
 import responses
+import urllib
 from ibm_platform_services.resource_manager_v2 import *
 
 
@@ -36,23 +41,25 @@ service.set_service_url(base_url)
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for list_resource_groups
-#-----------------------------------------------------------------------------
 class TestListResourceGroups():
+    """
+    Test Class for list_resource_groups
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_resource_groups()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_resource_groups_all_params(self):
+        """
+        list_resource_groups()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/resource_groups')
         mock_response = '{"resources": [{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}]}'
@@ -78,16 +85,16 @@ class TestListResourceGroups():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'date={}'.format(date) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_resource_groups_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_resource_groups_required_params(self):
+        """
+        test_list_resource_groups_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/resource_groups')
         mock_response = '{"resources": [{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}]}'
@@ -106,23 +113,25 @@ class TestListResourceGroups():
         assert response.status_code == 200
 
 
-#-----------------------------------------------------------------------------
-# Test Class for create_resource_group
-#-----------------------------------------------------------------------------
 class TestCreateResourceGroup():
+    """
+    Test Class for create_resource_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # create_resource_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_resource_group_all_params(self):
+        """
+        create_resource_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/resource_groups')
         mock_response = '{"id": "id", "crn": "crn"}'
@@ -152,11 +161,11 @@ class TestCreateResourceGroup():
         assert req_body['account_id'] == '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
 
 
-    #--------------------------------------------------------
-    # test_create_resource_group_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_resource_group_required_params(self):
+        """
+        test_create_resource_group_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/resource_groups')
         mock_response = '{"id": "id", "crn": "crn"}'
@@ -175,23 +184,25 @@ class TestCreateResourceGroup():
         assert response.status_code == 201
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_resource_group
-#-----------------------------------------------------------------------------
 class TestGetResourceGroup():
+    """
+    Test Class for get_resource_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_resource_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_resource_group_all_params(self):
+        """
+        get_resource_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
@@ -215,11 +226,11 @@ class TestGetResourceGroup():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_resource_group_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_resource_group_value_error(self):
+        """
+        test_get_resource_group_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
@@ -243,23 +254,25 @@ class TestGetResourceGroup():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_resource_group
-#-----------------------------------------------------------------------------
 class TestUpdateResourceGroup():
+    """
+    Test Class for update_resource_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_resource_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_resource_group_all_params(self):
+        """
+        update_resource_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
@@ -291,11 +304,11 @@ class TestUpdateResourceGroup():
         assert req_body['state'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_update_resource_group_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_resource_group_required_params(self):
+        """
+        test_update_resource_group_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
@@ -319,11 +332,11 @@ class TestUpdateResourceGroup():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_update_resource_group_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_resource_group_value_error(self):
+        """
+        test_update_resource_group_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
@@ -347,23 +360,25 @@ class TestUpdateResourceGroup():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for delete_resource_group
-#-----------------------------------------------------------------------------
 class TestDeleteResourceGroup():
+    """
+    Test Class for delete_resource_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # delete_resource_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_resource_group_all_params(self):
+        """
+        delete_resource_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/resource_groups/testString')
         responses.add(responses.DELETE,
@@ -384,11 +399,11 @@ class TestDeleteResourceGroup():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_delete_resource_group_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_resource_group_value_error(self):
+        """
+        test_delete_resource_group_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/resource_groups/testString')
         responses.add(responses.DELETE,
@@ -419,23 +434,25 @@ class TestDeleteResourceGroup():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for list_quota_definitions
-#-----------------------------------------------------------------------------
 class TestListQuotaDefinitions():
+    """
+    Test Class for list_quota_definitions
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_quota_definitions()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_quota_definitions_all_params(self):
+        """
+        list_quota_definitions()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/quota_definitions')
         mock_response = '{"resources": [{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": [{"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}], "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}]}'
@@ -454,23 +471,25 @@ class TestListQuotaDefinitions():
         assert response.status_code == 200
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_quota_definition
-#-----------------------------------------------------------------------------
 class TestGetQuotaDefinition():
+    """
+    Test Class for get_quota_definition
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_quota_definition()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_quota_definition_all_params(self):
+        """
+        get_quota_definition()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/quota_definitions/testString')
         mock_response = '{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": [{"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}], "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
@@ -494,11 +513,11 @@ class TestGetQuotaDefinition():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_quota_definition_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_quota_definition_value_error(self):
+        """
+        test_get_quota_definition_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/quota_definitions/testString')
         mock_response = '{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": [{"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}], "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00"}'
@@ -532,15 +551,15 @@ class TestGetQuotaDefinition():
 # Start of Model Tests
 ##############################################################################
 # region
-#-----------------------------------------------------------------------------
-# Test Class for QuotaDefinition
-#-----------------------------------------------------------------------------
 class TestQuotaDefinition():
+    """
+    Test Class for QuotaDefinition
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for QuotaDefinition
-    #--------------------------------------------------------
     def test_quota_definition_serialization(self):
+        """
+        Test serialization/deserialization for QuotaDefinition
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -548,20 +567,20 @@ class TestQuotaDefinition():
         resource_quota_model['_id'] = 'testString'
         resource_quota_model['resource_id'] = 'testString'
         resource_quota_model['crn'] = 'testString'
-        resource_quota_model['limit'] = 36.0
+        resource_quota_model['limit'] = 72.5
 
         # Construct a json representation of a QuotaDefinition model
         quota_definition_model_json = {}
         quota_definition_model_json['id'] = 'testString'
         quota_definition_model_json['name'] = 'testString'
         quota_definition_model_json['type'] = 'testString'
-        quota_definition_model_json['number_of_apps'] = 36.0
-        quota_definition_model_json['number_of_service_instances'] = 36.0
-        quota_definition_model_json['default_number_of_instances_per_lite_plan'] = 36.0
-        quota_definition_model_json['instances_per_app'] = 36.0
+        quota_definition_model_json['number_of_apps'] = 72.5
+        quota_definition_model_json['number_of_service_instances'] = 72.5
+        quota_definition_model_json['default_number_of_instances_per_lite_plan'] = 72.5
+        quota_definition_model_json['instances_per_app'] = 72.5
         quota_definition_model_json['instance_memory'] = 'testString'
         quota_definition_model_json['total_app_memory'] = 'testString'
-        quota_definition_model_json['vsi_limit'] = 36.0
+        quota_definition_model_json['vsi_limit'] = 72.5
         quota_definition_model_json['resource_quotas'] = [resource_quota_model]
         quota_definition_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
         quota_definition_model_json['updated_at'] = '2020-01-28T18:40:40.123456Z'
@@ -581,15 +600,15 @@ class TestQuotaDefinition():
         quota_definition_model_json2 = quota_definition_model.to_dict()
         assert quota_definition_model_json2 == quota_definition_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for QuotaDefinitionList
-#-----------------------------------------------------------------------------
 class TestQuotaDefinitionList():
+    """
+    Test Class for QuotaDefinitionList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for QuotaDefinitionList
-    #--------------------------------------------------------
     def test_quota_definition_list_serialization(self):
+        """
+        Test serialization/deserialization for QuotaDefinitionList
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -597,19 +616,19 @@ class TestQuotaDefinitionList():
         resource_quota_model['_id'] = 'testString'
         resource_quota_model['resource_id'] = 'testString'
         resource_quota_model['crn'] = 'testString'
-        resource_quota_model['limit'] = 36.0
+        resource_quota_model['limit'] = 72.5
 
         quota_definition_model = {} # QuotaDefinition
         quota_definition_model['id'] = 'testString'
         quota_definition_model['name'] = 'testString'
         quota_definition_model['type'] = 'testString'
-        quota_definition_model['number_of_apps'] = 36.0
-        quota_definition_model['number_of_service_instances'] = 36.0
-        quota_definition_model['default_number_of_instances_per_lite_plan'] = 36.0
-        quota_definition_model['instances_per_app'] = 36.0
+        quota_definition_model['number_of_apps'] = 72.5
+        quota_definition_model['number_of_service_instances'] = 72.5
+        quota_definition_model['default_number_of_instances_per_lite_plan'] = 72.5
+        quota_definition_model['instances_per_app'] = 72.5
         quota_definition_model['instance_memory'] = 'testString'
         quota_definition_model['total_app_memory'] = 'testString'
-        quota_definition_model['vsi_limit'] = 36.0
+        quota_definition_model['vsi_limit'] = 72.5
         quota_definition_model['resource_quotas'] = [resource_quota_model]
         quota_definition_model['created_at'] = '2020-01-28T18:40:40.123456Z'
         quota_definition_model['updated_at'] = '2020-01-28T18:40:40.123456Z'
@@ -633,15 +652,15 @@ class TestQuotaDefinitionList():
         quota_definition_list_model_json2 = quota_definition_list_model.to_dict()
         assert quota_definition_list_model_json2 == quota_definition_list_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResCreateResourceGroup
-#-----------------------------------------------------------------------------
 class TestResCreateResourceGroup():
+    """
+    Test Class for ResCreateResourceGroup
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResCreateResourceGroup
-    #--------------------------------------------------------
     def test_res_create_resource_group_serialization(self):
+        """
+        Test serialization/deserialization for ResCreateResourceGroup
+        """
 
         # Construct a json representation of a ResCreateResourceGroup model
         res_create_resource_group_model_json = {}
@@ -663,15 +682,15 @@ class TestResCreateResourceGroup():
         res_create_resource_group_model_json2 = res_create_resource_group_model.to_dict()
         assert res_create_resource_group_model_json2 == res_create_resource_group_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourceGroup
-#-----------------------------------------------------------------------------
 class TestResourceGroup():
+    """
+    Test Class for ResourceGroup
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourceGroup
-    #--------------------------------------------------------
     def test_resource_group_serialization(self):
+        """
+        Test serialization/deserialization for ResourceGroup
+        """
 
         # Construct a json representation of a ResourceGroup model
         resource_group_model_json = {}
@@ -704,15 +723,15 @@ class TestResourceGroup():
         resource_group_model_json2 = resource_group_model.to_dict()
         assert resource_group_model_json2 == resource_group_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourceGroupList
-#-----------------------------------------------------------------------------
 class TestResourceGroupList():
+    """
+    Test Class for ResourceGroupList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourceGroupList
-    #--------------------------------------------------------
     def test_resource_group_list_serialization(self):
+        """
+        Test serialization/deserialization for ResourceGroupList
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -750,22 +769,22 @@ class TestResourceGroupList():
         resource_group_list_model_json2 = resource_group_list_model.to_dict()
         assert resource_group_list_model_json2 == resource_group_list_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourceQuota
-#-----------------------------------------------------------------------------
 class TestResourceQuota():
+    """
+    Test Class for ResourceQuota
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourceQuota
-    #--------------------------------------------------------
     def test_resource_quota_serialization(self):
+        """
+        Test serialization/deserialization for ResourceQuota
+        """
 
         # Construct a json representation of a ResourceQuota model
         resource_quota_model_json = {}
         resource_quota_model_json['_id'] = 'testString'
         resource_quota_model_json['resource_id'] = 'testString'
         resource_quota_model_json['crn'] = 'testString'
-        resource_quota_model_json['limit'] = 36.0
+        resource_quota_model_json['limit'] = 72.5
 
         # Construct a model instance of ResourceQuota by calling from_dict on the json representation
         resource_quota_model = ResourceQuota.from_dict(resource_quota_model_json)

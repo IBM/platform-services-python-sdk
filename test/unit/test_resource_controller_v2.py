@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Unit Tests for ResourceControllerV2
+"""
+
 from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 import inspect
@@ -21,6 +25,7 @@ import pytest
 import re
 import requests
 import responses
+import urllib
 from ibm_platform_services.resource_controller_v2 import *
 
 
@@ -36,23 +41,25 @@ service.set_service_url(base_url)
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for list_resource_instances
-#-----------------------------------------------------------------------------
 class TestListResourceInstances():
+    """
+    Test Class for list_resource_instances
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_resource_instances()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_resource_instances_all_params(self):
+        """
+        list_resource_instances()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances')
         mock_response = '{"next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "resource_id": "resource_id", "resource_plan_id": "resource_plan_id", "target_crn": "target_crn", "state": "state", "type": "type", "sub_type": "sub_type", "allow_cleanup": false, "locked": true, "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "dashboard_url": "dashboard_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00"}], "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}], "rows_count": 10}'
@@ -94,7 +101,7 @@ class TestListResourceInstances():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'guid={}'.format(guid) in query_string
         assert 'name={}'.format(name) in query_string
         assert 'resource_group_id={}'.format(resource_group_id) in query_string
@@ -107,11 +114,11 @@ class TestListResourceInstances():
         assert 'updated_to={}'.format(updated_to) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_resource_instances_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_resource_instances_required_params(self):
+        """
+        test_list_resource_instances_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances')
         mock_response = '{"next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "resource_id": "resource_id", "resource_plan_id": "resource_plan_id", "target_crn": "target_crn", "state": "state", "type": "type", "sub_type": "sub_type", "allow_cleanup": false, "locked": true, "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "dashboard_url": "dashboard_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00"}], "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}], "rows_count": 10}'
@@ -130,23 +137,25 @@ class TestListResourceInstances():
         assert response.status_code == 200
 
 
-#-----------------------------------------------------------------------------
-# Test Class for create_resource_instance
-#-----------------------------------------------------------------------------
 class TestCreateResourceInstance():
+    """
+    Test Class for create_resource_instance
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # create_resource_instance()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_resource_instance_all_params(self):
+        """
+        create_resource_instance()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "resource_id": "resource_id", "resource_plan_id": "resource_plan_id", "target_crn": "target_crn", "state": "state", "type": "type", "sub_type": "sub_type", "allow_cleanup": false, "locked": true, "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "dashboard_url": "dashboard_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00"}], "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -193,11 +202,11 @@ class TestCreateResourceInstance():
         assert req_body['parameters'] == {}
 
 
-    #--------------------------------------------------------
-    # test_create_resource_instance_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_resource_instance_required_params(self):
+        """
+        test_create_resource_instance_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "resource_id": "resource_id", "resource_plan_id": "resource_plan_id", "target_crn": "target_crn", "state": "state", "type": "type", "sub_type": "sub_type", "allow_cleanup": false, "locked": true, "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "dashboard_url": "dashboard_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00"}], "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -242,11 +251,11 @@ class TestCreateResourceInstance():
         assert req_body['parameters'] == {}
 
 
-    #--------------------------------------------------------
-    # test_create_resource_instance_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_resource_instance_value_error(self):
+        """
+        test_create_resource_instance_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "resource_id": "resource_id", "resource_plan_id": "resource_plan_id", "target_crn": "target_crn", "state": "state", "type": "type", "sub_type": "sub_type", "allow_cleanup": false, "locked": true, "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "dashboard_url": "dashboard_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00"}], "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -279,23 +288,25 @@ class TestCreateResourceInstance():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_resource_instance
-#-----------------------------------------------------------------------------
 class TestGetResourceInstance():
+    """
+    Test Class for get_resource_instance
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_resource_instance()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_resource_instance_all_params(self):
+        """
+        get_resource_instance()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "resource_id": "resource_id", "resource_plan_id": "resource_plan_id", "target_crn": "target_crn", "state": "state", "type": "type", "sub_type": "sub_type", "allow_cleanup": false, "locked": true, "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "dashboard_url": "dashboard_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00"}], "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -319,11 +330,11 @@ class TestGetResourceInstance():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_resource_instance_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_resource_instance_value_error(self):
+        """
+        test_get_resource_instance_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "resource_id": "resource_id", "resource_plan_id": "resource_plan_id", "target_crn": "target_crn", "state": "state", "type": "type", "sub_type": "sub_type", "allow_cleanup": false, "locked": true, "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "dashboard_url": "dashboard_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00"}], "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -347,23 +358,25 @@ class TestGetResourceInstance():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for delete_resource_instance
-#-----------------------------------------------------------------------------
 class TestDeleteResourceInstance():
+    """
+    Test Class for delete_resource_instance
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # delete_resource_instance()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_resource_instance_all_params(self):
+        """
+        delete_resource_instance()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances/testString')
         responses.add(responses.DELETE,
@@ -384,11 +397,11 @@ class TestDeleteResourceInstance():
         assert response.status_code == 202
 
 
-    #--------------------------------------------------------
-    # test_delete_resource_instance_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_resource_instance_value_error(self):
+        """
+        test_delete_resource_instance_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances/testString')
         responses.add(responses.DELETE,
@@ -409,23 +422,25 @@ class TestDeleteResourceInstance():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_resource_instance
-#-----------------------------------------------------------------------------
 class TestUpdateResourceInstance():
+    """
+    Test Class for update_resource_instance
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_resource_instance()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_resource_instance_all_params(self):
+        """
+        update_resource_instance()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "resource_id": "resource_id", "resource_plan_id": "resource_plan_id", "target_crn": "target_crn", "state": "state", "type": "type", "sub_type": "sub_type", "allow_cleanup": false, "locked": true, "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "dashboard_url": "dashboard_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00"}], "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -463,11 +478,11 @@ class TestUpdateResourceInstance():
         assert req_body['allow_cleanup'] == True
 
 
-    #--------------------------------------------------------
-    # test_update_resource_instance_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_resource_instance_value_error(self):
+        """
+        test_update_resource_instance_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "resource_id": "resource_id", "resource_plan_id": "resource_plan_id", "target_crn": "target_crn", "state": "state", "type": "type", "sub_type": "sub_type", "allow_cleanup": false, "locked": true, "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "dashboard_url": "dashboard_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00"}], "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -495,23 +510,25 @@ class TestUpdateResourceInstance():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for lock_resource_instance
-#-----------------------------------------------------------------------------
 class TestLockResourceInstance():
+    """
+    Test Class for lock_resource_instance
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # lock_resource_instance()
-    #--------------------------------------------------------
     @responses.activate
     def test_lock_resource_instance_all_params(self):
+        """
+        lock_resource_instance()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances/testString/lock')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "resource_id": "resource_id", "resource_plan_id": "resource_plan_id", "target_crn": "target_crn", "state": "state", "type": "type", "sub_type": "sub_type", "allow_cleanup": false, "locked": true, "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "dashboard_url": "dashboard_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00"}], "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -535,11 +552,11 @@ class TestLockResourceInstance():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_lock_resource_instance_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_lock_resource_instance_value_error(self):
+        """
+        test_lock_resource_instance_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances/testString/lock')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "resource_id": "resource_id", "resource_plan_id": "resource_plan_id", "target_crn": "target_crn", "state": "state", "type": "type", "sub_type": "sub_type", "allow_cleanup": false, "locked": true, "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "dashboard_url": "dashboard_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00"}], "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -563,23 +580,25 @@ class TestLockResourceInstance():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for unlock_resource_instance
-#-----------------------------------------------------------------------------
 class TestUnlockResourceInstance():
+    """
+    Test Class for unlock_resource_instance
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # unlock_resource_instance()
-    #--------------------------------------------------------
     @responses.activate
     def test_unlock_resource_instance_all_params(self):
+        """
+        unlock_resource_instance()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances/testString/lock')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "resource_id": "resource_id", "resource_plan_id": "resource_plan_id", "target_crn": "target_crn", "state": "state", "type": "type", "sub_type": "sub_type", "allow_cleanup": false, "locked": true, "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "dashboard_url": "dashboard_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00"}], "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -603,11 +622,11 @@ class TestUnlockResourceInstance():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_unlock_resource_instance_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_unlock_resource_instance_value_error(self):
+        """
+        test_unlock_resource_instance_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances/testString/lock')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "resource_id": "resource_id", "resource_plan_id": "resource_plan_id", "target_crn": "target_crn", "state": "state", "type": "type", "sub_type": "sub_type", "allow_cleanup": false, "locked": true, "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "dashboard_url": "dashboard_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00"}], "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -641,23 +660,25 @@ class TestUnlockResourceInstance():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for list_resource_keys
-#-----------------------------------------------------------------------------
 class TestListResourceKeys():
+    """
+    Test Class for list_resource_keys
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_resource_keys()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_resource_keys_all_params(self):
+        """
+        list_resource_keys()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_keys')
         mock_response = '{"next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_instance_url": "resource_instance_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}], "rows_count": 10}'
@@ -693,7 +714,7 @@ class TestListResourceKeys():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'guid={}'.format(guid) in query_string
         assert 'name={}'.format(name) in query_string
         assert 'resource_group_id={}'.format(resource_group_id) in query_string
@@ -703,11 +724,11 @@ class TestListResourceKeys():
         assert 'updated_to={}'.format(updated_to) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_resource_keys_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_resource_keys_required_params(self):
+        """
+        test_list_resource_keys_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_keys')
         mock_response = '{"next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_instance_url": "resource_instance_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}], "rows_count": 10}'
@@ -726,23 +747,25 @@ class TestListResourceKeys():
         assert response.status_code == 200
 
 
-#-----------------------------------------------------------------------------
-# Test Class for create_resource_key
-#-----------------------------------------------------------------------------
 class TestCreateResourceKey():
+    """
+    Test Class for create_resource_key
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # create_resource_key()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_resource_key_all_params(self):
+        """
+        create_resource_key()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_keys')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_instance_url": "resource_instance_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -782,11 +805,11 @@ class TestCreateResourceKey():
         assert req_body['role'] == 'Writer'
 
 
-    #--------------------------------------------------------
-    # test_create_resource_key_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_resource_key_value_error(self):
+        """
+        test_create_resource_key_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_keys')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_instance_url": "resource_instance_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -818,23 +841,25 @@ class TestCreateResourceKey():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_resource_key
-#-----------------------------------------------------------------------------
 class TestGetResourceKey():
+    """
+    Test Class for get_resource_key
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_resource_key()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_resource_key_all_params(self):
+        """
+        get_resource_key()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_keys/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_instance_url": "resource_instance_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -858,11 +883,11 @@ class TestGetResourceKey():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_resource_key_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_resource_key_value_error(self):
+        """
+        test_get_resource_key_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_keys/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_instance_url": "resource_instance_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -886,23 +911,25 @@ class TestGetResourceKey():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for delete_resource_key
-#-----------------------------------------------------------------------------
 class TestDeleteResourceKey():
+    """
+    Test Class for delete_resource_key
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # delete_resource_key()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_resource_key_all_params(self):
+        """
+        delete_resource_key()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_keys/testString')
         responses.add(responses.DELETE,
@@ -923,11 +950,11 @@ class TestDeleteResourceKey():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_delete_resource_key_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_resource_key_value_error(self):
+        """
+        test_delete_resource_key_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_keys/testString')
         responses.add(responses.DELETE,
@@ -948,23 +975,25 @@ class TestDeleteResourceKey():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_resource_key
-#-----------------------------------------------------------------------------
 class TestUpdateResourceKey():
+    """
+    Test Class for update_resource_key
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_resource_key()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_resource_key_all_params(self):
+        """
+        update_resource_key()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_keys/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_instance_url": "resource_instance_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -993,11 +1022,11 @@ class TestUpdateResourceKey():
         assert req_body['name'] == 'my-new-key-name'
 
 
-    #--------------------------------------------------------
-    # test_update_resource_key_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_resource_key_value_error(self):
+        """
+        test_update_resource_key_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_keys/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_instance_url": "resource_instance_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -1033,23 +1062,25 @@ class TestUpdateResourceKey():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for list_resource_bindings
-#-----------------------------------------------------------------------------
 class TestListResourceBindings():
+    """
+    Test Class for list_resource_bindings
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_resource_bindings()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_resource_bindings_all_params(self):
+        """
+        list_resource_bindings()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_bindings')
         mock_response = '{"next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "target_crn": "target_crn", "region_binding_id": "region_binding_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_alias_url": "resource_alias_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}], "rows_count": 10}'
@@ -1087,7 +1118,7 @@ class TestListResourceBindings():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'guid={}'.format(guid) in query_string
         assert 'name={}'.format(name) in query_string
         assert 'resource_group_id={}'.format(resource_group_id) in query_string
@@ -1098,11 +1129,11 @@ class TestListResourceBindings():
         assert 'updated_to={}'.format(updated_to) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_resource_bindings_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_resource_bindings_required_params(self):
+        """
+        test_list_resource_bindings_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_bindings')
         mock_response = '{"next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "target_crn": "target_crn", "region_binding_id": "region_binding_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_alias_url": "resource_alias_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}], "rows_count": 10}'
@@ -1121,23 +1152,25 @@ class TestListResourceBindings():
         assert response.status_code == 200
 
 
-#-----------------------------------------------------------------------------
-# Test Class for create_resource_binding
-#-----------------------------------------------------------------------------
 class TestCreateResourceBinding():
+    """
+    Test Class for create_resource_binding
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # create_resource_binding()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_resource_binding_all_params(self):
+        """
+        create_resource_binding()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_bindings')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "target_crn": "target_crn", "region_binding_id": "region_binding_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_alias_url": "resource_alias_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -1180,11 +1213,11 @@ class TestCreateResourceBinding():
         assert req_body['role'] == 'Writer'
 
 
-    #--------------------------------------------------------
-    # test_create_resource_binding_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_resource_binding_value_error(self):
+        """
+        test_create_resource_binding_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_bindings')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "target_crn": "target_crn", "region_binding_id": "region_binding_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_alias_url": "resource_alias_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -1217,23 +1250,25 @@ class TestCreateResourceBinding():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_resource_binding
-#-----------------------------------------------------------------------------
 class TestGetResourceBinding():
+    """
+    Test Class for get_resource_binding
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_resource_binding()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_resource_binding_all_params(self):
+        """
+        get_resource_binding()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_bindings/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "target_crn": "target_crn", "region_binding_id": "region_binding_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_alias_url": "resource_alias_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -1257,11 +1292,11 @@ class TestGetResourceBinding():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_resource_binding_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_resource_binding_value_error(self):
+        """
+        test_get_resource_binding_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_bindings/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "target_crn": "target_crn", "region_binding_id": "region_binding_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_alias_url": "resource_alias_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -1285,23 +1320,25 @@ class TestGetResourceBinding():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for delete_resource_binding
-#-----------------------------------------------------------------------------
 class TestDeleteResourceBinding():
+    """
+    Test Class for delete_resource_binding
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # delete_resource_binding()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_resource_binding_all_params(self):
+        """
+        delete_resource_binding()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_bindings/testString')
         responses.add(responses.DELETE,
@@ -1322,11 +1359,11 @@ class TestDeleteResourceBinding():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_delete_resource_binding_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_resource_binding_value_error(self):
+        """
+        test_delete_resource_binding_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_bindings/testString')
         responses.add(responses.DELETE,
@@ -1347,23 +1384,25 @@ class TestDeleteResourceBinding():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_resource_binding
-#-----------------------------------------------------------------------------
 class TestUpdateResourceBinding():
+    """
+    Test Class for update_resource_binding
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_resource_binding()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_resource_binding_all_params(self):
+        """
+        update_resource_binding()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_bindings/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "target_crn": "target_crn", "region_binding_id": "region_binding_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_alias_url": "resource_alias_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -1392,11 +1431,11 @@ class TestUpdateResourceBinding():
         assert req_body['name'] == 'my-new-binding-name'
 
 
-    #--------------------------------------------------------
-    # test_update_resource_binding_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_resource_binding_value_error(self):
+        """
+        test_update_resource_binding_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_bindings/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "source_crn": "source_crn", "target_crn": "target_crn", "region_binding_id": "region_binding_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_alias_url": "resource_alias_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -1432,23 +1471,25 @@ class TestUpdateResourceBinding():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for list_resource_aliases
-#-----------------------------------------------------------------------------
 class TestListResourceAliases():
+    """
+    Test Class for list_resource_aliases
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_resource_aliases()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_resource_aliases_all_params(self):
+        """
+        list_resource_aliases()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_aliases')
         mock_response = '{"next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "state": "state", "resource_instance_id": "resource_instance_id", "region_instance_id": "region_instance_id", "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}], "rows_count": 10}'
@@ -1488,7 +1529,7 @@ class TestListResourceAliases():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'guid={}'.format(guid) in query_string
         assert 'name={}'.format(name) in query_string
         assert 'resource_instance_id={}'.format(resource_instance_id) in query_string
@@ -1500,11 +1541,11 @@ class TestListResourceAliases():
         assert 'updated_to={}'.format(updated_to) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_resource_aliases_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_resource_aliases_required_params(self):
+        """
+        test_list_resource_aliases_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_aliases')
         mock_response = '{"next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "state": "state", "resource_instance_id": "resource_instance_id", "region_instance_id": "region_instance_id", "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}], "rows_count": 10}'
@@ -1523,23 +1564,25 @@ class TestListResourceAliases():
         assert response.status_code == 200
 
 
-#-----------------------------------------------------------------------------
-# Test Class for create_resource_alias
-#-----------------------------------------------------------------------------
 class TestCreateResourceAlias():
+    """
+    Test Class for create_resource_alias
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # create_resource_alias()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_resource_alias_all_params(self):
+        """
+        create_resource_alias()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_aliases')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "state": "state", "resource_instance_id": "resource_instance_id", "region_instance_id": "region_instance_id", "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -1572,11 +1615,11 @@ class TestCreateResourceAlias():
         assert req_body['target'] == 'crn:v1:cf:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
 
 
-    #--------------------------------------------------------
-    # test_create_resource_alias_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_resource_alias_value_error(self):
+        """
+        test_create_resource_alias_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_aliases')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "state": "state", "resource_instance_id": "resource_instance_id", "region_instance_id": "region_instance_id", "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -1604,23 +1647,25 @@ class TestCreateResourceAlias():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_resource_alias
-#-----------------------------------------------------------------------------
 class TestGetResourceAlias():
+    """
+    Test Class for get_resource_alias
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_resource_alias()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_resource_alias_all_params(self):
+        """
+        get_resource_alias()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_aliases/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "state": "state", "resource_instance_id": "resource_instance_id", "region_instance_id": "region_instance_id", "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -1644,11 +1689,11 @@ class TestGetResourceAlias():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_resource_alias_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_resource_alias_value_error(self):
+        """
+        test_get_resource_alias_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_aliases/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "state": "state", "resource_instance_id": "resource_instance_id", "region_instance_id": "region_instance_id", "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -1672,23 +1717,25 @@ class TestGetResourceAlias():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for delete_resource_alias
-#-----------------------------------------------------------------------------
 class TestDeleteResourceAlias():
+    """
+    Test Class for delete_resource_alias
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # delete_resource_alias()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_resource_alias_all_params(self):
+        """
+        delete_resource_alias()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_aliases/testString')
         responses.add(responses.DELETE,
@@ -1709,11 +1756,11 @@ class TestDeleteResourceAlias():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_delete_resource_alias_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_resource_alias_value_error(self):
+        """
+        test_delete_resource_alias_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_aliases/testString')
         responses.add(responses.DELETE,
@@ -1734,23 +1781,25 @@ class TestDeleteResourceAlias():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_resource_alias
-#-----------------------------------------------------------------------------
 class TestUpdateResourceAlias():
+    """
+    Test Class for update_resource_alias
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_resource_alias()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_resource_alias_all_params(self):
+        """
+        update_resource_alias()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_aliases/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "state": "state", "resource_instance_id": "resource_instance_id", "region_instance_id": "region_instance_id", "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -1779,11 +1828,11 @@ class TestUpdateResourceAlias():
         assert req_body['name'] == 'my-new-alias-name'
 
 
-    #--------------------------------------------------------
-    # test_update_resource_alias_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_resource_alias_value_error(self):
+        """
+        test_update_resource_alias_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_aliases/testString')
         mock_response = '{"id": "id", "guid": "guid", "crn": "crn", "url": "url", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "state": "state", "resource_instance_id": "resource_instance_id", "region_instance_id": "region_instance_id", "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "created_at": "2019-01-01T12:00:00", "updated_at": "2019-01-01T12:00:00", "deleted_at": "2019-01-01T12:00:00"}'
@@ -1819,23 +1868,25 @@ class TestUpdateResourceAlias():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for list_reclamations
-#-----------------------------------------------------------------------------
 class TestListReclamations():
+    """
+    Test Class for list_reclamations
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_reclamations()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_reclamations_all_params(self):
+        """
+        list_reclamations()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/reclamations')
         mock_response = '{"resources": [{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
@@ -1861,16 +1912,16 @@ class TestListReclamations():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'resource_instance_id={}'.format(resource_instance_id) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_reclamations_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_reclamations_required_params(self):
+        """
+        test_list_reclamations_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/reclamations')
         mock_response = '{"resources": [{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
@@ -1889,23 +1940,25 @@ class TestListReclamations():
         assert response.status_code == 200
 
 
-#-----------------------------------------------------------------------------
-# Test Class for run_reclamation_action
-#-----------------------------------------------------------------------------
 class TestRunReclamationAction():
+    """
+    Test Class for run_reclamation_action
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # run_reclamation_action()
-    #--------------------------------------------------------
     @responses.activate
     def test_run_reclamation_action_all_params(self):
+        """
+        run_reclamation_action()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/reclamations/testString/actions/testString')
         mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
@@ -1939,11 +1992,11 @@ class TestRunReclamationAction():
         assert req_body['comment'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_run_reclamation_action_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_run_reclamation_action_required_params(self):
+        """
+        test_run_reclamation_action_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/reclamations/testString/actions/testString')
         mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
@@ -1969,11 +2022,11 @@ class TestRunReclamationAction():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_run_reclamation_action_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_run_reclamation_action_value_error(self):
+        """
+        test_run_reclamation_action_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/reclamations/testString/actions/testString')
         mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
@@ -2009,15 +2062,15 @@ class TestRunReclamationAction():
 # Start of Model Tests
 ##############################################################################
 # region
-#-----------------------------------------------------------------------------
-# Test Class for Credentials
-#-----------------------------------------------------------------------------
 class TestCredentials():
+    """
+    Test Class for Credentials
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Credentials
-    #--------------------------------------------------------
     def test_credentials_serialization(self):
+        """
+        Test serialization/deserialization for Credentials
+        """
 
         # Construct a json representation of a Credentials model
         credentials_model_json = {}
@@ -2043,15 +2096,15 @@ class TestCredentials():
         credentials_model_json2 = credentials_model.to_dict()
         assert credentials_model_json2 == credentials_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for PlanHistoryItem
-#-----------------------------------------------------------------------------
 class TestPlanHistoryItem():
+    """
+    Test Class for PlanHistoryItem
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for PlanHistoryItem
-    #--------------------------------------------------------
     def test_plan_history_item_serialization(self):
+        """
+        Test serialization/deserialization for PlanHistoryItem
+        """
 
         # Construct a json representation of a PlanHistoryItem model
         plan_history_item_model_json = {}
@@ -2073,15 +2126,15 @@ class TestPlanHistoryItem():
         plan_history_item_model_json2 = plan_history_item_model.to_dict()
         assert plan_history_item_model_json2 == plan_history_item_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Reclamation
-#-----------------------------------------------------------------------------
 class TestReclamation():
+    """
+    Test Class for Reclamation
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Reclamation
-    #--------------------------------------------------------
     def test_reclamation_serialization(self):
+        """
+        Test serialization/deserialization for Reclamation
+        """
 
         # Construct a json representation of a Reclamation model
         reclamation_model_json = {}
@@ -2116,15 +2169,15 @@ class TestReclamation():
         reclamation_model_json2 = reclamation_model.to_dict()
         assert reclamation_model_json2 == reclamation_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ReclamationsList
-#-----------------------------------------------------------------------------
 class TestReclamationsList():
+    """
+    Test Class for ReclamationsList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ReclamationsList
-    #--------------------------------------------------------
     def test_reclamations_list_serialization(self):
+        """
+        Test serialization/deserialization for ReclamationsList
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2164,15 +2217,15 @@ class TestReclamationsList():
         reclamations_list_model_json2 = reclamations_list_model.to_dict()
         assert reclamations_list_model_json2 == reclamations_list_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourceAlias
-#-----------------------------------------------------------------------------
 class TestResourceAlias():
+    """
+    Test Class for ResourceAlias
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourceAlias
-    #--------------------------------------------------------
     def test_resource_alias_serialization(self):
+        """
+        Test serialization/deserialization for ResourceAlias
+        """
 
         # Construct a json representation of a ResourceAlias model
         resource_alias_model_json = {}
@@ -2210,15 +2263,15 @@ class TestResourceAlias():
         resource_alias_model_json2 = resource_alias_model.to_dict()
         assert resource_alias_model_json2 == resource_alias_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourceAliasesList
-#-----------------------------------------------------------------------------
 class TestResourceAliasesList():
+    """
+    Test Class for ResourceAliasesList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourceAliasesList
-    #--------------------------------------------------------
     def test_resource_aliases_list_serialization(self):
+        """
+        Test serialization/deserialization for ResourceAliasesList
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2263,15 +2316,15 @@ class TestResourceAliasesList():
         resource_aliases_list_model_json2 = resource_aliases_list_model.to_dict()
         assert resource_aliases_list_model_json2 == resource_aliases_list_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourceBinding
-#-----------------------------------------------------------------------------
 class TestResourceBinding():
+    """
+    Test Class for ResourceBinding
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourceBinding
-    #--------------------------------------------------------
     def test_resource_binding_serialization(self):
+        """
+        Test serialization/deserialization for ResourceBinding
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2318,15 +2371,15 @@ class TestResourceBinding():
         resource_binding_model_json2 = resource_binding_model.to_dict()
         assert resource_binding_model_json2 == resource_binding_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourceBindingPostParameters
-#-----------------------------------------------------------------------------
 class TestResourceBindingPostParameters():
+    """
+    Test Class for ResourceBindingPostParameters
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourceBindingPostParameters
-    #--------------------------------------------------------
     def test_resource_binding_post_parameters_serialization(self):
+        """
+        Test serialization/deserialization for ResourceBindingPostParameters
+        """
 
         # Construct a json representation of a ResourceBindingPostParameters model
         resource_binding_post_parameters_model_json = {}
@@ -2347,15 +2400,15 @@ class TestResourceBindingPostParameters():
         resource_binding_post_parameters_model_json2 = resource_binding_post_parameters_model.to_dict()
         assert resource_binding_post_parameters_model_json2 == resource_binding_post_parameters_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourceBindingsList
-#-----------------------------------------------------------------------------
 class TestResourceBindingsList():
+    """
+    Test Class for ResourceBindingsList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourceBindingsList
-    #--------------------------------------------------------
     def test_resource_bindings_list_serialization(self):
+        """
+        Test serialization/deserialization for ResourceBindingsList
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2407,15 +2460,15 @@ class TestResourceBindingsList():
         resource_bindings_list_model_json2 = resource_bindings_list_model.to_dict()
         assert resource_bindings_list_model_json2 == resource_bindings_list_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourceInstance
-#-----------------------------------------------------------------------------
 class TestResourceInstance():
+    """
+    Test Class for ResourceInstance
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourceInstance
-    #--------------------------------------------------------
     def test_resource_instance_serialization(self):
+        """
+        Test serialization/deserialization for ResourceInstance
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2466,15 +2519,15 @@ class TestResourceInstance():
         resource_instance_model_json2 = resource_instance_model.to_dict()
         assert resource_instance_model_json2 == resource_instance_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourceInstancesList
-#-----------------------------------------------------------------------------
 class TestResourceInstancesList():
+    """
+    Test Class for ResourceInstancesList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourceInstancesList
-    #--------------------------------------------------------
     def test_resource_instances_list_serialization(self):
+        """
+        Test serialization/deserialization for ResourceInstancesList
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2530,15 +2583,15 @@ class TestResourceInstancesList():
         resource_instances_list_model_json2 = resource_instances_list_model.to_dict()
         assert resource_instances_list_model_json2 == resource_instances_list_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourceKey
-#-----------------------------------------------------------------------------
 class TestResourceKey():
+    """
+    Test Class for ResourceKey
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourceKey
-    #--------------------------------------------------------
     def test_resource_key_serialization(self):
+        """
+        Test serialization/deserialization for ResourceKey
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2583,15 +2636,15 @@ class TestResourceKey():
         resource_key_model_json2 = resource_key_model.to_dict()
         assert resource_key_model_json2 == resource_key_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourceKeyPostParameters
-#-----------------------------------------------------------------------------
 class TestResourceKeyPostParameters():
+    """
+    Test Class for ResourceKeyPostParameters
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourceKeyPostParameters
-    #--------------------------------------------------------
     def test_resource_key_post_parameters_serialization(self):
+        """
+        Test serialization/deserialization for ResourceKeyPostParameters
+        """
 
         # Construct a json representation of a ResourceKeyPostParameters model
         resource_key_post_parameters_model_json = {}
@@ -2612,15 +2665,15 @@ class TestResourceKeyPostParameters():
         resource_key_post_parameters_model_json2 = resource_key_post_parameters_model.to_dict()
         assert resource_key_post_parameters_model_json2 == resource_key_post_parameters_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ResourceKeysList
-#-----------------------------------------------------------------------------
 class TestResourceKeysList():
+    """
+    Test Class for ResourceKeysList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResourceKeysList
-    #--------------------------------------------------------
     def test_resource_keys_list_serialization(self):
+        """
+        Test serialization/deserialization for ResourceKeysList
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 

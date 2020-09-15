@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ 
 """
 Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete a tag
 or list all tags in your billing account with the Tagging API. The tag name must be unique
@@ -228,8 +230,10 @@ class GlobalTaggingV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v3/tags/{0}'.format(
-            *self.encode_path_vars(tag_name))
+        path_param_keys = ['tag_name']
+        path_param_values = self.encode_path_vars(tag_name)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v3/tags/{tag_name}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers,

@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Unit Tests for GlobalSearchV2
+"""
+
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 import inspect
 import json
@@ -20,6 +24,7 @@ import pytest
 import re
 import requests
 import responses
+import urllib
 from ibm_platform_services.global_search_v2 import *
 
 
@@ -35,23 +40,25 @@ service.set_service_url(base_url)
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for search
-#-----------------------------------------------------------------------------
 class TestSearch():
+    """
+    Test Class for search
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # search()
-    #--------------------------------------------------------
     @responses.activate
     def test_search_all_params(self):
+        """
+        search()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v3/resources/search')
         mock_response = '{"search_cursor": "search_cursor", "limit": 5, "items": [{"crn": "crn"}]}'
@@ -89,7 +96,7 @@ class TestSearch():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'limit={}'.format(limit) in query_string
         assert 'timeout={}'.format(timeout) in query_string
@@ -101,11 +108,11 @@ class TestSearch():
         assert req_body['search_cursor'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_search_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_search_required_params(self):
+        """
+        test_search_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v3/resources/search')
         mock_response = '{"search_cursor": "search_cursor", "limit": 5, "items": [{"crn": "crn"}]}'
@@ -148,23 +155,25 @@ class TestSearch():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for get_supported_types
-#-----------------------------------------------------------------------------
 class TestGetSupportedTypes():
+    """
+    Test Class for get_supported_types
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_supported_types()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_supported_types_all_params(self):
+        """
+        get_supported_types()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resources/supported_types')
         mock_response = '{"supported_types": ["supported_types"]}'
@@ -193,15 +202,15 @@ class TestGetSupportedTypes():
 # Start of Model Tests
 ##############################################################################
 # region
-#-----------------------------------------------------------------------------
-# Test Class for ResultItem
-#-----------------------------------------------------------------------------
 class TestResultItem():
+    """
+    Test Class for ResultItem
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ResultItem
-    #--------------------------------------------------------
     def test_result_item_serialization(self):
+        """
+        Test serialization/deserialization for ResultItem
+        """
 
         # Construct a json representation of a ResultItem model
         result_item_model_json = {}
@@ -223,15 +232,15 @@ class TestResultItem():
         result_item_model_json2 = result_item_model.to_dict()
         assert result_item_model_json2 == result_item_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ScanResult
-#-----------------------------------------------------------------------------
 class TestScanResult():
+    """
+    Test Class for ScanResult
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ScanResult
-    #--------------------------------------------------------
     def test_scan_result_serialization(self):
+        """
+        Test serialization/deserialization for ScanResult
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -242,7 +251,7 @@ class TestScanResult():
         # Construct a json representation of a ScanResult model
         scan_result_model_json = {}
         scan_result_model_json['search_cursor'] = 'testString'
-        scan_result_model_json['limit'] = 36.0
+        scan_result_model_json['limit'] = 72.5
         scan_result_model_json['items'] = [result_item_model]
 
         # Construct a model instance of ScanResult by calling from_dict on the json representation
@@ -260,15 +269,15 @@ class TestScanResult():
         scan_result_model_json2 = scan_result_model.to_dict()
         assert scan_result_model_json2 == scan_result_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for SupportedTypesList
-#-----------------------------------------------------------------------------
 class TestSupportedTypesList():
+    """
+    Test Class for SupportedTypesList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for SupportedTypesList
-    #--------------------------------------------------------
     def test_supported_types_list_serialization(self):
+        """
+        Test serialization/deserialization for SupportedTypesList
+        """
 
         # Construct a json representation of a SupportedTypesList model
         supported_types_list_model_json = {}

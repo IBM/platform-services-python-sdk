@@ -49,7 +49,6 @@ class TestCreateRules():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -71,9 +70,9 @@ class TestCreateRules():
 
         # Construct a dict representation of a RuleTargetAttribute model
         rule_target_attribute_model = {}
-        rule_target_attribute_model['name'] = 'testString'
+        rule_target_attribute_model['name'] = 'resource_id'
         rule_target_attribute_model['operator'] = 'string_equals'
-        rule_target_attribute_model['value'] = 'testString'
+        rule_target_attribute_model['value'] = 'f0f8f7994e754ff38f9d370201966561'
 
         # Construct a dict representation of a TargetResource model
         target_resource_model = {}
@@ -90,7 +89,7 @@ class TestCreateRules():
 
         # Construct a dict representation of a EnforcementAction model
         enforcement_action_model = {}
-        enforcement_action_model['action'] = 'audit_log'
+        enforcement_action_model['action'] = 'disallow'
 
         # Construct a dict representation of a RuleRequest model
         rule_request_model = {}
@@ -143,9 +142,9 @@ class TestCreateRules():
 
         # Construct a dict representation of a RuleTargetAttribute model
         rule_target_attribute_model = {}
-        rule_target_attribute_model['name'] = 'testString'
+        rule_target_attribute_model['name'] = 'resource_id'
         rule_target_attribute_model['operator'] = 'string_equals'
-        rule_target_attribute_model['value'] = 'testString'
+        rule_target_attribute_model['value'] = 'f0f8f7994e754ff38f9d370201966561'
 
         # Construct a dict representation of a TargetResource model
         target_resource_model = {}
@@ -162,7 +161,7 @@ class TestCreateRules():
 
         # Construct a dict representation of a EnforcementAction model
         enforcement_action_model = {}
-        enforcement_action_model['action'] = 'audit_log'
+        enforcement_action_model['action'] = 'disallow'
 
         # Construct a dict representation of a RuleRequest model
         rule_request_model = {}
@@ -213,9 +212,9 @@ class TestCreateRules():
 
         # Construct a dict representation of a RuleTargetAttribute model
         rule_target_attribute_model = {}
-        rule_target_attribute_model['name'] = 'testString'
+        rule_target_attribute_model['name'] = 'resource_id'
         rule_target_attribute_model['operator'] = 'string_equals'
-        rule_target_attribute_model['value'] = 'testString'
+        rule_target_attribute_model['value'] = 'f0f8f7994e754ff38f9d370201966561'
 
         # Construct a dict representation of a TargetResource model
         target_resource_model = {}
@@ -232,7 +231,7 @@ class TestCreateRules():
 
         # Construct a dict representation of a EnforcementAction model
         enforcement_action_model = {}
-        enforcement_action_model['action'] = 'audit_log'
+        enforcement_action_model['action'] = 'disallow'
 
         # Construct a dict representation of a RuleRequest model
         rule_request_model = {}
@@ -273,7 +272,6 @@ class TestListRules():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -397,7 +395,6 @@ class TestGetRule():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -498,7 +495,6 @@ class TestUpdateRule():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -739,7 +735,6 @@ class TestDeleteRule():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -831,7 +826,6 @@ class TestCreateAttachments():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -980,7 +974,6 @@ class TestListAttachments():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -1090,7 +1083,6 @@ class TestGetAttachment():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -1197,7 +1189,6 @@ class TestUpdateAttachment():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -1355,7 +1346,6 @@ class TestDeleteAttachment():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:

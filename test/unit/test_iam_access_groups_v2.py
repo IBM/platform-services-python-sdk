@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Unit Tests for IamAccessGroupsV2
+"""
+
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 import inspect
 import json
@@ -20,6 +24,7 @@ import pytest
 import re
 import requests
 import responses
+import urllib
 from ibm_platform_services.iam_access_groups_v2 import *
 
 
@@ -35,23 +40,25 @@ service.set_service_url(base_url)
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for create_access_group
-#-----------------------------------------------------------------------------
 class TestCreateAccessGroup():
+    """
+    Test Class for create_access_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # create_access_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_access_group_all_params(self):
+        """
+        create_access_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
@@ -81,7 +88,7 @@ class TestCreateAccessGroup():
         assert response.status_code == 201
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
@@ -89,11 +96,11 @@ class TestCreateAccessGroup():
         assert req_body['description'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_create_access_group_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_access_group_required_params(self):
+        """
+        test_create_access_group_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
@@ -121,7 +128,7 @@ class TestCreateAccessGroup():
         assert response.status_code == 201
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
@@ -129,11 +136,11 @@ class TestCreateAccessGroup():
         assert req_body['description'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_create_access_group_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_create_access_group_value_error(self):
+        """
+        test_create_access_group_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
@@ -160,23 +167,25 @@ class TestCreateAccessGroup():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for list_access_groups
-#-----------------------------------------------------------------------------
 class TestListAccessGroups():
+    """
+    Test Class for list_access_groups
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_access_groups()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_access_groups_all_params(self):
+        """
+        list_access_groups()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
@@ -214,7 +223,7 @@ class TestListAccessGroups():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'iam_id={}'.format(iam_id) in query_string
         assert 'limit={}'.format(limit) in query_string
@@ -224,11 +233,11 @@ class TestListAccessGroups():
         assert 'hide_public_access={}'.format('true' if hide_public_access else 'false') in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_access_groups_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_access_groups_required_params(self):
+        """
+        test_list_access_groups_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
@@ -252,15 +261,15 @@ class TestListAccessGroups():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_access_groups_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_access_groups_value_error(self):
+        """
+        test_list_access_groups_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
@@ -284,23 +293,25 @@ class TestListAccessGroups():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_access_group
-#-----------------------------------------------------------------------------
 class TestGetAccessGroup():
+    """
+    Test Class for get_access_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_access_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_access_group_all_params(self):
+        """
+        get_access_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
@@ -328,15 +339,15 @@ class TestGetAccessGroup():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'show_federated={}'.format('true' if show_federated else 'false') in query_string
 
 
-    #--------------------------------------------------------
-    # test_get_access_group_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_access_group_required_params(self):
+        """
+        test_get_access_group_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
@@ -360,11 +371,11 @@ class TestGetAccessGroup():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_access_group_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_access_group_value_error(self):
+        """
+        test_get_access_group_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
@@ -388,23 +399,25 @@ class TestGetAccessGroup():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_access_group
-#-----------------------------------------------------------------------------
 class TestUpdateAccessGroup():
+    """
+    Test Class for update_access_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_access_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_access_group_all_params(self):
+        """
+        update_access_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
@@ -440,11 +453,11 @@ class TestUpdateAccessGroup():
         assert req_body['description'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_update_access_group_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_access_group_required_params(self):
+        """
+        test_update_access_group_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
@@ -478,11 +491,11 @@ class TestUpdateAccessGroup():
         assert req_body['description'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_update_access_group_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_access_group_value_error(self):
+        """
+        test_update_access_group_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
@@ -510,23 +523,25 @@ class TestUpdateAccessGroup():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for delete_access_group
-#-----------------------------------------------------------------------------
 class TestDeleteAccessGroup():
+    """
+    Test Class for delete_access_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # delete_access_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_access_group_all_params(self):
+        """
+        delete_access_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
         responses.add(responses.DELETE,
@@ -551,15 +566,15 @@ class TestDeleteAccessGroup():
         assert response.status_code == 204
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'force={}'.format('true' if force else 'false') in query_string
 
 
-    #--------------------------------------------------------
-    # test_delete_access_group_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_access_group_required_params(self):
+        """
+        test_delete_access_group_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
         responses.add(responses.DELETE,
@@ -580,11 +595,11 @@ class TestDeleteAccessGroup():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_delete_access_group_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_delete_access_group_value_error(self):
+        """
+        test_delete_access_group_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
         responses.add(responses.DELETE,
@@ -615,23 +630,25 @@ class TestDeleteAccessGroup():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for get_account_settings
-#-----------------------------------------------------------------------------
 class TestGetAccountSettings():
+    """
+    Test Class for get_account_settings
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_account_settings()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_account_settings_all_params(self):
+        """
+        get_account_settings()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
@@ -657,15 +674,15 @@ class TestGetAccountSettings():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
 
-    #--------------------------------------------------------
-    # test_get_account_settings_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_account_settings_required_params(self):
+        """
+        test_get_account_settings_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
@@ -689,15 +706,15 @@ class TestGetAccountSettings():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
 
-    #--------------------------------------------------------
-    # test_get_account_settings_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_account_settings_value_error(self):
+        """
+        test_get_account_settings_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
@@ -721,23 +738,25 @@ class TestGetAccountSettings():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for update_account_settings
-#-----------------------------------------------------------------------------
 class TestUpdateAccountSettings():
+    """
+    Test Class for update_account_settings
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # update_account_settings()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_account_settings_all_params(self):
+        """
+        update_account_settings()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
@@ -765,18 +784,18 @@ class TestUpdateAccountSettings():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['public_access_enabled'] == True
 
 
-    #--------------------------------------------------------
-    # test_update_account_settings_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_account_settings_required_params(self):
+        """
+        test_update_account_settings_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
@@ -802,18 +821,18 @@ class TestUpdateAccountSettings():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['public_access_enabled'] == True
 
 
-    #--------------------------------------------------------
-    # test_update_account_settings_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_update_account_settings_value_error(self):
+        """
+        test_update_account_settings_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
@@ -848,23 +867,25 @@ class TestUpdateAccountSettings():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for is_member_of_access_group
-#-----------------------------------------------------------------------------
 class TestIsMemberOfAccessGroup():
+    """
+    Test Class for is_member_of_access_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # is_member_of_access_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_is_member_of_access_group_all_params(self):
+        """
+        is_member_of_access_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members/testString')
         responses.add(responses.HEAD,
@@ -889,11 +910,11 @@ class TestIsMemberOfAccessGroup():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_is_member_of_access_group_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_is_member_of_access_group_required_params(self):
+        """
+        test_is_member_of_access_group_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members/testString')
         responses.add(responses.HEAD,
@@ -916,11 +937,11 @@ class TestIsMemberOfAccessGroup():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_is_member_of_access_group_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_is_member_of_access_group_value_error(self):
+        """
+        test_is_member_of_access_group_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members/testString')
         responses.add(responses.HEAD,
@@ -943,23 +964,25 @@ class TestIsMemberOfAccessGroup():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for add_members_to_access_group
-#-----------------------------------------------------------------------------
 class TestAddMembersToAccessGroup():
+    """
+    Test Class for add_members_to_access_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # add_members_to_access_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_members_to_access_group_all_params(self):
+        """
+        add_members_to_access_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "created_at", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
@@ -995,11 +1018,11 @@ class TestAddMembersToAccessGroup():
         assert req_body['members'] == [add_group_members_request_members_item_model]
 
 
-    #--------------------------------------------------------
-    # test_add_members_to_access_group_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_members_to_access_group_required_params(self):
+        """
+        test_add_members_to_access_group_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "created_at", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
@@ -1033,11 +1056,11 @@ class TestAddMembersToAccessGroup():
         assert req_body['members'] == [add_group_members_request_members_item_model]
 
 
-    #--------------------------------------------------------
-    # test_add_members_to_access_group_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_members_to_access_group_value_error(self):
+        """
+        test_add_members_to_access_group_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "created_at", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
@@ -1067,23 +1090,25 @@ class TestAddMembersToAccessGroup():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for list_access_group_members
-#-----------------------------------------------------------------------------
 class TestListAccessGroupMembers():
+    """
+    Test Class for list_access_group_members
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_access_group_members()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_access_group_members_all_params(self):
+        """
+        list_access_group_members()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "created_at", "created_by_id": "created_by_id"}]}'
@@ -1096,8 +1121,8 @@ class TestListAccessGroupMembers():
         # Set up parameter values
         access_group_id = 'testString'
         transaction_id = 'testString'
-        limit = 36.0
-        offset = 36.0
+        limit = 72.5
+        offset = 72.5
         type = 'testString'
         verbose = True
         sort = 'testString'
@@ -1119,7 +1144,7 @@ class TestListAccessGroupMembers():
         assert response.status_code == 200
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'limit={}'.format(limit) in query_string
         assert 'offset={}'.format(offset) in query_string
         assert 'type={}'.format(type) in query_string
@@ -1127,11 +1152,11 @@ class TestListAccessGroupMembers():
         assert 'sort={}'.format(sort) in query_string
 
 
-    #--------------------------------------------------------
-    # test_list_access_group_members_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_access_group_members_required_params(self):
+        """
+        test_list_access_group_members_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "created_at", "created_by_id": "created_by_id"}]}'
@@ -1155,11 +1180,11 @@ class TestListAccessGroupMembers():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_list_access_group_members_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_access_group_members_value_error(self):
+        """
+        test_list_access_group_members_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "created_at", "created_by_id": "created_by_id"}]}'
@@ -1183,23 +1208,25 @@ class TestListAccessGroupMembers():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for remove_member_from_access_group
-#-----------------------------------------------------------------------------
 class TestRemoveMemberFromAccessGroup():
+    """
+    Test Class for remove_member_from_access_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # remove_member_from_access_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_remove_member_from_access_group_all_params(self):
+        """
+        remove_member_from_access_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members/testString')
         responses.add(responses.DELETE,
@@ -1224,11 +1251,11 @@ class TestRemoveMemberFromAccessGroup():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_remove_member_from_access_group_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_remove_member_from_access_group_required_params(self):
+        """
+        test_remove_member_from_access_group_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members/testString')
         responses.add(responses.DELETE,
@@ -1251,11 +1278,11 @@ class TestRemoveMemberFromAccessGroup():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_remove_member_from_access_group_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_remove_member_from_access_group_value_error(self):
+        """
+        test_remove_member_from_access_group_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members/testString')
         responses.add(responses.DELETE,
@@ -1278,23 +1305,25 @@ class TestRemoveMemberFromAccessGroup():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for remove_members_from_access_group
-#-----------------------------------------------------------------------------
 class TestRemoveMembersFromAccessGroup():
+    """
+    Test Class for remove_members_from_access_group
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # remove_members_from_access_group()
-    #--------------------------------------------------------
     @responses.activate
     def test_remove_members_from_access_group_all_params(self):
+        """
+        remove_members_from_access_group()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
@@ -1325,11 +1354,11 @@ class TestRemoveMembersFromAccessGroup():
         assert req_body['members'] == ['testString']
 
 
-    #--------------------------------------------------------
-    # test_remove_members_from_access_group_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_remove_members_from_access_group_required_params(self):
+        """
+        test_remove_members_from_access_group_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
@@ -1358,11 +1387,11 @@ class TestRemoveMembersFromAccessGroup():
         assert req_body['members'] == ['testString']
 
 
-    #--------------------------------------------------------
-    # test_remove_members_from_access_group_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_remove_members_from_access_group_value_error(self):
+        """
+        test_remove_members_from_access_group_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
@@ -1387,23 +1416,25 @@ class TestRemoveMembersFromAccessGroup():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for remove_member_from_all_access_groups
-#-----------------------------------------------------------------------------
 class TestRemoveMemberFromAllAccessGroups():
+    """
+    Test Class for remove_member_from_all_access_groups
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # remove_member_from_all_access_groups()
-    #--------------------------------------------------------
     @responses.activate
     def test_remove_member_from_all_access_groups_all_params(self):
+        """
+        remove_member_from_all_access_groups()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
@@ -1431,15 +1462,15 @@ class TestRemoveMemberFromAllAccessGroups():
         assert response.status_code == 207
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
 
-    #--------------------------------------------------------
-    # test_remove_member_from_all_access_groups_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_remove_member_from_all_access_groups_required_params(self):
+        """
+        test_remove_member_from_all_access_groups_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
@@ -1465,15 +1496,15 @@ class TestRemoveMemberFromAllAccessGroups():
         assert response.status_code == 207
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
 
-    #--------------------------------------------------------
-    # test_remove_member_from_all_access_groups_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_remove_member_from_all_access_groups_value_error(self):
+        """
+        test_remove_member_from_all_access_groups_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
@@ -1499,23 +1530,25 @@ class TestRemoveMemberFromAllAccessGroups():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for add_member_to_multiple_access_groups
-#-----------------------------------------------------------------------------
 class TestAddMemberToMultipleAccessGroups():
+    """
+    Test Class for add_member_to_multiple_access_groups
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # add_member_to_multiple_access_groups()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_member_to_multiple_access_groups_all_params(self):
+        """
+        add_member_to_multiple_access_groups()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
@@ -1547,7 +1580,7 @@ class TestAddMemberToMultipleAccessGroups():
         assert response.status_code == 207
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
@@ -1555,11 +1588,11 @@ class TestAddMemberToMultipleAccessGroups():
         assert req_body['groups'] == ['testString']
 
 
-    #--------------------------------------------------------
-    # test_add_member_to_multiple_access_groups_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_member_to_multiple_access_groups_required_params(self):
+        """
+        test_add_member_to_multiple_access_groups_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
@@ -1589,7 +1622,7 @@ class TestAddMemberToMultipleAccessGroups():
         assert response.status_code == 207
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = requests.utils.unquote(query_string)
+        query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
@@ -1597,11 +1630,11 @@ class TestAddMemberToMultipleAccessGroups():
         assert req_body['groups'] == ['testString']
 
 
-    #--------------------------------------------------------
-    # test_add_member_to_multiple_access_groups_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_member_to_multiple_access_groups_value_error(self):
+        """
+        test_add_member_to_multiple_access_groups_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
@@ -1639,23 +1672,25 @@ class TestAddMemberToMultipleAccessGroups():
 ##############################################################################
 # region
 
-#-----------------------------------------------------------------------------
-# Test Class for add_access_group_rule
-#-----------------------------------------------------------------------------
 class TestAddAccessGroupRule():
+    """
+    Test Class for add_access_group_rule
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # add_access_group_rule()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_access_group_rule_all_params(self):
+        """
+        add_access_group_rule()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
@@ -1701,11 +1736,11 @@ class TestAddAccessGroupRule():
         assert req_body['name'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_add_access_group_rule_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_access_group_rule_required_params(self):
+        """
+        test_add_access_group_rule_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
@@ -1749,11 +1784,11 @@ class TestAddAccessGroupRule():
         assert req_body['name'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_add_access_group_rule_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_add_access_group_rule_value_error(self):
+        """
+        test_add_access_group_rule_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
@@ -1790,23 +1825,25 @@ class TestAddAccessGroupRule():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for list_access_group_rules
-#-----------------------------------------------------------------------------
 class TestListAccessGroupRules():
+    """
+    Test Class for list_access_group_rules
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # list_access_group_rules()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_access_group_rules_all_params(self):
+        """
+        list_access_group_rules()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
@@ -1832,11 +1869,11 @@ class TestListAccessGroupRules():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_list_access_group_rules_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_access_group_rules_required_params(self):
+        """
+        test_list_access_group_rules_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
@@ -1860,11 +1897,11 @@ class TestListAccessGroupRules():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_list_access_group_rules_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_list_access_group_rules_value_error(self):
+        """
+        test_list_access_group_rules_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
@@ -1888,23 +1925,25 @@ class TestListAccessGroupRules():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for get_access_group_rule
-#-----------------------------------------------------------------------------
 class TestGetAccessGroupRule():
+    """
+    Test Class for get_access_group_rule
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # get_access_group_rule()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_access_group_rule_all_params(self):
+        """
+        get_access_group_rule()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
@@ -1932,11 +1971,11 @@ class TestGetAccessGroupRule():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_access_group_rule_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_access_group_rule_required_params(self):
+        """
+        test_get_access_group_rule_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
@@ -1962,11 +2001,11 @@ class TestGetAccessGroupRule():
         assert response.status_code == 200
 
 
-    #--------------------------------------------------------
-    # test_get_access_group_rule_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_get_access_group_rule_value_error(self):
+        """
+        test_get_access_group_rule_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
@@ -1992,23 +2031,25 @@ class TestGetAccessGroupRule():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for replace_access_group_rule
-#-----------------------------------------------------------------------------
 class TestReplaceAccessGroupRule():
+    """
+    Test Class for replace_access_group_rule
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # replace_access_group_rule()
-    #--------------------------------------------------------
     @responses.activate
     def test_replace_access_group_rule_all_params(self):
+        """
+        replace_access_group_rule()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
@@ -2058,11 +2099,11 @@ class TestReplaceAccessGroupRule():
         assert req_body['name'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_replace_access_group_rule_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_replace_access_group_rule_required_params(self):
+        """
+        test_replace_access_group_rule_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
@@ -2110,11 +2151,11 @@ class TestReplaceAccessGroupRule():
         assert req_body['name'] == 'testString'
 
 
-    #--------------------------------------------------------
-    # test_replace_access_group_rule_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_replace_access_group_rule_value_error(self):
+        """
+        test_replace_access_group_rule_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
@@ -2155,23 +2196,25 @@ class TestReplaceAccessGroupRule():
 
 
 
-#-----------------------------------------------------------------------------
-# Test Class for remove_access_group_rule
-#-----------------------------------------------------------------------------
 class TestRemoveAccessGroupRule():
+    """
+    Test Class for remove_access_group_rule
+    """
 
-    # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
             return re.compile(request_url.rstrip('/') + '/+')
 
-    #--------------------------------------------------------
-    # remove_access_group_rule()
-    #--------------------------------------------------------
     @responses.activate
     def test_remove_access_group_rule_all_params(self):
+        """
+        remove_access_group_rule()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         responses.add(responses.DELETE,
@@ -2196,11 +2239,11 @@ class TestRemoveAccessGroupRule():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_remove_access_group_rule_required_params()
-    #--------------------------------------------------------
     @responses.activate
     def test_remove_access_group_rule_required_params(self):
+        """
+        test_remove_access_group_rule_required_params()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         responses.add(responses.DELETE,
@@ -2223,11 +2266,11 @@ class TestRemoveAccessGroupRule():
         assert response.status_code == 204
 
 
-    #--------------------------------------------------------
-    # test_remove_access_group_rule_value_error()
-    #--------------------------------------------------------
     @responses.activate
     def test_remove_access_group_rule_value_error(self):
+        """
+        test_remove_access_group_rule_value_error()
+        """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
         responses.add(responses.DELETE,
@@ -2260,15 +2303,15 @@ class TestRemoveAccessGroupRule():
 # Start of Model Tests
 ##############################################################################
 # region
-#-----------------------------------------------------------------------------
-# Test Class for AccountSettings
-#-----------------------------------------------------------------------------
 class TestAccountSettings():
+    """
+    Test Class for AccountSettings
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for AccountSettings
-    #--------------------------------------------------------
     def test_account_settings_serialization(self):
+        """
+        Test serialization/deserialization for AccountSettings
+        """
 
         # Construct a json representation of a AccountSettings model
         account_settings_model_json = {}
@@ -2292,15 +2335,15 @@ class TestAccountSettings():
         account_settings_model_json2 = account_settings_model.to_dict()
         assert account_settings_model_json2 == account_settings_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for AddGroupMembersRequestMembersItem
-#-----------------------------------------------------------------------------
 class TestAddGroupMembersRequestMembersItem():
+    """
+    Test Class for AddGroupMembersRequestMembersItem
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for AddGroupMembersRequestMembersItem
-    #--------------------------------------------------------
     def test_add_group_members_request_members_item_serialization(self):
+        """
+        Test serialization/deserialization for AddGroupMembersRequestMembersItem
+        """
 
         # Construct a json representation of a AddGroupMembersRequestMembersItem model
         add_group_members_request_members_item_model_json = {}
@@ -2322,15 +2365,15 @@ class TestAddGroupMembersRequestMembersItem():
         add_group_members_request_members_item_model_json2 = add_group_members_request_members_item_model.to_dict()
         assert add_group_members_request_members_item_model_json2 == add_group_members_request_members_item_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for AddGroupMembersResponse
-#-----------------------------------------------------------------------------
 class TestAddGroupMembersResponse():
+    """
+    Test Class for AddGroupMembersResponse
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for AddGroupMembersResponse
-    #--------------------------------------------------------
     def test_add_group_members_response_serialization(self):
+        """
+        Test serialization/deserialization for AddGroupMembersResponse
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2366,15 +2409,15 @@ class TestAddGroupMembersResponse():
         add_group_members_response_model_json2 = add_group_members_response_model.to_dict()
         assert add_group_members_response_model_json2 == add_group_members_response_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for AddGroupMembersResponseMembersItem
-#-----------------------------------------------------------------------------
 class TestAddGroupMembersResponseMembersItem():
+    """
+    Test Class for AddGroupMembersResponseMembersItem
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for AddGroupMembersResponseMembersItem
-    #--------------------------------------------------------
     def test_add_group_members_response_members_item_serialization(self):
+        """
+        Test serialization/deserialization for AddGroupMembersResponseMembersItem
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2407,15 +2450,15 @@ class TestAddGroupMembersResponseMembersItem():
         add_group_members_response_members_item_model_json2 = add_group_members_response_members_item_model.to_dict()
         assert add_group_members_response_members_item_model_json2 == add_group_members_response_members_item_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for AddMembershipMultipleGroupsResponse
-#-----------------------------------------------------------------------------
 class TestAddMembershipMultipleGroupsResponse():
+    """
+    Test Class for AddMembershipMultipleGroupsResponse
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for AddMembershipMultipleGroupsResponse
-    #--------------------------------------------------------
     def test_add_membership_multiple_groups_response_serialization(self):
+        """
+        Test serialization/deserialization for AddMembershipMultipleGroupsResponse
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2449,15 +2492,15 @@ class TestAddMembershipMultipleGroupsResponse():
         add_membership_multiple_groups_response_model_json2 = add_membership_multiple_groups_response_model.to_dict()
         assert add_membership_multiple_groups_response_model_json2 == add_membership_multiple_groups_response_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for AddMembershipMultipleGroupsResponseGroupsItem
-#-----------------------------------------------------------------------------
 class TestAddMembershipMultipleGroupsResponseGroupsItem():
+    """
+    Test Class for AddMembershipMultipleGroupsResponseGroupsItem
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for AddMembershipMultipleGroupsResponseGroupsItem
-    #--------------------------------------------------------
     def test_add_membership_multiple_groups_response_groups_item_serialization(self):
+        """
+        Test serialization/deserialization for AddMembershipMultipleGroupsResponseGroupsItem
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2487,15 +2530,15 @@ class TestAddMembershipMultipleGroupsResponseGroupsItem():
         add_membership_multiple_groups_response_groups_item_model_json2 = add_membership_multiple_groups_response_groups_item_model.to_dict()
         assert add_membership_multiple_groups_response_groups_item_model_json2 == add_membership_multiple_groups_response_groups_item_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for DeleteFromAllGroupsResponse
-#-----------------------------------------------------------------------------
 class TestDeleteFromAllGroupsResponse():
+    """
+    Test Class for DeleteFromAllGroupsResponse
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for DeleteFromAllGroupsResponse
-    #--------------------------------------------------------
     def test_delete_from_all_groups_response_serialization(self):
+        """
+        Test serialization/deserialization for DeleteFromAllGroupsResponse
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2529,15 +2572,15 @@ class TestDeleteFromAllGroupsResponse():
         delete_from_all_groups_response_model_json2 = delete_from_all_groups_response_model.to_dict()
         assert delete_from_all_groups_response_model_json2 == delete_from_all_groups_response_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for DeleteFromAllGroupsResponseGroupsItem
-#-----------------------------------------------------------------------------
 class TestDeleteFromAllGroupsResponseGroupsItem():
+    """
+    Test Class for DeleteFromAllGroupsResponseGroupsItem
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for DeleteFromAllGroupsResponseGroupsItem
-    #--------------------------------------------------------
     def test_delete_from_all_groups_response_groups_item_serialization(self):
+        """
+        Test serialization/deserialization for DeleteFromAllGroupsResponseGroupsItem
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2567,15 +2610,15 @@ class TestDeleteFromAllGroupsResponseGroupsItem():
         delete_from_all_groups_response_groups_item_model_json2 = delete_from_all_groups_response_groups_item_model.to_dict()
         assert delete_from_all_groups_response_groups_item_model_json2 == delete_from_all_groups_response_groups_item_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for DeleteGroupBulkMembersResponse
-#-----------------------------------------------------------------------------
 class TestDeleteGroupBulkMembersResponse():
+    """
+    Test Class for DeleteGroupBulkMembersResponse
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for DeleteGroupBulkMembersResponse
-    #--------------------------------------------------------
     def test_delete_group_bulk_members_response_serialization(self):
+        """
+        Test serialization/deserialization for DeleteGroupBulkMembersResponse
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2609,15 +2652,15 @@ class TestDeleteGroupBulkMembersResponse():
         delete_group_bulk_members_response_model_json2 = delete_group_bulk_members_response_model.to_dict()
         assert delete_group_bulk_members_response_model_json2 == delete_group_bulk_members_response_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for DeleteGroupBulkMembersResponseMembersItem
-#-----------------------------------------------------------------------------
 class TestDeleteGroupBulkMembersResponseMembersItem():
+    """
+    Test Class for DeleteGroupBulkMembersResponseMembersItem
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for DeleteGroupBulkMembersResponseMembersItem
-    #--------------------------------------------------------
     def test_delete_group_bulk_members_response_members_item_serialization(self):
+        """
+        Test serialization/deserialization for DeleteGroupBulkMembersResponseMembersItem
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2647,15 +2690,15 @@ class TestDeleteGroupBulkMembersResponseMembersItem():
         delete_group_bulk_members_response_members_item_model_json2 = delete_group_bulk_members_response_members_item_model.to_dict()
         assert delete_group_bulk_members_response_members_item_model_json2 == delete_group_bulk_members_response_members_item_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Error
-#-----------------------------------------------------------------------------
 class TestError():
+    """
+    Test Class for Error
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Error
-    #--------------------------------------------------------
     def test_error_serialization(self):
+        """
+        Test serialization/deserialization for Error
+        """
 
         # Construct a json representation of a Error model
         error_model_json = {}
@@ -2677,15 +2720,15 @@ class TestError():
         error_model_json2 = error_model.to_dict()
         assert error_model_json2 == error_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Group
-#-----------------------------------------------------------------------------
 class TestGroup():
+    """
+    Test Class for Group
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Group
-    #--------------------------------------------------------
     def test_group_serialization(self):
+        """
+        Test serialization/deserialization for Group
+        """
 
         # Construct a json representation of a Group model
         group_model_json = {}
@@ -2715,15 +2758,15 @@ class TestGroup():
         group_model_json2 = group_model.to_dict()
         assert group_model_json2 == group_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for GroupMembersList
-#-----------------------------------------------------------------------------
 class TestGroupMembersList():
+    """
+    Test Class for GroupMembersList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for GroupMembersList
-    #--------------------------------------------------------
     def test_group_members_list_serialization(self):
+        """
+        Test serialization/deserialization for GroupMembersList
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2766,17 +2809,20 @@ class TestGroupMembersList():
         group_members_list_model_json2 = group_members_list_model.to_dict()
         assert group_members_list_model_json2 == group_members_list_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for GroupsList
-#-----------------------------------------------------------------------------
 class TestGroupsList():
+    """
+    Test Class for GroupsList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for GroupsList
-    #--------------------------------------------------------
     def test_groups_list_serialization(self):
+        """
+        Test serialization/deserialization for GroupsList
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
+
+        href_struct_model = {} # HrefStruct
+        href_struct_model['href'] = 'testString'
 
         group_model = {} # Group
         group_model['id'] = 'testString'
@@ -2789,9 +2835,6 @@ class TestGroupsList():
         group_model['last_modified_by_id'] = 'testString'
         group_model['href'] = 'testString'
         group_model['is_federated'] = True
-
-        href_struct_model = {} # HrefStruct
-        href_struct_model['href'] = 'testString'
 
         # Construct a json representation of a GroupsList model
         groups_list_model_json = {}
@@ -2819,15 +2862,15 @@ class TestGroupsList():
         groups_list_model_json2 = groups_list_model.to_dict()
         assert groups_list_model_json2 == groups_list_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for HrefStruct
-#-----------------------------------------------------------------------------
 class TestHrefStruct():
+    """
+    Test Class for HrefStruct
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for HrefStruct
-    #--------------------------------------------------------
     def test_href_struct_serialization(self):
+        """
+        Test serialization/deserialization for HrefStruct
+        """
 
         # Construct a json representation of a HrefStruct model
         href_struct_model_json = {}
@@ -2848,15 +2891,15 @@ class TestHrefStruct():
         href_struct_model_json2 = href_struct_model.to_dict()
         assert href_struct_model_json2 == href_struct_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for ListGroupMembersResponseMember
-#-----------------------------------------------------------------------------
 class TestListGroupMembersResponseMember():
+    """
+    Test Class for ListGroupMembersResponseMember
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for ListGroupMembersResponseMember
-    #--------------------------------------------------------
     def test_list_group_members_response_member_serialization(self):
+        """
+        Test serialization/deserialization for ListGroupMembersResponseMember
+        """
 
         # Construct a json representation of a ListGroupMembersResponseMember model
         list_group_members_response_member_model_json = {}
@@ -2884,15 +2927,15 @@ class TestListGroupMembersResponseMember():
         list_group_members_response_member_model_json2 = list_group_members_response_member_model.to_dict()
         assert list_group_members_response_member_model_json2 == list_group_members_response_member_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for Rule
-#-----------------------------------------------------------------------------
 class TestRule():
+    """
+    Test Class for Rule
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for Rule
-    #--------------------------------------------------------
     def test_rule_serialization(self):
+        """
+        Test serialization/deserialization for Rule
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
@@ -2930,15 +2973,15 @@ class TestRule():
         rule_model_json2 = rule_model.to_dict()
         assert rule_model_json2 == rule_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for RuleConditions
-#-----------------------------------------------------------------------------
 class TestRuleConditions():
+    """
+    Test Class for RuleConditions
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for RuleConditions
-    #--------------------------------------------------------
     def test_rule_conditions_serialization(self):
+        """
+        Test serialization/deserialization for RuleConditions
+        """
 
         # Construct a json representation of a RuleConditions model
         rule_conditions_model_json = {}
@@ -2961,15 +3004,15 @@ class TestRuleConditions():
         rule_conditions_model_json2 = rule_conditions_model.to_dict()
         assert rule_conditions_model_json2 == rule_conditions_model_json
 
-#-----------------------------------------------------------------------------
-# Test Class for RulesList
-#-----------------------------------------------------------------------------
 class TestRulesList():
+    """
+    Test Class for RulesList
+    """
 
-    #--------------------------------------------------------
-    # Test serialization/deserialization for RulesList
-    #--------------------------------------------------------
     def test_rules_list_serialization(self):
+        """
+        Test serialization/deserialization for RulesList
+        """
 
         # Construct dict forms of any model objects needed in order to build this model.
 

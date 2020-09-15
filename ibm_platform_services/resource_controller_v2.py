@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ 
 """
 Manage lifecycle of your Cloud resources using Resource Controller APIs. Resources are
 provisioned globally in an account scope. Supports asynchronous provisioning of resources.
@@ -138,6 +140,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/resource_instances'
         request = self.prepare_request(method='GET',
@@ -221,6 +224,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/resource_instances'
         request = self.prepare_request(method='POST',
@@ -257,9 +261,12 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/v2/resource_instances/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_instances/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -294,8 +301,10 @@ class ResourceControllerV2(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/v2/resource_instances/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_instances/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
@@ -355,9 +364,12 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/v2/resource_instances/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_instances/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
@@ -394,9 +406,12 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/v2/resource_instances/{0}/lock'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_instances/{id}/lock'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers)
@@ -430,9 +445,12 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/v2/resource_instances/{0}/lock'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_instances/{id}/lock'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
@@ -495,6 +513,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/resource_keys'
         request = self.prepare_request(method='GET',
@@ -555,6 +574,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/resource_keys'
         request = self.prepare_request(method='POST',
@@ -591,9 +611,12 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/v2/resource_keys/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_keys/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -628,8 +651,10 @@ class ResourceControllerV2(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/v2/resource_keys/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_keys/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
@@ -675,9 +700,12 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/v2/resource_keys/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_keys/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
@@ -743,6 +771,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/resource_bindings'
         request = self.prepare_request(method='GET',
@@ -809,6 +838,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/resource_bindings'
         request = self.prepare_request(method='POST',
@@ -845,9 +875,12 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/v2/resource_bindings/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_bindings/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -882,8 +915,10 @@ class ResourceControllerV2(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/v2/resource_bindings/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_bindings/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
@@ -930,9 +965,12 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/v2/resource_bindings/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_bindings/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
@@ -1001,6 +1039,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/resource_aliases'
         request = self.prepare_request(method='GET',
@@ -1056,6 +1095,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v2/resource_aliases'
         request = self.prepare_request(method='POST',
@@ -1092,9 +1132,12 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/v2/resource_aliases/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_aliases/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -1129,8 +1172,10 @@ class ResourceControllerV2(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/v2/resource_aliases/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_aliases/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
@@ -1176,9 +1221,12 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/v2/resource_aliases/{0}'.format(
-            *self.encode_path_vars(id))
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_aliases/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
@@ -1225,6 +1273,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/v1/reclamations'
         request = self.prepare_request(method='GET',
@@ -1281,9 +1330,12 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/v1/reclamations/{0}/actions/{1}'.format(
-            *self.encode_path_vars(id, action_name))
+        path_param_keys = ['id', 'action_name']
+        path_param_values = self.encode_path_vars(id, action_name)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/reclamations/{id}/actions/{action_name}'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,

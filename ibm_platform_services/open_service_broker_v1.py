@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ 
 """
 Contribute resources to the IBM Cloud catalog by implementing a `service broker` that
 conforms to the [Open Service Broker
@@ -114,8 +116,10 @@ class OpenServiceBrokerV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/bluemix_v1/service_instances/{0}'.format(
-            *self.encode_path_vars(instance_id))
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/bluemix_v1/service_instances/{instance_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -191,8 +195,10 @@ class OpenServiceBrokerV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/bluemix_v1/service_instances/{0}'.format(
-            *self.encode_path_vars(instance_id))
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/bluemix_v1/service_instances/{instance_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -305,8 +311,10 @@ class OpenServiceBrokerV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v2/service_instances/{0}'.format(
-            *self.encode_path_vars(instance_id))
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/service_instances/{instance_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -400,8 +408,10 @@ class OpenServiceBrokerV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v2/service_instances/{0}'.format(
-            *self.encode_path_vars(instance_id))
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/service_instances/{instance_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
@@ -468,8 +478,10 @@ class OpenServiceBrokerV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v2/service_instances/{0}'.format(
-            *self.encode_path_vars(instance_id))
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/service_instances/{instance_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers,
@@ -586,8 +598,10 @@ class OpenServiceBrokerV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v2/service_instances/{0}/last_operation'.format(
-            *self.encode_path_vars(instance_id))
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/service_instances/{instance_id}/last_operation'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -671,8 +685,10 @@ class OpenServiceBrokerV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v2/service_instances/{0}/service_bindings/{1}'.format(
-            *self.encode_path_vars(binding_id, instance_id))
+        path_param_keys = ['binding_id', 'instance_id']
+        path_param_values = self.encode_path_vars(binding_id, instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/service_instances/{instance_id}/service_bindings/{binding_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -736,8 +752,10 @@ class OpenServiceBrokerV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v2/service_instances/{0}/service_bindings/{1}'.format(
-            *self.encode_path_vars(binding_id, instance_id))
+        path_param_keys = ['binding_id', 'instance_id']
+        path_param_values = self.encode_path_vars(binding_id, instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/service_instances/{instance_id}/service_bindings/{binding_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers,
