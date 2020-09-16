@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Unit Tests for UserManagementV1
+"""
+
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 import inspect
 import json
@@ -45,7 +49,6 @@ class TestGetUserSettings():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -120,7 +123,6 @@ class TestUpdateUserSettings():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -249,7 +251,6 @@ class TestListUsers():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -354,7 +355,6 @@ class TestInviteUsers():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -394,6 +394,7 @@ class TestInviteUsers():
 
         # Construct a dict representation of a InviteUserIamPolicy model
         invite_user_iam_policy_model = {}
+        invite_user_iam_policy_model['type'] = 'testString'
         invite_user_iam_policy_model['roles'] = [role_model]
         invite_user_iam_policy_model['resources'] = [resource_model]
 
@@ -487,7 +488,6 @@ class TestGetUserProfile():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -562,7 +562,6 @@ class TestUpdateUserProfiles():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -681,7 +680,6 @@ class TestRemoveUsers():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -779,8 +777,8 @@ class TestUserList():
 
         # Construct a json representation of a UserList model
         user_list_model_json = {}
-        user_list_model_json['total_results'] = 36.0
-        user_list_model_json['limit'] = 36.0
+        user_list_model_json['total_results'] = 72.5
+        user_list_model_json['limit'] = 72.5
         user_list_model_json['first_url'] = 'testString'
         user_list_model_json['next_url'] = 'testString'
         user_list_model_json['resources'] = [user_profile_model]
@@ -956,6 +954,7 @@ class TestInviteUserIamPolicy():
 
         # Construct a json representation of a InviteUserIamPolicy model
         invite_user_iam_policy_model_json = {}
+        invite_user_iam_policy_model_json['type'] = 'testString'
         invite_user_iam_policy_model_json['roles'] = [role_model]
         invite_user_iam_policy_model_json['resources'] = [resource_model]
 

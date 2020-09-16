@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-7811f8fb-20200813-160653
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-b734cb71-20200916-090210
  
 """
 Manage the lifecycle of your users using User Management APIs.
@@ -116,8 +116,10 @@ class UserManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v2/accounts/{0}/users/{1}/settings'.format(
-            *self.encode_path_vars(account_id, iam_id))
+        path_param_keys = ['account_id', 'iam_id']
+        path_param_values = self.encode_path_vars(account_id, iam_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/accounts/{account_id}/users/{iam_id}/settings'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -185,8 +187,10 @@ class UserManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v2/accounts/{0}/users/{1}/settings'.format(
-            *self.encode_path_vars(account_id, iam_id))
+        path_param_keys = ['account_id', 'iam_id']
+        path_param_values = self.encode_path_vars(account_id, iam_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/accounts/{account_id}/users/{iam_id}/settings'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
@@ -243,8 +247,10 @@ class UserManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v2/accounts/{0}/users'.format(
-            *self.encode_path_vars(account_id))
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/accounts/{account_id}/users'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -313,8 +319,10 @@ class UserManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v2/accounts/{0}/users'.format(
-            *self.encode_path_vars(account_id))
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/accounts/{account_id}/users'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
@@ -358,8 +366,10 @@ class UserManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/v2/accounts/{0}/users/{1}'.format(
-            *self.encode_path_vars(account_id, iam_id))
+        path_param_keys = ['account_id', 'iam_id']
+        path_param_values = self.encode_path_vars(account_id, iam_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/accounts/{account_id}/users/{iam_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -436,8 +446,10 @@ class UserManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/v2/accounts/{0}/users/{1}'.format(
-            *self.encode_path_vars(account_id, iam_id))
+        path_param_keys = ['account_id', 'iam_id']
+        path_param_values = self.encode_path_vars(account_id, iam_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/accounts/{account_id}/users/{iam_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
@@ -481,8 +493,10 @@ class UserManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/v2/accounts/{0}/users/{1}'.format(
-            *self.encode_path_vars(account_id, iam_id))
+        path_param_keys = ['account_id', 'iam_id']
+        path_param_values = self.encode_path_vars(account_id, iam_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/accounts/{account_id}/users/{iam_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
@@ -958,20 +972,25 @@ class InviteUserIamPolicy():
     """
     Invite a user to an IAM policy.
 
+    :attr str type: The policy type. This can be either "access" or "authorization".
     :attr List[Role] roles: (optional) A list of IAM roles.
     :attr List[Resource] resources: (optional) A list of resources.
     """
 
     def __init__(self,
+                 type: str,
                  *,
                  roles: List['Role'] = None,
                  resources: List['Resource'] = None) -> None:
         """
         Initialize a InviteUserIamPolicy object.
 
+        :param str type: The policy type. This can be either "access" or
+               "authorization".
         :param List[Role] roles: (optional) A list of IAM roles.
         :param List[Resource] resources: (optional) A list of resources.
         """
+        self.type = type
         self.roles = roles
         self.resources = resources
 
@@ -979,6 +998,10 @@ class InviteUserIamPolicy():
     def from_dict(cls, _dict: Dict) -> 'InviteUserIamPolicy':
         """Initialize a InviteUserIamPolicy object from a json dictionary."""
         args = {}
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in InviteUserIamPolicy JSON')
         if 'roles' in _dict:
             args['roles'] = [Role.from_dict(x) for x in _dict.get('roles')]
         if 'resources' in _dict:
@@ -993,6 +1016,8 @@ class InviteUserIamPolicy():
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
         if hasattr(self, 'roles') and self.roles is not None:
             _dict['roles'] = [x.to_dict() for x in self.roles]
         if hasattr(self, 'resources') and self.resources is not None:
