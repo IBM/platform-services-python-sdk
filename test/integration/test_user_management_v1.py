@@ -13,156 +13,153 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""
-Integration Tests for UserManagementV1
-"""
-
 import os
-import pytest
+import sys
+import unittest
 from ibm_platform_services.user_management_v1 import *
 
-# Config file name
-config_file = 'user_management.env'
 
-class TestUserManagementV1():
-    """
-    Integration Test Class for UserManagementV1
-    """
+# Read config file
+config_file = 'user-management.env'
+
+class TestUserManagementV1(unittest.TestCase):
 
     @classmethod
     def setup_class(cls):
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
+        else:
+            raise unittest.SkipTest('External configuration not available, skipping...')
 
-            cls.user_management_service = UserManagementV1.new_instance(
-                )
-            assert cls.user_management_service is not None
+        cls.user_management_service = UserManagementV1.new_instance(service_name='USERMGMT1')
+        assert cls.user_management_service is not None
+
+        cls.alternate_user_management_service = UserManagementV1.new_instance(service_name='USERMGMT2')
+        assert cls.alternate_user_management_service is not None
 
         print('Setup complete.')
 
-    needscredentials = pytest.mark.skipif(
-        not os.path.exists(config_file), reason="External configuration not available, skipping..."
-    )
-
-    @needscredentials
     def test_get_user_settings(self):
 
-        get_user_settings_response = self.user_management_service.get_user_settings(
-            account_id='testString',
-            iam_id='testString'
+
+        user_settings = self.user_management_service.get_user_settings(
+            account_id='1aa434630b594b8a88b961a44c9eb2a9',
+            iam_id='IBMid-550008BJPR'
         )
 
-        assert get_user_settings_response.get_status_code() == 200
-        user_settings = get_user_settings_response.get_result()
-        assert user_settings is not None
+        assert user_settings.get_status_code() == 200
 
-    @needscredentials
+
     def test_update_user_settings(self):
 
-        update_user_settings_response = self.user_management_service.update_user_settings(
-            account_id='testString',
-            iam_id='testString',
+
+        user_settings = self.user_management_service.update_user_settings(
+            account_id='1aa434630b594b8a88b961a44c9eb2a9',
+            iam_id='IBMid-550008BJPR',
             language='testString',
             notification_language='testString',
             allowed_ip_addresses='32.96.110.50,172.16.254.1',
             self_manage=True
         )
 
-        assert update_user_settings_response.get_status_code() == 200
-        user_settings = update_user_settings_response.get_result()
-        assert user_settings is not None
+        assert user_settings.get_status_code() == 204
 
-    @needscredentials
+
     def test_list_users(self):
 
-        list_users_response = self.user_management_service.list_users(
-            account_id='testString',
-            state='testString'
+
+        user_list = self.user_management_service.list_users(
+            account_id='1aa434630b594b8a88b961a44c9eb2a9',
+            state='ACTIVE'
         )
 
-        assert list_users_response.get_status_code() == 200
-        user_list = list_users_response.get_result()
-        assert user_list is not None
+        assert user_list.get_status_code() == 200
 
-    @needscredentials
+
     def test_invite_users(self):
 
         # Construct a dict representation of a InviteUser model
         invite_user_model = {
-            'email': 'testString',
-            'account_role': 'testString'
+            'email': 'aminttest+linked_account_owner_11@mail.test.ibm.com',
+            'account_role': 'Member'
         }
 
         # Construct a dict representation of a Role model
         role_model = {
-            'role_id': 'testString'
+            'role_id': 'crn:v1:bluemix:public:iam::::role:Viewer'
         }
 
         # Construct a dict representation of a Attribute model
         attribute_model = {
-            'name': 'testString',
-            'value': 'testString'
+            'name': 'accountId',
+            'value': '1aa434630b594b8a88b961a44c9eb2a9'
+        }
+
+        attribute_model2 = {
+            'name': 'resourceGroupId',
+            'value': '*'
         }
 
         # Construct a dict representation of a Resource model
         resource_model = {
-            'attributes': [attribute_model]
+            'attributes': [attribute_model, attribute_model2]
         }
 
         # Construct a dict representation of a InviteUserIamPolicy model
         invite_user_iam_policy_model = {
-            'type': 'testString',
+            'type': 'access',
             'roles': [role_model],
             'resources': [resource_model]
         }
 
-        invite_users_response = self.user_management_service.invite_users(
-            account_id='testString',
+
+        user_list = self.alternate_user_management_service.invite_users(
+            account_id='1aa434630b594b8a88b961a44c9eb2a9',
             users=[invite_user_model],
             iam_policy=[invite_user_iam_policy_model],
-            access_groups=['testString']
+            access_groups=['AccessGroupId-51675919-2bd7-4ce3-86e4-5faff8065574']
         )
 
-        assert invite_users_response.get_status_code() == 202
-        user_list = invite_users_response.get_result()
-        assert user_list is not None
+        assert user_list.get_status_code() == 202
 
-    @needscredentials
+
     def test_get_user_profile(self):
 
-        get_user_profile_response = self.user_management_service.get_user_profile(
-            account_id='testString',
-            iam_id='testString'
+
+        user_profile = self.user_management_service.get_user_profile(
+            account_id='1aa434630b594b8a88b961a44c9eb2a9',
+            iam_id='IBMid-550008BJPR'
         )
 
-        assert get_user_profile_response.get_status_code() == 200
-        user_profile = get_user_profile_response.get_result()
-        assert user_profile is not None
+        assert user_profile.get_status_code() == 200
 
-    @needscredentials
+
     def test_update_user_profiles(self):
 
-        update_user_profiles_response = self.user_management_service.update_user_profiles(
-            account_id='testString',
-            iam_id='testString',
+
+        response = self.user_management_service.update_user_profiles(
+            account_id='1aa434630b594b8a88b961a44c9eb2a9',
+            iam_id='IBMid-550008BJPR',
             firstname='testString',
             lastname='testString',
-            state='testString',
-            email='testString',
+            state='ACTIVE',
+            email='do_not_delete_user_without_iam_policy_stage@mail.test.ibm.com',
             phonenumber='testString',
             altphonenumber='testString',
             photo='testString'
         )
 
-        assert update_user_profiles_response.get_status_code() == 204
+        assert response.get_status_code() == 204
 
-    @needscredentials
+
     def test_remove_users(self):
 
-        remove_users_response = self.user_management_service.remove_users(
-            account_id='testString',
-            iam_id='testString'
+
+        response = self.user_management_service.remove_users(
+            account_id='1aa434630b594b8a88b961a44c9eb2a9',
+            iam_id='de79cc26184417940e462fb814362c19'
         )
 
-        assert remove_users_response.get_status_code() == 204
+        assert response.get_status_code() == 204
+
 
