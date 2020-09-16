@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-b734cb71-20200916-090210
  
 """
 Manage the lifecycle of your users using User Management APIs.
@@ -37,7 +37,7 @@ from .common import get_sdk_headers
 class UserManagementV1(BaseService):
     """The User Management V1 service."""
 
-    DEFAULT_SERVICE_URL = 'https://user-management.test.cloud.ibm.com'
+    DEFAULT_SERVICE_URL = 'https://user-management.cloud.ibm.com'
     DEFAULT_SERVICE_NAME = 'user_management'
 
     @classmethod
