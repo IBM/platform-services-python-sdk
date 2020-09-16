@@ -1,3 +1,10 @@
+## [0.12.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.12.0...v0.12.1) (2020-09-16)
+
+
+### Bug Fixes
+
+* **User Management:** re-gen user-mgmt service ([#47](https://github.com/IBM/platform-services-python-sdk/issues/47)) ([c7953a8](https://github.com/IBM/platform-services-python-sdk/commit/c7953a89c6b96cb6c7f8582c07144f0a9fd85e3c))
+
 # [0.12.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.11.0...v0.12.0) (2020-08-31)
 
 
