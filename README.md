@@ -56,6 +56,7 @@ Service Name | Imported Class Name
 [Global Search](https://cloud.ibm.com/apidocs/search) | GlobalSearchV2
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | GlobalTaggingV1
 [IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | IamAccessGroupsV2
+[IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api) | IamIdentityV1
 [IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | IamPolicyManagementV1
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | OpenServiceBrokerV1
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | ResourceControllerV2
