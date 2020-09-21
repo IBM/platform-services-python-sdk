@@ -46,6 +46,9 @@ else:
     print('External configuration was not found, skipping tests...')
 
 class TestCatalogManagementV1(unittest.TestCase):
+    """
+    Integration Test Class for CaatalogManagementV1
+    """
 
     @classmethod
     def setUpClass(self):

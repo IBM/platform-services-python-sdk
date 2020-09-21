@@ -31,6 +31,10 @@ from ibm_platform_services.iam_access_groups_v2 import *
 configFile = 'iam_access_groups.env'
 
 class TestIamAccessGroupsV2(unittest.TestCase):
+    """
+    Integration Test Class for IamAccessGroupsV2
+    """
+
     @classmethod
     def setUpClass(cls):
         if os.path.exists(configFile):

@@ -39,7 +39,11 @@ else:
     print('External configuration was not found, skipping tests...')
 
 class TestResourceManagerV2(unittest.TestCase):
-    @classmethod
+     """
+    Integration Test Class for ResourceManagerV2
+    """
+
+   @classmethod
     def setUpClass(cls):
         if not configLoaded:
             raise unittest.SkipTest(

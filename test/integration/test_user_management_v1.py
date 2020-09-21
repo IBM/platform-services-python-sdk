@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+ This class contains an integration test for User Management service.
+"""
+
 import os
 import sys
 import unittest
@@ -23,6 +27,9 @@ from ibm_platform_services.user_management_v1 import *
 config_file = 'user-management.env'
 
 class TestUserManagementV1(unittest.TestCase):
+    """
+    Integration Test Class for UserManagementV1
+    """
 
     @classmethod
     def setup_class(cls):

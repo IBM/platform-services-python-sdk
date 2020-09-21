@@ -30,6 +30,9 @@ from ibm_platform_services.case_management_v1 import *
 configFile = 'case_management.env'
 
 class TestCaseManagementV1(unittest.TestCase):
+    """
+    Integration Test Class for CaseManagementV1
+    """
 
     # Used to store newly created case number
     new_case_number = ''
