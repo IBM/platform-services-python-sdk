@@ -42,6 +42,9 @@ configLoaded = None
 
     
 class TestEnterpriseManagementV1(unittest.TestCase):
+    """
+    Integration Test Class for EnterpriseManagementV1
+    """
     
     @classmethod
     def setUpClass(cls):

@@ -33,6 +33,10 @@ configLoaded = None
 
 
 class TestIamPolicyManagementV1(unittest.TestCase):
+    """
+    Integration Test Class for IamPolicyManagementV1
+    """
+
     @classmethod
     def setUpClass(cls):
         if os.path.exists(configFile):
