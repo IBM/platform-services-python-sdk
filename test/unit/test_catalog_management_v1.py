@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Unit Tests for CatalogeManagementV1
+"""
+
 from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 import inspect
@@ -40,6 +44,9 @@ service.set_service_url(base_url)
 # Test Class for get_catalog_account
 #-----------------------------------------------------------------------------
 class TestGetCatalogAccount():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -75,6 +82,9 @@ class TestGetCatalogAccount():
 # Test Class for update_catalog_account
 #-----------------------------------------------------------------------------
 class TestUpdateCatalogAccount():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -158,6 +168,9 @@ class TestUpdateCatalogAccount():
 # Test Class for get_catalog_account_filters
 #-----------------------------------------------------------------------------
 class TestGetCatalogAccountFilters():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -235,6 +248,9 @@ class TestGetCatalogAccountFilters():
 # Test Class for list_catalogs
 #-----------------------------------------------------------------------------
 class TestListCatalogs():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -270,6 +286,9 @@ class TestListCatalogs():
 # Test Class for create_catalog
 #-----------------------------------------------------------------------------
 class TestCreateCatalog():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -437,6 +456,9 @@ class TestCreateCatalog():
 # Test Class for get_catalog
 #-----------------------------------------------------------------------------
 class TestGetCatalog():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -505,6 +527,9 @@ class TestGetCatalog():
 # Test Class for replace_catalog
 #-----------------------------------------------------------------------------
 class TestReplaceCatalog():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -707,6 +732,9 @@ class TestReplaceCatalog():
 # Test Class for delete_catalog
 #-----------------------------------------------------------------------------
 class TestDeleteCatalog():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -779,6 +807,9 @@ class TestDeleteCatalog():
 # Test Class for get_enterprise
 #-----------------------------------------------------------------------------
 class TestGetEnterprise():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -847,6 +878,9 @@ class TestGetEnterprise():
 # Test Class for replace_enterprise
 #-----------------------------------------------------------------------------
 class TestReplaceEnterprise():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -987,6 +1021,9 @@ class TestReplaceEnterprise():
 # Test Class for get_consumption_offerings
 #-----------------------------------------------------------------------------
 class TestGetConsumptionOfferings():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -1063,6 +1100,9 @@ class TestGetConsumptionOfferings():
 # Test Class for list_offerings
 #-----------------------------------------------------------------------------
 class TestListOfferings():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -1165,6 +1205,9 @@ class TestListOfferings():
 # Test Class for create_offering
 #-----------------------------------------------------------------------------
 class TestCreateOffering():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -1503,6 +1546,9 @@ class TestCreateOffering():
 # Test Class for import_offering_version
 #-----------------------------------------------------------------------------
 class TestImportOfferingVersion():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -1638,6 +1684,9 @@ class TestImportOfferingVersion():
 # Test Class for import_offering
 #-----------------------------------------------------------------------------
 class TestImportOffering():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -1767,6 +1816,9 @@ class TestImportOffering():
 # Test Class for reload_offering
 #-----------------------------------------------------------------------------
 class TestReloadOffering():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -1904,6 +1956,9 @@ class TestReloadOffering():
 # Test Class for get_offering
 #-----------------------------------------------------------------------------
 class TestGetOffering():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -1976,6 +2031,9 @@ class TestGetOffering():
 # Test Class for replace_offering
 #-----------------------------------------------------------------------------
 class TestReplaceOffering():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -2320,6 +2378,9 @@ class TestReplaceOffering():
 # Test Class for delete_offering
 #-----------------------------------------------------------------------------
 class TestDeleteOffering():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -2386,6 +2447,9 @@ class TestDeleteOffering():
 # Test Class for replace_offering_icon
 #-----------------------------------------------------------------------------
 class TestReplaceOfferingIcon():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -2462,6 +2526,9 @@ class TestReplaceOfferingIcon():
 # Test Class for update_offering_ibm
 #-----------------------------------------------------------------------------
 class TestUpdateOfferingIbm():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -2552,6 +2619,9 @@ class TestUpdateOfferingIbm():
 # Test Class for get_version_about
 #-----------------------------------------------------------------------------
 class TestGetVersionAbout():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -2620,6 +2690,9 @@ class TestGetVersionAbout():
 # Test Class for get_version_license
 #-----------------------------------------------------------------------------
 class TestGetVersionLicense():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -2686,6 +2759,9 @@ class TestGetVersionLicense():
 # Test Class for get_version_container_images
 #-----------------------------------------------------------------------------
 class TestGetVersionContainerImages():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -2754,6 +2830,9 @@ class TestGetVersionContainerImages():
 # Test Class for deprecate_version
 #-----------------------------------------------------------------------------
 class TestDeprecateVersion():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -2816,6 +2895,9 @@ class TestDeprecateVersion():
 # Test Class for account_publish_version
 #-----------------------------------------------------------------------------
 class TestAccountPublishVersion():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -2878,6 +2960,9 @@ class TestAccountPublishVersion():
 # Test Class for ibm_publish_version
 #-----------------------------------------------------------------------------
 class TestIbmPublishVersion():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -2940,6 +3025,9 @@ class TestIbmPublishVersion():
 # Test Class for public_publish_version
 #-----------------------------------------------------------------------------
 class TestPublicPublishVersion():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -3002,6 +3090,9 @@ class TestPublicPublishVersion():
 # Test Class for commit_version
 #-----------------------------------------------------------------------------
 class TestCommitVersion():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -3064,6 +3155,9 @@ class TestCommitVersion():
 # Test Class for get_version_working_copy
 #-----------------------------------------------------------------------------
 class TestGetVersionWorkingCopy():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -3132,6 +3226,9 @@ class TestGetVersionWorkingCopy():
 # Test Class for get_version_updates
 #-----------------------------------------------------------------------------
 class TestGetVersionUpdates():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -3243,6 +3340,9 @@ class TestGetVersionUpdates():
 # Test Class for get_version
 #-----------------------------------------------------------------------------
 class TestGetVersion():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -3311,6 +3411,9 @@ class TestGetVersion():
 # Test Class for delete_version
 #-----------------------------------------------------------------------------
 class TestDeleteVersion():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -3373,6 +3476,9 @@ class TestDeleteVersion():
 # Test Class for list_versions
 #-----------------------------------------------------------------------------
 class TestListVersions():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -3449,6 +3555,9 @@ class TestListVersions():
 # Test Class for get_repos
 #-----------------------------------------------------------------------------
 class TestGetRepos():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -3525,6 +3634,9 @@ class TestGetRepos():
 # Test Class for get_repo
 #-----------------------------------------------------------------------------
 class TestGetRepo():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -3611,6 +3723,9 @@ class TestGetRepo():
 # Test Class for list_clusters
 #-----------------------------------------------------------------------------
 class TestListClusters():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -3684,6 +3799,9 @@ class TestListClusters():
 # Test Class for get_cluster
 #-----------------------------------------------------------------------------
 class TestGetCluster():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -3764,6 +3882,9 @@ class TestGetCluster():
 # Test Class for get_namespaces
 #-----------------------------------------------------------------------------
 class TestGetNamespaces():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -3886,6 +4007,9 @@ class TestGetNamespaces():
 # Test Class for create_operator
 #-----------------------------------------------------------------------------
 class TestCreateOperator():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -3996,6 +4120,9 @@ class TestCreateOperator():
 # Test Class for list_operators
 #-----------------------------------------------------------------------------
 class TestListOperators():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -4082,6 +4209,9 @@ class TestListOperators():
 # Test Class for replace_operator
 #-----------------------------------------------------------------------------
 class TestReplaceOperator():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -4192,6 +4322,9 @@ class TestReplaceOperator():
 # Test Class for delete_operator
 #-----------------------------------------------------------------------------
 class TestDeleteOperator():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -4272,6 +4405,9 @@ class TestDeleteOperator():
 # Test Class for install_version
 #-----------------------------------------------------------------------------
 class TestInstallVersion():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -4410,6 +4546,9 @@ class TestInstallVersion():
 # Test Class for preinstall_version
 #-----------------------------------------------------------------------------
 class TestPreinstallVersion():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -4548,6 +4687,9 @@ class TestPreinstallVersion():
 # Test Class for get_preinstall
 #-----------------------------------------------------------------------------
 class TestGetPreinstall():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -4662,6 +4804,9 @@ class TestGetPreinstall():
 # Test Class for validation_install
 #-----------------------------------------------------------------------------
 class TestValidationInstall():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -4800,6 +4945,9 @@ class TestValidationInstall():
 # Test Class for get_validation_status
 #-----------------------------------------------------------------------------
 class TestGetValidationStatus():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -4872,6 +5020,9 @@ class TestGetValidationStatus():
 # Test Class for get_override_values
 #-----------------------------------------------------------------------------
 class TestGetOverrideValues():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -4940,6 +5091,9 @@ class TestGetOverrideValues():
 # Test Class for get_schematics_workspaces
 #-----------------------------------------------------------------------------
 class TestGetSchematicsWorkspaces():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -5012,6 +5166,9 @@ class TestGetSchematicsWorkspaces():
 # Test Class for can_deploy_schematics
 #-----------------------------------------------------------------------------
 class TestCanDeploySchematics():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -5136,6 +5293,9 @@ class TestCanDeploySchematics():
 # Test Class for get_resource_groups
 #-----------------------------------------------------------------------------
 class TestGetResourceGroups():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -5181,6 +5341,9 @@ class TestGetResourceGroups():
 # Test Class for get_license_providers
 #-----------------------------------------------------------------------------
 class TestGetLicenseProviders():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -5216,6 +5379,9 @@ class TestGetLicenseProviders():
 # Test Class for list_license_entitlements
 #-----------------------------------------------------------------------------
 class TestListLicenseEntitlements():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -5292,6 +5458,9 @@ class TestListLicenseEntitlements():
 # Test Class for create_license_entitlement
 #-----------------------------------------------------------------------------
 class TestCreateLicenseEntitlement():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -5385,6 +5554,9 @@ class TestCreateLicenseEntitlement():
 # Test Class for get_license_entitlements
 #-----------------------------------------------------------------------------
 class TestGetLicenseEntitlements():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -5490,6 +5662,9 @@ class TestGetLicenseEntitlements():
 # Test Class for delete_license_entitlement
 #-----------------------------------------------------------------------------
 class TestDeleteLicenseEntitlement():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -5583,6 +5758,9 @@ class TestDeleteLicenseEntitlement():
 # Test Class for get_licenses
 #-----------------------------------------------------------------------------
 class TestGetLicenses():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -5709,6 +5887,9 @@ class TestGetLicenses():
 # Test Class for search_license_versions
 #-----------------------------------------------------------------------------
 class TestSearchLicenseVersions():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -5775,6 +5956,9 @@ class TestSearchLicenseVersions():
 # Test Class for search_license_offerings
 #-----------------------------------------------------------------------------
 class TestSearchLicenseOfferings():
+    """
+    Test Class
+    """
 
     # Preprocess the request URL to ensure the mock response will be found.
     def preprocess_url(self, request_url: str):
@@ -5851,6 +6035,9 @@ class TestSearchLicenseOfferings():
 # Test Class for Account
 #-----------------------------------------------------------------------------
 class TestAccount():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Account
@@ -5899,6 +6086,9 @@ class TestAccount():
 # Test Class for AccountGroup
 #-----------------------------------------------------------------------------
 class TestAccountGroup():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for AccountGroup
@@ -5947,6 +6137,9 @@ class TestAccountGroup():
 # Test Class for AccumulatedFilters
 #-----------------------------------------------------------------------------
 class TestAccumulatedFilters():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for AccumulatedFilters
@@ -6003,6 +6196,9 @@ class TestAccumulatedFilters():
 # Test Class for AccumulatedFiltersCatalogFiltersItem
 #-----------------------------------------------------------------------------
 class TestAccumulatedFiltersCatalogFiltersItem():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for AccumulatedFiltersCatalogFiltersItem
@@ -6055,6 +6251,9 @@ class TestAccumulatedFiltersCatalogFiltersItem():
 # Test Class for AccumulatedFiltersCatalogFiltersItemCatalog
 #-----------------------------------------------------------------------------
 class TestAccumulatedFiltersCatalogFiltersItemCatalog():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for AccumulatedFiltersCatalogFiltersItemCatalog
@@ -6085,6 +6284,9 @@ class TestAccumulatedFiltersCatalogFiltersItemCatalog():
 # Test Class for ApprovalResult
 #-----------------------------------------------------------------------------
 class TestApprovalResult():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for ApprovalResult
@@ -6116,6 +6318,9 @@ class TestApprovalResult():
 # Test Class for Catalog
 #-----------------------------------------------------------------------------
 class TestCatalog():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Catalog
@@ -6207,6 +6412,9 @@ class TestCatalog():
 # Test Class for CatalogSearchResult
 #-----------------------------------------------------------------------------
 class TestCatalogSearchResult():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for CatalogSearchResult
@@ -6309,6 +6517,9 @@ class TestCatalogSearchResult():
 # Test Class for CategoryFilter
 #-----------------------------------------------------------------------------
 class TestCategoryFilter():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for CategoryFilter
@@ -6344,6 +6555,9 @@ class TestCategoryFilter():
 # Test Class for ClusterInfo
 #-----------------------------------------------------------------------------
 class TestClusterInfo():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for ClusterInfo
@@ -6377,6 +6591,9 @@ class TestClusterInfo():
 # Test Class for ClusterSearchResult
 #-----------------------------------------------------------------------------
 class TestClusterSearchResult():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for ClusterSearchResult
@@ -6423,6 +6640,9 @@ class TestClusterSearchResult():
 # Test Class for Configuration
 #-----------------------------------------------------------------------------
 class TestConfiguration():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Configuration
@@ -6459,6 +6679,9 @@ class TestConfiguration():
 # Test Class for DeployRequestBodySchematics
 #-----------------------------------------------------------------------------
 class TestDeployRequestBodySchematics():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for DeployRequestBodySchematics
@@ -6491,6 +6714,9 @@ class TestDeployRequestBodySchematics():
 # Test Class for DeployRequirementsCheck
 #-----------------------------------------------------------------------------
 class TestDeployRequirementsCheck():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for DeployRequirementsCheck
@@ -6521,6 +6747,9 @@ class TestDeployRequirementsCheck():
 # Test Class for Deployment
 #-----------------------------------------------------------------------------
 class TestDeployment():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Deployment
@@ -6558,6 +6787,9 @@ class TestDeployment():
 # Test Class for Enterprise
 #-----------------------------------------------------------------------------
 class TestEnterprise():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Enterprise
@@ -6615,6 +6847,9 @@ class TestEnterprise():
 # Test Class for EnterpriseAccountGroups
 #-----------------------------------------------------------------------------
 class TestEnterpriseAccountGroups():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for EnterpriseAccountGroups
@@ -6666,6 +6901,9 @@ class TestEnterpriseAccountGroups():
 # Test Class for Feature
 #-----------------------------------------------------------------------------
 class TestFeature():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Feature
@@ -6696,6 +6934,9 @@ class TestFeature():
 # Test Class for FilterTerms
 #-----------------------------------------------------------------------------
 class TestFilterTerms():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for FilterTerms
@@ -6725,6 +6966,9 @@ class TestFilterTerms():
 # Test Class for Filters
 #-----------------------------------------------------------------------------
 class TestFilters():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Filters
@@ -6769,6 +7013,9 @@ class TestFilters():
 # Test Class for HelmChart
 #-----------------------------------------------------------------------------
 class TestHelmChart():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for HelmChart
@@ -6802,6 +7049,9 @@ class TestHelmChart():
 # Test Class for HelmPackage
 #-----------------------------------------------------------------------------
 class TestHelmPackage():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for HelmPackage
@@ -6847,6 +7097,9 @@ class TestHelmPackage():
 # Test Class for HelmPackageChart
 #-----------------------------------------------------------------------------
 class TestHelmPackageChart():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for HelmPackageChart
@@ -6889,6 +7142,9 @@ class TestHelmPackageChart():
 # Test Class for HelmRepoList
 #-----------------------------------------------------------------------------
 class TestHelmRepoList():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for HelmRepoList
@@ -6941,6 +7197,9 @@ class TestHelmRepoList():
 # Test Class for HelmRepoListChart
 #-----------------------------------------------------------------------------
 class TestHelmRepoListChart():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for HelmRepoListChart
@@ -6990,6 +7249,9 @@ class TestHelmRepoListChart():
 # Test Class for IDFilter
 #-----------------------------------------------------------------------------
 class TestIDFilter():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for IDFilter
@@ -7025,6 +7287,9 @@ class TestIDFilter():
 # Test Class for Image
 #-----------------------------------------------------------------------------
 class TestImage():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Image
@@ -7054,6 +7319,9 @@ class TestImage():
 # Test Class for ImageManifest
 #-----------------------------------------------------------------------------
 class TestImageManifest():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for ImageManifest
@@ -7089,6 +7357,9 @@ class TestImageManifest():
 # Test Class for InstallStatus
 #-----------------------------------------------------------------------------
 class TestInstallStatus():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for InstallStatus
@@ -7140,6 +7411,9 @@ class TestInstallStatus():
 # Test Class for InstallStatusContentMgmt
 #-----------------------------------------------------------------------------
 class TestInstallStatusContentMgmt():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for InstallStatusContentMgmt
@@ -7170,6 +7444,9 @@ class TestInstallStatusContentMgmt():
 # Test Class for InstallStatusMetadata
 #-----------------------------------------------------------------------------
 class TestInstallStatusMetadata():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for InstallStatusMetadata
@@ -7203,6 +7480,9 @@ class TestInstallStatusMetadata():
 # Test Class for InstallStatusRelease
 #-----------------------------------------------------------------------------
 class TestInstallStatusRelease():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for InstallStatusRelease
@@ -7236,6 +7516,9 @@ class TestInstallStatusRelease():
 # Test Class for Kind
 #-----------------------------------------------------------------------------
 class TestKind():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Kind
@@ -7387,6 +7670,9 @@ class TestKind():
 # Test Class for License
 #-----------------------------------------------------------------------------
 class TestLicense():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for License
@@ -7420,6 +7706,9 @@ class TestLicense():
 # Test Class for LicenseEntitlement
 #-----------------------------------------------------------------------------
 class TestLicenseEntitlement():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for LicenseEntitlement
@@ -7489,6 +7778,9 @@ class TestLicenseEntitlement():
 # Test Class for LicenseEntitlementHistoryItem
 #-----------------------------------------------------------------------------
 class TestLicenseEntitlementHistoryItem():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for LicenseEntitlementHistoryItem
@@ -7520,6 +7812,9 @@ class TestLicenseEntitlementHistoryItem():
 # Test Class for LicenseEntitlements
 #-----------------------------------------------------------------------------
 class TestLicenseEntitlements():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for LicenseEntitlements
@@ -7596,6 +7891,9 @@ class TestLicenseEntitlements():
 # Test Class for LicenseObject
 #-----------------------------------------------------------------------------
 class TestLicenseObject():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for LicenseObject
@@ -7650,6 +7948,9 @@ class TestLicenseObject():
 # Test Class for LicenseOfferingReference
 #-----------------------------------------------------------------------------
 class TestLicenseOfferingReference():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for LicenseOfferingReference
@@ -7684,6 +7985,9 @@ class TestLicenseOfferingReference():
 # Test Class for LicenseProvider
 #-----------------------------------------------------------------------------
 class TestLicenseProvider():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for LicenseProvider
@@ -7722,6 +8026,9 @@ class TestLicenseProvider():
 # Test Class for LicenseProviders
 #-----------------------------------------------------------------------------
 class TestLicenseProviders():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for LicenseProviders
@@ -7769,6 +8076,9 @@ class TestLicenseProviders():
 # Test Class for Licenses
 #-----------------------------------------------------------------------------
 class TestLicenses():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Licenses
@@ -7830,6 +8140,9 @@ class TestLicenses():
 # Test Class for Maintainers
 #-----------------------------------------------------------------------------
 class TestMaintainers():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Maintainers
@@ -7860,6 +8173,9 @@ class TestMaintainers():
 # Test Class for NamespaceSearchResult
 #-----------------------------------------------------------------------------
 class TestNamespaceSearchResult():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for NamespaceSearchResult
@@ -7897,6 +8213,9 @@ class TestNamespaceSearchResult():
 # Test Class for Offering
 #-----------------------------------------------------------------------------
 class TestOffering():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Offering
@@ -8091,6 +8410,9 @@ class TestOffering():
 # Test Class for OfferingSearchResult
 #-----------------------------------------------------------------------------
 class TestOfferingSearchResult():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for OfferingSearchResult
@@ -8296,6 +8618,9 @@ class TestOfferingSearchResult():
 # Test Class for OperatorDeployResult
 #-----------------------------------------------------------------------------
 class TestOperatorDeployResult():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for OperatorDeployResult
@@ -8332,6 +8657,9 @@ class TestOperatorDeployResult():
 # Test Class for Plan
 #-----------------------------------------------------------------------------
 class TestPlan():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Plan
@@ -8388,6 +8716,9 @@ class TestPlan():
 # Test Class for Rating
 #-----------------------------------------------------------------------------
 class TestRating():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Rating
@@ -8420,6 +8751,9 @@ class TestRating():
 # Test Class for RepoInfo
 #-----------------------------------------------------------------------------
 class TestRepoInfo():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for RepoInfo
@@ -8450,6 +8784,9 @@ class TestRepoInfo():
 # Test Class for Resource
 #-----------------------------------------------------------------------------
 class TestResource():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Resource
@@ -8480,6 +8817,9 @@ class TestResource():
 # Test Class for ResourceGroup
 #-----------------------------------------------------------------------------
 class TestResourceGroup():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for ResourceGroup
@@ -8514,6 +8854,9 @@ class TestResourceGroup():
 # Test Class for ResourceGroups
 #-----------------------------------------------------------------------------
 class TestResourceGroups():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for ResourceGroups
@@ -8561,6 +8904,9 @@ class TestResourceGroups():
 # Test Class for SchematicsWorkspace
 #-----------------------------------------------------------------------------
 class TestSchematicsWorkspace():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for SchematicsWorkspace
@@ -8630,6 +8976,9 @@ class TestSchematicsWorkspace():
 # Test Class for SchematicsWorkspaceCatalogRef
 #-----------------------------------------------------------------------------
 class TestSchematicsWorkspaceCatalogRef():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for SchematicsWorkspaceCatalogRef
@@ -8661,6 +9010,9 @@ class TestSchematicsWorkspaceCatalogRef():
 # Test Class for SchematicsWorkspaceRuntimeData
 #-----------------------------------------------------------------------------
 class TestSchematicsWorkspaceRuntimeData():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for SchematicsWorkspaceRuntimeData
@@ -8694,6 +9046,9 @@ class TestSchematicsWorkspaceRuntimeData():
 # Test Class for SchematicsWorkspaceSearchResult
 #-----------------------------------------------------------------------------
 class TestSchematicsWorkspaceSearchResult():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for SchematicsWorkspaceSearchResult
@@ -8774,6 +9129,9 @@ class TestSchematicsWorkspaceSearchResult():
 # Test Class for SchematicsWorkspaceTemplateRepo
 #-----------------------------------------------------------------------------
 class TestSchematicsWorkspaceTemplateRepo():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for SchematicsWorkspaceTemplateRepo
@@ -8808,6 +9166,9 @@ class TestSchematicsWorkspaceTemplateRepo():
 # Test Class for SchematicsWorkspaceWorkspaceStatus
 #-----------------------------------------------------------------------------
 class TestSchematicsWorkspaceWorkspaceStatus():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for SchematicsWorkspaceWorkspaceStatus
@@ -8838,6 +9199,9 @@ class TestSchematicsWorkspaceWorkspaceStatus():
 # Test Class for Script
 #-----------------------------------------------------------------------------
 class TestScript():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Script
@@ -8871,6 +9235,9 @@ class TestScript():
 # Test Class for State
 #-----------------------------------------------------------------------------
 class TestState():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for State
@@ -8904,6 +9271,9 @@ class TestState():
 # Test Class for SyndicationAuthorization
 #-----------------------------------------------------------------------------
 class TestSyndicationAuthorization():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for SyndicationAuthorization
@@ -8934,6 +9304,9 @@ class TestSyndicationAuthorization():
 # Test Class for SyndicationCluster
 #-----------------------------------------------------------------------------
 class TestSyndicationCluster():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for SyndicationCluster
@@ -8969,6 +9342,9 @@ class TestSyndicationCluster():
 # Test Class for SyndicationHistory
 #-----------------------------------------------------------------------------
 class TestSyndicationHistory():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for SyndicationHistory
@@ -9011,6 +9387,9 @@ class TestSyndicationHistory():
 # Test Class for SyndicationResource
 #-----------------------------------------------------------------------------
 class TestSyndicationResource():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for SyndicationResource
@@ -9063,6 +9442,9 @@ class TestSyndicationResource():
 # Test Class for Validation
 #-----------------------------------------------------------------------------
 class TestValidation():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Validation
@@ -9096,6 +9478,9 @@ class TestValidation():
 # Test Class for Version
 #-----------------------------------------------------------------------------
 class TestVersion():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for Version
@@ -9206,6 +9591,9 @@ class TestVersion():
 # Test Class for VersionEntitlement
 #-----------------------------------------------------------------------------
 class TestVersionEntitlement():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for VersionEntitlement
@@ -9239,6 +9627,9 @@ class TestVersionEntitlement():
 # Test Class for VersionUpdateDescriptor
 #-----------------------------------------------------------------------------
 class TestVersionUpdateDescriptor():
+    """
+    Test Class
+    """
 
     #--------------------------------------------------------
     # Test serialization/deserialization for VersionUpdateDescriptor

@@ -32,6 +32,10 @@ from dotenv import load_dotenv
 configFile = 'resource_controller.env'
 
 class TestResourceControllerV2(unittest.TestCase):
+    """
+    Integration Test Class for ResourceControllerV2
+    """
+
     @classmethod
     def setUpClass(cls):
         if os.path.exists(configFile):

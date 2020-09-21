@@ -45,6 +45,10 @@ except:
     
 # Test class
 class TestGlobalSearchV2(unittest.TestCase):
+    """
+    Integration Test Class for GlobalSearchV2
+    """
+
     def setUp(self):
         if not configLoaded:
           self.skipTest("External configuration not available, skipping...")

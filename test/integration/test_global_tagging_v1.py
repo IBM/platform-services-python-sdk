@@ -28,6 +28,10 @@ from jproperties import Properties
 unittest.TestLoader.sortTestMethodsUsing = None
 
 def getRandomIntegerString(length=8):
+    """
+    Helper function which returns a random integer of lengh 'length' digits.
+    """
+    
     if length < 0:
         length = 0
     res = ''
@@ -57,6 +61,10 @@ except:
 
 # Test class
 class TestGlobalTaggingV1(unittest.TestCase):
+    """
+    Integration Test Class for GlobalTaggingV1
+    """
+
     def setUp(self):
         if not configLoaded:
           self.skipTest("External configuration not available, skipping...")

@@ -32,6 +32,10 @@ from dotenv import load_dotenv
 configFile = 'open_service_broker.env'
 
 class TestOpenServiceBrokerV1(unittest.TestCase):
+    """
+    Integration Test Class for OpenServiceBrokerV1
+    """
+	
 	@classmethod
 	def setUpClass(cls):
 		if os.path.exists(configFile):
