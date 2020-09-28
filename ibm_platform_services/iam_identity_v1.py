@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ae19f58b-20200918-163627
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-6748b103-20200928-080640
  
 """
 The IAM Identity Service API allows for the management of Identities (Service IDs,
@@ -39,7 +39,7 @@ from .common import get_sdk_headers
 class IamIdentityV1(BaseService):
     """The iam_identity V1 service."""
 
-    DEFAULT_SERVICE_URL = 'https://iam.test.cloud.ibm.com'
+    DEFAULT_SERVICE_URL = 'https://iam.cloud.ibm.com'
     DEFAULT_SERVICE_NAME = 'iam_identity'
 
     @classmethod
