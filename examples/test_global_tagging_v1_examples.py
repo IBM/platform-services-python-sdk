@@ -84,7 +84,8 @@ class TestGlobalTaggingV1Examples():
         try:
             # begin-list_tags
 
-            tag_list = global_tagging_service.list_tags().get_result()
+            tag_list = global_tagging_service.list_tags(
+                attached_only=True).get_result()
 
             print(json.dumps(tag_list, indent=2))
 
@@ -131,7 +132,7 @@ class TestGlobalTaggingV1Examples():
 
             tag_results = global_tagging_service.detach_tag(
                 resources=[resource_model],
-                tag_name='tag_test_1'
+                tag_names=['tag_test_1', 'tag_test_2']
             ).get_result()
 
             print(json.dumps(tag_results, indent=2))
@@ -141,7 +142,7 @@ class TestGlobalTaggingV1Examples():
         except ApiException as e:
             pytest.fail(str(e))
 
-    @needscredentials
+    @ needscredentials
     def test_delete_tag_example(self):
         """
         delete_tag request example
@@ -160,7 +161,7 @@ class TestGlobalTaggingV1Examples():
         except ApiException as e:
             pytest.fail(str(e))
 
-    @needscredentials
+    @ needscredentials
     def test_delete_tag_all_example(self):
         """
         delete_tag_all request example
