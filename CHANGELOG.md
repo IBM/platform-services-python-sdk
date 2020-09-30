@@ -1,3 +1,10 @@
+## [0.12.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.12.1...v0.12.2) (2020-09-30)
+
+
+### Bug Fixes
+
+* **Global Tagging:** re-gen service with latest API definition ([#50](https://github.com/IBM/platform-services-python-sdk/issues/50)) ([a833687](https://github.com/IBM/platform-services-python-sdk/commit/a8336878204ba784a6c968a9950800eef0bfca26))
+
 ## [0.12.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.12.0...v0.12.1) (2020-09-16)
 
 
