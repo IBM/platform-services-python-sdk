@@ -14,12 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-6058b92b-20200924-123044
  
 """
 Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete a tag
 or list all tags in your billing account with the Tagging API. The tag name must be unique
-within a billing account. You can create tags in two formats: `key:value` or `label`.
+within a billing account. You can create tags in two formats: `key:value` or `label`. The
+tagging API supports two types of tag: `user` and `service`. `service` tags cannot be
+attached to IMS resources (see `providers=ims` query parameter). `service` tags must be in
+the form `service_prefix:tag_label` where `service_prefix` identifies the Service owning
+the tag.
 """
 
 from enum import Enum
@@ -80,13 +84,15 @@ class GlobalTaggingV1(BaseService):
 
     def list_tags(self,
         *,
+        account_id: str = None,
+        tag_type: str = None,
+        full_data: bool = None,
         providers: List[str] = None,
         attached_to: str = None,
-        full_data: bool = None,
         offset: int = None,
         limit: int = None,
-        order_by_name: str = None,
         timeout: int = None,
+        order_by_name: str = None,
         attached_only: bool = None,
         **kwargs
     ) -> DetailedResponse:
@@ -96,27 +102,34 @@ class GlobalTaggingV1(BaseService):
         Lists all tags in a billing account. Use the `attached_to` parameter to return the
         list of tags attached to the specified resource.
 
-        :param List[str] providers: (optional) Select a provider. Supported values
-               are `ghost` and `ims`. To list GhoST tags and infrastructure tags use
-               `ghost,ims`.
-        :param str attached_to: (optional) If you want to return only the list of
-               tags attached to a specified resource, pass here the ID of the resource.
-               For GhoST onboarded resources, the resource ID is the CRN; for IMS
-               resources, it is the IMS ID. When using this parameter it is mandatory to
-               specify the appropriate provider (`ims` or `ghost`).
+        :param str account_id: (optional) The ID of the billing account to list the
+               tags for. If it is not set, then it is taken from the authorization token.
+               This parameter is required if `tag_type` is set to `service`.
+        :param str tag_type: (optional) The type of the tag you want to list.
+               Supported values are `user` and `service`.
         :param bool full_data: (optional) If set to `true`, this query returns the
                provider, `ghost`, `ims` or `ghost,ims`, where the tag exists and the
                number of attached resources.
+        :param List[str] providers: (optional) Select a provider. Supported values
+               are `ghost` and `ims`. To list GhoST tags and infrastructure tags use
+               `ghost,ims`. `service` tags can only be attached to GhoST onboarded
+               resources, so you don't need to set this parameter when listing `service`
+               tags.
+        :param str attached_to: (optional) If you want to return only the list of
+               tags attached to a specified resource, pass the ID of the resource on this
+               parameter. For GhoST onboarded resources, the resource ID is the CRN; for
+               IMS resources, it is the IMS ID. When using this parameter, you must
+               specify the appropriate provider (`ims` or `ghost`).
         :param int offset: (optional) The offset is the index of the item from
                which you want to start returning data from.
         :param int limit: (optional) The number of tags to return.
-        :param str order_by_name: (optional) Order the output by tag name.
         :param int timeout: (optional) The search timeout bounds the search request
                to be executed within the specified time value. It returns the hits
                accumulated until time runs out.
-        :param bool attached_only: (optional) Filter on attached tags. If true,
-               returns only tags that are attached to one or more resources. If false
-               returns all tags.
+        :param str order_by_name: (optional) Order the output by tag name.
+        :param bool attached_only: (optional) Filter on attached tags. If `true`,
+               it returns only tags that are attached to one or more resources. If
+               `false`, it returns all tags.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TagList` object
@@ -129,13 +142,15 @@ class GlobalTaggingV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
+            'account_id': account_id,
+            'tag_type': tag_type,
+            'full_data': full_data,
             'providers': convert_list(providers),
             'attached_to': attached_to,
-            'full_data': full_data,
             'offset': offset,
             'limit': limit,
-            'order_by_name': order_by_name,
             'timeout': timeout,
+            'order_by_name': order_by_name,
             'attached_only': attached_only
         }
 
@@ -156,15 +171,23 @@ class GlobalTaggingV1(BaseService):
     def delete_tag_all(self,
         *,
         providers: str = None,
+        account_id: str = None,
+        tag_type: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
-        Delete unused tags.
+        Delete all unused tags.
 
-        Delete the tags that are not attatched to any resource.
+        Delete the tags that are not attached to any resource.
 
         :param str providers: (optional) Select a provider. Supported values are
                `ghost` and `ims`.
+        :param str account_id: (optional) The ID of the billing account to delete
+               the tags for. If it is not set, then it is taken from the authorization
+               token. It is a required parameter if `tag_type` is set to `service`.
+        :param str tag_type: (optional) The type of the tag. Supported values are
+               `user` and `service`. `service` is not supported if the `providers`
+               parameter is set to `ims`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `DeleteTagsResult` object
@@ -177,7 +200,9 @@ class GlobalTaggingV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
-            'providers': providers
+            'providers': providers,
+            'account_id': account_id,
+            'tag_type': tag_type
         }
 
         if 'headers' in kwargs:
@@ -198,10 +223,12 @@ class GlobalTaggingV1(BaseService):
         tag_name: str,
         *,
         providers: List[str] = None,
+        account_id: str = None,
+        tag_type: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
-        Delete a tag.
+        Delete an unused tag.
 
         Delete an existing tag. A tag can be deleted only if it is not attached to any
         resource.
@@ -209,6 +236,11 @@ class GlobalTaggingV1(BaseService):
         :param str tag_name: The name of tag to be deleted.
         :param List[str] providers: (optional) Select a provider. Supported values
                are `ghost` and `ims`. To delete tag both in GhoST in IMS, use `ghost,ims`.
+        :param str account_id: (optional) The ID of the billing account to delete
+               the tag for. It is a required parameter if `tag_type` is set to `service`,
+               otherwise it is inferred from the authorization IAM token.
+        :param str tag_type: (optional) The type of the tag. Supported values are
+               `user` and `service`. `service` is not supported for `providers=ims`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `DeleteTagResults` object
@@ -223,7 +255,9 @@ class GlobalTaggingV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
-            'providers': convert_list(providers)
+            'providers': convert_list(providers),
+            'account_id': account_id,
+            'tag_type': tag_type
         }
 
         if 'headers' in kwargs:
@@ -248,21 +282,32 @@ class GlobalTaggingV1(BaseService):
         *,
         tag_name: str = None,
         tag_names: List[str] = None,
+        account_id: str = None,
+        tag_type: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
-        Attach one or more tags.
+        Attach tags.
 
-        Attaches one or more tags to one or more resources. To attach a tag to a resource
-        managed by the Resource Controller, you must be an editor on the resource. To
-        attach a tag to a Cloud Foundry resource, you must have space developer role. To
-        attach a tag to IMS resources, depending on the resource, you need either `view
-        hardware details`, `view virtual server details` or `manage storage` permission.
+        Attaches one or more tags to one or more resources. To attach a `user` tag on a
+        resource, you must have the access listed in the [Granting users access to tag
+        resources](https://cloud.ibm.com/docs/account?topic=account-access) documentation.
+        To attach a `service` tag, you must be an authorized service. If that is the case,
+        then you can attach a `service` tag with your registered `prefix` to any resource
+        in any account. The account ID must be set through the `account_id` query
+        parameter.
 
         :param List[Resource] resources: List of resources on which the tag or tags
                should be attached.
         :param str tag_name: (optional) The name of the tag to attach.
         :param List[str] tag_names: (optional) An array of tag names to attach.
+        :param str account_id: (optional) The ID of the billing account where the
+               resources to be tagged lives. It is a required parameter if `tag_type` is
+               set to `service`. Otherwise, it is inferred from the authorization IAM
+               token.
+        :param str tag_type: (optional) The type of the tag. Supported values are
+               `user` and `service`. `service` is not supported if `providers` is set to
+               `ims`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TagResults` object
@@ -276,6 +321,11 @@ class GlobalTaggingV1(BaseService):
                                       service_version='V1',
                                       operation_id='attach_tag')
         headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'tag_type': tag_type
+        }
 
         data = {
             'resources': resources,
@@ -294,6 +344,7 @@ class GlobalTaggingV1(BaseService):
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
+                                       params=params,
                                        data=data)
 
         response = self.send(request)
@@ -305,22 +356,31 @@ class GlobalTaggingV1(BaseService):
         *,
         tag_name: str = None,
         tag_names: List[str] = None,
+        account_id: str = None,
+        tag_type: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
-        Detach one or more tags.
+        Detach tags.
 
-        Detach one or more tags from one or more resources. To detach a tag from a
-        Resource Controller managed resource, you must be an editor on the resource. To
-        detach a tag to a Cloud Foundry resource, you must have `space developer` role.
-          To detach a tag to IMS resources, depending on the resource, you need either
-        `view hardware details`, `view virtual server details` or `storage manage`
-        permission.
+        Detaches one or more tags from one or more resources. To detach a `user` tag on a
+        resource you must have the permissions listed in the [Granting users access to tag
+        resources](https://cloud.ibm.com/docs/account?topic=account-access) documentation.
+        To detach a `service` tag you must be an authorized Service. If that is the case,
+        then you can detach a `service` tag with your registered `prefix` from any
+        resource in any account. The account ID must be set through the `account_id` query
+        parameter.
 
         :param List[Resource] resources: List of resources on which the tag or tags
                should be detached.
         :param str tag_name: (optional) The name of the tag to detach.
         :param List[str] tag_names: (optional) An array of tag names to detach.
+        :param str account_id: (optional) The ID of the billing account where the
+               resources to be un-tagged lives. It is a required parameter if `tag_type`
+               is set to `service`, otherwise it is inferred from the authorization IAM
+               token.
+        :param str tag_type: (optional) The type of the tag. Supported values are
+               `user` and `service`. `service` is not supported for `providers=ims`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TagResults` object
@@ -334,6 +394,11 @@ class GlobalTaggingV1(BaseService):
                                       service_version='V1',
                                       operation_id='detach_tag')
         headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'tag_type': tag_type
+        }
 
         data = {
             'resources': resources,
@@ -352,6 +417,7 @@ class GlobalTaggingV1(BaseService):
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
+                                       params=params,
                                        data=data)
 
         response = self.send(request)
@@ -363,10 +429,18 @@ class ListTagsEnums:
     Enums for list_tags parameters.
     """
 
+    class TagType(str, Enum):
+        """
+        The type of the tag you want to list. Supported values are `user` and `service`.
+        """
+        USER = 'user'
+        SERVICE = 'service'
     class Providers(str, Enum):
         """
         Select a provider. Supported values are `ghost` and `ims`. To list GhoST tags and
-        infrastructure tags use `ghost,ims`.
+        infrastructure tags use `ghost,ims`. `service` tags can only be attached to GhoST
+        onboarded resources, so you don't need to set this parameter when listing
+        `service` tags.
         """
         GHOST = 'ghost'
         IMS = 'ims'
@@ -389,6 +463,13 @@ class DeleteTagAllEnums:
         """
         GHOST = 'ghost'
         IMS = 'ims'
+    class TagType(str, Enum):
+        """
+        The type of the tag. Supported values are `user` and `service`. `service` is not
+        supported if the `providers` parameter is set to `ims`.
+        """
+        USER = 'user'
+        SERVICE = 'service'
 
 
 class DeleteTagEnums:
@@ -403,6 +484,41 @@ class DeleteTagEnums:
         """
         GHOST = 'ghost'
         IMS = 'ims'
+    class TagType(str, Enum):
+        """
+        The type of the tag. Supported values are `user` and `service`. `service` is not
+        supported for `providers=ims`.
+        """
+        USER = 'user'
+        SERVICE = 'service'
+
+
+class AttachTagEnums:
+    """
+    Enums for attach_tag parameters.
+    """
+
+    class TagType(str, Enum):
+        """
+        The type of the tag. Supported values are `user` and `service`. `service` is not
+        supported if `providers` is set to `ims`.
+        """
+        USER = 'user'
+        SERVICE = 'service'
+
+
+class DetachTagEnums:
+    """
+    Enums for detach_tag parameters.
+    """
+
+    class TagType(str, Enum):
+        """
+        The type of the tag. Supported values are `user` and `service`. `service` is not
+        supported for `providers=ims`.
+        """
+        USER = 'user'
+        SERVICE = 'service'
 
 
 ##############################################################################
@@ -553,12 +669,13 @@ class DeleteTagResultsItem():
 
 class DeleteTagsResult():
     """
-    The results of a deleting unattatched tags.
+    Results of a deleting unattatched tags.
 
-    :attr int total_count: (optional) The number of tags deleted in the account.
-    :attr bool errors: (optional) An indicator that is set to true if there was an
-          error deleting some of the tags.
-    :attr List[DeleteTagsResultItem] items: (optional)
+    :attr int total_count: (optional) The number of tags that have been deleted.
+    :attr bool errors: (optional) It is set to true if there is at least one tag
+          operation in error.
+    :attr List[DeleteTagsResultItem] items: (optional) The list of tag operation
+          results.
     """
 
     def __init__(self,
@@ -569,11 +686,12 @@ class DeleteTagsResult():
         """
         Initialize a DeleteTagsResult object.
 
-        :param int total_count: (optional) The number of tags deleted in the
-               account.
-        :param bool errors: (optional) An indicator that is set to true if there
-               was an error deleting some of the tags.
-        :param List[DeleteTagsResultItem] items: (optional)
+        :param int total_count: (optional) The number of tags that have been
+               deleted.
+        :param bool errors: (optional) It is set to true if there is at least one
+               tag operation in error.
+        :param List[DeleteTagsResultItem] items: (optional) The list of tag
+               operation results.
         """
         self.total_count = total_count
         self.errors = errors
@@ -627,11 +745,10 @@ class DeleteTagsResult():
 
 class DeleteTagsResultItem():
     """
-    Result of deleting one unattached tag.
+    Result of a delete_tags request.
 
-    :attr str tag_name: (optional) The name of the tag that was deleted.
-    :attr bool is_error: (optional) An indicator that is set to true if there was an
-          error deleting the tag.
+    :attr str tag_name: (optional) The name of the deleted tag.
+    :attr bool is_error: (optional) true if the tag was not deleted.
     """
 
     def __init__(self,
@@ -641,9 +758,8 @@ class DeleteTagsResultItem():
         """
         Initialize a DeleteTagsResultItem object.
 
-        :param str tag_name: (optional) The name of the tag that was deleted.
-        :param bool is_error: (optional) An indicator that is set to true if there
-               was an error deleting the tag.
+        :param str tag_name: (optional) The name of the deleted tag.
+        :param bool is_error: (optional) true if the tag was not deleted.
         """
         self.tag_name = tag_name
         self.is_error = is_error
@@ -815,10 +931,11 @@ class TagList():
     """
     A list of tags.
 
-    :attr int total_count: (optional) The number of tags defined in the account.
-    :attr int offset: (optional) The offset specific at input time.
-    :attr int limit: (optional) The limit specified at input time.
-    :attr List[Tag] items: (optional) This is an array of output results.
+    :attr int total_count: (optional) Set the occurrencies of the total tags
+          associated to this account.
+    :attr int offset: (optional) The offset at which tags are returned.
+    :attr int limit: (optional) The number of tags requested to be returned.
+    :attr List[Tag] items: (optional) Array of output results.
     """
 
     def __init__(self,
@@ -830,11 +947,11 @@ class TagList():
         """
         Initialize a TagList object.
 
-        :param int total_count: (optional) The number of tags defined in the
-               account.
-        :param int offset: (optional) The offset specific at input time.
-        :param int limit: (optional) The limit specified at input time.
-        :param List[Tag] items: (optional) This is an array of output results.
+        :param int total_count: (optional) Set the occurrencies of the total tags
+               associated to this account.
+        :param int offset: (optional) The offset at which tags are returned.
+        :param int limit: (optional) The number of tags requested to be returned.
+        :param List[Tag] items: (optional) Array of output results.
         """
         self.total_count = total_count
         self.offset = offset
