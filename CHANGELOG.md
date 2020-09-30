@@ -1,3 +1,10 @@
+# [0.13.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.12.2...v0.13.0) (2020-09-30)
+
+
+### Features
+
+* **IAM Identity:** add service to the project ([#48](https://github.com/IBM/platform-services-python-sdk/issues/48)) ([bbb0d4e](https://github.com/IBM/platform-services-python-sdk/commit/bbb0d4eda44cf115fd411ccb95ab02bb6c2a2189))
+
 ## [0.12.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.12.1...v0.12.2) (2020-09-30)
 
 
