@@ -23,6 +23,23 @@ import pytest
 from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.iam_identity_v1 import *
 
+#
+# This file provides an example of how to use the IAM-IDENTITY service.
+#
+# The following configuration properties are assumed to be defined:
+#
+# IAM_IDENTITY_URL=<service url>
+# IAM_IDENTITY_AUTHTYPE=iam
+# IAM_IDENTITY_AUTH_URL=<IAM Token Service url>
+# IAM_IDENTITY_APIKEY=<IAM APIKEY for the User>
+# IAM_IDENTITY_ACCOUNT_ID=<AccountID which is unique to the User>
+# IAM_IDENTITY_IAM_ID=<IAM ID which is unique to the User account>
+#
+# These configuration properties can be exported as environment variables, or stored
+# in a "credentials" file and then:
+# export IBM_CREDENTIALS_FILE=<name of credentials file>
+#
+
 # Config file name
 config_file = 'iam_identity.env'
 
