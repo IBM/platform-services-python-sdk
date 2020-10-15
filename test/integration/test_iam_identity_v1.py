@@ -286,7 +286,7 @@ class TestIamIdentityV1():
             id=apikey_id1
         )
 
-        assert lock_api_key_response.get_status_code() == 200
+        assert lock_api_key_response.get_status_code() == 204
 
         api_key = self.get_api_key(
             self.iam_identity_service, apikey_id1)
@@ -303,7 +303,7 @@ class TestIamIdentityV1():
             id=apikey_id1
         )
 
-        assert unlock_api_key_response.get_status_code() == 200
+        assert unlock_api_key_response.get_status_code() == 204
 
         api_key = self.get_api_key(self.iam_identity_service, apikey_id1)
         assert api_key is not None
@@ -424,11 +424,7 @@ class TestIamIdentityV1():
             id=serviceid_id1
         )
 
-        assert lock_service_id_response.get_status_code() == 200
-        service_id = lock_service_id_response.get_result()
-        assert service_id is not None
-        # print('\nlock_service_id() response: ', json.dumps(service_id, indent=2))
-        assert service_id['locked'] == True
+        assert lock_service_id_response.get_status_code() == 204
 
         service_id = self.get_service_id(
             self.iam_identity_service, serviceid_id1)
@@ -444,11 +440,7 @@ class TestIamIdentityV1():
             id=serviceid_id1
         )
 
-        assert unlock_service_id_response.get_status_code() == 200
-        service_id = unlock_service_id_response.get_result()
-        assert service_id is not None
-        # print('\nunlock_service_id() response: ', json.dumps(service_id, indent=2))
-        assert service_id['locked'] == False
+        assert unlock_service_id_response.get_status_code() == 204
 
         service_id = self.get_service_id(
             self.iam_identity_service, serviceid_id1)

@@ -369,11 +369,9 @@ class TestIamIdentityV1Examples():
             global svc_id
             # begin-lock_service_id
 
-            service_id = iam_identity_service.lock_service_id(
-                id=svc_id
-            ).get_result()
+            response = iam_identity_service.lock_service_id(id=svc_id)
 
-            print(json.dumps(service_id, indent=2))
+            print(response)
 
             # end-lock_service_id
 
@@ -390,11 +388,9 @@ class TestIamIdentityV1Examples():
 
             # begin-unlock_service_id
 
-            service_id = iam_identity_service.unlock_service_id(
-                id=svc_id
-            ).get_result()
+            response = iam_identity_service.unlock_service_id(id=svc_id)
 
-            print(json.dumps(service_id, indent=2))
+            print(response)
 
             # end-unlock_service_id
 

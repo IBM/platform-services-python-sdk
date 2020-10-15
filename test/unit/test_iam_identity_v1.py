@@ -621,7 +621,7 @@ class TestLockApiKey():
         url = self.preprocess_url(base_url + '/v1/apikeys/testString/lock')
         responses.add(responses.POST,
                       url,
-                      status=200)
+                      status=204)
 
         # Set up parameter values
         id = 'testString'
@@ -634,7 +634,7 @@ class TestLockApiKey():
 
         # Check for correct operation
         assert len(responses.calls) == 1
-        assert response.status_code == 200
+        assert response.status_code == 204
 
 
     @responses.activate
@@ -646,7 +646,7 @@ class TestLockApiKey():
         url = self.preprocess_url(base_url + '/v1/apikeys/testString/lock')
         responses.add(responses.POST,
                       url,
-                      status=200)
+                      status=204)
 
         # Set up parameter values
         id = 'testString'
@@ -685,7 +685,7 @@ class TestUnlockApiKey():
         url = self.preprocess_url(base_url + '/v1/apikeys/testString/lock')
         responses.add(responses.DELETE,
                       url,
-                      status=200)
+                      status=204)
 
         # Set up parameter values
         id = 'testString'
@@ -698,7 +698,7 @@ class TestUnlockApiKey():
 
         # Check for correct operation
         assert len(responses.calls) == 1
-        assert response.status_code == 200
+        assert response.status_code == 204
 
 
     @responses.activate
@@ -710,7 +710,7 @@ class TestUnlockApiKey():
         url = self.preprocess_url(base_url + '/v1/apikeys/testString/lock')
         responses.add(responses.DELETE,
                       url,
-                      status=200)
+                      status=204)
 
         # Set up parameter values
         id = 'testString'
@@ -1252,12 +1252,9 @@ class TestLockServiceId():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/serviceids/testString/lock')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "created_at", "modified_at": "modified_at", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "created_at", "created_by": "created_by", "modified_at": "modified_at", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}]}}'
         responses.add(responses.POST,
                       url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+                      status=204)
 
         # Set up parameter values
         id = 'testString'
@@ -1270,7 +1267,7 @@ class TestLockServiceId():
 
         # Check for correct operation
         assert len(responses.calls) == 1
-        assert response.status_code == 200
+        assert response.status_code == 204
 
 
     @responses.activate
@@ -1280,12 +1277,9 @@ class TestLockServiceId():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/serviceids/testString/lock')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "created_at", "modified_at": "modified_at", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "created_at", "created_by": "created_by", "modified_at": "modified_at", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}]}}'
         responses.add(responses.POST,
                       url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+                      status=204)
 
         # Set up parameter values
         id = 'testString'
@@ -1322,12 +1316,9 @@ class TestUnlockServiceId():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/serviceids/testString/lock')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "created_at", "modified_at": "modified_at", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "created_at", "created_by": "created_by", "modified_at": "modified_at", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}]}}'
         responses.add(responses.DELETE,
                       url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+                      status=204)
 
         # Set up parameter values
         id = 'testString'
@@ -1340,7 +1331,7 @@ class TestUnlockServiceId():
 
         # Check for correct operation
         assert len(responses.calls) == 1
-        assert response.status_code == 200
+        assert response.status_code == 204
 
 
     @responses.activate
@@ -1350,12 +1341,9 @@ class TestUnlockServiceId():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/serviceids/testString/lock')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "created_at", "modified_at": "modified_at", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "created_at", "created_by": "created_by", "modified_at": "modified_at", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}]}}'
         responses.add(responses.DELETE,
                       url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+                      status=204)
 
         # Set up parameter values
         id = 'testString'
