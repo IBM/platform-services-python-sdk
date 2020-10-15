@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-6748b103-20200928-080640
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-fc98139c-20201015-143541
  
 """
 The IAM Identity Service API allows for the management of Identities (Service IDs,
@@ -864,7 +864,7 @@ class IamIdentityV1(BaseService):
         :param str id: Unique ID of the service ID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ServiceId` object
+        :rtype: DetailedResponse
         """
 
         if id is None:
@@ -877,7 +877,6 @@ class IamIdentityV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
-        headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
         path_param_values = self.encode_path_vars(id)
@@ -907,7 +906,7 @@ class IamIdentityV1(BaseService):
         :param str id: Unique ID of the service ID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ServiceId` object
+        :rtype: DetailedResponse
         """
 
         if id is None:
@@ -920,7 +919,6 @@ class IamIdentityV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
-        headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
         path_param_values = self.encode_path_vars(id)
