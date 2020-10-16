@@ -1,3 +1,10 @@
+## [0.13.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.13.0...v0.13.1) (2020-10-16)
+
+
+### Bug Fixes
+
+* **IAM Identity:** regen service after API definition updates ([c1a28c5](https://github.com/IBM/platform-services-python-sdk/commit/c1a28c51c44dab48f960336ce641e0902fdd526c))
+
 # [0.13.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.12.2...v0.13.0) (2020-09-30)
 
 
