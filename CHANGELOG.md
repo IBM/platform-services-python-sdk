@@ -1,3 +1,10 @@
+## [0.13.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.13.1...v0.13.2) (2020-10-30)
+
+
+### Bug Fixes
+
+* re-gen services with latest SDK generator ([b93a286](https://github.com/IBM/platform-services-python-sdk/commit/b93a286b3b44f1bcb113afd9719b9c3a7f246ef0))
+
 ## [0.13.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.13.0...v0.13.1) (2020-10-16)
 
 
