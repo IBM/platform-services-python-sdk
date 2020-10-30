@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
  
 """
 Manage lifecycle of your Cloud resources using Resource Controller APIs. Resources are
@@ -1800,6 +1800,9 @@ class ResourceAlias():
     :attr datetime created_at: (optional) The date when the alias was created.
     :attr datetime updated_at: (optional) The date when the alias was last updated.
     :attr datetime deleted_at: (optional) The date when the alias was deleted.
+    :attr str created_by: (optional) The subject who created the alias.
+    :attr str updated_by: (optional) The subject who updated the alias.
+    :attr str deleted_by: (optional) The subject who deleted the alias.
     """
 
     def __init__(self,
@@ -1821,7 +1824,10 @@ class ResourceAlias():
                  resource_keys_url: str = None,
                  created_at: datetime = None,
                  updated_at: datetime = None,
-                 deleted_at: datetime = None) -> None:
+                 deleted_at: datetime = None,
+                 created_by: str = None,
+                 updated_by: str = None,
+                 deleted_by: str = None) -> None:
         """
         Initialize a ResourceAlias object.
 
@@ -1859,6 +1865,9 @@ class ResourceAlias():
         :param datetime updated_at: (optional) The date when the alias was last
                updated.
         :param datetime deleted_at: (optional) The date when the alias was deleted.
+        :param str created_by: (optional) The subject who created the alias.
+        :param str updated_by: (optional) The subject who updated the alias.
+        :param str deleted_by: (optional) The subject who deleted the alias.
         """
         self.id = id
         self.guid = guid
@@ -1878,6 +1887,9 @@ class ResourceAlias():
         self.created_at = created_at
         self.updated_at = updated_at
         self.deleted_at = deleted_at
+        self.created_by = created_by
+        self.updated_by = updated_by
+        self.deleted_by = deleted_by
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ResourceAlias':
@@ -1919,6 +1931,12 @@ class ResourceAlias():
             args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
         if 'deleted_at' in _dict:
             args['deleted_at'] = string_to_datetime(_dict.get('deleted_at'))
+        if 'created_by' in _dict:
+            args['created_by'] = _dict.get('created_by')
+        if 'updated_by' in _dict:
+            args['updated_by'] = _dict.get('updated_by')
+        if 'deleted_by' in _dict:
+            args['deleted_by'] = _dict.get('deleted_by')
         return cls(**args)
 
     @classmethod
@@ -1965,6 +1983,12 @@ class ResourceAlias():
             _dict['updated_at'] = datetime_to_string(self.updated_at)
         if hasattr(self, 'deleted_at') and self.deleted_at is not None:
             _dict['deleted_at'] = datetime_to_string(self.deleted_at)
+        if hasattr(self, 'created_by') and self.created_by is not None:
+            _dict['created_by'] = self.created_by
+        if hasattr(self, 'updated_by') and self.updated_by is not None:
+            _dict['updated_by'] = self.updated_by
+        if hasattr(self, 'deleted_by') and self.deleted_by is not None:
+            _dict['deleted_by'] = self.deleted_by
         return _dict
 
     def _to_dict(self):
@@ -2082,6 +2106,7 @@ class ResourceBinding():
           binding.
     :attr str target_crn: (optional) The CRN of target resource, e.g. application,
           in a specific environment.
+    :attr str role: (optional) The role CRN.
     :attr str region_binding_id: (optional) The short ID of the binding in specific
           targeted environment, e.g. `service_binding_id` in a given IBM Cloud
           environment.
@@ -2097,6 +2122,9 @@ class ResourceBinding():
     :attr datetime updated_at: (optional) The date when the binding was last
           updated.
     :attr datetime deleted_at: (optional) The date when the binding was deleted.
+    :attr str created_by: (optional) The subject who created the binding.
+    :attr str updated_by: (optional) The subject who updated the binding.
+    :attr str deleted_by: (optional) The subject who deleted the binding.
     """
 
     def __init__(self,
@@ -2110,6 +2138,7 @@ class ResourceBinding():
                  resource_group_id: str = None,
                  source_crn: str = None,
                  target_crn: str = None,
+                 role: str = None,
                  region_binding_id: str = None,
                  state: str = None,
                  credentials: 'Credentials' = None,
@@ -2117,7 +2146,10 @@ class ResourceBinding():
                  resource_alias_url: str = None,
                  created_at: datetime = None,
                  updated_at: datetime = None,
-                 deleted_at: datetime = None) -> None:
+                 deleted_at: datetime = None,
+                 created_by: str = None,
+                 updated_by: str = None,
+                 deleted_by: str = None) -> None:
         """
         Initialize a ResourceBinding object.
 
@@ -2140,6 +2172,7 @@ class ResourceBinding():
                the binding.
         :param str target_crn: (optional) The CRN of target resource, e.g.
                application, in a specific environment.
+        :param str role: (optional) The role CRN.
         :param str region_binding_id: (optional) The short ID of the binding in
                specific targeted environment, e.g. `service_binding_id` in a given IBM
                Cloud environment.
@@ -2157,6 +2190,9 @@ class ResourceBinding():
                updated.
         :param datetime deleted_at: (optional) The date when the binding was
                deleted.
+        :param str created_by: (optional) The subject who created the binding.
+        :param str updated_by: (optional) The subject who updated the binding.
+        :param str deleted_by: (optional) The subject who deleted the binding.
         """
         self.id = id
         self.guid = guid
@@ -2167,6 +2203,7 @@ class ResourceBinding():
         self.resource_group_id = resource_group_id
         self.source_crn = source_crn
         self.target_crn = target_crn
+        self.role = role
         self.region_binding_id = region_binding_id
         self.state = state
         self.credentials = credentials
@@ -2175,6 +2212,9 @@ class ResourceBinding():
         self.created_at = created_at
         self.updated_at = updated_at
         self.deleted_at = deleted_at
+        self.created_by = created_by
+        self.updated_by = updated_by
+        self.deleted_by = deleted_by
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ResourceBinding':
@@ -2198,6 +2238,8 @@ class ResourceBinding():
             args['source_crn'] = _dict.get('source_crn')
         if 'target_crn' in _dict:
             args['target_crn'] = _dict.get('target_crn')
+        if 'role' in _dict:
+            args['role'] = _dict.get('role')
         if 'region_binding_id' in _dict:
             args['region_binding_id'] = _dict.get('region_binding_id')
         if 'state' in _dict:
@@ -2214,6 +2256,12 @@ class ResourceBinding():
             args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
         if 'deleted_at' in _dict:
             args['deleted_at'] = string_to_datetime(_dict.get('deleted_at'))
+        if 'created_by' in _dict:
+            args['created_by'] = _dict.get('created_by')
+        if 'updated_by' in _dict:
+            args['updated_by'] = _dict.get('updated_by')
+        if 'deleted_by' in _dict:
+            args['deleted_by'] = _dict.get('deleted_by')
         return cls(**args)
 
     @classmethod
@@ -2242,6 +2290,8 @@ class ResourceBinding():
             _dict['source_crn'] = self.source_crn
         if hasattr(self, 'target_crn') and self.target_crn is not None:
             _dict['target_crn'] = self.target_crn
+        if hasattr(self, 'role') and self.role is not None:
+            _dict['role'] = self.role
         if hasattr(self, 'region_binding_id') and self.region_binding_id is not None:
             _dict['region_binding_id'] = self.region_binding_id
         if hasattr(self, 'state') and self.state is not None:
@@ -2258,6 +2308,12 @@ class ResourceBinding():
             _dict['updated_at'] = datetime_to_string(self.updated_at)
         if hasattr(self, 'deleted_at') and self.deleted_at is not None:
             _dict['deleted_at'] = datetime_to_string(self.deleted_at)
+        if hasattr(self, 'created_by') and self.created_by is not None:
+            _dict['created_by'] = self.created_by
+        if hasattr(self, 'updated_by') and self.updated_by is not None:
+            _dict['updated_by'] = self.updated_by
+        if hasattr(self, 'deleted_by') and self.deleted_by is not None:
+            _dict['deleted_by'] = self.deleted_by
         return _dict
 
     def _to_dict(self):
@@ -2439,6 +2495,8 @@ class ResourceInstance():
     :attr str target_crn: (optional) The full deployment CRN as defined in the
           global catalog. The Cloud Resource Name (CRN) of the deployment location where
           the instance is provisioned.
+    :attr dict parameters: (optional) The current configuration parameters of the
+          instance.
     :attr str state: (optional) The current state of the instance. For example, if
           the instance is deleted, it will return removed.
     :attr str type: (optional) The type of the instance, e.g. `service_instance`.
@@ -2461,9 +2519,20 @@ class ResourceInstance():
     :attr str resource_keys_url: (optional) The relative path to the resource keys
           for the instance.
     :attr datetime created_at: (optional) The date when the instance was created.
+    :attr str created_by: (optional) The subject who created the instance.
     :attr datetime updated_at: (optional) The date when the instance was last
           updated.
+    :attr str updated_by: (optional) The subject who updated the instance.
     :attr datetime deleted_at: (optional) The date when the instance was deleted.
+    :attr str deleted_by: (optional) The subject who deleted the instance.
+    :attr datetime scheduled_reclaim_at: (optional) The date when the instance was
+          scheduled for reclamation.
+    :attr str scheduled_reclaim_by: (optional) The subject who initiated the
+          instance reclamation.
+    :attr datetime restored_at: (optional) The date when the instance under
+          reclamation was restored.
+    :attr str restored_by: (optional) The subject who restored the instance back
+          from reclamation.
     """
 
     def __init__(self,
@@ -2479,6 +2548,7 @@ class ResourceInstance():
                  resource_id: str = None,
                  resource_plan_id: str = None,
                  target_crn: str = None,
+                 parameters: dict = None,
                  state: str = None,
                  type: str = None,
                  sub_type: str = None,
@@ -2491,8 +2561,15 @@ class ResourceInstance():
                  resource_bindings_url: str = None,
                  resource_keys_url: str = None,
                  created_at: datetime = None,
+                 created_by: str = None,
                  updated_at: datetime = None,
-                 deleted_at: datetime = None) -> None:
+                 updated_by: str = None,
+                 deleted_at: datetime = None,
+                 deleted_by: str = None,
+                 scheduled_reclaim_at: datetime = None,
+                 scheduled_reclaim_by: str = None,
+                 restored_at: datetime = None,
+                 restored_by: str = None) -> None:
         """
         Initialize a ResourceInstance object.
 
@@ -2521,6 +2598,8 @@ class ResourceInstance():
         :param str target_crn: (optional) The full deployment CRN as defined in the
                global catalog. The Cloud Resource Name (CRN) of the deployment location
                where the instance is provisioned.
+        :param dict parameters: (optional) The current configuration parameters of
+               the instance.
         :param str state: (optional) The current state of the instance. For
                example, if the instance is deleted, it will return removed.
         :param str type: (optional) The type of the instance, e.g.
@@ -2545,10 +2624,21 @@ class ResourceInstance():
                keys for the instance.
         :param datetime created_at: (optional) The date when the instance was
                created.
+        :param str created_by: (optional) The subject who created the instance.
         :param datetime updated_at: (optional) The date when the instance was last
                updated.
+        :param str updated_by: (optional) The subject who updated the instance.
         :param datetime deleted_at: (optional) The date when the instance was
                deleted.
+        :param str deleted_by: (optional) The subject who deleted the instance.
+        :param datetime scheduled_reclaim_at: (optional) The date when the instance
+               was scheduled for reclamation.
+        :param str scheduled_reclaim_by: (optional) The subject who initiated the
+               instance reclamation.
+        :param datetime restored_at: (optional) The date when the instance under
+               reclamation was restored.
+        :param str restored_by: (optional) The subject who restored the instance
+               back from reclamation.
         """
         self.id = id
         self.guid = guid
@@ -2561,6 +2651,7 @@ class ResourceInstance():
         self.resource_id = resource_id
         self.resource_plan_id = resource_plan_id
         self.target_crn = target_crn
+        self.parameters = parameters
         self.state = state
         self.type = type
         self.sub_type = sub_type
@@ -2573,8 +2664,15 @@ class ResourceInstance():
         self.resource_bindings_url = resource_bindings_url
         self.resource_keys_url = resource_keys_url
         self.created_at = created_at
+        self.created_by = created_by
         self.updated_at = updated_at
+        self.updated_by = updated_by
         self.deleted_at = deleted_at
+        self.deleted_by = deleted_by
+        self.scheduled_reclaim_at = scheduled_reclaim_at
+        self.scheduled_reclaim_by = scheduled_reclaim_by
+        self.restored_at = restored_at
+        self.restored_by = restored_by
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ResourceInstance':
@@ -2602,6 +2700,8 @@ class ResourceInstance():
             args['resource_plan_id'] = _dict.get('resource_plan_id')
         if 'target_crn' in _dict:
             args['target_crn'] = _dict.get('target_crn')
+        if 'parameters' in _dict:
+            args['parameters'] = _dict.get('parameters')
         if 'state' in _dict:
             args['state'] = _dict.get('state')
         if 'type' in _dict:
@@ -2626,10 +2726,24 @@ class ResourceInstance():
             args['resource_keys_url'] = _dict.get('resource_keys_url')
         if 'created_at' in _dict:
             args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if 'created_by' in _dict:
+            args['created_by'] = _dict.get('created_by')
         if 'updated_at' in _dict:
             args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
+        if 'updated_by' in _dict:
+            args['updated_by'] = _dict.get('updated_by')
         if 'deleted_at' in _dict:
             args['deleted_at'] = string_to_datetime(_dict.get('deleted_at'))
+        if 'deleted_by' in _dict:
+            args['deleted_by'] = _dict.get('deleted_by')
+        if 'scheduled_reclaim_at' in _dict:
+            args['scheduled_reclaim_at'] = string_to_datetime(_dict.get('scheduled_reclaim_at'))
+        if 'scheduled_reclaim_by' in _dict:
+            args['scheduled_reclaim_by'] = _dict.get('scheduled_reclaim_by')
+        if 'restored_at' in _dict:
+            args['restored_at'] = string_to_datetime(_dict.get('restored_at'))
+        if 'restored_by' in _dict:
+            args['restored_by'] = _dict.get('restored_by')
         return cls(**args)
 
     @classmethod
@@ -2662,6 +2776,8 @@ class ResourceInstance():
             _dict['resource_plan_id'] = self.resource_plan_id
         if hasattr(self, 'target_crn') and self.target_crn is not None:
             _dict['target_crn'] = self.target_crn
+        if hasattr(self, 'parameters') and self.parameters is not None:
+            _dict['parameters'] = self.parameters
         if hasattr(self, 'state') and self.state is not None:
             _dict['state'] = self.state
         if hasattr(self, 'type') and self.type is not None:
@@ -2686,10 +2802,24 @@ class ResourceInstance():
             _dict['resource_keys_url'] = self.resource_keys_url
         if hasattr(self, 'created_at') and self.created_at is not None:
             _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'created_by') and self.created_by is not None:
+            _dict['created_by'] = self.created_by
         if hasattr(self, 'updated_at') and self.updated_at is not None:
             _dict['updated_at'] = datetime_to_string(self.updated_at)
+        if hasattr(self, 'updated_by') and self.updated_by is not None:
+            _dict['updated_by'] = self.updated_by
         if hasattr(self, 'deleted_at') and self.deleted_at is not None:
             _dict['deleted_at'] = datetime_to_string(self.deleted_at)
+        if hasattr(self, 'deleted_by') and self.deleted_by is not None:
+            _dict['deleted_by'] = self.deleted_by
+        if hasattr(self, 'scheduled_reclaim_at') and self.scheduled_reclaim_at is not None:
+            _dict['scheduled_reclaim_at'] = datetime_to_string(self.scheduled_reclaim_at)
+        if hasattr(self, 'scheduled_reclaim_by') and self.scheduled_reclaim_by is not None:
+            _dict['scheduled_reclaim_by'] = self.scheduled_reclaim_by
+        if hasattr(self, 'restored_at') and self.restored_at is not None:
+            _dict['restored_at'] = datetime_to_string(self.restored_at)
+        if hasattr(self, 'restored_by') and self.restored_by is not None:
+            _dict['restored_by'] = self.restored_by
         return _dict
 
     def _to_dict(self):
@@ -2805,6 +2935,7 @@ class ResourceKey():
     :attr str resource_group_id: (optional) The short ID of the resource group.
     :attr str source_crn: (optional) The CRN of resource instance or alias
           associated to the key.
+    :attr str role: (optional) The role CRN.
     :attr str state: (optional) The state of the key.
     :attr Credentials credentials: (optional) The credentials for the key.
           Additional key-value pairs are passed through from the resource brokers.  Refer
@@ -2815,6 +2946,9 @@ class ResourceKey():
     :attr datetime created_at: (optional) The date when the key was created.
     :attr datetime updated_at: (optional) The date when the key was last updated.
     :attr datetime deleted_at: (optional) The date when the key was deleted.
+    :attr str created_by: (optional) The subject who created the key.
+    :attr str updated_by: (optional) The subject who updated the key.
+    :attr str deleted_by: (optional) The subject who deleted the key.
     """
 
     def __init__(self,
@@ -2827,13 +2961,17 @@ class ResourceKey():
                  account_id: str = None,
                  resource_group_id: str = None,
                  source_crn: str = None,
+                 role: str = None,
                  state: str = None,
                  credentials: 'Credentials' = None,
                  iam_compatible: bool = None,
                  resource_instance_url: str = None,
                  created_at: datetime = None,
                  updated_at: datetime = None,
-                 deleted_at: datetime = None) -> None:
+                 deleted_at: datetime = None,
+                 created_by: str = None,
+                 updated_by: str = None,
+                 deleted_by: str = None) -> None:
         """
         Initialize a ResourceKey object.
 
@@ -2853,6 +2991,7 @@ class ResourceKey():
                group.
         :param str source_crn: (optional) The CRN of resource instance or alias
                associated to the key.
+        :param str role: (optional) The role CRN.
         :param str state: (optional) The state of the key.
         :param Credentials credentials: (optional) The credentials for the key.
                Additional key-value pairs are passed through from the resource brokers.
@@ -2865,6 +3004,9 @@ class ResourceKey():
         :param datetime updated_at: (optional) The date when the key was last
                updated.
         :param datetime deleted_at: (optional) The date when the key was deleted.
+        :param str created_by: (optional) The subject who created the key.
+        :param str updated_by: (optional) The subject who updated the key.
+        :param str deleted_by: (optional) The subject who deleted the key.
         """
         self.id = id
         self.guid = guid
@@ -2874,6 +3016,7 @@ class ResourceKey():
         self.account_id = account_id
         self.resource_group_id = resource_group_id
         self.source_crn = source_crn
+        self.role = role
         self.state = state
         self.credentials = credentials
         self.iam_compatible = iam_compatible
@@ -2881,6 +3024,9 @@ class ResourceKey():
         self.created_at = created_at
         self.updated_at = updated_at
         self.deleted_at = deleted_at
+        self.created_by = created_by
+        self.updated_by = updated_by
+        self.deleted_by = deleted_by
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ResourceKey':
@@ -2902,6 +3048,8 @@ class ResourceKey():
             args['resource_group_id'] = _dict.get('resource_group_id')
         if 'source_crn' in _dict:
             args['source_crn'] = _dict.get('source_crn')
+        if 'role' in _dict:
+            args['role'] = _dict.get('role')
         if 'state' in _dict:
             args['state'] = _dict.get('state')
         if 'credentials' in _dict:
@@ -2916,6 +3064,12 @@ class ResourceKey():
             args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
         if 'deleted_at' in _dict:
             args['deleted_at'] = string_to_datetime(_dict.get('deleted_at'))
+        if 'created_by' in _dict:
+            args['created_by'] = _dict.get('created_by')
+        if 'updated_by' in _dict:
+            args['updated_by'] = _dict.get('updated_by')
+        if 'deleted_by' in _dict:
+            args['deleted_by'] = _dict.get('deleted_by')
         return cls(**args)
 
     @classmethod
@@ -2942,6 +3096,8 @@ class ResourceKey():
             _dict['resource_group_id'] = self.resource_group_id
         if hasattr(self, 'source_crn') and self.source_crn is not None:
             _dict['source_crn'] = self.source_crn
+        if hasattr(self, 'role') and self.role is not None:
+            _dict['role'] = self.role
         if hasattr(self, 'state') and self.state is not None:
             _dict['state'] = self.state
         if hasattr(self, 'credentials') and self.credentials is not None:
@@ -2956,6 +3112,12 @@ class ResourceKey():
             _dict['updated_at'] = datetime_to_string(self.updated_at)
         if hasattr(self, 'deleted_at') and self.deleted_at is not None:
             _dict['deleted_at'] = datetime_to_string(self.deleted_at)
+        if hasattr(self, 'created_by') and self.created_by is not None:
+            _dict['created_by'] = self.created_by
+        if hasattr(self, 'updated_by') and self.updated_by is not None:
+            _dict['updated_by'] = self.updated_by
+        if hasattr(self, 'deleted_by') and self.deleted_by is not None:
+            _dict['deleted_by'] = self.deleted_by
         return _dict
 
     def _to_dict(self):

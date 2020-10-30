@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+ 
 """
 This is the API to use for managing private catalogs for IBM Cloud. Private catalogs
 provide a way to centrally manage access to products in the IBM Cloud catalog and your own
@@ -98,6 +100,7 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/catalogaccount'
         request = self.prepare_request(method='GET',
@@ -154,6 +157,45 @@ class CatalogManagementV1(BaseService):
         return response
 
 
+    def get_catalog_account_audit(self,
+        *,
+        id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get the audit log(s) for catalog account.
+
+        Get the audit log(s) for catalog account.
+
+        :param str id: (optional) Log identification.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_catalog_account_audit')
+        headers.update(sdk_headers)
+
+        params = {
+            'id': id
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        url = '/catalogaccount/audit'
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
+
+        response = self.send(request)
+        return response
+
+
     def get_catalog_account_filters(self,
         *,
         catalog: str = None,
@@ -183,6 +225,7 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/catalogaccount/filters'
         request = self.prepare_request(method='GET',
@@ -219,6 +262,7 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/catalogs'
         request = self.prepare_request(method='GET',
@@ -326,6 +370,7 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/catalogs'
         request = self.prepare_request(method='POST',
@@ -362,9 +407,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/catalogs/{0}'.format(
-            *self.encode_path_vars(catalog_identifier))
+        path_param_keys = ['catalog_identifier']
+        path_param_values = self.encode_path_vars(catalog_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -474,9 +522,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/catalogs/{0}'.format(
-            *self.encode_path_vars(catalog_identifier))
+        path_param_keys = ['catalog_identifier']
+        path_param_values = self.encode_path_vars(catalog_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -512,11 +563,59 @@ class CatalogManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/catalogs/{0}'.format(
-            *self.encode_path_vars(catalog_identifier))
+        path_param_keys = ['catalog_identifier']
+        path_param_values = self.encode_path_vars(catalog_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
+
+        response = self.send(request)
+        return response
+
+
+    def get_catalog_audit(self,
+        catalog_identifier: str,
+        *,
+        id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get the audit log(s) for catalog.
+
+        Get the audit log(s) for catalog.
+
+        :param str catalog_identifier: Catalog identifier.
+        :param str id: (optional) Log identification.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if catalog_identifier is None:
+            raise ValueError('catalog_identifier must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_catalog_audit')
+        headers.update(sdk_headers)
+
+        params = {
+            'id': id
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        path_param_keys = ['catalog_identifier']
+        path_param_values = self.encode_path_vars(catalog_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/audit'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request)
         return response
@@ -551,9 +650,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/enterprises/{0}'.format(
-            *self.encode_path_vars(enterprise_id))
+        path_param_keys = ['enterprise_id']
+        path_param_values = self.encode_path_vars(enterprise_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/enterprises/{enterprise_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -611,12 +713,60 @@ class CatalogManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/enterprises/{0}'.format(
-            *self.encode_path_vars(enterprise_id))
+        path_param_keys = ['enterprise_id']
+        path_param_values = self.encode_path_vars(enterprise_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/enterprises/{enterprise_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
                                        data=data)
+
+        response = self.send(request)
+        return response
+
+
+    def get_enterprises_audit(self,
+        enterprise_id: str,
+        *,
+        id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get the audit log(s) for enterprises.
+
+        Get the audit log(s) for enterprises.
+
+        :param str enterprise_id: Enterprise identification.
+        :param str id: (optional) Log identification.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if enterprise_id is None:
+            raise ValueError('enterprise_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_enterprises_audit')
+        headers.update(sdk_headers)
+
+        params = {
+            'id': id
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        path_param_keys = ['enterprise_id']
+        path_param_values = self.encode_path_vars(enterprise_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/enterprises/{enterprise_id}/audit'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request)
         return response
@@ -632,6 +782,8 @@ class CatalogManagementV1(BaseService):
         catalog: str = None,
         select: str = None,
         include_hidden: bool = None,
+        limit: int = None,
+        offset: int = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -653,6 +805,9 @@ class CatalogManagementV1(BaseService):
         :param bool include_hidden: (optional) true - include offerings which have
                been marked as hidden. The default is false and hidden offerings are not
                returned.
+        :param int limit: (optional) number or results to return.
+        :param int offset: (optional) number of results to skip before returning
+               values.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `OfferingSearchResult` object
@@ -668,11 +823,14 @@ class CatalogManagementV1(BaseService):
             'digest': digest,
             'catalog': catalog,
             'select': select,
-            'includeHidden': include_hidden
+            'includeHidden': include_hidden,
+            'limit': limit,
+            'offset': offset
         }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/offerings'
         request = self.prepare_request(method='GET',
@@ -688,6 +846,10 @@ class CatalogManagementV1(BaseService):
         catalog_identifier: str,
         *,
         digest: bool = None,
+        limit: int = None,
+        offset: int = None,
+        name: str = None,
+        sort: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -699,6 +861,16 @@ class CatalogManagementV1(BaseService):
         :param bool digest: (optional) true - Strip down the content of what is
                returned. For example don't return the readme. Makes the result much
                smaller. Defaults to false.
+        :param int limit: (optional) number or results to return.
+        :param int offset: (optional) number of results to skip before returning
+               values.
+        :param str name: (optional) only return results that contain the specified
+               string.
+        :param str sort: (optional) The field on which the output is sorted. Sorts
+               by default by **label** property. Available fields are **name**, **label**,
+               **created**, and **updated**. By adding **-** (i.e. **-label**) in front of
+               the query string, you can specify descending order. Default is ascending
+               order.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `OfferingSearchResult` object
@@ -713,14 +885,21 @@ class CatalogManagementV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
-            'digest': digest
+            'digest': digest,
+            'limit': limit,
+            'offset': offset,
+            'name': name,
+            'sort': sort
         }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/catalogs/{0}/offerings'.format(
-            *self.encode_path_vars(catalog_identifier))
+        path_param_keys = ['catalog_identifier']
+        path_param_values = self.encode_path_vars(catalog_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/offerings'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -885,9 +1064,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/catalogs/{0}/offerings'.format(
-            *self.encode_path_vars(catalog_identifier))
+        path_param_keys = ['catalog_identifier']
+        path_param_values = self.encode_path_vars(catalog_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/offerings'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
@@ -900,14 +1082,14 @@ class CatalogManagementV1(BaseService):
     def import_offering_version(self,
         catalog_identifier: str,
         offering_id: str,
-        zipurl: str,
         *,
         tags: List[str] = None,
         target_kinds: List[str] = None,
+        content: List[int] = None,
+        zipurl: str = None,
         target_version: str = None,
         include_config: bool = None,
         repo_type: str = None,
-        x_auth_token: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -917,18 +1099,19 @@ class CatalogManagementV1(BaseService):
 
         :param str catalog_identifier: Catalog identifier.
         :param str offering_id: Offering identification.
-        :param str zipurl: URL path to zip location.
         :param List[str] tags: (optional) Tags array.
         :param List[str] target_kinds: (optional) Target kinds.  Current valid
                values are 'iks', 'roks', 'vcenter', and 'terraform'.
+        :param List[int] content: (optional) byte array representing the content to
+               be imported.  Only supported for OVA images at this time.
+        :param str zipurl: (optional) URL path to zip location.  If not specified,
+               must provide content in the body of this call.
         :param str target_version: (optional) The semver value for this new
                version, if not found in the zip url package content.
         :param bool include_config: (optional) Add all possible configuration
                values to this version when importing.
         :param str repo_type: (optional) The type of repository containing this
                version.  Valid values are 'public_git' or 'enterprise_git'.
-        :param str x_auth_token: (optional) Authentication token used to access the
-               specified zip file.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Offering` object
@@ -938,11 +1121,7 @@ class CatalogManagementV1(BaseService):
             raise ValueError('catalog_identifier must be provided')
         if offering_id is None:
             raise ValueError('offering_id must be provided')
-        if zipurl is None:
-            raise ValueError('zipurl must be provided')
-        headers = {
-            'X-Auth-Token': x_auth_token
-        }
+        headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
                                       operation_id='import_offering_version')
@@ -957,7 +1136,8 @@ class CatalogManagementV1(BaseService):
 
         data = {
             'tags': tags,
-            'target_kinds': target_kinds
+            'target_kinds': target_kinds,
+            'content': content
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -965,9 +1145,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/catalogs/{0}/offerings/{1}/version'.format(
-            *self.encode_path_vars(catalog_identifier, offering_id))
+        path_param_keys = ['catalog_identifier', 'offering_id']
+        path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/version'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
@@ -980,11 +1163,13 @@ class CatalogManagementV1(BaseService):
 
     def import_offering(self,
         catalog_identifier: str,
-        zipurl: str,
         *,
         tags: List[str] = None,
         target_kinds: List[str] = None,
+        content: List[int] = None,
+        zipurl: str = None,
         offering_id: str = None,
+        target_version: str = None,
         include_config: bool = None,
         repo_type: str = None,
         x_auth_token: str = None,
@@ -996,12 +1181,17 @@ class CatalogManagementV1(BaseService):
         Import a new offering from a tgz.
 
         :param str catalog_identifier: Catalog identifier.
-        :param str zipurl: URL path to zip location.
         :param List[str] tags: (optional) Tags array.
         :param List[str] target_kinds: (optional) Target kinds.  Current valid
                values are 'iks', 'roks', 'vcenter', and 'terraform'.
+        :param List[int] content: (optional) byte array representing the content to
+               be imported.  Only supported for OVA images at this time.
+        :param str zipurl: (optional) URL path to zip location.  If not specified,
+               must provide content in this post body.
         :param str offering_id: (optional) Re-use the specified offeringID during
                import.
+        :param str target_version: (optional) The semver value for this new
+               version.
         :param bool include_config: (optional) Add all possible configuration items
                when creating this version.
         :param str repo_type: (optional) The type of repository containing this
@@ -1015,8 +1205,6 @@ class CatalogManagementV1(BaseService):
 
         if catalog_identifier is None:
             raise ValueError('catalog_identifier must be provided')
-        if zipurl is None:
-            raise ValueError('zipurl must be provided')
         headers = {
             'X-Auth-Token': x_auth_token
         }
@@ -1028,13 +1216,15 @@ class CatalogManagementV1(BaseService):
         params = {
             'zipurl': zipurl,
             'offeringID': offering_id,
+            'targetVersion': target_version,
             'includeConfig': include_config,
             'repoType': repo_type
         }
 
         data = {
             'tags': tags,
-            'target_kinds': target_kinds
+            'target_kinds': target_kinds,
+            'content': content
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -1042,9 +1232,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/catalogs/{0}/import/offerings'.format(
-            *self.encode_path_vars(catalog_identifier))
+        path_param_keys = ['catalog_identifier']
+        path_param_values = self.encode_path_vars(catalog_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/import/offerings'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
@@ -1058,13 +1251,13 @@ class CatalogManagementV1(BaseService):
     def reload_offering(self,
         catalog_identifier: str,
         offering_id: str,
-        zipurl: str,
         target_version: str,
         *,
         tags: List[str] = None,
         target_kinds: List[str] = None,
+        content: List[int] = None,
+        zipurl: str = None,
         repo_type: str = None,
-        x_auth_token: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -1074,15 +1267,16 @@ class CatalogManagementV1(BaseService):
 
         :param str catalog_identifier: Catalog identifier.
         :param str offering_id: Offering identification.
-        :param str zipurl: URL path to zip location.
         :param str target_version: The semver value for this new version.
         :param List[str] tags: (optional) Tags array.
         :param List[str] target_kinds: (optional) Target kinds.  Current valid
                values are 'iks', 'roks', 'vcenter', and 'terraform'.
+        :param List[int] content: (optional) byte array representing the content to
+               be imported.  Only supported for OVA images at this time.
+        :param str zipurl: (optional) URL path to zip location.  If not specified,
+               must provide content in this post body.
         :param str repo_type: (optional) The type of repository containing this
                version.  Valid values are 'public_git' or 'enterprise_git'.
-        :param str x_auth_token: (optional) Authentication token used to access the
-               specified zip file.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Offering` object
@@ -1092,27 +1286,24 @@ class CatalogManagementV1(BaseService):
             raise ValueError('catalog_identifier must be provided')
         if offering_id is None:
             raise ValueError('offering_id must be provided')
-        if zipurl is None:
-            raise ValueError('zipurl must be provided')
         if target_version is None:
             raise ValueError('target_version must be provided')
-        headers = {
-            'X-Auth-Token': x_auth_token
-        }
+        headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
                                       operation_id='reload_offering')
         headers.update(sdk_headers)
 
         params = {
-            'zipurl': zipurl,
             'targetVersion': target_version,
+            'zipurl': zipurl,
             'repoType': repo_type
         }
 
         data = {
             'tags': tags,
-            'target_kinds': target_kinds
+            'target_kinds': target_kinds,
+            'content': content
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -1120,9 +1311,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/catalogs/{0}/offerings/{1}/reload'.format(
-            *self.encode_path_vars(catalog_identifier, offering_id))
+        path_param_keys = ['catalog_identifier', 'offering_id']
+        path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/reload'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -1162,9 +1356,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/catalogs/{0}/offerings/{1}'.format(
-            *self.encode_path_vars(catalog_identifier, offering_id))
+        path_param_keys = ['catalog_identifier', 'offering_id']
+        path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/offerings/{offering_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -1332,9 +1529,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/catalogs/{0}/offerings/{1}'.format(
-            *self.encode_path_vars(catalog_identifier, offering_id))
+        path_param_keys = ['catalog_identifier', 'offering_id']
+        path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/offerings/{offering_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
@@ -1374,11 +1574,63 @@ class CatalogManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/catalogs/{0}/offerings/{1}'.format(
-            *self.encode_path_vars(catalog_identifier, offering_id))
+        path_param_keys = ['catalog_identifier', 'offering_id']
+        path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/offerings/{offering_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
+
+        response = self.send(request)
+        return response
+
+
+    def get_offering_audit(self,
+        catalog_identifier: str,
+        offering_id: str,
+        *,
+        id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get the audit log(s) for offering.
+
+        Get the audit log(s) for offering.
+
+        :param str catalog_identifier: Catalog identifier.
+        :param str offering_id: Offering identifier.
+        :param str id: (optional) Log identification.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if catalog_identifier is None:
+            raise ValueError('catalog_identifier must be provided')
+        if offering_id is None:
+            raise ValueError('offering_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_offering_audit')
+        headers.update(sdk_headers)
+
+        params = {
+            'id': id
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        path_param_keys = ['catalog_identifier', 'offering_id']
+        path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/audit'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request)
         return response
@@ -1418,9 +1670,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/catalogs/{0}/offerings/{1}/icon/{2}'.format(
-            *self.encode_path_vars(catalog_identifier, offering_id, file_name))
+        path_param_keys = ['catalog_identifier', 'offering_id', 'file_name']
+        path_param_values = self.encode_path_vars(catalog_identifier, offering_id, file_name)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/icon/{file_name}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers)
@@ -1437,16 +1692,20 @@ class CatalogManagementV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Approve offering to be permitted to publish to IBM Public Catalog (IBMers only or Everyone).
+        Approve offering to be permitted to publish or to request to be published to IBM Public Catalog (IBMers only or Everyone).
 
         Approve or disapprove the offering to be allowed to publish to the IBM Public
-        Catalog in `ibm` (visible to IBM only) or `public` (visible to everyone). Can
-        approve to only `ibm`, or it can be extended to `public`. If extended to `public`
-        then `ibm` is automatically approved too. If disapprove `public`, then `ibm`
-        approval will not  be changed. If disapprove `ibm` then `public` will
-        automatically be disapproved. This is because the process steps always go first
-        through `ibm` and then to `public`. `ibm` cannot be skipped. Only users with
-        Approval IAM authority can use this.
+        Catalog. Options:
+        * `allow_request` - (Allow requesting to publish to IBM)
+        * `ibm` - (Allow publishing to be visible to IBM only)
+        * `public` - (Allow publishing to be visible to everyone, including IBM)
+        If disapprove `public`, then `ibm` approval will not  be changed. If disapprove
+        `ibm` then `public` will automatically be disapproved. if disapprove
+        `allow_request` then all rights to publish will be removed. This is because the
+        process steps always go first through `allow` to `ibm` and then to `public`. `ibm`
+        cannot be skipped. Only users with Approval IAM authority can use this. Approvers
+        should use the catalog and offering id from the public catalog since they wouldn't
+        have access to the private offering.'.
 
         :param str catalog_identifier: Catalog identifier.
         :param str offering_id: Offering identification.
@@ -1473,9 +1732,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/catalogs/{0}/offerings/{1}/publish/{2}/{3}'.format(
-            *self.encode_path_vars(catalog_identifier, offering_id, approval_type, approved))
+        path_param_keys = ['catalog_identifier', 'offering_id', 'approval_type', 'approved']
+        path_param_values = self.encode_path_vars(catalog_identifier, offering_id, approval_type, approved)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/publish/{approval_type}/{approved}'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers)
@@ -1513,9 +1775,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'text/markdown'
 
-        url = '/versions/{0}/about'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/about'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -1555,8 +1820,10 @@ class CatalogManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/versions/{0}/licenses/{1}'.format(
-            *self.encode_path_vars(version_loc_id, license_id))
+        path_param_keys = ['version_loc_id', 'license_id']
+        path_param_values = self.encode_path_vars(version_loc_id, license_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/licenses/{license_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -1591,9 +1858,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/versions/{0}/containerImages'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/containerImages'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -1628,8 +1898,10 @@ class CatalogManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/versions/{0}/deprecate'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/deprecate'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers)
@@ -1664,8 +1936,10 @@ class CatalogManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/versions/{0}/account-publish'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/account-publish'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers)
@@ -1701,8 +1975,10 @@ class CatalogManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/versions/{0}/ibm-publish'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/ibm-publish'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers)
@@ -1737,8 +2013,10 @@ class CatalogManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/versions/{0}/public-publish'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/public-publish'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers)
@@ -1773,11 +2051,70 @@ class CatalogManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/versions/{0}/commit'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/commit'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers)
+
+        response = self.send(request)
+        return response
+
+
+    def copy_version(self,
+        version_loc_id: str,
+        *,
+        tags: List[str] = None,
+        target_kinds: List[str] = None,
+        content: List[int] = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Copy the specified version to a new target kind within the same offering.
+
+        Copy the specified version to a new target kind within the same offering.
+
+        :param str version_loc_id: A dotted value of `catalogID`.`versionID`.
+        :param List[str] tags: (optional) Tags array.
+        :param List[str] target_kinds: (optional) Target kinds.  Current valid
+               values are 'iks', 'roks', 'vcenter', and 'terraform'.
+        :param List[int] content: (optional) byte array representing the content to
+               be imported.  Only supported for OVA images at this time.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if version_loc_id is None:
+            raise ValueError('version_loc_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='copy_version')
+        headers.update(sdk_headers)
+
+        data = {
+            'tags': tags,
+            'target_kinds': target_kinds,
+            'content': content
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/copy'.format(**path_param_dict)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
 
         response = self.send(request)
         return response
@@ -1808,9 +2145,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/versions/{0}/workingcopy'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/workingcopy'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers)
@@ -1864,9 +2204,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/versions/{0}/updates'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/updates'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -1901,9 +2244,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/versions/{0}'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -1939,8 +2285,10 @@ class CatalogManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/versions/{0}'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
@@ -2029,9 +2377,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/repo/{0}/entries'.format(
-            *self.encode_path_vars(type))
+        path_param_keys = ['type']
+        path_param_values = self.encode_path_vars(type)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/repo/{type}/entries'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -2075,9 +2426,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/repo/{0}'.format(
-            *self.encode_path_vars(type))
+        path_param_keys = ['type']
+        path_param_values = self.encode_path_vars(type)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/repo/{type}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -2127,6 +2481,7 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/deploy/kubernetes/clusters'
         request = self.prepare_request(method='GET',
@@ -2177,9 +2532,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/deploy/kubernetes/clusters/{0}'.format(
-            *self.encode_path_vars(cluster_id))
+        path_param_keys = ['cluster_id']
+        path_param_values = self.encode_path_vars(cluster_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/deploy/kubernetes/clusters/{cluster_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -2236,9 +2594,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/deploy/kubernetes/clusters/{0}/namespaces'.format(
-            *self.encode_path_vars(cluster_id))
+        path_param_keys = ['cluster_id']
+        path_param_values = self.encode_path_vars(cluster_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/deploy/kubernetes/clusters/{cluster_id}/namespaces'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -2254,6 +2615,7 @@ class CatalogManagementV1(BaseService):
         cluster_id: str = None,
         region: str = None,
         namespaces: List[str] = None,
+        all_namespaces: bool = None,
         version_locator_id: str = None,
         **kwargs
     ) -> DetailedResponse:
@@ -2267,6 +2629,8 @@ class CatalogManagementV1(BaseService):
         :param str region: (optional) Cluster region.
         :param List[str] namespaces: (optional) Kube namespaces to deploy
                Operator(s) to.
+        :param bool all_namespaces: (optional) Denotes whether to install
+               Operator(s) globally.
         :param str version_locator_id: (optional) A dotted value of
                `catalogID`.`versionID`.
         :param dict headers: A `dict` containing the request headers
@@ -2288,6 +2652,7 @@ class CatalogManagementV1(BaseService):
             'cluster_id': cluster_id,
             'region': region,
             'namespaces': namespaces,
+            'all_namespaces': all_namespaces,
             'version_locator_id': version_locator_id
         }
         data = {k: v for (k, v) in data.items() if v is not None}
@@ -2296,6 +2661,7 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/deploy/kubernetes/olm/operator'
         request = self.prepare_request(method='POST',
@@ -2352,6 +2718,7 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/deploy/kubernetes/olm/operator'
         request = self.prepare_request(method='GET',
@@ -2369,6 +2736,7 @@ class CatalogManagementV1(BaseService):
         cluster_id: str = None,
         region: str = None,
         namespaces: List[str] = None,
+        all_namespaces: bool = None,
         version_locator_id: str = None,
         **kwargs
     ) -> DetailedResponse:
@@ -2382,6 +2750,8 @@ class CatalogManagementV1(BaseService):
         :param str region: (optional) Cluster region.
         :param List[str] namespaces: (optional) Kube namespaces to deploy
                Operator(s) to.
+        :param bool all_namespaces: (optional) Denotes whether to install
+               Operator(s) globally.
         :param str version_locator_id: (optional) A dotted value of
                `catalogID`.`versionID`.
         :param dict headers: A `dict` containing the request headers
@@ -2403,6 +2773,7 @@ class CatalogManagementV1(BaseService):
             'cluster_id': cluster_id,
             'region': region,
             'namespaces': namespaces,
+            'all_namespaces': all_namespaces,
             'version_locator_id': version_locator_id
         }
         data = {k: v for (k, v) in data.items() if v is not None}
@@ -2411,6 +2782,7 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/deploy/kubernetes/olm/operator'
         request = self.prepare_request(method='PUT',
@@ -2492,8 +2864,10 @@ class CatalogManagementV1(BaseService):
         script_id: str = None,
         version_locator_id: str = None,
         vcenter_id: str = None,
+        vcenter_user: str = None,
         vcenter_password: str = None,
         vcenter_location: str = None,
+        vcenter_datastore: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -2517,8 +2891,10 @@ class CatalogManagementV1(BaseService):
         :param str version_locator_id: (optional) A dotted value of
                `catalogID`.`versionID`.
         :param str vcenter_id: (optional) VCenter ID.
+        :param str vcenter_user: (optional) VCenter User.
         :param str vcenter_password: (optional) VCenter Password.
         :param str vcenter_location: (optional) VCenter Location.
+        :param str vcenter_datastore: (optional) VCenter Datastore.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
@@ -2549,8 +2925,10 @@ class CatalogManagementV1(BaseService):
             'script_id': script_id,
             'version_locator_id': version_locator_id,
             'vcenter_id': vcenter_id,
+            'vcenter_user': vcenter_user,
             'vcenter_password': vcenter_password,
-            'vcenter_location': vcenter_location
+            'vcenter_location': vcenter_location,
+            'vcenter_datastore': vcenter_datastore
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -2559,8 +2937,10 @@ class CatalogManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/versions/{0}/install'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/install'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
@@ -2584,8 +2964,10 @@ class CatalogManagementV1(BaseService):
         script_id: str = None,
         version_locator_id: str = None,
         vcenter_id: str = None,
+        vcenter_user: str = None,
         vcenter_password: str = None,
         vcenter_location: str = None,
+        vcenter_datastore: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -2609,8 +2991,10 @@ class CatalogManagementV1(BaseService):
         :param str version_locator_id: (optional) A dotted value of
                `catalogID`.`versionID`.
         :param str vcenter_id: (optional) VCenter ID.
+        :param str vcenter_user: (optional) VCenter User.
         :param str vcenter_password: (optional) VCenter Password.
         :param str vcenter_location: (optional) VCenter Location.
+        :param str vcenter_datastore: (optional) VCenter Datastore.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
@@ -2641,8 +3025,10 @@ class CatalogManagementV1(BaseService):
             'script_id': script_id,
             'version_locator_id': version_locator_id,
             'vcenter_id': vcenter_id,
+            'vcenter_user': vcenter_user,
             'vcenter_password': vcenter_password,
-            'vcenter_location': vcenter_location
+            'vcenter_location': vcenter_location,
+            'vcenter_datastore': vcenter_datastore
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -2651,8 +3037,10 @@ class CatalogManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/versions/{0}/preinstall'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/preinstall'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
@@ -2707,9 +3095,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/versions/{0}/preinstall'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/preinstall'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -2733,8 +3124,10 @@ class CatalogManagementV1(BaseService):
         script_id: str = None,
         version_locator_id: str = None,
         vcenter_id: str = None,
+        vcenter_user: str = None,
         vcenter_password: str = None,
         vcenter_location: str = None,
+        vcenter_datastore: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -2758,8 +3151,10 @@ class CatalogManagementV1(BaseService):
         :param str version_locator_id: (optional) A dotted value of
                `catalogID`.`versionID`.
         :param str vcenter_id: (optional) VCenter ID.
+        :param str vcenter_user: (optional) VCenter User.
         :param str vcenter_password: (optional) VCenter Password.
         :param str vcenter_location: (optional) VCenter Location.
+        :param str vcenter_datastore: (optional) VCenter Datastore.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
@@ -2790,8 +3185,10 @@ class CatalogManagementV1(BaseService):
             'script_id': script_id,
             'version_locator_id': version_locator_id,
             'vcenter_id': vcenter_id,
+            'vcenter_user': vcenter_user,
             'vcenter_password': vcenter_password,
-            'vcenter_location': vcenter_location
+            'vcenter_location': vcenter_location,
+            'vcenter_datastore': vcenter_datastore
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -2800,8 +3197,10 @@ class CatalogManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/versions/{0}/validation/install'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/validation/install'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
@@ -2842,9 +3241,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/versions/{0}/validation/install'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/validation/install'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -2879,9 +3281,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/versions/{0}/validation/overridevalues'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/validation/overridevalues'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -2921,9 +3326,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/versions/{0}/workspaces'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/workspaces'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -2978,9 +3386,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/versions/{0}/candeploy'.format(
-            *self.encode_path_vars(version_loc_id))
+        path_param_keys = ['version_loc_id']
+        path_param_values = self.encode_path_vars(version_loc_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/candeploy'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -3012,6 +3423,7 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/deploy/schematics/resourcegroups'
         request = self.prepare_request(method='GET',
@@ -3047,6 +3459,7 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/license/license_providers'
         request = self.prepare_request(method='GET',
@@ -3099,6 +3512,7 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/license/entitlements'
         request = self.prepare_request(method='GET',
@@ -3174,6 +3588,7 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/license/entitlements'
         request = self.prepare_request(method='POST',
@@ -3224,9 +3639,12 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
-        url = '/license/entitlements/productID/{0}'.format(
-            *self.encode_path_vars(license_product_id))
+        path_param_keys = ['license_product_id']
+        path_param_values = self.encode_path_vars(license_product_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/license/entitlements/productID/{license_product_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -3272,8 +3690,10 @@ class CatalogManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        url = '/license/entitlements/{0}'.format(
-            *self.encode_path_vars(entitlement_id))
+        path_param_keys = ['entitlement_id']
+        path_param_values = self.encode_path_vars(entitlement_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/license/entitlements/{entitlement_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers,
@@ -3330,6 +3750,7 @@ class CatalogManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         url = '/license/licenses'
         request = self.prepare_request(method='GET',
@@ -3428,6 +3849,512 @@ class CatalogManagementV1(BaseService):
         response = self.send(request)
         return response
 
+    #########################
+    # objects
+    #########################
+
+
+    def search_objects(self,
+        query: str,
+        *,
+        limit: int = None,
+        offset: int = None,
+        collapse: bool = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Search for objects across catalogs.
+
+        List the available objects from both public and private. These copies cannot be
+        used for updating. They are not complete and only return what is visible to the
+        caller.
+
+        :param str query: Lucene query string.
+        :param int limit: (optional) number or results to return.
+        :param int offset: (optional) number of results to skip before returning
+               values.
+        :param bool collapse: (optional) when true, hide private objects that
+               correspond to public or IBM published objects.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ObjectSearchResult` object
+        """
+
+        if query is None:
+            raise ValueError('query must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='search_objects')
+        headers.update(sdk_headers)
+
+        params = {
+            'query': query,
+            'limit': limit,
+            'offset': offset,
+            'collapse': collapse
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        url = '/objects'
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
+
+        response = self.send(request)
+        return response
+
+
+    def list_objects(self,
+        catalog_identifier: str,
+        *,
+        limit: int = None,
+        offset: int = None,
+        name: str = None,
+        sort: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get list of objects.
+
+        List the available objects in the specified catalog.
+
+        :param str catalog_identifier: Catalog identifier.
+        :param int limit: (optional) number or results to return.
+        :param int offset: (optional) number of results to skip before returning
+               values.
+        :param str name: (optional) only return results that contain the specified
+               string.
+        :param str sort: (optional) The field on which the output is sorted. Sorts
+               by default by **label** property. Available fields are **name**, **label**,
+               **created**, and **updated**. By adding **-** (i.e. **-label**) in front of
+               the query string, you can specify descending order. Default is ascending
+               order.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ObjectListResult` object
+        """
+
+        if catalog_identifier is None:
+            raise ValueError('catalog_identifier must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_objects')
+        headers.update(sdk_headers)
+
+        params = {
+            'limit': limit,
+            'offset': offset,
+            'name': name,
+            'sort': sort
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['catalog_identifier']
+        path_param_values = self.encode_path_vars(catalog_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/objects'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
+
+        response = self.send(request)
+        return response
+
+
+    def create_object(self,
+        catalog_identifier: str,
+        *,
+        id: str = None,
+        name: str = None,
+        rev: str = None,
+        crn: str = None,
+        url: str = None,
+        parent_id: str = None,
+        allow_list: List[str] = None,
+        label_i18n: str = None,
+        label: str = None,
+        tags: List[str] = None,
+        created: datetime = None,
+        updated: datetime = None,
+        short_description: str = None,
+        short_description_i18n: str = None,
+        kind: str = None,
+        publish: 'PublishObject' = None,
+        state: 'State' = None,
+        catalog_id: str = None,
+        catalog_name: str = None,
+        data: object = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Create an object.
+
+        Create an object.
+
+        :param str catalog_identifier: Catalog identifier.
+        :param str id: (optional) unique id.
+        :param str name: (optional) The programmatic name of this offering.
+        :param str rev: (optional) Cloudant revision.
+        :param str crn: (optional) The crn for this specific object.
+        :param str url: (optional) The url for this specific object.
+        :param str parent_id: (optional) The parent for this specific object.
+        :param List[str] allow_list: (optional) List of allowed accounts for this
+               specific object.
+        :param str label_i18n: (optional) Translated display name in the requested
+               language.
+        :param str label: (optional) Display name in the requested language.
+        :param List[str] tags: (optional) List of tags associated with this
+               catalog.
+        :param datetime created: (optional) The date and time this catalog was
+               created.
+        :param datetime updated: (optional) The date and time this catalog was last
+               updated.
+        :param str short_description: (optional) Short description in the requested
+               language.
+        :param str short_description_i18n: (optional) Short description
+               translation.
+        :param str kind: (optional) Kind of object.
+        :param PublishObject publish: (optional) Publish information.
+        :param State state: (optional) Offering state.
+        :param str catalog_id: (optional) The id of the catalog containing this
+               offering.
+        :param str catalog_name: (optional) The name of the catalog.
+        :param object data: (optional) Map of data values for this object.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Object` object
+        """
+
+        if catalog_identifier is None:
+            raise ValueError('catalog_identifier must be provided')
+        if created is not None:
+            created = datetime_to_string(created)
+        if updated is not None:
+            updated = datetime_to_string(updated)
+        if publish is not None:
+            publish = convert_model(publish)
+        if state is not None:
+            state = convert_model(state)
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='create_object')
+        headers.update(sdk_headers)
+
+        data = {
+            'id': id,
+            'name': name,
+            '_rev': rev,
+            'crn': crn,
+            'url': url,
+            'parent_id': parent_id,
+            'allow_list': allow_list,
+            'label_i18n': label_i18n,
+            'label': label,
+            'tags': tags,
+            'created': created,
+            'updated': updated,
+            'short_description': short_description,
+            'short_description_i18n': short_description_i18n,
+            'kind': kind,
+            'publish': publish,
+            'state': state,
+            'catalog_id': catalog_id,
+            'catalog_name': catalog_name,
+            'data': data
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['catalog_identifier']
+        path_param_values = self.encode_path_vars(catalog_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/objects'.format(**path_param_dict)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request)
+        return response
+
+
+    def get_object(self,
+        catalog_identifier: str,
+        object_identifier: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get an object.
+
+        Get an object.
+
+        :param str catalog_identifier: Catalog identifier.
+        :param str object_identifier: Object identifier.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Object` object
+        """
+
+        if catalog_identifier is None:
+            raise ValueError('catalog_identifier must be provided')
+        if object_identifier is None:
+            raise ValueError('object_identifier must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_object')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['catalog_identifier', 'object_identifier']
+        path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/objects/{object_identifier}'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request)
+        return response
+
+
+    def replace_object(self,
+        catalog_identifier: str,
+        object_identifier: str,
+        *,
+        id: str = None,
+        name: str = None,
+        rev: str = None,
+        crn: str = None,
+        url: str = None,
+        parent_id: str = None,
+        allow_list: List[str] = None,
+        label_i18n: str = None,
+        label: str = None,
+        tags: List[str] = None,
+        created: datetime = None,
+        updated: datetime = None,
+        short_description: str = None,
+        short_description_i18n: str = None,
+        kind: str = None,
+        publish: 'PublishObject' = None,
+        state: 'State' = None,
+        catalog_id: str = None,
+        catalog_name: str = None,
+        data: object = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Update an object.
+
+        Update an object.
+
+        :param str catalog_identifier: Catalog identifier.
+        :param str object_identifier: Object identifier.
+        :param str id: (optional) unique id.
+        :param str name: (optional) The programmatic name of this offering.
+        :param str rev: (optional) Cloudant revision.
+        :param str crn: (optional) The crn for this specific object.
+        :param str url: (optional) The url for this specific object.
+        :param str parent_id: (optional) The parent for this specific object.
+        :param List[str] allow_list: (optional) List of allowed accounts for this
+               specific object.
+        :param str label_i18n: (optional) Translated display name in the requested
+               language.
+        :param str label: (optional) Display name in the requested language.
+        :param List[str] tags: (optional) List of tags associated with this
+               catalog.
+        :param datetime created: (optional) The date and time this catalog was
+               created.
+        :param datetime updated: (optional) The date and time this catalog was last
+               updated.
+        :param str short_description: (optional) Short description in the requested
+               language.
+        :param str short_description_i18n: (optional) Short description
+               translation.
+        :param str kind: (optional) Kind of object.
+        :param PublishObject publish: (optional) Publish information.
+        :param State state: (optional) Offering state.
+        :param str catalog_id: (optional) The id of the catalog containing this
+               offering.
+        :param str catalog_name: (optional) The name of the catalog.
+        :param object data: (optional) Map of data values for this object.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Object` object
+        """
+
+        if catalog_identifier is None:
+            raise ValueError('catalog_identifier must be provided')
+        if object_identifier is None:
+            raise ValueError('object_identifier must be provided')
+        if created is not None:
+            created = datetime_to_string(created)
+        if updated is not None:
+            updated = datetime_to_string(updated)
+        if publish is not None:
+            publish = convert_model(publish)
+        if state is not None:
+            state = convert_model(state)
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='replace_object')
+        headers.update(sdk_headers)
+
+        data = {
+            'id': id,
+            'name': name,
+            '_rev': rev,
+            'crn': crn,
+            'url': url,
+            'parent_id': parent_id,
+            'allow_list': allow_list,
+            'label_i18n': label_i18n,
+            'label': label,
+            'tags': tags,
+            'created': created,
+            'updated': updated,
+            'short_description': short_description,
+            'short_description_i18n': short_description_i18n,
+            'kind': kind,
+            'publish': publish,
+            'state': state,
+            'catalog_id': catalog_id,
+            'catalog_name': catalog_name,
+            'data': data
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['catalog_identifier', 'object_identifier']
+        path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/objects/{object_identifier}'.format(**path_param_dict)
+        request = self.prepare_request(method='PUT',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request)
+        return response
+
+
+    def delete_object(self,
+        catalog_identifier: str,
+        object_identifier: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Delete an object.
+
+        Delete an object.
+
+        :param str catalog_identifier: Catalog identifier.
+        :param str object_identifier: Object identifier.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if catalog_identifier is None:
+            raise ValueError('catalog_identifier must be provided')
+        if object_identifier is None:
+            raise ValueError('object_identifier must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='delete_object')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        path_param_keys = ['catalog_identifier', 'object_identifier']
+        path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/objects/{object_identifier}'.format(**path_param_dict)
+        request = self.prepare_request(method='DELETE',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request)
+        return response
+
+
+    def get_object_audit(self,
+        catalog_identifier: str,
+        object_identifier: str,
+        *,
+        id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get the audit log(s) for object.
+
+        Get the audit log(s) for object.
+
+        :param str catalog_identifier: Catalog identifier.
+        :param str object_identifier: Object identifier.
+        :param str id: (optional) Log identification.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if catalog_identifier is None:
+            raise ValueError('catalog_identifier must be provided')
+        if object_identifier is None:
+            raise ValueError('object_identifier must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_object_audit')
+        headers.update(sdk_headers)
+
+        params = {
+            'id': id
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        path_param_keys = ['catalog_identifier', 'object_identifier']
+        path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/offerings/{object_identifier}/audit'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
+
+        response = self.send(request)
+        return response
+
 
 class GetConsumptionOfferingsEnums:
     """
@@ -3454,6 +4381,7 @@ class UpdateOfferingIbmEnums:
         """
         Type of approval, ibm or public.
         """
+        ALLOW_REQUEST = 'allow_request'
         IBM = 'ibm'
         PUBLIC = 'public'
     class Approved(str, Enum):
@@ -3799,6 +4727,7 @@ class ApprovalResult():
     """
     Result of approval.
 
+    :attr bool allow_request: (optional) Allowed to request to publish.
     :attr bool ibm: (optional) Visible to IBM.
     :attr bool public: (optional) Visible to everyone.
     :attr bool changed: (optional) Denotes whether approval has changed.
@@ -3806,16 +4735,19 @@ class ApprovalResult():
 
     def __init__(self,
                  *,
+                 allow_request: bool = None,
                  ibm: bool = None,
                  public: bool = None,
                  changed: bool = None) -> None:
         """
         Initialize a ApprovalResult object.
 
+        :param bool allow_request: (optional) Allowed to request to publish.
         :param bool ibm: (optional) Visible to IBM.
         :param bool public: (optional) Visible to everyone.
         :param bool changed: (optional) Denotes whether approval has changed.
         """
+        self.allow_request = allow_request
         self.ibm = ibm
         self.public = public
         self.changed = changed
@@ -3824,6 +4756,8 @@ class ApprovalResult():
     def from_dict(cls, _dict: Dict) -> 'ApprovalResult':
         """Initialize a ApprovalResult object from a json dictionary."""
         args = {}
+        if 'allow_request' in _dict:
+            args['allow_request'] = _dict.get('allow_request')
         if 'ibm' in _dict:
             args['ibm'] = _dict.get('ibm')
         if 'public' in _dict:
@@ -3840,6 +4774,8 @@ class ApprovalResult():
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
+        if hasattr(self, 'allow_request') and self.allow_request is not None:
+            _dict['allow_request'] = self.allow_request
         if hasattr(self, 'ibm') and self.ibm is not None:
             _dict['ibm'] = self.ibm
         if hasattr(self, 'public') and self.public is not None:
@@ -7631,6 +8567,668 @@ class NamespaceSearchResult():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class Object():
+    """
+    object information.
+
+    :attr str id: (optional) unique id.
+    :attr str name: (optional) The programmatic name of this offering.
+    :attr str rev: (optional) Cloudant revision.
+    :attr str crn: (optional) The crn for this specific object.
+    :attr str url: (optional) The url for this specific object.
+    :attr str parent_id: (optional) The parent for this specific object.
+    :attr List[str] allow_list: (optional) List of allowed accounts for this
+          specific object.
+    :attr str label_i18n: (optional) Translated display name in the requested
+          language.
+    :attr str label: (optional) Display name in the requested language.
+    :attr List[str] tags: (optional) List of tags associated with this catalog.
+    :attr datetime created: (optional) The date and time this catalog was created.
+    :attr datetime updated: (optional) The date and time this catalog was last
+          updated.
+    :attr str short_description: (optional) Short description in the requested
+          language.
+    :attr str short_description_i18n: (optional) Short description translation.
+    :attr str kind: (optional) Kind of object.
+    :attr PublishObject publish: (optional) Publish information.
+    :attr State state: (optional) Offering state.
+    :attr str catalog_id: (optional) The id of the catalog containing this offering.
+    :attr str catalog_name: (optional) The name of the catalog.
+    :attr object data: (optional) Map of data values for this object.
+    """
+
+    def __init__(self,
+                 *,
+                 id: str = None,
+                 name: str = None,
+                 rev: str = None,
+                 crn: str = None,
+                 url: str = None,
+                 parent_id: str = None,
+                 allow_list: List[str] = None,
+                 label_i18n: str = None,
+                 label: str = None,
+                 tags: List[str] = None,
+                 created: datetime = None,
+                 updated: datetime = None,
+                 short_description: str = None,
+                 short_description_i18n: str = None,
+                 kind: str = None,
+                 publish: 'PublishObject' = None,
+                 state: 'State' = None,
+                 catalog_id: str = None,
+                 catalog_name: str = None,
+                 data: object = None) -> None:
+        """
+        Initialize a Object object.
+
+        :param str id: (optional) unique id.
+        :param str name: (optional) The programmatic name of this offering.
+        :param str rev: (optional) Cloudant revision.
+        :param str crn: (optional) The crn for this specific object.
+        :param str url: (optional) The url for this specific object.
+        :param str parent_id: (optional) The parent for this specific object.
+        :param List[str] allow_list: (optional) List of allowed accounts for this
+               specific object.
+        :param str label_i18n: (optional) Translated display name in the requested
+               language.
+        :param str label: (optional) Display name in the requested language.
+        :param List[str] tags: (optional) List of tags associated with this
+               catalog.
+        :param datetime created: (optional) The date and time this catalog was
+               created.
+        :param datetime updated: (optional) The date and time this catalog was last
+               updated.
+        :param str short_description: (optional) Short description in the requested
+               language.
+        :param str short_description_i18n: (optional) Short description
+               translation.
+        :param str kind: (optional) Kind of object.
+        :param PublishObject publish: (optional) Publish information.
+        :param State state: (optional) Offering state.
+        :param str catalog_id: (optional) The id of the catalog containing this
+               offering.
+        :param str catalog_name: (optional) The name of the catalog.
+        :param object data: (optional) Map of data values for this object.
+        """
+        self.id = id
+        self.name = name
+        self.rev = rev
+        self.crn = crn
+        self.url = url
+        self.parent_id = parent_id
+        self.allow_list = allow_list
+        self.label_i18n = label_i18n
+        self.label = label
+        self.tags = tags
+        self.created = created
+        self.updated = updated
+        self.short_description = short_description
+        self.short_description_i18n = short_description_i18n
+        self.kind = kind
+        self.publish = publish
+        self.state = state
+        self.catalog_id = catalog_id
+        self.catalog_name = catalog_name
+        self.data = data
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Object':
+        """Initialize a Object object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        if '_rev' in _dict:
+            args['rev'] = _dict.get('_rev')
+        if 'crn' in _dict:
+            args['crn'] = _dict.get('crn')
+        if 'url' in _dict:
+            args['url'] = _dict.get('url')
+        if 'parent_id' in _dict:
+            args['parent_id'] = _dict.get('parent_id')
+        if 'allow_list' in _dict:
+            args['allow_list'] = _dict.get('allow_list')
+        if 'label_i18n' in _dict:
+            args['label_i18n'] = _dict.get('label_i18n')
+        if 'label' in _dict:
+            args['label'] = _dict.get('label')
+        if 'tags' in _dict:
+            args['tags'] = _dict.get('tags')
+        if 'created' in _dict:
+            args['created'] = string_to_datetime(_dict.get('created'))
+        if 'updated' in _dict:
+            args['updated'] = string_to_datetime(_dict.get('updated'))
+        if 'short_description' in _dict:
+            args['short_description'] = _dict.get('short_description')
+        if 'short_description_i18n' in _dict:
+            args['short_description_i18n'] = _dict.get('short_description_i18n')
+        if 'kind' in _dict:
+            args['kind'] = _dict.get('kind')
+        if 'publish' in _dict:
+            args['publish'] = PublishObject.from_dict(_dict.get('publish'))
+        if 'state' in _dict:
+            args['state'] = State.from_dict(_dict.get('state'))
+        if 'catalog_id' in _dict:
+            args['catalog_id'] = _dict.get('catalog_id')
+        if 'catalog_name' in _dict:
+            args['catalog_name'] = _dict.get('catalog_name')
+        if 'data' in _dict:
+            args['data'] = _dict.get('data')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Object object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'rev') and self.rev is not None:
+            _dict['_rev'] = self.rev
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'url') and self.url is not None:
+            _dict['url'] = self.url
+        if hasattr(self, 'parent_id') and self.parent_id is not None:
+            _dict['parent_id'] = self.parent_id
+        if hasattr(self, 'allow_list') and self.allow_list is not None:
+            _dict['allow_list'] = self.allow_list
+        if hasattr(self, 'label_i18n') and self.label_i18n is not None:
+            _dict['label_i18n'] = self.label_i18n
+        if hasattr(self, 'label') and self.label is not None:
+            _dict['label'] = self.label
+        if hasattr(self, 'tags') and self.tags is not None:
+            _dict['tags'] = self.tags
+        if hasattr(self, 'created') and self.created is not None:
+            _dict['created'] = datetime_to_string(self.created)
+        if hasattr(self, 'updated') and self.updated is not None:
+            _dict['updated'] = datetime_to_string(self.updated)
+        if hasattr(self, 'short_description') and self.short_description is not None:
+            _dict['short_description'] = self.short_description
+        if hasattr(self, 'short_description_i18n') and self.short_description_i18n is not None:
+            _dict['short_description_i18n'] = self.short_description_i18n
+        if hasattr(self, 'kind') and self.kind is not None:
+            _dict['kind'] = self.kind
+        if hasattr(self, 'publish') and self.publish is not None:
+            _dict['publish'] = self.publish.to_dict()
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state.to_dict()
+        if hasattr(self, 'catalog_id') and self.catalog_id is not None:
+            _dict['catalog_id'] = self.catalog_id
+        if hasattr(self, 'catalog_name') and self.catalog_name is not None:
+            _dict['catalog_name'] = self.catalog_name
+        if hasattr(self, 'data') and self.data is not None:
+            _dict['data'] = self.data
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Object object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Object') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Object') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ObjectDigest():
+    """
+    object information.
+
+    :attr str id: (optional) unique id.
+    :attr List[float] order: (optional) Lucene match order.
+    :attr ObjectDigestFields fields: (optional) Object digest.
+    """
+
+    def __init__(self,
+                 *,
+                 id: str = None,
+                 order: List[float] = None,
+                 fields: 'ObjectDigestFields' = None) -> None:
+        """
+        Initialize a ObjectDigest object.
+
+        :param str id: (optional) unique id.
+        :param List[float] order: (optional) Lucene match order.
+        :param ObjectDigestFields fields: (optional) Object digest.
+        """
+        self.id = id
+        self.order = order
+        self.fields = fields
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ObjectDigest':
+        """Initialize a ObjectDigest object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        if 'order' in _dict:
+            args['order'] = _dict.get('order')
+        if 'fields' in _dict:
+            args['fields'] = ObjectDigestFields.from_dict(_dict.get('fields'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ObjectDigest object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'order') and self.order is not None:
+            _dict['order'] = self.order
+        if hasattr(self, 'fields') and self.fields is not None:
+            _dict['fields'] = self.fields.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ObjectDigest object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ObjectDigest') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ObjectDigest') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ObjectDigestFields():
+    """
+    Object digest.
+
+    :attr str catalog_id: (optional) The id of the catalog containing this offering.
+    :attr str name: (optional) The programmatic name of this offering.
+    :attr str parent_id: (optional) The parent for this specific object.
+    :attr str label: (optional) Display name in the requested language.
+    :attr datetime updated: (optional) The date and time this catalog was last
+          updated.
+    :attr str kind: (optional) Kind of object.
+    :attr str parent_name: (optional) The name of the object's parent.
+    """
+
+    def __init__(self,
+                 *,
+                 catalog_id: str = None,
+                 name: str = None,
+                 parent_id: str = None,
+                 label: str = None,
+                 updated: datetime = None,
+                 kind: str = None,
+                 parent_name: str = None) -> None:
+        """
+        Initialize a ObjectDigestFields object.
+
+        :param str catalog_id: (optional) The id of the catalog containing this
+               offering.
+        :param str name: (optional) The programmatic name of this offering.
+        :param str parent_id: (optional) The parent for this specific object.
+        :param str label: (optional) Display name in the requested language.
+        :param datetime updated: (optional) The date and time this catalog was last
+               updated.
+        :param str kind: (optional) Kind of object.
+        :param str parent_name: (optional) The name of the object's parent.
+        """
+        self.catalog_id = catalog_id
+        self.name = name
+        self.parent_id = parent_id
+        self.label = label
+        self.updated = updated
+        self.kind = kind
+        self.parent_name = parent_name
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ObjectDigestFields':
+        """Initialize a ObjectDigestFields object from a json dictionary."""
+        args = {}
+        if 'catalog_id' in _dict:
+            args['catalog_id'] = _dict.get('catalog_id')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        if 'parent_id' in _dict:
+            args['parent_id'] = _dict.get('parent_id')
+        if 'label' in _dict:
+            args['label'] = _dict.get('label')
+        if 'updated' in _dict:
+            args['updated'] = string_to_datetime(_dict.get('updated'))
+        if 'kind' in _dict:
+            args['kind'] = _dict.get('kind')
+        if 'parent_name' in _dict:
+            args['parent_name'] = _dict.get('parent_name')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ObjectDigestFields object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'catalog_id') and self.catalog_id is not None:
+            _dict['catalog_id'] = self.catalog_id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'parent_id') and self.parent_id is not None:
+            _dict['parent_id'] = self.parent_id
+        if hasattr(self, 'label') and self.label is not None:
+            _dict['label'] = self.label
+        if hasattr(self, 'updated') and self.updated is not None:
+            _dict['updated'] = datetime_to_string(self.updated)
+        if hasattr(self, 'kind') and self.kind is not None:
+            _dict['kind'] = self.kind
+        if hasattr(self, 'parent_name') and self.parent_name is not None:
+            _dict['parent_name'] = self.parent_name
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ObjectDigestFields object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ObjectDigestFields') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ObjectDigestFields') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ObjectListResult():
+    """
+    Paginated object search result.
+
+    :attr int offset: (optional) The offset (origin 0) of the first resource in this
+          page of search results.
+    :attr int limit: (optional) The maximum number of resources returned in each
+          page of search results.
+    :attr int total_count: (optional) The overall total number of resources in the
+          search result set.
+    :attr int resource_count: (optional) The number of resources returned in this
+          page of search results.
+    :attr str first: (optional) A URL for retrieving the first page of search
+          results.
+    :attr str last: (optional) A URL for retrieving the last page of search results.
+    :attr str prev: (optional) A URL for retrieving the previous page of search
+          results.
+    :attr str next: (optional) A URL for retrieving the next page of search results.
+    :attr List[Object] resources: (optional) Resulting objects.
+    """
+
+    def __init__(self,
+                 *,
+                 offset: int = None,
+                 limit: int = None,
+                 total_count: int = None,
+                 resource_count: int = None,
+                 first: str = None,
+                 last: str = None,
+                 prev: str = None,
+                 next: str = None,
+                 resources: List['Object'] = None) -> None:
+        """
+        Initialize a ObjectListResult object.
+
+        :param int offset: (optional) The offset (origin 0) of the first resource
+               in this page of search results.
+        :param int limit: (optional) The maximum number of resources returned in
+               each page of search results.
+        :param int total_count: (optional) The overall total number of resources in
+               the search result set.
+        :param int resource_count: (optional) The number of resources returned in
+               this page of search results.
+        :param str first: (optional) A URL for retrieving the first page of search
+               results.
+        :param str last: (optional) A URL for retrieving the last page of search
+               results.
+        :param str prev: (optional) A URL for retrieving the previous page of
+               search results.
+        :param str next: (optional) A URL for retrieving the next page of search
+               results.
+        :param List[Object] resources: (optional) Resulting objects.
+        """
+        self.offset = offset
+        self.limit = limit
+        self.total_count = total_count
+        self.resource_count = resource_count
+        self.first = first
+        self.last = last
+        self.prev = prev
+        self.next = next
+        self.resources = resources
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ObjectListResult':
+        """Initialize a ObjectListResult object from a json dictionary."""
+        args = {}
+        if 'offset' in _dict:
+            args['offset'] = _dict.get('offset')
+        if 'limit' in _dict:
+            args['limit'] = _dict.get('limit')
+        if 'total_count' in _dict:
+            args['total_count'] = _dict.get('total_count')
+        if 'resource_count' in _dict:
+            args['resource_count'] = _dict.get('resource_count')
+        if 'first' in _dict:
+            args['first'] = _dict.get('first')
+        if 'last' in _dict:
+            args['last'] = _dict.get('last')
+        if 'prev' in _dict:
+            args['prev'] = _dict.get('prev')
+        if 'next' in _dict:
+            args['next'] = _dict.get('next')
+        if 'resources' in _dict:
+            args['resources'] = [Object.from_dict(x) for x in _dict.get('resources')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ObjectListResult object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'offset') and self.offset is not None:
+            _dict['offset'] = self.offset
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'total_count') and self.total_count is not None:
+            _dict['total_count'] = self.total_count
+        if hasattr(self, 'resource_count') and self.resource_count is not None:
+            _dict['resource_count'] = self.resource_count
+        if hasattr(self, 'first') and self.first is not None:
+            _dict['first'] = self.first
+        if hasattr(self, 'last') and self.last is not None:
+            _dict['last'] = self.last
+        if hasattr(self, 'prev') and self.prev is not None:
+            _dict['prev'] = self.prev
+        if hasattr(self, 'next') and self.next is not None:
+            _dict['next'] = self.next
+        if hasattr(self, 'resources') and self.resources is not None:
+            _dict['resources'] = [x.to_dict() for x in self.resources]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ObjectListResult object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ObjectListResult') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ObjectListResult') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ObjectSearchResult():
+    """
+    Paginated object search result.
+
+    :attr int offset: (optional) The offset (origin 0) of the first resource in this
+          page of search results.
+    :attr int limit: (optional) The maximum number of resources returned in each
+          page of search results.
+    :attr int total_count: (optional) The overall total number of resources in the
+          search result set.
+    :attr int resource_count: (optional) The number of resources returned in this
+          page of search results.
+    :attr str first: (optional) A URL for retrieving the first page of search
+          results.
+    :attr str last: (optional) A URL for retrieving the last page of search results.
+    :attr str prev: (optional) A URL for retrieving the previous page of search
+          results.
+    :attr str next: (optional) A URL for retrieving the next page of search results.
+    :attr List[ObjectDigest] resources: (optional) Resulting objects.
+    """
+
+    def __init__(self,
+                 *,
+                 offset: int = None,
+                 limit: int = None,
+                 total_count: int = None,
+                 resource_count: int = None,
+                 first: str = None,
+                 last: str = None,
+                 prev: str = None,
+                 next: str = None,
+                 resources: List['ObjectDigest'] = None) -> None:
+        """
+        Initialize a ObjectSearchResult object.
+
+        :param int offset: (optional) The offset (origin 0) of the first resource
+               in this page of search results.
+        :param int limit: (optional) The maximum number of resources returned in
+               each page of search results.
+        :param int total_count: (optional) The overall total number of resources in
+               the search result set.
+        :param int resource_count: (optional) The number of resources returned in
+               this page of search results.
+        :param str first: (optional) A URL for retrieving the first page of search
+               results.
+        :param str last: (optional) A URL for retrieving the last page of search
+               results.
+        :param str prev: (optional) A URL for retrieving the previous page of
+               search results.
+        :param str next: (optional) A URL for retrieving the next page of search
+               results.
+        :param List[ObjectDigest] resources: (optional) Resulting objects.
+        """
+        self.offset = offset
+        self.limit = limit
+        self.total_count = total_count
+        self.resource_count = resource_count
+        self.first = first
+        self.last = last
+        self.prev = prev
+        self.next = next
+        self.resources = resources
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ObjectSearchResult':
+        """Initialize a ObjectSearchResult object from a json dictionary."""
+        args = {}
+        if 'offset' in _dict:
+            args['offset'] = _dict.get('offset')
+        if 'limit' in _dict:
+            args['limit'] = _dict.get('limit')
+        if 'total_count' in _dict:
+            args['total_count'] = _dict.get('total_count')
+        if 'resource_count' in _dict:
+            args['resource_count'] = _dict.get('resource_count')
+        if 'first' in _dict:
+            args['first'] = _dict.get('first')
+        if 'last' in _dict:
+            args['last'] = _dict.get('last')
+        if 'prev' in _dict:
+            args['prev'] = _dict.get('prev')
+        if 'next' in _dict:
+            args['next'] = _dict.get('next')
+        if 'resources' in _dict:
+            args['resources'] = [ObjectDigest.from_dict(x) for x in _dict.get('resources')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ObjectSearchResult object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'offset') and self.offset is not None:
+            _dict['offset'] = self.offset
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'total_count') and self.total_count is not None:
+            _dict['total_count'] = self.total_count
+        if hasattr(self, 'resource_count') and self.resource_count is not None:
+            _dict['resource_count'] = self.resource_count
+        if hasattr(self, 'first') and self.first is not None:
+            _dict['first'] = self.first
+        if hasattr(self, 'last') and self.last is not None:
+            _dict['last'] = self.last
+        if hasattr(self, 'prev') and self.prev is not None:
+            _dict['prev'] = self.prev
+        if hasattr(self, 'next') and self.next is not None:
+            _dict['next'] = self.next
+        if hasattr(self, 'resources') and self.resources is not None:
+            _dict['resources'] = [x.to_dict() for x in self.resources]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ObjectSearchResult object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ObjectSearchResult') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ObjectSearchResult') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class Offering():
     """
     Offering information.
@@ -8341,6 +9939,100 @@ class Plan():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'Plan') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class PublishObject():
+    """
+    Publish information.
+
+    :attr bool permit_ibm_public_publish: (optional) Is it permitted to request
+          publishing to IBM or Public.
+    :attr bool ibm_approved: (optional) Indicates if this offering has been approved
+          for use by all IBMers.
+    :attr bool public_approved: (optional) Indicates if this offering has been
+          approved for use by all IBM Cloud users.
+    :attr str portal_approval_record: (optional) The portal's approval record ID.
+    :attr str portal_url: (optional) The portal UI URL.
+    """
+
+    def __init__(self,
+                 *,
+                 permit_ibm_public_publish: bool = None,
+                 ibm_approved: bool = None,
+                 public_approved: bool = None,
+                 portal_approval_record: str = None,
+                 portal_url: str = None) -> None:
+        """
+        Initialize a PublishObject object.
+
+        :param bool permit_ibm_public_publish: (optional) Is it permitted to
+               request publishing to IBM or Public.
+        :param bool ibm_approved: (optional) Indicates if this offering has been
+               approved for use by all IBMers.
+        :param bool public_approved: (optional) Indicates if this offering has been
+               approved for use by all IBM Cloud users.
+        :param str portal_approval_record: (optional) The portal's approval record
+               ID.
+        :param str portal_url: (optional) The portal UI URL.
+        """
+        self.permit_ibm_public_publish = permit_ibm_public_publish
+        self.ibm_approved = ibm_approved
+        self.public_approved = public_approved
+        self.portal_approval_record = portal_approval_record
+        self.portal_url = portal_url
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'PublishObject':
+        """Initialize a PublishObject object from a json dictionary."""
+        args = {}
+        if 'permit_ibm_public_publish' in _dict:
+            args['permit_ibm_public_publish'] = _dict.get('permit_ibm_public_publish')
+        if 'ibm_approved' in _dict:
+            args['ibm_approved'] = _dict.get('ibm_approved')
+        if 'public_approved' in _dict:
+            args['public_approved'] = _dict.get('public_approved')
+        if 'portal_approval_record' in _dict:
+            args['portal_approval_record'] = _dict.get('portal_approval_record')
+        if 'portal_url' in _dict:
+            args['portal_url'] = _dict.get('portal_url')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a PublishObject object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'permit_ibm_public_publish') and self.permit_ibm_public_publish is not None:
+            _dict['permit_ibm_public_publish'] = self.permit_ibm_public_publish
+        if hasattr(self, 'ibm_approved') and self.ibm_approved is not None:
+            _dict['ibm_approved'] = self.ibm_approved
+        if hasattr(self, 'public_approved') and self.public_approved is not None:
+            _dict['public_approved'] = self.public_approved
+        if hasattr(self, 'portal_approval_record') and self.portal_approval_record is not None:
+            _dict['portal_approval_record'] = self.portal_approval_record
+        if hasattr(self, 'portal_url') and self.portal_url is not None:
+            _dict['portal_url'] = self.portal_url
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this PublishObject object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'PublishObject') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'PublishObject') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
