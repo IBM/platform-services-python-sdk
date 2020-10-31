@@ -1,0 +1,9 @@
+coverage:
+  status:
+    project:
+      default:
+        # Tolerate a drop in coverage from PR <= 2%
+        threshold: 2%
+
+
+      
