@@ -52,6 +52,7 @@ Service Name | Imported Class Name
 [Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog) | CatalogManagementV1
 [Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | ConfigurationGovernanceV1
 [Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | EnterpriseManagementV1
+[Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports) | EnterpriseUsageReportsV1
 [Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | GlobalCatalogV1
 [Global Search](https://cloud.ibm.com/apidocs/search) | GlobalSearchV2
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | GlobalTaggingV1

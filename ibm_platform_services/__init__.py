@@ -26,6 +26,7 @@ from .case_management_v1 import CaseManagementV1
 from .catalog_management_v1 import CatalogManagementV1
 from .configuration_governance_v1 import ConfigurationGovernanceV1
 from .enterprise_management_v1 import EnterpriseManagementV1
+from .enterprise_usage_reports_v1 import EnterpriseUsageReportsV1
 from .global_catalog_v1 import GlobalCatalogV1
 from .global_search_v2 import GlobalSearchV2
 from .global_tagging_v1 import GlobalTaggingV1
