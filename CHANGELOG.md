@@ -1,3 +1,10 @@
+# [0.15.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.14.0...v0.15.0) (2020-11-04)
+
+
+### Features
+
+* **Enterprise Usage Reports:** add service to project ([8f20580](https://github.com/IBM/platform-services-python-sdk/commit/8f20580bdd4060ce22aac9c9f889df82d72e65a5))
+
 # [0.14.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.13.2...v0.14.0) (2020-10-31)
 
 
