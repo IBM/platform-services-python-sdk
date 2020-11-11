@@ -14,12 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-af92e433-20201110-100619
  
 """
 API specification for the Configuration Governance service.
 """
 
+from datetime import datetime
 from enum import Enum
 from typing import Dict, List
 import json
@@ -27,7 +28,7 @@ import json
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
-from ibm_cloud_sdk_core.utils import convert_model
+from ibm_cloud_sdk_core.utils import convert_model, datetime_to_string, string_to_datetime
 
 from .common import get_sdk_headers
 
@@ -77,9 +78,8 @@ class ConfigurationGovernanceV1(BaseService):
 
 
     def create_rules(self,
+        transaction_id: str,
         rules: List['CreateRuleRequest'],
-        *,
-        transaction_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -91,18 +91,20 @@ class ConfigurationGovernanceV1(BaseService):
         conditions, and enforcement actions that you specify. The response returns the ID
         value for your rule, along with other metadata.
 
-        :param List[CreateRuleRequest] rules: A list of rules to be created.
-        :param str transaction_id: (optional) The unique identifier that is used to
-               trace an entire request. If you omit this field, the service generates and
-               sends a transaction ID in the
+        :param str transaction_id: The unique identifier that is used to trace an
+               entire request. If you omit this field, the service generates and sends a
+               transaction ID in the
                `trace` field of the response body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
+        :param List[CreateRuleRequest] rules: A list of rules to be created.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `CreateRulesResponse` object
         """
 
+        if transaction_id is None:
+            raise ValueError('transaction_id must be provided')
         if rules is None:
             raise ValueError('rules must be provided')
         rules = [convert_model(x) for x in rules]
@@ -136,9 +138,9 @@ class ConfigurationGovernanceV1(BaseService):
 
 
     def list_rules(self,
+        transaction_id: str,
         account_id: str,
         *,
-        transaction_id: str = None,
         attached: bool = None,
         labels: str = None,
         scopes: str = None,
@@ -151,13 +153,13 @@ class ConfigurationGovernanceV1(BaseService):
 
         Retrieves a list of the rules that are available in your account.
 
-        :param str account_id: Your IBM Cloud account ID.
-        :param str transaction_id: (optional) The unique identifier that is used to
-               trace an entire request. If you omit this field, the service generates and
-               sends a transaction ID in the
+        :param str transaction_id: The unique identifier that is used to trace an
+               entire request. If you omit this field, the service generates and sends a
+               transaction ID in the
                `trace` field of the response body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
+        :param str account_id: Your IBM Cloud account ID.
         :param bool attached: (optional) Retrieves a list of rules that have scope
                attachments.
         :param str labels: (optional) Retrieves a list of rules that match the
@@ -181,6 +183,8 @@ class ConfigurationGovernanceV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `RuleList` object
         """
 
+        if transaction_id is None:
+            raise ValueError('transaction_id must be provided')
         if account_id is None:
             raise ValueError('account_id must be provided')
         headers = {
@@ -216,8 +220,7 @@ class ConfigurationGovernanceV1(BaseService):
 
     def get_rule(self,
         rule_id: str,
-        *,
-        transaction_id: str = None,
+        transaction_id: str,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -226,9 +229,9 @@ class ConfigurationGovernanceV1(BaseService):
         Retrieves an existing rule and its details.
 
         :param str rule_id: The UUID that uniquely identifies the rule.
-        :param str transaction_id: (optional) The unique identifier that is used to
-               trace an entire request. If you omit this field, the service generates and
-               sends a transaction ID in the
+        :param str transaction_id: The unique identifier that is used to trace an
+               entire request. If you omit this field, the service generates and sends a
+               transaction ID in the
                `trace` field of the response body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
@@ -239,6 +242,8 @@ class ConfigurationGovernanceV1(BaseService):
 
         if rule_id is None:
             raise ValueError('rule_id must be provided')
+        if transaction_id is None:
+            raise ValueError('transaction_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
         }
@@ -265,6 +270,7 @@ class ConfigurationGovernanceV1(BaseService):
 
     def update_rule(self,
         rule_id: str,
+        transaction_id: str,
         if_match: str,
         name: str,
         description: str,
@@ -275,7 +281,6 @@ class ConfigurationGovernanceV1(BaseService):
         account_id: str = None,
         rule_type: str = None,
         labels: List[str] = None,
-        transaction_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -284,6 +289,12 @@ class ConfigurationGovernanceV1(BaseService):
         Updates an existing rule based on the properties that you specify.
 
         :param str rule_id: The UUID that uniquely identifies the rule.
+        :param str transaction_id: The unique identifier that is used to trace an
+               entire request. If you omit this field, the service generates and sends a
+               transaction ID in the
+               `trace` field of the response body.
+               **Note:** To help with debugging logs, it is strongly recommended that you
+               generate and supply a `Transaction-Id` with each request.
         :param str if_match: Compares a supplied `Etag` value with the version that
                is stored for the requested resource. If the values match, the server
                allows the request method to continue.
@@ -304,12 +315,6 @@ class ConfigurationGovernanceV1(BaseService):
         :param List[str] labels: (optional) Labels that you can use to group and
                search for similar rules, such as those that help you to meet a specific
                organization guideline.
-        :param str transaction_id: (optional) The unique identifier that is used to
-               trace an entire request. If you omit this field, the service generates and
-               sends a transaction ID in the
-               `trace` field of the response body.
-               **Note:** To help with debugging logs, it is strongly recommended that you
-               generate and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Rule` object
@@ -317,6 +322,8 @@ class ConfigurationGovernanceV1(BaseService):
 
         if rule_id is None:
             raise ValueError('rule_id must be provided')
+        if transaction_id is None:
+            raise ValueError('transaction_id must be provided')
         if if_match is None:
             raise ValueError('if_match must be provided')
         if name is None:
@@ -333,8 +340,8 @@ class ConfigurationGovernanceV1(BaseService):
         required_config = convert_model(required_config)
         enforcement_actions = [convert_model(x) for x in enforcement_actions]
         headers = {
-            'If-Match': if_match,
-            'Transaction-Id': transaction_id
+            'Transaction-Id': transaction_id,
+            'If-Match': if_match
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
@@ -374,8 +381,7 @@ class ConfigurationGovernanceV1(BaseService):
 
     def delete_rule(self,
         rule_id: str,
-        *,
-        transaction_id: str = None,
+        transaction_id: str,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -384,9 +390,9 @@ class ConfigurationGovernanceV1(BaseService):
         Deletes an existing rule.
 
         :param str rule_id: The UUID that uniquely identifies the rule.
-        :param str transaction_id: (optional) The unique identifier that is used to
-               trace an entire request. If you omit this field, the service generates and
-               sends a transaction ID in the
+        :param str transaction_id: The unique identifier that is used to trace an
+               entire request. If you omit this field, the service generates and sends a
+               transaction ID in the
                `trace` field of the response body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
@@ -397,6 +403,8 @@ class ConfigurationGovernanceV1(BaseService):
 
         if rule_id is None:
             raise ValueError('rule_id must be provided')
+        if transaction_id is None:
+            raise ValueError('transaction_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
         }
@@ -422,9 +430,8 @@ class ConfigurationGovernanceV1(BaseService):
 
     def create_attachments(self,
         rule_id: str,
+        transaction_id: str,
         attachments: List['AttachmentRequest'],
-        *,
-        transaction_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -437,13 +444,13 @@ class ConfigurationGovernanceV1(BaseService):
         attachment, along with other metadata.
 
         :param str rule_id: The UUID that uniquely identifies the rule.
-        :param List[AttachmentRequest] attachments:
-        :param str transaction_id: (optional) The unique identifier that is used to
-               trace an entire request. If you omit this field, the service generates and
-               sends a transaction ID in the
+        :param str transaction_id: The unique identifier that is used to trace an
+               entire request. If you omit this field, the service generates and sends a
+               transaction ID in the
                `trace` field of the response body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
+        :param List[AttachmentRequest] attachments:
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `CreateAttachmentsResponse` object
@@ -451,6 +458,8 @@ class ConfigurationGovernanceV1(BaseService):
 
         if rule_id is None:
             raise ValueError('rule_id must be provided')
+        if transaction_id is None:
+            raise ValueError('transaction_id must be provided')
         if attachments is None:
             raise ValueError('attachments must be provided')
         attachments = [convert_model(x) for x in attachments]
@@ -488,8 +497,8 @@ class ConfigurationGovernanceV1(BaseService):
 
     def list_attachments(self,
         rule_id: str,
+        transaction_id: str,
         *,
-        transaction_id: str = None,
         limit: int = None,
         offset: int = None,
         **kwargs
@@ -500,9 +509,9 @@ class ConfigurationGovernanceV1(BaseService):
         Retrieves a list of scope attachments that are associated with the specified rule.
 
         :param str rule_id: The UUID that uniquely identifies the rule.
-        :param str transaction_id: (optional) The unique identifier that is used to
-               trace an entire request. If you omit this field, the service generates and
-               sends a transaction ID in the
+        :param str transaction_id: The unique identifier that is used to trace an
+               entire request. If you omit this field, the service generates and sends a
+               transaction ID in the
                `trace` field of the response body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
@@ -525,6 +534,8 @@ class ConfigurationGovernanceV1(BaseService):
 
         if rule_id is None:
             raise ValueError('rule_id must be provided')
+        if transaction_id is None:
+            raise ValueError('transaction_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
         }
@@ -558,8 +569,7 @@ class ConfigurationGovernanceV1(BaseService):
     def get_attachment(self,
         rule_id: str,
         attachment_id: str,
-        *,
-        transaction_id: str = None,
+        transaction_id: str,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -569,9 +579,9 @@ class ConfigurationGovernanceV1(BaseService):
 
         :param str rule_id: The UUID that uniquely identifies the rule.
         :param str attachment_id: The UUID that uniquely identifies the attachment.
-        :param str transaction_id: (optional) The unique identifier that is used to
-               trace an entire request. If you omit this field, the service generates and
-               sends a transaction ID in the
+        :param str transaction_id: The unique identifier that is used to trace an
+               entire request. If you omit this field, the service generates and sends a
+               transaction ID in the
                `trace` field of the response body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
@@ -584,6 +594,8 @@ class ConfigurationGovernanceV1(BaseService):
             raise ValueError('rule_id must be provided')
         if attachment_id is None:
             raise ValueError('attachment_id must be provided')
+        if transaction_id is None:
+            raise ValueError('transaction_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
         }
@@ -611,12 +623,12 @@ class ConfigurationGovernanceV1(BaseService):
     def update_attachment(self,
         rule_id: str,
         attachment_id: str,
+        transaction_id: str,
         if_match: str,
         account_id: str,
         included_scope: 'RuleScope',
         *,
         excluded_scopes: List['RuleScope'] = None,
-        transaction_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -626,6 +638,12 @@ class ConfigurationGovernanceV1(BaseService):
 
         :param str rule_id: The UUID that uniquely identifies the rule.
         :param str attachment_id: The UUID that uniquely identifies the attachment.
+        :param str transaction_id: The unique identifier that is used to trace an
+               entire request. If you omit this field, the service generates and sends a
+               transaction ID in the
+               `trace` field of the response body.
+               **Note:** To help with debugging logs, it is strongly recommended that you
+               generate and supply a `Transaction-Id` with each request.
         :param str if_match: Compares a supplied `Etag` value with the version that
                is stored for the requested resource. If the values match, the server
                allows the request method to continue.
@@ -636,12 +654,6 @@ class ConfigurationGovernanceV1(BaseService):
                attached across your accounts.
         :param List[RuleScope] excluded_scopes: (optional) The extent at which the
                rule can be excluded from the included scope.
-        :param str transaction_id: (optional) The unique identifier that is used to
-               trace an entire request. If you omit this field, the service generates and
-               sends a transaction ID in the
-               `trace` field of the response body.
-               **Note:** To help with debugging logs, it is strongly recommended that you
-               generate and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Attachment` object
@@ -651,6 +663,8 @@ class ConfigurationGovernanceV1(BaseService):
             raise ValueError('rule_id must be provided')
         if attachment_id is None:
             raise ValueError('attachment_id must be provided')
+        if transaction_id is None:
+            raise ValueError('transaction_id must be provided')
         if if_match is None:
             raise ValueError('if_match must be provided')
         if account_id is None:
@@ -661,8 +675,8 @@ class ConfigurationGovernanceV1(BaseService):
         if excluded_scopes is not None:
             excluded_scopes = [convert_model(x) for x in excluded_scopes]
         headers = {
-            'If-Match': if_match,
-            'Transaction-Id': transaction_id
+            'Transaction-Id': transaction_id,
+            'If-Match': if_match
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
@@ -698,8 +712,7 @@ class ConfigurationGovernanceV1(BaseService):
     def delete_attachment(self,
         rule_id: str,
         attachment_id: str,
-        *,
-        transaction_id: str = None,
+        transaction_id: str,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -709,9 +722,9 @@ class ConfigurationGovernanceV1(BaseService):
 
         :param str rule_id: The UUID that uniquely identifies the rule.
         :param str attachment_id: The UUID that uniquely identifies the attachment.
-        :param str transaction_id: (optional) The unique identifier that is used to
-               trace an entire request. If you omit this field, the service generates and
-               sends a transaction ID in the
+        :param str transaction_id: The unique identifier that is used to trace an
+               entire request. If you omit this field, the service generates and sends a
+               transaction ID in the
                `trace` field of the response body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
@@ -724,6 +737,8 @@ class ConfigurationGovernanceV1(BaseService):
             raise ValueError('rule_id must be provided')
         if attachment_id is None:
             raise ValueError('attachment_id must be provided')
+        if transaction_id is None:
+            raise ValueError('transaction_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
         }
@@ -1337,7 +1352,7 @@ class EnforcementAction():
     EnforcementAction.
 
     :attr str action: To block a request from completing, use `disallow`. To log the
-           request to Activity Tracker with LogDNA, use `audit_log`.
+          request to Activity Tracker with LogDNA, use `audit_log`.
     """
 
     def __init__(self,
@@ -1346,7 +1361,7 @@ class EnforcementAction():
         Initialize a EnforcementAction object.
 
         :param str action: To block a request from completing, use `disallow`. To
-               log the  request to Activity Tracker with LogDNA, use `audit_log`.
+               log the request to Activity Tracker with LogDNA, use `audit_log`.
         """
         self.action = action
 
@@ -1392,8 +1407,8 @@ class EnforcementAction():
 
     class ActionEnum(str, Enum):
         """
-        To block a request from completing, use `disallow`. To log the  request to
-        Activity Tracker with LogDNA, use `audit_log`.
+        To block a request from completing, use `disallow`. To log the request to Activity
+        Tracker with LogDNA, use `audit_log`.
         """
         AUDIT_LOG = 'audit_log'
         DISALLOW = 'disallow'
@@ -1478,10 +1493,11 @@ class Rule():
           for similar rules, such as those that help you to meet a specific organization
           guideline.
     :attr str rule_id: (optional) The UUID that uniquely identifies the rule.
-    :attr str creation_date: (optional) The date the resource was created.
+    :attr datetime creation_date: (optional) The date the resource was created.
     :attr str created_by: (optional) The unique identifier for the user or
           application that created the resource.
-    :attr str modification_date: (optional) The date the resource was last modified.
+    :attr datetime modification_date: (optional) The date the resource was last
+          modified.
     :attr str modified_by: (optional) The unique identifier for the user or
           application that last modified the resource.
     :attr int number_of_attachments: (optional) The number of scope attachments that
@@ -1499,9 +1515,9 @@ class Rule():
                  rule_type: str = None,
                  labels: List[str] = None,
                  rule_id: str = None,
-                 creation_date: str = None,
+                 creation_date: datetime = None,
                  created_by: str = None,
-                 modification_date: str = None,
+                 modification_date: datetime = None,
                  modified_by: str = None,
                  number_of_attachments: int = None) -> None:
         """
@@ -1571,11 +1587,11 @@ class Rule():
         if 'rule_id' in _dict:
             args['rule_id'] = _dict.get('rule_id')
         if 'creation_date' in _dict:
-            args['creation_date'] = _dict.get('creation_date')
+            args['creation_date'] = string_to_datetime(_dict.get('creation_date'))
         if 'created_by' in _dict:
             args['created_by'] = _dict.get('created_by')
         if 'modification_date' in _dict:
-            args['modification_date'] = _dict.get('modification_date')
+            args['modification_date'] = string_to_datetime(_dict.get('modification_date'))
         if 'modified_by' in _dict:
             args['modified_by'] = _dict.get('modified_by')
         if 'number_of_attachments' in _dict:
@@ -1612,11 +1628,11 @@ class Rule():
         if hasattr(self, 'rule_id') and getattr(self, 'rule_id') is not None:
             _dict['rule_id'] = getattr(self, 'rule_id')
         if hasattr(self, 'creation_date') and getattr(self, 'creation_date') is not None:
-            _dict['creation_date'] = getattr(self, 'creation_date')
+            _dict['creation_date'] = datetime_to_string(getattr(self, 'creation_date'))
         if hasattr(self, 'created_by') and getattr(self, 'created_by') is not None:
             _dict['created_by'] = getattr(self, 'created_by')
         if hasattr(self, 'modification_date') and getattr(self, 'modification_date') is not None:
-            _dict['modification_date'] = getattr(self, 'modification_date')
+            _dict['modification_date'] = datetime_to_string(getattr(self, 'modification_date'))
         if hasattr(self, 'modified_by') and getattr(self, 'modified_by') is not None:
             _dict['modified_by'] = getattr(self, 'modified_by')
         if hasattr(self, 'number_of_attachments') and getattr(self, 'number_of_attachments') is not None:
@@ -2094,8 +2110,7 @@ class RuleSingleProperty():
     :attr str description: (optional)
     :attr str property: A resource configuration variable that describes the
           property that you want to apply to the target resource.
-          Available options depend on the target service and resource. Currently,
-          `public_access_enabled` is supported.
+          Available options depend on the target service and resource.
     :attr str operator: The way in which the `property` field is compared to its
           value.
           There are three types of operators: string, numeric, and boolean.
@@ -2116,8 +2131,7 @@ class RuleSingleProperty():
 
         :param str property: A resource configuration variable that describes the
                property that you want to apply to the target resource.
-               Available options depend on the target service and resource. Currently,
-               `public_access_enabled` is supported.
+               Available options depend on the target service and resource.
         :param str operator: The way in which the `property` field is compared to
                its value.
                There are three types of operators: string, numeric, and boolean.
@@ -2205,6 +2219,8 @@ class RuleSingleProperty():
         NUM_LESS_THAN_EQUALS = 'num_less_than_equals'
         NUM_GREATER_THAN = 'num_greater_than'
         NUM_GREATER_THAN_EQUALS = 'num_greater_than_equals'
+        IPS_IN_RANGE = 'ips_in_range'
+        STRINGS_IN_LIST = 'strings_in_list'
 
 
 class RuleTargetAttribute():
@@ -2310,19 +2326,20 @@ class RuleTargetAttribute():
         IS_NOT_EMPTY = 'is_not_empty'
         IS_TRUE = 'is_true'
         IS_FALSE = 'is_false'
+        IPS_IN_RANGE = 'ips_in_range'
+        STRINGS_IN_LIST = 'strings_in_list'
 
 
 class TargetResource():
     """
-    The properties that describe the resource that you want to target  with the rule.
+    The properties that describe the resource that you want to target with the rule.
 
     :attr str service_name: The programmatic name of the IBM Cloud service that you
-          want to  target with the rule. Currently, `iam-groups` is supported.
+          want to target with the rule.
     :attr str resource_kind: The type of resource that you want to target.
     :attr List[RuleTargetAttribute] additional_target_attributes: (optional) An
-          extra qualifier for the resource kind. When you include  additional attributes,
-          only the resources that match the             definition are included in the
-          rule.
+          extra qualifier for the resource kind. When you include additional attributes,
+          only the resources that match the definition are included in the rule.
     """
 
     def __init__(self,
@@ -2334,13 +2351,12 @@ class TargetResource():
         Initialize a TargetResource object.
 
         :param str service_name: The programmatic name of the IBM Cloud service
-               that you want to  target with the rule. Currently, `iam-groups` is
-               supported.
+               that you want to target with the rule.
         :param str resource_kind: The type of resource that you want to target.
         :param List[RuleTargetAttribute] additional_target_attributes: (optional)
-               An extra qualifier for the resource kind. When you include  additional
-               attributes, only the resources that match the             definition are
-               included in the rule.
+               An extra qualifier for the resource kind. When you include additional
+               attributes, only the resources that match the definition are included in
+               the rule.
         """
         self.service_name = service_name
         self.resource_kind = resource_kind
@@ -2538,8 +2554,7 @@ class RuleConditionSingleProperty(RuleCondition):
     :attr str description: (optional)
     :attr str property: A resource configuration variable that describes the
           property that you want to apply to the target resource.
-          Available options depend on the target service and resource. Currently,
-          `public_access_enabled` is supported.
+          Available options depend on the target service and resource.
     :attr str operator: The way in which the `property` field is compared to its
           value.
           There are three types of operators: string, numeric, and boolean.
@@ -2560,8 +2575,7 @@ class RuleConditionSingleProperty(RuleCondition):
 
         :param str property: A resource configuration variable that describes the
                property that you want to apply to the target resource.
-               Available options depend on the target service and resource. Currently,
-               `public_access_enabled` is supported.
+               Available options depend on the target service and resource.
         :param str operator: The way in which the `property` field is compared to
                its value.
                There are three types of operators: string, numeric, and boolean.
@@ -2650,6 +2664,8 @@ class RuleConditionSingleProperty(RuleCondition):
         NUM_LESS_THAN_EQUALS = 'num_less_than_equals'
         NUM_GREATER_THAN = 'num_greater_than'
         NUM_GREATER_THAN_EQUALS = 'num_greater_than_equals'
+        IPS_IN_RANGE = 'ips_in_range'
+        STRINGS_IN_LIST = 'strings_in_list'
 
 
 class RuleRequiredConfigMultipleProperties(RuleRequiredConfig):
@@ -2682,8 +2698,7 @@ class RuleRequiredConfigSingleProperty(RuleRequiredConfig):
     :attr str description: (optional)
     :attr str property: A resource configuration variable that describes the
           property that you want to apply to the target resource.
-          Available options depend on the target service and resource. Currently,
-          `public_access_enabled` is supported.
+          Available options depend on the target service and resource.
     :attr str operator: The way in which the `property` field is compared to its
           value.
           There are three types of operators: string, numeric, and boolean.
@@ -2704,8 +2719,7 @@ class RuleRequiredConfigSingleProperty(RuleRequiredConfig):
 
         :param str property: A resource configuration variable that describes the
                property that you want to apply to the target resource.
-               Available options depend on the target service and resource. Currently,
-               `public_access_enabled` is supported.
+               Available options depend on the target service and resource.
         :param str operator: The way in which the `property` field is compared to
                its value.
                There are three types of operators: string, numeric, and boolean.
@@ -2794,6 +2808,8 @@ class RuleRequiredConfigSingleProperty(RuleRequiredConfig):
         NUM_LESS_THAN_EQUALS = 'num_less_than_equals'
         NUM_GREATER_THAN = 'num_greater_than'
         NUM_GREATER_THAN_EQUALS = 'num_greater_than_equals'
+        IPS_IN_RANGE = 'ips_in_range'
+        STRINGS_IN_LIST = 'strings_in_list'
 
 
 class RuleRequiredConfigMultiplePropertiesConditionAnd(RuleRequiredConfigMultipleProperties):
