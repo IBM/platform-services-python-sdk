@@ -1,3 +1,10 @@
+## [0.15.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.15.0...v0.15.1) (2020-11-11)
+
+
+### Bug Fixes
+
+* **Configuration Governance:** update service after API changes ([49eb226](https://github.com/IBM/platform-services-python-sdk/commit/49eb226ef97633cc568d0f826f083081eebd7cf7))
+
 # [0.15.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.14.0...v0.15.0) (2020-11-04)
 
 
