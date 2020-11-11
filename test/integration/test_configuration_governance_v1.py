@@ -65,8 +65,8 @@ class TestConfigurationGovernanceV1():
 
         # Construct a dict representation of a RuleRequiredConfigMultiplePropertiesConditionAnd model
         rule_required_config_model_1 = RuleRequiredConfigMultiplePropertiesConditionAnd(
-            description = "allowed_gb<=20 && location=='us-east'",
-            and_ = [allowed_gb_condition, location_condition]
+            description="allowed_gb<=20 && location=='us-east'",
+            and_=[allowed_gb_condition, location_condition]
         ).to_dict()
 
         # Construct a dict representation of a RuleRequiredConfigSingleProperty model
@@ -139,10 +139,11 @@ class TestConfigurationGovernanceV1():
 
     # Helper function to clean rules
     def clean_rules(self, label):
-        print("Cleaning rules...");
-    
+        print("Cleaning rules...")
+
         list_rules_response = self.service.list_rules(
             account_id=self.ACCOUNT_ID,
+            transaction_id=TRANSACTION_ID,
             labels=label,
             limit=1000,
             offset=0
@@ -157,9 +158,11 @@ class TestConfigurationGovernanceV1():
         # Now walk through the returned rules and delete each one.
         if rule_list['total_count'] > 0:
             for rule in rule_list['rules']:
-                print("Deleting rule: name='%s' id='%s'" % (rule['name'], rule['rule_id']))
+                print("Deleting rule: name='%s' id='%s'" %
+                      (rule['name'], rule['rule_id']))
                 delete_rule_response = self.service.delete_rule(
-                    rule_id=rule['rule_id']
+                    rule_id=rule['rule_id'],
+                    transaction_id=TRANSACTION_ID,
                 )
                 assert delete_rule_response.get_status_code() == 204
         print("Finished cleaning rules...")
@@ -176,20 +179,22 @@ class TestConfigurationGovernanceV1():
 
             # Construct a separate service client for some negative tests.
             # This service has an apikey that lacks the necessary access to create or list rules, etc.
-            cls.service_no_access = ConfigurationGovernanceV1.new_instance("NO_ACCESS");
+            cls.service_no_access = ConfigurationGovernanceV1.new_instance(
+                "NO_ACCESS")
             assert cls.service_no_access is not None
             assert cls.service_no_access.service_url is not None
 
             # Load up our test-specific config properties.
-            cls.config = read_external_sources(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME);
+            cls.config = read_external_sources(
+                ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
             assert cls.config["URL"] == cls.service.service_url
 
             # Retrieve and verify some additional test-related config properties.
-            cls.ACCOUNT_ID = cls.config.get("ACCOUNT_ID");
-            cls.TEST_SERVICE_NAME = cls.config.get("TEST_SERVICE_NAME");
-            cls.ENTERPRISE_SCOPE_ID = cls.config.get("ENTERPRISE_SCOPE_ID");
-            cls.SUBACCT_SCOPE_ID = cls.config.get("SUBACCT_SCOPE_ID");
+            cls.ACCOUNT_ID = cls.config.get("ACCOUNT_ID")
+            cls.TEST_SERVICE_NAME = cls.config.get("TEST_SERVICE_NAME")
+            cls.ENTERPRISE_SCOPE_ID = cls.config.get("ENTERPRISE_SCOPE_ID")
+            cls.SUBACCT_SCOPE_ID = cls.config.get("SUBACCT_SCOPE_ID")
             assert cls.ACCOUNT_ID is not None
             assert cls.TEST_SERVICE_NAME is not None
             assert cls.ENTERPRISE_SCOPE_ID is not None
@@ -206,11 +211,11 @@ class TestConfigurationGovernanceV1():
 
         print('Setup complete.')
 
-    @classmethod 
+    @classmethod
     def teardown_class(cls):
-        print("Starting clean up...");
-        cls.clean_rules(cls, TEST_LABEL);
-        print("Clean up complete.");
+        print("Starting clean up...")
+        cls.clean_rules(cls, TEST_LABEL)
+        print("Clean up complete.")
 
     needscredentials = pytest.mark.skipif(
         not os.path.exists(config_file), reason="External configuration not available, skipping..."
@@ -227,7 +232,8 @@ class TestConfigurationGovernanceV1():
     def get_attachment(self, rule_id, attachment_id):
         get_attachment_response = self.service.get_attachment(
             rule_id=rule_id,
-            attachment_id=attachment_id
+            attachment_id=attachment_id,
+            transaction_id=TRANSACTION_ID,
         )
         assert get_rule_response.get_status_code() == 200
         return get_rule_response.get_result()
@@ -315,14 +321,15 @@ class TestConfigurationGovernanceV1():
                 rules=[create_rule_request_model],
                 transaction_id=TRANSACTION_ID
             )
-            pytest.fail(msg='Using a no-access apikey should not have succeeded!')
+            pytest.fail(
+                msg='Using a no-access apikey should not have succeeded!')
         except ApiException as e:
             assert e.code == 403
             assert e.message == 'The token is not authorized to perform the operation'
 
     @needscredentials
     def test_list_rules(self):
-    
+
         list_rules_response = self.service.list_rules(
             account_id=self.ACCOUNT_ID,
             transaction_id=TRANSACTION_ID,
@@ -351,7 +358,8 @@ class TestConfigurationGovernanceV1():
                 limit=1000,
                 offset=0
             )
-            pytest.fail(msg='Using a no-access apikey should not have succeeded!')
+            pytest.fail(
+                msg='Using a no-access apikey should not have succeeded!')
         except ApiException as e:
             assert e.code == 403
             assert e.message == 'The token is not authorized to perform the operation'
@@ -451,7 +459,7 @@ class TestConfigurationGovernanceV1():
         )
 
         assert delete_rule_response.get_status_code() == 204
-    
+
         # Now check to make sure listRules() returns only 1 rule.
         list_rules_response = self.service.list_rules(
             account_id=self.ACCOUNT_ID,
@@ -469,11 +477,11 @@ class TestConfigurationGovernanceV1():
 
         try:
             rule = self.get_rule(RULE_ID_2)
-            pytest.fail(msg="Getting a non-existant rule should not have succeeded!")
+            pytest.fail(
+                msg="Getting a non-existant rule should not have succeeded!")
         except ApiException as e:
             assert e.code == 404
             assert e.message == "The requested resource was not found"
-
 
     @needscredentials
     def test_delete_rule_invalid_rule_id(self):
@@ -550,29 +558,6 @@ class TestConfigurationGovernanceV1():
         assert rule is not None
         assert rule['number_of_attachments'] == 2
 
-
-    @needscredentials
-    def test_create_attachment_invalid_scope_type(self):
-        try:
-            assert RULE_ID_1 is not None
-
-            # Construct a dict representation of a AttachmentRequest model
-            attachment_request_model = {
-                'account_id': self.ACCOUNT_ID,
-                'included_scope': self.enterprise_scope,
-                'excluded_scopes': [self.bad_scope]
-            }
-
-            create_attachments_response = self.service.create_attachments(
-                rule_id=RULE_ID_1,
-                attachments=[attachment_request_model],
-                transaction_id=TRANSACTION_ID
-            )
-            pytest.fail(msg="Invalid attachment should not have succeeded!")
-        except ApiException as e:
-            assert e.code == 400
-            assert e.message == "attachment[0]: The excluded scope at index 0 is not a descendant of the included scope."
-
     @needscredentials
     def test_get_attachment(self):
 
@@ -581,7 +566,8 @@ class TestConfigurationGovernanceV1():
 
         get_attachment_response = self.service.get_attachment(
             rule_id=RULE_ID_1,
-            attachment_id=ATTACHMENT_ID_1
+            attachment_id=ATTACHMENT_ID_1,
+            transaction_id=TRANSACTION_ID,
         )
 
         assert get_attachment_response.get_status_code() == 200
@@ -609,7 +595,8 @@ class TestConfigurationGovernanceV1():
 
             get_attachment_response = self.service.get_attachment(
                 rule_id=RULE_ID_1,
-                attachment_id="BOGUS_ID"
+                attachment_id="BOGUS_ID",
+                transaction_id=TRANSACTION_ID,
             )
             pytest.fail(msg="Invalid attachment id should not have succeeded!")
         except ApiException as e:
@@ -643,7 +630,8 @@ class TestConfigurationGovernanceV1():
                 assert att['included_scope']['note'] == 'leaf account'
                 assert len(att['excluded_scopes']) == 0
             else:
-                pytest.fail(msg="Unrecognized attachmentId: " + att['attachment_id'])
+                pytest.fail(msg="Unrecognized attachmentId: " +
+                            att['attachment_id'])
 
     @needscredentials
     def test_update_attachment(self):
@@ -718,7 +706,6 @@ class TestConfigurationGovernanceV1():
 
         assert delete_attachment_response.get_status_code() == 204
 
-
         list_attachments_response = self.service.list_attachments(
             rule_id=RULE_ID_1,
             transaction_id=TRANSACTION_ID,
@@ -734,7 +721,8 @@ class TestConfigurationGovernanceV1():
 
         try:
             attachment = self.get_attachment(RULE_ID_1, ATTACHMENT_ID_2)
-            pytest.fail(msg="Getting a non-existant attachment should not have succeeded!")
+            pytest.fail(
+                msg="Getting a non-existant attachment should not have succeeded!")
         except ApiException as e:
             assert e.code == 404
             assert e.message == "The requested resource was not found"

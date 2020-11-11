@@ -18,6 +18,7 @@ Examples for ConfigurationGovernanceV1
 """
 
 import os
+import uuid
 import pytest
 from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.configuration_governance_v1 import *
@@ -41,6 +42,9 @@ account_id = None
 service_name = None
 enterprise_scope_id = None
 subacct_scope_id = None
+
+transaction_id = str(uuid.uuid4())
+
 
 ##############################################################################
 # Start of Examples for Service: ConfigurationGovernanceV1
@@ -67,7 +71,8 @@ class TestConfigurationGovernanceV1Examples():
 
             # Load the configuration
             global config, account_id, service_name, enterprise_scope_id, subacct_scope_id
-            config = read_external_sources(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(
+                ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME)
 
             account_id = config['ACCOUNT_ID']
             service_name = config['EXAMPLE_SERVICE_NAME']
@@ -109,32 +114,34 @@ class TestConfigurationGovernanceV1Examples():
                 'account_id': account_id,
                 'name': 'Disable public access',
                 'description': 'Ensure that public access to account resources is disabled.',
-                'target': {'service_name':service_name,'resource_kind':'service'},
-                'required_config': {'description':'Public access check','and':[{'property':'public_access_enabled','operator':'is_false'}]},
+                'target': {'service_name': service_name, 'resource_kind': 'service'},
+                'required_config': {'description': 'Public access check', 'and': [{'property': 'public_access_enabled', 'operator': 'is_false'}]},
                 'enforcement_actions': [enforcement_action_model],
                 'labels': [test_label]
             }
 
             create_rule_request_model = {
                 'request_id': '3cebc877-58e7-44a5-a292-32114fa73558',
-                'rule': {'account_id':account_id,'name':'Disable public access','description':'Ensure that public access to account resources is disabled.','labels':[test_label],'target':{'service_name':service_name,'resource_kind':'service'},'required_config':{'description':'Public access check','and':[{'property':'public_access_enabled','operator':'is_false'}]},'enforcement_actions':[{'action':'disallow'},{'action':'audit_log'}]}
+                'rule': {'account_id': account_id, 'name': 'Disable public access', 'description': 'Ensure that public access to account resources is disabled.', 'labels': [test_label], 'target': {'service_name': service_name, 'resource_kind': 'service'}, 'required_config': {'description': 'Public access check', 'and': [{'property': 'public_access_enabled', 'operator': 'is_false'}]}, 'enforcement_actions': [{'action': 'disallow'}, {'action': 'audit_log'}]}
             }
 
             detailed_response = configuration_governance_service.create_rules(
-                rules=[create_rule_request_model]
+                rules=[create_rule_request_model],
+                transaction_id=transaction_id
             )
             create_rules_response = detailed_response.get_result()
             if detailed_response.status_code == 207:
                 for responseEntry in create_rules_response['rules']:
                     if responseEntry['status_code'] > 299:
-                        raise ApiException(code=responseEntry['errors'][0]['code'], message=responseEntry['errors'][0]['message'])
+                        raise ApiException(
+                            code=responseEntry['errors'][0]['code'], message=responseEntry['errors'][0]['message'])
 
             print(json.dumps(create_rules_response, indent=2))
 
             # end-create_rules
 
             global rule_id_link
-            rule_id_link = create_rules_response['rules'][0]['rule']['rule_id'];
+            rule_id_link = create_rules_response['rules'][0]['rule']['rule_id']
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -154,13 +161,14 @@ class TestConfigurationGovernanceV1Examples():
 
             attachment_request_model = {
                 'account_id': account_id,
-                'included_scope': {'note':'My enterprise','scope_id':enterprise_scope_id,'scope_type':'enterprise'},
+                'included_scope': {'note': 'My enterprise', 'scope_id': enterprise_scope_id, 'scope_type': 'enterprise'},
                 'excluded_scopes': [excluded_scope_model]
             }
 
             create_attachments_response = configuration_governance_service.create_attachments(
                 rule_id=rule_id_link,
-                attachments=[attachment_request_model]
+                attachments=[attachment_request_model],
+                transaction_id=transaction_id
             ).get_result()
 
             print(json.dumps(create_attachments_response, indent=2))
@@ -168,7 +176,7 @@ class TestConfigurationGovernanceV1Examples():
             # end-create_attachments
 
             global attachment_id_link
-            attachment_id_link = create_attachments_response['attachments'][0]['attachment_id'];
+            attachment_id_link = create_attachments_response['attachments'][0]['attachment_id']
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -182,7 +190,8 @@ class TestConfigurationGovernanceV1Examples():
 
             attachment = configuration_governance_service.get_attachment(
                 rule_id=rule_id_link,
-                attachment_id=attachment_id_link
+                attachment_id=attachment_id_link,
+                transaction_id=transaction_id
             ).get_result()
 
             print(json.dumps(attachment, indent=2))
@@ -191,7 +200,10 @@ class TestConfigurationGovernanceV1Examples():
 
             global attachment_etag_link
             attachment_etag_link = configuration_governance_service.get_attachment(
-                rule_id=rule_id_link, attachment_id=attachment_id_link).get_headers().get('Etag')
+                rule_id=rule_id_link,
+                attachment_id=attachment_id_link,
+                transaction_id=transaction_id
+            ).get_headers().get('Etag')
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -204,7 +216,8 @@ class TestConfigurationGovernanceV1Examples():
             # begin-get_rule
 
             rule = configuration_governance_service.get_rule(
-                rule_id=rule_id_link
+                rule_id=rule_id_link,
+                transaction_id=transaction_id
             ).get_result()
 
             print(json.dumps(rule, indent=2))
@@ -212,7 +225,10 @@ class TestConfigurationGovernanceV1Examples():
             # end-get_rule
 
             global rule_etag_link
-            rule_etag_link = configuration_governance_service.get_rule(rule_id=rule_id_link).get_headers().get('etag')
+            rule_etag_link = configuration_governance_service.get_rule(
+                rule_id=rule_id_link,
+                transaction_id=transaction_id
+            ).get_headers().get('etag')
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -225,7 +241,8 @@ class TestConfigurationGovernanceV1Examples():
             # begin-list_rules
 
             rule_list = configuration_governance_service.list_rules(
-                account_id=account_id
+                account_id=account_id,
+                transaction_id=transaction_id
             ).get_result()
 
             print(json.dumps(rule_list, indent=2))
@@ -265,11 +282,14 @@ class TestConfigurationGovernanceV1Examples():
 
             rule = configuration_governance_service.update_rule(
                 rule_id=rule_id_link,
+                transaction_id=transaction_id,
                 if_match=rule_etag_link,
                 name='Disable public access',
                 description='Ensure that public access to account resources is disabled.',
-                target={'service_name':service_name,'resource_kind':'service','additional_target_attributes':[]},
-                required_config={'property':'public_access_enabled','operator':'is_false'},
+                target={'service_name': service_name, 'resource_kind': 'service',
+                        'additional_target_attributes': []},
+                required_config={
+                    'property': 'public_access_enabled', 'operator': 'is_false'},
                 enforcement_actions=[enforcement_action_model],
                 account_id=account_id,
                 rule_type='user_defined',
@@ -292,7 +312,8 @@ class TestConfigurationGovernanceV1Examples():
             # begin-list_attachments
 
             attachment_list = configuration_governance_service.list_attachments(
-                rule_id=rule_id_link
+                rule_id=rule_id_link,
+                transaction_id=transaction_id
             ).get_result()
 
             print(json.dumps(attachment_list, indent=2))
@@ -319,9 +340,11 @@ class TestConfigurationGovernanceV1Examples():
             attachment = configuration_governance_service.update_attachment(
                 rule_id=rule_id_link,
                 attachment_id=attachment_id_link,
+                transaction_id=transaction_id,
                 if_match=attachment_etag_link,
                 account_id=account_id,
-                included_scope={'note':'My enterprise','scope_id':enterprise_scope_id,'scope_type':'enterprise'},
+                included_scope={'note': 'My enterprise',
+                                'scope_id': enterprise_scope_id, 'scope_type': 'enterprise'},
                 excluded_scopes=[excluded_scope_model]
             ).get_result()
 
@@ -342,7 +365,8 @@ class TestConfigurationGovernanceV1Examples():
 
             response = configuration_governance_service.delete_attachment(
                 rule_id=rule_id_link,
-                attachment_id=attachment_id_link
+                attachment_id=attachment_id_link,
+                transaction_id=transaction_id
             ).get_result()
 
             print(json.dumps(response, indent=2))
@@ -361,7 +385,8 @@ class TestConfigurationGovernanceV1Examples():
             # begin-delete_rule
 
             response = configuration_governance_service.delete_rule(
-                rule_id=rule_id_link
+                rule_id=rule_id_link,
+                transaction_id=transaction_id
             ).get_result()
 
             print(json.dumps(response, indent=2))
@@ -378,8 +403,9 @@ class TestConfigurationGovernanceV1Examples():
         """
         try:
             rule_list = configuration_governance_service.list_rules(
+                transaction_id=transaction_id,
                 account_id=account_id,
-                labels=test_label
+                labels=test_label,
             ).get_result()
 
             for rule in rule_list['rules']:
