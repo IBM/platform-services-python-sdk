@@ -22,13 +22,14 @@ import pytest
 import unittest
 import os
 import os.path
-import datetime
+from datetime import datetime, timezone
 import random
 from ibm_cloud_sdk_core import *
 from ibm_platform_services.iam_access_groups_v2 import *
 
 # Read config file
 configFile = 'iam_access_groups.env'
+
 
 class TestIamAccessGroupsV2(unittest.TestCase):
     """
@@ -40,8 +41,9 @@ class TestIamAccessGroupsV2(unittest.TestCase):
         if os.path.exists(configFile):
             os.environ['IBM_CREDENTIALS_FILE'] = configFile
         else:
-            raise unittest.SkipTest('External configuration not available, skipping...')
-          
+            raise unittest.SkipTest(
+                'External configuration not available, skipping...')
+
         cls.service = IamAccessGroupsV2.new_instance()
         assert cls.service is not None
 
@@ -63,7 +65,7 @@ class TestIamAccessGroupsV2(unittest.TestCase):
         cls.testAccountSettings = AccountSettings()
 
         print('\nSetup complete.')
-        
+
     @classmethod
     def tearDownClass(cls):
         # Delete all the access groups that we created during the test.
@@ -85,10 +87,8 @@ class TestIamAccessGroupsV2(unittest.TestCase):
 
             # Force delete the test group (or any test groups older than 5 minutes)
             if group.name == cls.testGroupName:
-
-                createdAt = datetime.datetime.strptime(group.created_at,'%Y-%m-%dT%H:%M:%SZ')
-                now = datetime.datetime.utcnow()
-                minutesDifference = (now - createdAt).seconds / 60
+                now = datetime.now(tz=timezone.utc)
+                minutesDifference = (now - group.created_at).seconds / 60
 
                 if group.id == cls.testGroupId or minutesDifference > 5:
                     response = cls.service.delete_access_group(
@@ -122,7 +122,8 @@ class TestIamAccessGroupsV2(unittest.TestCase):
         assert self.testGroupId
         print("Group ID: ", self.testGroupId)
 
-        response = self.service.get_access_group(access_group_id=self.testGroupId)
+        response = self.service.get_access_group(
+            access_group_id=self.testGroupId)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -162,7 +163,7 @@ class TestIamAccessGroupsV2(unittest.TestCase):
         print("Group ID: ", self.testGroupId)
 
         response = self.service.list_access_groups(
-            account_id=self.testAccountId,hide_public_access=True)
+            account_id=self.testAccountId, hide_public_access=True)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -363,7 +364,8 @@ class TestIamAccessGroupsV2(unittest.TestCase):
         print("Group ID: ", self.testGroupId)
         print("Rule ID: ", self.testClaimRuleId)
 
-        response = self.service.list_access_group_rules(access_group_id=self.testGroupId)
+        response = self.service.list_access_group_rules(
+            access_group_id=self.testGroupId)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -424,7 +426,8 @@ class TestIamAccessGroupsV2(unittest.TestCase):
         assert result_dict is None
 
     def test_17_get_account_settings(self):
-        response = self.service.get_account_settings(account_id=self.testAccountId)
+        response = self.service.get_account_settings(
+            account_id=self.testAccountId)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -439,7 +442,7 @@ class TestIamAccessGroupsV2(unittest.TestCase):
 
     def test_18_update_account_settings(self):
         response = self.service.update_account_settings(
-            account_id=self.testAccountId, 
+            account_id=self.testAccountId,
             public_access_enabled=self.testAccountSettings.public_access_enabled
         )
         assert response is not None

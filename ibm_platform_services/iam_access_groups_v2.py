@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-af92e433-20201110-100619
  
 """
 The IAM Access Groups API allows for the management of Access Groups (Create, Read,
@@ -22,13 +22,14 @@ Update, Delete) as well as the management of memberships and rules within the gr
 container.
 """
 
+from datetime import datetime
 from typing import Dict, List
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
-from ibm_cloud_sdk_core.utils import convert_model
+from ibm_cloud_sdk_core.utils import convert_model, datetime_to_string, string_to_datetime
 
 from .common import get_sdk_headers
 
@@ -1274,7 +1275,7 @@ class AccountSettings():
     The Access Groups settings for a specific account.
 
     :attr str account_id: (optional) The account id of the settings being shown.
-    :attr str last_modified_at: (optional) The timestamp the settings were last
+    :attr datetime last_modified_at: (optional) The timestamp the settings were last
           edited at.
     :attr str last_modified_by_id: (optional) The `iam_id` of the entity that last
           modified the settings.
@@ -1287,7 +1288,7 @@ class AccountSettings():
     def __init__(self,
                  *,
                  account_id: str = None,
-                 last_modified_at: str = None,
+                 last_modified_at: datetime = None,
                  last_modified_by_id: str = None,
                  public_access_enabled: bool = None) -> None:
         """
@@ -1295,8 +1296,8 @@ class AccountSettings():
 
         :param str account_id: (optional) The account id of the settings being
                shown.
-        :param str last_modified_at: (optional) The timestamp the settings were
-               last edited at.
+        :param datetime last_modified_at: (optional) The timestamp the settings
+               were last edited at.
         :param str last_modified_by_id: (optional) The `iam_id` of the entity that
                last modified the settings.
         :param bool public_access_enabled: (optional) This flag controls the public
@@ -1316,7 +1317,7 @@ class AccountSettings():
         if 'account_id' in _dict:
             args['account_id'] = _dict.get('account_id')
         if 'last_modified_at' in _dict:
-            args['last_modified_at'] = _dict.get('last_modified_at')
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
         if 'last_modified_by_id' in _dict:
             args['last_modified_by_id'] = _dict.get('last_modified_by_id')
         if 'public_access_enabled' in _dict:
@@ -1334,7 +1335,7 @@ class AccountSettings():
         if hasattr(self, 'account_id') and self.account_id is not None:
             _dict['account_id'] = self.account_id
         if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
-            _dict['last_modified_at'] = self.last_modified_at
+            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
         if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
             _dict['last_modified_by_id'] = self.last_modified_by_id
         if hasattr(self, 'public_access_enabled') and self.public_access_enabled is not None:
@@ -1489,7 +1490,8 @@ class AddGroupMembersResponseMembersItem():
 
     :attr str iam_id: (optional) The IBMid or Service Id of the member.
     :attr str type: (optional) The member type - either `user` or `service`.
-    :attr str created_at: (optional) The timestamp the membership was created at.
+    :attr datetime created_at: (optional) The timestamp the membership was created
+          at.
     :attr str created_by_id: (optional) The `iam_id` of the entity that created the
           membership.
     :attr int status_code: (optional) The outcome of the operation on this `iam_id`.
@@ -1503,7 +1505,7 @@ class AddGroupMembersResponseMembersItem():
                  *,
                  iam_id: str = None,
                  type: str = None,
-                 created_at: str = None,
+                 created_at: datetime = None,
                  created_by_id: str = None,
                  status_code: int = None,
                  trace: str = None,
@@ -1513,8 +1515,8 @@ class AddGroupMembersResponseMembersItem():
 
         :param str iam_id: (optional) The IBMid or Service Id of the member.
         :param str type: (optional) The member type - either `user` or `service`.
-        :param str created_at: (optional) The timestamp the membership was created
-               at.
+        :param datetime created_at: (optional) The timestamp the membership was
+               created at.
         :param str created_by_id: (optional) The `iam_id` of the entity that
                created the membership.
         :param int status_code: (optional) The outcome of the operation on this
@@ -1541,7 +1543,7 @@ class AddGroupMembersResponseMembersItem():
         if 'type' in _dict:
             args['type'] = _dict.get('type')
         if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
         if 'created_by_id' in _dict:
             args['created_by_id'] = _dict.get('created_by_id')
         if 'status_code' in _dict:
@@ -1565,7 +1567,7 @@ class AddGroupMembersResponseMembersItem():
         if hasattr(self, 'type') and self.type is not None:
             _dict['type'] = self.type
         if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = self.created_at
+            _dict['created_at'] = datetime_to_string(self.created_at)
         if hasattr(self, 'created_by_id') and self.created_by_id is not None:
             _dict['created_by_id'] = self.created_by_id
         if hasattr(self, 'status_code') and self.status_code is not None:
@@ -2126,11 +2128,11 @@ class Group():
     :attr str name: (optional) The group's name.
     :attr str description: (optional) The group's description - if defined.
     :attr str account_id: (optional) The account id where the group was created.
-    :attr str created_at: (optional) The timestamp the group was created at.
+    :attr datetime created_at: (optional) The timestamp the group was created at.
     :attr str created_by_id: (optional) The `iam_id` of the entity that created the
           group.
-    :attr str last_modified_at: (optional) The timestamp the group was last edited
-          at.
+    :attr datetime last_modified_at: (optional) The timestamp the group was last
+          edited at.
     :attr str last_modified_by_id: (optional) The `iam_id` of the entity that last
           modified the group name or description.
     :attr str href: (optional) A url to the given group resource.
@@ -2144,9 +2146,9 @@ class Group():
                  name: str = None,
                  description: str = None,
                  account_id: str = None,
-                 created_at: str = None,
+                 created_at: datetime = None,
                  created_by_id: str = None,
-                 last_modified_at: str = None,
+                 last_modified_at: datetime = None,
                  last_modified_by_id: str = None,
                  href: str = None,
                  is_federated: bool = None) -> None:
@@ -2158,11 +2160,12 @@ class Group():
         :param str description: (optional) The group's description - if defined.
         :param str account_id: (optional) The account id where the group was
                created.
-        :param str created_at: (optional) The timestamp the group was created at.
+        :param datetime created_at: (optional) The timestamp the group was created
+               at.
         :param str created_by_id: (optional) The `iam_id` of the entity that
                created the group.
-        :param str last_modified_at: (optional) The timestamp the group was last
-               edited at.
+        :param datetime last_modified_at: (optional) The timestamp the group was
+               last edited at.
         :param str last_modified_by_id: (optional) The `iam_id` of the entity that
                last modified the group name or description.
         :param str href: (optional) A url to the given group resource.
@@ -2193,11 +2196,11 @@ class Group():
         if 'account_id' in _dict:
             args['account_id'] = _dict.get('account_id')
         if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
         if 'created_by_id' in _dict:
             args['created_by_id'] = _dict.get('created_by_id')
         if 'last_modified_at' in _dict:
-            args['last_modified_at'] = _dict.get('last_modified_at')
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
         if 'last_modified_by_id' in _dict:
             args['last_modified_by_id'] = _dict.get('last_modified_by_id')
         if 'href' in _dict:
@@ -2223,11 +2226,11 @@ class Group():
         if hasattr(self, 'account_id') and self.account_id is not None:
             _dict['account_id'] = self.account_id
         if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = self.created_at
+            _dict['created_at'] = datetime_to_string(self.created_at)
         if hasattr(self, 'created_by_id') and self.created_by_id is not None:
             _dict['created_by_id'] = self.created_by_id
         if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
-            _dict['last_modified_at'] = self.last_modified_at
+            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
         if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
             _dict['last_modified_by_id'] = self.last_modified_by_id
         if hasattr(self, 'href') and self.href is not None:
@@ -2551,7 +2554,8 @@ class ListGroupMembersResponseMember():
     :attr str description: (optional) If the member type is service, this is the
           service id's description.
     :attr str href: (optional) A url to the given member resource.
-    :attr str created_at: (optional) The timestamp the membership was created at.
+    :attr datetime created_at: (optional) The timestamp the membership was created
+          at.
     :attr str created_by_id: (optional) The `iam_id` of the entity that created the
           membership.
     """
@@ -2564,7 +2568,7 @@ class ListGroupMembersResponseMember():
                  email: str = None,
                  description: str = None,
                  href: str = None,
-                 created_at: str = None,
+                 created_at: datetime = None,
                  created_by_id: str = None) -> None:
         """
         Initialize a ListGroupMembersResponseMember object.
@@ -2577,8 +2581,8 @@ class ListGroupMembersResponseMember():
         :param str description: (optional) If the member type is service, this is
                the service id's description.
         :param str href: (optional) A url to the given member resource.
-        :param str created_at: (optional) The timestamp the membership was created
-               at.
+        :param datetime created_at: (optional) The timestamp the membership was
+               created at.
         :param str created_by_id: (optional) The `iam_id` of the entity that
                created the membership.
         """
@@ -2608,7 +2612,7 @@ class ListGroupMembersResponseMember():
         if 'href' in _dict:
             args['href'] = _dict.get('href')
         if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
         if 'created_by_id' in _dict:
             args['created_by_id'] = _dict.get('created_by_id')
         return cls(**args)
@@ -2634,7 +2638,7 @@ class ListGroupMembersResponseMember():
         if hasattr(self, 'href') and self.href is not None:
             _dict['href'] = self.href
         if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = self.created_at
+            _dict['created_at'] = datetime_to_string(self.created_at)
         if hasattr(self, 'created_by_id') and self.created_by_id is not None:
             _dict['created_by_id'] = self.created_by_id
         return _dict
@@ -2670,11 +2674,11 @@ class Rule():
     :attr str account_id: (optional) The account id that the group is in.
     :attr List[RuleConditions] conditions: (optional) A list of conditions the rule
           must satisfy.
-    :attr str created_at: (optional) The timestamp the rule was created at.
+    :attr datetime created_at: (optional) The timestamp the rule was created at.
     :attr str created_by_id: (optional) The `iam_id` of the entity that created the
           rule.
-    :attr str last_modified_at: (optional) The timestamp the rule was last edited
-          at.
+    :attr datetime last_modified_at: (optional) The timestamp the rule was last
+          edited at.
     :attr str last_modified_by_id: (optional) The IAM id that last modified the
           rule.
     """
@@ -2688,9 +2692,9 @@ class Rule():
                  access_group_id: str = None,
                  account_id: str = None,
                  conditions: List['RuleConditions'] = None,
-                 created_at: str = None,
+                 created_at: datetime = None,
                  created_by_id: str = None,
-                 last_modified_at: str = None,
+                 last_modified_at: datetime = None,
                  last_modified_by_id: str = None) -> None:
         """
         Initialize a Rule object.
@@ -2705,11 +2709,12 @@ class Rule():
         :param str account_id: (optional) The account id that the group is in.
         :param List[RuleConditions] conditions: (optional) A list of conditions the
                rule must satisfy.
-        :param str created_at: (optional) The timestamp the rule was created at.
+        :param datetime created_at: (optional) The timestamp the rule was created
+               at.
         :param str created_by_id: (optional) The `iam_id` of the entity that
                created the rule.
-        :param str last_modified_at: (optional) The timestamp the rule was last
-               edited at.
+        :param datetime last_modified_at: (optional) The timestamp the rule was
+               last edited at.
         :param str last_modified_by_id: (optional) The IAM id that last modified
                the rule.
         """
@@ -2744,11 +2749,11 @@ class Rule():
         if 'conditions' in _dict:
             args['conditions'] = [RuleConditions.from_dict(x) for x in _dict.get('conditions')]
         if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
         if 'created_by_id' in _dict:
             args['created_by_id'] = _dict.get('created_by_id')
         if 'last_modified_at' in _dict:
-            args['last_modified_at'] = _dict.get('last_modified_at')
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
         if 'last_modified_by_id' in _dict:
             args['last_modified_by_id'] = _dict.get('last_modified_by_id')
         return cls(**args)
@@ -2776,11 +2781,11 @@ class Rule():
         if hasattr(self, 'conditions') and self.conditions is not None:
             _dict['conditions'] = [x.to_dict() for x in self.conditions]
         if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = self.created_at
+            _dict['created_at'] = datetime_to_string(self.created_at)
         if hasattr(self, 'created_by_id') and self.created_by_id is not None:
             _dict['created_by_id'] = self.created_by_id
         if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
-            _dict['last_modified_at'] = self.last_modified_at
+            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
         if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
             _dict['last_modified_by_id'] = self.last_modified_by_id
         return _dict
