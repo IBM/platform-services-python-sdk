@@ -1,3 +1,31 @@
+## [0.15.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.15.1...v0.15.2) (2020-11-18)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** update service and add examples ([070b24e](https://github.com/IBM/platform-services-python-sdk/commit/070b24ef79865916255415253486a29629e55bc9))
+
+## [0.15.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.15.0...v0.15.1) (2020-11-11)
+
+
+### Bug Fixes
+
+* **Configuration Governance:** update service after API changes ([49eb226](https://github.com/IBM/platform-services-python-sdk/commit/49eb226ef97633cc568d0f826f083081eebd7cf7))
+
+# [0.15.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.14.0...v0.15.0) (2020-11-04)
+
+
+### Features
+
+* **Enterprise Usage Reports:** add service to project ([8f20580](https://github.com/IBM/platform-services-python-sdk/commit/8f20580bdd4060ce22aac9c9f889df82d72e65a5))
+
+# [0.14.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.13.2...v0.14.0) (2020-10-31)
+
+
+### Features
+
+* **Usage Reports:** add service to project ([2e16c56](https://github.com/IBM/platform-services-python-sdk/commit/2e16c56564090e8048201a8d0b47d934ea90788c))
+
 ## [0.13.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.13.1...v0.13.2) (2020-10-30)
 
 
