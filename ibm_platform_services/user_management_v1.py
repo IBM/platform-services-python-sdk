@@ -226,6 +226,7 @@ class UserManagementV1(BaseService):
 
         :param str account_id: The account ID.
         :param str state: (optional) The state of the user.
+        :param dict body: An optional `dict` containing additional body parameters.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `UserList` object
@@ -293,7 +294,6 @@ class UserManagementV1(BaseService):
                policies.
         :param List[str] access_groups: (optional) A list of access groups.
         :param dict headers: A `dict` containing the request headers
-        :param dict body: An optional `dict` containing additional body parameters.
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `UserList` object
         """
