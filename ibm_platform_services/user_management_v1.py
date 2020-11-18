@@ -243,6 +243,9 @@ class UserManagementV1(BaseService):
             'state': state
         }
 
+        if 'body' in kwargs:
+            params.update(kwargs.get('body'))
+
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
@@ -290,6 +293,7 @@ class UserManagementV1(BaseService):
                policies.
         :param List[str] access_groups: (optional) A list of access groups.
         :param dict headers: A `dict` containing the request headers
+        :param dict body: An optional `dict` containing additional body parameters.
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `UserList` object
         """
