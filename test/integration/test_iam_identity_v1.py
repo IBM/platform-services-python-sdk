@@ -156,7 +156,7 @@ class TestIamIdentityV1():
         assert create_api_key_response.get_status_code() == 201
         api_key = create_api_key_response.get_result()
         assert api_key is not None
-        # print('\ncreate_api_key1() response: ', json.dumps(api_key, indent=2))
+        print('\ncreate_api_key1() response: ', json.dumps(api_key, indent=2))
 
         global apikey_id1
         apikey_id1 = api_key['id']
@@ -174,7 +174,7 @@ class TestIamIdentityV1():
         assert create_api_key_response.get_status_code() == 201
         api_key = create_api_key_response.get_result()
         assert api_key is not None
-        # print('\ncreate_api_key2() response: ', json.dumps(api_key, indent=2))
+        print('\ncreate_api_key2() response: ', json.dumps(api_key, indent=2))
 
         global apikey_id2
         apikey_id2 = api_key['id']
@@ -193,7 +193,7 @@ class TestIamIdentityV1():
         assert get_api_key_response.get_status_code() == 200
         api_key = get_api_key_response.get_result()
         assert api_key is not None
-        # print('\nget_api_key response: ', json.dumps(api_key, indent=2))
+        print('\nget_api_key response: ', json.dumps(api_key, indent=2))
 
         assert api_key['id'] == apikey_id1
         assert api_key['name'] == self.apikey_name
@@ -217,7 +217,7 @@ class TestIamIdentityV1():
         assert get_api_keys_details_response.get_status_code() == 200
         api_key = get_api_keys_details_response.get_result()
         assert api_key is not None
-        # print('\nget_api_key_details() response: ', json.dumps(api_key, indent=2))
+        print('\nget_api_key_details() response: ', json.dumps(api_key, indent=2))
 
         assert api_key['iam_id'] == self.iam_id
         assert api_key['account_id'] == self.account_id
@@ -242,7 +242,7 @@ class TestIamIdentityV1():
             assert list_api_keys_response.get_status_code() == 200
             api_key_list = list_api_keys_response.get_result()
             assert api_key_list is not None
-            # print('\nlist_api_keys() response: ', json.dumps(api_key_list, indent=2))
+            print('\nlist_api_keys() response: ', json.dumps(api_key_list, indent=2))
 
             if len(api_key_list['apikeys']) > 0:
                 for apikey in api_key_list['apikeys']:
@@ -273,7 +273,7 @@ class TestIamIdentityV1():
 
         assert update_api_key_response.get_status_code() == 200
         api_key = update_api_key_response.get_result()
-        # print('\nupdate_api_key() response: ', json.dumps(api_key, indent=2))
+        print('\nupdate_api_key() response: ', json.dumps(api_key, indent=2))
         assert api_key is not None
         assert api_key['description'] == new_description
 
@@ -349,7 +349,7 @@ class TestIamIdentityV1():
         assert create_service_id_response.get_status_code() == 201
         service_id = create_service_id_response.get_result()
         assert service_id is not None
-        # print('\ncreate_service_id() response: ', json.dumps(service_id, indent=2))
+        print('\ncreate_service_id() response: ', json.dumps(service_id, indent=2))
 
         global serviceid_id1
         serviceid_id1 = service_id['id']
@@ -368,7 +368,7 @@ class TestIamIdentityV1():
         assert get_service_id_response.get_status_code() == 200
         service_id = get_service_id_response.get_result()
         assert service_id is not None
-        # print('\nget_service_id() response: ', json.dumps(service_id, indent=2))
+        print('\nget_service_id() response: ', json.dumps(service_id, indent=2))
 
         assert service_id['id'] == serviceid_id1
         assert service_id['name'] == self.serviceid_name
@@ -388,7 +388,7 @@ class TestIamIdentityV1():
 
         assert list_service_ids_response.get_status_code() == 200
         service_id_list = list_service_ids_response.get_result()
-        # print('\nlist_service_ids() response: ', json.dumps(service_id_list, indent=2))
+        print('\nlist_service_ids() response: ', json.dumps(service_id_list, indent=2))
 
         assert service_id_list is not None
         assert len(service_id_list['serviceids']) == 1
@@ -412,7 +412,7 @@ class TestIamIdentityV1():
         assert update_service_id_response.get_status_code() == 200
         service_id = update_service_id_response.get_result()
         assert service_id is not None
-        # print('\nupdate_service_id() response: ', json.dumps(service_id, indent=2))
+        print('\nupdate_service_id() response: ', json.dumps(service_id, indent=2))
         assert service_id['description'] == new_description
 
     @needscredentials
