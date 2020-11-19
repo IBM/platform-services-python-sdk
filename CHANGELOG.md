@@ -1,3 +1,10 @@
+## [0.15.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.15.2...v0.15.3) (2020-11-19)
+
+
+### Bug Fixes
+
+* **IAM Identity:** update service to use datetime ([0d7906c](https://github.com/IBM/platform-services-python-sdk/commit/0d7906cfdf5a17dd6f58bbe1191e7c1592e72356))
+
 ## [0.15.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.15.1...v0.15.2) (2020-11-18)
 
 
