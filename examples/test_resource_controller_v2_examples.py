@@ -25,10 +25,43 @@ from ibm_platform_services.resource_controller_v2 import *
 # Config file name
 config_file = 'resource_controller.env'
 
+#####################################################
+############# Example config file fields ############
+# RESOURCE_CONTROLLER_URL=https://resource-controller.cloud.ibm.com
+# RESOURCE_CONTROLLER_AUTH_TYPE=iam
+# RESOURCE_CONTROLLER_AUTH_URL=https://iam.cloud.ibm.com/identity/token
+# RESOURCE_CONTROLLER_APIKEY=<User's IAM API Key>
+# RESOURCE_CONTROLLER_RESOURCE_GROUP=5g9f447903254bb58972a2f3f5a4c711
+# RESOURCE_CONTROLLER_RECLAMATION_PLAN_ID=0be5ad401ae913d8ff665d92680664ed
+# RESOURCE_CONTROLLER_ACCOUNT_ID=b80a8b513ae24e178438b7a18bd8d609
+# RESOURCE_CONTROLLER_ALIAS_TARGET_CRN=crn:v1:cf:public:cf:eu-gb:o/e242c7f0-9eb7-4541-ad3e-b5f5a45a1498::cf-space:f5038ca8-9d28-42a1-9e57-9b9fdd66bf8e
+# RESOURCE_CONTROLLER_BINDING_TARGET_CRN=crn:v1:cf:public:cf:eu-gb:s/f5038ca8-9d28-42a1-9e57-9b9fdd66bf8e::cf-application:b04ddee1-2838-449a-96d3-02a03179e991
+#####################################################
+
 resource_controller_service = None
 
 config = None
 
+instanceGuid = None
+aliasGuid = None
+bindingGuid = None
+instanceKeyGuid = None
+resourceGroup = None
+resourcePlanId = None
+accountId = None
+aliasTargetCRN = None
+bindingTargetCRN = None
+reclamationId = None
+resourceInstanceName = 'RcSdkInstance1Python'
+resourceInstanceUpdateName = 'RcSdkInstanceUpdate1Python'
+aliasName = 'RcSdkAlias1Python'
+aliasUpdateName = 'RcSdkAliasUpdate1Python'
+bindingName = 'RcSdkBinding1Python'
+bindingUpdateName = 'RcSdkBindingUpdate1Python'
+keyName = 'RcSdkKey1Python'
+keyUpdateName = 'RcSdkKeyUpdate1Python'
+targetRegion = 'global'
+reclaimAction = 'reclaim'
 
 ##############################################################################
 # Start of Examples for Service: ResourceControllerV2
@@ -47,8 +80,7 @@ class TestResourceControllerV2Examples():
 
             # begin-common
 
-            resource_controller_service = ResourceControllerV2.new_instance(
-            )
+            resource_controller_service = ResourceControllerV2.new_instance()
 
             # end-common
             assert resource_controller_service is not None
@@ -57,6 +89,21 @@ class TestResourceControllerV2Examples():
             global config
             config = read_external_sources(
                 ResourceControllerV2.DEFAULT_SERVICE_NAME)
+            
+            global resourceGroup
+            resourceGroup = config['RESOURCE_GROUP']
+
+            global resourcePlanId
+            resourcePlanId = config['RECLAMATION_PLAN_ID']
+
+            global accountId
+            accountId = config['ACCOUNT_ID']
+
+            global aliasTargetCRN
+            aliasTargetCRN = config['ALIAS_TARGET_CRN']
+
+            global bindingTargetCRN
+            bindingTargetCRN = config['BINDING_TARGET_CRN']
 
         print('Setup complete.')
 
@@ -65,42 +112,24 @@ class TestResourceControllerV2Examples():
     )
 
     @needscredentials
-    def test_list_resource_instances_example(self):
-        """
-        list_resource_instances request example
-        """
-        try:
-            # begin-list_resource_instances
-
-            resource_instances_list = resource_controller_service.list_resource_instances(
-                updated_from='2019-01-08T00:00:00.000Z',
-                updated_to='2019-01-08T00:00:00.000Z'
-            ).get_result()
-
-            print(json.dumps(resource_instances_list, indent=2))
-
-            # end-list_resource_instances
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
     def test_create_resource_instance_example(self):
         """
         create_resource_instance request example
         """
         try:
+            global instanceGuid, resourceInstanceName, targetRegion, resourceGroup, resourcePlanId
             # begin-create_resource_instance
-
+            
             resource_instance = resource_controller_service.create_resource_instance(
-                name='my-instance',
-                target='bluemix-us-south',
-                resource_group='5c49eabc-f5e8-5881-a37e-2d100a33b3df',
-                resource_plan_id='cloudant-standard'
+                name=resourceInstanceName,
+                target=targetRegion,
+                resource_group=resourceGroup,
+                resource_plan_id=resourcePlanId
             ).get_result()
 
             print(json.dumps(resource_instance, indent=2))
 
+            instanceGuid = resource_instance.get('guid')
             # end-create_resource_instance
 
         except ApiException as e:
@@ -112,10 +141,11 @@ class TestResourceControllerV2Examples():
         get_resource_instance request example
         """
         try:
+            global instanceGuid
             # begin-get_resource_instance
 
             resource_instance = resource_controller_service.get_resource_instance(
-                id='testString'
+                id=instanceGuid
             ).get_result()
 
             print(json.dumps(resource_instance, indent=2))
@@ -131,10 +161,15 @@ class TestResourceControllerV2Examples():
         update_resource_instance request example
         """
         try:
+            global instanceGuid, resourceInstanceUpdateName
             # begin-update_resource_instance
 
+            params = {}
+            params['example'] = 'property'
             resource_instance = resource_controller_service.update_resource_instance(
-                id='testString',
+                id=instanceGuid,
+                name=resourceInstanceUpdateName,
+                parameters=params
             ).get_result()
 
             print(json.dumps(resource_instance, indent=2))
@@ -145,198 +180,21 @@ class TestResourceControllerV2Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    def test_lock_resource_instance_example(self):
+    def test_list_resource_instances_example(self):
         """
-        lock_resource_instance request example
-        """
-        try:
-            # begin-lock_resource_instance
-
-            resource_instance = resource_controller_service.lock_resource_instance(
-                id='testString'
-            ).get_result()
-
-            print(json.dumps(resource_instance, indent=2))
-
-            # end-lock_resource_instance
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_list_resource_keys_example(self):
-        """
-        list_resource_keys request example
+        list_resource_instances request example
         """
         try:
-            # begin-list_resource_keys
+            global resourceInstanceName
+            # begin-list_resource_instances
 
-            resource_keys_list = resource_controller_service.list_resource_keys(
-                updated_from='2019-01-08T00:00:00.000Z',
-                updated_to='2019-01-08T00:00:00.000Z'
+            resource_instances_list = resource_controller_service.list_resource_instances(
+                name=resourceInstanceName
             ).get_result()
 
-            print(json.dumps(resource_keys_list, indent=2))
+            print(json.dumps(resource_instances_list, indent=2))
 
-            # end-list_resource_keys
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_create_resource_key_example(self):
-        """
-        create_resource_key request example
-        """
-        try:
-            # begin-create_resource_key
-
-            resource_key = resource_controller_service.create_resource_key(
-                name='my-key',
-                source='25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
-            ).get_result()
-
-            print(json.dumps(resource_key, indent=2))
-
-            # end-create_resource_key
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_get_resource_key_example(self):
-        """
-        get_resource_key request example
-        """
-        try:
-            # begin-get_resource_key
-
-            resource_key = resource_controller_service.get_resource_key(
-                id='testString'
-            ).get_result()
-
-            print(json.dumps(resource_key, indent=2))
-
-            # end-get_resource_key
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_update_resource_key_example(self):
-        """
-        update_resource_key request example
-        """
-        try:
-            # begin-update_resource_key
-
-            resource_key = resource_controller_service.update_resource_key(
-                id='testString',
-                name='my-new-key-name'
-            ).get_result()
-
-            print(json.dumps(resource_key, indent=2))
-
-            # end-update_resource_key
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_list_resource_bindings_example(self):
-        """
-        list_resource_bindings request example
-        """
-        try:
-            # begin-list_resource_bindings
-
-            resource_bindings_list = resource_controller_service.list_resource_bindings(
-                updated_from='2019-01-08T00:00:00.000Z',
-                updated_to='2019-01-08T00:00:00.000Z'
-            ).get_result()
-
-            print(json.dumps(resource_bindings_list, indent=2))
-
-            # end-list_resource_bindings
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_create_resource_binding_example(self):
-        """
-        create_resource_binding request example
-        """
-        try:
-            # begin-create_resource_binding
-
-            resource_binding = resource_controller_service.create_resource_binding(
-                source='25eba2a9-beef-450b-82cf-f5ad5e36c6dd',
-                target='crn:v1:cf:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
-            ).get_result()
-
-            print(json.dumps(resource_binding, indent=2))
-
-            # end-create_resource_binding
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_get_resource_binding_example(self):
-        """
-        get_resource_binding request example
-        """
-        try:
-            # begin-get_resource_binding
-
-            resource_binding = resource_controller_service.get_resource_binding(
-                id='testString'
-            ).get_result()
-
-            print(json.dumps(resource_binding, indent=2))
-
-            # end-get_resource_binding
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_update_resource_binding_example(self):
-        """
-        update_resource_binding request example
-        """
-        try:
-            # begin-update_resource_binding
-
-            resource_binding = resource_controller_service.update_resource_binding(
-                id='testString',
-                name='my-new-binding-name'
-            ).get_result()
-
-            print(json.dumps(resource_binding, indent=2))
-
-            # end-update_resource_binding
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_list_resource_aliases_example(self):
-        """
-        list_resource_aliases request example
-        """
-        try:
-            # begin-list_resource_aliases
-
-            resource_aliases_list = resource_controller_service.list_resource_aliases(
-                updated_from='2019-01-08T00:00:00.000Z',
-                updated_to='2019-01-08T00:00:00.000Z'
-            ).get_result()
-
-            print(json.dumps(resource_aliases_list, indent=2))
-
-            # end-list_resource_aliases
+            # end-list_resource_instances
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -347,14 +205,16 @@ class TestResourceControllerV2Examples():
         create_resource_alias request example
         """
         try:
+            global instanceGuid, aliasName, aliasGuid, aliasTargetCRN
             # begin-create_resource_alias
-
+            
             resource_alias = resource_controller_service.create_resource_alias(
-                name='my-alias',
-                source='a8dff6d3-d287-4668-a81d-c87c55c2656d',
-                target='crn:v1:cf:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
+                name=aliasName,
+                source=instanceGuid,
+                target=aliasTargetCRN
             ).get_result()
 
+            aliasGuid = resource_alias.get('guid')
             print(json.dumps(resource_alias, indent=2))
 
             # end-create_resource_alias
@@ -368,10 +228,11 @@ class TestResourceControllerV2Examples():
         get_resource_alias request example
         """
         try:
+            global aliasGuid
             # begin-get_resource_alias
 
             resource_alias = resource_controller_service.get_resource_alias(
-                id='testString'
+                id=aliasGuid
             ).get_result()
 
             print(json.dumps(resource_alias, indent=2))
@@ -387,11 +248,12 @@ class TestResourceControllerV2Examples():
         update_resource_alias request example
         """
         try:
+            global aliasGuid, aliasUpdateName
             # begin-update_resource_alias
-
+            
             resource_alias = resource_controller_service.update_resource_alias(
-                id='testString',
-                name='my-new-alias-name'
+                id=aliasGuid,
+                name=aliasUpdateName
             ).get_result()
 
             print(json.dumps(resource_alias, indent=2))
@@ -402,14 +264,325 @@ class TestResourceControllerV2Examples():
             pytest.fail(str(e))
 
     @needscredentials
+    def test_list_resource_aliases_example(self):
+        """
+        list_resource_aliases request example
+        """
+        try:
+            # begin-list_resource_aliases
+            
+            resource_aliases_list = resource_controller_service.list_resource_aliases(
+                name=aliasName
+            ).get_result()
+
+            print(json.dumps(resource_aliases_list, indent=2))
+
+            # end-list_resource_aliases
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    
+    @needscredentials
+    def test_create_resource_binding_example(self):
+        """
+        create_resource_binding request example
+        """
+        try:
+            global aliasGuid, bindingGuid, bindingName, bindingTargetCRN
+            # begin-create_resource_binding
+
+            resource_binding = resource_controller_service.create_resource_binding(
+                source=aliasGuid,
+                target=bindingTargetCRN,
+                name=bindingName
+            ).get_result()
+
+            bindingGuid = resource_binding.get('guid')
+            print(json.dumps(resource_binding, indent=2))
+
+            # end-create_resource_binding
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_resource_binding_example(self):
+        """
+        get_resource_binding request example
+        """
+        try:
+            global bindingGuid
+            # begin-get_resource_binding
+
+            resource_binding = resource_controller_service.get_resource_binding(
+                id=bindingGuid
+            ).get_result()
+
+            print(json.dumps(resource_binding, indent=2))
+
+            # end-get_resource_binding
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_resource_binding_example(self):
+        """
+        update_resource_binding request example
+        """
+        try:
+            global bindingGuid, bindingUpdateName
+            # begin-update_resource_binding
+            
+            resource_binding = resource_controller_service.update_resource_binding(
+                id=bindingGuid,
+                name=bindingUpdateName
+            ).get_result()
+
+            print(json.dumps(resource_binding, indent=2))
+
+            # end-update_resource_binding
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_resource_bindings_example(self):
+        """
+        list_resource_bindings request example
+        """
+        try:
+            # begin-list_resource_bindings
+
+            resource_bindings_list = resource_controller_service.list_resource_bindings(
+                name=bindingName
+            ).get_result()
+
+            print(json.dumps(resource_bindings_list, indent=2))
+
+            # end-list_resource_bindings
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_resource_key_example(self):
+        """
+        create_resource_key request example
+        """
+        try:
+            global instanceGuid, instanceKeyGuid, keyName
+            # begin-create_resource_key
+
+            resource_key = resource_controller_service.create_resource_key(
+                name=keyName,
+                source=instanceGuid
+            ).get_result()
+
+            instanceKeyGuid = resource_key.get('guid') 
+            print(json.dumps(resource_key, indent=2))
+
+            # end-create_resource_key
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_resource_key_example(self):
+        """
+        get_resource_key request example
+        """
+        try:
+            global instanceKeyGuid
+            # begin-get_resource_key
+
+            resource_key = resource_controller_service.get_resource_key(
+                id=instanceKeyGuid
+            ).get_result()
+
+            print(json.dumps(resource_key, indent=2))
+
+            # end-get_resource_key
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_resource_key_example(self):
+        """
+        update_resource_key request example
+        """
+        try:
+            global instanceKeyGuid, keyUpdateName
+            # begin-update_resource_key
+
+            resource_key = resource_controller_service.update_resource_key(
+                id=instanceKeyGuid,
+                name=keyUpdateName
+            ).get_result()
+
+            print(json.dumps(resource_key, indent=2))
+
+            # end-update_resource_key
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_resource_keys_example(self):
+        """
+        list_resource_keys request example
+        """
+        try:
+            # begin-list_resource_keys
+
+            resource_keys_list = resource_controller_service.list_resource_keys(
+                name=keyName
+            ).get_result()
+
+            print(json.dumps(resource_keys_list, indent=2))
+
+            # end-list_resource_keys
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_resource_binding_example(self):
+        """
+        delete_resource_binding request example
+        """
+        try:
+            global bindingGuid
+            # begin-delete_resource_binding
+
+            response = resource_controller_service.delete_resource_binding(
+                id=bindingGuid
+            ).get_result()
+
+            print(json.dumps(response, indent=2))
+
+            # end-delete_resource_binding
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_resource_key_example(self):
+        """
+        delete_resource_key request example
+        """
+        try:
+            global instanceKeyGuid
+            # begin-delete_resource_key
+
+            response = resource_controller_service.delete_resource_key(
+                id=instanceKeyGuid
+            ).get_result()
+
+            print(json.dumps(response, indent=2))
+
+            # end-delete_resource_key
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_resource_alias_example(self):
+        """
+        delete_resource_alias request example
+        """
+        try:
+            global aliasGuid
+            # begin-delete_resource_alias
+
+            response = resource_controller_service.delete_resource_alias(
+                id=aliasGuid
+            ).get_result()
+
+            print(json.dumps(response, indent=2))
+
+            # end-delete_resource_alias
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_lock_resource_instance_example(self):
+        """
+        lock_resource_instance request example
+        """
+        try:
+            global instanceGuid
+            # begin-lock_resource_instance
+
+            resource_instance = resource_controller_service.lock_resource_instance(
+                id=instanceGuid
+            ).get_result()
+
+            print(json.dumps(resource_instance, indent=2))
+
+            # end-lock_resource_instance
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_unlock_resource_instance_example(self):
+        """
+        unlock_resource_instance request example
+        """
+        try:
+            global instanceGuid
+            # begin-unlock_resource_instance
+
+            resource_instance = resource_controller_service.unlock_resource_instance(
+                id=instanceGuid
+            ).get_result()
+
+            print(json.dumps(resource_instance, indent=2))
+
+            # end-unlock_resource_instance
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_resource_instance_example(self):
+        """
+        delete_resource_instance request example
+        """
+        try:
+            global instanceGuid
+            # begin-delete_resource_instance
+
+            response = resource_controller_service.delete_resource_instance(
+                id=instanceGuid
+            ).get_result()
+
+            print(json.dumps(response, indent=2))
+
+            # end-delete_resource_instance
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
     def test_list_reclamations_example(self):
         """
         list_reclamations request example
         """
         try:
+            global instanceGuid, reclamationId, accountId
             # begin-list_reclamations
 
-            reclamations_list = resource_controller_service.list_reclamations().get_result()
+            reclamations_list = resource_controller_service.list_reclamations(
+                account_id=accountId
+            ).get_result()
+
+            for res in reclamations_list.get('resources'):
+                if res.get('resource_instance_id') == instanceGuid:
+                    reclamationId = res.get('id')
 
             print(json.dumps(reclamations_list, indent=2))
 
@@ -424,11 +597,12 @@ class TestResourceControllerV2Examples():
         run_reclamation_action request example
         """
         try:
+            global reclamationId, reclaimAction
             # begin-run_reclamation_action
-
+            
             reclamation = resource_controller_service.run_reclamation_action(
-                id='testString',
-                action_name='testString'
+                id=reclamationId,
+                action_name=reclaimAction
             ).get_result()
 
             print(json.dumps(reclamation, indent=2))
@@ -437,101 +611,7 @@ class TestResourceControllerV2Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
-
-    @needscredentials
-    def test_unlock_resource_instance_example(self):
-        """
-        unlock_resource_instance request example
-        """
-        try:
-            # begin-unlock_resource_instance
-
-            resource_instance = resource_controller_service.unlock_resource_instance(
-                id='testString'
-            ).get_result()
-
-            print(json.dumps(resource_instance, indent=2))
-
-            # end-unlock_resource_instance
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_delete_resource_key_example(self):
-        """
-        delete_resource_key request example
-        """
-        try:
-            # begin-delete_resource_key
-
-            response = resource_controller_service.delete_resource_key(
-                id='testString'
-            ).get_result()
-
-            print(json.dumps(response, indent=2))
-
-            # end-delete_resource_key
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_delete_resource_instance_example(self):
-        """
-        delete_resource_instance request example
-        """
-        try:
-            # begin-delete_resource_instance
-
-            response = resource_controller_service.delete_resource_instance(
-                id='testString'
-            ).get_result()
-
-            print(json.dumps(response, indent=2))
-
-            # end-delete_resource_instance
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_delete_resource_binding_example(self):
-        """
-        delete_resource_binding request example
-        """
-        try:
-            # begin-delete_resource_binding
-
-            response = resource_controller_service.delete_resource_binding(
-                id='testString'
-            ).get_result()
-
-            print(json.dumps(response, indent=2))
-
-            # end-delete_resource_binding
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_delete_resource_alias_example(self):
-        """
-        delete_resource_alias request example
-        """
-        try:
-            # begin-delete_resource_alias
-
-            response = resource_controller_service.delete_resource_alias(
-                id='testString'
-            ).get_result()
-
-            print(json.dumps(response, indent=2))
-
-            # end-delete_resource_alias
-
-        except ApiException as e:
-            pytest.fail(str(e))
+            # print(str(e))
 
 # endregion
 ##############################################################################

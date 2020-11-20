@@ -25,10 +25,36 @@ from ibm_platform_services.open_service_broker_v1 import *
 # Config file name
 config_file = 'open_service_broker.env'
 
+############## Example fields for config file ##############
+# OPEN_SERVICE_BROKER_URL=<Service Broker's URL>
+# OPEN_SERVICE_BROKER_AUTH_TYPE=basic
+# OPEN_SERVICE_BROKER_USERNAME=<username>
+# OPEN_SERVICE_BROKER_PASSWORD=<password>
+# OPEN_SERVICE_BROKER_PLAN_ID=ecc19311-aba2-49f7-8198-1e450c8460d4
+# OPEN_SERVICE_BROKER_RESOURCE_INSTANCE_ID=crn:v1:bluemix:public:compose-redis:us-south:a/003e9bc3993aec710d30a5a719e57a80:416d769b-682d-4833-8bd7-5ef8778e5b52
+# OPEN_SERVICE_BROKER_SERVICE_ID=0bc9d744-6f8c-4821-9648-2278bf6925bb
+# OPEN_SERVICE_BROKER_ACCOUNT_ID=003e9bc3993aec710d30a5a719e57a80
+# OPEN_SERVICE_BROKER_BINDING_ID=crn:v1:staging:public:compose-redis:global:a/bc2b2fca0af84354a916dc1de6eee42e:osb-sdk-example::
+# OPEN_SERVICE_BROKER_SPACE_GUID=336ba5f3-f185-488e-ac8d-02195ee3f2cc
+# OPEN_SERVICE_BROKER_APPLICATION_GUID=d3f16a48-8bd1-4aab-a7de-e2a22ad38292
+# OPEN_SERVICE_BROKER_ORGANIZATION_GUID=d35d4f0e-5076-4c89-9361-2522894b4856
+############################################################
+
 open_service_broker_service = None
 
 config = None
 
+instanceId = None
+orgGuid = None
+planId = None
+serviceId = None
+spaceGuid = None
+accountId = None
+bindingId = None
+appGuid = None
+initiatorId = 'null'
+reasonCode = 'IBMCLOUD_ACCT_SUSPEND'
+operation = 'Provision_45'
 
 ##############################################################################
 # Start of Examples for Service: OpenServiceBrokerV1
@@ -58,6 +84,30 @@ class TestOpenServiceBrokerV1Examples():
             config = read_external_sources(
                 OpenServiceBrokerV1.DEFAULT_SERVICE_NAME)
 
+            global instanceId
+            instanceId = config['RESOURCE_INSTANCE_ID']
+
+            global orgGuid
+            orgGuid = config['ORGANIZATION_GUID']
+
+            global planId
+            planId = config['PLAN_ID']
+
+            global serviceId
+            serviceId = config['SERVICE_ID']
+
+            global spaceGuid
+            spaceGuid = config['SPACE_GUID']
+
+            global accountId
+            accountId = config['ACCOUNT_ID']
+
+            global bindingId
+            bindingId = config['BINDING_ID']
+
+            global appGuid
+            appGuid = config['APPLICATION_GUID']
+
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
@@ -70,13 +120,14 @@ class TestOpenServiceBrokerV1Examples():
         get_service_instance_state request example
         """
         try:
+            global instanceId
             # begin-get_service_instance_state
 
-            resp1874644_root = open_service_broker_service.get_service_instance_state(
-                instance_id='testString'
+            response = open_service_broker_service.get_service_instance_state(
+                instance_id=instanceId
             ).get_result()
 
-            print(json.dumps(resp1874644_root, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-get_service_instance_state
 
@@ -89,13 +140,17 @@ class TestOpenServiceBrokerV1Examples():
         replace_service_instance_state request example
         """
         try:
+            global instanceId, initiatorId, reasonCode
             # begin-replace_service_instance_state
-
-            resp2448145_root = open_service_broker_service.replace_service_instance_state(
-                instance_id='testString'
+        
+            response = open_service_broker_service.replace_service_instance_state(
+                instance_id=instanceId,
+                enabled=False,
+                initiator_id=initiatorId,
+                reason_code=reasonCode
             ).get_result()
 
-            print(json.dumps(resp2448145_root, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-replace_service_instance_state
 
@@ -108,13 +163,27 @@ class TestOpenServiceBrokerV1Examples():
         replace_service_instance request example
         """
         try:
+            global instanceId, orgGuid, planId, serviceId, accountId
             # begin-replace_service_instance
 
-            resp2079872_root = open_service_broker_service.replace_service_instance(
-                instance_id='testString'
+            context = Context(
+                account_id=accountId,
+                crn=instanceId,
+                platform='ibmcloud'
+            )
+            pars = {}
+            response = open_service_broker_service.replace_service_instance(
+                instance_id=instanceId,
+                organization_guid=orgGuid,
+                plan_id=planId,
+                service_id=serviceId,
+                space_guid=spaceGuid,
+                context=context,
+                parameters=pars,
+                accepts_incomplete=True
             ).get_result()
 
-            print(json.dumps(resp2079872_root, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-replace_service_instance
 
@@ -127,13 +196,27 @@ class TestOpenServiceBrokerV1Examples():
         update_service_instance request example
         """
         try:
+            global instanceId, planId, serviceId, accountId
             # begin-update_service_instance
 
-            resp2079874_root = open_service_broker_service.update_service_instance(
-                instance_id='testString'
+            context = Context(
+                account_id=accountId,
+                crn=instanceId,
+                platform='ibmcloud'
+            )
+            pars = {}
+            prevValues = {}
+            response = open_service_broker_service.update_service_instance(
+                instance_id=instanceId,
+                plan_id=planId,
+                service_id=serviceId,
+                context=context,
+                parameters=pars,
+                previous_values=prevValues,
+                accepts_incomplete=True
             ).get_result()
 
-            print(json.dumps(resp2079874_root, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-update_service_instance
 
@@ -148,9 +231,9 @@ class TestOpenServiceBrokerV1Examples():
         try:
             # begin-list_catalog
 
-            resp1874650_root = open_service_broker_service.list_catalog().get_result()
+            response = open_service_broker_service.list_catalog().get_result()
 
-            print(json.dumps(resp1874650_root, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-list_catalog
 
@@ -163,18 +246,22 @@ class TestOpenServiceBrokerV1Examples():
         get_last_operation request example
         """
         try:
+            global instanceId, operation, planId, serviceId
             # begin-get_last_operation
 
-            resp2079894_root = open_service_broker_service.get_last_operation(
-                instance_id='testString'
+            response = open_service_broker_service.get_last_operation(
+                instance_id=instanceId,
+                operation = operation,
+                plan_id = planId,
+                service_id = serviceId
             ).get_result()
 
-            print(json.dumps(resp2079894_root, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-get_last_operation
 
         except ApiException as e:
-            pytest.fail(str(e))
+            pytest.fail(str(e)) 
 
     @needscredentials
     def test_replace_service_binding_example(self):
@@ -182,14 +269,24 @@ class TestOpenServiceBrokerV1Examples():
         replace_service_binding request example
         """
         try:
+            global instanceId, bindingId, appGuid, planId, serviceId, spaceGuid, accountId
             # begin-replace_service_binding
 
-            resp2079876_root = open_service_broker_service.replace_service_binding(
-                binding_id='testString',
-                instance_id='testString'
+            bindResource = BindResource(
+                account_id=accountId,
+                serviceid_crn=appGuid
+            )
+            pars = {}
+            response = open_service_broker_service.replace_service_binding(
+                binding_id=bindingId,
+                instance_id=instanceId,
+                plan_id=planId,
+                service_id=serviceId,
+                bind_resource=bindResource,
+                parameters=pars
             ).get_result()
 
-            print(json.dumps(resp2079876_root, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-replace_service_binding
 
@@ -202,15 +299,16 @@ class TestOpenServiceBrokerV1Examples():
         delete_service_instance request example
         """
         try:
+            global instanceId, planId, serviceId
             # begin-delete_service_instance
 
-            resp2079874_root = open_service_broker_service.delete_service_instance(
-                service_id='testString',
-                plan_id='testString',
-                instance_id='testString'
+            response = open_service_broker_service.delete_service_instance(
+                instance_id=instanceId,
+                plan_id=planId,
+                service_id=serviceId,
             ).get_result()
 
-            print(json.dumps(resp2079874_root, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-delete_service_instance
 
@@ -223,13 +321,14 @@ class TestOpenServiceBrokerV1Examples():
         delete_service_binding request example
         """
         try:
+            global bindingId, instanceId, planId, serviceId
             # begin-delete_service_binding
 
             response = open_service_broker_service.delete_service_binding(
-                binding_id='testString',
-                instance_id='testString',
-                plan_id='testString',
-                service_id='testString'
+                binding_id=bindingId,
+                instance_id=instanceId,
+                plan_id=planId,
+                service_id=serviceId,
             ).get_result()
 
             print(json.dumps(response, indent=2))
