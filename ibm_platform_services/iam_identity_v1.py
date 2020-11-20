@@ -14,13 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef9b3113-20201118-074613
  
 """
 The IAM Identity Service API allows for the management of Identities (Service IDs,
 ApiKeys).
 """
 
+from datetime import datetime
 from enum import Enum
 from typing import Dict, List
 import json
@@ -28,7 +29,7 @@ import json
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
-from ibm_cloud_sdk_core.utils import convert_model
+from ibm_cloud_sdk_core.utils import convert_model, datetime_to_string, string_to_datetime
 
 from .common import get_sdk_headers
 
@@ -609,7 +610,7 @@ class IamIdentityV1(BaseService):
         *,
         description: str = None,
         unique_instance_crns: List[str] = None,
-        apikey: 'CreateApiKeyRequest' = None,
+        apikey: 'ApiKeyInsideCreateServiceIdRequest' = None,
         entity_lock: str = None,
         **kwargs
     ) -> DetailedResponse:
@@ -629,8 +630,8 @@ class IamIdentityV1(BaseService):
                provided during a create of a Service Id.
         :param List[str] unique_instance_crns: (optional) Optional list of CRNs
                (string array) which point to the services connected to the service ID.
-        :param CreateApiKeyRequest apikey: (optional) Input body parameters for the
-               Create API key V1 REST request.
+        :param ApiKeyInsideCreateServiceIdRequest apikey: (optional) Parameters for
+               the API key in the Create service Id V1 REST request.
         :param str entity_lock: (optional) Indicates if the service ID is locked
                for further write operations. False by default.
         :param dict headers: A `dict` containing the request headers
@@ -989,11 +990,11 @@ class ApiKey():
     :attr str crn: Cloud Resource Name of the item. Example Cloud Resource Name:
           'crn:v1:bluemix:public:iam-identity:us-south:a/myaccount::apikey:1234-9012-5678'.
     :attr bool locked: The API key cannot be changed if set to true.
-    :attr str created_at: (optional) If set contains a date time string of the
+    :attr datetime created_at: (optional) If set contains a date time string of the
           creation date in ISO format.
     :attr str created_by: IAM ID of the user or service which created the API key.
-    :attr str modified_at: (optional) If set contains a date time string of the last
-          modification date in ISO format.
+    :attr datetime modified_at: (optional) If set contains a date time string of the
+          last modification date in ISO format.
     :attr str name: Name of the API key. The name is not checked for uniqueness.
           Therefore multiple names with the same value can exist. Access is done via the
           UUID of the API key.
@@ -1023,8 +1024,8 @@ class ApiKey():
                  *,
                  context: 'ResponseContext' = None,
                  entity_tag: str = None,
-                 created_at: str = None,
-                 modified_at: str = None,
+                 created_at: datetime = None,
+                 modified_at: datetime = None,
                  description: str = None,
                  history: List['EnityHistoryRecord'] = None) -> None:
         """
@@ -1054,10 +1055,10 @@ class ApiKey():
         :param str entity_tag: (optional) Version of the API Key details object.
                You need to specify this value when updating the API key to avoid stale
                updates.
-        :param str created_at: (optional) If set contains a date time string of the
-               creation date in ISO format.
-        :param str modified_at: (optional) If set contains a date time string of
-               the last modification date in ISO format.
+        :param datetime created_at: (optional) If set contains a date time string
+               of the creation date in ISO format.
+        :param datetime modified_at: (optional) If set contains a date time string
+               of the last modification date in ISO format.
         :param str description: (optional) The optional description of the API key.
                The 'description' property is only available if a description was provided
                during a create of an API key.
@@ -1099,13 +1100,13 @@ class ApiKey():
         else:
             raise ValueError('Required property \'locked\' not present in ApiKey JSON')
         if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
         if 'created_by' in _dict:
             args['created_by'] = _dict.get('created_by')
         else:
             raise ValueError('Required property \'created_by\' not present in ApiKey JSON')
         if 'modified_at' in _dict:
-            args['modified_at'] = _dict.get('modified_at')
+            args['modified_at'] = string_to_datetime(_dict.get('modified_at'))
         if 'name' in _dict:
             args['name'] = _dict.get('name')
         else:
@@ -1147,11 +1148,11 @@ class ApiKey():
         if hasattr(self, 'locked') and self.locked is not None:
             _dict['locked'] = self.locked
         if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = self.created_at
+            _dict['created_at'] = datetime_to_string(self.created_at)
         if hasattr(self, 'created_by') and self.created_by is not None:
             _dict['created_by'] = self.created_by
         if hasattr(self, 'modified_at') and self.modified_at is not None:
-            _dict['modified_at'] = self.modified_at
+            _dict['modified_at'] = datetime_to_string(self.modified_at)
         if hasattr(self, 'name') and self.name is not None:
             _dict['name'] = self.name
         if hasattr(self, 'description') and self.description is not None:
@@ -1181,6 +1182,110 @@ class ApiKey():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'ApiKey') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ApiKeyInsideCreateServiceIdRequest():
+    """
+    Parameters for the API key in the Create service Id V1 REST request.
+
+    :attr str name: Name of the API key. The name is not checked for uniqueness.
+          Therefore multiple names with the same value can exist. Access is done via the
+          UUID of the API key.
+    :attr str description: (optional) The optional description of the API key. The
+          'description' property is only available if a description was provided during a
+          create of an API key.
+    :attr str apikey: (optional) You can optionally passthrough the API key value
+          for this API key. If passed, NO validation of that apiKey value is done, i.e.
+          the value can be non-URL safe. If omitted, the API key management will create an
+          URL safe opaque API key value. The value of the API key is checked for
+          uniqueness. Please ensure enough variations when passing in this value.
+    :attr bool store_value: (optional) Send true or false to set whether the API key
+          value is retrievable in the future by using the Get details of an API key
+          request. If you create an API key for a user, you must specify `false` or omit
+          the value. We don't allow storing of API keys for users.
+    """
+
+    def __init__(self,
+                 name: str,
+                 *,
+                 description: str = None,
+                 apikey: str = None,
+                 store_value: bool = None) -> None:
+        """
+        Initialize a ApiKeyInsideCreateServiceIdRequest object.
+
+        :param str name: Name of the API key. The name is not checked for
+               uniqueness. Therefore multiple names with the same value can exist. Access
+               is done via the UUID of the API key.
+        :param str description: (optional) The optional description of the API key.
+               The 'description' property is only available if a description was provided
+               during a create of an API key.
+        :param str apikey: (optional) You can optionally passthrough the API key
+               value for this API key. If passed, NO validation of that apiKey value is
+               done, i.e. the value can be non-URL safe. If omitted, the API key
+               management will create an URL safe opaque API key value. The value of the
+               API key is checked for uniqueness. Please ensure enough variations when
+               passing in this value.
+        :param bool store_value: (optional) Send true or false to set whether the
+               API key value is retrievable in the future by using the Get details of an
+               API key request. If you create an API key for a user, you must specify
+               `false` or omit the value. We don't allow storing of API keys for users.
+        """
+        self.name = name
+        self.description = description
+        self.apikey = apikey
+        self.store_value = store_value
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ApiKeyInsideCreateServiceIdRequest':
+        """Initialize a ApiKeyInsideCreateServiceIdRequest object from a json dictionary."""
+        args = {}
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in ApiKeyInsideCreateServiceIdRequest JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'apikey' in _dict:
+            args['apikey'] = _dict.get('apikey')
+        if 'store_value' in _dict:
+            args['store_value'] = _dict.get('store_value')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ApiKeyInsideCreateServiceIdRequest object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'apikey') and self.apikey is not None:
+            _dict['apikey'] = self.apikey
+        if hasattr(self, 'store_value') and self.store_value is not None:
+            _dict['store_value'] = self.store_value
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ApiKeyInsideCreateServiceIdRequest object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ApiKeyInsideCreateServiceIdRequest') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ApiKeyInsideCreateServiceIdRequest') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -1299,128 +1404,6 @@ class ApiKeyList():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'ApiKeyList') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class CreateApiKeyRequest():
-    """
-    Input body parameters for the Create API key V1 REST request.
-
-    :attr str name: Name of the API key. The name is not checked for uniqueness.
-          Therefore multiple names with the same value can exist. Access is done via the
-          UUID of the API key.
-    :attr str description: (optional) The optional description of the API key. The
-          'description' property is only available if a description was provided during a
-          create of an API key.
-    :attr str iam_id: The iam_id that this API key authenticates.
-    :attr str account_id: (optional) The account ID of the API key.
-    :attr str apikey: (optional) You can optionally passthrough the API key value
-          for this API key. If passed, NO validation of that apiKey value is done, i.e.
-          the value can be non-URL safe. If omitted, the API key management will create an
-          URL safe opaque API key value. The value of the API key is checked for
-          uniqueness. Please ensure enough variations when passing in this value.
-    :attr bool store_value: (optional) Send true or false to set whether the API key
-          value is retrievable in the future by using the Get details of an API key
-          request. If you create an API key for a user, you must specify `false` or omit
-          the value. We don't allow storing of API keys for users.
-    """
-
-    def __init__(self,
-                 name: str,
-                 iam_id: str,
-                 *,
-                 description: str = None,
-                 account_id: str = None,
-                 apikey: str = None,
-                 store_value: bool = None) -> None:
-        """
-        Initialize a CreateApiKeyRequest object.
-
-        :param str name: Name of the API key. The name is not checked for
-               uniqueness. Therefore multiple names with the same value can exist. Access
-               is done via the UUID of the API key.
-        :param str iam_id: The iam_id that this API key authenticates.
-        :param str description: (optional) The optional description of the API key.
-               The 'description' property is only available if a description was provided
-               during a create of an API key.
-        :param str account_id: (optional) The account ID of the API key.
-        :param str apikey: (optional) You can optionally passthrough the API key
-               value for this API key. If passed, NO validation of that apiKey value is
-               done, i.e. the value can be non-URL safe. If omitted, the API key
-               management will create an URL safe opaque API key value. The value of the
-               API key is checked for uniqueness. Please ensure enough variations when
-               passing in this value.
-        :param bool store_value: (optional) Send true or false to set whether the
-               API key value is retrievable in the future by using the Get details of an
-               API key request. If you create an API key for a user, you must specify
-               `false` or omit the value. We don't allow storing of API keys for users.
-        """
-        self.name = name
-        self.description = description
-        self.iam_id = iam_id
-        self.account_id = account_id
-        self.apikey = apikey
-        self.store_value = store_value
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'CreateApiKeyRequest':
-        """Initialize a CreateApiKeyRequest object from a json dictionary."""
-        args = {}
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        else:
-            raise ValueError('Required property \'name\' not present in CreateApiKeyRequest JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'iam_id' in _dict:
-            args['iam_id'] = _dict.get('iam_id')
-        else:
-            raise ValueError('Required property \'iam_id\' not present in CreateApiKeyRequest JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        if 'apikey' in _dict:
-            args['apikey'] = _dict.get('apikey')
-        if 'store_value' in _dict:
-            args['store_value'] = _dict.get('store_value')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a CreateApiKeyRequest object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
-        if hasattr(self, 'description') and self.description is not None:
-            _dict['description'] = self.description
-        if hasattr(self, 'iam_id') and self.iam_id is not None:
-            _dict['iam_id'] = self.iam_id
-        if hasattr(self, 'account_id') and self.account_id is not None:
-            _dict['account_id'] = self.account_id
-        if hasattr(self, 'apikey') and self.apikey is not None:
-            _dict['apikey'] = self.apikey
-        if hasattr(self, 'store_value') and self.store_value is not None:
-            _dict['store_value'] = self.store_value
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this CreateApiKeyRequest object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'CreateApiKeyRequest') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'CreateApiKeyRequest') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -1688,10 +1671,10 @@ class ServiceId():
     :attr str crn: Cloud Resource Name of the item. Example Cloud Resource Name:
           'crn:v1:bluemix:public:iam-identity:us-south:a/myaccount::serviceid:1234-5678-9012'.
     :attr bool locked: The service ID cannot be changed if set to true.
-    :attr str created_at: (optional) If set contains a date time string of the
+    :attr datetime created_at: (optional) If set contains a date time string of the
           creation date in ISO format.
-    :attr str modified_at: (optional) If set contains a date time string of the last
-          modification date in ISO format.
+    :attr datetime modified_at: (optional) If set contains a date time string of the
+          last modification date in ISO format.
     :attr str account_id: ID of the account the service ID belongs to.
     :attr str name: Name of the Service Id. The name is not checked for uniqueness.
           Therefore multiple names with the same value can exist. Access is done via the
@@ -1716,8 +1699,8 @@ class ServiceId():
                  *,
                  context: 'ResponseContext' = None,
                  entity_tag: str = None,
-                 created_at: str = None,
-                 modified_at: str = None,
+                 created_at: datetime = None,
+                 modified_at: datetime = None,
                  description: str = None,
                  unique_instance_crns: List[str] = None,
                  history: List['EnityHistoryRecord'] = None) -> None:
@@ -1740,10 +1723,10 @@ class ServiceId():
         :param str entity_tag: (optional) Version of the service ID details object.
                You need to specify this value when updating the service ID to avoid stale
                updates.
-        :param str created_at: (optional) If set contains a date time string of the
-               creation date in ISO format.
-        :param str modified_at: (optional) If set contains a date time string of
-               the last modification date in ISO format.
+        :param datetime created_at: (optional) If set contains a date time string
+               of the creation date in ISO format.
+        :param datetime modified_at: (optional) If set contains a date time string
+               of the last modification date in ISO format.
         :param str description: (optional) The optional description of the Service
                Id. The 'description' property is only available if a description was
                provided during a create of a Service Id.
@@ -1792,9 +1775,9 @@ class ServiceId():
         else:
             raise ValueError('Required property \'locked\' not present in ServiceId JSON')
         if 'created_at' in _dict:
-            args['created_at'] = _dict.get('created_at')
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
         if 'modified_at' in _dict:
-            args['modified_at'] = _dict.get('modified_at')
+            args['modified_at'] = string_to_datetime(_dict.get('modified_at'))
         if 'account_id' in _dict:
             args['account_id'] = _dict.get('account_id')
         else:
@@ -1836,9 +1819,9 @@ class ServiceId():
         if hasattr(self, 'locked') and self.locked is not None:
             _dict['locked'] = self.locked
         if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = self.created_at
+            _dict['created_at'] = datetime_to_string(self.created_at)
         if hasattr(self, 'modified_at') and self.modified_at is not None:
-            _dict['modified_at'] = self.modified_at
+            _dict['modified_at'] = datetime_to_string(self.modified_at)
         if hasattr(self, 'account_id') and self.account_id is not None:
             _dict['account_id'] = self.account_id
         if hasattr(self, 'name') and self.name is not None:

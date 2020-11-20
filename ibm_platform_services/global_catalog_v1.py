@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef9b3113-20201118-074613
  
 """
 The catalog service manages offerings across geographies as the system of record. The
@@ -836,7 +836,7 @@ class GlobalCatalogV1(BaseService):
         Get the pricing for an object.
 
         This endpoint returns the pricing for an object. Static pricing is defined in the
-        catalog. Dynamic pricing is stored in Bluemix Pricing Catalog.
+        catalog. Dynamic pricing is stored in IBM Cloud Pricing Catalog.
 
         :param str id: The object's unique ID.
         :param str account: (optional) This changes the scope of the request
@@ -2092,16 +2092,16 @@ class CatalogEntry():
           object returned.
     :attr str id: (optional) Catalog entry's unique ID. It's the same across all
           catalog instances.
-    :attr object catalog_crn: (optional)
-    :attr object url: (optional) URL to get details about this object.
-    :attr object children_url: (optional) URL to get details about children of this
+    :attr str catalog_crn: (optional) The CRN associated with the catalog entry.
+    :attr str url: (optional) URL to get details about this object.
+    :attr str children_url: (optional) URL to get details about children of this
           object.
-    :attr object geo_tags: (optional) tags to indicate the locations this service is
-          deployable to.
-    :attr object pricing_tags: (optional) tags to indicate the type of pricing plans
-          this service supports.
-    :attr object created: (optional) Date created.
-    :attr object updated: (optional) Date last updated.
+    :attr List[str] geo_tags: (optional) tags to indicate the locations this service
+          is deployable to.
+    :attr List[str] pricing_tags: (optional) tags to indicate the type of pricing
+          plans this service supports.
+    :attr datetime created: (optional) Date created.
+    :attr datetime updated: (optional) Date last updated.
     """
 
     def __init__(self,
@@ -2118,13 +2118,13 @@ class CatalogEntry():
                  active: bool = None,
                  metadata: 'CatalogEntryMetadata' = None,
                  id: str = None,
-                 catalog_crn: object = None,
-                 url: object = None,
-                 children_url: object = None,
-                 geo_tags: object = None,
-                 pricing_tags: object = None,
-                 created: object = None,
-                 updated: object = None) -> None:
+                 catalog_crn: str = None,
+                 url: str = None,
+                 children_url: str = None,
+                 geo_tags: List[str] = None,
+                 pricing_tags: List[str] = None,
+                 created: datetime = None,
+                 updated: datetime = None) -> None:
         """
         Initialize a CatalogEntry object.
 
@@ -2226,9 +2226,9 @@ class CatalogEntry():
         if 'pricing_tags' in _dict:
             args['pricing_tags'] = _dict.get('pricing_tags')
         if 'created' in _dict:
-            args['created'] = _dict.get('created')
+            args['created'] = string_to_datetime(_dict.get('created'))
         if 'updated' in _dict:
-            args['updated'] = _dict.get('updated')
+            args['updated'] = string_to_datetime(_dict.get('updated'))
         return cls(**args)
 
     @classmethod
@@ -2274,9 +2274,9 @@ class CatalogEntry():
         if hasattr(self, 'pricing_tags') and getattr(self, 'pricing_tags') is not None:
             _dict['pricing_tags'] = getattr(self, 'pricing_tags')
         if hasattr(self, 'created') and getattr(self, 'created') is not None:
-            _dict['created'] = getattr(self, 'created')
+            _dict['created'] = datetime_to_string(getattr(self, 'created'))
         if hasattr(self, 'updated') and getattr(self, 'updated') is not None:
-            _dict['updated'] = getattr(self, 'updated')
+            _dict['updated'] = datetime_to_string(getattr(self, 'updated'))
         return _dict
 
     def _to_dict(self):
@@ -3114,7 +3114,7 @@ class Message():
     :attr str gid: (optional) transaction id associatd with action.
     :attr str type: (optional) type of action taken.
     :attr str message: (optional) message describing action.
-    :attr object data: (optional) JSON object containing details on changes made to
+    :attr dict data: (optional) An object containing details on changes made to
           object data.
     """
 
@@ -3130,7 +3130,7 @@ class Message():
                  gid: str = None,
                  type: str = None,
                  message: str = None,
-                 data: object = None) -> None:
+                 data: dict = None) -> None:
         """
         Initialize a Message object.
 
@@ -3145,8 +3145,8 @@ class Message():
         :param str gid: (optional) transaction id associatd with action.
         :param str type: (optional) type of action taken.
         :param str message: (optional) message describing action.
-        :param object data: (optional) JSON object containing details on changes
-               made to object data.
+        :param dict data: (optional) An object containing details on changes made
+               to object data.
         """
         self.id = id
         self.effective = effective

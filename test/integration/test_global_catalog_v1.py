@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """
 Test the platform service Global Catalog API operations
 """
@@ -35,15 +34,16 @@ if os.path.exists(configFile):
 else:
     print('External configuration was not found, skipping tests...')
 
+
 class TestGlobalCatalogV1(unittest.TestCase):
     """
     Integration Test Class for GlobalCatalogV1
     """
-
     @classmethod
     def setUpClass(self):
         if not configLoaded:
-            raise unittest.SkipTest('External configuration not available, skipping...')
+            raise unittest.SkipTest(
+                'External configuration not available, skipping...')
 
         self.service = GlobalCatalogV1.new_instance()
 
@@ -58,20 +58,20 @@ class TestGlobalCatalogV1(unittest.TestCase):
             'tags': ['a', 'b', 'c'],
             'overview_ui': {
                 'en': {
-                   'display_name': 'display',
-                   'long_description': 'longDesc',
-                   'description': 'desc'
-               }
-           },
-           'images': {
-             'image': 'image',
-             'small_image': 'small',
-             'medium_image': 'medium',
-             'feature_image': 'feature'
+                    'display_name': 'display',
+                    'long_description': 'longDesc',
+                    'description': 'desc'
+                }
             },
-           'provider': {
-             'email': 'bogus@us.ibm.com',
-             'name': 'someName'
+            'images': {
+                'image': 'image',
+                'small_image': 'small',
+                'medium_image': 'medium',
+                'feature_image': 'feature'
+            },
+            'provider': {
+                'email': 'bogus@us.ibm.com',
+                'name': 'someName'
             },
             'restrictions': 'private',
             'metadata': {
@@ -95,20 +95,20 @@ class TestGlobalCatalogV1(unittest.TestCase):
             'tags': ['a', 'b', 'c'],
             'overview_ui': {
                 'en': {
-                   'display_name': 'display',
-                   'long_description': 'longDesc',
-                   'description': 'desc'
-               }
-           },
-           'images': {
-             'image': 'image',
-             'small_image': 'small',
-             'medium_image': 'medium',
-             'feature_image': 'feature'
+                    'display_name': 'display',
+                    'long_description': 'longDesc',
+                    'description': 'desc'
+                }
             },
-           'provider': {
-             'email': 'bogus@us.ibm.com',
-             'name': 'someName'
+            'images': {
+                'image': 'image',
+                'small_image': 'small',
+                'medium_image': 'medium',
+                'feature_image': 'feature'
+            },
+            'provider': {
+                'email': 'bogus@us.ibm.com',
+                'name': 'someName'
             }
         }
 
@@ -118,34 +118,37 @@ class TestGlobalCatalogV1(unittest.TestCase):
             'active': False,
             'kind': 'template',
             'disabled': False,
-            'tags': ['x', 'y', 'z'],                            # tags are case-sensitive
+            'tags': ['x', 'y', 'z'],  # tags are case-sensitive
             'overview_ui': {
                 'en': {
-                   'display_name': 'displayUpdated',
-                   'long_description': 'longDescUpdated',
-                   'description': 'descUpdated'
-               }
-           },
-           'images': {
-             'image': 'imageUpdated',
-             'small_image': 'smallUpdated',
-             'medium_image': 'mediumUpdated',
-             'feature_image': 'featureUpdated'
+                    'display_name': 'displayUpdated',
+                    'long_description': 'longDescUpdated',
+                    'description': 'descUpdated'
+                }
             },
-           'provider': {
-             'email': 'bogus@us.ibm.com',
-             'name': 'someNameUpdated'
+            'images': {
+                'image': 'imageUpdated',
+                'small_image': 'smallUpdated',
+                'medium_image': 'mediumUpdated',
+                'feature_image': 'featureUpdated'
+            },
+            'provider': {
+                'email': 'bogus@us.ibm.com',
+                'name': 'someNameUpdated'
             }
         }
 
     def setUp(self):
-        self.service.delete_catalog_entry(id=self.defaultEntry['id'], force=True)
+        self.service.delete_catalog_entry(id=self.defaultEntry['id'],
+                                          force=True)
 
     def tearDown(self):
-        self.service.delete_catalog_entry(id=self.defaultEntry['id'], force=True)
+        self.service.delete_catalog_entry(id=self.defaultEntry['id'],
+                                          force=True)
 
     def test_create_catalog_entry(self):
-        env = self.service.create_catalog_entry(id=self.defaultEntry['id'],
+        env = self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
             name=self.defaultEntry['name'],
             overview_ui=self.defaultEntry['overview_ui'],
             kind=self.defaultEntry['kind'],
@@ -165,9 +168,12 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert results.get('images') == self.defaultEntry['images']
         assert results.get('provider') == self.defaultEntry['provider']
         assert results.get('tags') == self.defaultEntry['tags']
+        catalog_entry = CatalogEntry.from_dict(results)
+        print("create_catalog_entry() response: ", catalog_entry)
 
     def test_get_catalog_entry(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
             name=self.defaultEntry['name'],
             overview_ui=self.defaultEntry['overview_ui'],
             kind=self.defaultEntry['kind'],
@@ -189,9 +195,12 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert results.get('images') == self.defaultEntry['images']
         assert results.get('provider') == self.defaultEntry['provider']
         assert results.get('tags') == self.defaultEntry['tags']
+        catalog_entry = CatalogEntry.from_dict(results)
+        print("get_catalog_entry() response: ", catalog_entry)
 
     def test_update_catalog_entry(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
             name=self.defaultEntry['name'],
             overview_ui=self.defaultEntry['overview_ui'],
             kind=self.defaultEntry['kind'],
@@ -200,7 +209,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
             tags=self.defaultEntry['tags'],
             provider=self.defaultEntry['provider'])
 
-        env = self.service.update_catalog_entry(id=self.updatedEntry['id'],
+        env = self.service.update_catalog_entry(
+            id=self.updatedEntry['id'],
             name=self.updatedEntry['name'],
             overview_ui=self.updatedEntry['overview_ui'],
             kind=self.updatedEntry['kind'],
@@ -222,7 +232,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert results.get('tags') == self.updatedEntry['tags']
 
     def test_delete_catalog_entry(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
             name=self.defaultEntry['name'],
             overview_ui=self.defaultEntry['overview_ui'],
             kind=self.defaultEntry['kind'],
@@ -231,7 +242,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
             tags=self.defaultEntry['tags'],
             provider=self.defaultEntry['provider'])
 
-        env = self.service.delete_catalog_entry(id=self.defaultEntry['id'], force=True)
+        env = self.service.delete_catalog_entry(id=self.defaultEntry['id'],
+                                                force=True)
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -239,7 +251,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert results is not None
 
     def test_get_catalog_entry_after_delete_failure(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
             name=self.defaultEntry['name'],
             overview_ui=self.defaultEntry['overview_ui'],
             kind=self.defaultEntry['kind'],
@@ -268,7 +281,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
 
     def test_update_catalog_entry_failure(self):
         with pytest.raises(ApiException) as e:
-            self.service.update_catalog_entry(id='bogus',
+            self.service.update_catalog_entry(
+                id='bogus',
                 name=self.updatedEntry['name'],
                 overview_ui=self.updatedEntry['overview_ui'],
                 kind=self.updatedEntry['kind'],
@@ -279,7 +293,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert e.value.code == 404
 
     def test_create_catalog_entry_failure(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
             name=self.defaultEntry['name'],
             overview_ui=self.defaultEntry['overview_ui'],
             kind=self.defaultEntry['kind'],
@@ -289,7 +304,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
             provider=self.defaultEntry['provider'])
 
         with pytest.raises(ApiException) as e:
-            self.service.create_catalog_entry(id=self.defaultEntry['id'],
+            self.service.create_catalog_entry(
+                id=self.defaultEntry['id'],
                 name=self.defaultEntry['name'],
                 overview_ui=self.defaultEntry['overview_ui'],
                 kind=self.defaultEntry['kind'],
@@ -310,9 +326,12 @@ class TestGlobalCatalogV1(unittest.TestCase):
         resources = results.get('resources')
         assert resources is not None
         assert len(resources) > 0
+        resources_obj = EntrySearchResult.from_dict(resources)
+        print("list_catalog_entries() response: ", resources_obj)
 
     def test_get_child_catalog_entry(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
             name=self.defaultEntry['name'],
             overview_ui=self.defaultEntry['overview_ui'],
             kind=self.defaultEntry['kind'],
@@ -320,7 +339,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
             provider=self.defaultEntry['provider'])
-        self.service.create_catalog_entry(id=self.defaultChildEntry['id'],
+        self.service.create_catalog_entry(
+            id=self.defaultChildEntry['id'],
             parent_id=self.defaultChildEntry['parent_id'],
             name=self.defaultChildEntry['name'],
             overview_ui=self.defaultChildEntry['overview_ui'],
@@ -330,7 +350,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
             tags=self.defaultChildEntry['tags'],
             provider=self.defaultChildEntry['provider'])
 
-        env = self.service.get_child_objects(id=self.defaultEntry['id'], kind=self.defaultEntry['kind'])
+        env = self.service.get_child_objects(id=self.defaultEntry['id'],
+                                             kind=self.defaultEntry['kind'])
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -345,11 +366,15 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert resources[0].get('id') == self.defaultChildEntry['id']
         assert resources[0].get('name') == self.defaultChildEntry['name']
         assert resources[0].get('active') == self.defaultChildEntry['active']
-        assert resources[0].get('disabled') == self.defaultChildEntry['disabled']
+        assert resources[0].get(
+            'disabled') == self.defaultChildEntry['disabled']
         assert resources[0].get('kind') == self.defaultChildEntry['kind']
         assert resources[0].get('images') == self.defaultChildEntry['images']
-        assert resources[0].get('provider') == self.defaultChildEntry['provider']
+        assert resources[0].get(
+            'provider') == self.defaultChildEntry['provider']
         assert resources[0].get('tags') == self.defaultChildEntry['tags']
+        results_obj = EntrySearchResult.from_dict(results)
+        print("get_child_objects() response: ", results_obj)
 
     def test_get_child_catalog_entry_failure(self):
         with pytest.raises(ApiException) as e:
@@ -357,7 +382,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert e.value.code == 404
 
     def test_restore_catalog_entry(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
             name=self.defaultEntry['name'],
             overview_ui=self.defaultEntry['overview_ui'],
             kind=self.defaultEntry['kind'],
@@ -392,7 +418,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert e.value.code == 404
 
     def test_get_visibility(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
             name=self.defaultEntry['name'],
             overview_ui=self.defaultEntry['overview_ui'],
             kind=self.defaultEntry['kind'],
@@ -415,7 +442,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert e.value.code == 404
 
     def test_update_visibility(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
             name=self.defaultEntry['name'],
             overview_ui=self.defaultEntry['overview_ui'],
             kind=self.defaultEntry['kind'],
@@ -434,7 +462,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert e.value.code == 404
 
     def test_get_pricing_failure(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
             name=self.defaultEntry['name'],
             overview_ui=self.defaultEntry['overview_ui'],
             kind=self.defaultEntry['kind'],
@@ -443,30 +472,32 @@ class TestGlobalCatalogV1(unittest.TestCase):
             tags=self.defaultEntry['tags'],
             provider=self.defaultEntry['provider'])
 
-        
         with pytest.raises(ApiException) as e:
             self.service.get_pricing(self.defaultEntry['id'])
         assert e.value.code == 404
-        
+
         with pytest.raises(ApiException) as e:
             self.service.get_pricing('bogus')
         assert e.value.code == 404
 
     def test_list_artifacts(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
-          name=self.defaultEntry['name'],
-          overview_ui=self.defaultEntry['overview_ui'],
-          kind=self.defaultEntry['kind'],
-          images=self.defaultEntry['images'],
-          disabled=self.defaultEntry['disabled'],
-          tags=self.defaultEntry['tags'],
-          provider=self.defaultEntry['provider'])
-        self.service.upload_artifact(object_id=self.defaultEntry['id'],
-         artifact_id=self.defaultEntry['artifactId'],
-         artifact=self.defaultEntry['artifact'])
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
+            name=self.defaultEntry['name'],
+            overview_ui=self.defaultEntry['overview_ui'],
+            kind=self.defaultEntry['kind'],
+            images=self.defaultEntry['images'],
+            disabled=self.defaultEntry['disabled'],
+            tags=self.defaultEntry['tags'],
+            provider=self.defaultEntry['provider'])
+        self.service.upload_artifact(
+            object_id=self.defaultEntry['id'],
+            artifact_id=self.defaultEntry['artifactId'],
+            artifact=self.defaultEntry['artifact'])
 
-        env = self.service.list_artifacts(object_id=self.defaultEntry['id'],
-          artifact_id=self.defaultEntry['artifactId'])
+        env = self.service.list_artifacts(
+            object_id=self.defaultEntry['id'],
+            artifact_id=self.defaultEntry['artifactId'])
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -478,9 +509,9 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert resources is not None
         assert len(resources) == 1
         assert resources[0].get('name') == self.defaultEntry['artifactId']
-        assert resources[0].get('url') == '{}/{}/artifacts/{}'.format(self.service.service_url,
-          self.defaultEntry['id'],
-          self.defaultEntry['artifactId'])
+        assert resources[0].get('url') == '{}/{}/artifacts/{}'.format(
+            self.service.service_url, self.defaultEntry['id'],
+            self.defaultEntry['artifactId'])
         assert resources[0].get('size') == 24
 
     def test_list_artifacts_failure(self):
@@ -493,19 +524,23 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert results.get('count') == 0
 
     def test_get_artifact(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
-          name=self.defaultEntry['name'],
-          overview_ui=self.defaultEntry['overview_ui'],
-          kind=self.defaultEntry['kind'],
-          images=self.defaultEntry['images'],
-          disabled=self.defaultEntry['disabled'],
-          tags=self.defaultEntry['tags'],
-          provider=self.defaultEntry['provider'])
-        self.service.upload_artifact(object_id=self.defaultEntry['id'],
-         artifact_id=self.defaultEntry['artifactId'],
-         artifact=self.defaultEntry['artifact'])
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
+            name=self.defaultEntry['name'],
+            overview_ui=self.defaultEntry['overview_ui'],
+            kind=self.defaultEntry['kind'],
+            images=self.defaultEntry['images'],
+            disabled=self.defaultEntry['disabled'],
+            tags=self.defaultEntry['tags'],
+            provider=self.defaultEntry['provider'])
+        self.service.upload_artifact(
+            object_id=self.defaultEntry['id'],
+            artifact_id=self.defaultEntry['artifactId'],
+            artifact=self.defaultEntry['artifact'])
 
-        env = self.service.get_artifact(object_id=self.defaultEntry['id'], artifact_id=self.defaultEntry['artifactId'])
+        env = self.service.get_artifact(
+            object_id=self.defaultEntry['id'],
+            artifact_id=self.defaultEntry['artifactId'])
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -514,17 +549,19 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert results == self.defaultEntry['artifact']
 
     def test_get_artifact_failure(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
-          name=self.defaultEntry['name'],
-          overview_ui=self.defaultEntry['overview_ui'],
-          kind=self.defaultEntry['kind'],
-          images=self.defaultEntry['images'],
-          disabled=self.defaultEntry['disabled'],
-          tags=self.defaultEntry['tags'],
-          provider=self.defaultEntry['provider'])
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
+            name=self.defaultEntry['name'],
+            overview_ui=self.defaultEntry['overview_ui'],
+            kind=self.defaultEntry['kind'],
+            images=self.defaultEntry['images'],
+            disabled=self.defaultEntry['disabled'],
+            tags=self.defaultEntry['tags'],
+            provider=self.defaultEntry['provider'])
 
         with pytest.raises(ApiException) as e:
-            self.service.get_artifact(object_id=self.defaultEntry['id'], artifact_id='bogus')
+            self.service.get_artifact(object_id=self.defaultEntry['id'],
+                                      artifact_id='bogus')
         assert e.value.code == 404
 
         with pytest.raises(ApiException) as e:
@@ -532,16 +569,18 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert e.value.code == 404
 
     def test_upload_artifact(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
-          name=self.defaultEntry['name'],
-          overview_ui=self.defaultEntry['overview_ui'],
-          kind=self.defaultEntry['kind'],
-          images=self.defaultEntry['images'],
-          disabled=self.defaultEntry['disabled'],
-          tags=self.defaultEntry['tags'],
-          provider=self.defaultEntry['provider'])
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
+            name=self.defaultEntry['name'],
+            overview_ui=self.defaultEntry['overview_ui'],
+            kind=self.defaultEntry['kind'],
+            images=self.defaultEntry['images'],
+            disabled=self.defaultEntry['disabled'],
+            tags=self.defaultEntry['tags'],
+            provider=self.defaultEntry['provider'])
 
-        env = self.service.upload_artifact(object_id=self.defaultEntry['id'],
+        env = self.service.upload_artifact(
+            object_id=self.defaultEntry['id'],
             artifact_id=self.defaultEntry['artifactId'],
             artifact=self.defaultEntry['artifact'])
         assert env is not None
@@ -556,16 +595,18 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert e.value.code == 404
 
     def test_delete_artifact(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
-          name=self.defaultEntry['name'],
-          overview_ui=self.defaultEntry['overview_ui'],
-          kind=self.defaultEntry['kind'],
-          images=self.defaultEntry['images'],
-          disabled=self.defaultEntry['disabled'],
-          tags=self.defaultEntry['tags'],
-          provider=self.defaultEntry['provider'])
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
+            name=self.defaultEntry['name'],
+            overview_ui=self.defaultEntry['overview_ui'],
+            kind=self.defaultEntry['kind'],
+            images=self.defaultEntry['images'],
+            disabled=self.defaultEntry['disabled'],
+            tags=self.defaultEntry['tags'],
+            provider=self.defaultEntry['provider'])
 
-        env = self.service.delete_artifact(object_id=self.defaultEntry['id'], artifact_id='bogus')
+        env = self.service.delete_artifact(object_id=self.defaultEntry['id'],
+                                           artifact_id='bogus')
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -573,16 +614,18 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert results is not None
 
     def test_delete_artifact_failure(self):
-        self.service.create_catalog_entry(id=self.defaultEntry['id'],
-          name=self.defaultEntry['name'],
-          overview_ui=self.defaultEntry['overview_ui'],
-          kind=self.defaultEntry['kind'],
-          images=self.defaultEntry['images'],
-          disabled=self.defaultEntry['disabled'],
-          tags=self.defaultEntry['tags'],
-          provider=self.defaultEntry['provider'])
+        self.service.create_catalog_entry(
+            id=self.defaultEntry['id'],
+            name=self.defaultEntry['name'],
+            overview_ui=self.defaultEntry['overview_ui'],
+            kind=self.defaultEntry['kind'],
+            images=self.defaultEntry['images'],
+            disabled=self.defaultEntry['disabled'],
+            tags=self.defaultEntry['tags'],
+            provider=self.defaultEntry['provider'])
 
-        env = self.service.delete_artifact(object_id=self.defaultEntry['id'], artifact_id='bogus')
+        env = self.service.delete_artifact(object_id=self.defaultEntry['id'],
+                                           artifact_id='bogus')
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -592,6 +635,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
         with pytest.raises(ApiException) as e:
             self.service.delete_artifact('bogus', 'bogus')
         assert e.value.code == 404
+
 
 if __name__ == '__main__':
     unittest.main()
