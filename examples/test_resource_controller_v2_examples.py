@@ -18,6 +18,7 @@ Examples for ResourceControllerV2
 """
 
 import os
+import time
 import pytest
 from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.resource_controller_v2 import *
@@ -570,6 +571,9 @@ class TestResourceControllerV2Examples():
             print(json.dumps(response, indent=2))
 
             # end-delete_resource_instance
+
+            #wait for reclamation object to be created
+            time.sleep(20)
 
         except ApiException as e:
             pytest.fail(str(e))
