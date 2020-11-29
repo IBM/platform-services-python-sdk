@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-60fd6b3d-20201128-071551
  
 """
 Manage the lifecycle of your users using User Management APIs.
@@ -71,136 +71,7 @@ class UserManagementV1(BaseService):
 
 
     #########################
-    # userSettings
-    #########################
-
-
-    def get_user_settings(self,
-        account_id: str,
-        iam_id: str,
-        **kwargs
-    ) -> DetailedResponse:
-        """
-        Get user settings.
-
-        Retrieve a user's settings by the user's IAM ID. You can use the IAM service token
-        or a user token for authorization. To use this method, the requesting user or
-        service ID must have the viewer, editor, or administrator role on the User
-        Management service. <br/><br/>The user settings have several fields. The
-        `language` field is the language setting for the user interface display language.
-        The `notification_language` field is the language setting for phone and email
-        notifications. The `allowed_ip_addresses` field specifies a list of IP addresses
-        that the user can log in and perform operations from as described in [Allowing
-        specific IP addresses for a user](/docs/account?topic=account-ips). For
-        information about the `self_manage` field, review information about the
-        [user-managed login setting](/docs/account?topic=account-types).
-
-        :param str account_id: The account ID.
-        :param str iam_id: The user's IAM ID.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `UserSettings` object
-        """
-
-        if account_id is None:
-            raise ValueError('account_id must be provided')
-        if iam_id is None:
-            raise ValueError('iam_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_user_settings')
-        headers.update(sdk_headers)
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['account_id', 'iam_id']
-        path_param_values = self.encode_path_vars(account_id, iam_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v2/accounts/{account_id}/users/{iam_id}/settings'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
-
-        response = self.send(request)
-        return response
-
-
-    def update_user_settings(self,
-        account_id: str,
-        iam_id: str,
-        *,
-        language: str = None,
-        notification_language: str = None,
-        allowed_ip_addresses: str = None,
-        self_manage: bool = None,
-        **kwargs
-    ) -> DetailedResponse:
-        """
-        Partially update user settings.
-
-        Update a user's settings by the user's IAM ID. You can use the IAM service token
-        or a user token for authorization. To fully use this method, the user or service
-        ID must have the editor or administrator role on the User Management service.
-        Without these roles, a user can update only their own `language` or
-        `notification_language` fields. If `self_manage` is `true`, the user can also
-        update the `allowed_ip_addresses` field.
-
-        :param str account_id: The account ID.
-        :param str iam_id: The user's IAM ID.
-        :param str language: (optional) The console UI language. By default, this
-               field is empty.
-        :param str notification_language: (optional) The language for email and
-               phone notifications. By default, this field is empty.
-        :param str allowed_ip_addresses: (optional) A comma-separated list of IP
-               addresses.
-        :param bool self_manage: (optional) Whether user managed login is enabled.
-               The default value is `false`.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `UserSettings` object
-        """
-
-        if account_id is None:
-            raise ValueError('account_id must be provided')
-        if iam_id is None:
-            raise ValueError('iam_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_user_settings')
-        headers.update(sdk_headers)
-
-        data = {
-            'language': language,
-            'notification_language': notification_language,
-            'allowed_ip_addresses': allowed_ip_addresses,
-            'self_manage': self_manage
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['account_id', 'iam_id']
-        path_param_values = self.encode_path_vars(account_id, iam_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v2/accounts/{account_id}/users/{iam_id}/settings'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
-
-        response = self.send(request)
-        return response
-
-    #########################
-    # users
+    # Users
     #########################
 
 
@@ -208,6 +79,8 @@ class UserManagementV1(BaseService):
         account_id: str,
         *,
         state: str = None,
+        limit: int = None,
+        start: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -226,6 +99,11 @@ class UserManagementV1(BaseService):
 
         :param str account_id: The account ID.
         :param str state: (optional) The state of the user.
+        :param int limit: (optional) The number of results to be returned.
+        :param str start: (optional) An optional token that indicates the beginning
+               of the page of results to be returned. If omitted, the first page of
+               results is returned. This value is obtained from the 'next_url' field of
+               the operation response.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `UserList` object
@@ -240,7 +118,9 @@ class UserManagementV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
-            'state': state
+            'state': state,
+            'limit': limit,
+            '_start': start
         }
 
         if 'headers' in kwargs:
@@ -269,20 +149,21 @@ class UserManagementV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Invite users.
+        Invite users to an account.
 
         Invite users to the account. You must use a user token for authorization. Service
         IDs can't invite users to the account. To use this method, the requesting user
         must have the editor or administrator role on the User Management service. For
-        more information, see the [Inviting users](/docs/account?topic=account-iamuserinv)
-        documentation. You can specify the user account role and the corresponding IAM
-        policy information in the request body. <br/><br/>When you invite a user to an
-        account, the user is initially created in the `PROCESSING` state. After the user
-        is successfully created, all specified permissions are configured, and the
-        activation email is sent, the invited user is transitioned to the `PENDING` state.
-        When the invited user clicks the activation email and creates and confirms their
-        IBM Cloud account, the user is transitioned to `ACTIVE` state. If the user email
-        is already verified, no email is generated.
+        more information, see the [Inviting
+        users](https://cloud.ibm.com/docs/account?topic=account-iamuserinv) documentation.
+        You can specify the user account role and the corresponding IAM policy information
+        in the request body. <br/><br/>When you invite a user to an account, the user is
+        initially created in the `PROCESSING` state. After the user is successfully
+        created, all specified permissions are configured, and the activation email is
+        sent, the invited user is transitioned to the `PENDING` state. When the invited
+        user clicks the activation email and creates and confirms their IBM Cloud account,
+        the user is transitioned to `ACTIVE` state. If the user email is already verified,
+        no email is generated.
 
         :param str account_id: The account ID.
         :param List[InviteUser] users: (optional) A list of users to be invited.
@@ -291,7 +172,7 @@ class UserManagementV1(BaseService):
         :param List[str] access_groups: (optional) A list of access groups.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `UserList` object
+        :rtype: DetailedResponse with `dict` result representing a `InvitedUserList` object
         """
 
         if account_id is None:
@@ -378,7 +259,7 @@ class UserManagementV1(BaseService):
         return response
 
 
-    def update_user_profiles(self,
+    def update_user_profile(self,
         account_id: str,
         iam_id: str,
         *,
@@ -392,7 +273,7 @@ class UserManagementV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Partially update user profiles.
+        Partially update user profile.
 
         Partially update a user's profile by user's IAM ID. You can use the IAM service
         token or a user token for authorization. To use this method, the requesting user
@@ -427,7 +308,7 @@ class UserManagementV1(BaseService):
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='update_user_profiles')
+                                      operation_id='update_user_profile')
         headers.update(sdk_headers)
 
         data = {
@@ -459,19 +340,19 @@ class UserManagementV1(BaseService):
         return response
 
 
-    def remove_users(self,
+    def remove_user(self,
         account_id: str,
         iam_id: str,
         **kwargs
     ) -> DetailedResponse:
         """
-        Remove users.
+        Remove user from account.
 
         Remove users from an account by user's IAM ID. You must use a user token for
         authorization. Service IDs can't remove users from an account. To use this method,
         the requesting user must have the editor or administrator role on the User
         Management service. For more information, see the [Removing
-        users](/docs/account?topic=account-remove) documentation.
+        users](https://cloud.ibm.com/docs/account?topic=account-remove) documentation.
 
         :param str account_id: The account ID.
         :param str iam_id: The user's IAM ID.
@@ -487,7 +368,7 @@ class UserManagementV1(BaseService):
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='remove_users')
+                                      operation_id='remove_user')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -504,36 +385,294 @@ class UserManagementV1(BaseService):
         response = self.send(request)
         return response
 
+    #########################
+    # User Settings
+    #########################
+
+
+    def get_user_settings(self,
+        account_id: str,
+        iam_id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get user settings.
+
+        Retrieve a user's settings by the user's IAM ID. You can use the IAM service token
+        or a user token for authorization. To use this method, the requesting user or
+        service ID must have the viewer, editor, or administrator role on the User
+        Management service. <br/><br/>The user settings have several fields. The
+        `language` field is the language setting for the user interface display language.
+        The `notification_language` field is the language setting for phone and email
+        notifications. The `allowed_ip_addresses` field specifies a list of IP addresses
+        that the user can log in and perform operations from as described in [Allowing
+        specific IP addresses for a
+        user](https://cloud.ibm.com/docs/account?topic=account-ips). For information about
+        the `self_manage` field, review information about the [user-managed login
+        setting](https://cloud.ibm.com/docs/account?topic=account-types).
+
+        :param str account_id: The account ID.
+        :param str iam_id: The user's IAM ID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `UserSettings` object
+        """
+
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        if iam_id is None:
+            raise ValueError('iam_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_user_settings')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id', 'iam_id']
+        path_param_values = self.encode_path_vars(account_id, iam_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/accounts/{account_id}/users/{iam_id}/settings'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request)
+        return response
+
+
+    def update_user_settings(self,
+        account_id: str,
+        iam_id: str,
+        *,
+        language: str = None,
+        notification_language: str = None,
+        allowed_ip_addresses: str = None,
+        self_manage: bool = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Partially update user settings.
+
+        Update a user's settings by the user's IAM ID. You can use the IAM service token
+        or a user token for authorization. To fully use this method, the user or service
+        ID must have the editor or administrator role on the User Management service.
+        Without these roles, a user can update only their own `language` or
+        `notification_language` fields. If `self_manage` is `true`, the user can also
+        update the `allowed_ip_addresses` field.
+
+        :param str account_id: The account ID.
+        :param str iam_id: The user's IAM ID.
+        :param str language: (optional) The console UI language. By default, this
+               field is empty.
+        :param str notification_language: (optional) The language for email and
+               phone notifications. By default, this field is empty.
+        :param str allowed_ip_addresses: (optional) A comma-separated list of IP
+               addresses.
+        :param bool self_manage: (optional) Whether user managed login is enabled.
+               The default value is `false`.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        if iam_id is None:
+            raise ValueError('iam_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='update_user_settings')
+        headers.update(sdk_headers)
+
+        data = {
+            'language': language,
+            'notification_language': notification_language,
+            'allowed_ip_addresses': allowed_ip_addresses,
+            'self_manage': self_manage
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        path_param_keys = ['account_id', 'iam_id']
+        path_param_values = self.encode_path_vars(account_id, iam_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/accounts/{account_id}/users/{iam_id}/settings'.format(**path_param_dict)
+        request = self.prepare_request(method='PATCH',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request)
+        return response
+
 
 ##############################################################################
 # Models
 ##############################################################################
 
 
+class InvitedUser():
+    """
+    Information about a user that has been invited to join an account.
+
+    :attr str email: (optional) The email address associated with the invited user.
+    :attr str id: (optional) The id associated with the invited user.
+    :attr str state: (optional) The state of the invitation for the user.
+    """
+
+    def __init__(self,
+                 *,
+                 email: str = None,
+                 id: str = None,
+                 state: str = None) -> None:
+        """
+        Initialize a InvitedUser object.
+
+        :param str email: (optional) The email address associated with the invited
+               user.
+        :param str id: (optional) The id associated with the invited user.
+        :param str state: (optional) The state of the invitation for the user.
+        """
+        self.email = email
+        self.id = id
+        self.state = state
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'InvitedUser':
+        """Initialize a InvitedUser object from a json dictionary."""
+        args = {}
+        if 'email' in _dict:
+            args['email'] = _dict.get('email')
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        if 'state' in _dict:
+            args['state'] = _dict.get('state')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a InvitedUser object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'email') and self.email is not None:
+            _dict['email'] = self.email
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this InvitedUser object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'InvitedUser') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'InvitedUser') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class InvitedUserList():
+    """
+    A collection of invited users.  This is the response returned by the invite_users
+    operation.
+
+    :attr List[InvitedUser] resources: (optional) The list of users that have been
+          invited to join the account.
+    """
+
+    def __init__(self,
+                 *,
+                 resources: List['InvitedUser'] = None) -> None:
+        """
+        Initialize a InvitedUserList object.
+
+        :param List[InvitedUser] resources: (optional) The list of users that have
+               been invited to join the account.
+        """
+        self.resources = resources
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'InvitedUserList':
+        """Initialize a InvitedUserList object from a json dictionary."""
+        args = {}
+        if 'resources' in _dict:
+            args['resources'] = [InvitedUser.from_dict(x) for x in _dict.get('resources')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a InvitedUserList object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'resources') and self.resources is not None:
+            _dict['resources'] = [x.to_dict() for x in self.resources]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this InvitedUserList object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'InvitedUserList') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'InvitedUserList') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class UserList():
     """
     The users returned.
 
-    :attr float total_results: (optional) The number of users returned.
-    :attr float limit: (optional) A limit to the number of users returned in a page.
+    :attr int total_results: The number of users returned.
+    :attr int limit: A limit to the number of users returned in a page.
     :attr str first_url: (optional) The first URL of the get users API.
     :attr str next_url: (optional) The next URL of the get users API.
     :attr List[UserProfile] resources: (optional) A list of users in the account.
     """
 
     def __init__(self,
+                 total_results: int,
+                 limit: int,
                  *,
-                 total_results: float = None,
-                 limit: float = None,
                  first_url: str = None,
                  next_url: str = None,
                  resources: List['UserProfile'] = None) -> None:
         """
         Initialize a UserList object.
 
-        :param float total_results: (optional) The number of users returned.
-        :param float limit: (optional) A limit to the number of users returned in a
-               page.
+        :param int total_results: The number of users returned.
+        :param int limit: A limit to the number of users returned in a page.
         :param str first_url: (optional) The first URL of the get users API.
         :param str next_url: (optional) The next URL of the get users API.
         :param List[UserProfile] resources: (optional) A list of users in the
@@ -551,8 +690,12 @@ class UserList():
         args = {}
         if 'total_results' in _dict:
             args['total_results'] = _dict.get('total_results')
+        else:
+            raise ValueError('Required property \'total_results\' not present in UserList JSON')
         if 'limit' in _dict:
             args['limit'] = _dict.get('limit')
+        else:
+            raise ValueError('Required property \'limit\' not present in UserList JSON')
         if 'first_url' in _dict:
             args['first_url'] = _dict.get('first_url')
         if 'next_url' in _dict:
@@ -843,7 +986,7 @@ class UserSettings():
 
 class Attribute():
     """
-    Attribute.
+    An attribute/value pair.
 
     :attr str name: (optional) The name of the attribute.
     :attr str value: (optional) The value of the attribute.
@@ -1044,7 +1187,7 @@ class InviteUserIamPolicy():
 
 class Resource():
     """
-    object.
+    A collection of attribute value pairs.
 
     :attr List[Attribute] attributes: (optional) A list of IAM attributes.
     """
