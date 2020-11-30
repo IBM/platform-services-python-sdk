@@ -1,3 +1,10 @@
+## [0.15.5](https://github.com/IBM/platform-services-python-sdk/compare/v0.15.4...v0.15.5) (2020-11-30)
+
+
+### Bug Fixes
+
+* **User Management:** re-gen service and update tests after API changes ([#62](https://github.com/IBM/platform-services-python-sdk/issues/62)) ([2d799ad](https://github.com/IBM/platform-services-python-sdk/commit/2d799ad4e5a635fe74e281367cf5345815ee0d07))
+
 ## [0.15.4](https://github.com/IBM/platform-services-python-sdk/compare/v0.15.3...v0.15.4) (2020-11-19)
 
 
