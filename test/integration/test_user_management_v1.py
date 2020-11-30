@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """
  This class contains an integration test for User Management service.
 """
@@ -20,97 +19,112 @@
 import os
 import sys
 import unittest
+import urllib.parse as urlparse
+from urllib.parse import parse_qs
 from ibm_platform_services.user_management_v1 import *
 
-
 # Read config file
-config_file = 'user-management.env'
+config_file = 'user_management.env'
+
+REMOVED_USERID = None
+
 
 class TestUserManagementV1(unittest.TestCase):
     """
     Integration Test Class for UserManagementV1
     """
-
     @classmethod
     def setup_class(cls):
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
         else:
-            raise unittest.SkipTest('External configuration not available, skipping...')
+            raise unittest.SkipTest(
+                'External configuration not available, skipping...')
 
-        cls.user_management_service = UserManagementV1.new_instance(service_name='USERMGMT1')
+        cls.user_management_service = UserManagementV1.new_instance(
+            service_name='USERMGMT1')
         assert cls.user_management_service is not None
 
-        cls.alternate_user_management_service = UserManagementV1.new_instance(service_name='USERMGMT2')
+        cls.alternate_user_management_service = UserManagementV1.new_instance(
+            service_name='USERMGMT2')
         assert cls.alternate_user_management_service is not None
 
+        cls.ACCOUNT_ID = '1aa434630b594b8a88b961a44c9eb2a9'
+        cls.IAM_USERID = 'IBMid-550008BJPR'
+        cls.INVITED_USER_EMAIL = 'aminttest+linked_account_owner_11@mail.test.ibm.com'
+        cls.VIEWER_ROLEID = 'crn:v1:bluemix:public:iam::::role:Viewer'
+        cls.ACCESS_GROUP_ID = 'AccessGroupId-51675919-2bd7-4ce3-86e4-5faff8065574'
+
+        print('\nService URL: ', cls.user_management_service.service_url)
         print('Setup complete.')
 
-    def test_get_user_settings(self):
-
+    def test_01_get_user_settings(self):
 
         user_settings = self.user_management_service.get_user_settings(
-            account_id='1aa434630b594b8a88b961a44c9eb2a9',
-            iam_id='IBMid-550008BJPR'
-        )
+            account_id=self.ACCOUNT_ID, iam_id=self.IAM_USERID)
 
         assert user_settings.get_status_code() == 200
+        assert user_settings.get_result() is not None
+        print('\nget_user_settings() result: ',
+              json.dumps(user_settings.get_result(), indent=2))
 
-
-    def test_update_user_settings(self):
-
+    def test_02_update_user_settings(self):
 
         user_settings = self.user_management_service.update_user_settings(
-            account_id='1aa434630b594b8a88b961a44c9eb2a9',
-            iam_id='IBMid-550008BJPR',
-            language='testString',
-            notification_language='testString',
+            account_id=self.ACCOUNT_ID,
+            iam_id=self.IAM_USERID,
+            language='French',
+            notification_language='English',
             allowed_ip_addresses='32.96.110.50,172.16.254.1',
-            self_manage=True
-        )
+            self_manage=True)
 
         assert user_settings.get_status_code() == 204
 
+    def test_03_list_users(self):
+        results = []
+        start = None
 
-    def test_list_users(self):
+        while True:
+            response = self.user_management_service.list_users(
+                account_id=self.ACCOUNT_ID, limit=10, start=start)
+            assert response.get_status_code() == 200
 
+            user_list = response.get_result()
+            assert user_list is not None
 
-        user_list = self.user_management_service.list_users(
-            account_id='1aa434630b594b8a88b961a44c9eb2a9',
-            state='ACTIVE'
-        )
+            assert 'resources' in user_list
 
-        assert user_list.get_status_code() == 200
+            results.extend(user_list['resources'])
 
+            next_url = user_list.get('next_url')
+            start = None
+            if next_url is not None:
+                start = self.get_start_token_from_url(next_url)
 
-    def test_invite_users(self):
+            if start is None:
+                break
+
+        num_users = len(results)
+        print(f'\nlist_users() returned a total of {num_users} users.')
+
+    def test_04_invite_users(self):
 
         # Construct a dict representation of a InviteUser model
         invite_user_model = {
-            'email': 'aminttest+linked_account_owner_11@mail.test.ibm.com',
+            'email': self.INVITED_USER_EMAIL,
             'account_role': 'Member'
         }
 
         # Construct a dict representation of a Role model
-        role_model = {
-            'role_id': 'crn:v1:bluemix:public:iam::::role:Viewer'
-        }
+        role_model = {'role_id': self.VIEWER_ROLEID}
 
         # Construct a dict representation of a Attribute model
-        attribute_model = {
-            'name': 'accountId',
-            'value': '1aa434630b594b8a88b961a44c9eb2a9'
-        }
+        attribute_model = {'name': 'accountId', 'value': self.ACCOUNT_ID}
 
-        attribute_model2 = {
-            'name': 'resourceGroupId',
-            'value': '*'
-        }
+        attribute_model2 = {'name': 'resourceGroupId', 'value': '*'}
 
         # Construct a dict representation of a Resource model
-        resource_model = {
-            'attributes': [attribute_model, attribute_model2]
-        }
+        resource_model = {'attributes': [attribute_model, attribute_model2]}
 
         # Construct a dict representation of a InviteUserIamPolicy model
         invite_user_iam_policy_model = {
@@ -119,54 +133,65 @@ class TestUserManagementV1(unittest.TestCase):
             'resources': [resource_model]
         }
 
-
-        user_list = self.alternate_user_management_service.invite_users(
-            account_id='1aa434630b594b8a88b961a44c9eb2a9',
+        response = self.alternate_user_management_service.invite_users(
+            account_id=self.ACCOUNT_ID,
             users=[invite_user_model],
             iam_policy=[invite_user_iam_policy_model],
-            access_groups=['AccessGroupId-51675919-2bd7-4ce3-86e4-5faff8065574']
-        )
+            access_groups=[self.ACCESS_GROUP_ID])
 
-        assert user_list.get_status_code() == 202
+        assert response.get_status_code() == 202
+        assert response.get_result() is not None
+        print('\ninvite_users() result: ',
+              json.dumps(response.get_result(), indent=2))
 
+        invited_users = response.get_result().get('resources')
+        assert invited_users is not None
 
-    def test_get_user_profile(self):
+        global REMOVED_USERID
+        REMOVED_USERID = invited_users[0].get('id')
+        assert REMOVED_USERID is not None
 
+    def test_05_get_user_profile(self):
 
         user_profile = self.user_management_service.get_user_profile(
-            account_id='1aa434630b594b8a88b961a44c9eb2a9',
-            iam_id='IBMid-550008BJPR'
-        )
+            account_id=self.ACCOUNT_ID, iam_id=self.IAM_USERID)
 
         assert user_profile.get_status_code() == 200
+        assert user_profile.get_result() is not None
+        print('\nget_user_profile() result: ',
+              json.dumps(user_profile.get_result(), indent=2))
 
+    def test_06_update_user_profile(self):
 
-    def test_update_user_profiles(self):
-
-
-        response = self.user_management_service.update_user_profiles(
-            account_id='1aa434630b594b8a88b961a44c9eb2a9',
-            iam_id='IBMid-550008BJPR',
-            firstname='testString',
-            lastname='testString',
+        response = self.user_management_service.update_user_profile(
+            account_id=self.ACCOUNT_ID,
+            iam_id=self.IAM_USERID,
+            firstname='John',
+            lastname='Doe',
             state='ACTIVE',
-            email='do_not_delete_user_without_iam_policy_stage@mail.test.ibm.com',
-            phonenumber='testString',
-            altphonenumber='testString',
-            photo='testString'
-        )
+            email=
+            'do_not_delete_user_without_iam_policy_stage@mail.test.ibm.com')
 
         assert response.get_status_code() == 204
 
+    def test_07_remove_user(self):
+        global REMOVED_USERID
+        assert REMOVED_USERID is not None
 
-    def test_remove_users(self):
-
-
-        response = self.user_management_service.remove_users(
-            account_id='1aa434630b594b8a88b961a44c9eb2a9',
-            iam_id='de79cc26184417940e462fb814362c19'
-        )
+        response = self.user_management_service.remove_user(
+            account_id=self.ACCOUNT_ID, iam_id=REMOVED_USERID)
 
         assert response.get_status_code() == 204
 
-
+    def get_start_token_from_url(self, url):
+        if url is None:
+            return None
+        try:
+            parsed = urlparse.urlparse(url)
+            query_value = parse_qs(parsed.query).get('_start')
+            if query_value is not None:
+                return query_value[0]
+            return None
+        except Exception as e:
+            print('Error parsing URL', e)
+            return None
