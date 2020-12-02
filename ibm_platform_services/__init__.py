@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """
  This package provides a client library for accessing the IBM Cloud Platform Services.
 """
@@ -25,6 +24,7 @@ from .version import __version__
 from .case_management_v1 import CaseManagementV1
 from .catalog_management_v1 import CatalogManagementV1
 from .configuration_governance_v1 import ConfigurationGovernanceV1
+from .enterprise_billing_units_v1 import EnterpriseBillingUnitsV1
 from .enterprise_management_v1 import EnterpriseManagementV1
 from .enterprise_usage_reports_v1 import EnterpriseUsageReportsV1
 from .global_catalog_v1 import GlobalCatalogV1
