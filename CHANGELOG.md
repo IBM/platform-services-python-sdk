@@ -1,3 +1,10 @@
+# [0.16.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.15.5...v0.16.0) (2020-12-04)
+
+
+### Features
+
+* **Enterprise Billing Units:** add service to project ([928a90f](https://github.com/IBM/platform-services-python-sdk/commit/928a90fdd7164f9956ea826a1296e24cb626dd12))
+
 ## [0.15.5](https://github.com/IBM/platform-services-python-sdk/compare/v0.15.4...v0.15.5) (2020-11-30)
 
 
