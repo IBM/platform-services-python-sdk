@@ -1,3 +1,10 @@
+# [0.17.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.16.0...v0.17.0) (2020-12-07)
+
+
+### Features
+
+* **Usage Metering:** add service to project ([f3d9dda](https://github.com/IBM/platform-services-python-sdk/commit/f3d9dda68b6a18d4d628722f694ecd6ab7de4a94))
+
 # [0.16.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.15.5...v0.16.0) (2020-12-04)
 
 
