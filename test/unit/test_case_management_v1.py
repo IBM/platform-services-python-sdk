@@ -1118,7 +1118,7 @@ class TestAttachmentList():
         attachment_model['id'] = 'string'
         attachment_model['filename'] = 'string'
         attachment_model['size_in_bytes'] = 0
-        attachment_model['created_at'] = 'string'
+        attachment_model['created_at'] = '2019-07-31 07:26:36'
         attachment_model['url'] = 'string'
 
         # Construct a json representation of a AttachmentList model
