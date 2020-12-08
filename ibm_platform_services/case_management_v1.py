@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
  
 """
 Case management API for creating cases, getting case statuses, adding comments to a case,
@@ -775,7 +775,7 @@ class Attachment():
     :attr str id: (optional) Unique identifier of the attachment in database.
     :attr str filename: (optional) Name of the attachment.
     :attr int size_in_bytes: (optional) Size of the attachment in bytes.
-    :attr str created_at: (optional) Date time of uploading.
+    :attr str created_at: (optional) Date time of uploading in UTC.
     :attr str url: (optional) URL of the attachment used to download.
     """
 
@@ -792,7 +792,7 @@ class Attachment():
         :param str id: (optional) Unique identifier of the attachment in database.
         :param str filename: (optional) Name of the attachment.
         :param int size_in_bytes: (optional) Size of the attachment in bytes.
-        :param str created_at: (optional) Date time of uploading.
+        :param str created_at: (optional) Date time of uploading in UTC.
         :param str url: (optional) URL of the attachment used to download.
         """
         self.id = id
@@ -1389,7 +1389,7 @@ class Comment():
     A comment in a case.
 
     :attr str value: (optional) The comment.
-    :attr str added_at: (optional) Timestamp of when comment is added.
+    :attr str added_at: (optional) Date time when comment was added in UTC.
     :attr User added_by: (optional) User info in a case.
     """
 
@@ -1402,7 +1402,7 @@ class Comment():
         Initialize a Comment object.
 
         :param str value: (optional) The comment.
-        :param str added_at: (optional) Timestamp of when comment is added.
+        :param str added_at: (optional) Date time when comment was added in UTC.
         :param User added_by: (optional) User info in a case.
         """
         self.value = value
