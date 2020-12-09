@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef9b3113-20201118-074613
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
  
 """
 The catalog service manages offerings across geographies as the system of record. The
@@ -304,7 +304,8 @@ class GlobalCatalogV1(BaseService):
 
         This endpoint returns a specific catalog entry using the object's unique
         identifier, for example `/*service_name*?complete=true`. This endpoint is ETag
-        enabled.
+        enabled. This can be used by an unauthenticated user for publicly available
+        services.
 
         :param str id: The catalog entry's unqiue ID.
         :param str account: (optional) This changes the scope of the request
@@ -573,7 +574,8 @@ class GlobalCatalogV1(BaseService):
         Get child catalog entries of a specific kind.
 
         Fetch child catalog entries for a catalog entry with a specific id. This endpoint
-        is ETag enabled.
+        is ETag enabled. This can be used by an unauthenticated user for publicly
+        available services.
 
         :param str id: The parent catalog entry's ID.
         :param str kind: The **kind** of child catalog entries to search for. A
@@ -836,7 +838,8 @@ class GlobalCatalogV1(BaseService):
         Get the pricing for an object.
 
         This endpoint returns the pricing for an object. Static pricing is defined in the
-        catalog. Dynamic pricing is stored in IBM Cloud Pricing Catalog.
+        catalog. Dynamic pricing is stored in IBM Cloud Pricing Catalog. This can be used
+        by an unauthenticated user for publicly available services.
 
         :param str id: The object's unique ID.
         :param str account: (optional) This changes the scope of the request
