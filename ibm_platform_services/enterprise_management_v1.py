@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
  
 """
 The Enterprise Management API enables you to create and manage an enterprise, account
@@ -390,8 +390,8 @@ class EnterpriseManagementV1(BaseService):
         Create a new account as a part of an existing enterprise. The API creates an
         account entity under the parent that is specified in the payload of the request.
         The request also takes in the name and the owner of this new account. The owner
-        must have a valid IBMid that's registered with {{site.data.keyword.cloud_notm}},
-        but they don't need to be a user in the enterprise account.
+        must have a valid IBMid that's registered with IBM Cloud, but they don't need to
+        be a user in the enterprise account.
 
         :param str parent: The CRN of the parent under which the account will be
                created. The parent can be an existing account group or the enterprise
