@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
  
 """
 Contribute resources to the IBM Cloud catalog by implementing a `service broker` that
@@ -247,21 +247,21 @@ class OpenServiceBrokerV1(BaseService):
                and deprovision, so the broker can use it to correlate the resource it
                creates.
         :param str organization_guid: (optional) Deprecated in favor of `context`.
-               The identifier for the project space within the IBM Cloud platform
-               organization. Although most brokers will not use this field, it might be
-               helpful for executing operations on a user's behalf. It MUST be a non-empty
-               string.
+               The IBM Cloud platform GUID for the organization under which the service
+               instance is to be provisioned. Although most brokers will not use this
+               field, it might be helpful for executing operations on a user's behalf. It
+               MUST be a non-empty string.
         :param str plan_id: (optional) The ID of the plan for which the service
                instance has been requested, which is stored in the catalog.json of your
                broker. This value should be a GUID and it MUST be unique to a service.
         :param str service_id: (optional) The ID of the service stored in the
                catalog.json of your broker. This value should be a GUID and it MUST be a
                non-empty string.
-        :param str space_guid: (optional) Deprecated in favor of `context`. The IBM
-               Cloud platform GUID for the organization under which the service instance
-               is to be provisioned. Although most brokers will not use this field, it
-               might be helpful for executing operations on a user's behalf. It MUST be a
-               non-empty string.
+        :param str space_guid: (optional) Deprecated in favor of `context`. The
+               identifier for the project space within the IBM Cloud platform
+               organization. Although most brokers will not use this field, it might be
+               helpful for executing operations on a user's behalf. It MUST be a non-empty
+               string.
         :param Context context: (optional) Platform specific contextual information
                under which the service instance is to be provisioned.
         :param dict parameters: (optional) Configuration options for the service
