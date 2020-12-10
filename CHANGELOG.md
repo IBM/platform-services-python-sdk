@@ -1,3 +1,17 @@
+## [0.17.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.0...v0.17.1) (2020-12-10)
+
+
+### Bug Fixes
+
+* **Case Management:** re-gen service with latest API ([334254a](https://github.com/IBM/platform-services-python-sdk/commit/334254a4033d8338dc17505e9b2eab8967c50188))
+* **Configuration Governance:** re-gen service with latest API ([d0c0792](https://github.com/IBM/platform-services-python-sdk/commit/d0c0792046a18230f26fa3df4426318ecf545bd4))
+* **Enterprise Billing Units:** re-gen service with latest API ([a559646](https://github.com/IBM/platform-services-python-sdk/commit/a55964653a1c799f2c69f990a7f3495c34eefc2d))
+* **Enterprise Management:** re-gen service with latest API ([1db4906](https://github.com/IBM/platform-services-python-sdk/commit/1db49065b6184ce8c69c99fc6fa9855c75e09338))
+* **Enterprise Usage Reports:** re-gen service with latest API ([8937b1d](https://github.com/IBM/platform-services-python-sdk/commit/8937b1dccd92ad70ff93dc9b41513c95e3e9f032))
+* **Global Catalog:** re-gen service with latest API ([fc7573f](https://github.com/IBM/platform-services-python-sdk/commit/fc7573ff88040a0256f432cd55dc4222972dbebf))
+* **Global Search:** re-gen service and add examples ([d9983a8](https://github.com/IBM/platform-services-python-sdk/commit/d9983a802460f0dbc3d5579f419fccad1452679a))
+* **Global Tagging:** re-gen service with latest API ([6bce37c](https://github.com/IBM/platform-services-python-sdk/commit/6bce37c2bf41105a40988df4fd8909a7fe377ef1))
+
 # [0.17.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.16.0...v0.17.0) (2020-12-07)
 
 
