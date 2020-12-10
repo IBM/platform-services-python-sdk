@@ -36,7 +36,7 @@ base_url = 'https://api.global-search-tagging.cloud.ibm.com'
 service.set_service_url(base_url)
 
 ##############################################################################
-# Start of Service: ResourceFinder
+# Start of Service: Search
 ##############################################################################
 # region
 
@@ -147,7 +147,7 @@ class TestSearch():
 
 # endregion
 ##############################################################################
-# End of Service: ResourceFinder
+# End of Service: Search
 ##############################################################################
 
 ##############################################################################
@@ -251,7 +251,7 @@ class TestScanResult():
         # Construct a json representation of a ScanResult model
         scan_result_model_json = {}
         scan_result_model_json['search_cursor'] = 'testString'
-        scan_result_model_json['limit'] = 72.5
+        scan_result_model_json['limit'] = 38
         scan_result_model_json['items'] = [result_item_model]
 
         # Construct a model instance of ScanResult by calling from_dict on the json representation

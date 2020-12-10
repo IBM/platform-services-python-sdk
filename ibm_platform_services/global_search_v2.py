@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
  
 """
 Search for resources with the global and shared resource properties repository integrated
@@ -79,7 +79,7 @@ class GlobalSearchV2(BaseService):
 
 
     #########################
-    # resourceFinder
+    # Search
     #########################
 
 
@@ -98,7 +98,7 @@ class GlobalSearchV2(BaseService):
         """
         Find instances of resources.
 
-        'Find cloud foundry resources, resource controlled enabled resources, or storage
+        Find cloud foundry resources, resource controller-enabled resources, or storage
         and network resources running on classic infrastructure in a specific account ID.
         You can apply query strings if necessary. To filter results, you can insert a
         string using the Lucene syntax and the query string is parsed into a series of
@@ -112,7 +112,7 @@ class GlobalSearchV2(BaseService):
         data that you must use on all the subsequent calls to get the next batch of
         results until you get the empty result set. By default, the fields returned for
         every resources are: "crn", "name", "family", "type", "account_id". You can
-        specify the subset of the fields you want in your request.''.
+        specify the subset of the fields you want in your request.
 
         :param str query: (optional) The Lucene-formatted query string. Default to
                '*' if not set.
@@ -176,7 +176,7 @@ class GlobalSearchV2(BaseService):
         return response
 
     #########################
-    # resourceTypes
+    # Resource Types
     #########################
 
 
@@ -289,8 +289,7 @@ class ScanResult():
 
     :attr str search_cursor: The search cursor to use on all calls after the first
           one.
-    :attr float limit: (optional) Value of the limit parameter specified by the
-          user.
+    :attr int limit: (optional) Value of the limit parameter specified by the user.
     :attr List[ResultItem] items: The array of results. Each item represents a
           resource. An empty array signals the end of the result set, there are no more
           hits to fetch.
@@ -300,7 +299,7 @@ class ScanResult():
                  search_cursor: str,
                  items: List['ResultItem'],
                  *,
-                 limit: float = None) -> None:
+                 limit: int = None) -> None:
         """
         Initialize a ScanResult object.
 
@@ -309,8 +308,8 @@ class ScanResult():
         :param List[ResultItem] items: The array of results. Each item represents a
                resource. An empty array signals the end of the result set, there are no
                more hits to fetch.
-        :param float limit: (optional) Value of the limit parameter specified by
-               the user.
+        :param int limit: (optional) Value of the limit parameter specified by the
+               user.
         """
         self.search_cursor = search_cursor
         self.limit = limit

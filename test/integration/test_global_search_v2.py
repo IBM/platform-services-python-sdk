@@ -12,113 +12,78 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """
-Test the platform service Global Search API operations
+Integration Tests for GlobalSearchV2
 """
 
-import unittest
 import os
-from ibm_platform_services import GlobalSearchV2
-from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-from jproperties import Properties
+import pytest
+import uuid
+from ibm_cloud_sdk_core import *
+from ibm_platform_services.global_search_v2 import *
 
-# Read config file
-configFile = 'ghost.env'
-config = {}
-configLoaded = None
+# Config file name
+config_file = 'global_search.env'
 
-try:
-    with open(configFile, "rb") as f:
-        p = Properties()
-        p.load(f, "utf-8")
-        config['GST_API_URL'] = p['GST_API_URL'].data
-        config['GST_TAGS_URL'] = p['GST_TAGS_URL'].data
-        config['GST_RESOURCE_NAMES'] = p['GST_RESOURCE_NAMES'].data
-        config['GST_IINTERNA_APIKEY'] = p['GST_IINTERNA_APIKEY'].data
-        config['GST_IAM_URL'] = p['GST_IAM_URL'].data
-        config['GST_QUERY'] = p['GST_QUERY'].data
-        config['GST_RESOURCE_CRN'] = p['GST_RESOURCE_CRN'].data
-        configLoaded = True
-except:
-    print('External configuration was not found, skipping tests...')
-    
-# Test class
-class TestGlobalSearchV2(unittest.TestCase):
+transaction_id = str(uuid.uuid4())
+
+
+class TestGlobalSearchV2():
     """
     Integration Test Class for GlobalSearchV2
     """
+    @classmethod
+    def setup_class(cls):
+        if os.path.exists(config_file):
+            os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
-    def setUp(self):
-        if not configLoaded:
-          self.skipTest("External configuration not available, skipping...")
-        
-        # Create authenticator with IAM API key (it generates bearer token automatically)
-        apikey = config['GST_IINTERNA_APIKEY']
-        iam_url = config['GST_IAM_URL']
-        assert apikey is not None
-        assert iam_url is not None
-        authenticator = IAMAuthenticator(apikey, url=iam_url)
-        
-        self.global_search = GlobalSearchV2(authenticator=authenticator)
-        self.global_search.set_service_url(config['GST_API_URL'])
-        self.items = set(config['GST_RESOURCE_NAMES'].split(','))
+            cls.global_search_service = GlobalSearchV2.new_instance()
+            assert cls.global_search_service is not None
 
-    def tearDown(self):
-        # Delete the resources
-        print("Clean up complete")
+        print('Setup complete.')
 
-    def test_search_1(self):
-        # It makes the query
-        env = self.global_search.search(query='name:gst-sdk*', search_cursor=None, transaction_id=None)
-        assert env is not None
-        results = env.get_result()
-        items = results.get('items')
-        assert items is not None
-        assert len(items) == 2
-        items_name_set = set()
-        for item in items:
-            items_name_set.add(item.get('name'))
-        # It checks if the resultset and expected set are equal
-        assert items_name_set == self.items
+    needscredentials = pytest.mark.skipif(
+        not os.path.exists(config_file),
+        reason="External configuration not available, skipping...")
 
-    def test_search_2(self):
-        items_to_check = set(self.items)  # Make a copy of the items in memory
-        fields_to_search = ['crn', 'name']
-        # It makes the first query
-        env = self.global_search.search(query='name:gst-sdk*', search_cursor=None, transaction_id=None,
-                                        fields=fields_to_search,
-                                        limit=1)
-        assert env is not None
-        results = env.get_result()
-        items = results.get('items')
-        assert items is not None
-        assert len(items) == 1
-        items_to_check.remove(items[0]['name'])
-        assert len(items_to_check) == 1
+    @needscredentials
+    def test_search(self):
 
-        # It makes the second query with cursor
-        search_cursor_str = results.get('search_cursor')
-        env = self.global_search.search(query='name:gst-sdk*', search_cursor=search_cursor_str, transaction_id=None,
-                                        fields=fields_to_search,
-                                        limit=1)
-        assert env is not None
-        results = env.get_result()
-        items = results.get('items')
-        assert items is not None
-        assert len(items) == 1
-        items_to_check.remove(items[0]['name'])
-        assert len(items_to_check) == 0
+        search_results = []
+        more_results = True
+        search_cursor = None
 
+        while more_results:
+            search_response = self.global_search_service.search(
+                query='GST-sdk-*',
+                fields=['*'],
+                search_cursor=search_cursor,
+                transaction_id=transaction_id,
+                limit=1)
+
+            assert search_response.get_status_code() == 200
+            scan_result = search_response.get_result()
+            assert scan_result is not None
+            print('\nsearch() result: ', json.dumps(scan_result, indent=2))
+
+            if len(scan_result['items']) > 0:
+                for elem in scan_result['items']:
+                    search_results.append(elem)
+                search_cursor = scan_result['search_cursor']
+            else:
+                more_results = False
+
+        print('Total items returned by search(): ', len(search_results))
+
+    @needscredentials
     def test_get_supported_types(self):
-        # It makes the query
-        env = self.global_search.get_supported_types()
-        assert env is not None
-        results = env.get_result()
-        supported_types = results.get('supported_types')
-        assert supported_types is not None
-        assert len(supported_types) > 0
 
+        get_supported_types_response = self.global_search_service.get_supported_types(
+        )
 
-if __name__ == '__main__':
-    unittest.main()
+        assert get_supported_types_response.get_status_code() == 200
+        supported_types_list = get_supported_types_response.get_result()
+        assert supported_types_list is not None
+
+        print('get_supported_types() result: ',
+              json.dumps(supported_types_list, indent=2))
