@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-2dc02c80-20201206-075555
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
  
 """
 IBM Cloud Usage Metering is a platform service that enables service providers to submit
