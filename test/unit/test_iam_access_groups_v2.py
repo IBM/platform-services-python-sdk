@@ -627,243 +627,6 @@ class TestDeleteAccessGroup():
 ##############################################################################
 
 ##############################################################################
-# Start of Service: AccountSettings
-##############################################################################
-# region
-
-class TestGetAccountSettings():
-    """
-    Test Class for get_account_settings
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_get_account_settings_all_params(self):
-        """
-        get_account_settings()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/groups/settings')
-        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        account_id = 'testString'
-        transaction_id = 'testString'
-
-        # Invoke method
-        response = service.get_account_settings(
-            account_id,
-            transaction_id=transaction_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'account_id={}'.format(account_id) in query_string
-
-
-    @responses.activate
-    def test_get_account_settings_required_params(self):
-        """
-        test_get_account_settings_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/groups/settings')
-        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        account_id = 'testString'
-
-        # Invoke method
-        response = service.get_account_settings(
-            account_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'account_id={}'.format(account_id) in query_string
-
-
-    @responses.activate
-    def test_get_account_settings_value_error(self):
-        """
-        test_get_account_settings_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/groups/settings')
-        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        account_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "account_id": account_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.get_account_settings(**req_copy)
-
-
-
-class TestUpdateAccountSettings():
-    """
-    Test Class for update_account_settings
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_update_account_settings_all_params(self):
-        """
-        update_account_settings()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/groups/settings')
-        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        account_id = 'testString'
-        public_access_enabled = True
-        transaction_id = 'testString'
-
-        # Invoke method
-        response = service.update_account_settings(
-            account_id,
-            public_access_enabled=public_access_enabled,
-            transaction_id=transaction_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'account_id={}'.format(account_id) in query_string
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['public_access_enabled'] == True
-
-
-    @responses.activate
-    def test_update_account_settings_required_params(self):
-        """
-        test_update_account_settings_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/groups/settings')
-        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        account_id = 'testString'
-        public_access_enabled = True
-
-        # Invoke method
-        response = service.update_account_settings(
-            account_id,
-            public_access_enabled=public_access_enabled,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'account_id={}'.format(account_id) in query_string
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['public_access_enabled'] == True
-
-
-    @responses.activate
-    def test_update_account_settings_value_error(self):
-        """
-        test_update_account_settings_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/groups/settings')
-        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        account_id = 'testString'
-        public_access_enabled = True
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "account_id": account_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.update_account_settings(**req_copy)
-
-
-
-# endregion
-##############################################################################
-# End of Service: AccountSettings
-##############################################################################
-
-##############################################################################
 # Start of Service: MembershipOperations
 ##############################################################################
 # region
@@ -1122,8 +885,8 @@ class TestListAccessGroupMembers():
         # Set up parameter values
         access_group_id = 'testString'
         transaction_id = 'testString'
-        limit = 72.5
-        offset = 72.5
+        limit = 38
+        offset = 38
         type = 'testString'
         verbose = True
         sort = 'testString'
@@ -2297,6 +2060,243 @@ class TestRemoveAccessGroupRule():
 # endregion
 ##############################################################################
 # End of Service: RuleOperations
+##############################################################################
+
+##############################################################################
+# Start of Service: AccountSettings
+##############################################################################
+# region
+
+class TestGetAccountSettings():
+    """
+    Test Class for get_account_settings
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_get_account_settings_all_params(self):
+        """
+        get_account_settings()
+        """
+        # Set up mock
+        url = self.preprocess_url(base_url + '/groups/settings')
+        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        account_id = 'testString'
+        transaction_id = 'testString'
+
+        # Invoke method
+        response = service.get_account_settings(
+            account_id,
+            transaction_id=transaction_id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+
+
+    @responses.activate
+    def test_get_account_settings_required_params(self):
+        """
+        test_get_account_settings_required_params()
+        """
+        # Set up mock
+        url = self.preprocess_url(base_url + '/groups/settings')
+        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = service.get_account_settings(
+            account_id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+
+
+    @responses.activate
+    def test_get_account_settings_value_error(self):
+        """
+        test_get_account_settings_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(base_url + '/groups/settings')
+        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                service.get_account_settings(**req_copy)
+
+
+
+class TestUpdateAccountSettings():
+    """
+    Test Class for update_account_settings
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_update_account_settings_all_params(self):
+        """
+        update_account_settings()
+        """
+        # Set up mock
+        url = self.preprocess_url(base_url + '/groups/settings')
+        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        account_id = 'testString'
+        public_access_enabled = True
+        transaction_id = 'testString'
+
+        # Invoke method
+        response = service.update_account_settings(
+            account_id,
+            public_access_enabled=public_access_enabled,
+            transaction_id=transaction_id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['public_access_enabled'] == True
+
+
+    @responses.activate
+    def test_update_account_settings_required_params(self):
+        """
+        test_update_account_settings_required_params()
+        """
+        # Set up mock
+        url = self.preprocess_url(base_url + '/groups/settings')
+        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        account_id = 'testString'
+        public_access_enabled = True
+
+        # Invoke method
+        response = service.update_account_settings(
+            account_id,
+            public_access_enabled=public_access_enabled,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['public_access_enabled'] == True
+
+
+    @responses.activate
+    def test_update_account_settings_value_error(self):
+        """
+        test_update_account_settings_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(base_url + '/groups/settings')
+        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        account_id = 'testString'
+        public_access_enabled = True
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                service.update_account_settings(**req_copy)
+
+
+
+# endregion
+##############################################################################
+# End of Service: AccountSettings
 ##############################################################################
 
 
