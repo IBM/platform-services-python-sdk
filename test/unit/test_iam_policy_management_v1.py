@@ -62,7 +62,7 @@ class TestListPolicies():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies')
-        mock_response = '{"policies": [{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -76,6 +76,8 @@ class TestListPolicies():
         access_group_id = 'testString'
         type = 'testString'
         service_type = 'testString'
+        sort = 'testString'
+        format = 'testString'
 
         # Invoke method
         response = service.list_policies(
@@ -85,6 +87,8 @@ class TestListPolicies():
             access_group_id=access_group_id,
             type=type,
             service_type=service_type,
+            sort=sort,
+            format=format,
             headers={}
         )
 
@@ -99,6 +103,8 @@ class TestListPolicies():
         assert 'access_group_id={}'.format(access_group_id) in query_string
         assert 'type={}'.format(type) in query_string
         assert 'service_type={}'.format(service_type) in query_string
+        assert 'sort={}'.format(sort) in query_string
+        assert 'format={}'.format(format) in query_string
 
 
     @responses.activate
@@ -108,7 +114,7 @@ class TestListPolicies():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies')
-        mock_response = '{"policies": [{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -140,7 +146,7 @@ class TestListPolicies():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies')
-        mock_response = '{"policies": [{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -182,7 +188,7 @@ class TestCreatePolicy():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies')
-        mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -217,6 +223,7 @@ class TestCreatePolicy():
         subjects = [policy_subject_model]
         roles = [policy_role_model]
         resources = [policy_resource_model]
+        description = 'testString'
         accept_language = 'testString'
 
         # Invoke method
@@ -225,6 +232,7 @@ class TestCreatePolicy():
             subjects,
             roles,
             resources,
+            description=description,
             accept_language=accept_language,
             headers={}
         )
@@ -238,6 +246,7 @@ class TestCreatePolicy():
         assert req_body['subjects'] == [policy_subject_model]
         assert req_body['roles'] == [policy_role_model]
         assert req_body['resources'] == [policy_resource_model]
+        assert req_body['description'] == 'testString'
 
 
     @responses.activate
@@ -247,7 +256,7 @@ class TestCreatePolicy():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies')
-        mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -282,6 +291,7 @@ class TestCreatePolicy():
         subjects = [policy_subject_model]
         roles = [policy_role_model]
         resources = [policy_resource_model]
+        description = 'testString'
 
         # Invoke method
         response = service.create_policy(
@@ -289,6 +299,7 @@ class TestCreatePolicy():
             subjects,
             roles,
             resources,
+            description=description,
             headers={}
         )
 
@@ -301,6 +312,7 @@ class TestCreatePolicy():
         assert req_body['subjects'] == [policy_subject_model]
         assert req_body['roles'] == [policy_role_model]
         assert req_body['resources'] == [policy_resource_model]
+        assert req_body['description'] == 'testString'
 
 
     @responses.activate
@@ -310,7 +322,7 @@ class TestCreatePolicy():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies')
-        mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -345,6 +357,7 @@ class TestCreatePolicy():
         subjects = [policy_subject_model]
         roles = [policy_role_model]
         resources = [policy_resource_model]
+        description = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -381,7 +394,7 @@ class TestUpdatePolicy():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies/testString')
-        mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -418,6 +431,7 @@ class TestUpdatePolicy():
         subjects = [policy_subject_model]
         roles = [policy_role_model]
         resources = [policy_resource_model]
+        description = 'testString'
 
         # Invoke method
         response = service.update_policy(
@@ -427,6 +441,7 @@ class TestUpdatePolicy():
             subjects,
             roles,
             resources,
+            description=description,
             headers={}
         )
 
@@ -439,6 +454,7 @@ class TestUpdatePolicy():
         assert req_body['subjects'] == [policy_subject_model]
         assert req_body['roles'] == [policy_role_model]
         assert req_body['resources'] == [policy_resource_model]
+        assert req_body['description'] == 'testString'
 
 
     @responses.activate
@@ -448,7 +464,7 @@ class TestUpdatePolicy():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies/testString')
-        mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -485,6 +501,7 @@ class TestUpdatePolicy():
         subjects = [policy_subject_model]
         roles = [policy_role_model]
         resources = [policy_resource_model]
+        description = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -523,7 +540,7 @@ class TestGetPolicy():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies/testString')
-        mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -551,7 +568,7 @@ class TestGetPolicy():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/policies/testString')
-        mock_response = '{"id": "id", "type": "type", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1174,6 +1191,7 @@ class TestPolicy():
         policy_model_json = {}
         policy_model_json['id'] = 'testString'
         policy_model_json['type'] = 'testString'
+        policy_model_json['description'] = 'testString'
         policy_model_json['subjects'] = [policy_subject_model]
         policy_model_json['roles'] = [policy_role_model]
         policy_model_json['resources'] = [policy_resource_model]
@@ -1233,6 +1251,7 @@ class TestPolicyList():
         policy_model = {} # Policy
         policy_model['id'] = 'testString'
         policy_model['type'] = 'testString'
+        policy_model['description'] = 'testString'
         policy_model['subjects'] = [policy_subject_model]
         policy_model['roles'] = [policy_role_model]
         policy_model['resources'] = [policy_resource_model]
