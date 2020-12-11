@@ -1,3 +1,20 @@
+## [0.17.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.1...v0.17.2) (2020-12-11)
+
+
+### Bug Fixes
+
+* **Case Management:** re-gen service with latest API ([6afb2c6](https://github.com/IBM/platform-services-python-sdk/commit/6afb2c6c5c6089afbfcc20edd9e2750a7bcb7f0c))
+* **Configuration Governance:** re-gen service with latest API ([3e6fc54](https://github.com/IBM/platform-services-python-sdk/commit/3e6fc542fef5fb53eb6e03f84d204c446cbfc21f))
+* **IAM Access Groups:** re-gen service with latest API ([789fe03](https://github.com/IBM/platform-services-python-sdk/commit/789fe03d2a9974cef64d61feab5656c5960608c2))
+* **IAM Identity Service:** re-gen service with latest API ([9146485](https://github.com/IBM/platform-services-python-sdk/commit/9146485616f9460a7ab307e0b77fa887bada4ded))
+* **IAM Policy Management:** re-gen service with latest API ([0954aeb](https://github.com/IBM/platform-services-python-sdk/commit/0954aeb4f244f07ae2b88e23398f83a93112da40))
+* **Open Service Broker:** re-gen service with latest API ([0c6dbaa](https://github.com/IBM/platform-services-python-sdk/commit/0c6dbaab67dbde25cc37719e0da3890f7dd940a2))
+* **Resource Controller:** re-gen service with latest API ([8ea773e](https://github.com/IBM/platform-services-python-sdk/commit/8ea773e968f285a5c8296b3a1256499f712297e4))
+* **Resource Manager:** re-gen service with latest API ([6712e08](https://github.com/IBM/platform-services-python-sdk/commit/6712e0861c5f65e8178a859f4aff77c909e1b56c))
+* **Usage Metering:** re-gen service with latest API ([6ab37f1](https://github.com/IBM/platform-services-python-sdk/commit/6ab37f135515b0252995f301ecfb258533eedd10))
+* **Usage Reports:** re-gen service with latest API ([0893c95](https://github.com/IBM/platform-services-python-sdk/commit/0893c955a48cb8b175053e6e0ad7f2c3bc04ba90))
+* **User Management:** re-gen service with latest API ([d20e76f](https://github.com/IBM/platform-services-python-sdk/commit/d20e76f1eac4e604e100b145a294640a56b59983))
+
 ## [0.17.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.0...v0.17.1) (2020-12-10)
 
 
