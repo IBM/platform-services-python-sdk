@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-af92e433-20201110-100619
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
  
 """
 The IAM Access Groups API allows for the management of Access Groups (Create, Read,
@@ -74,7 +74,7 @@ class IamAccessGroupsV2(BaseService):
 
 
     #########################
-    # accessGroupOperations
+    # Access Group Operations
     #########################
 
 
@@ -95,8 +95,7 @@ class IamAccessGroupsV2(BaseService):
         Because the group's name does not have to be unique, it is possible to create
         multiple groups with the same name.
 
-        :param str account_id: IBM Cloud account id under which the group is
-               created.
+        :param str account_id: IBM Cloud account identifier.
         :param str name: Assign the specified name to the Access Group. This field
                has a limit of 100 characters.
         :param str description: (optional) Assign a description for the Access
@@ -169,16 +168,15 @@ class IamAccessGroupsV2(BaseService):
         access (admin, editor, or viewer)). There may be more groups in the account that
         aren't shown if you lack the aforementioned permissions.
 
-        :param str account_id: IBM Cloud account id under which the groups are
-               listed.
+        :param str account_id: IBM Cloud account identifier.
         :param str transaction_id: (optional) An optional transaction id for the
                request.
         :param str iam_id: (optional) Return groups for member id (IBMid or Service
                Id).
         :param int limit: (optional) Return up to this limit of results where limit
                is between 0 and 100.
-        :param int offset: (optional) Offset the results using this query
-               parameter.
+        :param int offset: (optional) The offset of the first result item to be
+               returned.
         :param str sort: (optional) Sort the results by id, name, description, or
                is_federated flag.
         :param bool show_federated: (optional) If show_federated is true, each
@@ -240,7 +238,7 @@ class IamAccessGroupsV2(BaseService):
         information. A revision number is returned in the `Etag` header, which is needed
         when updating the Access Group.
 
-        :param str access_group_id: The Access Group to get.
+        :param str access_group_id: The Access Group identifier.
         :param str transaction_id: (optional) An optional transaction id for the
                request.
         :param bool show_federated: (optional) If show_federated is true, the group
@@ -298,7 +296,7 @@ class IamAccessGroupsV2(BaseService):
         An `If-Match` header must be populated with the group's most recent revision
         number (which can be acquired in the `Get an Access Group` API).
 
-        :param str access_group_id: The Access group to update.
+        :param str access_group_id: The Access Group identifier.
         :param str if_match: The current revision number of the group being
                updated. This can be found in the Create/Get Access Group response Etag
                header.
@@ -366,7 +364,7 @@ class IamAccessGroupsV2(BaseService):
         if rules or members do exist, set the `force` parameter to true to delete the
         group as well as its associated members, rules, and policies.
 
-        :param str access_group_id: The Access group to delete.
+        :param str access_group_id: The Access Group identifier.
         :param str transaction_id: (optional) An optional transaction id for the
                request.
         :param bool force: (optional) If force is true, delete the group as well as
@@ -406,122 +404,7 @@ class IamAccessGroupsV2(BaseService):
         return response
 
     #########################
-    # accountSettings
-    #########################
-
-
-    def get_account_settings(self,
-        account_id: str,
-        *,
-        transaction_id: str = None,
-        **kwargs
-    ) -> DetailedResponse:
-        """
-        Get Account Settings.
-
-        Retrieve the Access Groups settings for a specific account.
-
-        :param str account_id: The account id of the settings being retrieved.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `AccountSettings` object
-        """
-
-        if account_id is None:
-            raise ValueError('account_id must be provided')
-        headers = {
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='get_account_settings')
-        headers.update(sdk_headers)
-
-        params = {
-            'account_id': account_id
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-        headers['Accept'] = 'application/json'
-
-        url = '/groups/settings'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
-
-        response = self.send(request)
-        return response
-
-
-    def update_account_settings(self,
-        account_id: str,
-        *,
-        public_access_enabled: bool = None,
-        transaction_id: str = None,
-        **kwargs
-    ) -> DetailedResponse:
-        """
-        Update Account Settings.
-
-        Update the Access Groups settings for a specific account. Note: When the
-        `public_access_enabled` setting is set to false, all policies within the account
-        attached to the Public Access group will be deleted. Only set
-        `public_access_enabled` to false if you are sure that you want those policies to
-        be removed.
-
-        :param str account_id: The account id of the settings being updated.
-        :param bool public_access_enabled: (optional) This flag controls the public
-               access feature within the account. It is set to true by default. Note: When
-               this flag is set to false, all policies within the account attached to the
-               Public Access group will be deleted.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `AccountSettings` object
-        """
-
-        if account_id is None:
-            raise ValueError('account_id must be provided')
-        headers = {
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='update_account_settings')
-        headers.update(sdk_headers)
-
-        params = {
-            'account_id': account_id
-        }
-
-        data = {
-            'public_access_enabled': public_access_enabled
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-        headers['Accept'] = 'application/json'
-
-        url = '/groups/settings'
-        request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       params=params,
-                                       data=data)
-
-        response = self.send(request)
-        return response
-
-    #########################
-    # membershipOperations
+    # Membership Operations
     #########################
 
 
@@ -540,8 +423,8 @@ class IamAccessGroupsV2(BaseService):
         Content` status code is returned. If the membership or the group does not exist, a
         `404 - Not Found` status code is returned.
 
-        :param str access_group_id: The access_group_id to check for membership in.
-        :param str iam_id: The iam_id to look for within the group.
+        :param str access_group_id: The Access Group identifier.
+        :param str iam_id: The IAM identifier.
         :param str transaction_id: (optional) An optional transaction id for the
                request.
         :param dict headers: A `dict` containing the request headers
@@ -593,7 +476,7 @@ class IamAccessGroupsV2(BaseService):
         can only be added to 50 groups. Additionally, this API request payload can add up
         to 50 members per call.
 
-        :param str access_group_id: The Access Group to add the members to.
+        :param str access_group_id: The Access Group identifier.
         :param List[AddGroupMembersRequestMembersItem] members: (optional) An array
                of member objects to add to an access group.
         :param str transaction_id: (optional) An optional transaction id for the
@@ -643,8 +526,8 @@ class IamAccessGroupsV2(BaseService):
         access_group_id: str,
         *,
         transaction_id: str = None,
-        limit: float = None,
-        offset: float = None,
+        limit: int = None,
+        offset: int = None,
         type: str = None,
         verbose: bool = None,
         sort: str = None,
@@ -659,13 +542,13 @@ class IamAccessGroupsV2(BaseService):
         for each `iam_id`. If performance is a concern, leave the `verbose` parameter off
         so that name information does not get retrieved.
 
-        :param str access_group_id: The access_group_id to list members of.
+        :param str access_group_id: The Access Group identifier.
         :param str transaction_id: (optional) An optional transaction id for the
                request.
-        :param float limit: (optional) Return up to this limit of results where
-               limit is between 0 and 100.
-        :param float offset: (optional) Offset the results using this query
-               parameter.
+        :param int limit: (optional) Return up to this limit of results where limit
+               is between 0 and 100.
+        :param int offset: (optional) The offset of the first result item to be
+               returned.
         :param str type: (optional) Filter the results by member type.
         :param bool verbose: (optional) Return user's email and name for each user
                id or the name for each service id.
@@ -725,8 +608,8 @@ class IamAccessGroupsV2(BaseService):
         only a `204 - No Content` response with no body is returned. However, if any error
         occurs, the standard error format will be returned.
 
-        :param str access_group_id: The access_group_id to find the membership in.
-        :param str iam_id: The iam_id to remove from the group.
+        :param str access_group_id: The Access Group identifier.
+        :param str iam_id: The IAM identifier.
         :param str transaction_id: (optional) An optional transaction id for the
                request.
         :param dict headers: A `dict` containing the request headers
@@ -776,7 +659,7 @@ class IamAccessGroupsV2(BaseService):
         the body to determine successful deletion of each member. This API request payload
         can delete up to 50 members per call.
 
-        :param str access_group_id: The access_group_id to find the memberships in.
+        :param str access_group_id: The Access Group identifier.
         :param List[str] members: (optional) The `iam_id`s to remove from the
                access group. This field has a limit of 50 `iam_id`s.
         :param str transaction_id: (optional) An optional transaction id for the
@@ -835,9 +718,8 @@ class IamAccessGroupsV2(BaseService):
         all Access Groups in the account. If a partial failure occurs on deletion, the
         response will be shown in the body.
 
-        :param str account_id: IBM Cloud account id for the group membership
-               deletion.
-        :param str iam_id: The iam_id to remove from all groups.
+        :param str account_id: IBM Cloud account identifier.
+        :param str iam_id: The IAM identifier.
         :param str transaction_id: (optional) An optional transaction id for the
                request.
         :param dict headers: A `dict` containing the request headers
@@ -894,9 +776,8 @@ class IamAccessGroupsV2(BaseService):
         how many groups that can be in the request is 50. The response is a list of
         results that show if adding the member to each group was successful or not.
 
-        :param str account_id: IBM Cloud account id of the groups that the member
-               will be added to.
-        :param str iam_id: The iam_id to be added to the groups.
+        :param str account_id: IBM Cloud account identifier.
+        :param str iam_id: The IAM identifier.
         :param str type: (optional) The type of the member, must be either "user"
                or "service".
         :param List[str] groups: (optional) The ids of the access groups a given
@@ -950,7 +831,7 @@ class IamAccessGroupsV2(BaseService):
         return response
 
     #########################
-    # ruleOperations
+    # Rule Operations
     #########################
 
 
@@ -975,8 +856,7 @@ class IamAccessGroupsV2(BaseService):
         stringified JSON value. [Consult this documentation for further explanation of
         dynamic rules.](/docs/iam/accessgroup_rules.html#rules).
 
-        :param str access_group_id: The id of the group that the rule will be added
-               to.
+        :param str access_group_id: The Access Group identifier.
         :param int expiration: The number of hours that the rule lives for (Must be
                between 1 and 24).
         :param str realm_name: The url of the identity provider.
@@ -1046,7 +926,7 @@ class IamAccessGroupsV2(BaseService):
         This API lists all rules in a given Access Group. Because only a few rules are
         created on each group, there is no pagination or sorting support on this API.
 
-        :param str access_group_id: The group id that the rules are bound to.
+        :param str access_group_id: The Access Group identifier.
         :param str transaction_id: (optional) An optional transaction id for the
                request.
         :param dict headers: A `dict` containing the request headers
@@ -1093,7 +973,7 @@ class IamAccessGroupsV2(BaseService):
         Retrieve a rule from an Access Group. A revision number is returned in the `Etag`
         header, which is needed when updating the rule.
 
-        :param str access_group_id: The group id that the rule is bound to.
+        :param str access_group_id: The Access Group identifier.
         :param str rule_id: The rule to get.
         :param str transaction_id: (optional) An optional transaction id for the
                request.
@@ -1149,8 +1029,8 @@ class IamAccessGroupsV2(BaseService):
         populated with the rule's most recent revision number (which can be acquired in
         the `Get an Access Group rule` API).
 
-        :param str access_group_id: The group id that the rule is bound to.
-        :param str rule_id: The rule to update.
+        :param str access_group_id: The Access Group identifier.
+        :param str rule_id: The rule to get.
         :param str if_match: The current revision number of the rule being updated.
                This can be found in the Get Rule response Etag header.
         :param int expiration: The number of hours that the rule lives for (Must be
@@ -1229,8 +1109,8 @@ class IamAccessGroupsV2(BaseService):
         a `204 - No Content` response with no body is returned. However, if any error
         occurs, the standard error format will be returned.
 
-        :param str access_group_id: The group id that the rule is bound to.
-        :param str rule_id: The rule to delete.
+        :param str access_group_id: The Access Group identifier.
+        :param str rule_id: The rule to get.
         :param str transaction_id: (optional) An optional transaction id for the
                request.
         :param dict headers: A `dict` containing the request headers
@@ -1260,6 +1140,121 @@ class IamAccessGroupsV2(BaseService):
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
+
+        response = self.send(request)
+        return response
+
+    #########################
+    # Account Settings
+    #########################
+
+
+    def get_account_settings(self,
+        account_id: str,
+        *,
+        transaction_id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get Account Settings.
+
+        Retrieve the Access Groups settings for a specific account.
+
+        :param str account_id: IBM Cloud account identifier.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettings` object
+        """
+
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        headers = {
+            'Transaction-Id': transaction_id
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V2',
+                                      operation_id='get_account_settings')
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        url = '/groups/settings'
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
+
+        response = self.send(request)
+        return response
+
+
+    def update_account_settings(self,
+        account_id: str,
+        *,
+        public_access_enabled: bool = None,
+        transaction_id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Update Account Settings.
+
+        Update the Access Groups settings for a specific account. Note: When the
+        `public_access_enabled` setting is set to false, all policies within the account
+        attached to the Public Access group will be deleted. Only set
+        `public_access_enabled` to false if you are sure that you want those policies to
+        be removed.
+
+        :param str account_id: IBM Cloud account identifier.
+        :param bool public_access_enabled: (optional) This flag controls the public
+               access feature within the account. It is set to true by default. Note: When
+               this flag is set to false, all policies within the account attached to the
+               Public Access group will be deleted.
+        :param str transaction_id: (optional) An optional transaction id for the
+               request.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettings` object
+        """
+
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        headers = {
+            'Transaction-Id': transaction_id
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V2',
+                                      operation_id='update_account_settings')
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id
+        }
+
+        data = {
+            'public_access_enabled': public_access_enabled
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        url = '/groups/settings'
+        request = self.prepare_request(method='PATCH',
+                                       url=url,
+                                       headers=headers,
+                                       params=params,
+                                       data=data)
 
         response = self.send(request)
         return response
@@ -2262,7 +2257,8 @@ class GroupMembersList():
     The members of a group.
 
     :attr int limit: (optional) Limit on how many items can be returned.
-    :attr int offset: (optional) The number of items to skip over in the result set.
+    :attr int offset: (optional) The offset of the first item returned in the result
+          set.
     :attr int total_count: (optional) The total number of items that match the
           query.
     :attr HrefStruct first: (optional) A link object.
@@ -2287,7 +2283,7 @@ class GroupMembersList():
         Initialize a GroupMembersList object.
 
         :param int limit: (optional) Limit on how many items can be returned.
-        :param int offset: (optional) The number of items to skip over in the
+        :param int offset: (optional) The offset of the first item returned in the
                result set.
         :param int total_count: (optional) The total number of items that match the
                query.
@@ -2378,7 +2374,8 @@ class GroupsList():
     The list of access groups returned as part of a response.
 
     :attr int limit: (optional) Limit on how many items can be returned.
-    :attr int offset: (optional) The number of items to skip over in the result set.
+    :attr int offset: (optional) The offset of the first item returned in the result
+          set.
     :attr int total_count: (optional) The total number of items that match the
           query.
     :attr HrefStruct first: (optional) A link object.
@@ -2402,7 +2399,7 @@ class GroupsList():
         Initialize a GroupsList object.
 
         :param int limit: (optional) Limit on how many items can be returned.
-        :param int offset: (optional) The number of items to skip over in the
+        :param int offset: (optional) The offset of the first item returned in the
                result set.
         :param int total_count: (optional) The total number of items that match the
                query.
