@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
  
 """
 IAM Policy Management API
@@ -84,6 +84,8 @@ class IamPolicyManagementV1(BaseService):
         access_group_id: str = None,
         type: str = None,
         service_type: str = None,
+        sort: str = None,
+        format: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -103,6 +105,10 @@ class IamPolicyManagementV1(BaseService):
         :param str access_group_id: (optional) The access group id.
         :param str type: (optional) The type of policy (access or authorization).
         :param str service_type: (optional) The type of service.
+        :param str sort: (optional) Sort the results by any of the top level policy
+               fields (id, created_at, created_by_id, last_modified_at, etc).
+        :param str format: (optional) Include additional data per policy returned
+               [include_last_permit, display].
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `PolicyList` object
@@ -123,7 +129,9 @@ class IamPolicyManagementV1(BaseService):
             'iam_id': iam_id,
             'access_group_id': access_group_id,
             'type': type,
-            'service_type': service_type
+            'service_type': service_type,
+            'sort': sort,
+            'format': format
         }
 
         if 'headers' in kwargs:
@@ -146,6 +154,7 @@ class IamPolicyManagementV1(BaseService):
         roles: List['PolicyRole'],
         resources: List['PolicyResource'],
         *,
+        description: str = None,
         accept_language: str = None,
         **kwargs
     ) -> DetailedResponse:
@@ -187,6 +196,7 @@ class IamPolicyManagementV1(BaseService):
                granted by the policy.
         :param List[PolicyResource] resources: The resources associated with a
                policy.
+        :param str description: (optional) Customer-defined description.
         :param str accept_language: (optional) Translation language code.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -216,7 +226,8 @@ class IamPolicyManagementV1(BaseService):
             'type': type,
             'subjects': subjects,
             'roles': roles,
-            'resources': resources
+            'resources': resources,
+            'description': description
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -243,6 +254,8 @@ class IamPolicyManagementV1(BaseService):
         subjects: List['PolicySubject'],
         roles: List['PolicyRole'],
         resources: List['PolicyResource'],
+        *,
+        description: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -284,6 +297,7 @@ class IamPolicyManagementV1(BaseService):
                granted by the policy.
         :param List[PolicyResource] resources: The resources associated with a
                policy.
+        :param str description: (optional) Customer-defined description.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Policy` object
@@ -316,7 +330,8 @@ class IamPolicyManagementV1(BaseService):
             'type': type,
             'subjects': subjects,
             'roles': roles,
-            'resources': resources
+            'resources': resources,
+            'description': description
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -859,6 +874,7 @@ class Policy():
 
     :attr str id: (optional) The policy ID.
     :attr str type: (optional) The policy type; either 'access' or 'authorization'.
+    :attr str description: (optional) Customer-defined description.
     :attr List[PolicySubject] subjects: (optional) The subjects associated with a
           policy.
     :attr List[PolicyRole] roles: (optional) A set of role cloud resource names
@@ -880,6 +896,7 @@ class Policy():
                  *,
                  id: str = None,
                  type: str = None,
+                 description: str = None,
                  subjects: List['PolicySubject'] = None,
                  roles: List['PolicyRole'] = None,
                  resources: List['PolicyResource'] = None,
@@ -893,6 +910,7 @@ class Policy():
 
         :param str type: (optional) The policy type; either 'access' or
                'authorization'.
+        :param str description: (optional) Customer-defined description.
         :param List[PolicySubject] subjects: (optional) The subjects associated
                with a policy.
         :param List[PolicyRole] roles: (optional) A set of role cloud resource
@@ -902,6 +920,7 @@ class Policy():
         """
         self.id = id
         self.type = type
+        self.description = description
         self.subjects = subjects
         self.roles = roles
         self.resources = resources
@@ -919,6 +938,8 @@ class Policy():
             args['id'] = _dict.get('id')
         if 'type' in _dict:
             args['type'] = _dict.get('type')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
         if 'subjects' in _dict:
             args['subjects'] = [PolicySubject.from_dict(x) for x in _dict.get('subjects')]
         if 'roles' in _dict:
@@ -949,6 +970,8 @@ class Policy():
             _dict['id'] = getattr(self, 'id')
         if hasattr(self, 'type') and self.type is not None:
             _dict['type'] = self.type
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
         if hasattr(self, 'subjects') and self.subjects is not None:
             _dict['subjects'] = [x.to_dict() for x in self.subjects]
         if hasattr(self, 'roles') and self.roles is not None:
