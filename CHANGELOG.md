@@ -1,3 +1,10 @@
+## [0.17.4](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.3...v0.17.4) (2021-01-08)
+
+
+### Bug Fixes
+
+* **deps:** use python core v3.3.6 ([8e33c7a](https://github.com/IBM/platform-services-python-sdk/commit/8e33c7a8d2f24632b71d5d697940c8a9d4c270b0))
+
 ## [0.17.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.2...v0.17.3) (2021-01-08)
 
 
