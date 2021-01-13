@@ -1,3 +1,10 @@
+## [0.17.5](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.4...v0.17.5) (2021-01-13)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** minor code re-gen after recent API changes ([ee9c895](https://github.com/IBM/platform-services-python-sdk/commit/ee9c895e56dd03e205ee62bb9f7c30431bfd1c94))
+
 ## [0.17.4](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.3...v0.17.4) (2021-01-08)
 
 
