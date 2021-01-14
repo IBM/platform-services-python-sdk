@@ -1,3 +1,10 @@
+## [0.17.6](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.5...v0.17.6) (2021-01-14)
+
+
+### Bug Fixes
+
+* **Configuration Governance:** re-gen service after recent API changes ([87da690](https://github.com/IBM/platform-services-python-sdk/commit/87da690c6addbb0f1d0ed46a34d93b03ada52ee3))
+
 ## [0.17.5](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.4...v0.17.5) (2021-01-13)
 
 
