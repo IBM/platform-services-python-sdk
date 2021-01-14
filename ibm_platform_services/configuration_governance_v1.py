@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-c6db7f4a-20210114-141015
  
 """
 API specification for the Configuration Governance service.
@@ -78,8 +78,9 @@ class ConfigurationGovernanceV1(BaseService):
 
 
     def create_rules(self,
-        transaction_id: str,
         rules: List['CreateRuleRequest'],
+        *,
+        transaction_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -91,20 +92,19 @@ class ConfigurationGovernanceV1(BaseService):
         conditions, and enforcement actions that you specify. The response returns the ID
         value for your rule, along with other metadata.
 
-        :param str transaction_id: The unique identifier that is used to trace an
-               entire request. If you omit this field, the service generates and sends a
-               transaction ID in the
-               `trace` field of the response body.
+        :param List[CreateRuleRequest] rules: A list of rules to be created.
+        :param str transaction_id: (optional) The unique identifier that is used to
+               trace an entire request. If you omit this field, the service generates and
+               sends a transaction ID as a response header of the request. In the case of
+               an error, the transaction ID is set in the `trace` field of the response
+               body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
-        :param List[CreateRuleRequest] rules: A list of rules to be created.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `CreateRulesResponse` object
         """
 
-        if transaction_id is None:
-            raise ValueError('transaction_id must be provided')
         if rules is None:
             raise ValueError('rules must be provided')
         rules = [convert_model(x) for x in rules]
@@ -138,9 +138,9 @@ class ConfigurationGovernanceV1(BaseService):
 
 
     def list_rules(self,
-        transaction_id: str,
         account_id: str,
         *,
+        transaction_id: str = None,
         attached: bool = None,
         labels: str = None,
         scopes: str = None,
@@ -153,13 +153,14 @@ class ConfigurationGovernanceV1(BaseService):
 
         Retrieves a list of the rules that are available in your account.
 
-        :param str transaction_id: The unique identifier that is used to trace an
-               entire request. If you omit this field, the service generates and sends a
-               transaction ID in the
-               `trace` field of the response body.
+        :param str account_id: Your IBM Cloud account ID.
+        :param str transaction_id: (optional) The unique identifier that is used to
+               trace an entire request. If you omit this field, the service generates and
+               sends a transaction ID as a response header of the request. In the case of
+               an error, the transaction ID is set in the `trace` field of the response
+               body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
-        :param str account_id: Your IBM Cloud account ID.
         :param bool attached: (optional) Retrieves a list of rules that have scope
                attachments.
         :param str labels: (optional) Retrieves a list of rules that match the
@@ -183,8 +184,6 @@ class ConfigurationGovernanceV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `RuleList` object
         """
 
-        if transaction_id is None:
-            raise ValueError('transaction_id must be provided')
         if account_id is None:
             raise ValueError('account_id must be provided')
         headers = {
@@ -220,7 +219,8 @@ class ConfigurationGovernanceV1(BaseService):
 
     def get_rule(self,
         rule_id: str,
-        transaction_id: str,
+        *,
+        transaction_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -229,10 +229,11 @@ class ConfigurationGovernanceV1(BaseService):
         Retrieves an existing rule and its details.
 
         :param str rule_id: The UUID that uniquely identifies the rule.
-        :param str transaction_id: The unique identifier that is used to trace an
-               entire request. If you omit this field, the service generates and sends a
-               transaction ID in the
-               `trace` field of the response body.
+        :param str transaction_id: (optional) The unique identifier that is used to
+               trace an entire request. If you omit this field, the service generates and
+               sends a transaction ID as a response header of the request. In the case of
+               an error, the transaction ID is set in the `trace` field of the response
+               body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
@@ -242,8 +243,6 @@ class ConfigurationGovernanceV1(BaseService):
 
         if rule_id is None:
             raise ValueError('rule_id must be provided')
-        if transaction_id is None:
-            raise ValueError('transaction_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
         }
@@ -270,7 +269,6 @@ class ConfigurationGovernanceV1(BaseService):
 
     def update_rule(self,
         rule_id: str,
-        transaction_id: str,
         if_match: str,
         name: str,
         description: str,
@@ -281,6 +279,7 @@ class ConfigurationGovernanceV1(BaseService):
         account_id: str = None,
         rule_type: str = None,
         labels: List[str] = None,
+        transaction_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -289,12 +288,6 @@ class ConfigurationGovernanceV1(BaseService):
         Updates an existing rule based on the properties that you specify.
 
         :param str rule_id: The UUID that uniquely identifies the rule.
-        :param str transaction_id: The unique identifier that is used to trace an
-               entire request. If you omit this field, the service generates and sends a
-               transaction ID in the
-               `trace` field of the response body.
-               **Note:** To help with debugging logs, it is strongly recommended that you
-               generate and supply a `Transaction-Id` with each request.
         :param str if_match: Compares a supplied `Etag` value with the version that
                is stored for the requested resource. If the values match, the server
                allows the request method to continue.
@@ -315,6 +308,13 @@ class ConfigurationGovernanceV1(BaseService):
         :param List[str] labels: (optional) Labels that you can use to group and
                search for similar rules, such as those that help you to meet a specific
                organization guideline.
+        :param str transaction_id: (optional) The unique identifier that is used to
+               trace an entire request. If you omit this field, the service generates and
+               sends a transaction ID as a response header of the request. In the case of
+               an error, the transaction ID is set in the `trace` field of the response
+               body.
+               **Note:** To help with debugging logs, it is strongly recommended that you
+               generate and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Rule` object
@@ -322,8 +322,6 @@ class ConfigurationGovernanceV1(BaseService):
 
         if rule_id is None:
             raise ValueError('rule_id must be provided')
-        if transaction_id is None:
-            raise ValueError('transaction_id must be provided')
         if if_match is None:
             raise ValueError('if_match must be provided')
         if name is None:
@@ -340,8 +338,8 @@ class ConfigurationGovernanceV1(BaseService):
         required_config = convert_model(required_config)
         enforcement_actions = [convert_model(x) for x in enforcement_actions]
         headers = {
-            'Transaction-Id': transaction_id,
-            'If-Match': if_match
+            'If-Match': if_match,
+            'Transaction-Id': transaction_id
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
@@ -381,7 +379,8 @@ class ConfigurationGovernanceV1(BaseService):
 
     def delete_rule(self,
         rule_id: str,
-        transaction_id: str,
+        *,
+        transaction_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -390,10 +389,11 @@ class ConfigurationGovernanceV1(BaseService):
         Deletes an existing rule.
 
         :param str rule_id: The UUID that uniquely identifies the rule.
-        :param str transaction_id: The unique identifier that is used to trace an
-               entire request. If you omit this field, the service generates and sends a
-               transaction ID in the
-               `trace` field of the response body.
+        :param str transaction_id: (optional) The unique identifier that is used to
+               trace an entire request. If you omit this field, the service generates and
+               sends a transaction ID as a response header of the request. In the case of
+               an error, the transaction ID is set in the `trace` field of the response
+               body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
@@ -403,8 +403,6 @@ class ConfigurationGovernanceV1(BaseService):
 
         if rule_id is None:
             raise ValueError('rule_id must be provided')
-        if transaction_id is None:
-            raise ValueError('transaction_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
         }
@@ -430,8 +428,9 @@ class ConfigurationGovernanceV1(BaseService):
 
     def create_attachments(self,
         rule_id: str,
-        transaction_id: str,
         attachments: List['AttachmentRequest'],
+        *,
+        transaction_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -444,13 +443,14 @@ class ConfigurationGovernanceV1(BaseService):
         attachment, along with other metadata.
 
         :param str rule_id: The UUID that uniquely identifies the rule.
-        :param str transaction_id: The unique identifier that is used to trace an
-               entire request. If you omit this field, the service generates and sends a
-               transaction ID in the
-               `trace` field of the response body.
+        :param List[AttachmentRequest] attachments:
+        :param str transaction_id: (optional) The unique identifier that is used to
+               trace an entire request. If you omit this field, the service generates and
+               sends a transaction ID as a response header of the request. In the case of
+               an error, the transaction ID is set in the `trace` field of the response
+               body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
-        :param List[AttachmentRequest] attachments:
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `CreateAttachmentsResponse` object
@@ -458,8 +458,6 @@ class ConfigurationGovernanceV1(BaseService):
 
         if rule_id is None:
             raise ValueError('rule_id must be provided')
-        if transaction_id is None:
-            raise ValueError('transaction_id must be provided')
         if attachments is None:
             raise ValueError('attachments must be provided')
         attachments = [convert_model(x) for x in attachments]
@@ -497,8 +495,8 @@ class ConfigurationGovernanceV1(BaseService):
 
     def list_attachments(self,
         rule_id: str,
-        transaction_id: str,
         *,
+        transaction_id: str = None,
         limit: int = None,
         offset: int = None,
         **kwargs
@@ -509,10 +507,11 @@ class ConfigurationGovernanceV1(BaseService):
         Retrieves a list of scope attachments that are associated with the specified rule.
 
         :param str rule_id: The UUID that uniquely identifies the rule.
-        :param str transaction_id: The unique identifier that is used to trace an
-               entire request. If you omit this field, the service generates and sends a
-               transaction ID in the
-               `trace` field of the response body.
+        :param str transaction_id: (optional) The unique identifier that is used to
+               trace an entire request. If you omit this field, the service generates and
+               sends a transaction ID as a response header of the request. In the case of
+               an error, the transaction ID is set in the `trace` field of the response
+               body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
         :param int limit: (optional) The number of resources to retrieve. By
@@ -534,8 +533,6 @@ class ConfigurationGovernanceV1(BaseService):
 
         if rule_id is None:
             raise ValueError('rule_id must be provided')
-        if transaction_id is None:
-            raise ValueError('transaction_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
         }
@@ -569,7 +566,8 @@ class ConfigurationGovernanceV1(BaseService):
     def get_attachment(self,
         rule_id: str,
         attachment_id: str,
-        transaction_id: str,
+        *,
+        transaction_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -579,10 +577,11 @@ class ConfigurationGovernanceV1(BaseService):
 
         :param str rule_id: The UUID that uniquely identifies the rule.
         :param str attachment_id: The UUID that uniquely identifies the attachment.
-        :param str transaction_id: The unique identifier that is used to trace an
-               entire request. If you omit this field, the service generates and sends a
-               transaction ID in the
-               `trace` field of the response body.
+        :param str transaction_id: (optional) The unique identifier that is used to
+               trace an entire request. If you omit this field, the service generates and
+               sends a transaction ID as a response header of the request. In the case of
+               an error, the transaction ID is set in the `trace` field of the response
+               body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
@@ -594,8 +593,6 @@ class ConfigurationGovernanceV1(BaseService):
             raise ValueError('rule_id must be provided')
         if attachment_id is None:
             raise ValueError('attachment_id must be provided')
-        if transaction_id is None:
-            raise ValueError('transaction_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
         }
@@ -623,12 +620,12 @@ class ConfigurationGovernanceV1(BaseService):
     def update_attachment(self,
         rule_id: str,
         attachment_id: str,
-        transaction_id: str,
         if_match: str,
         account_id: str,
         included_scope: 'RuleScope',
         *,
         excluded_scopes: List['RuleScope'] = None,
+        transaction_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -638,12 +635,6 @@ class ConfigurationGovernanceV1(BaseService):
 
         :param str rule_id: The UUID that uniquely identifies the rule.
         :param str attachment_id: The UUID that uniquely identifies the attachment.
-        :param str transaction_id: The unique identifier that is used to trace an
-               entire request. If you omit this field, the service generates and sends a
-               transaction ID in the
-               `trace` field of the response body.
-               **Note:** To help with debugging logs, it is strongly recommended that you
-               generate and supply a `Transaction-Id` with each request.
         :param str if_match: Compares a supplied `Etag` value with the version that
                is stored for the requested resource. If the values match, the server
                allows the request method to continue.
@@ -654,6 +645,13 @@ class ConfigurationGovernanceV1(BaseService):
                attached across your accounts.
         :param List[RuleScope] excluded_scopes: (optional) The extent at which the
                rule can be excluded from the included scope.
+        :param str transaction_id: (optional) The unique identifier that is used to
+               trace an entire request. If you omit this field, the service generates and
+               sends a transaction ID as a response header of the request. In the case of
+               an error, the transaction ID is set in the `trace` field of the response
+               body.
+               **Note:** To help with debugging logs, it is strongly recommended that you
+               generate and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Attachment` object
@@ -663,8 +661,6 @@ class ConfigurationGovernanceV1(BaseService):
             raise ValueError('rule_id must be provided')
         if attachment_id is None:
             raise ValueError('attachment_id must be provided')
-        if transaction_id is None:
-            raise ValueError('transaction_id must be provided')
         if if_match is None:
             raise ValueError('if_match must be provided')
         if account_id is None:
@@ -675,8 +671,8 @@ class ConfigurationGovernanceV1(BaseService):
         if excluded_scopes is not None:
             excluded_scopes = [convert_model(x) for x in excluded_scopes]
         headers = {
-            'Transaction-Id': transaction_id,
-            'If-Match': if_match
+            'If-Match': if_match,
+            'Transaction-Id': transaction_id
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
@@ -712,7 +708,8 @@ class ConfigurationGovernanceV1(BaseService):
     def delete_attachment(self,
         rule_id: str,
         attachment_id: str,
-        transaction_id: str,
+        *,
+        transaction_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -722,10 +719,11 @@ class ConfigurationGovernanceV1(BaseService):
 
         :param str rule_id: The UUID that uniquely identifies the rule.
         :param str attachment_id: The UUID that uniquely identifies the attachment.
-        :param str transaction_id: The unique identifier that is used to trace an
-               entire request. If you omit this field, the service generates and sends a
-               transaction ID in the
-               `trace` field of the response body.
+        :param str transaction_id: (optional) The unique identifier that is used to
+               trace an entire request. If you omit this field, the service generates and
+               sends a transaction ID as a response header of the request. In the case of
+               an error, the transaction ID is set in the `trace` field of the response
+               body.
                **Note:** To help with debugging logs, it is strongly recommended that you
                generate and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
@@ -737,8 +735,6 @@ class ConfigurationGovernanceV1(BaseService):
             raise ValueError('rule_id must be provided')
         if attachment_id is None:
             raise ValueError('attachment_id must be provided')
-        if transaction_id is None:
-            raise ValueError('transaction_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
         }
