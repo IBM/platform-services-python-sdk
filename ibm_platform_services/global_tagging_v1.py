@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,16 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-a8493a65-20210115-083246
  
 """
 Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete a tag
 or list all tags in your billing account with the Tagging API. The tag name must be unique
 within a billing account. You can create tags in two formats: `key:value` or `label`. The
-tagging API supports two types of tag: `user` and `service`. `service` tags cannot be
-attached to IMS resources (see `providers=ims` query parameter). `service` tags must be in
-the form `service_prefix:tag_label` where `service_prefix` identifies the Service owning
-the tag.
+tagging API supports three types of tag: `user` `service`, and `access` tags. `service`
+tags cannot be attached to IMS resources. `service` tags must be in the form
+`service_prefix:tag_label` where `service_prefix` identifies the Service owning the tag.
+`access` tags cannot be attached to IMS and Cloud Foundry resources. They must be in the
+form `key:value`.
 """
 
 from enum import Enum
@@ -84,6 +85,7 @@ class GlobalTaggingV1(BaseService):
 
     def list_tags(self,
         *,
+        impersonate_user: str = None,
         account_id: str = None,
         tag_type: str = None,
         full_data: bool = None,
@@ -102,19 +104,21 @@ class GlobalTaggingV1(BaseService):
         Lists all tags in a billing account. Use the `attached_to` parameter to return the
         list of tags attached to the specified resource.
 
+        :param str impersonate_user: (optional) The user on whose behalf the get
+               operation must be performed (_for administrators only_).
         :param str account_id: (optional) The ID of the billing account to list the
                tags for. If it is not set, then it is taken from the authorization token.
                This parameter is required if `tag_type` is set to `service`.
         :param str tag_type: (optional) The type of the tag you want to list.
-               Supported values are `user` and `service`.
+               Supported values are `user`, `service` and `access`.
         :param bool full_data: (optional) If set to `true`, this query returns the
                provider, `ghost`, `ims` or `ghost,ims`, where the tag exists and the
                number of attached resources.
         :param List[str] providers: (optional) Select a provider. Supported values
                are `ghost` and `ims`. To list GhoST tags and infrastructure tags use
-               `ghost,ims`. `service` tags can only be attached to GhoST onboarded
-               resources, so you don't need to set this parameter when listing `service`
-               tags.
+               `ghost,ims`. `service` and `access` tags can only be attached to GhoST
+               onboarded resources, so you should not set this parameter when listing
+               them.
         :param str attached_to: (optional) If you want to return only the list of
                tags attached to a specified resource, pass the ID of the resource on this
                parameter. For GhoST onboarded resources, the resource ID is the CRN; for
@@ -142,6 +146,7 @@ class GlobalTaggingV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
+            'impersonate_user': impersonate_user,
             'account_id': account_id,
             'tag_type': tag_type,
             'full_data': full_data,
@@ -168,9 +173,76 @@ class GlobalTaggingV1(BaseService):
         return response
 
 
+    def create_tag(self,
+        tag_names: List[str],
+        *,
+        impersonate_user: str = None,
+        account_id: str = None,
+        tag_type: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Create an access tag.
+
+        Create an access tag. To create an `access` tag, you must have the access listed
+        in the [Granting users access to tag
+        resources](https://cloud.ibm.com/docs/account?topic=account-access) documentation.
+        `service` and `user` tags cannot be created upfront. They are created when they
+        are attached for the first time to a resource.
+
+        :param List[str] tag_names: An array of tag names to create.
+        :param str impersonate_user: (optional) The user on whose behalf the create
+               operation must be performed (_for administrators only_).
+        :param str account_id: (optional) The ID of the billing account where the
+               tag must be created. It is a required parameter if `impersonate_user` is
+               set.
+        :param str tag_type: (optional) The type of the tags you want to create.
+               The only allowed value is `access`.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `CreateTagResults` object
+        """
+
+        if tag_names is None:
+            raise ValueError('tag_names must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='create_tag')
+        headers.update(sdk_headers)
+
+        params = {
+            'impersonate_user': impersonate_user,
+            'account_id': account_id,
+            'tag_type': tag_type
+        }
+
+        data = {
+            'tag_names': tag_names
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        url = '/v3/tags'
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       params=params,
+                                       data=data)
+
+        response = self.send(request)
+        return response
+
+
     def delete_tag_all(self,
         *,
         providers: str = None,
+        impersonate_user: str = None,
         account_id: str = None,
         tag_type: str = None,
         **kwargs
@@ -182,12 +254,14 @@ class GlobalTaggingV1(BaseService):
 
         :param str providers: (optional) Select a provider. Supported values are
                `ghost` and `ims`.
+        :param str impersonate_user: (optional) The user on whose behalf the delete
+               all operation must be performed (_for administrators only_).
         :param str account_id: (optional) The ID of the billing account to delete
                the tags for. If it is not set, then it is taken from the authorization
                token. It is a required parameter if `tag_type` is set to `service`.
         :param str tag_type: (optional) The type of the tag. Supported values are
-               `user` and `service`. `service` is not supported if the `providers`
-               parameter is set to `ims`.
+               `user`, `service` and `access`. `service` and `access` are not supported
+               for IMS resources (`providers` parameter set to `ims`).
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `DeleteTagsResult` object
@@ -201,6 +275,7 @@ class GlobalTaggingV1(BaseService):
 
         params = {
             'providers': providers,
+            'impersonate_user': impersonate_user,
             'account_id': account_id,
             'tag_type': tag_type
         }
@@ -223,6 +298,7 @@ class GlobalTaggingV1(BaseService):
         tag_name: str,
         *,
         providers: List[str] = None,
+        impersonate_user: str = None,
         account_id: str = None,
         tag_type: str = None,
         **kwargs
@@ -236,11 +312,14 @@ class GlobalTaggingV1(BaseService):
         :param str tag_name: The name of tag to be deleted.
         :param List[str] providers: (optional) Select a provider. Supported values
                are `ghost` and `ims`. To delete tag both in GhoST in IMS, use `ghost,ims`.
+        :param str impersonate_user: (optional) The user on whose behalf the delete
+               operation must be performed (_for administrators only_).
         :param str account_id: (optional) The ID of the billing account to delete
                the tag for. It is a required parameter if `tag_type` is set to `service`,
                otherwise it is inferred from the authorization IAM token.
         :param str tag_type: (optional) The type of the tag. Supported values are
-               `user` and `service`. `service` is not supported for `providers=ims`.
+               `user`, `service` and `access`. `service` and `access` are not supported
+               for IMS resources (`providers` parameter set to `ims`).
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `DeleteTagResults` object
@@ -256,6 +335,7 @@ class GlobalTaggingV1(BaseService):
 
         params = {
             'providers': convert_list(providers),
+            'impersonate_user': impersonate_user,
             'account_id': account_id,
             'tag_type': tag_type
         }
@@ -282,6 +362,7 @@ class GlobalTaggingV1(BaseService):
         *,
         tag_name: str = None,
         tag_names: List[str] = None,
+        impersonate_user: str = None,
         account_id: str = None,
         tag_type: str = None,
         **kwargs
@@ -295,19 +376,22 @@ class GlobalTaggingV1(BaseService):
         To attach a `service` tag, you must be an authorized service. If that is the case,
         then you can attach a `service` tag with your registered `prefix` to any resource
         in any account. The account ID must be set through the `account_id` query
-        parameter.
+        parameter. To attach an `access` tag, you must be the resource administrator
+        within the account. You can attach only `access` tags already existing.
 
         :param List[Resource] resources: List of resources on which the tag or tags
                should be attached.
         :param str tag_name: (optional) The name of the tag to attach.
         :param List[str] tag_names: (optional) An array of tag names to attach.
+        :param str impersonate_user: (optional) The user on whose behalf the attach
+               operation must be performed (_for administrators only_).
         :param str account_id: (optional) The ID of the billing account where the
                resources to be tagged lives. It is a required parameter if `tag_type` is
                set to `service`. Otherwise, it is inferred from the authorization IAM
                token.
         :param str tag_type: (optional) The type of the tag. Supported values are
-               `user` and `service`. `service` is not supported if `providers` is set to
-               `ims`.
+               `user`, `service` and `access`. `service` and `access` are not supported
+               for IMS resources.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TagResults` object
@@ -323,6 +407,7 @@ class GlobalTaggingV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
+            'impersonate_user': impersonate_user,
             'account_id': account_id,
             'tag_type': tag_type
         }
@@ -356,6 +441,7 @@ class GlobalTaggingV1(BaseService):
         *,
         tag_name: str = None,
         tag_names: List[str] = None,
+        impersonate_user: str = None,
         account_id: str = None,
         tag_type: str = None,
         **kwargs
@@ -369,18 +455,22 @@ class GlobalTaggingV1(BaseService):
         To detach a `service` tag you must be an authorized Service. If that is the case,
         then you can detach a `service` tag with your registered `prefix` from any
         resource in any account. The account ID must be set through the `account_id` query
-        parameter.
+        parameter. To detach an `access` tag, you must be the resource administrator
+        within the account.
 
         :param List[Resource] resources: List of resources on which the tag or tags
                should be detached.
         :param str tag_name: (optional) The name of the tag to detach.
         :param List[str] tag_names: (optional) An array of tag names to detach.
+        :param str impersonate_user: (optional) The user on whose behalf the detach
+               operation must be performed (_for administrators only_).
         :param str account_id: (optional) The ID of the billing account where the
                resources to be un-tagged lives. It is a required parameter if `tag_type`
                is set to `service`, otherwise it is inferred from the authorization IAM
                token.
         :param str tag_type: (optional) The type of the tag. Supported values are
-               `user` and `service`. `service` is not supported for `providers=ims`.
+               `user`, `service` and `access`. `service` and `access` are not supported
+               for IMS resources.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TagResults` object
@@ -396,6 +486,7 @@ class GlobalTaggingV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
+            'impersonate_user': impersonate_user,
             'account_id': account_id,
             'tag_type': tag_type
         }
@@ -431,16 +522,18 @@ class ListTagsEnums:
 
     class TagType(str, Enum):
         """
-        The type of the tag you want to list. Supported values are `user` and `service`.
+        The type of the tag you want to list. Supported values are `user`, `service` and
+        `access`.
         """
         USER = 'user'
         SERVICE = 'service'
+        ACCESS = 'access'
     class Providers(str, Enum):
         """
         Select a provider. Supported values are `ghost` and `ims`. To list GhoST tags and
-        infrastructure tags use `ghost,ims`. `service` tags can only be attached to GhoST
-        onboarded resources, so you don't need to set this parameter when listing
-        `service` tags.
+        infrastructure tags use `ghost,ims`. `service` and `access` tags can only be
+        attached to GhoST onboarded resources, so you should not set this parameter when
+        listing them.
         """
         GHOST = 'ghost'
         IMS = 'ims'
@@ -450,6 +543,18 @@ class ListTagsEnums:
         """
         ASC = 'asc'
         DESC = 'desc'
+
+
+class CreateTagEnums:
+    """
+    Enums for create_tag parameters.
+    """
+
+    class TagType(str, Enum):
+        """
+        The type of the tags you want to create. The only allowed value is `access`.
+        """
+        ACCESS = 'access'
 
 
 class DeleteTagAllEnums:
@@ -465,11 +570,13 @@ class DeleteTagAllEnums:
         IMS = 'ims'
     class TagType(str, Enum):
         """
-        The type of the tag. Supported values are `user` and `service`. `service` is not
-        supported if the `providers` parameter is set to `ims`.
+        The type of the tag. Supported values are `user`, `service` and `access`.
+        `service` and `access` are not supported for IMS resources (`providers` parameter
+        set to `ims`).
         """
         USER = 'user'
         SERVICE = 'service'
+        ACCESS = 'access'
 
 
 class DeleteTagEnums:
@@ -486,11 +593,13 @@ class DeleteTagEnums:
         IMS = 'ims'
     class TagType(str, Enum):
         """
-        The type of the tag. Supported values are `user` and `service`. `service` is not
-        supported for `providers=ims`.
+        The type of the tag. Supported values are `user`, `service` and `access`.
+        `service` and `access` are not supported for IMS resources (`providers` parameter
+        set to `ims`).
         """
         USER = 'user'
         SERVICE = 'service'
+        ACCESS = 'access'
 
 
 class AttachTagEnums:
@@ -500,11 +609,12 @@ class AttachTagEnums:
 
     class TagType(str, Enum):
         """
-        The type of the tag. Supported values are `user` and `service`. `service` is not
-        supported if `providers` is set to `ims`.
+        The type of the tag. Supported values are `user`, `service` and `access`.
+        `service` and `access` are not supported for IMS resources.
         """
         USER = 'user'
         SERVICE = 'service'
+        ACCESS = 'access'
 
 
 class DetachTagEnums:
@@ -514,17 +624,138 @@ class DetachTagEnums:
 
     class TagType(str, Enum):
         """
-        The type of the tag. Supported values are `user` and `service`. `service` is not
-        supported for `providers=ims`.
+        The type of the tag. Supported values are `user`, `service` and `access`.
+        `service` and `access` are not supported for IMS resources.
         """
         USER = 'user'
         SERVICE = 'service'
+        ACCESS = 'access'
 
 
 ##############################################################################
 # Models
 ##############################################################################
 
+
+class CreateTagResults():
+    """
+    Results of a create tag(s) request.
+
+    :attr List[CreateTagResultsResultsItem] results: (optional) Array of results of
+          an set_tags request.
+    """
+
+    def __init__(self,
+                 *,
+                 results: List['CreateTagResultsResultsItem'] = None) -> None:
+        """
+        Initialize a CreateTagResults object.
+
+        :param List[CreateTagResultsResultsItem] results: (optional) Array of
+               results of an set_tags request.
+        """
+        self.results = results
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateTagResults':
+        """Initialize a CreateTagResults object from a json dictionary."""
+        args = {}
+        if 'results' in _dict:
+            args['results'] = [CreateTagResultsResultsItem.from_dict(x) for x in _dict.get('results')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateTagResults object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'results') and self.results is not None:
+            _dict['results'] = [x.to_dict() for x in self.results]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateTagResults object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateTagResults') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateTagResults') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class CreateTagResultsResultsItem():
+    """
+    CreateTagResultsResultsItem.
+
+    :attr str tag_name: (optional) The name of the tag created.
+    :attr bool is_error: (optional) true if the tag was not created.
+    """
+
+    def __init__(self,
+                 *,
+                 tag_name: str = None,
+                 is_error: bool = None) -> None:
+        """
+        Initialize a CreateTagResultsResultsItem object.
+
+        :param str tag_name: (optional) The name of the tag created.
+        :param bool is_error: (optional) true if the tag was not created.
+        """
+        self.tag_name = tag_name
+        self.is_error = is_error
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateTagResultsResultsItem':
+        """Initialize a CreateTagResultsResultsItem object from a json dictionary."""
+        args = {}
+        if 'tag_name' in _dict:
+            args['tag_name'] = _dict.get('tag_name')
+        if 'is_error' in _dict:
+            args['is_error'] = _dict.get('is_error')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateTagResultsResultsItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'tag_name') and self.tag_name is not None:
+            _dict['tag_name'] = self.tag_name
+        if hasattr(self, 'is_error') and self.is_error is not None:
+            _dict['is_error'] = self.is_error
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateTagResultsResultsItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateTagResultsResultsItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateTagResultsResultsItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 class DeleteTagResults():
     """
