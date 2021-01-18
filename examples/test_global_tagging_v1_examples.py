@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """
 Examples for GlobalTaggingV1
 """
@@ -48,7 +47,6 @@ class TestGlobalTaggingV1Examples():
     """
     Example Test Class for GlobalTaggingV1
     """
-
     @classmethod
     def setup_class(cls):
         global global_tagging_service
@@ -73,8 +71,27 @@ class TestGlobalTaggingV1Examples():
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
-        not os.path.exists(config_file), reason="External configuration not available, skipping..."
-    )
+        not os.path.exists(config_file),
+        reason="External configuration not available, skipping...")
+
+    @needscredentials
+    def test_create_tag_example(self):
+        """
+        create_tag request example
+        """
+        try:
+            # begin-create_tag
+
+            create_tag_results = global_tagging_service.create_tag(
+                tag_names=['env:example-access-tag'],
+                tag_type='access').get_result()
+
+            print(json.dumps(create_tag_results, indent=2))
+
+            # end-create_tag
+
+        except ApiException as e:
+            pytest.fail(str(e))
 
     @needscredentials
     def test_list_tags_example(self):
@@ -85,7 +102,11 @@ class TestGlobalTaggingV1Examples():
             # begin-list_tags
 
             tag_list = global_tagging_service.list_tags(
-                attached_only=True).get_result()
+                tag_type='user',
+                attached_only=True,
+                full_data=True,
+                providers=['ghost'],
+                order_by_name='asc').get_result()
 
             print(json.dumps(tag_list, indent=2))
 
@@ -102,14 +123,12 @@ class TestGlobalTaggingV1Examples():
         try:
             # begin-attach_tag
 
-            resource_model = {
-                'resource_id': resource_crn
-            }
+            resource_model = {'resource_id': resource_crn}
 
             tag_results = global_tagging_service.attach_tag(
                 resources=[resource_model],
-                tag_names=['tag_test_1', 'tag_test_2']
-            ).get_result()
+                tag_names=['tag_test_1', 'tag_test_2'],
+                tag_type='user').get_result()
 
             print(json.dumps(tag_results, indent=2))
 
@@ -126,14 +145,12 @@ class TestGlobalTaggingV1Examples():
         try:
             # begin-detach_tag
 
-            resource_model = {
-                'resource_id': resource_crn
-            }
+            resource_model = {'resource_id': resource_crn}
 
             tag_results = global_tagging_service.detach_tag(
                 resources=[resource_model],
-                tag_names=['tag_test_1', 'tag_test_2']
-            ).get_result()
+                tag_names=['tag_test_1', 'tag_test_2'],
+                tag_type='user').get_result()
 
             print(json.dumps(tag_results, indent=2))
 
@@ -142,7 +159,7 @@ class TestGlobalTaggingV1Examples():
         except ApiException as e:
             pytest.fail(str(e))
 
-    @ needscredentials
+    @needscredentials
     def test_delete_tag_example(self):
         """
         delete_tag request example
@@ -151,8 +168,8 @@ class TestGlobalTaggingV1Examples():
             # begin-delete_tag
 
             delete_tag_results = global_tagging_service.delete_tag(
-                tag_name='tag_test_1'
-            ).get_result()
+                tag_name='env:example-access-tag',
+                tag_type='access').get_result()
 
             print(json.dumps(delete_tag_results, indent=2))
 
@@ -161,7 +178,7 @@ class TestGlobalTaggingV1Examples():
         except ApiException as e:
             pytest.fail(str(e))
 
-    @ needscredentials
+    @needscredentials
     def test_delete_tag_all_example(self):
         """
         delete_tag_all request example
@@ -169,7 +186,8 @@ class TestGlobalTaggingV1Examples():
         try:
             # begin-delete_tag_all
 
-            delete_tags_result = global_tagging_service.delete_tag_all().get_result()
+            delete_tags_result = global_tagging_service.delete_tag_all(
+                tag_type='user').get_result()
 
             print(json.dumps(delete_tags_result, indent=2))
 
@@ -177,6 +195,7 @@ class TestGlobalTaggingV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
+
 
 # endregion
 ##############################################################################

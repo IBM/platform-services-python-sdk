@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -69,6 +69,7 @@ class TestListTags():
                       status=200)
 
         # Set up parameter values
+        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
         full_data = True
@@ -82,6 +83,7 @@ class TestListTags():
 
         # Invoke method
         response = service.list_tags(
+            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             full_data=full_data,
@@ -101,6 +103,7 @@ class TestListTags():
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
+        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
         assert 'full_data={}'.format('true' if full_data else 'false') in query_string
@@ -136,6 +139,122 @@ class TestListTags():
         assert response.status_code == 200
 
 
+class TestCreateTag():
+    """
+    Test Class for create_tag
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_create_tag_all_params(self):
+        """
+        create_tag()
+        """
+        # Set up mock
+        url = self.preprocess_url(base_url + '/v3/tags')
+        mock_response = '{"results": [{"tag_name": "tag_name", "is_error": true}]}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        tag_names = ['testString']
+        impersonate_user = 'testString'
+        account_id = 'testString'
+        tag_type = 'access'
+
+        # Invoke method
+        response = service.create_tag(
+            tag_names,
+            impersonate_user=impersonate_user,
+            account_id=account_id,
+            tag_type=tag_type,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'impersonate_user={}'.format(impersonate_user) in query_string
+        assert 'account_id={}'.format(account_id) in query_string
+        assert 'tag_type={}'.format(tag_type) in query_string
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['tag_names'] == ['testString']
+
+
+    @responses.activate
+    def test_create_tag_required_params(self):
+        """
+        test_create_tag_required_params()
+        """
+        # Set up mock
+        url = self.preprocess_url(base_url + '/v3/tags')
+        mock_response = '{"results": [{"tag_name": "tag_name", "is_error": true}]}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        tag_names = ['testString']
+
+        # Invoke method
+        response = service.create_tag(
+            tag_names,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['tag_names'] == ['testString']
+
+
+    @responses.activate
+    def test_create_tag_value_error(self):
+        """
+        test_create_tag_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(base_url + '/v3/tags')
+        mock_response = '{"results": [{"tag_name": "tag_name", "is_error": true}]}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        tag_names = ['testString']
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "tag_names": tag_names,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                service.create_tag(**req_copy)
+
+
+
 class TestDeleteTagAll():
     """
     Test Class for delete_tag_all
@@ -166,12 +285,14 @@ class TestDeleteTagAll():
 
         # Set up parameter values
         providers = 'ghost'
+        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
 
         # Invoke method
         response = service.delete_tag_all(
             providers=providers,
+            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             headers={}
@@ -184,6 +305,7 @@ class TestDeleteTagAll():
         query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'providers={}'.format(providers) in query_string
+        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
 
@@ -242,6 +364,7 @@ class TestDeleteTag():
         # Set up parameter values
         tag_name = 'testString'
         providers = ['ghost']
+        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
 
@@ -249,6 +372,7 @@ class TestDeleteTag():
         response = service.delete_tag(
             tag_name,
             providers=providers,
+            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             headers={}
@@ -261,6 +385,7 @@ class TestDeleteTag():
         query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'providers={}'.format(','.join(providers)) in query_string
+        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
 
@@ -358,6 +483,7 @@ class TestAttachTag():
         resources = [resource_model]
         tag_name = 'testString'
         tag_names = ['testString']
+        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
 
@@ -366,6 +492,7 @@ class TestAttachTag():
             resources,
             tag_name=tag_name,
             tag_names=tag_names,
+            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             headers={}
@@ -377,6 +504,7 @@ class TestAttachTag():
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
+        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
         # Validate body params
@@ -500,6 +628,7 @@ class TestDetachTag():
         resources = [resource_model]
         tag_name = 'testString'
         tag_names = ['testString']
+        impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
 
@@ -508,6 +637,7 @@ class TestDetachTag():
             resources,
             tag_name=tag_name,
             tag_names=tag_names,
+            impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
             headers={}
@@ -519,6 +649,7 @@ class TestDetachTag():
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
+        assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
         # Validate body params
@@ -615,6 +746,71 @@ class TestDetachTag():
 # Start of Model Tests
 ##############################################################################
 # region
+class TestCreateTagResults():
+    """
+    Test Class for CreateTagResults
+    """
+
+    def test_create_tag_results_serialization(self):
+        """
+        Test serialization/deserialization for CreateTagResults
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        create_tag_results_results_item_model = {} # CreateTagResultsResultsItem
+        create_tag_results_results_item_model['tag_name'] = 'testString'
+        create_tag_results_results_item_model['is_error'] = True
+
+        # Construct a json representation of a CreateTagResults model
+        create_tag_results_model_json = {}
+        create_tag_results_model_json['results'] = [create_tag_results_results_item_model]
+
+        # Construct a model instance of CreateTagResults by calling from_dict on the json representation
+        create_tag_results_model = CreateTagResults.from_dict(create_tag_results_model_json)
+        assert create_tag_results_model != False
+
+        # Construct a model instance of CreateTagResults by calling from_dict on the json representation
+        create_tag_results_model_dict = CreateTagResults.from_dict(create_tag_results_model_json).__dict__
+        create_tag_results_model2 = CreateTagResults(**create_tag_results_model_dict)
+
+        # Verify the model instances are equivalent
+        assert create_tag_results_model == create_tag_results_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        create_tag_results_model_json2 = create_tag_results_model.to_dict()
+        assert create_tag_results_model_json2 == create_tag_results_model_json
+
+class TestCreateTagResultsResultsItem():
+    """
+    Test Class for CreateTagResultsResultsItem
+    """
+
+    def test_create_tag_results_results_item_serialization(self):
+        """
+        Test serialization/deserialization for CreateTagResultsResultsItem
+        """
+
+        # Construct a json representation of a CreateTagResultsResultsItem model
+        create_tag_results_results_item_model_json = {}
+        create_tag_results_results_item_model_json['tag_name'] = 'testString'
+        create_tag_results_results_item_model_json['is_error'] = True
+
+        # Construct a model instance of CreateTagResultsResultsItem by calling from_dict on the json representation
+        create_tag_results_results_item_model = CreateTagResultsResultsItem.from_dict(create_tag_results_results_item_model_json)
+        assert create_tag_results_results_item_model != False
+
+        # Construct a model instance of CreateTagResultsResultsItem by calling from_dict on the json representation
+        create_tag_results_results_item_model_dict = CreateTagResultsResultsItem.from_dict(create_tag_results_results_item_model_json).__dict__
+        create_tag_results_results_item_model2 = CreateTagResultsResultsItem(**create_tag_results_results_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert create_tag_results_results_item_model == create_tag_results_results_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        create_tag_results_results_item_model_json2 = create_tag_results_results_item_model.to_dict()
+        assert create_tag_results_results_item_model_json2 == create_tag_results_results_item_model_json
+
 class TestDeleteTagResults():
     """
     Test Class for DeleteTagResults
