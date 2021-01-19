@@ -1,3 +1,10 @@
+## [0.17.7](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.6...v0.17.7) (2021-01-19)
+
+
+### Bug Fixes
+
+* **Global Tagging:** update service after recent API changes ([1dbbf61](https://github.com/IBM/platform-services-python-sdk/commit/1dbbf6145ee56f9b299c0d20bc7d1f61518c779a))
+
 ## [0.17.6](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.5...v0.17.6) (2021-01-14)
 
 
