@@ -1,3 +1,10 @@
+## [0.17.8](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.7...v0.17.8) (2021-01-26)
+
+
+### Bug Fixes
+
+* **deps:** move to python 3.6 as minimum supported level ([f480aba](https://github.com/IBM/platform-services-python-sdk/commit/f480aba8a2280f96849590cb8323bf802e45b2f4))
+
 ## [0.17.7](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.6...v0.17.7) (2021-01-19)
 
 
