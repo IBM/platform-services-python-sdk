@@ -7,6 +7,7 @@ setup: deps dev_deps install_project
 all: setup test-unit lint
 
 deps:
+	python -m pip install --upgrade pip
 	python -m pip install -r requirements.txt
 
 dev_deps:
