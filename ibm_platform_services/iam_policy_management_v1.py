@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-9b90c5f5-20210129-120415
  
 """
 IAM Policy Management API
@@ -84,6 +84,8 @@ class IamPolicyManagementV1(BaseService):
         access_group_id: str = None,
         type: str = None,
         service_type: str = None,
+        tag_name: str = None,
+        tag_value: str = None,
         sort: str = None,
         format: str = None,
         **kwargs
@@ -93,11 +95,11 @@ class IamPolicyManagementV1(BaseService):
 
         Get policies and filter by attributes. While managing policies, you may want to
         retrieve policies in the account and filter by attribute values. This can be done
-        through query parameters. Currently, we only support the following attributes:
-        account_id, iam_id, access_group_id, type, and service_type. account_id is a
-        required query parameter. Only policies that have the specified attributes and
-        that the caller has read access to are returned. If the caller does not have read
-        access to any policies an empty array is returned.
+        through query parameters. Currently, only the following attributes are supported:
+        account_id, iam_id, access_group_id, type, service_type, sort and format.
+        account_id is a required query parameter. Only policies that have the specified
+        attributes and that the caller has read access to are returned. If the caller does
+        not have read access to any policies an empty array is returned.
 
         :param str account_id: The account GUID in which the policies belong to.
         :param str accept_language: (optional) Translation language code.
@@ -105,6 +107,10 @@ class IamPolicyManagementV1(BaseService):
         :param str access_group_id: (optional) The access group id.
         :param str type: (optional) The type of policy (access or authorization).
         :param str service_type: (optional) The type of service.
+        :param str tag_name: (optional) The name of the access management tag in
+               the policy.
+        :param str tag_value: (optional) The value of the access management tag in
+               the policy.
         :param str sort: (optional) Sort the results by any of the top level policy
                fields (id, created_at, created_by_id, last_modified_at, etc).
         :param str format: (optional) Include additional data per policy returned
@@ -130,6 +136,8 @@ class IamPolicyManagementV1(BaseService):
             'access_group_id': access_group_id,
             'type': type,
             'service_type': service_type,
+            'tag_name': tag_name,
+            'tag_value': tag_value,
             'sort': sort,
             'format': format
         }
@@ -1069,18 +1077,22 @@ class PolicyResource():
 
     :attr List[ResourceAttribute] attributes: (optional) List of resource
           attributes.
+    :attr List[ResourceTag] tags: (optional) List of access management tags.
     """
 
     def __init__(self,
                  *,
-                 attributes: List['ResourceAttribute'] = None) -> None:
+                 attributes: List['ResourceAttribute'] = None,
+                 tags: List['ResourceTag'] = None) -> None:
         """
         Initialize a PolicyResource object.
 
         :param List[ResourceAttribute] attributes: (optional) List of resource
                attributes.
+        :param List[ResourceTag] tags: (optional) List of access management tags.
         """
         self.attributes = attributes
+        self.tags = tags
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'PolicyResource':
@@ -1088,6 +1100,8 @@ class PolicyResource():
         args = {}
         if 'attributes' in _dict:
             args['attributes'] = [ResourceAttribute.from_dict(x) for x in _dict.get('attributes')]
+        if 'tags' in _dict:
+            args['tags'] = [ResourceTag.from_dict(x) for x in _dict.get('tags')]
         return cls(**args)
 
     @classmethod
@@ -1100,6 +1114,8 @@ class PolicyResource():
         _dict = {}
         if hasattr(self, 'attributes') and self.attributes is not None:
             _dict['attributes'] = [x.to_dict() for x in self.attributes]
+        if hasattr(self, 'tags') and self.tags is not None:
+            _dict['tags'] = [x.to_dict() for x in self.tags]
         return _dict
 
     def _to_dict(self):
@@ -1320,6 +1336,81 @@ class ResourceAttribute():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'ResourceAttribute') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ResourceTag():
+    """
+    A tag associated with a resource.
+
+    :attr str name: The name of an access management tag.
+    :attr str value: The value of an access management tag.
+    :attr str operator: (optional) The operator of an access management tag.
+    """
+
+    def __init__(self,
+                 name: str,
+                 value: str,
+                 *,
+                 operator: str = None) -> None:
+        """
+        Initialize a ResourceTag object.
+
+        :param str name: The name of an access management tag.
+        :param str value: The value of an access management tag.
+        :param str operator: (optional) The operator of an access management tag.
+        """
+        self.name = name
+        self.value = value
+        self.operator = operator
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ResourceTag':
+        """Initialize a ResourceTag object from a json dictionary."""
+        args = {}
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in ResourceTag JSON')
+        if 'value' in _dict:
+            args['value'] = _dict.get('value')
+        else:
+            raise ValueError('Required property \'value\' not present in ResourceTag JSON')
+        if 'operator' in _dict:
+            args['operator'] = _dict.get('operator')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ResourceTag object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        if hasattr(self, 'operator') and self.operator is not None:
+            _dict['operator'] = self.operator
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ResourceTag object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ResourceTag') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ResourceTag') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
