@@ -41,6 +41,8 @@ class TestCaseManagementV1(unittest.TestCase):
 
     resource_crn = 'crn:v1:staging:public:cloud-object-storage:global:a/19c52e57800c4d8bb9aefc66b3e49755:61848e72-6ba6-415e-84e2-91f3915e194d::'
 
+    case_label = 'Python-SDK-IT'
+
     @classmethod
     def setUpClass(cls):
         if os.path.exists(configFile):
@@ -68,8 +70,8 @@ class TestCaseManagementV1(unittest.TestCase):
         offering_payload_model['type'] = offering_payload_type_model
 
         type = 'technical'
-        subject = 'Python - Integration test'
-        description = 'Please -ignore this is a test case.'
+        subject = TestCaseManagementV1.case_label + ' test case'
+        description = 'Please ignore - this is a test case.'
         severity = 4
         offering = offering_payload_model
 
@@ -79,18 +81,21 @@ class TestCaseManagementV1(unittest.TestCase):
                                             severity=severity,
                                             offering=offering,
                                             headers={})
+        assert response.get_status_code() == 200
+        assert response.result is not None
+        print('create_case() response:\n{}'.format(
+            json.dumps(response.result, indent=2)))
 
         # Storing the new case number for subsequent test cases
         TestCaseManagementV1.new_case_number = response.result['number']
 
-        assert response.get_status_code() == 200
         assert subject == response.result['short_description']
         assert description == response.result['description']
 
     def test_02_create_case_with_empty_offering(self):
 
         type = 'technical'
-        subject = 'Python - Integration test'
+        subject = TestCaseManagementV1.case_label + ' test case (negative test)'
         description = 'Please -ignore this is a test case.'
         severity = 4
 
@@ -133,19 +138,46 @@ class TestCaseManagementV1(unittest.TestCase):
 
     def test_04_get_cases(self):
 
+        cases = []
         offset = 0
-        limit = 2
+        page_size = 1
         sort = 'number'
-        fields = ['number']
+        fields = [
+            'number',
+            'status',
+            'short_description',
+            'description',
+            'created_at',
+            'created_by',
+            'updated_at',
+            'updated_by',
+            'comments',
+        ]
 
-        response = self.service.get_cases(offset=offset,
-                                          limit=limit,
-                                          sort=sort,
-                                          fields=fields,
-                                          headers={})
+        more_results = True
+        while more_results:
+            response = self.service.get_cases(
+                offset=offset,
+                limit=page_size,
+                sort=sort,
+                search=TestCaseManagementV1.case_label,
+                fields=fields,
+            )
+            assert response.status_code == 200
+            assert response.get_result() is not None
 
-        assert response.status_code == 200
-        assert response.result['total_count'] > 0
+            case_list = response.get_result()
+            assert case_list is not None
+
+            if len(case_list.get('cases')) > 0:
+                cases.extend(case_list.get('cases'))
+                offset += len(case_list.get('cases'))
+            else:
+                more_results = False
+
+        assert len(cases) > 0
+        print('get_cases returned a total of {} cases'.format(len(cases)))
+        print('returned cases\n{}'.format(json.dumps(cases, indent=2)))
 
     def test_05_get_case(self):
 
