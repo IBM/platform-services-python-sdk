@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.com/IBM/platform-services-python-sdk.svg?branch=master)](https://travis-ci.com/IBM/platform-services-python-sdk)
+[![Build Status](https://travis-ci.com/IBM/platform-services-python-sdk.svg?branch=main)](https://travis-ci.com/IBM/platform-services-python-sdk)
 [![Release](https://img.shields.io/github/v/release/IBM/platform-services-python-sdk)](https://github.com/IBM/platform-services-python-sdk/releases/latest)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ibm-platform-services)](https://pypi.org/project/ibm-platform-services/)
 [![PyPI](https://img.shields.io/pypi/v/ibm-platform-services)](https://pypi.org/project/ibm-platform-services/)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/ibm-platform-services)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![codecov](https://codecov.io/gh/IBM/platform-services-python-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/IBM/platform-services-python-sdk)
+[![codecov](https://codecov.io/gh/IBM/platform-services-python-sdk/branch/main/graph/badge.svg)](https://codecov.io/gh/IBM/platform-services-python-sdk)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 # IBM Cloud Platform Services Python SDK Version 0.17.8
@@ -90,7 +90,7 @@ easy_install --upgrade "ibm-platform-services>=0.17.8"
 ```
 
 ## Using the SDK
-For general SDK usage information, please see [this link](https://github.com/IBM/ibm-cloud-sdk-common/blob/master/README.md)
+For general SDK usage information, please see [this link](https://github.com/IBM/ibm-cloud-sdk-common/blob/main/README.md)
 
 ## Questions
 If you are having difficulties using this SDK or have a question about the IBM Cloud services,
@@ -106,9 +106,9 @@ Before that, please search for similar issues. It's possible that someone has al
 Find more open source projects on the [IBM Github Page](http://ibm.github.io/)
 
 ## Contributing
-See [CONTRIBUTING.md](https://github.com/IBM/platform-services-python-sdk/blob/master/CONTRIBUTING.md).
+See [CONTRIBUTING.md](https://github.com/IBM/platform-services-python-sdk/blob/main/CONTRIBUTING.md).
 
 ## License
 
 This SDK is released under the Apache 2.0 license.
-The license's full text can be found in [LICENSE](https://github.com/IBM/platform-services-python-sdk/blob/master/LICENSE).
+The license's full text can be found in [LICENSE](https://github.com/IBM/platform-services-python-sdk/blob/main/LICENSE).
