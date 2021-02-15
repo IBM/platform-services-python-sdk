@@ -64,23 +64,6 @@ class TestCaseManagementV1Examples():
     )
 
     @needscredentials
-    def test_get_cases_example(self):
-        """
-        get_cases request example
-        """
-        try:
-            # begin-getCases
-
-            case_list = case_management_service.get_cases().get_result()
-
-            print(json.dumps(case_list, indent=2))
-
-            # end-getCases
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
     def test_create_case_example(self):
         """
         create_case request example
@@ -121,27 +104,18 @@ class TestCaseManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    def test_update_case_status_example(self):
+    def test_get_cases_example(self):
         """
-        update_case_status request example
+        get_cases request example
         """
         try:
-            # begin-updateCaseStatus
+            # begin-getCases
 
-            status_payload_model = {
-                'action': 'resolve',
-                'comment': 'It was actually a mistake',
-                'resolution_code': 1
-            }
+            case_list = case_management_service.get_cases().get_result()
 
-            case = case_management_service.update_case_status(
-                case_number='testString',
-                status_payload=status_payload_model
-            ).get_result()
+            print(json.dumps(case_list, indent=2))
 
-            print(json.dumps(case, indent=2))
-
-            # end-updateCaseStatus
+            # end-getCases
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -181,6 +155,25 @@ class TestCaseManagementV1Examples():
             print(json.dumps(watchlist_add_response, indent=2))
 
             # end-addWatchlist
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_remove_watchlist_example(self):
+        """
+        remove_watchlist request example
+        """
+        try:
+            # begin-removeWatchlist
+
+            watchlist = case_management_service.remove_watchlist(
+                case_number='testString',
+            ).get_result()
+
+            print(json.dumps(watchlist, indent=2))
+
+            # end-removeWatchlist
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -250,25 +243,6 @@ class TestCaseManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    def test_remove_watchlist_example(self):
-        """
-        remove_watchlist request example
-        """
-        try:
-            # begin-removeWatchlist
-
-            watchlist = case_management_service.remove_watchlist(
-                case_number='testString',
-            ).get_result()
-
-            print(json.dumps(watchlist, indent=2))
-
-            # end-removeWatchlist
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
     def test_delete_file_example(self):
         """
         delete_file request example
@@ -284,6 +258,32 @@ class TestCaseManagementV1Examples():
             print(json.dumps(attachment_list, indent=2))
 
             # end-deleteFile
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_case_status_example(self):
+        """
+        update_case_status request example
+        """
+        try:
+            # begin-updateCaseStatus
+
+            status_payload_model = {
+                'action': 'resolve',
+                'comment': 'It was actually a mistake',
+                'resolution_code': 1
+            }
+
+            case = case_management_service.update_case_status(
+                case_number='testString',
+                status_payload=status_payload_model
+            ).get_result()
+
+            print(json.dumps(case, indent=2))
+
+            # end-updateCaseStatus
 
         except ApiException as e:
             pytest.fail(str(e))
