@@ -17,17 +17,22 @@
 Examples for CaseManagementV1
 """
 
+import io
 import os
 import pytest
 from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.case_management_v1 import *
 
 # Config file name
-config_file = 'case_management_v1.env'
+config_file = 'case_management.env'
 
 case_management_service = None
 
 config = None
+
+case_number = None
+attachment_id = None
+resource_crn = None
 
 
 ##############################################################################
@@ -57,6 +62,9 @@ class TestCaseManagementV1Examples():
             global config
             config = read_external_sources(CaseManagementV1.DEFAULT_SERVICE_NAME)
 
+            global resource_crn
+            resource_crn = config['RESOURCE_CRN']
+
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
@@ -71,15 +79,32 @@ class TestCaseManagementV1Examples():
         try:
             # begin-createCase
 
+            offering_type = OfferingType(
+                group='crn_service_name',
+                key='cloud-object-storage'
+            )
+            offering_payload = Offering(
+                name='Cloud Object Storage',
+                type=offering_type
+            )
+
             case = case_management_service.create_case(
                 type='technical',
-                subject='testString',
-                description='testString'
+                subject='Example technical case',
+                description='This is an example case description. This is where the problem would be described.',
+                offering=offering_payload,
+                severity=4,
             ).get_result()
 
             print(json.dumps(case, indent=2))
 
             # end-createCase
+
+            assert case is not None
+            assert case['number'] is not None
+
+            global case_number
+            case_number = case['number']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -89,11 +114,21 @@ class TestCaseManagementV1Examples():
         """
         get_case request example
         """
+        assert case_number is not None
+
         try:
             # begin-getCase
 
+            fields_to_return = [
+                GetCaseEnums.Fields.DESCRIPTION,
+                GetCaseEnums.Fields.STATUS,
+                GetCaseEnums.Fields.SEVERITY,
+                GetCaseEnums.Fields.CREATED_BY,
+            ]
+
             case = case_management_service.get_case(
-                case_number='testString'
+                case_number=case_number,
+                fields=fields_to_return
             ).get_result()
 
             print(json.dumps(case, indent=2))
@@ -111,7 +146,12 @@ class TestCaseManagementV1Examples():
         try:
             # begin-getCases
 
-            case_list = case_management_service.get_cases().get_result()
+            case_list = case_management_service.get_cases(
+                offset=0,
+                limit=100,
+                search='blocker',
+                sort=GetCasesEnums.Fields.UPDATED_AT,
+            ).get_result()
 
             print(json.dumps(case_list, indent=2))
 
@@ -125,12 +165,14 @@ class TestCaseManagementV1Examples():
         """
         add_comment request example
         """
+        assert case_number is not None
+
         try:
             # begin-addComment
 
             comment = case_management_service.add_comment(
-                case_number='testString',
-                comment='This is a test comment'
+                case_number=case_number,
+                comment='This is an example comment.'
             ).get_result()
 
             print(json.dumps(comment, indent=2))
@@ -145,11 +187,18 @@ class TestCaseManagementV1Examples():
         """
         add_watchlist request example
         """
+        assert case_number is not None
+
         try:
             # begin-addWatchlist
 
+            watchlist_users = [
+                User(realm='IBMid', user_id='abc@ibm.com')
+            ]
+
             watchlist_add_response = case_management_service.add_watchlist(
-                case_number='testString',
+                case_number=case_number,
+                watchlist=watchlist_users,
             ).get_result()
 
             print(json.dumps(watchlist_add_response, indent=2))
@@ -164,11 +213,18 @@ class TestCaseManagementV1Examples():
         """
         remove_watchlist request example
         """
+        assert case_number is not None
+
         try:
             # begin-removeWatchlist
 
+            watchlist_users = [
+                User(realm='IBMid', user_id='abc@ibm.com')
+            ]
+
             watchlist = case_management_service.remove_watchlist(
-                case_number='testString',
+                case_number=case_number,
+                watchlist=watchlist_users,
             ).get_result()
 
             print(json.dumps(watchlist, indent=2))
@@ -183,11 +239,16 @@ class TestCaseManagementV1Examples():
         """
         add_resource request example
         """
+        assert case_number is not None
+        assert resource_crn is not None
+
         try:
             # begin-addResource
 
             resource = case_management_service.add_resource(
-                case_number='testString',
+                case_number=case_number,
+                crn=resource_crn,
+                note="This resource is the service that is having the problem.",
             ).get_result()
 
             print(json.dumps(resource, indent=2))
@@ -202,21 +263,35 @@ class TestCaseManagementV1Examples():
         """
         upload_file request example
         """
+        assert case_number is not None
+
         try:
             # begin-uploadFile
 
+            example_file_content = b'This is the content of the file to upload.'
+
             file_with_metadata_model = {
-                'data': io.BytesIO(b'This is a mock file.').getvalue()
+                'data': io.BytesIO(example_file_content).getvalue(),
+                'filename': 'example.log',
+                'content_type': 'application/octet-stream',
             }
 
+            files_to_upload = [file_with_metadata_model]
+
             attachment = case_management_service.upload_file(
-                case_number='testString',
-                file=[file_with_metadata_model]
+                case_number=case_number,
+                file=files_to_upload,
             ).get_result()
 
             print(json.dumps(attachment, indent=2))
 
             # end-uploadFile
+
+            assert attachment is not None
+            assert attachment['id'] is not None
+
+            global attachment_id
+            attachment_id = attachment['id']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -226,16 +301,21 @@ class TestCaseManagementV1Examples():
         """
         download_file request example
         """
+        assert case_number is not None
+        assert attachment_id is not None
+
         try:
             # begin-downloadFile
 
-            result = case_management_service.download_file(
-                case_number='testString',
-                file_id='testString'
-            ).get_result()
+            response = case_management_service.download_file(
+                case_number=case_number,
+                file_id=attachment_id,
+            )
 
-            with open('/tmp/result.out', 'wb') as fp:
-                fp.write(result)
+            file = response.get_result()
+
+            print('Attachment content-type:', response.get_headers()['content-type'])
+            print('Attachment contents:', file)
 
             # end-downloadFile
 
@@ -247,12 +327,15 @@ class TestCaseManagementV1Examples():
         """
         delete_file request example
         """
+        assert case_number is not None
+        assert attachment_id is not None
+
         try:
             # begin-deleteFile
 
             attachment_list = case_management_service.delete_file(
-                case_number='testString',
-                file_id='testString'
+                case_number=case_number,
+                file_id=attachment_id
             ).get_result()
 
             print(json.dumps(attachment_list, indent=2))
@@ -267,17 +350,19 @@ class TestCaseManagementV1Examples():
         """
         update_case_status request example
         """
+        assert case_number is not None
+
         try:
             # begin-updateCaseStatus
 
             status_payload_model = {
                 'action': 'resolve',
-                'comment': 'It was actually a mistake',
-                'resolution_code': 1
+                'comment': 'The problem has been resolved.',
+                'resolution_code': 1,
             }
 
             case = case_management_service.update_case_status(
-                case_number='testString',
+                case_number=case_number,
                 status_payload=status_payload_model
             ).get_result()
 
