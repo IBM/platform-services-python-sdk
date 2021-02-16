@@ -315,7 +315,7 @@ class TestCaseManagementV1Examples():
             file = response.get_result()
 
             print('Attachment content-type:', response.get_headers()['content-type'])
-            print('Attachment contents:', file)
+            print('Attachment contents:', file.content)
 
             # end-downloadFile
 
