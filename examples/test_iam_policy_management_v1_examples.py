@@ -19,7 +19,6 @@ Examples for IamPolicyManagementV1
 
 import os
 import pytest
-import random
 from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.iam_policy_management_v1 import *
 
@@ -45,13 +44,13 @@ iam_policy_management_service = None
 
 config = None
 
-test_account_id = None
-test_policy_id = None
-test_policy_etag = None
-test_custom_role_id = None
-test_custom_role_etag = None
-test_user_id = "IBMid-SDKPython" + str(random.randint(0, 99999))
-test_service_name = "iam-groups"
+example_account_id = None
+example_policy_id = None
+example_policy_etag = None
+example_custom_role_id = None
+example_custom_role_etag = None
+example_user_id = "IBMid-user1"
+example_service_name = "iam-groups"
 
 ##############################################################################
 # Start of Examples for Service: IamPolicyManagementV1
@@ -77,9 +76,9 @@ class TestIamPolicyManagementV1Examples():
             assert iam_policy_management_service is not None
 
             # Load the configuration
-            global config, test_account_id
+            global config, example_account_id
             config = read_external_sources(IamPolicyManagementV1.DEFAULT_SERVICE_NAME)
-            test_account_id = config['TEST_ACCOUNT_ID']
+            example_account_id = config['TEST_ACCOUNT_ID']
 
         print('Setup complete.')
 
@@ -93,34 +92,34 @@ class TestIamPolicyManagementV1Examples():
         create_policy request example
         """
         try:
-            global test_policy_id
+            global example_policy_id
             # begin-create_policy
 
-            policy_subject = PolicySubject(
-                attributes=[SubjectAttribute(name='iam_id', value=test_user_id)])
-            policy_role = PolicyRole(
+            policy_subjects = PolicySubject(
+                attributes=[SubjectAttribute(name='iam_id', value=example_user_id)])
+            policy_roles = PolicyRole(
                 role_id='crn:v1:bluemix:public:iam::::role:Viewer')
-            resource_account_attribute = ResourceAttribute(
-                name='accountId', value=test_account_id)
-            resource_service_attribute = ResourceAttribute(
-                name='serviceName', value=test_service_name)
-            resource_tag = ResourceTag(name='project', value='prototype')
-            policy_resource = PolicyResource(
-                attributes=[resource_account_attribute,
-                            resource_service_attribute],
-                tags=[resource_tag])
+            account_id_resource_attribute = ResourceAttribute(
+                name='accountId', value=example_account_id)
+            service_name_resource_attribute = ResourceAttribute(
+                name='serviceName', value=example_service_name)
+            policy_resource_tag = ResourceTag(name='project', value='prototype')
+            policy_resources = PolicyResource(
+                attributes=[account_id_resource_attribute,
+                            service_name_resource_attribute],
+                tags=[policy_resource_tag])
 
             policy = iam_policy_management_service.create_policy(
                 type='access',
-                subjects=[policy_subject],
-                roles=[policy_role],
-                resources=[policy_resource]
+                subjects=[policy_subjects],
+                roles=[policy_roles],
+                resources=[policy_resources]
             ).get_result()
 
-            print(policy)
+            print(json.dumps(policy, indent=2))
 
             # end-create_policy
-            test_policy_id = policy['id']
+            example_policy_id = policy['id']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -131,18 +130,18 @@ class TestIamPolicyManagementV1Examples():
         get_policy request example
         """
         try:
-            global test_policy_etag
+            global example_policy_etag
             # begin-get_policy
 
             response = iam_policy_management_service.get_policy(
-                policy_id=test_policy_id
+                policy_id=example_policy_id
             )
             policy = response.get_result()
 
-            print(policy)
+            print(json.dumps(policy, indent=2))
 
             # end-get_policy
-            test_policy_etag = response.get_headers().get("Etag")
+            example_policy_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -155,30 +154,30 @@ class TestIamPolicyManagementV1Examples():
         try:
             # begin-update_policy
 
-            policy_subject = PolicySubject(
-                attributes=[SubjectAttribute(name='iam_id', value=test_user_id)])
-            updated_policy_role = PolicyRole(
+            policy_subjects = PolicySubject(
+                attributes=[SubjectAttribute(name='iam_id', value=example_user_id)])
+            account_id_resource_attribute = ResourceAttribute(
+                name='accountId', value=example_account_id)
+            service_name_resource_attribute = ResourceAttribute(
+                name='serviceName', value=example_service_name)
+            policy_resource_tag = ResourceTag(name='project', value='prototype')
+            policy_resources = PolicyResource(
+                attributes=[account_id_resource_attribute,
+                            service_name_resource_attribute],
+                tags=[policy_resource_tag])
+            updated_policy_roles = PolicyRole(
                 role_id='crn:v1:bluemix:public:iam::::role:Editor')
-            resource_account_attribute = ResourceAttribute(
-                name='accountId', value=test_account_id)
-            resource_service_attribute = ResourceAttribute(
-                name='serviceName', value=test_service_name)
-            resource_tag = ResourceTag(name='project', value='prototype')
-            policy_resource = PolicyResource(
-                attributes=[resource_account_attribute,
-                            resource_service_attribute],
-                tags=[resource_tag])
 
             policy = iam_policy_management_service.update_policy(
                 type='access',
-                policy_id=test_policy_id,
-                if_match=test_policy_etag,
-                subjects=[policy_subject],
-                roles=[updated_policy_role],
-                resources=[policy_resource]
+                policy_id=example_policy_id,
+                if_match=example_policy_etag,
+                subjects=[policy_subjects],
+                roles=[updated_policy_roles],
+                resources=[policy_resources]
             ).get_result()
 
-            print(policy)
+            print(json.dumps(policy, indent=2))
 
             # end-update_policy
 
@@ -194,10 +193,10 @@ class TestIamPolicyManagementV1Examples():
             # begin-list_policies
 
             policy_list = iam_policy_management_service.list_policies(
-                account_id=test_account_id, iam_id=test_user_id, format='include_last_permit'
+                account_id=example_account_id, iam_id=example_user_id, format='include_last_permit'
             ).get_result()
 
-            print(policy_list)
+            print(json.dumps(policy_list, indent=2))
 
             # end-list_policies
 
@@ -213,10 +212,10 @@ class TestIamPolicyManagementV1Examples():
             # begin-delete_policy
 
             response = iam_policy_management_service.delete_policy(
-                policy_id=test_policy_id
-            )
+                policy_id=example_policy_id
+            ).get_result()
 
-            print(response)
+            print(json.dumps(response, indent=2))
 
             # end-delete_policy
 
@@ -229,21 +228,21 @@ class TestIamPolicyManagementV1Examples():
         create_role request example
         """
         try:
-            global test_custom_role_id
+            global example_custom_role_id
             # begin-create_role
 
             custom_role = iam_policy_management_service.create_role(
                 display_name='IAM Groups read access',
                 actions=['iam-groups.groups.read'],
                 name='ExampleRoleIAMGroups',
-                account_id=test_account_id,
-                service_name=test_service_name
+                account_id=example_account_id,
+                service_name=example_service_name
             ).get_result()
 
-            print(custom_role)
+            print(json.dumps(custom_role, indent=2))
 
             # end-create_role
-            test_custom_role_id = custom_role["id"]
+            example_custom_role_id = custom_role["id"]
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -254,18 +253,18 @@ class TestIamPolicyManagementV1Examples():
         get_role request example
         """
         try:
-            global test_custom_role_etag
+            global example_custom_role_etag
             # begin-get_role
 
             response = iam_policy_management_service.get_role(
-                role_id=test_custom_role_id
+                role_id=example_custom_role_id
             )
             custom_role = response.get_result()
 
-            print(custom_role)
+            print(json.dumps(custom_role, indent=2))
 
             # end-get_role
-            test_custom_role_etag = response.get_headers().get("Etag")
+            example_custom_role_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -280,12 +279,12 @@ class TestIamPolicyManagementV1Examples():
 
             updated_role_actions = ['iam-groups.groups.read', 'iam-groups.groups.list']
             custom_role = iam_policy_management_service.update_role(
-                role_id=test_custom_role_id,
-                if_match=test_custom_role_etag,
+                role_id=example_custom_role_id,
+                if_match=example_custom_role_etag,
                 actions=updated_role_actions
             ).get_result()
 
-            print(custom_role)
+            print(json.dumps(custom_role, indent=2))
 
             # end-update_role
 
@@ -301,10 +300,10 @@ class TestIamPolicyManagementV1Examples():
             # begin-list_roles
 
             role_list = iam_policy_management_service.list_roles(
-                account_id=test_account_id
+                account_id=example_account_id
             ).get_result()
 
-            print(role_list)
+            print(json.dumps(role_list, indent=2))
 
             # end-list_roles
 
@@ -320,10 +319,10 @@ class TestIamPolicyManagementV1Examples():
             # begin-delete_role
 
             response = iam_policy_management_service.delete_role(
-                role_id=test_custom_role_id
-            )
+                role_id=example_custom_role_id
+            ).get_result()
 
-            print(response)
+            print(json.dumps(response, indent=2))
 
             # end-delete_role
 
