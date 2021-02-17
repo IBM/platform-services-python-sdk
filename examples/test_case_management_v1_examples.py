@@ -68,7 +68,7 @@ class TestCaseManagementV1Examples():
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
-        not os.path.exists(config_file), reason="External configuration not available, skipping..."
+        not os.path.exists(config_file), reason='External configuration not available, skipping...'
     )
 
     @needscredentials
@@ -248,7 +248,7 @@ class TestCaseManagementV1Examples():
             resource = case_management_service.add_resource(
                 case_number=case_number,
                 crn=resource_crn,
-                note="This resource is the service that is having the problem.",
+                note='This resource is the service that is having the problem.',
             ).get_result()
 
             print(json.dumps(resource, indent=2))
