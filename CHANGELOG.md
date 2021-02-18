@@ -1,3 +1,10 @@
+## [0.17.10](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.9...v0.17.10) (2021-02-18)
+
+
+### Bug Fixes
+
+* **Global Catalog:** re-gen service and add examples ([#81](https://github.com/IBM/platform-services-python-sdk/issues/81)) ([294b0f5](https://github.com/IBM/platform-services-python-sdk/commit/294b0f5f68392e8b63f7693181c0c3084697c90e))
+
 ## [0.17.9](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.8...v0.17.9) (2021-02-18)
 
 
