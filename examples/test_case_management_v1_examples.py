@@ -23,6 +23,16 @@ import pytest
 from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.case_management_v1 import *
 
+#
+# This file provides an example of how to use the Case Management service.
+#
+# CASE_MANAGEMENT_URL=<service url>
+# CASE_MANAGEMENT_AUTHTYPE=iam
+# CASE_MANAGEMENT_APIKEY=<IAM apikey>
+# CASE_MANAGEMENT_AUTH_URL=<IAM token service URL - omit this if using the production environment>
+# CASE_MANAGEMENT_RESOURCE_CRN=<cloud resource name>
+#
+
 # Config file name
 config_file = 'case_management.env'
 
@@ -60,7 +70,8 @@ class TestCaseManagementV1Examples():
 
             # Load the configuration
             global config
-            config = read_external_sources(CaseManagementV1.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(
+                CaseManagementV1.DEFAULT_SERVICE_NAME)
 
             global resource_crn
             resource_crn = config['RESOURCE_CRN']
@@ -314,7 +325,8 @@ class TestCaseManagementV1Examples():
 
             file = response.get_result()
 
-            print('Attachment content-type:', response.get_headers()['content-type'])
+            print('Attachment content-type:',
+                  response.get_headers()['content-type'])
             print('Attachment contents:', file.content)
 
             # end-downloadFile
