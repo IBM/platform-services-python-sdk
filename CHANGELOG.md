@@ -1,3 +1,11 @@
+## [0.17.9](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.8...v0.17.9) (2021-02-18)
+
+
+### Bug Fixes
+
+* **build:** transition default branch master -> main ([17dc954](https://github.com/IBM/platform-services-python-sdk/commit/17dc9547b58ff5c8de5a029640ad1b20e323dd72))
+* **Case Management:** re-gen service and add examples ([#80](https://github.com/IBM/platform-services-python-sdk/issues/80)) ([fb784fc](https://github.com/IBM/platform-services-python-sdk/commit/fb784fc75e389e354d8cb36898b186bc4aa8646a))
+
 ## [0.17.8](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.7...v0.17.8) (2021-01-26)
 
 
