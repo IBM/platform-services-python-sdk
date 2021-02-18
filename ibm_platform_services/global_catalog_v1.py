@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-4c92c221-20210211-060810
  
 """
 The catalog service manages offerings across geographies as the system of record. The
@@ -91,7 +91,10 @@ class GlobalCatalogV1(BaseService):
         sort_by: str = None,
         descending: str = None,
         languages: str = None,
-        complete: str = None,
+        catalog: bool = None,
+        complete: bool = None,
+        offset: int = None,
+        limit: int = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -129,9 +132,18 @@ class GlobalCatalogV1(BaseService):
                your browser through the Accept-Langauge header, which allows an override
                of the header. Languages are specified in standard form, such as `en-us`.
                To include all languages use a wildcard (*).
-        :param str complete: (optional) Returns all available fields for all
+        :param bool catalog: (optional) Checks to see if a catalog's object is
+               visible, or if it's filtered by service, plan, deployment, or region. Use
+               the value `?catalog=true`. If a `200` code is returned, the object is
+               visible. If a `403` code is returned, the object is not visible for the
+               user.
+        :param bool complete: (optional) Returns all available fields for all
                languages. Use the value `?complete=true` as shortcut for
                ?include=*&languages=*.
+        :param int offset: (optional) Useful for pagination, specifies index
+               (origin 0) of first item to return in response.
+        :param int limit: (optional) Useful for pagination, specifies the maximum
+               number of items to return in the response.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `EntrySearchResult` object
@@ -150,7 +162,10 @@ class GlobalCatalogV1(BaseService):
             'sort-by': sort_by,
             'descending': descending,
             'languages': languages,
-            'complete': complete
+            'catalog': catalog,
+            'complete': complete,
+            '_offset': offset,
+            '_limit': limit
         }
 
         if 'headers' in kwargs:
@@ -295,7 +310,7 @@ class GlobalCatalogV1(BaseService):
         account: str = None,
         include: str = None,
         languages: str = None,
-        complete: str = None,
+        complete: bool = None,
         depth: int = None,
         **kwargs
     ) -> DetailedResponse:
@@ -323,7 +338,7 @@ class GlobalCatalogV1(BaseService):
                your browser through the Accept-Langauge header, which allows an override
                of the header. Languages are specified in standard form, such as `en-us`.
                To include all languages use a wildcard (*).
-        :param str complete: (optional) Returns all available fields for all
+        :param bool complete: (optional) Returns all available fields for all
                languages. Use the value `?complete=true` as shortcut for
                ?include=*&languages=*.
         :param int depth: (optional) Return the children down to the requested
@@ -567,7 +582,9 @@ class GlobalCatalogV1(BaseService):
         sort_by: str = None,
         descending: str = None,
         languages: str = None,
-        complete: str = None,
+        complete: bool = None,
+        offset: int = None,
+        limit: int = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -601,8 +618,12 @@ class GlobalCatalogV1(BaseService):
                your browser through the Accept-Langauge header. This allows an override of
                the header. Languages are specified in standard form, such as `en-us`. To
                include all languages use the wildcard (*).
-        :param str complete: (optional) Use the value `?complete=true` as shortcut
+        :param bool complete: (optional) Use the value `?complete=true` as shortcut
                for ?include=*&languages=*.
+        :param int offset: (optional) Useful for pagination, specifies index
+               (origin 0) of first item to return in response.
+        :param int limit: (optional) Useful for pagination, specifies the maximum
+               number of items to return in the response.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `EntrySearchResult` object
@@ -625,7 +646,9 @@ class GlobalCatalogV1(BaseService):
             'sort-by': sort_by,
             'descending': descending,
             'languages': languages,
-            'complete': complete
+            'complete': complete,
+            '_offset': offset,
+            '_limit': limit
         }
 
         if 'headers' in kwargs:
