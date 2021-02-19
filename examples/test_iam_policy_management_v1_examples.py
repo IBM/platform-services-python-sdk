@@ -105,7 +105,7 @@ class TestIamPolicyManagementV1Examples():
             account_id_resource_attribute = ResourceAttribute(
                 name='accountId', value=example_account_id)
             service_name_resource_attribute = ResourceAttribute(
-                name='serviceName', value=example_service_name)
+                name='serviceType', value='service')
             policy_resource_tag = ResourceTag(
                 name='project', value='prototype')
             policy_resources = PolicyResource(
@@ -163,7 +163,7 @@ class TestIamPolicyManagementV1Examples():
             account_id_resource_attribute = ResourceAttribute(
                 name='accountId', value=example_account_id)
             service_name_resource_attribute = ResourceAttribute(
-                name='serviceName', value=example_service_name)
+                name='serviceType', value='service')
             policy_resource_tag = ResourceTag(
                 name='project', value='prototype')
             policy_resources = PolicyResource(

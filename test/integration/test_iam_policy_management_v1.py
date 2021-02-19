@@ -68,7 +68,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         cls.testPolicyResources = PolicyResource(attributes=
             [ResourceAttribute(name='accountId', value=cls.testAccountId,
                 operator='stringEquals'),
-            ResourceAttribute(name='serviceName', value=cls.testServiceName,
+            ResourceAttribute(name='serviceType', value='service',
                 operator='stringEquals')], tags=[resource_tag])
 
         cls.testCustomRoleId = ""
