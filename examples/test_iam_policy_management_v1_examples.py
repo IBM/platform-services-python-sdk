@@ -23,20 +23,20 @@ from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.iam_policy_management_v1 import *
 
 #
-# Below are examples on how to use IAM Policy Management service
+# This file provides an example of how to use the IAM Policy Management service.
 #
-# The following environment variables are assumed to be defined when running examples below:
+# The following configuration properties are assumed to be defined:
 #
-# IAM_POLICY_MANAGEMENT_URL=https://iam.cloud.ibm.com
+# IAM_POLICY_MANAGEMENT_URL=<service url>
 # IAM_POLICY_MANAGEMENT_AUTH_TYPE=iam
-# IAM_POLICY_MANAGEMENT_AUTH_URL=https://iam.cloud.ibm.com/identity/token
-# IAM_POLICY_MANAGEMENT_APIKEY= <YOUR_APIKEY>
-# IAM_POLICY_MANAGEMENT_TEST_ACCOUNT_ID= <YOUR_ACCOUNT_ID>
+# IAM_POLICY_MANAGEMENT_AUTH_URL=<IAM token service URL - omit this if using the production environment>
+# IAM_POLICY_MANAGEMENT_APIKEY=<YOUR_APIKEY>
+# IAM_POLICY_MANAGEMENT_TEST_ACCOUNT_ID=<YOUR_ACCOUNT_ID>
 #
-# Alternatively, above environment variables can be placed in a "credentials" file and then:
-# export IBM_CREDENTIALS_FILE=<name of credentials file>
+# These configuration properties can be exported as environment variables, or stored
+# in a configuration file and then:
+# export IBM_CREDENTIALS_FILE=<name of config file>
 #
-
 # Config file name
 config_file = 'iam_policy_management.env'
 
@@ -56,6 +56,8 @@ example_service_name = "iam-groups"
 # Start of Examples for Service: IamPolicyManagementV1
 ##############################################################################
 # region
+
+
 class TestIamPolicyManagementV1Examples():
     """
     Example Test Class for IamPolicyManagementV1
@@ -77,7 +79,8 @@ class TestIamPolicyManagementV1Examples():
 
             # Load the configuration
             global config, example_account_id
-            config = read_external_sources(IamPolicyManagementV1.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(
+                IamPolicyManagementV1.DEFAULT_SERVICE_NAME)
             example_account_id = config['TEST_ACCOUNT_ID']
 
         print('Setup complete.')
@@ -103,7 +106,8 @@ class TestIamPolicyManagementV1Examples():
                 name='accountId', value=example_account_id)
             service_name_resource_attribute = ResourceAttribute(
                 name='serviceName', value=example_service_name)
-            policy_resource_tag = ResourceTag(name='project', value='prototype')
+            policy_resource_tag = ResourceTag(
+                name='project', value='prototype')
             policy_resources = PolicyResource(
                 attributes=[account_id_resource_attribute,
                             service_name_resource_attribute],
@@ -160,7 +164,8 @@ class TestIamPolicyManagementV1Examples():
                 name='accountId', value=example_account_id)
             service_name_resource_attribute = ResourceAttribute(
                 name='serviceName', value=example_service_name)
-            policy_resource_tag = ResourceTag(name='project', value='prototype')
+            policy_resource_tag = ResourceTag(
+                name='project', value='prototype')
             policy_resources = PolicyResource(
                 attributes=[account_id_resource_attribute,
                             service_name_resource_attribute],
@@ -277,7 +282,8 @@ class TestIamPolicyManagementV1Examples():
         try:
             # begin-update_role
 
-            updated_role_actions = ['iam-groups.groups.read', 'iam-groups.groups.list']
+            updated_role_actions = [
+                'iam-groups.groups.read', 'iam-groups.groups.list']
             custom_role = iam_policy_management_service.update_role(
                 role_id=example_custom_role_id,
                 if_match=example_custom_role_etag,
