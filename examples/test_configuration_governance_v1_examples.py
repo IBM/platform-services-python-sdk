@@ -22,7 +22,24 @@ import pytest
 from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.configuration_governance_v1 import *
 
-# Config file name
+#
+# This file provides an example of how to use the Configuration Governance service.
+#
+# The following configuration properties are assumed to be defined:
+#
+# CONFIGURATION_GOVERNANCE_URL=<service url>
+# CONFIGURATION_GOVERNANCE_AUTHTYPE=iam
+# CONFIGURATION_GOVERNANCE_APIKEY=<IAM api key of user with authority to create rules>
+# CONFIGURATION_GOVERNANCE_AUTH_URL=<IAM token service URL - omit this if using the production environment>
+# CONFIGURATION_GOVERNANCE_ACCOUNT_ID=<the id of the account under which rules/attachments should be created>
+# CONFIGURATION_GOVERNANCE_EXAMPLE_SERVICE_NAME=<the name of the service to be associated with rule>
+# CONFIGURATION_GOVERNANCE_ENTERPRISE_SCOPE_ID=<the id of the "enterprise" scope to be used in the examples>
+# CONFIGURATION_GOVERNANCE_SUBACCT_SCOPE_ID=<the id of the "leaf account" scope to be used in the examples>
+#
+# These configuration properties can be exported as environment variables, or stored
+# in a configuration file and then:
+# export IBM_CREDENTIALS_FILE=<name of configuration file>
+#
 config_file = 'configuration_governance.env'
 
 configuration_governance_service = None

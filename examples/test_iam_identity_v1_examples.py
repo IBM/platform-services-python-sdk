@@ -24,7 +24,7 @@ from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.iam_identity_v1 import *
 
 #
-# This file provides an example of how to use the IAM-IDENTITY service.
+# This file provides an example of how to use the IAM Identity service.
 #
 # The following configuration properties are assumed to be defined:
 #
@@ -36,11 +36,9 @@ from ibm_platform_services.iam_identity_v1 import *
 # IAM_IDENTITY_IAM_ID=<IAM ID which is unique to the User account>
 #
 # These configuration properties can be exported as environment variables, or stored
-# in a "credentials" file and then:
-# export IBM_CREDENTIALS_FILE=<name of credentials file>
+# in a configuration file and then:
+# export IBM_CREDENTIALS_FILE=<name of configuration file>
 #
-
-# Config file name
 config_file = 'iam_identity.env'
 
 iam_identity_service = None
