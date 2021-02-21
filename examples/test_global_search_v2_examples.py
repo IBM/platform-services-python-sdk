@@ -21,16 +21,21 @@ import pytest
 from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.global_search_v2 import *
 
-# This file provides an example of how to use the Global Tagging service.
+#
+# This file provides an example of how to use the Global Search service.
+#
+# The following configuration properties are assumed to be defined:
 #
 # The following configuration properties are assumed to be defined in the external configuration file:
-# GLOBAL_TAGGING_URL=<service url>
-# GLOBAL_TAGGING_AUTHTYPE=iam
-# GLOBAL_TAGGING_APIKEY=<IAM api key>
-# GLOBAL_TAGGING_AUTH_URL=<IAM token service URL - omit this if using the production environment>
-# GLOBAL_TAGGING_RESOURCE_CRN=<the crn of the resource to be used in the examples>
-
-# Config file name
+# GLOBAL_SEARCH_URL=<service url>
+# GLOBAL_SEARCH_AUTHTYPE=iam
+# GLOBAL_SEARCH_APIKEY=<IAM api key>
+# GLOBAL_SEARCH_AUTH_URL=<IAM token service URL - omit this if using the production environment>
+#
+# These configuration properties can be exported as environment variables, or stored
+# in a configuration file and then:
+# export IBM_CREDENTIALS_FILE=<name of configuration file>
+#
 config_file = 'global_search.env'
 
 global_search_service = None

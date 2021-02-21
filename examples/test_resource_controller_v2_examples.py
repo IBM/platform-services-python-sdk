@@ -23,9 +23,6 @@ import pytest
 from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.resource_controller_v2 import *
 
-# Config file name
-config_file = 'resource_controller.env'
-
 #
 # This file provides an example of how to use the Resource Controller service.
 #
@@ -42,9 +39,10 @@ config_file = 'resource_controller.env'
 # RESOURCE_CONTROLLER_BINDING_TARGET_CRN=<The CRN of application to bind to in a specific environment>
 #
 # These configuration properties can be exported as environment variables, or stored
-# in a "credentials" file and then:
-# export IBM_CREDENTIALS_FILE=<name of credentials file>
+# in a configuration file and then:
+# export IBM_CREDENTIALS_FILE=<name of configuration file>
 #
+config_file = 'resource_controller.env'
 
 resource_controller_service = None
 

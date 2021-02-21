@@ -22,9 +22,6 @@ import pytest
 from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.open_service_broker_v1 import *
 
-# Config file name
-config_file = 'open_service_broker.env'
-
 #
 # This file provides an example of how to use the Open Service Broker service.
 #
@@ -44,9 +41,10 @@ config_file = 'open_service_broker.env'
 # OPEN_SERVICE_BROKER_ORGANIZATION_GUID=<The IBM Cloud platform GUID for the organization under which the service instance is to be provisioned>
 #
 # These configuration properties can be exported as environment variables, or stored
-# in a "credentials" file and then:
-# export IBM_CREDENTIALS_FILE=<name of credentials file>
+# in a configuration file and then:
+# export IBM_CREDENTIALS_FILE=<name of configuration file>
 #
+config_file = 'open_service_broker.env'
 
 open_service_broker_service = None
 

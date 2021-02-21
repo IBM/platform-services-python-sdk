@@ -25,14 +25,17 @@ from ibm_platform_services.usage_metering_v4 import *
 #
 # This file provides an example of how to use the Usage Metering service.
 #
-# The following configuration properties are assumed to be defined in the external configuration file:
+# The following configuration properties are assumed to be defined:
+#
 # USAGE_METERING_URL=<service url>
 # USAGE_METERING_AUTHTYPE=iam
 # USAGE_METERING_APIKEY=<your iam apikey>
 # USAGE_METERING_AUTH_URL=<IAM token service URL - omit this if using the production environment>
 #
-
-# Config file name
+# These configuration properties can be exported as environment variables, or stored
+# in a configuration file and then:
+# export IBM_CREDENTIALS_FILE=<name of configuration file>
+#
 config_file = 'usage_metering.env'
 
 usage_metering_service = None
