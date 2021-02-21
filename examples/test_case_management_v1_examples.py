@@ -26,20 +26,22 @@ from ibm_platform_services.case_management_v1 import *
 #
 # This file provides an example of how to use the Case Management service.
 #
-# CASE_MANAGEMENT_URL=<service url>
-# CASE_MANAGEMENT_AUTHTYPE=iam
-# CASE_MANAGEMENT_APIKEY=<IAM apikey>
-# CASE_MANAGEMENT_AUTH_URL=<IAM token service URL - omit this if using the production environment>
-# CASE_MANAGEMENT_RESOURCE_CRN=<cloud resource name>
+# The following configuration properties are assumed to be defined:
 #
-
-# Config file name
+# CASE_MANAGEMENT_URL=<service url>
+# CASE_MANAGEMENT_AUTH_TYPE=iam
+# CASE_MANAGEMENT_AUTH_URL=<IAM token service URL - omit this if using the production environment>
+# CASE_MANAGEMENT_APIKEY=<IAM apikey>
+# CASE_MANAGEMENT_RESOURCE_CRN=<CRN of resource to use in examples>
+#
+# These configuration properties can be exported as environment variables, or stored
+# in a configuration file and then:
+# export IBM_CREDENTIALS_FILE=<name of configuration file>
+#
 config_file = 'case_management.env'
 
 case_management_service = None
-
 config = None
-
 case_number = None
 attachment_id = None
 resource_crn = None

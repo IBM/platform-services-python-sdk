@@ -24,5 +24,8 @@ test-unit:
 test-int:
 	python -m pytest test/integration
 
+test-examples:
+	python -m pytest examples
+
 lint:
 	./pylint.sh
