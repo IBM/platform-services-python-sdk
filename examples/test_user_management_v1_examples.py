@@ -64,6 +64,25 @@ class TestUserManagementV1Examples():
     )
 
     @needscredentials
+    def test_invite_users_example(self):
+        """
+        invite_users request example
+        """
+        try:
+            # begin-invite_users
+
+            invited_user_list = user_management_service.invite_users(
+                account_id='testString'
+            ).get_result()
+
+            print(json.dumps(invited_user_list, indent=2))
+
+            # end-invite_users
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
     def test_list_users_example(self):
         """
         list_users request example
@@ -83,20 +102,21 @@ class TestUserManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    def test_invite_users_example(self):
+    def test_remove_user_example(self):
         """
-        invite_users request example
+        remove_user request example
         """
         try:
-            # begin-invite_users
+            # begin-remove_user
 
-            invited_user_list = user_management_service.invite_users(
-                account_id='testString'
+            response = user_management_service.remove_user(
+                account_id='testString',
+                iam_id='testString'
             ).get_result()
 
-            print(json.dumps(invited_user_list, indent=2))
+            print(json.dumps(response, indent=2))
 
-            # end-invite_users
+            # end-remove_user
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -177,26 +197,6 @@ class TestUserManagementV1Examples():
             print(json.dumps(response, indent=2))
 
             # end-update_user_settings
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_remove_user_example(self):
-        """
-        remove_user request example
-        """
-        try:
-            # begin-remove_user
-
-            response = user_management_service.remove_user(
-                account_id='testString',
-                iam_id='testString'
-            ).get_result()
-
-            print(json.dumps(response, indent=2))
-
-            # end-remove_user
 
         except ApiException as e:
             pytest.fail(str(e))
