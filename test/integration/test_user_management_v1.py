@@ -52,9 +52,9 @@ class TestUserManagementV1(unittest.TestCase):
             service_name=UserManagementV1.DEFAULT_SERVICE_NAME)
         assert cls.user_management_service is not None
 
-        cls.alternate_user_management_service = UserManagementV1.new_instance(
-            service_name='USERMGMT2')
-        assert cls.alternate_user_management_service is not None
+        cls.user_management_admin_service = UserManagementV1.new_instance(
+            service_name='USER_MANAGEMENT_ADMIN')
+        assert cls.user_management_admin_service is not None
 
         cls.ACCOUNT_ID = cls.config['ACCOUNT_ID']
         cls.IAM_USERID = cls.config['USER_ID']
@@ -140,7 +140,7 @@ class TestUserManagementV1(unittest.TestCase):
             'resources': [resource_model]
         }
 
-        response = self.alternate_user_management_service.invite_users(
+        response = self.user_management_admin_service.invite_users(
             account_id=self.ACCOUNT_ID,
             users=[invite_user_model],
             iam_policy=[invite_user_iam_policy_model],

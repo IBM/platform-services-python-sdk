@@ -37,10 +37,10 @@ from ibm_platform_services.user_management_v1 import *
 # USER_MANAGEMENT_VIEWER_ROLE_ID=<viewer role ID>
 # USER_MANAGEMENT_ACCESS_GROUP_ID=<access group ID>
 # # alternateService
-# USERMGMT2_URL=<service url>
-# USERMGMT2_AUTHTYPE=iam
-# USERMGMT2_AUTH_URL=<IAM token service URL - omit this if using the production environment>
-# USERMGMT2_APIKEY=<IAM apikey>
+# USER_MANAGEMENT_ADMIN_URL=<service url>
+# USER_MANAGEMENT_ADMIN_AUTHTYPE=iam
+# USER_MANAGEMENT_ADMIN_AUTH_URL=<IAM token service URL - omit this if using the production environment>
+# USER_MANAGEMENT_ADMIN_APIKEY=<IAM apikey>
 #
 # These configuration properties can be exported as environment variables, or stored
 # in a configuration file and then:
@@ -49,7 +49,7 @@ from ibm_platform_services.user_management_v1 import *
 config_file = 'user_management.env'
 
 user_management_service = None
-alternate_user_management_service = None
+user_management_admin_service = None
 
 
 config = None
@@ -77,14 +77,16 @@ class TestUserManagementV1Examples():
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
-            global alternate_user_management_service
+            global user_management_admin_service
 
             # begin-common
 
-            user_management_service = UserManagementV1.new_instance()
+            user_management_service = UserManagementV1.new_instance(
+                service_name='USER_MANAGEMENT',
+            )
 
-            alternate_user_management_service = UserManagementV1.new_instance(
-                service_name='USERMGMT2',
+            user_management_admin_service = UserManagementV1.new_instance(
+                service_name='USER_MANAGEMENT_ADMIN',
             )
 
             # end-common
@@ -149,7 +151,7 @@ class TestUserManagementV1Examples():
                 'resources': [resource_model]
             }
 
-            invite_user_response = alternate_user_management_service.invite_users(
+            invite_user_response = user_management_admin_service.invite_users(
                 account_id=account_id,
                 users=[invite_user_model],
                 iam_policy=[invite_user_iam_policy_model],
@@ -200,7 +202,7 @@ class TestUserManagementV1Examples():
         try:
             # begin-remove_user
 
-            response = user_management_service.remove_user(
+            response = user_management_admin_service.remove_user(
                 account_id=account_id,
                 iam_id=delete_user_id,
             ).get_result()
