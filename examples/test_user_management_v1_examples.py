@@ -22,7 +22,30 @@ import pytest
 from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.user_management_v1 import *
 
-# Config file name
+#
+# This file provides an example of how to use the User Management service.
+#
+# The following configuration properties are assumed to be defined:
+#
+# USER_MANAGEMENT_URL=<service url>
+# USER_MANAGEMENT_AUTHTYPE=iam
+# USER_MANAGEMENT_AUTH_URL=<IAM token service URL - omit this if using the production environment>
+# USER_MANAGEMENT_APIKEY=<IAM apikey>
+# USER_MANAGEMENT_ACCOUNT_ID=<account ID>
+# USER_MANAGEMENT_USER_ID=<user ID>
+# USER_MANAGEMENT_MEMBER_EMAIL=<member email to invite>
+# USER_MANAGEMENT_VIEWER_ROLE_ID=<viewer role ID>
+# USER_MANAGEMENT_ACCESS_GROUP_ID=<access group ID>
+# # alternateService
+# USERMGMT2_URL=<service url>
+# USERMGMT2_AUTHTYPE=iam
+# USERMGMT2_AUTH_URL=<IAM token service URL - omit this if using the production environment>
+# USERMGMT2_APIKEY=<IAM apikey>
+#
+# These configuration properties can be exported as environment variables, or stored
+# in a configuration file and then:
+# export IBM_CREDENTIALS_FILE=<name of configuration file>
+#
 config_file = 'user_management.env'
 
 user_management_service = None
