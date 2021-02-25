@@ -21,6 +21,8 @@ import sys
 import unittest
 import urllib.parse as urlparse
 from urllib.parse import parse_qs
+
+from ibm_cloud_sdk_core.utils import read_external_sources
 from ibm_platform_services.user_management_v1 import *
 
 # Read config file
@@ -41,19 +43,24 @@ class TestUserManagementV1(unittest.TestCase):
             raise unittest.SkipTest(
                 'External configuration not available, skipping...')
 
+        cls.config = read_external_sources(
+            UserManagementV1.DEFAULT_SERVICE_NAME
+        )
+        assert cls.config is not None
+
         cls.user_management_service = UserManagementV1.new_instance(
-            service_name='USERMGMT1')
+            service_name=UserManagementV1.DEFAULT_SERVICE_NAME)
         assert cls.user_management_service is not None
 
-        cls.alternate_user_management_service = UserManagementV1.new_instance(
-            service_name='USERMGMT2')
-        assert cls.alternate_user_management_service is not None
+        cls.user_management_admin_service = UserManagementV1.new_instance(
+            service_name='USER_MANAGEMENT_ADMIN')
+        assert cls.user_management_admin_service is not None
 
-        cls.ACCOUNT_ID = '1aa434630b594b8a88b961a44c9eb2a9'
-        cls.IAM_USERID = 'IBMid-550008BJPR'
-        cls.INVITED_USER_EMAIL = 'aminttest+linked_account_owner_11@mail.test.ibm.com'
-        cls.VIEWER_ROLEID = 'crn:v1:bluemix:public:iam::::role:Viewer'
-        cls.ACCESS_GROUP_ID = 'AccessGroupId-51675919-2bd7-4ce3-86e4-5faff8065574'
+        cls.ACCOUNT_ID = cls.config['ACCOUNT_ID']
+        cls.IAM_USERID = cls.config['USER_ID']
+        cls.INVITED_USER_EMAIL = cls.config['MEMBER_EMAIL']
+        cls.VIEWER_ROLEID = cls.config['VIEWER_ROLE_ID']
+        cls.ACCESS_GROUP_ID = cls.config['ACCESS_GROUP_ID']
 
         print('\nService URL: ', cls.user_management_service.service_url)
         print('Setup complete.')
@@ -133,7 +140,7 @@ class TestUserManagementV1(unittest.TestCase):
             'resources': [resource_model]
         }
 
-        response = self.alternate_user_management_service.invite_users(
+        response = self.user_management_admin_service.invite_users(
             account_id=self.ACCOUNT_ID,
             users=[invite_user_model],
             iam_policy=[invite_user_iam_policy_model],
