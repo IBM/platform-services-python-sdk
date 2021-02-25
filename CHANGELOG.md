@@ -1,3 +1,10 @@
+## [0.17.11](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.10...v0.17.11) (2021-02-25)
+
+
+### Bug Fixes
+
+* **User Management:** add examples ([#83](https://github.com/IBM/platform-services-python-sdk/issues/83)) ([710d213](https://github.com/IBM/platform-services-python-sdk/commit/710d2137a96c4fee6092c508dc3162140190198f))
+
 ## [0.17.10](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.9...v0.17.10) (2021-02-18)
 
 
