@@ -63,11 +63,13 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         cls.testPolicySubject = PolicySubject(attributes=
             [SubjectAttribute(name='iam_id', value=cls.testUserId)])
         cls.testPolicyRole = PolicyRole(role_id=cls.testViewerRoleCrn)
+        resource_tag = ResourceTag(name='project', value='prototype',
+                                   operator='stringEquals')
         cls.testPolicyResources = PolicyResource(attributes=
             [ResourceAttribute(name='accountId', value=cls.testAccountId,
                 operator='stringEquals'),
-            ResourceAttribute(name='serviceName', value=cls.testServiceName,
-                operator='stringEquals')])
+            ResourceAttribute(name='serviceType', value='service',
+                operator='stringEquals')], tags=[resource_tag])
 
         cls.testCustomRoleId = ""
         cls.testCustomRoleETag = ""

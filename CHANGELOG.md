@@ -1,3 +1,17 @@
+## [0.17.12](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.11...v0.17.12) (2021-02-25)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** re-gen service and add examples after recent API changes ([#79](https://github.com/IBM/platform-services-python-sdk/issues/79)) ([3e92813](https://github.com/IBM/platform-services-python-sdk/commit/3e92813547f077f9819629fc1e5e16ae3ef3eb30))
+
+## [0.17.11](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.10...v0.17.11) (2021-02-25)
+
+
+### Bug Fixes
+
+* **User Management:** add examples ([#83](https://github.com/IBM/platform-services-python-sdk/issues/83)) ([710d213](https://github.com/IBM/platform-services-python-sdk/commit/710d2137a96c4fee6092c508dc3162140190198f))
+
 ## [0.17.10](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.9...v0.17.10) (2021-02-18)
 
 
