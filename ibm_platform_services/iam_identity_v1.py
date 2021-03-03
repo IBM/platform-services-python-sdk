@@ -101,26 +101,26 @@ class IamIdentityV1(BaseService):
         manager or IBM Cloud space developer in order to manage  service IDs of the
         entity.
 
-        :param str account_id: (optional) Account ID of the API keys(s) to query.
+        :param str account_id: (optional) Account ID of the API key(s) to query.
                If a service IAM ID is specified in iam_id then account_id must match the
                account of the IAM ID. If a user IAM ID is specified in iam_id then then
                account_id must match the account of the Authorization token.
         :param str iam_id: (optional) IAM ID of the API key(s) to be queried. The
                IAM ID may be that of a user or a service. For a user IAM ID iam_id must
                match the Authorization token.
-        :param int pagesize: (optional) Optional size of a single page. Default is
-               20 items per page. Valid range is 1 to 100.
-        :param str pagetoken: (optional) Optional Prev or Next page token returned
-               from a previous query execution. Default is start with first page.
-        :param str scope: (optional) Optional parameter to define the scope of the
-               queried API Keys. Can be 'entity' (default) or 'account'.
-        :param str type: (optional) Optional parameter to filter the type of the
-               queried API Keys. Can be 'user' or 'serviceid'.
-        :param str sort: (optional) Optional sort property, valid values are name,
-               description, created_at and created_by. If specified, the items are sorted
-               by the value of this property.
-        :param str order: (optional) Optional sort order, valid values are asc and
-               desc. Default: asc.
+        :param int pagesize: (optional) Size of a single page. Default is 20 items per
+               page. Valid range is 1 to 100.
+        :param str pagetoken: (optional) Prev or Next page token returned from a previous
+               query execution. Default is start with first page.
+        :param str scope: (optional) parameter to define the scope of the queried API
+               Keys. Can be 'entity' (default) or 'account'.
+        :param str type: (optional) parameter to filter the type of the queried API Keys.
+               Can be 'user' or 'serviceid'.
+        :param str sort: (optional) sort property, valid values are name, description,
+               created_at and created_by. If specified, the items are sorted by the value
+               of this property.
+        :param str order: (optional) sort order, valid values are asc and desc. Default:
+               asc.
         :param bool include_history: (optional) Defines if the entity history is
                included in the response.
         :param dict headers: A `dict` containing the request headers
