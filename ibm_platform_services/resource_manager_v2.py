@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-4883cbcd-20210301-143711
  
 """
 Manage lifecycle of your Cloud resource groups using Resource Manager APIs.
@@ -80,6 +80,9 @@ class ResourceManagerV2(BaseService):
         *,
         account_id: str = None,
         date: str = None,
+        name: str = None,
+        default: bool = None,
+        include_deleted: bool = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -89,8 +92,14 @@ class ResourceManagerV2(BaseService):
 
         :param str account_id: (optional) The ID of the account that contains the
                resource groups that you want to get.
-        :param str date: (optional) The date would be in a format of YYYY-MM which
-               returns resource groups exclude the deleted ones before this month.
+        :param str date: (optional) The date in the format of YYYY-MM which returns
+               resource groups. Deleted resource groups will be excluded before this
+               month.
+        :param str name: (optional) The name of the resource group.
+        :param bool default: (optional) Boolean value to specify whether or not to
+               list default resource groups.
+        :param bool include_deleted: (optional) Boolean value to specify whether or
+               not to list default resource groups.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceGroupList` object
@@ -104,7 +113,10 @@ class ResourceManagerV2(BaseService):
 
         params = {
             'account_id': account_id,
-            'date': date
+            'date': date,
+            'name': name,
+            'default': default,
+            'include_deleted': include_deleted
         }
 
         if 'headers' in kwargs:
@@ -601,7 +613,7 @@ class ResCreateResourceGroup():
     :attr str id: (optional) An alpha-numeric value identifying the resource group.
     :attr str crn: (optional) The full CRN (cloud resource name) associated with the
           resource group. For more on this format, see [Cloud Resource
-          Names](https://cloud.ibm.com/docs/resources?topic=resources-crn).
+          Names](https://cloud.ibm.com/docs/account?topic=account-crn).
     """
 
     def __init__(self,
@@ -615,7 +627,7 @@ class ResCreateResourceGroup():
                group.
         :param str crn: (optional) The full CRN (cloud resource name) associated
                with the resource group. For more on this format, see [Cloud Resource
-               Names](https://cloud.ibm.com/docs/resources?topic=resources-crn).
+               Names](https://cloud.ibm.com/docs/account?topic=account-crn).
         """
         self.id = id
         self.crn = crn
@@ -669,7 +681,7 @@ class ResourceGroup():
     :attr str id: (optional) An alpha-numeric value identifying the resource group.
     :attr str crn: (optional) The full CRN (cloud resource name) associated with the
           resource group. For more on this format, see [Cloud Resource
-          Names](https://cloud.ibm.com/docs/resources?topic=resources-crn).
+          Names](https://cloud.ibm.com/docs/account?topic=account-crn).
     :attr str account_id: (optional) An alpha-numeric value identifying the account
           ID.
     :attr str name: (optional) The human-readable name of the resource group.
@@ -714,7 +726,7 @@ class ResourceGroup():
                group.
         :param str crn: (optional) The full CRN (cloud resource name) associated
                with the resource group. For more on this format, see [Cloud Resource
-               Names](https://cloud.ibm.com/docs/resources?topic=resources-crn).
+               Names](https://cloud.ibm.com/docs/account?topic=account-crn).
         :param str account_id: (optional) An alpha-numeric value identifying the
                account ID.
         :param str name: (optional) The human-readable name of the resource group.
@@ -900,7 +912,7 @@ class ResourceQuota():
     :attr str resource_id: (optional) The human-readable name of the quota.
     :attr str crn: (optional) The full CRN (cloud resource name) associated with the
           quota. For more on this format, see
-          https://cloud.ibm.com/docs/resources?topic=resources-crn#crn.
+          https://cloud.ibm.com/docs/account?topic=account-crn.
     :attr float limit: (optional) The limit number of this resource.
     """
 
@@ -917,7 +929,7 @@ class ResourceQuota():
         :param str resource_id: (optional) The human-readable name of the quota.
         :param str crn: (optional) The full CRN (cloud resource name) associated
                with the quota. For more on this format, see
-               https://cloud.ibm.com/docs/resources?topic=resources-crn#crn.
+               https://cloud.ibm.com/docs/account?topic=account-crn.
         :param float limit: (optional) The limit number of this resource.
         """
         self.id = id
