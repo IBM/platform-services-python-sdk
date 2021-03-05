@@ -38,9 +38,14 @@ from ibm_platform_services.resource_manager_v2 import *
 config_file = 'resource_manager_v2.env'
 
 resource_manager_service = None
+delete_resource_manager_service = None
 
 config = None
 
+example_quota_id = None
+example_user_account_id = None
+
+resource_group_id = None
 
 ##############################################################################
 # Start of Examples for Service: ResourceManagerV2
@@ -60,14 +65,26 @@ class TestResourceManagerV2Examples():
             # begin-common
 
             resource_manager_service = ResourceManagerV2.new_instance(
+                service_name=ResourceManagerV2.DEFAULT_SERVICE_NAME,
+            )
+
+            delete_resource_manager_service = ResourceManagerV2.new_instance(
+                service_name='DELETE_RESOURCE_MANAGER',
             )
 
             # end-common
             assert resource_manager_service is not None
+            assert delete_resource_manager_service is not None
 
             # Load the configuration
             global config
             config = read_external_sources(ResourceManagerV2.DEFAULT_SERVICE_NAME)
+
+            global example_quota_id
+            example_quota_id = config['TEST_QUOTA_ID']
+
+            global example_user_account_id
+            example_user_account_id = config['TEST_USER_ACCOUNT_ID']
 
         print('Setup complete.')
 
@@ -76,35 +93,26 @@ class TestResourceManagerV2Examples():
     )
 
     @needscredentials
-    def test_list_resource_groups_example(self):
-        """
-        list_resource_groups request example
-        """
-        try:
-            # begin-list_resource_groups
-
-            resource_group_list = resource_manager_service.list_resource_groups().get_result()
-
-            print(json.dumps(resource_group_list, indent=2))
-
-            # end-list_resource_groups
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
     def test_create_resource_group_example(self):
         """
         create_resource_group request example
         """
+        assert example_user_account_id is not None
+
         try:
             # begin-create_resource_group
 
-            res_create_resource_group = resource_manager_service.create_resource_group().get_result()
+            res_create_resource_group = resource_manager_service.create_resource_group(
+                account_id=example_user_account_id,
+                name='ExampleGroup',
+            ).get_result()
 
             print(json.dumps(res_create_resource_group, indent=2))
 
             # end-create_resource_group
+
+            global resource_group_id
+            resource_group_id = res_create_resource_group.get('id')
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -114,11 +122,13 @@ class TestResourceManagerV2Examples():
         """
         get_resource_group request example
         """
+        assert resource_group_id is not None
+
         try:
             # begin-get_resource_group
 
             resource_group = resource_manager_service.get_resource_group(
-                id='testString'
+                id=resource_group_id,
             ).get_result()
 
             print(json.dumps(resource_group, indent=2))
@@ -133,16 +143,84 @@ class TestResourceManagerV2Examples():
         """
         update_resource_group request example
         """
+        assert resource_group_id is not None
+
         try:
             # begin-update_resource_group
 
             resource_group = resource_manager_service.update_resource_group(
-                id='testString'
+                id=resource_group_id,
+                name='RenamedExampleGroup',
+                state='ACTIVE',
             ).get_result()
 
             print(json.dumps(resource_group, indent=2))
 
             # end-update_resource_group
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_resource_groups_example(self):
+        """
+        list_resource_groups request example
+        """
+        assert example_user_account_id is not None
+
+        try:
+            # begin-list_resource_groups
+
+            resource_group_list = resource_manager_service.list_resource_groups(
+                account_id=example_user_account_id,
+                include_deleted=True,
+            ).get_result()
+
+            print(json.dumps(resource_group_list, indent=2))
+
+            # end-list_resource_groups
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_resource_group_example(self):
+        """
+        delete_resource_group request example
+        """
+        assert resource_group_id is not None
+
+        try:
+            # begin-delete_resource_group
+
+            response = delete_resource_manager_service.delete_resource_group(
+                id=resource_group_id,
+            ).get_result()
+
+            print(json.dumps(response, indent=2))
+
+            # end-delete_resource_group
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_quota_definition_example(self):
+        """
+        get_quota_definition request example
+        """
+        assert example_quota_id is not None
+
+        try:
+            # begin-get_quota_definition
+
+            quota_definition = resource_manager_service.get_quota_definition(
+                id=example_quota_id,
+            ).get_result()
+
+            print(json.dumps(quota_definition, indent=2))
+
+            # end-get_quota_definition
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -164,43 +242,6 @@ class TestResourceManagerV2Examples():
         except ApiException as e:
             pytest.fail(str(e))
 
-    @needscredentials
-    def test_get_quota_definition_example(self):
-        """
-        get_quota_definition request example
-        """
-        try:
-            # begin-get_quota_definition
-
-            quota_definition = resource_manager_service.get_quota_definition(
-                id='testString'
-            ).get_result()
-
-            print(json.dumps(quota_definition, indent=2))
-
-            # end-get_quota_definition
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_delete_resource_group_example(self):
-        """
-        delete_resource_group request example
-        """
-        try:
-            # begin-delete_resource_group
-
-            response = resource_manager_service.delete_resource_group(
-                id='testString'
-            ).get_result()
-
-            print(json.dumps(response, indent=2))
-
-            # end-delete_resource_group
-
-        except ApiException as e:
-            pytest.fail(str(e))
 
 # endregion
 ##############################################################################
