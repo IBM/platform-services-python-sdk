@@ -49,6 +49,11 @@ class TestResourceManagerV2(unittest.TestCase):
             raise unittest.SkipTest(
                 'External configuration not available, skipping...')
 
+        cls.config = read_external_sources(
+            ResourceManagerV2.DEFAULT_SERVICE_NAME
+        )
+        assert cls.config is not None
+
         # Construct the first service instance.
         cls.service1 = ResourceManagerV2.new_instance(service_name='RMGR1')
         assert cls.service1 is not None
@@ -58,8 +63,8 @@ class TestResourceManagerV2(unittest.TestCase):
         assert cls.service2 is not None
 
         # setup default values
-        cls.test_quota_id = '7ce89f4a-4381-4600-b814-3cd9a4f4bdf4'
-        cls.test_user_account_id = '60ce10d1d94749bf8dceff12065db1b0'
+        cls.test_quota_id = cls.config['TEST_QUOTA_ID']
+        cls.test_user_account_id = cls.config['TEST_USER_ACCOUNT_ID']
         cls.new_resource_group_id = ''
 
         print('\nSetup complete.')
