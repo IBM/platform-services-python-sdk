@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-e6cfc86e-20210308-084627
  
 """
-The IAM Identity Service API allows for the management of Identities (Service IDs,
-ApiKeys).
+The IAM Identity Service API allows for the management of Account Settings and Identities
+(Service IDs, ApiKeys).
 """
 
 from datetime import datetime
@@ -932,6 +932,158 @@ class IamIdentityV1(BaseService):
         response = self.send(request)
         return response
 
+    #########################
+    # accountSettings
+    #########################
+
+
+    def get_account_settings(self,
+        account_id: str,
+        *,
+        include_history: bool = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get account configurations.
+
+        Returns the details of an account's configuration.
+
+        :param str account_id: Unique ID of the account.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsResponse` object
+        """
+
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_account_settings')
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/accounts/{account_id}/settings/identity'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
+
+        response = self.send(request)
+        return response
+
+
+    def update_account_settings(self,
+        if_match: str,
+        account_id: str,
+        *,
+        restrict_create_service_id: str = None,
+        restrict_create_platform_apikey: str = None,
+        allowed_ip_addresses: str = None,
+        mfa: str = None,
+        session_expiration_in_seconds: str = None,
+        session_invalidation_in_seconds: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Update account configurations.
+
+        Allows a user to configure settings on their account with regards to MFA, session
+        lifetimes,  access control for creating new identities, and enforcing IP
+        restrictions on  token creation.
+
+        :param str if_match: Version of the account settings to be updated. Specify
+               the version that you  retrieved as entity_tag (ETag header) when reading
+               the account. This value helps  identifying parallel usage of this API. Pass
+               * to indicate to update any version  available. This might result in stale
+               updates.
+        :param str account_id: The id of the account to update the settings for.
+        :param str restrict_create_service_id: (optional) Defines whether or not
+               creating a Service Id is access controlled. Valid values:
+                 * RESTRICTED - to apply access control
+                 * NOT_RESTRICTED - to remove access control
+                 * NOT_SET - to unset a previously set value.
+        :param str restrict_create_platform_apikey: (optional) Defines whether or
+               not creating a Service Id is access controlled. Valid values:
+                 * RESTRICTED - to apply access control
+                 * NOT_RESTRICTED - to remove access control
+                 * NOT_SET - to 'unset' a previous set value.
+        :param str allowed_ip_addresses: (optional) Defines the IP addresses and
+               subnets from which IAM tokens can be created for the account.
+        :param str mfa: (optional) Defines the MFA trait for the account. Valid
+               values:
+                 * NONE - No MFA trait set
+                 * TOTP - For all non-federated IBMId users
+                 * TOTP4ALL - For all users
+                 * LEVEL1 - Email-based MFA for all users
+                 * LEVEL2 - TOTP-based MFA for all users
+                 * LEVEL3 - U2F MFA for all users.
+        :param str session_expiration_in_seconds: (optional) Defines the session
+               expiration in seconds for the account. Valid values:
+                 * Any whole number between between '900' and '86400'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str session_invalidation_in_seconds: (optional) Defines the period
+               of time in seconds in which a session will be invalidated due  to
+               inactivity. Valid values:
+                 * Any whole number between '900' and '7200'
+                 * NOT_SET - To unset account setting and use service default.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsResponse` object
+        """
+
+        if if_match is None:
+            raise ValueError('if_match must be provided')
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        headers = {
+            'If-Match': if_match
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='update_account_settings')
+        headers.update(sdk_headers)
+
+        data = {
+            'restrict_create_service_id': restrict_create_service_id,
+            'restrict_create_platform_apikey': restrict_create_platform_apikey,
+            'allowed_ip_addresses': allowed_ip_addresses,
+            'mfa': mfa,
+            'session_expiration_in_seconds': session_expiration_in_seconds,
+            'session_invalidation_in_seconds': session_invalidation_in_seconds
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/accounts/{account_id}/settings/identity'.format(**path_param_dict)
+        request = self.prepare_request(method='PUT',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request)
+        return response
+
 
 class ListApiKeysEnums:
     """
@@ -976,6 +1128,238 @@ class ListServiceIdsEnums:
 ##############################################################################
 # Models
 ##############################################################################
+
+
+class AccountSettingsResponse():
+    """
+    Response body format for Account Settings REST requests.
+
+    :attr ResponseContext context: (optional) Context with key properties for
+          problem determination.
+    :attr str account_id: Unique ID of the account.
+    :attr str restrict_create_service_id: Defines whether or not creating a Service
+          Id is access controlled. Valid values:
+            * RESTRICTED - to apply access control
+            * NOT_RESTRICTED - to remove access control
+            * NOT_SET - to 'unset' a previous set value.
+    :attr str restrict_create_platform_apikey: Defines whether or not creating a
+          Service Id is access controlled. Valid values:
+            * RESTRICTED - to apply access control
+            * NOT_RESTRICTED - to remove access control
+            * NOT_SET - to 'unset' a previous set value.
+    :attr str allowed_ip_addresses: Defines the IP addresses and subnets from which
+          IAM tokens can be created for the account.
+    :attr str entity_tag: Version of the account settings.
+    :attr str mfa: Defines the MFA trait for the account. Valid values:
+            * NONE - No MFA trait set
+            * TOTP - For all non-federated IBMId users
+            * TOTP4ALL - For all users
+            * LEVEL1 - Email-based MFA for all users
+            * LEVEL2 - TOTP-based MFA for all users
+            * LEVEL3 - U2F MFA for all users.
+    :attr List[EnityHistoryRecord] history: (optional) History of the Account
+          Settings.
+    :attr str session_expiration_in_seconds: Defines the session expiration in
+          seconds for the account. Valid values:
+            * Any whole number between between '900' and '86400'
+            * NOT_SET - To unset account setting and use service default.
+    :attr str session_invalidation_in_seconds: Defines the period of time in seconds
+          in which a session will be invalidated due  to inactivity. Valid values:
+            * Any whole number between '900' and '7200'
+            * NOT_SET - To unset account setting and use service default.
+    """
+
+    def __init__(self,
+                 account_id: str,
+                 restrict_create_service_id: str,
+                 restrict_create_platform_apikey: str,
+                 allowed_ip_addresses: str,
+                 entity_tag: str,
+                 mfa: str,
+                 session_expiration_in_seconds: str,
+                 session_invalidation_in_seconds: str,
+                 *,
+                 context: 'ResponseContext' = None,
+                 history: List['EnityHistoryRecord'] = None) -> None:
+        """
+        Initialize a AccountSettingsResponse object.
+
+        :param str account_id: Unique ID of the account.
+        :param str restrict_create_service_id: Defines whether or not creating a
+               Service Id is access controlled. Valid values:
+                 * RESTRICTED - to apply access control
+                 * NOT_RESTRICTED - to remove access control
+                 * NOT_SET - to 'unset' a previous set value.
+        :param str restrict_create_platform_apikey: Defines whether or not creating
+               a Service Id is access controlled. Valid values:
+                 * RESTRICTED - to apply access control
+                 * NOT_RESTRICTED - to remove access control
+                 * NOT_SET - to 'unset' a previous set value.
+        :param str allowed_ip_addresses: Defines the IP addresses and subnets from
+               which IAM tokens can be created for the account.
+        :param str entity_tag: Version of the account settings.
+        :param str mfa: Defines the MFA trait for the account. Valid values:
+                 * NONE - No MFA trait set
+                 * TOTP - For all non-federated IBMId users
+                 * TOTP4ALL - For all users
+                 * LEVEL1 - Email-based MFA for all users
+                 * LEVEL2 - TOTP-based MFA for all users
+                 * LEVEL3 - U2F MFA for all users.
+        :param str session_expiration_in_seconds: Defines the session expiration in
+               seconds for the account. Valid values:
+                 * Any whole number between between '900' and '86400'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str session_invalidation_in_seconds: Defines the period of time in
+               seconds in which a session will be invalidated due  to inactivity. Valid
+               values:
+                 * Any whole number between '900' and '7200'
+                 * NOT_SET - To unset account setting and use service default.
+        :param ResponseContext context: (optional) Context with key properties for
+               problem determination.
+        :param List[EnityHistoryRecord] history: (optional) History of the Account
+               Settings.
+        """
+        self.context = context
+        self.account_id = account_id
+        self.restrict_create_service_id = restrict_create_service_id
+        self.restrict_create_platform_apikey = restrict_create_platform_apikey
+        self.allowed_ip_addresses = allowed_ip_addresses
+        self.entity_tag = entity_tag
+        self.mfa = mfa
+        self.history = history
+        self.session_expiration_in_seconds = session_expiration_in_seconds
+        self.session_invalidation_in_seconds = session_invalidation_in_seconds
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccountSettingsResponse':
+        """Initialize a AccountSettingsResponse object from a json dictionary."""
+        args = {}
+        if 'context' in _dict:
+            args['context'] = ResponseContext.from_dict(_dict.get('context'))
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in AccountSettingsResponse JSON')
+        if 'restrict_create_service_id' in _dict:
+            args['restrict_create_service_id'] = _dict.get('restrict_create_service_id')
+        else:
+            raise ValueError('Required property \'restrict_create_service_id\' not present in AccountSettingsResponse JSON')
+        if 'restrict_create_platform_apikey' in _dict:
+            args['restrict_create_platform_apikey'] = _dict.get('restrict_create_platform_apikey')
+        else:
+            raise ValueError('Required property \'restrict_create_platform_apikey\' not present in AccountSettingsResponse JSON')
+        if 'allowed_ip_addresses' in _dict:
+            args['allowed_ip_addresses'] = _dict.get('allowed_ip_addresses')
+        else:
+            raise ValueError('Required property \'allowed_ip_addresses\' not present in AccountSettingsResponse JSON')
+        if 'entity_tag' in _dict:
+            args['entity_tag'] = _dict.get('entity_tag')
+        else:
+            raise ValueError('Required property \'entity_tag\' not present in AccountSettingsResponse JSON')
+        if 'mfa' in _dict:
+            args['mfa'] = _dict.get('mfa')
+        else:
+            raise ValueError('Required property \'mfa\' not present in AccountSettingsResponse JSON')
+        if 'history' in _dict:
+            args['history'] = [EnityHistoryRecord.from_dict(x) for x in _dict.get('history')]
+        if 'session_expiration_in_seconds' in _dict:
+            args['session_expiration_in_seconds'] = _dict.get('session_expiration_in_seconds')
+        else:
+            raise ValueError('Required property \'session_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
+        if 'session_invalidation_in_seconds' in _dict:
+            args['session_invalidation_in_seconds'] = _dict.get('session_invalidation_in_seconds')
+        else:
+            raise ValueError('Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccountSettingsResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'context') and self.context is not None:
+            _dict['context'] = self.context.to_dict()
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'restrict_create_service_id') and self.restrict_create_service_id is not None:
+            _dict['restrict_create_service_id'] = self.restrict_create_service_id
+        if hasattr(self, 'restrict_create_platform_apikey') and self.restrict_create_platform_apikey is not None:
+            _dict['restrict_create_platform_apikey'] = self.restrict_create_platform_apikey
+        if hasattr(self, 'allowed_ip_addresses') and self.allowed_ip_addresses is not None:
+            _dict['allowed_ip_addresses'] = self.allowed_ip_addresses
+        if hasattr(self, 'entity_tag') and self.entity_tag is not None:
+            _dict['entity_tag'] = self.entity_tag
+        if hasattr(self, 'mfa') and self.mfa is not None:
+            _dict['mfa'] = self.mfa
+        if hasattr(self, 'history') and self.history is not None:
+            _dict['history'] = [x.to_dict() for x in self.history]
+        if hasattr(self, 'session_expiration_in_seconds') and self.session_expiration_in_seconds is not None:
+            _dict['session_expiration_in_seconds'] = self.session_expiration_in_seconds
+        if hasattr(self, 'session_invalidation_in_seconds') and self.session_invalidation_in_seconds is not None:
+            _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccountSettingsResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccountSettingsResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccountSettingsResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class RestrictCreateServiceIdEnum(str, Enum):
+        """
+        Defines whether or not creating a Service Id is access controlled. Valid values:
+          * RESTRICTED - to apply access control
+          * NOT_RESTRICTED - to remove access control
+          * NOT_SET - to 'unset' a previous set value.
+        """
+        RESTRICTED = 'RESTRICTED'
+        NOT_RESTRICTED = 'NOT_RESTRICTED'
+        NOT_SET = 'NOT_SET'
+
+
+    class RestrictCreatePlatformApikeyEnum(str, Enum):
+        """
+        Defines whether or not creating a Service Id is access controlled. Valid values:
+          * RESTRICTED - to apply access control
+          * NOT_RESTRICTED - to remove access control
+          * NOT_SET - to 'unset' a previous set value.
+        """
+        RESTRICTED = 'RESTRICTED'
+        NOT_RESTRICTED = 'NOT_RESTRICTED'
+        NOT_SET = 'NOT_SET'
+
+
+    class MfaEnum(str, Enum):
+        """
+        Defines the MFA trait for the account. Valid values:
+          * NONE - No MFA trait set
+          * TOTP - For all non-federated IBMId users
+          * TOTP4ALL - For all users
+          * LEVEL1 - Email-based MFA for all users
+          * LEVEL2 - TOTP-based MFA for all users
+          * LEVEL3 - U2F MFA for all users.
+        """
+        NONE = 'NONE'
+        TOTP = 'TOTP'
+        TOTP4ALL = 'TOTP4ALL'
+        LEVEL1 = 'LEVEL1'
+        LEVEL2 = 'LEVEL2'
+        LEVEL3 = 'LEVEL3'
 
 
 class ApiKey():

@@ -414,6 +414,45 @@ class TestIamIdentityV1Examples():
         except ApiException as e:
             pytest.fail(str(e))
 
+    @needscredentials
+    def test_get_account_settings_example(self):
+        """
+        get_account_settings request example
+        """
+        try:
+            # begin-getAccountSettings
+
+            account_settings_response = iam_identity_service.get_account_settings(
+                account_id='testString'
+            ).get_result()
+
+            print(json.dumps(account_settings_response, indent=2))
+
+            # end-getAccountSettings
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_account_settings_example(self):
+        """
+        update_account_settings request example
+        """
+        try:
+            # begin-updateAccountSettings
+
+            account_settings_response = iam_identity_service.update_account_settings(
+                if_match='testString',
+                account_id='testString',
+            ).get_result()
+
+            print(json.dumps(account_settings_response, indent=2))
+
+            # end-updateAccountSettings
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
 # endregion
 ##############################################################################
 # End of Examples for Service: IamIdentityV1
