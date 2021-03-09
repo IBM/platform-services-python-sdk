@@ -23,7 +23,7 @@ from ibm_cloud_sdk_core import *
 from ibm_platform_services.posture_management_v1 import *
 
 # Config file name
-config_file = 'posture_management_v1.env'
+config_file = 'posture_management.env'
 
 class TestPostureManagementV1():
     """
