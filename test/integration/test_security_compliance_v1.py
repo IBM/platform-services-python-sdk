@@ -23,7 +23,7 @@ from ibm_cloud_sdk_core import *
 from ibm_platform_services.security_compliance_v1 import *
 
 # Config file name
-config_file = 'security_compliance_v1.env'
+config_file = 'security_compliance.env'
 
 class TestSecurityComplianceV1():
     """

@@ -35,7 +35,7 @@ from ibm_platform_services.security_compliance_v1 import *
 # in a configuration file and then:
 # export IBM_CREDENTIALS_FILE=<name of configuration file>
 #
-config_file = 'security_compliance_v1.env'
+config_file = 'security_compliance.env'
 
 security_compliance_service = None
 
