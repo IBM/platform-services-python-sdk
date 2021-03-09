@@ -63,6 +63,7 @@ Service Name | Imported Class Name
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | OpenServiceBrokerV1
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | ResourceControllerV2
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | ResourceManagerV2
+[Security Compliance](https://cloud.ibm.com/apidocs/security-compliance/posture) | securitycompliancev1
 [Usage Metering](https://cloud.ibm.com/apidocs/usage-metering) | UsageMeteringV4
 [Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting) | UsageReportsV4
 [User Management](https://cloud.ibm.com/apidocs/user-management) | UserManagementV1
