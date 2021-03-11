@@ -56,6 +56,7 @@ apikey_id = None
 apikey_etag = None
 svc_id = None
 svc_id_etag = None
+account_settings_etag = None
 
 
 ##############################################################################
@@ -410,6 +411,53 @@ class TestIamIdentityV1Examples():
             print(response)
 
             # end-delete_service_id
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_account_settings_example(self):
+        """
+        get_account_settings request example
+        """
+        try:
+            global account_settings_etag
+            # begin-getAccountSettings
+
+            response = iam_identity_service.get_account_settings(
+                account_id=account_id
+            )
+            settings = response.get_result()
+            account_settings_etag = response.get_headers()['Etag']
+            print(json.dumps(settings, indent=2))
+
+            # end-getAccountSettings
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_account_settings_example(self):
+        """
+        update_account_settings request example
+        """
+        try:
+            global account_settings_etag
+            # begin-updateAccountSettings
+
+            account_settings_response = iam_identity_service.update_account_settings(
+                account_id=account_id,
+                if_match=account_settings_etag,
+                restrict_create_service_id="NOT_RESTRICTED",
+                restrict_create_platform_apikey="NOT_RESTRICTED",
+                mfa="NONE",
+                session_expiration_in_seconds="86400",
+                session_invalidation_in_seconds="7200",
+            ).get_result()
+
+            print(json.dumps(account_settings_response, indent=2))
+
+            # end-updateAccountSettings
 
         except ApiException as e:
             pytest.fail(str(e))
