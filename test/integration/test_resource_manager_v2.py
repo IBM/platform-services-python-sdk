@@ -63,8 +63,8 @@ class TestResourceManagerV2(unittest.TestCase):
         assert cls.service2 is not None
 
         # setup default values
-        cls.test_quota_id = cls.config['TEST_QUOTA_ID']
-        cls.test_user_account_id = cls.config['TEST_USER_ACCOUNT_ID']
+        cls.test_quota_id = cls.config['QUOTA_ID']
+        cls.test_user_account_id = cls.config['USER_ACCOUNT_ID']
         cls.new_resource_group_id = ''
 
         print('\nSetup complete.')

@@ -81,10 +81,10 @@ class TestResourceManagerV2Examples():
             config = read_external_sources(ResourceManagerV2.DEFAULT_SERVICE_NAME)
 
             global example_quota_id
-            example_quota_id = config['TEST_QUOTA_ID']
+            example_quota_id = config['QUOTA_ID']
 
             global example_user_account_id
-            example_user_account_id = config['TEST_USER_ACCOUNT_ID']
+            example_user_account_id = config['USER_ACCOUNT_ID']
 
         print('Setup complete.')
 
