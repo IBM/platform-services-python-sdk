@@ -36,6 +36,7 @@ apikey_id2 = None
 serviceid_id1 = None
 serviceid_etag1 = None
 
+account_setting_etag = None
 
 class TestIamIdentityV1():
     """
@@ -470,30 +471,57 @@ class TestIamIdentityV1():
 
     @needscredentials
     def test_get_account_settings(self):
+        global account_setting_etag
+        assert account_setting_etag is None
 
         get_account_settings_response = self.iam_identity_service.get_account_settings(
-            account_id='testString',
-            include_history=True
+            account_id=self.account_id,
+            include_history=False
         )
 
         assert get_account_settings_response.get_status_code() == 200
-        account_settings_response = get_account_settings_response.get_result()
-        assert account_settings_response is not None
+        settings = get_account_settings_response.get_result()
+        assert settings is not None
+
+        assert settings["account_id"] == self.account_id
+        assert settings["restrict_create_service_id"] is not None
+        assert settings["restrict_create_platform_apikey"] is not None
+        assert settings["entity_tag"] is not None
+        assert settings["mfa"] is not None
+        assert settings["history"] is not None
+        assert settings["session_expiration_in_seconds"] is not None
+        assert settings["session_invalidation_in_seconds"] is not None
+
+        account_setting_etag = get_account_settings_response.get_headers()['Etag']
+        assert account_setting_etag is not None
 
     @needscredentials
     def test_update_account_settings(self):
+        global account_setting_etag
+        assert account_setting_etag is not None
 
         update_account_settings_response = self.iam_identity_service.update_account_settings(
-            if_match='testString',
-            account_id='testString',
-            restrict_create_service_id='RESTRICTED',
-            restrict_create_platform_apikey='RESTRICTED',
-            allowed_ip_addresses='testString',
+            if_match=account_setting_etag,
+            account_id=self.account_id,
+            restrict_create_service_id="NOT_RESTRICTED",
+            restrict_create_platform_apikey="NOT_RESTRICTED",
+            # allowed_ip_addresses='testString',
             mfa='NONE',
-            session_expiration_in_seconds='testString',
-            session_invalidation_in_seconds='testString'
+            session_expiration_in_seconds="86400",
+            session_invalidation_in_seconds="7200"
         )
 
         assert update_account_settings_response.get_status_code() == 200
-        account_settings_response = update_account_settings_response.get_result()
-        assert account_settings_response is not None
+        settings = update_account_settings_response.get_result()
+        assert settings is not None
+        print('\ntest_update_account_settings() response: ',
+              json.dumps(settings, indent=2))
+
+        assert settings["account_id"] == self.account_id
+        assert settings["restrict_create_service_id"] == "NOT_RESTRICTED"
+        assert settings["restrict_create_platform_apikey"] == "NOT_RESTRICTED"
+        assert settings["entity_tag"] != account_setting_etag
+        assert settings["mfa"] == "NONE"
+        assert settings["history"] is not None
+        assert settings["session_expiration_in_seconds"] == "86400"
+        assert settings["session_invalidation_in_seconds"] == "7200"
