@@ -25,6 +25,10 @@ from ibm_platform_services.posture_management_v1 import *
 # Config file name
 config_file = 'posture_management.env'
 
+# Global variables used to share values between test operations.
+profile_id = None
+scope_id = None
+
 class TestPostureManagementV1():
     """
     Integration Test Class for PostureManagementV1
@@ -43,6 +47,14 @@ class TestPostureManagementV1():
                 PostureManagementV1.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
 
+            cls.account_id = cls.config['ACCOUNT_ID']
+            cls.profile_name = cls.config['PROFILE_NAME']
+            cls.scopes_name = cls.config['SCOPES_NAME']
+
+            assert cls.account_id is not None
+            assert cls.profile_name is not None
+            assert cls.scopes_name is not None
+
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
@@ -50,40 +62,48 @@ class TestPostureManagementV1():
     )
 
     @needscredentials
-    def test_create_validation_scan(self):
-
-        create_validation_scan_response = self.posture_management_service.create_validation_scan(
-            account_id='testString',
-            scope_id=1,
-            profile_id=6,
-            group_profile_id=13
-        )
-
-        assert create_validation_scan_response.get_status_code() == 200
-        result = create_validation_scan_response.get_result()
-        assert result is not None
-
-    @needscredentials
     def test_list_profile(self):
 
         list_profile_response = self.posture_management_service.list_profile(
-            account_id='testString',
-            name='testString'
+            account_id=self.account_id,
+            name=self.profile_name,
         )
 
         assert list_profile_response.get_status_code() == 200
         profiles_list = list_profile_response.get_result()
         assert profiles_list is not None
 
+        global profile_id
+        profile_id = profiles_list['profiles'][0]['profile_id']
+
     @needscredentials
     def test_list_scopes(self):
 
         list_scopes_response = self.posture_management_service.list_scopes(
-            account_id='testString',
-            name='testString'
+            account_id=self.account_id,
+            name=self.scopes_name,
         )
 
         assert list_scopes_response.get_status_code() == 200
         scopes_list = list_scopes_response.get_result()
         assert scopes_list is not None
+
+        global scope_id
+        scope_id = scopes_list['scopes'][0]['scope_id']
+
+    @needscredentials
+    def test_create_validation_scan(self):
+        assert profile_id is not None
+        assert scope_id is not None
+
+        create_validation_scan_response = self.posture_management_service.create_validation_scan(
+            account_id=self.account_id,
+            scope_id=scope_id,
+            profile_id=profile_id,
+        )
+
+        assert create_validation_scan_response.get_status_code() == 200
+        result = create_validation_scan_response.get_result()
+        assert result is not None
+
 
