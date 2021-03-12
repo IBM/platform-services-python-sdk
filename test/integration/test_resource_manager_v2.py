@@ -26,17 +26,9 @@ import datetime
 import random
 from ibm_cloud_sdk_core import *
 from ibm_platform_services.resource_manager_v2 import *
-from dotenv import load_dotenv
 
-# Read config file
-configFile = 'resource_manager.env'
-configLoaded = None
-
-if os.path.exists(configFile):
-    load_dotenv(dotenv_path=configFile)
-    configLoaded = True
-else:
-    print('External configuration was not found, skipping tests...')
+# Location of our config file.
+config_file = 'resource_manager.env'
 
 class TestResourceManagerV2(unittest.TestCase):
     """
@@ -45,27 +37,26 @@ class TestResourceManagerV2(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        if not configLoaded:
-            raise unittest.SkipTest(
-                'External configuration not available, skipping...')
+        if os.path.exists(config_file):
+            os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
-        cls.config = read_external_sources(
-            ResourceManagerV2.DEFAULT_SERVICE_NAME
-        )
-        assert cls.config is not None
+            cls.config = read_external_sources(
+                ResourceManagerV2.DEFAULT_SERVICE_NAME
+            )
+            assert cls.config is not None
 
-        # Construct the first service instance.
-        cls.service = ResourceManagerV2.new_instance(service_name=ResourceManagerV2.DEFAULT_SERVICE_NAME)
-        assert cls.service is not None
+            # Construct the first service instance.
+            cls.service = ResourceManagerV2.new_instance(service_name=ResourceManagerV2.DEFAULT_SERVICE_NAME)
+            assert cls.service is not None
 
-        # Construct the second service instance.
-        cls.alt_service = ResourceManagerV2.new_instance(service_name='ALT_RESOURCE_MANAGER')
-        assert cls.alt_service is not None
+            # Construct the second service instance.
+            cls.alt_service = ResourceManagerV2.new_instance(service_name='ALT_RESOURCE_MANAGER')
+            assert cls.alt_service is not None
 
-        # setup default values
-        cls.test_quota_id = cls.config['QUOTA_ID']
-        cls.test_user_account_id = cls.config['USER_ACCOUNT_ID']
-        cls.new_resource_group_id = ''
+            # setup default values
+            cls.test_quota_id = cls.config['QUOTA_ID']
+            cls.test_user_account_id = cls.config['USER_ACCOUNT_ID']
+            cls.new_resource_group_id = ''
 
         print('\nSetup complete.')
 
