@@ -35,7 +35,7 @@ from ibm_platform_services.resource_manager_v2 import *
 # in a configuration file and then:
 # export IBM_CREDENTIALS_FILE=<name of configuration file>
 #
-config_file = 'resource_manager_v2.env'
+config_file = 'resource_manager.env'
 
 resource_manager_service = None
 delete_resource_manager_service = None
@@ -59,6 +59,8 @@ class TestResourceManagerV2Examples():
     @classmethod
     def setup_class(cls):
         global resource_manager_service
+        global delete_resource_manager_service
+
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
@@ -69,7 +71,7 @@ class TestResourceManagerV2Examples():
             )
 
             delete_resource_manager_service = ResourceManagerV2.new_instance(
-                service_name='DELETE_RESOURCE_MANAGER',
+                service_name='ALT_RESOURCE_MANAGER',
             )
 
             # end-common
