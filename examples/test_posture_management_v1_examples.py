@@ -44,6 +44,13 @@ posture_management_service = None
 
 config = None
 
+account_id = None
+profile_name = None
+scopes_name = None
+
+profile_id = None
+scope_id = None
+
 
 ##############################################################################
 # Start of Examples for Service: PostureManagementV1
@@ -62,8 +69,7 @@ class TestPostureManagementV1Examples():
 
             # begin-common
 
-            posture_management_service = PostureManagementV1.new_instance(
-            )
+            posture_management_service = PostureManagementV1.new_instance()
 
             # end-common
             assert posture_management_service is not None
@@ -71,10 +77,15 @@ class TestPostureManagementV1Examples():
             # Load the configuration
             global config
             config = read_external_sources(PostureManagementV1.DEFAULT_SERVICE_NAME)
-            if config is not None:
-                cls.account_id   = config.get('ACCOUNT_ID', '')
-                cls.scopes_name  = config.get('SCOPES_NAME', '')
-                cls.profile_name = config.get('PROFILE_NAME', '')
+
+            global account_id
+            account_id   = config['ACCOUNT_ID']
+
+            global profile_name
+            profile_name = config['PROFILE_NAME']
+
+            global scopes_name
+            scopes_name  = config['SCOPES_NAME']
 
         print('Setup complete.')
 
@@ -90,13 +101,18 @@ class TestPostureManagementV1Examples():
         """
         try:
             # begin-list_profile
+
             profiles_list = posture_management_service.list_profile(
-                account_id=self.account_id,
+                account_id=account_id,
+                name=profile_name,
             ).get_result()
 
             print(json.dumps(profiles_list, indent=2))
 
             # end-list_profile
+
+            global profile_id
+            profile_id = profiles_list['profiles'][0]['profile_id']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -110,12 +126,16 @@ class TestPostureManagementV1Examples():
             # begin-list_scopes
 
             scopes_list = posture_management_service.list_scopes(
-                account_id=self.account_id,
+                account_id=account_id,
+                name=scopes_name,
             ).get_result()
 
             print(json.dumps(scopes_list, indent=2))
 
             # end-list_scopes
+
+            global scope_id
+            scope_id = scopes_list['scopes'][0]['scope_id']
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -126,27 +146,12 @@ class TestPostureManagementV1Examples():
         create_validation_scan request example
         """
         try:
-            # Get Profile id based on Name
-            profiles_list = posture_management_service.list_profile(
-                account_id=self.account_id,
-                name=self.profile_name
-            ).get_result()
-            if profiles_list is not None:
-                profile_id = profiles_list['profiles'][0]['profile_id']
-
-            # Get Scopes id based on Name
-            scopes_list = posture_management_service.list_scopes(
-                account_id=self.account_id,
-                name=self.scopes_name
-            ).get_result()
-            if scopes_list is not None:
-                scope_id = scopes_list['scopes'][0]['scope_id']
-
             # begin-create_validation_scan
+
             result = posture_management_service.create_validation_scan(
-                account_id=self.account_id,
+                account_id=account_id,
                 scope_id=scope_id,
-                profile_id=profile_id
+                profile_id=profile_id,
             ).get_result()
 
             print(json.dumps(result, indent=2))
