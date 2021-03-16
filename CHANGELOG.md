@@ -1,3 +1,17 @@
+## [0.17.14](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.13...v0.17.14) (2021-03-11)
+
+
+### Bug Fixes
+
+* **IAM Identity:** update service after recent API changes ([#91](https://github.com/IBM/platform-services-python-sdk/issues/91)) ([3381cb1](https://github.com/IBM/platform-services-python-sdk/commit/3381cb1eafdd8339b46d2bfe0fa91b52be1ae6b2))
+
+## [0.17.13](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.12...v0.17.13) (2021-03-05)
+
+
+### Bug Fixes
+
+* **Resource Controller:** update service after recent API changes ([#89](https://github.com/IBM/platform-services-python-sdk/issues/89)) ([ec3cdea](https://github.com/IBM/platform-services-python-sdk/commit/ec3cdeafc650fd21e9727a594eb54fa839c6ef28))
+
 ## [0.17.12](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.11...v0.17.12) (2021-02-25)
 
 

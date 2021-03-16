@@ -36,6 +36,7 @@ apikey_id2 = None
 serviceid_id1 = None
 serviceid_etag1 = None
 
+account_setting_etag = None
 
 class TestIamIdentityV1():
     """
@@ -217,7 +218,8 @@ class TestIamIdentityV1():
         assert get_api_keys_details_response.get_status_code() == 200
         api_key = get_api_keys_details_response.get_result()
         assert api_key is not None
-        print('\nget_api_key_details() response: ', json.dumps(api_key, indent=2))
+        print('\nget_api_key_details() response: ',
+              json.dumps(api_key, indent=2))
 
         assert api_key['iam_id'] == self.iam_id
         assert api_key['account_id'] == self.account_id
@@ -242,7 +244,8 @@ class TestIamIdentityV1():
             assert list_api_keys_response.get_status_code() == 200
             api_key_list = list_api_keys_response.get_result()
             assert api_key_list is not None
-            print('\nlist_api_keys() response: ', json.dumps(api_key_list, indent=2))
+            print('\nlist_api_keys() response: ',
+                  json.dumps(api_key_list, indent=2))
 
             if len(api_key_list['apikeys']) > 0:
                 for apikey in api_key_list['apikeys']:
@@ -349,7 +352,8 @@ class TestIamIdentityV1():
         assert create_service_id_response.get_status_code() == 201
         service_id = create_service_id_response.get_result()
         assert service_id is not None
-        print('\ncreate_service_id() response: ', json.dumps(service_id, indent=2))
+        print('\ncreate_service_id() response: ',
+              json.dumps(service_id, indent=2))
 
         global serviceid_id1
         serviceid_id1 = service_id['id']
@@ -368,7 +372,8 @@ class TestIamIdentityV1():
         assert get_service_id_response.get_status_code() == 200
         service_id = get_service_id_response.get_result()
         assert service_id is not None
-        print('\nget_service_id() response: ', json.dumps(service_id, indent=2))
+        print('\nget_service_id() response: ',
+              json.dumps(service_id, indent=2))
 
         assert service_id['id'] == serviceid_id1
         assert service_id['name'] == self.serviceid_name
@@ -388,7 +393,8 @@ class TestIamIdentityV1():
 
         assert list_service_ids_response.get_status_code() == 200
         service_id_list = list_service_ids_response.get_result()
-        print('\nlist_service_ids() response: ', json.dumps(service_id_list, indent=2))
+        print('\nlist_service_ids() response: ',
+              json.dumps(service_id_list, indent=2))
 
         assert service_id_list is not None
         assert len(service_id_list['serviceids']) == 1
@@ -412,7 +418,8 @@ class TestIamIdentityV1():
         assert update_service_id_response.get_status_code() == 200
         service_id = update_service_id_response.get_result()
         assert service_id is not None
-        print('\nupdate_service_id() response: ', json.dumps(service_id, indent=2))
+        print('\nupdate_service_id() response: ',
+              json.dumps(service_id, indent=2))
         assert service_id['description'] == new_description
 
     @needscredentials
@@ -461,3 +468,60 @@ class TestIamIdentityV1():
         service_id = self.get_service_id(
             self.iam_identity_service, serviceid_id1)
         assert service_id is None
+
+    @needscredentials
+    def test_get_account_settings(self):
+        global account_setting_etag
+        assert account_setting_etag is None
+
+        get_account_settings_response = self.iam_identity_service.get_account_settings(
+            account_id=self.account_id,
+            include_history=False
+        )
+
+        assert get_account_settings_response.get_status_code() == 200
+        settings = get_account_settings_response.get_result()
+        assert settings is not None
+
+        assert settings["account_id"] == self.account_id
+        assert settings["restrict_create_service_id"] is not None
+        assert settings["restrict_create_platform_apikey"] is not None
+        assert settings["entity_tag"] is not None
+        assert settings["mfa"] is not None
+        assert settings["history"] is not None
+        assert settings["session_expiration_in_seconds"] is not None
+        assert settings["session_invalidation_in_seconds"] is not None
+
+        account_setting_etag = get_account_settings_response.get_headers()['Etag']
+        assert account_setting_etag is not None
+
+    @needscredentials
+    def test_update_account_settings(self):
+        global account_setting_etag
+        assert account_setting_etag is not None
+
+        update_account_settings_response = self.iam_identity_service.update_account_settings(
+            if_match=account_setting_etag,
+            account_id=self.account_id,
+            restrict_create_service_id="NOT_RESTRICTED",
+            restrict_create_platform_apikey="NOT_RESTRICTED",
+            # allowed_ip_addresses='testString',
+            mfa='NONE',
+            session_expiration_in_seconds="86400",
+            session_invalidation_in_seconds="7200"
+        )
+
+        assert update_account_settings_response.get_status_code() == 200
+        settings = update_account_settings_response.get_result()
+        assert settings is not None
+        print('\ntest_update_account_settings() response: ',
+              json.dumps(settings, indent=2))
+
+        assert settings["account_id"] == self.account_id
+        assert settings["restrict_create_service_id"] == "NOT_RESTRICTED"
+        assert settings["restrict_create_platform_apikey"] == "NOT_RESTRICTED"
+        assert settings["entity_tag"] != account_setting_etag
+        assert settings["mfa"] == "NONE"
+        assert settings["history"] is not None
+        assert settings["session_expiration_in_seconds"] == "86400"
+        assert settings["session_invalidation_in_seconds"] == "7200"

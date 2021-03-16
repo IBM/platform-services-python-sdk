@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-9ae61cfc-20210302-143858
  
 """
 Manage lifecycle of your Cloud resources using Resource Controller APIs. Resources are
@@ -161,7 +161,7 @@ class ResourceControllerV2(BaseService):
         tags: List[str] = None,
         allow_cleanup: bool = None,
         parameters: dict = None,
-        entity_lock: str = None,
+        entity_lock: bool = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -184,7 +184,7 @@ class ResourceControllerV2(BaseService):
                region instance delete call.
         :param dict parameters: (optional) Configuration options represented as
                key-value pairs that are passed through to the target resource brokers.
-        :param str entity_lock: (optional) Indicates if the resource instance is
+        :param bool entity_lock: (optional) Indicates if the resource instance is
                locked for further update or delete operations. It does not affect actions
                performed on child resources like aliases, bindings or keys. False by
                default.
@@ -277,6 +277,8 @@ class ResourceControllerV2(BaseService):
 
     def delete_resource_instance(self,
         id: str,
+        *,
+        recursive: bool = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -285,6 +287,8 @@ class ResourceControllerV2(BaseService):
         Delete a resource instance by ID.
 
         :param str id: The short or long ID of the instance.
+        :param bool recursive: (optional) Will delete resource bindings, keys and
+               aliases associated with the instance.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
@@ -298,6 +302,10 @@ class ResourceControllerV2(BaseService):
                                       operation_id='delete_resource_instance')
         headers.update(sdk_headers)
 
+        params = {
+            'recursive': recursive
+        }
+
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
@@ -307,7 +315,8 @@ class ResourceControllerV2(BaseService):
         url = '/v2/resource_instances/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
-                                       headers=headers)
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request)
         return response
@@ -374,6 +383,84 @@ class ResourceControllerV2(BaseService):
                                        url=url,
                                        headers=headers,
                                        data=data)
+
+        response = self.send(request)
+        return response
+
+
+    def list_resource_aliases_for_instance(self,
+        id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get a list of all resource aliases for the instance.
+
+        Get a list of all resource aliases for the instance.
+
+        :param str id: The short or long ID of the instance.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ResourceAliasesList` object
+        """
+
+        if id is None:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V2',
+                                      operation_id='list_resource_aliases_for_instance')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_instances/{id}/resource_aliases'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request)
+        return response
+
+
+    def list_resource_keys_for_instance(self,
+        id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get a list of all the resource keys for the instance.
+
+        Get a list of all the resource keys for the instance.
+
+        :param str id: The short or long ID of the instance.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ResourceKeysList` object
+        """
+
+        if id is None:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V2',
+                                      operation_id='list_resource_keys_for_instance')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_instances/{id}/resource_keys'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request)
         return response
@@ -1235,6 +1322,45 @@ class ResourceControllerV2(BaseService):
         response = self.send(request)
         return response
 
+
+    def list_resource_bindings_for_alias(self,
+        id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get a list of all resource bindings for the alias.
+
+        Get a list of all resource bindings for the alias.
+
+        :param str id: The short or long ID of the alias.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ResourceBindingsList` object
+        """
+
+        if id is None:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V2',
+                                      operation_id='list_resource_bindings_for_alias')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_aliases/{id}/resource_bindings'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request)
+        return response
+
     #########################
     # Resource Reclamations
     #########################
@@ -1461,20 +1587,25 @@ class PlanHistoryItem():
     :attr str resource_plan_id: The unique ID of the plan associated with the
           offering. This value is provided by and stored in the global catalog.
     :attr datetime start_date: The date on which the plan was changed.
+    :attr str requestor_id: (optional) The subject who made the plan change.
     """
 
     def __init__(self,
                  resource_plan_id: str,
-                 start_date: datetime) -> None:
+                 start_date: datetime,
+                 *,
+                 requestor_id: str = None) -> None:
         """
         Initialize a PlanHistoryItem object.
 
         :param str resource_plan_id: The unique ID of the plan associated with the
                offering. This value is provided by and stored in the global catalog.
         :param datetime start_date: The date on which the plan was changed.
+        :param str requestor_id: (optional) The subject who made the plan change.
         """
         self.resource_plan_id = resource_plan_id
         self.start_date = start_date
+        self.requestor_id = requestor_id
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'PlanHistoryItem':
@@ -1488,6 +1619,8 @@ class PlanHistoryItem():
             args['start_date'] = string_to_datetime(_dict.get('start_date'))
         else:
             raise ValueError('Required property \'start_date\' not present in PlanHistoryItem JSON')
+        if 'requestor_id' in _dict:
+            args['requestor_id'] = _dict.get('requestor_id')
         return cls(**args)
 
     @classmethod
@@ -1502,6 +1635,8 @@ class PlanHistoryItem():
             _dict['resource_plan_id'] = self.resource_plan_id
         if hasattr(self, 'start_date') and self.start_date is not None:
             _dict['start_date'] = datetime_to_string(self.start_date)
+        if hasattr(self, 'requestor_id') and self.requestor_id is not None:
+            _dict['requestor_id'] = self.requestor_id
         return _dict
 
     def _to_dict(self):
@@ -2344,16 +2479,23 @@ class ResourceBindingPostParameters():
           an existing IAM serviceId for the role assignment.
     """
 
+    # The set of defined properties for the class
+    _properties = frozenset(['serviceid_crn'])
+
     def __init__(self,
                  *,
-                 serviceid_crn: str = None) -> None:
+                 serviceid_crn: str = None,
+                 **kwargs) -> None:
         """
         Initialize a ResourceBindingPostParameters object.
 
         :param str serviceid_crn: (optional) An optional platform defined option to
                reuse an existing IAM serviceId for the role assignment.
+        :param **kwargs: (optional) Any additional properties.
         """
         self.serviceid_crn = serviceid_crn
+        for _key, _value in kwargs.items():
+            setattr(self, _key, _value)
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ResourceBindingPostParameters':
@@ -2361,6 +2503,7 @@ class ResourceBindingPostParameters():
         args = {}
         if 'serviceid_crn' in _dict:
             args['serviceid_crn'] = _dict.get('serviceid_crn')
+        args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
     @classmethod
@@ -2373,6 +2516,9 @@ class ResourceBindingPostParameters():
         _dict = {}
         if hasattr(self, 'serviceid_crn') and self.serviceid_crn is not None:
             _dict['serviceid_crn'] = self.serviceid_crn
+        for _key in [k for k in vars(self).keys() if k not in ResourceBindingPostParameters._properties]:
+            if getattr(self, _key, None) is not None:
+                _dict[_key] = getattr(self, _key)
         return _dict
 
     def _to_dict(self):
@@ -2512,6 +2658,8 @@ class ResourceInstance():
           administrative features of the instance.
     :attr List[PlanHistoryItem] plan_history: (optional) The plan history of the
           instance.
+    :attr dict extensions: (optional) Additional instance properties, contributed by
+          the service and/or platform, are represented as key-value pairs.
     :attr str resource_aliases_url: (optional) The relative path to the resource
           aliases for the instance.
     :attr str resource_bindings_url: (optional) The relative path to the resource
@@ -2557,6 +2705,7 @@ class ResourceInstance():
                  last_operation: dict = None,
                  dashboard_url: str = None,
                  plan_history: List['PlanHistoryItem'] = None,
+                 extensions: dict = None,
                  resource_aliases_url: str = None,
                  resource_bindings_url: str = None,
                  resource_keys_url: str = None,
@@ -2616,6 +2765,9 @@ class ResourceInstance():
                access administrative features of the instance.
         :param List[PlanHistoryItem] plan_history: (optional) The plan history of
                the instance.
+        :param dict extensions: (optional) Additional instance properties,
+               contributed by the service and/or platform, are represented as key-value
+               pairs.
         :param str resource_aliases_url: (optional) The relative path to the
                resource aliases for the instance.
         :param str resource_bindings_url: (optional) The relative path to the
@@ -2660,6 +2812,7 @@ class ResourceInstance():
         self.last_operation = last_operation
         self.dashboard_url = dashboard_url
         self.plan_history = plan_history
+        self.extensions = extensions
         self.resource_aliases_url = resource_aliases_url
         self.resource_bindings_url = resource_bindings_url
         self.resource_keys_url = resource_keys_url
@@ -2718,6 +2871,8 @@ class ResourceInstance():
             args['dashboard_url'] = _dict.get('dashboard_url')
         if 'plan_history' in _dict:
             args['plan_history'] = [PlanHistoryItem.from_dict(x) for x in _dict.get('plan_history')]
+        if 'extensions' in _dict:
+            args['extensions'] = _dict.get('extensions')
         if 'resource_aliases_url' in _dict:
             args['resource_aliases_url'] = _dict.get('resource_aliases_url')
         if 'resource_bindings_url' in _dict:
@@ -2794,6 +2949,8 @@ class ResourceInstance():
             _dict['dashboard_url'] = self.dashboard_url
         if hasattr(self, 'plan_history') and self.plan_history is not None:
             _dict['plan_history'] = [x.to_dict() for x in self.plan_history]
+        if hasattr(self, 'extensions') and self.extensions is not None:
+            _dict['extensions'] = self.extensions
         if hasattr(self, 'resource_aliases_url') and self.resource_aliases_url is not None:
             _dict['resource_aliases_url'] = self.resource_aliases_url
         if hasattr(self, 'resource_bindings_url') and self.resource_bindings_url is not None:
@@ -3148,16 +3305,23 @@ class ResourceKeyPostParameters():
           an existing IAM serviceId for the role assignment.
     """
 
+    # The set of defined properties for the class
+    _properties = frozenset(['serviceid_crn'])
+
     def __init__(self,
                  *,
-                 serviceid_crn: str = None) -> None:
+                 serviceid_crn: str = None,
+                 **kwargs) -> None:
         """
         Initialize a ResourceKeyPostParameters object.
 
         :param str serviceid_crn: (optional) An optional platform defined option to
                reuse an existing IAM serviceId for the role assignment.
+        :param **kwargs: (optional) Any additional properties.
         """
         self.serviceid_crn = serviceid_crn
+        for _key, _value in kwargs.items():
+            setattr(self, _key, _value)
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ResourceKeyPostParameters':
@@ -3165,6 +3329,7 @@ class ResourceKeyPostParameters():
         args = {}
         if 'serviceid_crn' in _dict:
             args['serviceid_crn'] = _dict.get('serviceid_crn')
+        args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
     @classmethod
@@ -3177,6 +3342,9 @@ class ResourceKeyPostParameters():
         _dict = {}
         if hasattr(self, 'serviceid_crn') and self.serviceid_crn is not None:
             _dict['serviceid_crn'] = self.serviceid_crn
+        for _key in [k for k in vars(self).keys() if k not in ResourceKeyPostParameters._properties]:
+            if getattr(self, _key, None) is not None:
+                _dict[_key] = getattr(self, _key)
         return _dict
 
     def _to_dict(self):
