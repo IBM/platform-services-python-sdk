@@ -80,6 +80,7 @@ class TestListPolicies():
         tag_value = 'testString'
         sort = 'testString'
         format = 'testString'
+        state = 'testString'
 
         # Invoke method
         response = service.list_policies(
@@ -93,6 +94,7 @@ class TestListPolicies():
             tag_value=tag_value,
             sort=sort,
             format=format,
+            state=state,
             headers={}
         )
 
@@ -111,6 +113,7 @@ class TestListPolicies():
         assert 'tag_value={}'.format(tag_value) in query_string
         assert 'sort={}'.format(sort) in query_string
         assert 'format={}'.format(format) in query_string
+        assert 'state={}'.format(state) in query_string
 
 
     @responses.activate
@@ -691,6 +694,86 @@ class TestDeletePolicy():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 service.delete_policy(**req_copy)
+
+
+
+class TestPatchPolicy():
+    """
+    Test Class for patch_policy
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_patch_policy_all_params(self):
+        """
+        patch_policy()
+        """
+        # Set up mock
+        url = self.preprocess_url(base_url + '/v1/policies/testString')
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        policy_id = 'testString'
+        if_match = 'testString'
+        state = 'testString'
+
+        # Invoke method
+        response = service.patch_policy(
+            policy_id,
+            if_match,
+            state=state,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['state'] == 'testString'
+
+
+    @responses.activate
+    def test_patch_policy_value_error(self):
+        """
+        test_patch_policy_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(base_url + '/v1/policies/testString')
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        policy_id = 'testString'
+        if_match = 'testString'
+        state = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "policy_id": policy_id,
+            "if_match": if_match,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                service.patch_policy(**req_copy)
 
 
 

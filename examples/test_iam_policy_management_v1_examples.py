@@ -190,6 +190,27 @@ class TestIamPolicyManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
+    def test_patch_policy_example(self):
+        """
+        patch_policy request example
+        """
+        try:
+            # begin-patch_policy
+
+            policy = iam_policy_management_service.patch_policy(
+                policy_id=example_policy_id,
+                if_match=example_policy_etag,
+                state='active'
+            ).get_result()
+
+            print(json.dumps(policy, indent=2))
+
+            # end-patch_policy
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
     def test_list_policies_example(self):
         """
         list_policies request example

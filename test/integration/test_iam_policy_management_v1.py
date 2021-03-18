@@ -161,6 +161,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result.subjects[0] == self.testPolicySubject
         assert result.resources[0] == self.testPolicyResources
         assert result.roles[0].role_id == self.testViewerRoleCrn
+        assert result.state == 'active'
 
         self.__class__.testPolicyETag = response.get_headers().get(self.etagHeader)
 
@@ -189,6 +190,8 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result.subjects[0] == self.testPolicySubject
         assert result.resources[0] == self.testPolicyResources
         assert result.roles[0].role_id == self.testEditorRoleCrn
+
+        self.__class__.testPolicyETag = response.get_headers().get(self.etagHeader)
 
     def test_04_list_access_policies(self):
         print("Policy ID: ", self.testPolicyId)
@@ -312,3 +315,22 @@ class TestIamPolicyManagementV1(unittest.TestCase):
                 foundCustomRole = True
                 break
         assert foundCustomRole
+
+    def test_09_patch_access_policy(self):
+        assert self.testPolicyId
+        assert self.testPolicyETag
+        print("Policy ID: ", self.testPolicyId)
+
+        response = self.service.patch_policy(
+            policy_id=self.testPolicyId, if_match=self.testPolicyETag,
+            state='active')
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = Policy.from_dict(result_dict)
+        assert result is not None
+        assert result.id == self.testPolicyId
+        assert result.state == 'active'
