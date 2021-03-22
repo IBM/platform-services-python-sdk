@@ -968,6 +968,7 @@ class Policy():
           was last modified.
     :attr str last_modified_by_id: (optional) The iam ID of the entity that last
           modified the policy.
+    :attr str state: (optional) The policy state; either 'active' or 'deleted'.
     """
 
     def __init__(self,
@@ -982,7 +983,8 @@ class Policy():
                  created_at: datetime = None,
                  created_by_id: str = None,
                  last_modified_at: datetime = None,
-                 last_modified_by_id: str = None) -> None:
+                 last_modified_by_id: str = None,
+                 state: str = None) -> None:
         """
         Initialize a Policy object.
 
@@ -995,6 +997,8 @@ class Policy():
                names (CRNs) granted by the policy.
         :param List[PolicyResource] resources: (optional) The resources associated
                with a policy.
+        :param str state: (optional) The policy state; either 'active' or
+               'deleted'.
         """
         self.id = id
         self.type = type
@@ -1007,6 +1011,7 @@ class Policy():
         self.created_by_id = created_by_id
         self.last_modified_at = last_modified_at
         self.last_modified_by_id = last_modified_by_id
+        self.state = state
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'Policy':
@@ -1034,6 +1039,8 @@ class Policy():
             args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
         if 'last_modified_by_id' in _dict:
             args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if 'state' in _dict:
+            args['state'] = _dict.get('state')
         return cls(**args)
 
     @classmethod
@@ -1066,6 +1073,8 @@ class Policy():
             _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
         if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
             _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
         return _dict
 
     def _to_dict(self):
