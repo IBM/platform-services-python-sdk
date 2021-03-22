@@ -19,7 +19,6 @@ Unit Tests for IamPolicyManagementV1
 
 from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
-from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import inspect
 import json
 import pytest
