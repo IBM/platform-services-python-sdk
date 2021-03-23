@@ -158,7 +158,7 @@ class TestUserManagementV1Examples():
                 access_groups=[access_group_id]
             ).get_result()
 
-            print(json.dumps(invite_user_response, indent=2))
+            print('\ninvite_users() result:\n', json.dumps(invite_user_response, indent=2))
 
             # end-invite_users
 
@@ -184,7 +184,7 @@ class TestUserManagementV1Examples():
                 limit=100,
             ).get_result()
 
-            print(json.dumps(user_list, indent=2))
+            print('\nlist_users() result:\n', json.dumps(user_list, indent=2))
 
             # end-list_users
 
@@ -207,7 +207,7 @@ class TestUserManagementV1Examples():
                 iam_id=delete_user_id,
             ).get_result()
 
-            print(json.dumps(response, indent=2))
+            print('\nremove_user() result:\n', json.dumps(response, indent=2))
 
             # end-remove_user
 
@@ -230,7 +230,7 @@ class TestUserManagementV1Examples():
                 iam_id=user_id,
             ).get_result()
 
-            print(json.dumps(user_profile, indent=2))
+            print('\nget_user_profile()0 result:\n', json.dumps(user_profile, indent=2))
 
             # end-get_user_profile
 
@@ -254,7 +254,7 @@ class TestUserManagementV1Examples():
                 phonenumber='123456789',
             ).get_result()
 
-            print(json.dumps(response, indent=2))
+            print('\nupdate_user_profile() result:\n', json.dumps(response, indent=2))
 
             # end-update_user_profile
 
@@ -277,7 +277,7 @@ class TestUserManagementV1Examples():
                 iam_id=user_id,
             ).get_result()
 
-            print(json.dumps(user_settings, indent=2))
+            print('\nget_user_settings() result:\n', json.dumps(user_settings, indent=2))
 
             # end-get_user_settings
 
@@ -302,7 +302,7 @@ class TestUserManagementV1Examples():
                 allowed_ip_addresses='192.168.0.2,192.168.0.3',
             ).get_result()
 
-            print(json.dumps(response, indent=2))
+            print('\nupdate_user_settings() result:\n', json.dumps(response, indent=2))
 
             # end-update_user_settings
 
