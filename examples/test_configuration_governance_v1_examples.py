@@ -182,7 +182,7 @@ class TestConfigurationGovernanceV1Examples():
                             code=responseEntry['errors'][0]['code'],
                             message=responseEntry['errors'][0]['message'])
 
-            print(json.dumps(create_rules_response, indent=2))
+            print('\ncreate_rules() result:\n', json.dumps(create_rules_response, indent=2))
 
             # end-create_rules
 
@@ -219,7 +219,7 @@ class TestConfigurationGovernanceV1Examples():
                 rule_id=rule_id_link,
                 attachments=[attachment_request_model]).get_result()
 
-            print(json.dumps(create_attachments_response, indent=2))
+            print('\ncreate_attachments() result:\n', json.dumps(create_attachments_response, indent=2))
 
             # end-create_attachments
 
@@ -241,7 +241,7 @@ class TestConfigurationGovernanceV1Examples():
                 rule_id=rule_id_link,
                 attachment_id=attachment_id_link).get_result()
 
-            print(json.dumps(attachment, indent=2))
+            print('\nget_attachment() result:\n', json.dumps(attachment, indent=2))
 
             # end-get_attachment
 
@@ -263,7 +263,7 @@ class TestConfigurationGovernanceV1Examples():
             rule = configuration_governance_service.get_rule(
                 rule_id=rule_id_link).get_result()
 
-            print(json.dumps(rule, indent=2))
+            print('\nget_rule() result:\n', json.dumps(rule, indent=2))
 
             # end-get_rule
 
@@ -284,7 +284,7 @@ class TestConfigurationGovernanceV1Examples():
             rule_list = configuration_governance_service.list_rules(
                 account_id=account_id).get_result()
 
-            print(json.dumps(rule_list, indent=2))
+            print('\nlist_rules() result:\n', json.dumps(rule_list, indent=2))
 
             # end-list_rules
 
@@ -337,7 +337,7 @@ class TestConfigurationGovernanceV1Examples():
                 rule_type='user_defined',
                 labels=['testString']).get_result()
 
-            print(json.dumps(rule, indent=2))
+            print('\nupdate_rule() result:\n', json.dumps(rule, indent=2))
 
             # end-update_rule
 
@@ -355,7 +355,7 @@ class TestConfigurationGovernanceV1Examples():
             attachment_list = configuration_governance_service.list_attachments(
                 rule_id=rule_id_link).get_result()
 
-            print(json.dumps(attachment_list, indent=2))
+            print('\nlist_attachments() result:\n', json.dumps(attachment_list, indent=2))
 
             # end-list_attachments
 
@@ -388,7 +388,7 @@ class TestConfigurationGovernanceV1Examples():
                 },
                 excluded_scopes=[excluded_scope_model]).get_result()
 
-            print(json.dumps(attachment, indent=2))
+            print('\nupdate_attachment() result:\n', json.dumps(attachment, indent=2))
 
             # end-update_attachment
 
@@ -407,7 +407,7 @@ class TestConfigurationGovernanceV1Examples():
                 rule_id=rule_id_link,
                 attachment_id=attachment_id_link).get_result()
 
-            print(json.dumps(response, indent=2))
+            print('\ndelete_attachment() result:\n', json.dumps(response, indent=2))
 
             # end-delete_attachment
 
@@ -425,7 +425,7 @@ class TestConfigurationGovernanceV1Examples():
             response = configuration_governance_service.delete_rule(
                 rule_id=rule_id_link).get_result()
 
-            print(json.dumps(response, indent=2))
+            print('\ndelete_rule() result:\n', json.dumps(response, indent=2))
 
             # end-delete_rule
 
