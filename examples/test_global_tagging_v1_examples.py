@@ -91,7 +91,7 @@ class TestGlobalTaggingV1Examples():
                 tag_names=['env:example-access-tag'],
                 tag_type='access').get_result()
 
-            print(json.dumps(create_tag_results, indent=2))
+            print('\ncreate_tag() result:\n', json.dumps(create_tag_results, indent=2))
 
             # end-create_tag
 
@@ -113,7 +113,7 @@ class TestGlobalTaggingV1Examples():
                 providers=['ghost'],
                 order_by_name='asc').get_result()
 
-            print(json.dumps(tag_list, indent=2))
+            print('\nlist_tags() result:\n', json.dumps(tag_list, indent=2))
 
             # end-list_tags
 
@@ -135,7 +135,7 @@ class TestGlobalTaggingV1Examples():
                 tag_names=['tag_test_1', 'tag_test_2'],
                 tag_type='user').get_result()
 
-            print(json.dumps(tag_results, indent=2))
+            print('\nattach_tag() result:\n', json.dumps(tag_results, indent=2))
 
             # end-attach_tag
 
@@ -157,7 +157,7 @@ class TestGlobalTaggingV1Examples():
                 tag_names=['tag_test_1', 'tag_test_2'],
                 tag_type='user').get_result()
 
-            print(json.dumps(tag_results, indent=2))
+            print('\ndetach_tag() result:\n', json.dumps(tag_results, indent=2))
 
             # end-detach_tag
 
@@ -176,7 +176,7 @@ class TestGlobalTaggingV1Examples():
                 tag_name='env:example-access-tag',
                 tag_type='access').get_result()
 
-            print(json.dumps(delete_tag_results, indent=2))
+            print('\ndelete_tag() result:\n', json.dumps(delete_tag_results, indent=2))
 
             # end-delete_tag
 
@@ -194,7 +194,7 @@ class TestGlobalTaggingV1Examples():
             delete_tags_result = global_tagging_service.delete_tag_all(
                 tag_type='user').get_result()
 
-            print(json.dumps(delete_tags_result, indent=2))
+            print('\ndelete_tag_all() result:\n', json.dumps(delete_tags_result, indent=2))
 
             # end-delete_tag_all
 
