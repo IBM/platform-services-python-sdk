@@ -26,7 +26,6 @@ import uuid
 import time
 from ibm_cloud_sdk_core import *
 from ibm_platform_services.open_service_broker_v1 import *
-from dotenv import load_dotenv
 
 # Read config file
 configFile = 'open_service_broker.env'

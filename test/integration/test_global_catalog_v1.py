@@ -21,18 +21,9 @@ import os
 from ibm_cloud_sdk_core import *
 from ibm_platform_services.global_catalog_v1 import *
 import pytest
-from dotenv import load_dotenv
 import time
 
-configFile = 'global_catalog.env'
-configLoaded = None
-config = {}
-
-if os.path.exists(configFile):
-    load_dotenv(dotenv_path=configFile)
-    configLoaded = True
-else:
-    print('External configuration was not found, skipping tests...')
+config_file = 'global_catalog.env'
 
 
 class TestGlobalCatalogV1(unittest.TestCase):
@@ -41,7 +32,9 @@ class TestGlobalCatalogV1(unittest.TestCase):
     """
     @classmethod
     def setUpClass(self):
-        if not configLoaded:
+        if os.path.exists(config_file):
+            os.environ['IBM_CREDENTIALS_FILE'] = config_file
+        else:
             raise unittest.SkipTest(
                 'External configuration not available, skipping...')
 
