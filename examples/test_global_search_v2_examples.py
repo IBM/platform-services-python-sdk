@@ -80,7 +80,7 @@ class TestGlobalSearchV2Examples():
                                                     fields=['*'])
             scan_result = response.get_result()
 
-            print(json.dumps(scan_result, indent=2))
+            print('\nsearch() result:\n', json.dumps(scan_result, indent=2))
 
             # end-search
 
@@ -98,7 +98,7 @@ class TestGlobalSearchV2Examples():
             supported_types_list = global_search_service.get_supported_types(
             ).get_result()
 
-            print(json.dumps(supported_types_list, indent=2))
+            print('\nget_supported_types() result:\n', json.dumps(supported_types_list, indent=2))
 
             # end-get_supported_types
 
