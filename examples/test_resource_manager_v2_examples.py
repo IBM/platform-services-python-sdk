@@ -109,7 +109,7 @@ class TestResourceManagerV2Examples():
                 name='ExampleGroup',
             ).get_result()
 
-            print(json.dumps(res_create_resource_group, indent=2))
+            print('\ncreate_resource_group() result:\n', json.dumps(res_create_resource_group, indent=2))
 
             # end-create_resource_group
 
@@ -133,7 +133,7 @@ class TestResourceManagerV2Examples():
                 id=resource_group_id,
             ).get_result()
 
-            print(json.dumps(resource_group, indent=2))
+            print('\nget_resource_group() result:\n', json.dumps(resource_group, indent=2))
 
             # end-get_resource_group
 
@@ -156,7 +156,7 @@ class TestResourceManagerV2Examples():
                 state='ACTIVE',
             ).get_result()
 
-            print(json.dumps(resource_group, indent=2))
+            print('\nupdate_resource_group() result:\n', json.dumps(resource_group, indent=2))
 
             # end-update_resource_group
 
@@ -178,7 +178,7 @@ class TestResourceManagerV2Examples():
                 include_deleted=True,
             ).get_result()
 
-            print(json.dumps(resource_group_list, indent=2))
+            print('\nlist_resource_groups() result:\n', json.dumps(resource_group_list, indent=2))
 
             # end-list_resource_groups
 
@@ -199,7 +199,7 @@ class TestResourceManagerV2Examples():
                 id=resource_group_id,
             ).get_result()
 
-            print(json.dumps(response, indent=2))
+            print('\ndelete_resource_group() result:\n', json.dumps(response, indent=2))
 
             # end-delete_resource_group
 
@@ -220,7 +220,7 @@ class TestResourceManagerV2Examples():
                 id=example_quota_id,
             ).get_result()
 
-            print(json.dumps(quota_definition, indent=2))
+            print('\nget_quota_definition() result:\n', json.dumps(quota_definition, indent=2))
 
             # end-get_quota_definition
 
@@ -237,7 +237,7 @@ class TestResourceManagerV2Examples():
 
             quota_definition_list = resource_manager_service.list_quota_definitions().get_result()
 
-            print(json.dumps(quota_definition_list, indent=2))
+            print('\nlist_quota_definitions() result:\n', json.dumps(quota_definition_list, indent=2))
 
             # end-list_quota_definitions
 
