@@ -118,7 +118,7 @@ class TestUsageReportsV4Examples():
                 billingmonth=billing_month
             ).get_result()
 
-            print(json.dumps(account_summary, indent=2))
+            print('\nget_account_summary() result:\n', json.dumps(account_summary, indent=2))
 
             # end-get_account_summary
 
@@ -140,7 +140,7 @@ class TestUsageReportsV4Examples():
                 billingmonth=billing_month
             ).get_result()
 
-            print(json.dumps(account_usage, indent=2))
+            print('\nget_account_usage() result:\n', json.dumps(account_usage, indent=2))
 
             # end-get_account_usage
 
@@ -163,7 +163,7 @@ class TestUsageReportsV4Examples():
                 billingmonth=billing_month
             ).get_result()
 
-            print(json.dumps(resource_group_usage, indent=2))
+            print('\nget_resource_group_usage() result:\n', json.dumps(resource_group_usage, indent=2))
 
             # end-get_resource_group_usage
 
@@ -186,7 +186,7 @@ class TestUsageReportsV4Examples():
                 billingmonth=billing_month
             ).get_result()
 
-            print(json.dumps(org_usage, indent=2))
+            print('\nget_org_usage() result:\n', json.dumps(org_usage, indent=2))
 
             # end-get_org_usage
 
@@ -208,7 +208,7 @@ class TestUsageReportsV4Examples():
                 billingmonth=billing_month
             ).get_result()
 
-            print(json.dumps(instances_usage, indent=2))
+            print('\nget_resource_usage_account() result:\n', json.dumps(instances_usage, indent=2))
 
             # end-get_resource_usage_account
 
@@ -231,7 +231,7 @@ class TestUsageReportsV4Examples():
                 billingmonth=billing_month
             ).get_result()
 
-            print(json.dumps(instances_usage, indent=2))
+            print('\nget_resource_usage_resource_group() result:\n', json.dumps(instances_usage, indent=2))
 
             # end-get_resource_usage_resource_group
 
@@ -254,7 +254,7 @@ class TestUsageReportsV4Examples():
                 billingmonth=billing_month
             ).get_result()
 
-            print(json.dumps(instances_usage, indent=2))
+            print('\nget_resource_usage_org() result:\n', json.dumps(instances_usage, indent=2))
 
             # end-get_resource_usage_org
 
