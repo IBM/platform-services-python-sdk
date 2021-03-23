@@ -121,7 +121,7 @@ class TestUsageMeteringV4Examples():
                 resource_id=resource_id,
                 resource_usage=[resource_instance_usage_model]).get_result()
 
-            print(json.dumps(response_accepted, indent=2))
+            print('\nreport_resource_usage() result:\n', json.dumps(response_accepted, indent=2))
 
             # end-report_resource_usage
 
