@@ -107,7 +107,7 @@ class TestEnterpriseUsageReportsV1Examples():
                 limit=10
             ).get_result()
 
-            print(json.dumps(reports, indent=2))
+            print('\nget_resource_usage_report() result:\n', json.dumps(reports, indent=2))
 
             # end-get_resource_usage_report
 
