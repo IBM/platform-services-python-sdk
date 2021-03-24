@@ -1,3 +1,10 @@
+## [0.17.16](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.15...v0.17.16) (2021-03-24)
+
+
+### Bug Fixes
+
+* remove dotenv ([#95](https://github.com/IBM/platform-services-python-sdk/issues/95)) ([c957981](https://github.com/IBM/platform-services-python-sdk/commit/c957981097897c639c4f1694bd86b76cd8afd3c7))
+
 ## [0.17.15](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.14...v0.17.15) (2021-03-18)
 
 
