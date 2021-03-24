@@ -161,7 +161,7 @@ class TestListProfiles():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/posture/v1/profiles')
-        mock_response = '{"profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "CIS IBM Foundations Benchmark 1.0.0", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "reason_for_delete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "no_of_controls": 58, "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "enabled": true}]}'
+        mock_response = '{"profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "CIS IBM Foundations Benchmark 1.0.0", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "reason_for_delete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "enabled": true}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -196,7 +196,7 @@ class TestListProfiles():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/posture/v1/profiles')
-        mock_response = '{"profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "CIS IBM Foundations Benchmark 1.0.0", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "reason_for_delete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "no_of_controls": 58, "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "enabled": true}]}'
+        mock_response = '{"profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "CIS IBM Foundations Benchmark 1.0.0", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "reason_for_delete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "enabled": true}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -228,7 +228,7 @@ class TestListProfiles():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/posture/v1/profiles')
-        mock_response = '{"profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "CIS IBM Foundations Benchmark 1.0.0", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "reason_for_delete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "no_of_controls": 58, "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "enabled": true}]}'
+        mock_response = '{"profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "CIS IBM Foundations Benchmark 1.0.0", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "reason_for_delete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "enabled": true}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -458,7 +458,6 @@ class TestProfile():
         profile_model_json['profile_id'] = '3045'
         profile_model_json['base_profile'] = 'CIS IBM Foundations Benchmark 1.0.0'
         profile_model_json['profile_type'] = 'predefined'
-        profile_model_json['no_of_controls'] = 58
         profile_model_json['created_time'] = datetime_to_string(string_to_datetime("2021-02-26T04:07:25.000Z"))
         profile_model_json['modified_time'] = datetime_to_string(string_to_datetime("2021-02-26T04:07:25.000Z"))
         profile_model_json['enabled'] = True
@@ -516,7 +515,6 @@ class TestProfilesList():
         profile_model['profile_id'] = '3045'
         profile_model['base_profile'] = 'CIS IBM Foundations Benchmark 1.0.0'
         profile_model['profile_type'] = 'predefined'
-        profile_model['no_of_controls'] = 58
         profile_model['created_time'] = datetime_to_string(string_to_datetime("2021-02-26T04:07:25.000Z"))
         profile_model['modified_time'] = datetime_to_string(string_to_datetime("2021-02-26T04:07:25.000Z"))
         profile_model['enabled'] = True

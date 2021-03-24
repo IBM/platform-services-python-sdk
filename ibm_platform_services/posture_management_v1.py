@@ -441,8 +441,6 @@ class Profile():
     :attr str base_profile: (optional) The base profile that the controls are pulled
           from.
     :attr str profile_type: (optional) The type of profile.
-    :attr int no_of_controls: (optional) The number of controls that are in the
-          profile.
     :attr datetime created_time: (optional) The time that the profile was created in
           UTC.
     :attr datetime modified_time: (optional) The time that the profile was most
@@ -463,7 +461,6 @@ class Profile():
                  profile_id: str = None,
                  base_profile: str = None,
                  profile_type: str = None,
-                 no_of_controls: int = None,
                  created_time: datetime = None,
                  modified_time: datetime = None,
                  enabled: bool = None) -> None:
@@ -484,8 +481,6 @@ class Profile():
         :param str base_profile: (optional) The base profile that the controls are
                pulled from.
         :param str profile_type: (optional) The type of profile.
-        :param int no_of_controls: (optional) The number of controls that are in
-               the profile.
         :param datetime created_time: (optional) The time that the profile was
                created in UTC.
         :param datetime modified_time: (optional) The time that the profile was
@@ -503,7 +498,6 @@ class Profile():
         self.profile_id = profile_id
         self.base_profile = base_profile
         self.profile_type = profile_type
-        self.no_of_controls = no_of_controls
         self.created_time = created_time
         self.modified_time = modified_time
         self.enabled = enabled
@@ -532,8 +526,6 @@ class Profile():
             args['base_profile'] = _dict.get('base_profile')
         if 'profile_type' in _dict:
             args['profile_type'] = _dict.get('profile_type')
-        if 'no_of_controls' in _dict:
-            args['no_of_controls'] = _dict.get('no_of_controls')
         if 'created_time' in _dict:
             args['created_time'] = string_to_datetime(_dict.get('created_time'))
         if 'modified_time' in _dict:
@@ -570,8 +562,6 @@ class Profile():
             _dict['base_profile'] = self.base_profile
         if hasattr(self, 'profile_type') and self.profile_type is not None:
             _dict['profile_type'] = self.profile_type
-        if hasattr(self, 'no_of_controls') and self.no_of_controls is not None:
-            _dict['no_of_controls'] = self.no_of_controls
         if hasattr(self, 'created_time') and self.created_time is not None:
             _dict['created_time'] = datetime_to_string(self.created_time)
         if hasattr(self, 'modified_time') and self.modified_time is not None:
