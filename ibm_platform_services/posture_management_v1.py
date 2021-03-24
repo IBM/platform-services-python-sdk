@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-e6cfc86e-20210308-121737
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-b414353e-20210324-135924
  
 """
 With IBM Cloud® Security and Compliance Center, you can embed checks into your every day
@@ -22,6 +22,7 @@ workflows to help manage your current security and compliance posture. By monito
 risks, you can identify security vulnerabilities and quickly work to mitigate the impact.
 """
 
+from datetime import datetime
 from enum import Enum
 from typing import Dict, List
 import json
@@ -29,6 +30,7 @@ import json
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
+from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 
 from .common import get_sdk_headers
 
@@ -77,27 +79,27 @@ class PostureManagementV1(BaseService):
     #########################
 
 
-    def create_validation_scan(self,
+    def create_validation(self,
         account_id: str,
         *,
-        scope_id: int = None,
-        profile_id: int = None,
-        group_profile_id: int = None,
+        scope_id: str = None,
+        profile_id: str = None,
+        group_profile_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
-        Initiate a validation scan.
+        Initiate a validations scan.
 
-        Validation scans determine a specified scope's adherence to regulatory controls by
-        validating the configuration of the resources in your scope to the attached
+        Validations scans determine a specified scope's adherence to regulatory controls
+        by validating the configuration of the resources in your scope to the attached
         profile. To initiate a scan, you must have configured a collector, provided
         credentials, and completed both a fact collection and discovery scan. [Learn
         more](/docs/security-compliance?topic=security-compliance-schedule-scan).
 
         :param str account_id: Your IBM Cloud account ID.
-        :param int scope_id: (optional) The unique ID of the scope.
-        :param int profile_id: (optional) The unique ID of the profile.
-        :param int group_profile_id: (optional) The ID of the profile group.
+        :param str scope_id: (optional) The unique ID of the scope.
+        :param str profile_id: (optional) The unique ID of the profile.
+        :param str group_profile_id: (optional) The ID of the profile group.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Result` object
@@ -108,7 +110,7 @@ class PostureManagementV1(BaseService):
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='create_validation_scan')
+                                      operation_id='create_validation')
         headers.update(sdk_headers)
 
         params = {
@@ -128,7 +130,7 @@ class PostureManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/posture/v1/scans/validation'
+        url = '/posture/v1/scans/validations'
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
@@ -143,7 +145,7 @@ class PostureManagementV1(BaseService):
     #########################
 
 
-    def list_profile(self,
+    def list_profiles(self,
         account_id: str,
         *,
         name: str = None,
@@ -167,7 +169,7 @@ class PostureManagementV1(BaseService):
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='list_profile')
+                                      operation_id='list_profiles')
         headers.update(sdk_headers)
 
         params = {
@@ -426,7 +428,6 @@ class Profile():
     Profile.
 
     :attr str name: (optional) The name of the profile.
-    :attr int no_of_goals: (optional) The number of goals that are in the profile.
     :attr str description: (optional) A description of the profile.
     :attr int version: (optional) The version of the profile.
     :attr str created_by: (optional) The user who created the profile.
@@ -435,14 +436,17 @@ class Profile():
           profile.
     :attr ApplicabilityCriteria applicability_criteria: (optional) The criteria that
           defines how a profile applies.
-    :attr int profile_id: (optional) An auto-generated unique identifying number of
+    :attr str profile_id: (optional) An auto-generated unique identifying number of
           the profile.
     :attr str base_profile: (optional) The base profile that the controls are pulled
           from.
     :attr str profile_type: (optional) The type of profile.
-    :attr str created_time: (optional) The time that the profile was created in UTC.
-    :attr str modified_time: (optional) The time that the profile was most recently
-          modified in UTC.
+    :attr int no_of_controls: (optional) The number of controls that are in the
+          profile.
+    :attr datetime created_time: (optional) The time that the profile was created in
+          UTC.
+    :attr datetime modified_time: (optional) The time that the profile was most
+          recently modified in UTC.
     :attr bool enabled: (optional) The profile status. If the profile is enabled,
           the value is true. If the profile is disabled, the value is false.
     """
@@ -450,25 +454,23 @@ class Profile():
     def __init__(self,
                  *,
                  name: str = None,
-                 no_of_goals: int = None,
                  description: str = None,
                  version: int = None,
                  created_by: str = None,
                  modified_by: str = None,
                  reason_for_delete: str = None,
                  applicability_criteria: 'ApplicabilityCriteria' = None,
-                 profile_id: int = None,
+                 profile_id: str = None,
                  base_profile: str = None,
                  profile_type: str = None,
-                 created_time: str = None,
-                 modified_time: str = None,
+                 no_of_controls: int = None,
+                 created_time: datetime = None,
+                 modified_time: datetime = None,
                  enabled: bool = None) -> None:
         """
         Initialize a Profile object.
 
         :param str name: (optional) The name of the profile.
-        :param int no_of_goals: (optional) The number of goals that are in the
-               profile.
         :param str description: (optional) A description of the profile.
         :param int version: (optional) The version of the profile.
         :param str created_by: (optional) The user who created the profile.
@@ -477,20 +479,21 @@ class Profile():
                profile.
         :param ApplicabilityCriteria applicability_criteria: (optional) The
                criteria that defines how a profile applies.
-        :param int profile_id: (optional) An auto-generated unique identifying
+        :param str profile_id: (optional) An auto-generated unique identifying
                number of the profile.
         :param str base_profile: (optional) The base profile that the controls are
                pulled from.
         :param str profile_type: (optional) The type of profile.
-        :param str created_time: (optional) The time that the profile was created
-               in UTC.
-        :param str modified_time: (optional) The time that the profile was most
-               recently modified in UTC.
+        :param int no_of_controls: (optional) The number of controls that are in
+               the profile.
+        :param datetime created_time: (optional) The time that the profile was
+               created in UTC.
+        :param datetime modified_time: (optional) The time that the profile was
+               most recently modified in UTC.
         :param bool enabled: (optional) The profile status. If the profile is
                enabled, the value is true. If the profile is disabled, the value is false.
         """
         self.name = name
-        self.no_of_goals = no_of_goals
         self.description = description
         self.version = version
         self.created_by = created_by
@@ -500,6 +503,7 @@ class Profile():
         self.profile_id = profile_id
         self.base_profile = base_profile
         self.profile_type = profile_type
+        self.no_of_controls = no_of_controls
         self.created_time = created_time
         self.modified_time = modified_time
         self.enabled = enabled
@@ -510,8 +514,6 @@ class Profile():
         args = {}
         if 'name' in _dict:
             args['name'] = _dict.get('name')
-        if 'no_of_goals' in _dict:
-            args['no_of_goals'] = _dict.get('no_of_goals')
         if 'description' in _dict:
             args['description'] = _dict.get('description')
         if 'version' in _dict:
@@ -530,10 +532,12 @@ class Profile():
             args['base_profile'] = _dict.get('base_profile')
         if 'profile_type' in _dict:
             args['profile_type'] = _dict.get('profile_type')
+        if 'no_of_controls' in _dict:
+            args['no_of_controls'] = _dict.get('no_of_controls')
         if 'created_time' in _dict:
-            args['created_time'] = _dict.get('created_time')
+            args['created_time'] = string_to_datetime(_dict.get('created_time'))
         if 'modified_time' in _dict:
-            args['modified_time'] = _dict.get('modified_time')
+            args['modified_time'] = string_to_datetime(_dict.get('modified_time'))
         if 'enabled' in _dict:
             args['enabled'] = _dict.get('enabled')
         return cls(**args)
@@ -548,8 +552,6 @@ class Profile():
         _dict = {}
         if hasattr(self, 'name') and self.name is not None:
             _dict['name'] = self.name
-        if hasattr(self, 'no_of_goals') and self.no_of_goals is not None:
-            _dict['no_of_goals'] = self.no_of_goals
         if hasattr(self, 'description') and self.description is not None:
             _dict['description'] = self.description
         if hasattr(self, 'version') and self.version is not None:
@@ -568,10 +570,12 @@ class Profile():
             _dict['base_profile'] = self.base_profile
         if hasattr(self, 'profile_type') and self.profile_type is not None:
             _dict['profile_type'] = self.profile_type
+        if hasattr(self, 'no_of_controls') and self.no_of_controls is not None:
+            _dict['no_of_controls'] = self.no_of_controls
         if hasattr(self, 'created_time') and self.created_time is not None:
-            _dict['created_time'] = self.created_time
+            _dict['created_time'] = datetime_to_string(self.created_time)
         if hasattr(self, 'modified_time') and self.modified_time is not None:
-            _dict['modified_time'] = self.modified_time
+            _dict['modified_time'] = datetime_to_string(self.modified_time)
         if hasattr(self, 'enabled') and self.enabled is not None:
             _dict['enabled'] = self.enabled
         return _dict
@@ -600,7 +604,7 @@ class Profile():
         """
         PREDEFINED = 'predefined'
         CUSTOM = 'custom'
-        GROUP = 'group'
+        TEMPLATE_GROUP = 'template_group'
 
 
 class ProfilesList():
@@ -725,8 +729,8 @@ class Scan():
     """
     Scan.
 
-    :attr int scan_id: (optional) An auto-generated unique identifier for the scan.
-    :attr int discover_id: (optional) An auto-generated unique identifier for
+    :attr str scan_id: (optional) An auto-generated unique identifier for the scan.
+    :attr str discover_id: (optional) An auto-generated unique identifier for
           discovery.
     :attr str status: (optional) The status of the collector as it completes a scan.
     :attr str status_message: (optional) The current status of the collector.
@@ -734,16 +738,16 @@ class Scan():
 
     def __init__(self,
                  *,
-                 scan_id: int = None,
-                 discover_id: int = None,
+                 scan_id: str = None,
+                 discover_id: str = None,
                  status: str = None,
                  status_message: str = None) -> None:
         """
         Initialize a Scan object.
 
-        :param int scan_id: (optional) An auto-generated unique identifier for the
+        :param str scan_id: (optional) An auto-generated unique identifier for the
                scan.
-        :param int discover_id: (optional) An auto-generated unique identifier for
+        :param str discover_id: (optional) An auto-generated unique identifier for
                discovery.
         :param str status: (optional) The status of the collector as it completes a
                scan.
@@ -857,22 +861,23 @@ class Scope():
     :attr str description: (optional) A detailed description of the scope.
     :attr str created_by: (optional) The user who created the scope.
     :attr str modified_by: (optional) The user who most recently modified the scope.
-    :attr int scope_id: (optional) An auto-generated unique identifier for the
+    :attr str scope_id: (optional) An auto-generated unique identifier for the
           scope.
     :attr str name: (optional) A unique name for your scope.
     :attr bool enabled: (optional) Indicates whether scope is enabled/disabled.
     :attr str environment_type: (optional) The environment that the scope is
           targeted to.
-    :attr str created_time: (optional) The time that the scope was created in UTC.
-    :attr str modified_time: (optional) The time that the scope was last modified in
+    :attr datetime created_time: (optional) The time that the scope was created in
           UTC.
+    :attr datetime modified_time: (optional) The time that the scope was last
+          modified in UTC.
     :attr str last_scan_type: (optional) The last type of scan that was run on the
           scope.
     :attr str last_scan_type_description: (optional) A description of the last scan
           type.
-    :attr str last_scan_status_updated_time: (optional) The last time that a scan
-          status for a scope was updated in UTC.
-    :attr List[int] collectors_id: (optional) The unique IDs of the collectors that
+    :attr datetime last_scan_status_updated_time: (optional) The last time that a
+          scan status for a scope was updated in UTC.
+    :attr List[str] collectors_id: (optional) The unique IDs of the collectors that
           are attached to the scope.
     :attr List[Scan] scans: (optional) A list of the scans that have been run on the
           scope.
@@ -883,16 +888,16 @@ class Scope():
                  description: str = None,
                  created_by: str = None,
                  modified_by: str = None,
-                 scope_id: int = None,
+                 scope_id: str = None,
                  name: str = None,
                  enabled: bool = None,
                  environment_type: str = None,
-                 created_time: str = None,
-                 modified_time: str = None,
+                 created_time: datetime = None,
+                 modified_time: datetime = None,
                  last_scan_type: str = None,
                  last_scan_type_description: str = None,
-                 last_scan_status_updated_time: str = None,
-                 collectors_id: List[int] = None,
+                 last_scan_status_updated_time: datetime = None,
+                 collectors_id: List[str] = None,
                  scans: List['Scan'] = None) -> None:
         """
         Initialize a Scope object.
@@ -901,24 +906,24 @@ class Scope():
         :param str created_by: (optional) The user who created the scope.
         :param str modified_by: (optional) The user who most recently modified the
                scope.
-        :param int scope_id: (optional) An auto-generated unique identifier for the
+        :param str scope_id: (optional) An auto-generated unique identifier for the
                scope.
         :param str name: (optional) A unique name for your scope.
         :param bool enabled: (optional) Indicates whether scope is
                enabled/disabled.
         :param str environment_type: (optional) The environment that the scope is
                targeted to.
-        :param str created_time: (optional) The time that the scope was created in
-               UTC.
-        :param str modified_time: (optional) The time that the scope was last
+        :param datetime created_time: (optional) The time that the scope was
+               created in UTC.
+        :param datetime modified_time: (optional) The time that the scope was last
                modified in UTC.
         :param str last_scan_type: (optional) The last type of scan that was run on
                the scope.
         :param str last_scan_type_description: (optional) A description of the last
                scan type.
-        :param str last_scan_status_updated_time: (optional) The last time that a
-               scan status for a scope was updated in UTC.
-        :param List[int] collectors_id: (optional) The unique IDs of the collectors
+        :param datetime last_scan_status_updated_time: (optional) The last time
+               that a scan status for a scope was updated in UTC.
+        :param List[str] collectors_id: (optional) The unique IDs of the collectors
                that are attached to the scope.
         :param List[Scan] scans: (optional) A list of the scans that have been run
                on the scope.
@@ -957,15 +962,15 @@ class Scope():
         if 'environment_type' in _dict:
             args['environment_type'] = _dict.get('environment_type')
         if 'created_time' in _dict:
-            args['created_time'] = _dict.get('created_time')
+            args['created_time'] = string_to_datetime(_dict.get('created_time'))
         if 'modified_time' in _dict:
-            args['modified_time'] = _dict.get('modified_time')
+            args['modified_time'] = string_to_datetime(_dict.get('modified_time'))
         if 'last_scan_type' in _dict:
             args['last_scan_type'] = _dict.get('last_scan_type')
         if 'last_scan_type_description' in _dict:
             args['last_scan_type_description'] = _dict.get('last_scan_type_description')
         if 'last_scan_status_updated_time' in _dict:
-            args['last_scan_status_updated_time'] = _dict.get('last_scan_status_updated_time')
+            args['last_scan_status_updated_time'] = string_to_datetime(_dict.get('last_scan_status_updated_time'))
         if 'collectors_id' in _dict:
             args['collectors_id'] = _dict.get('collectors_id')
         if 'scans' in _dict:
@@ -995,15 +1000,15 @@ class Scope():
         if hasattr(self, 'environment_type') and self.environment_type is not None:
             _dict['environment_type'] = self.environment_type
         if hasattr(self, 'created_time') and self.created_time is not None:
-            _dict['created_time'] = self.created_time
+            _dict['created_time'] = datetime_to_string(self.created_time)
         if hasattr(self, 'modified_time') and self.modified_time is not None:
-            _dict['modified_time'] = self.modified_time
+            _dict['modified_time'] = datetime_to_string(self.modified_time)
         if hasattr(self, 'last_scan_type') and self.last_scan_type is not None:
             _dict['last_scan_type'] = self.last_scan_type
         if hasattr(self, 'last_scan_type_description') and self.last_scan_type_description is not None:
             _dict['last_scan_type_description'] = self.last_scan_type_description
         if hasattr(self, 'last_scan_status_updated_time') and self.last_scan_status_updated_time is not None:
-            _dict['last_scan_status_updated_time'] = self.last_scan_status_updated_time
+            _dict['last_scan_status_updated_time'] = datetime_to_string(self.last_scan_status_updated_time)
         if hasattr(self, 'collectors_id') and self.collectors_id is not None:
             _dict['collectors_id'] = self.collectors_id
         if hasattr(self, 'scans') and self.scans is not None:

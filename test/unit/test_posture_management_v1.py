@@ -17,7 +17,9 @@
 Unit Tests for PostureManagementV1
 """
 
+from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import inspect
 import json
 import pytest
@@ -40,9 +42,9 @@ service.set_service_url(base_url)
 ##############################################################################
 # region
 
-class TestCreateValidationScan():
+class TestCreateValidation():
     """
-    Test Class for create_validation_scan
+    Test Class for create_validation
     """
 
     def preprocess_url(self, request_url: str):
@@ -55,27 +57,27 @@ class TestCreateValidationScan():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_create_validation_scan_all_params(self):
+    def test_create_validation_all_params(self):
         """
-        create_validation_scan()
+        create_validation()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/posture/v1/scans/validation')
-        mock_response = '{"result": true, "message": "message"}'
+        url = self.preprocess_url(base_url + '/posture/v1/scans/validations')
+        mock_response = '{"result": true, "message": "Success: The validation is in progress. To see the results, go to Security & Compliance > Assess > Scans in the service dashboard and select the scan My_Example_scan."}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
                       content_type='application/json',
-                      status=200)
+                      status=202)
 
         # Set up parameter values
         account_id = 'testString'
-        scope_id = 1
-        profile_id = 6
-        group_profile_id = 13
+        scope_id = '1'
+        profile_id = '6'
+        group_profile_id = '13'
 
         # Invoke method
-        response = service.create_validation_scan(
+        response = service.create_validation(
             account_id,
             scope_id=scope_id,
             profile_id=profile_id,
@@ -85,37 +87,37 @@ class TestCreateValidationScan():
 
         # Check for correct operation
         assert len(responses.calls) == 1
-        assert response.status_code == 200
+        assert response.status_code == 202
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['scope_id'] == 1
-        assert req_body['profile_id'] == 6
-        assert req_body['group_profile_id'] == 13
+        assert req_body['scope_id'] == '1'
+        assert req_body['profile_id'] == '6'
+        assert req_body['group_profile_id'] == '13'
 
 
     @responses.activate
-    def test_create_validation_scan_value_error(self):
+    def test_create_validation_value_error(self):
         """
-        test_create_validation_scan_value_error()
+        test_create_validation_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/posture/v1/scans/validation')
-        mock_response = '{"result": true, "message": "message"}'
+        url = self.preprocess_url(base_url + '/posture/v1/scans/validations')
+        mock_response = '{"result": true, "message": "Success: The validation is in progress. To see the results, go to Security & Compliance > Assess > Scans in the service dashboard and select the scan My_Example_scan."}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
                       content_type='application/json',
-                      status=200)
+                      status=202)
 
         # Set up parameter values
         account_id = 'testString'
-        scope_id = 1
-        profile_id = 6
-        group_profile_id = 13
+        scope_id = '1'
+        profile_id = '6'
+        group_profile_id = '13'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -124,7 +126,7 @@ class TestCreateValidationScan():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_validation_scan(**req_copy)
+                service.create_validation(**req_copy)
 
 
 
@@ -138,9 +140,9 @@ class TestCreateValidationScan():
 ##############################################################################
 # region
 
-class TestListProfile():
+class TestListProfiles():
     """
-    Test Class for list_profile
+    Test Class for list_profiles
     """
 
     def preprocess_url(self, request_url: str):
@@ -153,13 +155,13 @@ class TestListProfile():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_list_profile_all_params(self):
+    def test_list_profiles_all_params(self):
         """
-        list_profile()
+        list_profiles()
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/posture/v1/profiles')
-        mock_response = '{"profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "no_of_goals": 58, "description": "CIS IBM Foundations Benchmark 1.0.0", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "reason_for_delete", "applicability_criteria": {"environment": ["[IBM Cloud]"], "resource": ["[My_example_bucket]"], "environment_category": ["[Cloud]"], "resource_category": ["[Storage]"], "resource_type": ["Bucket"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": 3045, "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "created_time": "2021-02-26T04:07:25Z", "modified_time": "2021-02-26T04:07:25Z", "enabled": true}]}'
+        mock_response = '{"profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "CIS IBM Foundations Benchmark 1.0.0", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "reason_for_delete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "no_of_controls": 58, "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "enabled": true}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -171,7 +173,7 @@ class TestListProfile():
         name = 'testString'
 
         # Invoke method
-        response = service.list_profile(
+        response = service.list_profiles(
             account_id,
             name=name,
             headers={}
@@ -188,13 +190,13 @@ class TestListProfile():
 
 
     @responses.activate
-    def test_list_profile_required_params(self):
+    def test_list_profiles_required_params(self):
         """
-        test_list_profile_required_params()
+        test_list_profiles_required_params()
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/posture/v1/profiles')
-        mock_response = '{"profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "no_of_goals": 58, "description": "CIS IBM Foundations Benchmark 1.0.0", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "reason_for_delete", "applicability_criteria": {"environment": ["[IBM Cloud]"], "resource": ["[My_example_bucket]"], "environment_category": ["[Cloud]"], "resource_category": ["[Storage]"], "resource_type": ["Bucket"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": 3045, "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "created_time": "2021-02-26T04:07:25Z", "modified_time": "2021-02-26T04:07:25Z", "enabled": true}]}'
+        mock_response = '{"profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "CIS IBM Foundations Benchmark 1.0.0", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "reason_for_delete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "no_of_controls": 58, "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "enabled": true}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -205,7 +207,7 @@ class TestListProfile():
         account_id = 'testString'
 
         # Invoke method
-        response = service.list_profile(
+        response = service.list_profiles(
             account_id,
             headers={}
         )
@@ -220,13 +222,13 @@ class TestListProfile():
 
 
     @responses.activate
-    def test_list_profile_value_error(self):
+    def test_list_profiles_value_error(self):
         """
-        test_list_profile_value_error()
+        test_list_profiles_value_error()
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/posture/v1/profiles')
-        mock_response = '{"profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "no_of_goals": 58, "description": "CIS IBM Foundations Benchmark 1.0.0", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "reason_for_delete", "applicability_criteria": {"environment": ["[IBM Cloud]"], "resource": ["[My_example_bucket]"], "environment_category": ["[Cloud]"], "resource_category": ["[Storage]"], "resource_type": ["Bucket"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": 3045, "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "created_time": "2021-02-26T04:07:25Z", "modified_time": "2021-02-26T04:07:25Z", "enabled": true}]}'
+        mock_response = '{"profiles": [{"name": "CIS IBM Foundations Benchmark 1.0.0", "description": "CIS IBM Foundations Benchmark 1.0.0", "version": 1, "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "reason_for_delete": "reason_for_delete", "applicability_criteria": {"environment": ["ibm"], "resource": ["cloud_object_storage"], "environment_category": ["cloud_platform"], "resource_category": ["xaas"], "resource_type": ["storage"], "software_details": {"anyKey": "anyValue"}, "os_details": {"anyKey": "anyValue"}, "additional_details": {"anyKey": "anyValue"}, "environment_category_description": {"mapKey": "Cloud"}, "environment_description": {"mapKey": "IBM Cloud"}, "resource_category_description": {"mapKey": "Storage"}, "resource_type_description": {"mapKey": "Bucket"}, "resource_description": {"mapKey": "My_specific_bucket"}}, "profile_id": "3045", "base_profile": "CIS IBM Foundations Benchmark 1.0.0", "profile_type": "predefined", "no_of_controls": 58, "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "enabled": true}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -243,7 +245,7 @@ class TestListProfile():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.list_profile(**req_copy)
+                service.list_profiles(**req_copy)
 
 
 
@@ -278,7 +280,7 @@ class TestListScopes():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/posture/v1/scopes')
-        mock_response = '{"scopes": [{"description": "This scope targets all of the resources that are available in our IBM Cloud staging environment.", "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "scope_id": 1, "name": "My_Example_Scope", "enabled": true, "environment_type": "ibm", "created_time": "2021-02-26T04:07:25Z", "modified_time": "2021-02-26T04:07:25Z", "last_scan_type": "fact_collection", "last_scan_type_description": "Fact collection", "last_scan_status_updated_time": "2021-02-26T04:07:25Z", "collectors_id": [13], "scans": [{"scan_id": 235, "discover_id": 49, "status": "validation_completed", "status_message": "The collector aborted the task during upgrade."}]}]}'
+        mock_response = '{"scopes": [{"description": "This scope targets all of the resources that are available in our IBM Cloud staging environment.", "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "scope_id": "1", "name": "My_Example_Scope", "enabled": true, "environment_type": "ibm", "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "last_scan_type": "fact_collection", "last_scan_type_description": "Fact collection", "last_scan_status_updated_time": "2021-02-26T04:07:25.000Z", "collectors_id": ["collectors_id"], "scans": [{"scan_id": "235", "discover_id": "49", "status": "validation_completed", "status_message": "The collector aborted the task during upgrade."}]}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -313,7 +315,7 @@ class TestListScopes():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/posture/v1/scopes')
-        mock_response = '{"scopes": [{"description": "This scope targets all of the resources that are available in our IBM Cloud staging environment.", "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "scope_id": 1, "name": "My_Example_Scope", "enabled": true, "environment_type": "ibm", "created_time": "2021-02-26T04:07:25Z", "modified_time": "2021-02-26T04:07:25Z", "last_scan_type": "fact_collection", "last_scan_type_description": "Fact collection", "last_scan_status_updated_time": "2021-02-26T04:07:25Z", "collectors_id": [13], "scans": [{"scan_id": 235, "discover_id": 49, "status": "validation_completed", "status_message": "The collector aborted the task during upgrade."}]}]}'
+        mock_response = '{"scopes": [{"description": "This scope targets all of the resources that are available in our IBM Cloud staging environment.", "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "scope_id": "1", "name": "My_Example_Scope", "enabled": true, "environment_type": "ibm", "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "last_scan_type": "fact_collection", "last_scan_type_description": "Fact collection", "last_scan_status_updated_time": "2021-02-26T04:07:25.000Z", "collectors_id": ["collectors_id"], "scans": [{"scan_id": "235", "discover_id": "49", "status": "validation_completed", "status_message": "The collector aborted the task during upgrade."}]}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -345,7 +347,7 @@ class TestListScopes():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/posture/v1/scopes')
-        mock_response = '{"scopes": [{"description": "This scope targets all of the resources that are available in our IBM Cloud staging environment.", "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "scope_id": 1, "name": "My_Example_Scope", "enabled": true, "environment_type": "ibm", "created_time": "2021-02-26T04:07:25Z", "modified_time": "2021-02-26T04:07:25Z", "last_scan_type": "fact_collection", "last_scan_type_description": "Fact collection", "last_scan_status_updated_time": "2021-02-26T04:07:25Z", "collectors_id": [13], "scans": [{"scan_id": 235, "discover_id": 49, "status": "validation_completed", "status_message": "The collector aborted the task during upgrade."}]}]}'
+        mock_response = '{"scopes": [{"description": "This scope targets all of the resources that are available in our IBM Cloud staging environment.", "created_by": "IBMid-5500081P68", "modified_by": "IBMid-5500081P68", "scope_id": "1", "name": "My_Example_Scope", "enabled": true, "environment_type": "ibm", "created_time": "2021-02-26T04:07:25.000Z", "modified_time": "2021-02-26T04:07:25.000Z", "last_scan_type": "fact_collection", "last_scan_type_description": "Fact collection", "last_scan_status_updated_time": "2021-02-26T04:07:25.000Z", "collectors_id": ["collectors_id"], "scans": [{"scan_id": "235", "discover_id": "49", "status": "validation_completed", "status_message": "The collector aborted the task during upgrade."}]}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -388,11 +390,11 @@ class TestApplicabilityCriteria():
 
         # Construct a json representation of a ApplicabilityCriteria model
         applicability_criteria_model_json = {}
-        applicability_criteria_model_json['environment'] = ['IBM Cloud']
-        applicability_criteria_model_json['resource'] = ['My_example_bucket']
-        applicability_criteria_model_json['environment_category'] = ['Cloud']
-        applicability_criteria_model_json['resource_category'] = ['Storage']
-        applicability_criteria_model_json['resource_type'] = ['Bucket']
+        applicability_criteria_model_json['environment'] = ['ibm']
+        applicability_criteria_model_json['resource'] = ['cloud_object_storage']
+        applicability_criteria_model_json['environment_category'] = ['cloud_platform']
+        applicability_criteria_model_json['resource_category'] = ['xaas']
+        applicability_criteria_model_json['resource_type'] = ['storage']
         applicability_criteria_model_json['software_details'] = { 'foo': 'bar' }
         applicability_criteria_model_json['os_details'] = { 'foo': 'bar' }
         applicability_criteria_model_json['additional_details'] = { 'foo': 'bar' }
@@ -430,11 +432,11 @@ class TestProfile():
         # Construct dict forms of any model objects needed in order to build this model.
 
         applicability_criteria_model = {} # ApplicabilityCriteria
-        applicability_criteria_model['environment'] = ['IBM Cloud']
-        applicability_criteria_model['resource'] = ['My_example_bucket']
-        applicability_criteria_model['environment_category'] = ['Cloud']
-        applicability_criteria_model['resource_category'] = ['Storage']
-        applicability_criteria_model['resource_type'] = ['Bucket']
+        applicability_criteria_model['environment'] = ['ibm']
+        applicability_criteria_model['resource'] = ['cloud_object_storage']
+        applicability_criteria_model['environment_category'] = ['cloud_platform']
+        applicability_criteria_model['resource_category'] = ['xaas']
+        applicability_criteria_model['resource_type'] = ['storage']
         applicability_criteria_model['software_details'] = { 'foo': 'bar' }
         applicability_criteria_model['os_details'] = { 'foo': 'bar' }
         applicability_criteria_model['additional_details'] = { 'foo': 'bar' }
@@ -447,18 +449,18 @@ class TestProfile():
         # Construct a json representation of a Profile model
         profile_model_json = {}
         profile_model_json['name'] = 'CIS IBM Foundations Benchmark 1.0.0'
-        profile_model_json['no_of_goals'] = 58
         profile_model_json['description'] = 'CIS IBM Foundations Benchmark 1.0.0'
         profile_model_json['version'] = 1
         profile_model_json['created_by'] = 'IBMid-5500081P68'
         profile_model_json['modified_by'] = 'IBMid-5500081P68'
         profile_model_json['reason_for_delete'] = 'testString'
         profile_model_json['applicability_criteria'] = applicability_criteria_model
-        profile_model_json['profile_id'] = 3045
+        profile_model_json['profile_id'] = '3045'
         profile_model_json['base_profile'] = 'CIS IBM Foundations Benchmark 1.0.0'
         profile_model_json['profile_type'] = 'predefined'
-        profile_model_json['created_time'] = '2021-02-26T04:07:25Z'
-        profile_model_json['modified_time'] = '2021-02-26T04:07:25Z'
+        profile_model_json['no_of_controls'] = 58
+        profile_model_json['created_time'] = datetime_to_string(string_to_datetime("2021-02-26T04:07:25.000Z"))
+        profile_model_json['modified_time'] = datetime_to_string(string_to_datetime("2021-02-26T04:07:25.000Z"))
         profile_model_json['enabled'] = True
 
         # Construct a model instance of Profile by calling from_dict on the json representation
@@ -489,11 +491,11 @@ class TestProfilesList():
         # Construct dict forms of any model objects needed in order to build this model.
 
         applicability_criteria_model = {} # ApplicabilityCriteria
-        applicability_criteria_model['environment'] = ['IBM Cloud']
-        applicability_criteria_model['resource'] = ['My_example_bucket']
-        applicability_criteria_model['environment_category'] = ['Cloud']
-        applicability_criteria_model['resource_category'] = ['Storage']
-        applicability_criteria_model['resource_type'] = ['Bucket']
+        applicability_criteria_model['environment'] = ['ibm']
+        applicability_criteria_model['resource'] = ['cloud_object_storage']
+        applicability_criteria_model['environment_category'] = ['cloud_platform']
+        applicability_criteria_model['resource_category'] = ['xaas']
+        applicability_criteria_model['resource_type'] = ['storage']
         applicability_criteria_model['software_details'] = { 'foo': 'bar' }
         applicability_criteria_model['os_details'] = { 'foo': 'bar' }
         applicability_criteria_model['additional_details'] = { 'foo': 'bar' }
@@ -505,18 +507,18 @@ class TestProfilesList():
 
         profile_model = {} # Profile
         profile_model['name'] = 'CIS IBM Foundations Benchmark 1.0.0'
-        profile_model['no_of_goals'] = 58
         profile_model['description'] = 'CIS IBM Foundations Benchmark 1.0.0'
         profile_model['version'] = 1
         profile_model['created_by'] = 'IBMid-5500081P68'
         profile_model['modified_by'] = 'IBMid-5500081P68'
         profile_model['reason_for_delete'] = 'testString'
         profile_model['applicability_criteria'] = applicability_criteria_model
-        profile_model['profile_id'] = 3045
+        profile_model['profile_id'] = '3045'
         profile_model['base_profile'] = 'CIS IBM Foundations Benchmark 1.0.0'
         profile_model['profile_type'] = 'predefined'
-        profile_model['created_time'] = '2021-02-26T04:07:25Z'
-        profile_model['modified_time'] = '2021-02-26T04:07:25Z'
+        profile_model['no_of_controls'] = 58
+        profile_model['created_time'] = datetime_to_string(string_to_datetime("2021-02-26T04:07:25.000Z"))
+        profile_model['modified_time'] = datetime_to_string(string_to_datetime("2021-02-26T04:07:25.000Z"))
         profile_model['enabled'] = True
 
         # Construct a json representation of a ProfilesList model
@@ -551,7 +553,7 @@ class TestResult():
         # Construct a json representation of a Result model
         result_model_json = {}
         result_model_json['result'] = True
-        result_model_json['message'] = 'testString'
+        result_model_json['message'] = 'Success: The validation is in progress. To see the results, go to Security & Compliance > Assess > Scans in the service dashboard and select the scan My_Example_scan.'
 
         # Construct a model instance of Result by calling from_dict on the json representation
         result_model = Result.from_dict(result_model_json)
@@ -580,8 +582,8 @@ class TestScan():
 
         # Construct a json representation of a Scan model
         scan_model_json = {}
-        scan_model_json['scan_id'] = 235
-        scan_model_json['discover_id'] = 49
+        scan_model_json['scan_id'] = '235'
+        scan_model_json['discover_id'] = '49'
         scan_model_json['status'] = 'validation_completed'
         scan_model_json['status_message'] = 'The collector aborted the task during upgrade.'
 
@@ -613,8 +615,8 @@ class TestScope():
         # Construct dict forms of any model objects needed in order to build this model.
 
         scan_model = {} # Scan
-        scan_model['scan_id'] = 235
-        scan_model['discover_id'] = 49
+        scan_model['scan_id'] = '235'
+        scan_model['discover_id'] = '49'
         scan_model['status'] = 'validation_completed'
         scan_model['status_message'] = 'The collector aborted the task during upgrade.'
 
@@ -623,16 +625,16 @@ class TestScope():
         scope_model_json['description'] = 'This scope targets all of the resources that are available in our IBM Cloud staging environment.'
         scope_model_json['created_by'] = 'IBMid-5500081P68'
         scope_model_json['modified_by'] = 'IBMid-5500081P68'
-        scope_model_json['scope_id'] = 1
+        scope_model_json['scope_id'] = '1'
         scope_model_json['name'] = 'My_Example_Scope'
         scope_model_json['enabled'] = True
         scope_model_json['environment_type'] = 'ibm'
-        scope_model_json['created_time'] = '2021-02-26T04:07:25Z'
-        scope_model_json['modified_time'] = '2021-02-26T04:07:25Z'
+        scope_model_json['created_time'] = datetime_to_string(string_to_datetime("2021-02-26T04:07:25.000Z"))
+        scope_model_json['modified_time'] = datetime_to_string(string_to_datetime("2021-02-26T04:07:25.000Z"))
         scope_model_json['last_scan_type'] = 'fact_collection'
         scope_model_json['last_scan_type_description'] = 'Fact collection'
-        scope_model_json['last_scan_status_updated_time'] = '2021-02-26T04:07:25Z'
-        scope_model_json['collectors_id'] = [2, 1]
+        scope_model_json['last_scan_status_updated_time'] = datetime_to_string(string_to_datetime("2021-02-26T04:07:25.000Z"))
+        scope_model_json['collectors_id'] = ['2', '1']
         scope_model_json['scans'] = [scan_model]
 
         # Construct a model instance of Scope by calling from_dict on the json representation
@@ -663,8 +665,8 @@ class TestScopesList():
         # Construct dict forms of any model objects needed in order to build this model.
 
         scan_model = {} # Scan
-        scan_model['scan_id'] = 235
-        scan_model['discover_id'] = 49
+        scan_model['scan_id'] = '235'
+        scan_model['discover_id'] = '49'
         scan_model['status'] = 'validation_completed'
         scan_model['status_message'] = 'The collector aborted the task during upgrade.'
 
@@ -672,16 +674,16 @@ class TestScopesList():
         scope_model['description'] = 'This scope targets all of the resources that are available in our IBM Cloud staging environment.'
         scope_model['created_by'] = 'IBMid-5500081P68'
         scope_model['modified_by'] = 'IBMid-5500081P68'
-        scope_model['scope_id'] = 1
+        scope_model['scope_id'] = '1'
         scope_model['name'] = 'My_Example_Scope'
         scope_model['enabled'] = True
         scope_model['environment_type'] = 'ibm'
-        scope_model['created_time'] = '2021-02-26T04:07:25Z'
-        scope_model['modified_time'] = '2021-02-26T04:07:25Z'
+        scope_model['created_time'] = datetime_to_string(string_to_datetime("2021-02-26T04:07:25.000Z"))
+        scope_model['modified_time'] = datetime_to_string(string_to_datetime("2021-02-26T04:07:25.000Z"))
         scope_model['last_scan_type'] = 'fact_collection'
         scope_model['last_scan_type_description'] = 'Fact collection'
-        scope_model['last_scan_status_updated_time'] = '2021-02-26T04:07:25Z'
-        scope_model['collectors_id'] = [2, 1]
+        scope_model['last_scan_status_updated_time'] = datetime_to_string(string_to_datetime("2021-02-26T04:07:25.000Z"))
+        scope_model['collectors_id'] = ['2', '1']
         scope_model['scans'] = [scan_model]
 
         # Construct a json representation of a ScopesList model
