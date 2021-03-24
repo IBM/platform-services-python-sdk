@@ -102,7 +102,7 @@ class TestPostureManagementV1Examples():
         try:
             # begin-list_profile
 
-            profiles_list = posture_management_service.list_profile(
+            profiles_list = posture_management_service.list_profiles(
                 account_id=account_id,
                 name=profile_name,
             ).get_result()
@@ -148,7 +148,7 @@ class TestPostureManagementV1Examples():
         try:
             # begin-create_validation_scan
 
-            result = posture_management_service.create_validation_scan(
+            result = posture_management_service.create_validation(
                 account_id=account_id,
                 scope_id=scope_id,
                 profile_id=profile_id,

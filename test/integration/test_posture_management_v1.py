@@ -64,7 +64,7 @@ class TestPostureManagementV1():
     @needscredentials
     def test_list_profile(self):
 
-        list_profile_response = self.posture_management_service.list_profile(
+        list_profile_response = self.posture_management_service.list_profiles(
             account_id=self.account_id,
             name=self.profile_name,
         )
@@ -96,7 +96,7 @@ class TestPostureManagementV1():
         assert profile_id is not None
         assert scope_id is not None
 
-        create_validation_scan_response = self.posture_management_service.create_validation_scan(
+        create_validation_scan_response = self.posture_management_service.create_validation(
             account_id=self.account_id,
             scope_id=scope_id,
             profile_id=profile_id,
