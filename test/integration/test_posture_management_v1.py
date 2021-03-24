@@ -28,6 +28,7 @@ config_file = 'posture_management.env'
 # Global variables used to share values between test operations.
 profile_id = None
 scope_id = None
+group_profile_id = 0
 
 class TestPostureManagementV1():
     """
@@ -62,15 +63,15 @@ class TestPostureManagementV1():
     )
 
     @needscredentials
-    def test_list_profile(self):
+    def test_list_profiles(self):
 
-        list_profile_response = self.posture_management_service.list_profiles(
+        list_profiles_response = self.posture_management_service.list_profiles(
             account_id=self.account_id,
             name=self.profile_name,
         )
 
-        assert list_profile_response.get_status_code() == 200
-        profiles_list = list_profile_response.get_result()
+        assert list_profiles_response.get_status_code() == 200
+        profiles_list = list_profiles_response.get_result()
         assert profiles_list is not None
 
         global profile_id
@@ -92,18 +93,19 @@ class TestPostureManagementV1():
         scope_id = scopes_list['scopes'][0]['scope_id']
 
     @needscredentials
-    def test_create_validation_scan(self):
+    def test_create_validation(self):
         assert profile_id is not None
         assert scope_id is not None
 
-        create_validation_scan_response = self.posture_management_service.create_validation(
+        create_validation_response = self.posture_management_service.create_validation(
             account_id=self.account_id,
             scope_id=scope_id,
             profile_id=profile_id,
+            group_profile_id=group_profile_id,
         )
 
-        assert create_validation_scan_response.get_status_code() == 200
-        result = create_validation_scan_response.get_result()
+        assert create_validation_response.get_status_code() == 202
+        result = create_validation_response.get_result()
         assert result is not None
 
 

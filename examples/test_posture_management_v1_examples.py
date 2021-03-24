@@ -50,6 +50,7 @@ scopes_name = None
 
 profile_id = None
 scope_id = None
+group_profile_id = 0
 
 
 ##############################################################################
@@ -95,12 +96,12 @@ class TestPostureManagementV1Examples():
 
 
     @needscredentials
-    def test_list_profile_example(self):
+    def test_list_profiles_example(self):
         """
-        list_profile request example
+        list_profiles request example
         """
         try:
-            # begin-list_profile
+            # begin-list_profiles
 
             profiles_list = posture_management_service.list_profiles(
                 account_id=account_id,
@@ -141,22 +142,23 @@ class TestPostureManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    def test_create_validation_scan_example(self):
+    def test_create_validation_example(self):
         """
-        create_validation_scan request example
+        create_validation request example
         """
         try:
-            # begin-create_validation_scan
+            # begin-create_validation
 
             result = posture_management_service.create_validation(
                 account_id=account_id,
                 scope_id=scope_id,
                 profile_id=profile_id,
+                group_profile_id=group_profile_id,
             ).get_result()
 
             print(json.dumps(result, indent=2))
 
-            # end-create_validation_scan
+            # end-create_validation
 
         except ApiException as e:
             pytest.fail(str(e))
