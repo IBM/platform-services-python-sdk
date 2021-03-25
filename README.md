@@ -61,6 +61,7 @@ Service Name | Imported Class Name
 [IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api) | IamIdentityV1
 [IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | IamPolicyManagementV1
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | OpenServiceBrokerV1
+[Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture) | posturemanagementv1
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | ResourceControllerV2
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | ResourceManagerV2
 [Usage Metering](https://cloud.ibm.com/apidocs/usage-metering) | UsageMeteringV4
