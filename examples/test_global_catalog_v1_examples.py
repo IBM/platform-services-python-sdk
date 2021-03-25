@@ -119,7 +119,7 @@ class TestGlobalCatalogV1Examples():
                 metadata=metadata_model,
             ).get_result()
 
-            print(json.dumps(catalog_entry, indent=2))
+            print('\ncreate_catalog_entry() result:\n' + json.dumps(catalog_entry, indent=2))
 
             # end-create_catalog_entry
 
@@ -142,7 +142,7 @@ class TestGlobalCatalogV1Examples():
                 complete=True,
             ).get_result()
 
-            print(json.dumps(catalog_entry, indent=2))
+            print('\nget_catalog_entry() result:\n' + json.dumps(catalog_entry, indent=2))
 
             # end-get_catalog_entry
 
@@ -197,7 +197,7 @@ class TestGlobalCatalogV1Examples():
                 metadata=metadata_model,
             ).get_result()
 
-            print(json.dumps(catalog_entry, indent=2))
+            print('\nupdate_catalog_entry() result:\n' + json.dumps(catalog_entry, indent=2))
 
             # end-update_catalog_entry
 
@@ -219,7 +219,7 @@ class TestGlobalCatalogV1Examples():
                 complete=True,
             ).get_result()
 
-            print(json.dumps(entry_search_result, indent=2))
+            print('\nlist_catalog_entries() result:\n' + json.dumps(entry_search_result, indent=2))
 
             # end-list_catalog_entries
 
@@ -245,7 +245,7 @@ class TestGlobalCatalogV1Examples():
                 complete=True,
             ).get_result()
 
-            print(json.dumps(entry_search_result, indent=2))
+            print('\nget_child_objects() result:\n' + json.dumps(entry_search_result, indent=2))
 
             # end-get_child_objects
 
@@ -267,7 +267,7 @@ class TestGlobalCatalogV1Examples():
                 id=catalog_entry_id,
             ).get_result()
 
-            print(json.dumps(response, indent=2))
+            print('\nrestore_catalog_entry() result:\n' + json.dumps(response, indent=2))
 
             # end-restore_catalog_entry
 
@@ -289,7 +289,7 @@ class TestGlobalCatalogV1Examples():
                 id=catalog_entry_id,
             ).get_result()
 
-            print(json.dumps(visibility, indent=2))
+            print('\nget_visibility() result:\n' + json.dumps(visibility, indent=2))
 
             # end-get_visibility
 
@@ -312,7 +312,7 @@ class TestGlobalCatalogV1Examples():
                 extendable=False,
             ).get_result()
 
-            print(json.dumps(response, indent=2))
+            print('\nupdate_visibility() result:\n' + json.dumps(response, indent=2))
 
             # end-update_visibility
 
@@ -335,7 +335,7 @@ class TestGlobalCatalogV1Examples():
                 id=catalog_entry_id,
             ).get_result()
 
-            print(json.dumps(pricing_get, indent=2))
+            print('\nget_pricing() result:\n' + json.dumps(pricing_get, indent=2))
 
             # end-get_pricing
 
@@ -359,7 +359,7 @@ class TestGlobalCatalogV1Examples():
                 limit=10,
             ).get_result()
 
-            print(json.dumps(audit_search_result, indent=2))
+            print('\nget_audit_logs() result:\n' + json.dumps(audit_search_result, indent=2))
 
             # end-get_audit_logs
 
@@ -387,7 +387,7 @@ class TestGlobalCatalogV1Examples():
                 content_type='text/plain',
             ).get_result()
 
-            print(json.dumps(response, indent=2))
+            print('\nupload_artifact() result:\n' + json.dumps(response, indent=2))
 
             # end-upload_artifact
 
@@ -412,6 +412,7 @@ class TestGlobalCatalogV1Examples():
 
             content_type = response.get_headers().get('content-type')
             result = response.get_result()
+            print('\nget_artifact() result:\n')
             print('Artifact content-type: {0}'.format(content_type))
             print('Artifact contents: {0}'.format(str(result.content)))
 
@@ -434,7 +435,7 @@ class TestGlobalCatalogV1Examples():
             artifacts = global_catalog_service.list_artifacts(
                 object_id=catalog_entry_id).get_result()
 
-            print(json.dumps(artifacts, indent=2))
+            print('\nlist_artifacts() result:\n' + json.dumps(artifacts, indent=2))
 
             # end-list_artifacts
 
@@ -457,7 +458,7 @@ class TestGlobalCatalogV1Examples():
                 artifact_id='artifact.txt',
             ).get_result()
 
-            print(json.dumps(response, indent=2))
+            print('\ndelete_artifact() result:\n' + json.dumps(response, indent=2))
 
             # end-delete_artifact
 
@@ -478,7 +479,7 @@ class TestGlobalCatalogV1Examples():
             response = global_catalog_service.delete_catalog_entry(
                 id=catalog_entry_id).get_result()
 
-            print(json.dumps(response, indent=2))
+            print('\ndelete_catalog_entry() result:\n' + json.dumps(response, indent=2))
 
             # end-delete_catalog_entry
 

@@ -1,3 +1,38 @@
+## [0.17.18](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.17...v0.17.18) (2021-03-25)
+
+
+### Bug Fixes
+
+* **Global Search:** update service after recent API changes ([#97](https://github.com/IBM/platform-services-python-sdk/issues/97)) ([4741518](https://github.com/IBM/platform-services-python-sdk/commit/474151892fa309e628ecf997237727249fff424d))
+
+## [0.17.17](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.16...v0.17.17) (2021-03-25)
+
+
+### Bug Fixes
+
+* add labels to examples ([#94](https://github.com/IBM/platform-services-python-sdk/issues/94)) ([00c285a](https://github.com/IBM/platform-services-python-sdk/commit/00c285ab656000f773df5e3c0538870a76631431))
+
+## [0.17.16](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.15...v0.17.16) (2021-03-24)
+
+
+### Bug Fixes
+
+* remove dotenv ([#95](https://github.com/IBM/platform-services-python-sdk/issues/95)) ([c957981](https://github.com/IBM/platform-services-python-sdk/commit/c957981097897c639c4f1694bd86b76cd8afd3c7))
+
+## [0.17.15](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.14...v0.17.15) (2021-03-18)
+
+
+### Bug Fixes
+
+* **Resource Manager:** update service after recent API changes and generate examples ([#90](https://github.com/IBM/platform-services-python-sdk/issues/90)) ([4fabb77](https://github.com/IBM/platform-services-python-sdk/commit/4fabb77055da545d7ead02f4a2bc9c2afbae2da7))
+
+## [0.17.14](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.13...v0.17.14) (2021-03-11)
+
+
+### Bug Fixes
+
+* **IAM Identity:** update service after recent API changes ([#91](https://github.com/IBM/platform-services-python-sdk/issues/91)) ([3381cb1](https://github.com/IBM/platform-services-python-sdk/commit/3381cb1eafdd8339b46d2bfe0fa91b52be1ae6b2))
+
 ## [0.17.13](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.12...v0.17.13) (2021-03-05)
 
 

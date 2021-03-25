@@ -109,7 +109,7 @@ class TestCaseManagementV1Examples():
                 severity=4,
             ).get_result()
 
-            print(json.dumps(case, indent=2))
+            print('\ncreate_case() result:\n' + json.dumps(case, indent=2))
 
             # end-createCase
 
@@ -144,7 +144,7 @@ class TestCaseManagementV1Examples():
                 fields=fields_to_return
             ).get_result()
 
-            print(json.dumps(case, indent=2))
+            print('\nget_case() result:\n' + json.dumps(case, indent=2))
 
             # end-getCase
 
@@ -166,7 +166,7 @@ class TestCaseManagementV1Examples():
                 sort=GetCasesEnums.Fields.UPDATED_AT,
             ).get_result()
 
-            print(json.dumps(case_list, indent=2))
+            print('\nget_cases() result:\n' + json.dumps(case_list, indent=2))
 
             # end-getCases
 
@@ -188,7 +188,7 @@ class TestCaseManagementV1Examples():
                 comment='This is an example comment.'
             ).get_result()
 
-            print(json.dumps(comment, indent=2))
+            print('\nadd_comment() result:\n' + json.dumps(comment, indent=2))
 
             # end-addComment
 
@@ -214,7 +214,7 @@ class TestCaseManagementV1Examples():
                 watchlist=watchlist_users,
             ).get_result()
 
-            print(json.dumps(watchlist_add_response, indent=2))
+            print('\nadd_watchlist() result:\n' + json.dumps(watchlist_add_response, indent=2))
 
             # end-addWatchlist
 
@@ -240,7 +240,7 @@ class TestCaseManagementV1Examples():
                 watchlist=watchlist_users,
             ).get_result()
 
-            print(json.dumps(watchlist, indent=2))
+            print('\nremove_watchlist() result:\n' + json.dumps(watchlist, indent=2))
 
             # end-removeWatchlist
 
@@ -264,7 +264,7 @@ class TestCaseManagementV1Examples():
                 note='This resource is the service that is having the problem.',
             ).get_result()
 
-            print(json.dumps(resource, indent=2))
+            print('\nadd_resource() result:\n' + json.dumps(resource, indent=2))
 
             # end-addResource
 
@@ -296,7 +296,7 @@ class TestCaseManagementV1Examples():
                 file=files_to_upload,
             ).get_result()
 
-            print(json.dumps(attachment, indent=2))
+            print('\nupload_file() result:\n' + json.dumps(attachment, indent=2))
 
             # end-uploadFile
 
@@ -327,8 +327,8 @@ class TestCaseManagementV1Examples():
 
             file = response.get_result()
 
-            print('Attachment content-type:',
-                  response.get_headers()['content-type'])
+            print('\ndownload_file() result:\n')
+            print('Attachment content-type:', response.get_headers()['content-type'])
             print('Attachment contents:', file.content)
 
             # end-downloadFile
@@ -352,7 +352,7 @@ class TestCaseManagementV1Examples():
                 file_id=attachment_id
             ).get_result()
 
-            print(json.dumps(attachment_list, indent=2))
+            print('\ndelete_file() result:\n' + json.dumps(attachment_list, indent=2))
 
             # end-deleteFile
 
@@ -380,7 +380,7 @@ class TestCaseManagementV1Examples():
                 status_payload=status_payload_model
             ).get_result()
 
-            print(json.dumps(case, indent=2))
+            print('\nupdate_case_status() result:\n' + json.dumps(case, indent=2))
 
             # end-updateCaseStatus
 

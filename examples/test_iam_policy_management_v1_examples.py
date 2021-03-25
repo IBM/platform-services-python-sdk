@@ -120,7 +120,7 @@ class TestIamPolicyManagementV1Examples():
                 resources=[policy_resources]
             ).get_result()
 
-            print(json.dumps(policy, indent=2))
+            print('\ncreate_policy() result:\n' + json.dumps(policy, indent=2))
 
             # end-create_policy
             example_policy_id = policy['id']
@@ -142,7 +142,7 @@ class TestIamPolicyManagementV1Examples():
             )
             policy = response.get_result()
 
-            print(json.dumps(policy, indent=2))
+            print('\nget_policy() result:\n' + json.dumps(policy, indent=2))
 
             # end-get_policy
             example_policy_etag = response.get_headers().get("Etag")
@@ -182,7 +182,7 @@ class TestIamPolicyManagementV1Examples():
                 resources=[policy_resources]
             ).get_result()
 
-            print(json.dumps(policy, indent=2))
+            print('\nupdate_policy() result:\n' + json.dumps(policy, indent=2))
 
             # end-update_policy
 
@@ -201,7 +201,7 @@ class TestIamPolicyManagementV1Examples():
                 account_id=example_account_id, iam_id=example_user_id, format='include_last_permit'
             ).get_result()
 
-            print(json.dumps(policy_list, indent=2))
+            print('\nlist_policies() result:\n' + json.dumps(policy_list, indent=2))
 
             # end-list_policies
 
@@ -220,7 +220,7 @@ class TestIamPolicyManagementV1Examples():
                 policy_id=example_policy_id
             ).get_result()
 
-            print(json.dumps(response, indent=2))
+            print('\ndelete_policy() result:\n' + json.dumps(response, indent=2))
 
             # end-delete_policy
 
@@ -244,7 +244,7 @@ class TestIamPolicyManagementV1Examples():
                 service_name=example_service_name
             ).get_result()
 
-            print(json.dumps(custom_role, indent=2))
+            print('\ncreate_role() result:\n' + json.dumps(custom_role, indent=2))
 
             # end-create_role
             example_custom_role_id = custom_role["id"]
@@ -266,7 +266,7 @@ class TestIamPolicyManagementV1Examples():
             )
             custom_role = response.get_result()
 
-            print(json.dumps(custom_role, indent=2))
+            print('\nget_role() result:\n' + json.dumps(custom_role, indent=2))
 
             # end-get_role
             example_custom_role_etag = response.get_headers().get("Etag")
@@ -290,7 +290,7 @@ class TestIamPolicyManagementV1Examples():
                 actions=updated_role_actions
             ).get_result()
 
-            print(json.dumps(custom_role, indent=2))
+            print('\nupdate_role() result:\n' + json.dumps(custom_role, indent=2))
 
             # end-update_role
 
@@ -309,7 +309,7 @@ class TestIamPolicyManagementV1Examples():
                 account_id=example_account_id
             ).get_result()
 
-            print(json.dumps(role_list, indent=2))
+            print('\nlist_roles() result:\n' + json.dumps(role_list, indent=2))
 
             # end-list_roles
 
@@ -328,7 +328,7 @@ class TestIamPolicyManagementV1Examples():
                 role_id=example_custom_role_id
             ).get_result()
 
-            print(json.dumps(response, indent=2))
+            print('\ndelete_role() result:\n' + json.dumps(response, indent=2))
 
             # end-delete_role
 
