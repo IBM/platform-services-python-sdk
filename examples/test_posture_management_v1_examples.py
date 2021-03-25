@@ -108,7 +108,7 @@ class TestPostureManagementV1Examples():
                 name=profile_name,
             ).get_result()
 
-            print(json.dumps(profiles_list, indent=2))
+            print('\nlist_profiles() result:\n' + json.dumps(profiles_list, indent=2))
 
             # end-list_profile
 
@@ -131,7 +131,7 @@ class TestPostureManagementV1Examples():
                 name=scopes_name,
             ).get_result()
 
-            print(json.dumps(scopes_list, indent=2))
+            print('\nlist_scopes() result:\n' + json.dumps(scopes_list, indent=2))
 
             # end-list_scopes
 
@@ -156,7 +156,7 @@ class TestPostureManagementV1Examples():
                 group_profile_id=group_profile_id,
             ).get_result()
 
-            print(json.dumps(result, indent=2))
+            print('\ncreate_validation() result:\n' + json.dumps(result, indent=2))
 
             # end-create_validation
 
