@@ -1,3 +1,10 @@
+## [0.17.18](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.17...v0.17.18) (2021-03-25)
+
+
+### Bug Fixes
+
+* **Global Search:** update service after recent API changes ([#97](https://github.com/IBM/platform-services-python-sdk/issues/97)) ([4741518](https://github.com/IBM/platform-services-python-sdk/commit/474151892fa309e628ecf997237727249fff424d))
+
 ## [0.17.17](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.16...v0.17.17) (2021-03-25)
 
 
