@@ -1,3 +1,10 @@
+## [0.17.17](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.16...v0.17.17) (2021-03-25)
+
+
+### Bug Fixes
+
+* add labels to examples ([#94](https://github.com/IBM/platform-services-python-sdk/issues/94)) ([00c285a](https://github.com/IBM/platform-services-python-sdk/commit/00c285ab656000f773df5e3c0538870a76631431))
+
 ## [0.17.16](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.15...v0.17.16) (2021-03-24)
 
 
