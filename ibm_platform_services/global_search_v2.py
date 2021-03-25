@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-b414353e-20210324-135924
  
 """
 Search for resources with the global and shared resource properties repository integrated
@@ -96,7 +96,7 @@ class GlobalSearchV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Find instances of resources.
+        Find instances of resources (v3).
 
         Find cloud foundry resources, resource controller-enabled resources, or storage
         and network resources running on classic infrastructure in a specific account ID.
@@ -184,9 +184,9 @@ class GlobalSearchV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Get all supported resource types.
+        DEPRECATED. Get all GhoST indices.
 
-        Retrieves a list of all the resource types supported by GhoST.
+        Retrieves a list of all GhoST indices.
 
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -367,10 +367,9 @@ class ScanResult():
 
 class SupportedTypesList():
     """
-    A list of resource types supported by GhoST.
+    A list of all GhoST indices.
 
-    :attr List[str] supported_types: (optional) A list of resource types supported
-          by GhoST.
+    :attr List[str] supported_types: (optional) A list of all GhoST indices.
     """
 
     def __init__(self,
@@ -379,8 +378,7 @@ class SupportedTypesList():
         """
         Initialize a SupportedTypesList object.
 
-        :param List[str] supported_types: (optional) A list of resource types
-               supported by GhoST.
+        :param List[str] supported_types: (optional) A list of all GhoST indices.
         """
         self.supported_types = supported_types
 
