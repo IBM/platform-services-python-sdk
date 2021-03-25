@@ -134,8 +134,7 @@ class TestResourceControllerV2Examples():
                 resource_plan_id=resource_plan_id
             ).get_result()
 
-            print('\ncreate_resource_instance() response:\n',
-                  json.dumps(resource_instance, indent=2))
+            print('\ncreate_resource_instance() result:\n' + json.dumps(resource_instance, indent=2))
 
             # end-create_resource_instance
 
@@ -157,8 +156,7 @@ class TestResourceControllerV2Examples():
                 id=instance_guid
             ).get_result()
 
-            print('\nget_resource_instance() response:\n',
-                  json.dumps(resource_instance, indent=2))
+            print('\nget_resource_instance() result:\n' + json.dumps(resource_instance, indent=2))
 
             # end-get_resource_instance
 
@@ -178,8 +176,7 @@ class TestResourceControllerV2Examples():
                 name=resource_instance_name
             ).get_result()
 
-            print('\nlist_resource_instances() response:\n',
-                  json.dumps(resource_instances_list, indent=2))
+            print('\nlist_resource_instances() result:\n' + json.dumps(resource_instances_list, indent=2))
 
             # end-list_resource_instances
 
@@ -204,8 +201,7 @@ class TestResourceControllerV2Examples():
                 parameters=parameters
             ).get_result()
 
-            print('\nupdate_resource_instance() response:\n',
-                  json.dumps(resource_instance, indent=2))
+            print('\nupdate_resource_instance() result:\n' + json.dumps(resource_instance, indent=2))
 
             # end-update_resource_instance
 
@@ -227,8 +223,7 @@ class TestResourceControllerV2Examples():
                 target=alias_target_crn
             ).get_result()
 
-            print('\ncreate_resource_alias() response:\n',
-                  json.dumps(resource_alias, indent=2))
+            print('\ncreate_resource_alias() result:\n' + json.dumps(resource_alias, indent=2))
 
             # end-create_resource_alias
 
@@ -250,8 +245,7 @@ class TestResourceControllerV2Examples():
                 id=alias_guid
             ).get_result()
 
-            print('\nget_resource_alias() response:\n',
-                  json.dumps(resource_alias, indent=2))
+            print('\nget_resource_alias() result:\n' + json.dumps(resource_alias, indent=2))
 
             # end-get_resource_alias
 
@@ -271,8 +265,7 @@ class TestResourceControllerV2Examples():
                 name=alias_name
             ).get_result()
 
-            print('\nlist_resource_aliases() response:\n',
-                  json.dumps(resource_aliases_list, indent=2))
+            print('\nlist_resource_aliases() result:\n' + json.dumps(resource_aliases_list, indent=2))
 
             # end-list_resource_aliases
 
@@ -293,8 +286,7 @@ class TestResourceControllerV2Examples():
                 name=alias_update_name
             ).get_result()
 
-            print('\nupdate_resource_alias() response:\n',
-                  json.dumps(resource_alias, indent=2))
+            print('\nupdate_resource_alias() result:\n' + json.dumps(resource_alias, indent=2))
 
             # end-update_resource_alias
 
@@ -314,8 +306,7 @@ class TestResourceControllerV2Examples():
                 id=instance_guid
             ).get_result()
 
-            print('\nlist_resource_aliases_for_instance() response:\n',
-                  json.dumps(resource_aliases_list, indent=2))
+            print('\nlist_resource_aliases_for_instance() result:\n' + json.dumps(resource_aliases_list, indent=2))
 
             # end-list_resource_aliases_for_instance
 
@@ -341,8 +332,7 @@ class TestResourceControllerV2Examples():
                 parameters=parameters
             ).get_result()
 
-            print('\ncreate_resource_binding() response:\n',
-                  json.dumps(resource_binding, indent=2))
+            print('\ncreate_resource_binding() result:\n' + json.dumps(resource_binding, indent=2))
 
             # end-create_resource_binding
 
@@ -364,8 +354,7 @@ class TestResourceControllerV2Examples():
                 id=binding_guid
             ).get_result()
 
-            print('\nget_resource_binding() response:\n',
-                  json.dumps(resource_binding, indent=2))
+            print('\nget_resource_binding() result:\n' + json.dumps(resource_binding, indent=2))
 
             # end-get_resource_binding
 
@@ -385,8 +374,7 @@ class TestResourceControllerV2Examples():
                 name=binding_name
             ).get_result()
 
-            print('\nlist_resource_bindings() response:\n',
-                  json.dumps(resource_bindings_list, indent=2))
+            print('\nlist_resource_bindings() result:\n' + json.dumps(resource_bindings_list, indent=2))
 
             # end-list_resource_bindings
 
@@ -407,8 +395,7 @@ class TestResourceControllerV2Examples():
                 name=binding_update_name
             ).get_result()
 
-            print('\nupdate_resource_binding() response:\n',
-                  json.dumps(resource_binding, indent=2))
+            print('\nupdate_resource_binding() result:\n' + json.dumps(resource_binding, indent=2))
 
             # end-update_resource_binding
 
@@ -428,8 +415,7 @@ class TestResourceControllerV2Examples():
                 id=alias_guid
             ).get_result()
 
-            print('\nlist_resource_bindings_for_alias() response:\n',
-                  json.dumps(resource_bindings_list, indent=2))
+            print('\nlist_resource_bindings_for_alias() result:\n' + json.dumps(resource_bindings_list, indent=2))
 
             # end-list_resource_bindings_for_alias
 
@@ -454,8 +440,7 @@ class TestResourceControllerV2Examples():
                 parameters=parameters
             ).get_result()
 
-            print('\ncreate_resource_key() response:\n',
-                  json.dumps(resource_key, indent=2))
+            print('\ncreate_resource_key() result:\n' + json.dumps(resource_key, indent=2))
 
             # end-create_resource_key
 
@@ -477,8 +462,7 @@ class TestResourceControllerV2Examples():
                 id=instance_key_guid
             ).get_result()
 
-            print('\nget_resource_key() response:\n',
-                  json.dumps(resource_key, indent=2))
+            print('\nget_resource_key() result:\n' + json.dumps(resource_key, indent=2))
 
             # end-get_resource_key
 
@@ -498,8 +482,7 @@ class TestResourceControllerV2Examples():
                 name=key_name
             ).get_result()
 
-            print('\nlist_resource_keys() response:\n',
-                  json.dumps(resource_keys_list, indent=2))
+            print('\nlist_resource_keys() result:\n' + json.dumps(resource_keys_list, indent=2))
 
             # end-list_resource_keys
 
@@ -520,8 +503,7 @@ class TestResourceControllerV2Examples():
                 name=key_update_name
             ).get_result()
 
-            print('\nupdate_resource_key() response:\n',
-                  json.dumps(resource_key, indent=2))
+            print('\nupdate_resource_key() result:\n' + json.dumps(resource_key, indent=2))
 
             # end-update_resource_key
 
@@ -541,8 +523,7 @@ class TestResourceControllerV2Examples():
                 id=instance_guid
             ).get_result()
 
-            print('\nlist_resource_keys_for_instance() response:\n',
-                  json.dumps(resource_keys_list, indent=2))
+            print('\nlist_resource_keys_for_instance() result:\n' + json.dumps(resource_keys_list, indent=2))
 
             # end-list_resource_keys_for_instance
 
@@ -561,8 +542,7 @@ class TestResourceControllerV2Examples():
             response = resource_controller_service.delete_resource_binding(
                 id=binding_guid)
 
-            print('\ndelete_resource_binding() response status code: ',
-                  response.get_status_code())
+            print('\ndelete_resource_binding() response status code: ', response.get_status_code())
 
             # end-delete_resource_binding
 
@@ -581,8 +561,7 @@ class TestResourceControllerV2Examples():
             response = resource_controller_service.delete_resource_key(
                 id=instance_key_guid)
 
-            print('\ndelete_resource_key() response status code: ',
-                  response.get_status_code())
+            print('\ndelete_resource_key() response status code: ', response.get_status_code())
 
             # end-delete_resource_key
 
@@ -601,8 +580,7 @@ class TestResourceControllerV2Examples():
             response = resource_controller_service.delete_resource_alias(
                 id=alias_guid
             )
-            print('\ndelete_resource_alias() response status code: ',
-                  response.get_status_code())
+            print('\ndelete_resource_alias() response status code: ', response.get_status_code())
 
             # end-delete_resource_alias
 
@@ -622,8 +600,7 @@ class TestResourceControllerV2Examples():
                 id=instance_guid
             ).get_result()
 
-            print('\nlock_resource_instance() response:\n',
-                  json.dumps(resource_instance, indent=2))
+            print('\nlock_resource_instance() result:\n' + json.dumps(resource_instance, indent=2))
 
             # end-lock_resource_instance
 
@@ -643,8 +620,7 @@ class TestResourceControllerV2Examples():
                 id=instance_guid
             ).get_result()
 
-            print('\nunlock_resource_instance() response:\n',
-                  json.dumps(resource_instance, indent=2))
+            print('\nunlock_resource_instance() result:\n' + json.dumps(resource_instance, indent=2))
 
             # end-unlock_resource_instance
 
@@ -665,8 +641,7 @@ class TestResourceControllerV2Examples():
                 recursive=False
             )
 
-            print('\ndelete_resource_instance() response status code: ',
-                  response.get_status_code())
+            print('\ndelete_resource_instance() response status code: ', response.get_status_code())
 
             # end-delete_resource_instance
 
@@ -689,8 +664,7 @@ class TestResourceControllerV2Examples():
                 account_id=account_id
             ).get_result()
 
-            print('\nlist_reclamations() response:\n',
-                  json.dumps(reclamations_list, indent=2))
+            print('\nlist_reclamations() result:\n' + json.dumps(reclamations_list, indent=2))
 
             # end-list_reclamations
 
@@ -716,8 +690,7 @@ class TestResourceControllerV2Examples():
                 action_name='reclaim'
             ).get_result()
 
-            print('\nrun_reclamation_action() response:\n',
-                  json.dumps(reclamation, indent=2))
+            print('\nrun_reclamation_action() result:\n' + json.dumps(reclamation, indent=2))
 
             # end-run_reclamation_action
 
