@@ -1,3 +1,10 @@
+# [0.18.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.18...v0.18.0) (2021-03-26)
+
+
+### Features
+
+* **Posture Management:** add service to project ([#93](https://github.com/IBM/platform-services-python-sdk/issues/93)) ([c194fea](https://github.com/IBM/platform-services-python-sdk/commit/c194feab8bc7bc04aa20d447f458bbe3cfd5ef87))
+
 ## [0.17.18](https://github.com/IBM/platform-services-python-sdk/compare/v0.17.17...v0.17.18) (2021-03-25)
 
 
