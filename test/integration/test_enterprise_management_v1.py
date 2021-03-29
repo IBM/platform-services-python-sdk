@@ -28,7 +28,6 @@ import random
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_cloud_sdk_core import *
 from ibm_platform_services.enterprise_management_v1 import *
-from dotenv import load_dotenv
 import time, datetime
 import math
 import random

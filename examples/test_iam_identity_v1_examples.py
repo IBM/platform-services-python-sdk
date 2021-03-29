@@ -117,7 +117,7 @@ class TestIamIdentityV1Examples():
 
             apikey_id = api_key['id']
 
-            print(json.dumps(api_key, indent=2))
+            print('\ncreate_api_key() result:\n' + json.dumps(api_key, indent=2))
 
             # end-create_api_key
 
@@ -140,7 +140,7 @@ class TestIamIdentityV1Examples():
                 include_history=True
             ).get_result()
 
-            print(json.dumps(api_key_list, indent=2))
+            print('\nlist_api_keys() result:\n' + json.dumps(api_key_list, indent=2))
 
             # end-list_api_keys
 
@@ -161,7 +161,7 @@ class TestIamIdentityV1Examples():
                 iam_api_key=apikey
             ).get_result()
 
-            print(json.dumps(api_key, indent=2))
+            print('\nget_api_keys_details() result:\n' + json.dumps(api_key, indent=2))
 
             # end-get_api_keys_details
 
@@ -184,7 +184,7 @@ class TestIamIdentityV1Examples():
             apikey_etag = response.get_headers()['Etag']
             api_key = response.get_result()
 
-            print(json.dumps(api_key, indent=2))
+            print('\nget_api_key() result:\n' + json.dumps(api_key, indent=2))
 
             # end-get_api_key
 
@@ -206,7 +206,7 @@ class TestIamIdentityV1Examples():
                 description='This is an updated description'
             ).get_result()
 
-            print(json.dumps(api_key, indent=2))
+            print('\nupdate_api_key() result:\n' + json.dumps(api_key, indent=2))
 
             # end-update_api_key
 
@@ -224,7 +224,7 @@ class TestIamIdentityV1Examples():
 
             response = iam_identity_service.lock_api_key(id=apikey_id)
 
-            print(response)
+            print('\nlock_api_key() response status code: ', response.get_status_code())
 
             # end-lock_api_key
 
@@ -242,7 +242,7 @@ class TestIamIdentityV1Examples():
 
             response = iam_identity_service.unlock_api_key(id=apikey_id)
 
-            print(response)
+            print('\nunlock_api_key() response status code: ', response.get_status_code())
 
             # end-unlock_api_key
 
@@ -261,7 +261,7 @@ class TestIamIdentityV1Examples():
 
             response = iam_identity_service.delete_api_key(id=apikey_id)
 
-            print(response)
+            print('\ndelete_api_key() response status code: ', response.get_status_code())
 
             # end-delete_api_key
 
@@ -285,7 +285,7 @@ class TestIamIdentityV1Examples():
 
             svc_id = service_id['id']
 
-            print(json.dumps(service_id, indent=2))
+            print('\ncreate_service_id() result:\n' + json.dumps(service_id, indent=2))
 
             # end-create_service_id
         except ApiException as e:
@@ -307,7 +307,7 @@ class TestIamIdentityV1Examples():
             svc_id_etag = response.get_headers()['Etag']
             service_id = response.get_result()
 
-            print(json.dumps(service_id, indent=2))
+            print('\nget_service_id() result:\n' + json.dumps(service_id, indent=2))
 
             # end-get_service_id
 
@@ -330,7 +330,7 @@ class TestIamIdentityV1Examples():
                 name=serviceid_name
             ).get_result()
 
-            print(json.dumps(service_id_list, indent=2))
+            print('\nlist_service_ids() result:\n' + json.dumps(service_id_list, indent=2))
 
             # end-list_service_ids
 
@@ -352,7 +352,7 @@ class TestIamIdentityV1Examples():
                 description='This is an updated description'
             ).get_result()
 
-            print(json.dumps(service_id, indent=2))
+            print('\nupdate_service_id() result:\n' + json.dumps(service_id, indent=2))
 
             # end-update_service_id
 
@@ -370,7 +370,7 @@ class TestIamIdentityV1Examples():
 
             response = iam_identity_service.lock_service_id(id=svc_id)
 
-            print(response)
+            print('\nlock_service_id() response status code: ', response.get_status_code())
 
             # end-lock_service_id
 
@@ -389,7 +389,7 @@ class TestIamIdentityV1Examples():
 
             response = iam_identity_service.unlock_service_id(id=svc_id)
 
-            print(response)
+            print('\nunlock_service_id() response status code: ', response.get_status_code())
 
             # end-unlock_service_id
 
@@ -408,7 +408,7 @@ class TestIamIdentityV1Examples():
 
             response = iam_identity_service.delete_service_id(id=svc_id)
 
-            print(response)
+            print('\ndelete_service_id() response status code: ', response.get_status_code())
 
             # end-delete_service_id
 
@@ -429,7 +429,7 @@ class TestIamIdentityV1Examples():
             )
             settings = response.get_result()
             account_settings_etag = response.get_headers()['Etag']
-            print(json.dumps(settings, indent=2))
+            print('\nget_account_settings() result:\n' + json.dumps(settings, indent=2))
 
             # end-getAccountSettings
 
@@ -455,7 +455,7 @@ class TestIamIdentityV1Examples():
                 session_invalidation_in_seconds="7200",
             ).get_result()
 
-            print(json.dumps(account_settings_response, indent=2))
+            print('\nupdate_account_settings() result:\n' + json.dumps(account_settings_response, indent=2))
 
             # end-updateAccountSettings
 
