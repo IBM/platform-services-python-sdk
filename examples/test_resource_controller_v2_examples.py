@@ -125,6 +125,7 @@ class TestResourceControllerV2Examples():
         """
         try:
             global instance_guid, resource_instance_name, target_region, resource_group, resource_plan_id
+            print('\ncreate_resource_instance() result:')
             # begin-create_resource_instance
 
             resource_instance = resource_controller_service.create_resource_instance(
@@ -134,7 +135,7 @@ class TestResourceControllerV2Examples():
                 resource_plan_id=resource_plan_id
             ).get_result()
 
-            print('\ncreate_resource_instance() result:\n' + json.dumps(resource_instance, indent=2))
+            print(json.dumps(resource_instance, indent=2))
 
             # end-create_resource_instance
 
@@ -150,13 +151,14 @@ class TestResourceControllerV2Examples():
         """
         try:
             global instance_guid
+            print('\nget_resource_instance() result:')
             # begin-get_resource_instance
 
             resource_instance = resource_controller_service.get_resource_instance(
                 id=instance_guid
             ).get_result()
 
-            print('\nget_resource_instance() result:\n' + json.dumps(resource_instance, indent=2))
+            print(json.dumps(resource_instance, indent=2))
 
             # end-get_resource_instance
 
@@ -170,13 +172,14 @@ class TestResourceControllerV2Examples():
         """
         try:
             global resource_instance_name
+            print('\nlist_resource_instances() result:')
             # begin-list_resource_instances
 
             resource_instances_list = resource_controller_service.list_resource_instances(
                 name=resource_instance_name
             ).get_result()
 
-            print('\nlist_resource_instances() result:\n' + json.dumps(resource_instances_list, indent=2))
+            print(json.dumps(resource_instances_list, indent=2))
 
             # end-list_resource_instances
 
@@ -190,6 +193,7 @@ class TestResourceControllerV2Examples():
         """
         try:
             global instance_guid, resource_instance_update_name
+            print('\nupdate_resource_instance() result:')
             # begin-update_resource_instance
 
             parameters = {
@@ -201,7 +205,7 @@ class TestResourceControllerV2Examples():
                 parameters=parameters
             ).get_result()
 
-            print('\nupdate_resource_instance() result:\n' + json.dumps(resource_instance, indent=2))
+            print(json.dumps(resource_instance, indent=2))
 
             # end-update_resource_instance
 
@@ -215,6 +219,7 @@ class TestResourceControllerV2Examples():
         """
         try:
             global instance_guid, alias_name, alias_guid, alias_target_crn
+            print('\ncreate_resource_alias() result:')
             # begin-create_resource_alias
 
             resource_alias = resource_controller_service.create_resource_alias(
@@ -223,7 +228,7 @@ class TestResourceControllerV2Examples():
                 target=alias_target_crn
             ).get_result()
 
-            print('\ncreate_resource_alias() result:\n' + json.dumps(resource_alias, indent=2))
+            print(json.dumps(resource_alias, indent=2))
 
             # end-create_resource_alias
 
@@ -239,13 +244,14 @@ class TestResourceControllerV2Examples():
         """
         try:
             global alias_guid
+            print('\nget_resource_alias() result:')
             # begin-get_resource_alias
 
             resource_alias = resource_controller_service.get_resource_alias(
                 id=alias_guid
             ).get_result()
 
-            print('\nget_resource_alias() result:\n' + json.dumps(resource_alias, indent=2))
+            print(json.dumps(resource_alias, indent=2))
 
             # end-get_resource_alias
 
@@ -259,13 +265,14 @@ class TestResourceControllerV2Examples():
         """
         try:
             global alias_name
+            print('\nlist_resource_aliases() result:')
             # begin-list_resource_aliases
 
             resource_aliases_list = resource_controller_service.list_resource_aliases(
                 name=alias_name
             ).get_result()
 
-            print('\nlist_resource_aliases() result:\n' + json.dumps(resource_aliases_list, indent=2))
+            print(json.dumps(resource_aliases_list, indent=2))
 
             # end-list_resource_aliases
 
@@ -279,6 +286,7 @@ class TestResourceControllerV2Examples():
         """
         try:
             global alias_guid, alias_update_name
+            print('\nupdate_resource_alias() result:')
             # begin-update_resource_alias
 
             resource_alias = resource_controller_service.update_resource_alias(
@@ -286,7 +294,7 @@ class TestResourceControllerV2Examples():
                 name=alias_update_name
             ).get_result()
 
-            print('\nupdate_resource_alias() result:\n' + json.dumps(resource_alias, indent=2))
+            print(json.dumps(resource_alias, indent=2))
 
             # end-update_resource_alias
 
@@ -300,13 +308,14 @@ class TestResourceControllerV2Examples():
         """
         try:
             global instance_guid
+            print('\nlist_resource_aliases_for_instance() result:')
             # begin-list_resource_aliases_for_instance
 
             resource_aliases_list = resource_controller_service.list_resource_aliases_for_instance(
                 id=instance_guid
             ).get_result()
 
-            print('\nlist_resource_aliases_for_instance() result:\n' + json.dumps(resource_aliases_list, indent=2))
+            print(json.dumps(resource_aliases_list, indent=2))
 
             # end-list_resource_aliases_for_instance
 
@@ -320,6 +329,7 @@ class TestResourceControllerV2Examples():
         """
         try:
             global alias_guid, binding_guid, binding_name, binding_target_crn
+            print('\ncreate_resource_binding() result:')
             # begin-create_resource_binding
 
             parameters = {
@@ -332,7 +342,7 @@ class TestResourceControllerV2Examples():
                 parameters=parameters
             ).get_result()
 
-            print('\ncreate_resource_binding() result:\n' + json.dumps(resource_binding, indent=2))
+            print(json.dumps(resource_binding, indent=2))
 
             # end-create_resource_binding
 
@@ -348,13 +358,14 @@ class TestResourceControllerV2Examples():
         """
         try:
             global binding_guid
+            print('\nget_resource_binding() result:')
             # begin-get_resource_binding
 
             resource_binding = resource_controller_service.get_resource_binding(
                 id=binding_guid
             ).get_result()
 
-            print('\nget_resource_binding() result:\n' + json.dumps(resource_binding, indent=2))
+            print(json.dumps(resource_binding, indent=2))
 
             # end-get_resource_binding
 
@@ -368,13 +379,14 @@ class TestResourceControllerV2Examples():
         """
         try:
             global binding_name
+            print('\nlist_resource_bindings() result:')
             # begin-list_resource_bindings
 
             resource_bindings_list = resource_controller_service.list_resource_bindings(
                 name=binding_name
             ).get_result()
 
-            print('\nlist_resource_bindings() result:\n' + json.dumps(resource_bindings_list, indent=2))
+            print(json.dumps(resource_bindings_list, indent=2))
 
             # end-list_resource_bindings
 
@@ -388,6 +400,7 @@ class TestResourceControllerV2Examples():
         """
         try:
             global binding_guid, binding_update_name
+            print('\nupdate_resource_binding() result:')
             # begin-update_resource_binding
 
             resource_binding = resource_controller_service.update_resource_binding(
@@ -395,7 +408,7 @@ class TestResourceControllerV2Examples():
                 name=binding_update_name
             ).get_result()
 
-            print('\nupdate_resource_binding() result:\n' + json.dumps(resource_binding, indent=2))
+            print(json.dumps(resource_binding, indent=2))
 
             # end-update_resource_binding
 
@@ -409,13 +422,14 @@ class TestResourceControllerV2Examples():
         """
         try:
             global alias_guid
+            print('\nlist_resource_bindings_for_alias() result:')
             # begin-list_resource_bindings_for_alias
 
             resource_bindings_list = resource_controller_service.list_resource_bindings_for_alias(
                 id=alias_guid
             ).get_result()
 
-            print('\nlist_resource_bindings_for_alias() result:\n' + json.dumps(resource_bindings_list, indent=2))
+            print(json.dumps(resource_bindings_list, indent=2))
 
             # end-list_resource_bindings_for_alias
 
@@ -429,6 +443,7 @@ class TestResourceControllerV2Examples():
         """
         try:
             global instance_guid, instance_key_guid, key_name
+            print('\ncreate_resource_key() result:')
             # begin-create_resource_key
 
             parameters = {
@@ -440,7 +455,7 @@ class TestResourceControllerV2Examples():
                 parameters=parameters
             ).get_result()
 
-            print('\ncreate_resource_key() result:\n' + json.dumps(resource_key, indent=2))
+            print(json.dumps(resource_key, indent=2))
 
             # end-create_resource_key
 
@@ -456,13 +471,14 @@ class TestResourceControllerV2Examples():
         """
         try:
             global instance_key_guid
+            print('\nget_resource_key() result:')
             # begin-get_resource_key
 
             resource_key = resource_controller_service.get_resource_key(
                 id=instance_key_guid
             ).get_result()
 
-            print('\nget_resource_key() result:\n' + json.dumps(resource_key, indent=2))
+            print(json.dumps(resource_key, indent=2))
 
             # end-get_resource_key
 
@@ -476,13 +492,14 @@ class TestResourceControllerV2Examples():
         """
         try:
             global key_name
+            print('\nlist_resource_keys() result:')
             # begin-list_resource_keys
 
             resource_keys_list = resource_controller_service.list_resource_keys(
                 name=key_name
             ).get_result()
 
-            print('\nlist_resource_keys() result:\n' + json.dumps(resource_keys_list, indent=2))
+            print(json.dumps(resource_keys_list, indent=2))
 
             # end-list_resource_keys
 
@@ -496,6 +513,7 @@ class TestResourceControllerV2Examples():
         """
         try:
             global instance_key_guid, key_update_name
+            print('\nupdate_resource_key() result:')
             # begin-update_resource_key
 
             resource_key = resource_controller_service.update_resource_key(
@@ -503,7 +521,7 @@ class TestResourceControllerV2Examples():
                 name=key_update_name
             ).get_result()
 
-            print('\nupdate_resource_key() result:\n' + json.dumps(resource_key, indent=2))
+            print(json.dumps(resource_key, indent=2))
 
             # end-update_resource_key
 
@@ -517,13 +535,14 @@ class TestResourceControllerV2Examples():
         """
         try:
             global instance_guid
+            print('\nlist_resource_keys_for_instance() result:')
             # begin-list_resource_keys_for_instance
 
             resource_keys_list = resource_controller_service.list_resource_keys_for_instance(
                 id=instance_guid
             ).get_result()
 
-            print('\nlist_resource_keys_for_instance() result:\n' + json.dumps(resource_keys_list, indent=2))
+            print(json.dumps(resource_keys_list, indent=2))
 
             # end-list_resource_keys_for_instance
 
@@ -542,9 +561,9 @@ class TestResourceControllerV2Examples():
             response = resource_controller_service.delete_resource_binding(
                 id=binding_guid)
 
-            print('\ndelete_resource_binding() response status code: ', response.get_status_code())
-
             # end-delete_resource_binding
+            print('\ndelete_resource_binding() response status code: ',
+                  response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -561,9 +580,9 @@ class TestResourceControllerV2Examples():
             response = resource_controller_service.delete_resource_key(
                 id=instance_key_guid)
 
-            print('\ndelete_resource_key() response status code: ', response.get_status_code())
-
             # end-delete_resource_key
+            print('\ndelete_resource_key() response status code: ',
+                  response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -580,9 +599,10 @@ class TestResourceControllerV2Examples():
             response = resource_controller_service.delete_resource_alias(
                 id=alias_guid
             )
-            print('\ndelete_resource_alias() response status code: ', response.get_status_code())
 
             # end-delete_resource_alias
+            print('\ndelete_resource_alias() response status code: ',
+                  response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -594,13 +614,14 @@ class TestResourceControllerV2Examples():
         """
         try:
             global instance_guid
+            print('\nlock_resource_instance() result:')
             # begin-lock_resource_instance
 
             resource_instance = resource_controller_service.lock_resource_instance(
                 id=instance_guid
             ).get_result()
 
-            print('\nlock_resource_instance() result:\n' + json.dumps(resource_instance, indent=2))
+            print(json.dumps(resource_instance, indent=2))
 
             # end-lock_resource_instance
 
@@ -614,13 +635,14 @@ class TestResourceControllerV2Examples():
         """
         try:
             global instance_guid
+            print('\nunlock_resource_instance() result:')
             # begin-unlock_resource_instance
 
             resource_instance = resource_controller_service.unlock_resource_instance(
                 id=instance_guid
             ).get_result()
 
-            print('\nunlock_resource_instance() result:\n' + json.dumps(resource_instance, indent=2))
+            print(json.dumps(resource_instance, indent=2))
 
             # end-unlock_resource_instance
 
@@ -641,9 +663,9 @@ class TestResourceControllerV2Examples():
                 recursive=False
             )
 
-            print('\ndelete_resource_instance() response status code: ', response.get_status_code())
-
             # end-delete_resource_instance
+            print('\ndelete_resource_instance() response status code: ',
+                  response.get_status_code())
 
             # wait for reclamation object to be created
             time.sleep(20)
@@ -658,13 +680,14 @@ class TestResourceControllerV2Examples():
         """
         try:
             global instance_guid, reclamation_id, account_id
+            print('\nlist_reclamations() result:')
             # begin-list_reclamations
 
             reclamations_list = resource_controller_service.list_reclamations(
                 account_id=account_id
             ).get_result()
 
-            print('\nlist_reclamations() result:\n' + json.dumps(reclamations_list, indent=2))
+            print(json.dumps(reclamations_list, indent=2))
 
             # end-list_reclamations
 
@@ -683,6 +706,7 @@ class TestResourceControllerV2Examples():
         try:
             global reclamation_id
             assert reclamation_id is not None
+            print('\nrun_reclamation_action() result:')
             # begin-run_reclamation_action
 
             reclamation = resource_controller_service.run_reclamation_action(
@@ -690,7 +714,7 @@ class TestResourceControllerV2Examples():
                 action_name='reclaim'
             ).get_result()
 
-            print('\nrun_reclamation_action() result:\n' + json.dumps(reclamation, indent=2))
+            print(json.dumps(reclamation, indent=2))
 
             # end-run_reclamation_action
 
