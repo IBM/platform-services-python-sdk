@@ -14,15 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-1eae594e-20210113-143533
+# IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
  
 """
-The IAM Access Groups API allows for the management of Access Groups (Create, Read,
+The IAM Access Groups API allows for the management of access groups (Create, Read,
 Update, Delete) as well as the management of memberships and rules within the group
 container.
 """
 
 from datetime import datetime
+from enum import Enum
 from typing import Dict, List
 import json
 
@@ -74,7 +75,7 @@ class IamAccessGroupsV2(BaseService):
 
 
     #########################
-    # Access Group Operations
+    # Access group operations
     #########################
 
 
@@ -87,21 +88,28 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Create an Access Group.
+        Create an access group.
 
-        Create a new Access Group to assign multiple users and service ids to multiple
+        Create a new access group to assign multiple users and service ids to multiple
         policies. The group will be created in the account specified by the `account_id`
         parameter. The group name is a required field, but a description is optional.
         Because the group's name does not have to be unique, it is possible to create
         multiple groups with the same name.
 
-        :param str account_id: IBM Cloud account identifier.
-        :param str name: Assign the specified name to the Access Group. This field
-               has a limit of 100 characters.
-        :param str description: (optional) Assign a description for the Access
-               Group. This field has a limit of 250 characters.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str account_id: Account ID of the API keys(s) to query. If a service
+               IAM ID is specified in iam_id then account_id must match the account of the
+               IAM ID. If a user IAM ID is specified in iam_id then then account_id must
+               match the account of the Authorization token.
+        :param str name: Assign the specified name to the access group. This field
+               is case-sensitive and has a limit of 100 characters. The group name has to
+               be unique within an account.
+        :param str description: (optional) Assign an optional description for the
+               access group. This field has a limit of 250 characters.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Group` object
@@ -159,18 +167,24 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        List Access Groups.
+        List access groups.
 
-        This API lists Access Groups within an account. Parameters for pagination and
+        This API lists access groups within an account. Parameters for pagination and
         sorting can be used to filter the results. The `account_id` query parameter
         determines which account to retrieve groups from. Only the groups you have access
         to are returned (either because of a policy on a specific group or account level
         access (admin, editor, or viewer)). There may be more groups in the account that
         aren't shown if you lack the aforementioned permissions.
 
-        :param str account_id: IBM Cloud account identifier.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str account_id: Account ID of the API keys(s) to query. If a service
+               IAM ID is specified in iam_id then account_id must match the account of the
+               IAM ID. If a user IAM ID is specified in iam_id then then account_id must
+               match the account of the Authorization token.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param str iam_id: (optional) Return groups for member id (IBMid or Service
                Id).
         :param int limit: (optional) Return up to this limit of results where limit
@@ -231,16 +245,19 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Get an Access Group.
+        Get an access group.
 
-        Retrieve an Access Group by its `access_group_id`. Only the groups data is
+        Retrieve an access group by its `access_group_id`. Only the groups data is
         returned (group name, description, account_id, ...), not membership or rule
-        information. A revision number is returned in the `Etag` header, which is needed
-        when updating the Access Group.
+        information. A revision number is returned in the `ETag` header, which is needed
+        when updating the access group.
 
-        :param str access_group_id: The Access Group identifier.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str access_group_id: The access group identifier.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param bool show_federated: (optional) If show_federated is true, the group
                will return an is_federated value that is set to true if rules exist for
                the group.
@@ -290,22 +307,26 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Update an Access Group.
+        Update an access group.
 
-        Update the group name or description of an existing Access Group using this API.
+        Update the group name or description of an existing access group using this API.
         An `If-Match` header must be populated with the group's most recent revision
-        number (which can be acquired in the `Get an Access Group` API).
+        number (which can be acquired in the `Get an access group` API).
 
-        :param str access_group_id: The Access Group identifier.
+        :param str access_group_id: The access group identifier.
         :param str if_match: The current revision number of the group being
-               updated. This can be found in the Create/Get Access Group response Etag
+               updated. This can be found in the Create/Get access group response ETag
                header.
-        :param str name: (optional) Assign the specified name to the Access Group.
-               This field has a limit of 100 characters.
-        :param str description: (optional) Assign a description for the Access
-               Group. This field has a limit of 250 characters.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str name: (optional) Assign the specified name to the access group.
+               This field is case-sensitive and has a limit of 100 characters. The group
+               name has to be unique within an account.
+        :param str description: (optional) Assign an optional description for the
+               access group. This field has a limit of 250 characters.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Group` object
@@ -357,16 +378,19 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Delete an Access Group.
+        Delete an access group.
 
-        This API is used for deleting an Access Group. If the Access Group has no members
+        This API is used for deleting an access group. If the access group has no members
         or rules associated with it, the group and its policies will be deleted. However,
         if rules or members do exist, set the `force` parameter to true to delete the
         group as well as its associated members, rules, and policies.
 
-        :param str access_group_id: The Access Group identifier.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str access_group_id: The access group identifier.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param bool force: (optional) If force is true, delete the group as well as
                its associated members and rules.
         :param dict headers: A `dict` containing the request headers
@@ -404,7 +428,7 @@ class IamAccessGroupsV2(BaseService):
         return response
 
     #########################
-    # Membership Operations
+    # Membership operations
     #########################
 
 
@@ -416,17 +440,20 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Check membership in an Access Group.
+        Check membership in an access group.
 
         This HEAD operation determines if a given `iam_id` is present in a group. No
         response body is returned with this request. If the membership exists, a `204 - No
         Content` status code is returned. If the membership or the group does not exist, a
         `404 - Not Found` status code is returned.
 
-        :param str access_group_id: The Access Group identifier.
+        :param str access_group_id: The access group identifier.
         :param str iam_id: The IAM identifier.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
@@ -467,20 +494,23 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Add members to an Access Group.
+        Add members to an access group.
 
         Use this API to add users (`IBMid-...`) or service IDs (`iam-ServiceId-...`) to an
-        Access Group. Any member added gains access to resources defined in the group's
+        access group. Any member added gains access to resources defined in the group's
         policies. To revoke a given user's access, simply remove them from the group.
         There is no limit to the number of members one group can have, but each `iam_id`
         can only be added to 50 groups. Additionally, this API request payload can add up
         to 50 members per call.
 
-        :param str access_group_id: The Access Group identifier.
+        :param str access_group_id: The access group identifier.
         :param List[AddGroupMembersRequestMembersItem] members: (optional) An array
                of member objects to add to an access group.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `AddGroupMembersResponse` object
@@ -534,7 +564,7 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        List Access Group members.
+        List access group members.
 
         List all members of a given group using this API. Parameters for pagination and
         sorting can be used to filter the results. The most useful query parameter may be
@@ -542,9 +572,12 @@ class IamAccessGroupsV2(BaseService):
         for each `iam_id`. If performance is a concern, leave the `verbose` parameter off
         so that name information does not get retrieved.
 
-        :param str access_group_id: The Access Group identifier.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str access_group_id: The access group identifier.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param int limit: (optional) Return up to this limit of results where limit
                is between 0 and 100.
         :param int offset: (optional) The offset of the first result item to be
@@ -602,16 +635,19 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Delete member from an Access Group.
+        Delete member from an access group.
 
         Remove one member from a group using this API. If the operation is successful,
         only a `204 - No Content` response with no body is returned. However, if any error
         occurs, the standard error format will be returned.
 
-        :param str access_group_id: The Access Group identifier.
+        :param str access_group_id: The access group identifier.
         :param str iam_id: The IAM identifier.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
@@ -652,18 +688,21 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Delete members from an Access Group.
+        Delete members from an access group.
 
         Remove multiple members from a group using this API. On a successful call, this
         API will always return 207. It is the caller's responsibility to iterate across
         the body to determine successful deletion of each member. This API request payload
         can delete up to 50 members per call.
 
-        :param str access_group_id: The Access Group identifier.
+        :param str access_group_id: The access group identifier.
         :param List[str] members: (optional) The `iam_id`s to remove from the
                access group. This field has a limit of 50 `iam_id`s.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `DeleteGroupBulkMembersResponse` object
@@ -711,17 +750,23 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Delete member from all Access Groups.
+        Delete member from all access groups.
 
         This API removes a given member from every group they are a member of within the
         specified account. By using one operation, you can revoke one member's access to
-        all Access Groups in the account. If a partial failure occurs on deletion, the
+        all access groups in the account. If a partial failure occurs on deletion, the
         response will be shown in the body.
 
-        :param str account_id: IBM Cloud account identifier.
+        :param str account_id: Account ID of the API keys(s) to query. If a service
+               IAM ID is specified in iam_id then account_id must match the account of the
+               IAM ID. If a user IAM ID is specified in iam_id then then account_id must
+               match the account of the Authorization token.
         :param str iam_id: The IAM identifier.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `DeleteFromAllGroupsResponse` object
@@ -770,20 +815,26 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Add member to multiple Access Groups.
+        Add member to multiple access groups.
 
-        This API will add a member to multiple Access Groups in an account. The limit of
+        This API will add a member to multiple access groups in an account. The limit of
         how many groups that can be in the request is 50. The response is a list of
         results that show if adding the member to each group was successful or not.
 
-        :param str account_id: IBM Cloud account identifier.
+        :param str account_id: Account ID of the API keys(s) to query. If a service
+               IAM ID is specified in iam_id then account_id must match the account of the
+               IAM ID. If a user IAM ID is specified in iam_id then then account_id must
+               match the account of the Authorization token.
         :param str iam_id: The IAM identifier.
         :param str type: (optional) The type of the member, must be either "user"
                or "service".
         :param List[str] groups: (optional) The ids of the access groups a given
                member is to be added to.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `AddMembershipMultipleGroupsResponse` object
@@ -831,7 +882,7 @@ class IamAccessGroupsV2(BaseService):
         return response
 
     #########################
-    # Rule Operations
+    # Rule operations
     #########################
 
 
@@ -846,9 +897,9 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Create rule for an Access Group.
+        Create rule for an access group.
 
-        Rules can be used to dynamically add users to an Access Group. If a user's SAML
+        Rules can be used to dynamically add users to an access group. If a user's SAML
         assertions match the rule's conditions during login, the user will be dynamically
         added to the group. The duration of the user's access to the group is determined
         by the `expiration` field. After access expires, the user will need to log in
@@ -856,15 +907,17 @@ class IamAccessGroupsV2(BaseService):
         stringified JSON value. [Consult this documentation for further explanation of
         dynamic rules.](/docs/iam/accessgroup_rules.html#rules).
 
-        :param str access_group_id: The Access Group identifier.
-        :param int expiration: The number of hours that the rule lives for (Must be
-               between 1 and 24).
+        :param str access_group_id: The access group identifier.
+        :param int expiration: The number of hours that the rule lives for.
         :param str realm_name: The url of the identity provider.
         :param List[RuleConditions] conditions: A list of conditions the rule must
                satisfy.
         :param str name: (optional) The name of the rule.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Rule` object
@@ -921,14 +974,17 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        List Access Group rules.
+        List access group rules.
 
-        This API lists all rules in a given Access Group. Because only a few rules are
+        This API lists all rules in a given access group. Because only a few rules are
         created on each group, there is no pagination or sorting support on this API.
 
-        :param str access_group_id: The Access Group identifier.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str access_group_id: The access group identifier.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `RulesList` object
@@ -968,15 +1024,18 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Get an Access Group rule.
+        Get an access group rule.
 
-        Retrieve a rule from an Access Group. A revision number is returned in the `Etag`
+        Retrieve a rule from an access group. A revision number is returned in the `ETag`
         header, which is needed when updating the rule.
 
-        :param str access_group_id: The Access Group identifier.
+        :param str access_group_id: The access group identifier.
         :param str rule_id: The rule to get.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Rule` object
@@ -1023,24 +1082,26 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Replace an Access Group rule.
+        Replace an access group rule.
 
         Update the body of an existing rule using this API. An `If-Match` header must be
         populated with the rule's most recent revision number (which can be acquired in
-        the `Get an Access Group rule` API).
+        the `Get an access group rule` API).
 
-        :param str access_group_id: The Access Group identifier.
+        :param str access_group_id: The access group identifier.
         :param str rule_id: The rule to get.
         :param str if_match: The current revision number of the rule being updated.
-               This can be found in the Get Rule response Etag header.
-        :param int expiration: The number of hours that the rule lives for (Must be
-               between 1 and 24).
+               This can be found in the Get Rule response ETag header.
+        :param int expiration: The number of hours that the rule lives for.
         :param str realm_name: The url of the identity provider.
         :param List[RuleConditions] conditions: A list of conditions the rule must
                satisfy.
         :param str name: (optional) The name of the rule.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Rule` object
@@ -1103,16 +1164,19 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Delete an Access Group rule.
+        Delete an access group rule.
 
         Remove one rule from a group using this API. If the operation is successful, only
         a `204 - No Content` response with no body is returned. However, if any error
         occurs, the standard error format will be returned.
 
-        :param str access_group_id: The Access Group identifier.
+        :param str access_group_id: The access group identifier.
         :param str rule_id: The rule to get.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
@@ -1145,7 +1209,7 @@ class IamAccessGroupsV2(BaseService):
         return response
 
     #########################
-    # Account Settings
+    # Account settings
     #########################
 
 
@@ -1156,13 +1220,19 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Get Account Settings.
+        Get account settings.
 
-        Retrieve the Access Groups settings for a specific account.
+        Retrieve the access groups settings for a specific account.
 
-        :param str account_id: IBM Cloud account identifier.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str account_id: Account ID of the API keys(s) to query. If a service
+               IAM ID is specified in iam_id then account_id must match the account of the
+               IAM ID. If a user IAM ID is specified in iam_id then then account_id must
+               match the account of the Authorization token.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `AccountSettings` object
@@ -1204,21 +1274,27 @@ class IamAccessGroupsV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Update Account Settings.
+        Update account settings.
 
-        Update the Access Groups settings for a specific account. Note: When the
+        Update the access groups settings for a specific account. Note: When the
         `public_access_enabled` setting is set to false, all policies within the account
         attached to the Public Access group will be deleted. Only set
         `public_access_enabled` to false if you are sure that you want those policies to
         be removed.
 
-        :param str account_id: IBM Cloud account identifier.
+        :param str account_id: Account ID of the API keys(s) to query. If a service
+               IAM ID is specified in iam_id then account_id must match the account of the
+               IAM ID. If a user IAM ID is specified in iam_id then then account_id must
+               match the account of the Authorization token.
         :param bool public_access_enabled: (optional) This flag controls the public
                access feature within the account. It is set to true by default. Note: When
                this flag is set to false, all policies within the account attached to the
                Public Access group will be deleted.
-        :param str transaction_id: (optional) An optional transaction id for the
-               request.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `AccountSettings` object
@@ -1267,7 +1343,7 @@ class IamAccessGroupsV2(BaseService):
 
 class AccountSettings():
     """
-    The Access Groups settings for a specific account.
+    The access groups settings for a specific account.
 
     :attr str account_id: (optional) The account id of the settings being shown.
     :attr datetime last_modified_at: (optional) The timestamp the settings were last
@@ -1660,7 +1736,7 @@ class AddMembershipMultipleGroupsResponseGroupsItem():
     """
     AddMembershipMultipleGroupsResponseGroupsItem.
 
-    :attr str access_group_id: (optional) The Access Group that the member is to be
+    :attr str access_group_id: (optional) The access group that the member is to be
           added to.
     :attr int status_code: (optional) The outcome of the add membership operation on
           this `access_group_id`.
@@ -1679,7 +1755,7 @@ class AddMembershipMultipleGroupsResponseGroupsItem():
         """
         Initialize a AddMembershipMultipleGroupsResponseGroupsItem object.
 
-        :param str access_group_id: (optional) The Access Group that the member is
+        :param str access_group_id: (optional) The access group that the member is
                to be added to.
         :param int status_code: (optional) The outcome of the add membership
                operation on this `access_group_id`.
@@ -1813,7 +1889,7 @@ class DeleteFromAllGroupsResponseGroupsItem():
     """
     DeleteFromAllGroupsResponseGroupsItem.
 
-    :attr str access_group_id: (optional) The Access Group that the member is to be
+    :attr str access_group_id: (optional) The access group that the member is to be
           deleted from.
     :attr int status_code: (optional) The outcome of the delete operation on this
           `access_group_id`.
@@ -1832,7 +1908,7 @@ class DeleteFromAllGroupsResponseGroupsItem():
         """
         Initialize a DeleteFromAllGroupsResponseGroupsItem object.
 
-        :param str access_group_id: (optional) The Access Group that the member is
+        :param str access_group_id: (optional) The access group that the member is
                to be deleted from.
         :param int status_code: (optional) The outcome of the delete operation on
                this `access_group_id`.
@@ -2119,7 +2195,7 @@ class Group():
     """
     An IAM access group.
 
-    :attr str id: (optional) The group's Access Group ID.
+    :attr str id: (optional) The group's access group ID.
     :attr str name: (optional) The group's name.
     :attr str description: (optional) The group's description - if defined.
     :attr str account_id: (optional) The account id where the group was created.
@@ -2150,19 +2226,11 @@ class Group():
         """
         Initialize a Group object.
 
-        :param str id: (optional) The group's Access Group ID.
+        :param str id: (optional) The group's access group ID.
         :param str name: (optional) The group's name.
         :param str description: (optional) The group's description - if defined.
         :param str account_id: (optional) The account id where the group was
                created.
-        :param datetime created_at: (optional) The timestamp the group was created
-               at.
-        :param str created_by_id: (optional) The `iam_id` of the entity that
-               created the group.
-        :param datetime last_modified_at: (optional) The timestamp the group was
-               last edited at.
-        :param str last_modified_by_id: (optional) The `iam_id` of the entity that
-               last modified the group name or description.
         :param str href: (optional) A url to the given group resource.
         :param bool is_federated: (optional) This is set to true if rules exist for
                the group.
@@ -2220,14 +2288,14 @@ class Group():
             _dict['description'] = self.description
         if hasattr(self, 'account_id') and self.account_id is not None:
             _dict['account_id'] = self.account_id
-        if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = datetime_to_string(self.created_at)
-        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
-            _dict['created_by_id'] = self.created_by_id
-        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
-            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
-        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
-            _dict['last_modified_by_id'] = self.last_modified_by_id
+        if hasattr(self, 'created_at') and getattr(self, 'created_at') is not None:
+            _dict['created_at'] = datetime_to_string(getattr(self, 'created_at'))
+        if hasattr(self, 'created_by_id') and getattr(self, 'created_by_id') is not None:
+            _dict['created_by_id'] = getattr(self, 'created_by_id')
+        if hasattr(self, 'last_modified_at') and getattr(self, 'last_modified_at') is not None:
+            _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
+        if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
+            _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
         if hasattr(self, 'href') and self.href is not None:
             _dict['href'] = self.href
         if hasattr(self, 'is_federated') and self.is_federated is not None:
@@ -2811,9 +2879,7 @@ class RuleConditions():
 
     :attr str claim: The claim to evaluate against. This will be found in the `ext`
           claims of a user's login request.
-    :attr str operator: The operation to perform on the claim. Valid operators are
-          EQUALS, EQUALS_IGNORE_CASE, IN, NOT_EQUALS_IGNORE_CASE, NOT_EQUALS, and
-          CONTAINS.
+    :attr str operator: The operation to perform on the claim.
     :attr str value: The stringified JSON value that the claim is compared to using
           the operator.
     """
@@ -2827,9 +2893,7 @@ class RuleConditions():
 
         :param str claim: The claim to evaluate against. This will be found in the
                `ext` claims of a user's login request.
-        :param str operator: The operation to perform on the claim. Valid operators
-               are EQUALS, EQUALS_IGNORE_CASE, IN, NOT_EQUALS_IGNORE_CASE, NOT_EQUALS, and
-               CONTAINS.
+        :param str operator: The operation to perform on the claim.
         :param str value: The stringified JSON value that the claim is compared to
                using the operator.
         """
@@ -2888,6 +2952,18 @@ class RuleConditions():
     def __ne__(self, other: 'RuleConditions') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+    class OperatorEnum(str, Enum):
+        """
+        The operation to perform on the claim.
+        """
+        EQUALS = 'EQUALS'
+        EQUALS_IGNORE_CASE = 'EQUALS_IGNORE_CASE'
+        IN = 'IN'
+        NOT_EQUALS_IGNORE_CASE = 'NOT_EQUALS_IGNORE_CASE'
+        NOT_EQUALS = 'NOT_EQUALS'
+        CONTAINS = 'CONTAINS'
+
 
 class RulesList():
     """

@@ -19,6 +19,7 @@ Unit Tests for IamAccessGroupsV2
 
 from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import inspect
 import json
 import pytest
@@ -62,7 +63,7 @@ class TestCreateAccessGroup():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -71,8 +72,8 @@ class TestCreateAccessGroup():
 
         # Set up parameter values
         account_id = 'testString'
-        name = 'testString'
-        description = 'testString'
+        name = 'Managers'
+        description = 'Group for managers'
         transaction_id = 'testString'
 
         # Invoke method
@@ -93,8 +94,8 @@ class TestCreateAccessGroup():
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'testString'
-        assert req_body['description'] == 'testString'
+        assert req_body['name'] == 'Managers'
+        assert req_body['description'] == 'Group for managers'
 
 
     @responses.activate
@@ -104,7 +105,7 @@ class TestCreateAccessGroup():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -113,8 +114,8 @@ class TestCreateAccessGroup():
 
         # Set up parameter values
         account_id = 'testString'
-        name = 'testString'
-        description = 'testString'
+        name = 'Managers'
+        description = 'Group for managers'
 
         # Invoke method
         response = service.create_access_group(
@@ -133,8 +134,8 @@ class TestCreateAccessGroup():
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'testString'
-        assert req_body['description'] == 'testString'
+        assert req_body['name'] == 'Managers'
+        assert req_body['description'] == 'Group for managers'
 
 
     @responses.activate
@@ -144,7 +145,7 @@ class TestCreateAccessGroup():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -153,8 +154,8 @@ class TestCreateAccessGroup():
 
         # Set up parameter values
         account_id = 'testString'
-        name = 'testString'
-        description = 'testString'
+        name = 'Managers'
+        description = 'Group for managers'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -189,7 +190,7 @@ class TestListAccessGroups():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -241,7 +242,7 @@ class TestListAccessGroups():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -273,7 +274,7 @@ class TestListAccessGroups():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -315,7 +316,7 @@ class TestGetAccessGroup():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -351,7 +352,7 @@ class TestGetAccessGroup():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -379,7 +380,7 @@ class TestGetAccessGroup():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -421,7 +422,7 @@ class TestUpdateAccessGroup():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -431,8 +432,8 @@ class TestUpdateAccessGroup():
         # Set up parameter values
         access_group_id = 'testString'
         if_match = 'testString'
-        name = 'testString'
-        description = 'testString'
+        name = 'Awesome Managers'
+        description = 'Group for awesome managers.'
         transaction_id = 'testString'
 
         # Invoke method
@@ -450,8 +451,8 @@ class TestUpdateAccessGroup():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'testString'
-        assert req_body['description'] == 'testString'
+        assert req_body['name'] == 'Awesome Managers'
+        assert req_body['description'] == 'Group for awesome managers.'
 
 
     @responses.activate
@@ -461,7 +462,7 @@ class TestUpdateAccessGroup():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -471,8 +472,8 @@ class TestUpdateAccessGroup():
         # Set up parameter values
         access_group_id = 'testString'
         if_match = 'testString'
-        name = 'testString'
-        description = 'testString'
+        name = 'Awesome Managers'
+        description = 'Group for awesome managers.'
 
         # Invoke method
         response = service.update_access_group(
@@ -488,8 +489,8 @@ class TestUpdateAccessGroup():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'testString'
-        assert req_body['description'] == 'testString'
+        assert req_body['name'] == 'Awesome Managers'
+        assert req_body['description'] == 'Group for awesome managers.'
 
 
     @responses.activate
@@ -499,7 +500,7 @@ class TestUpdateAccessGroup():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -509,8 +510,8 @@ class TestUpdateAccessGroup():
         # Set up parameter values
         access_group_id = 'testString'
         if_match = 'testString'
-        name = 'testString'
-        description = 'testString'
+        name = 'Awesome Managers'
+        description = 'Group for awesome managers.'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -749,7 +750,7 @@ class TestAddMembersToAccessGroup():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members')
-        mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
+        mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -758,8 +759,8 @@ class TestAddMembersToAccessGroup():
 
         # Construct a dict representation of a AddGroupMembersRequestMembersItem model
         add_group_members_request_members_item_model = {}
-        add_group_members_request_members_item_model['iam_id'] = 'testString'
-        add_group_members_request_members_item_model['type'] = 'testString'
+        add_group_members_request_members_item_model['iam_id'] = 'IBMid-user1'
+        add_group_members_request_members_item_model['type'] = 'user'
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -789,7 +790,7 @@ class TestAddMembersToAccessGroup():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members')
-        mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
+        mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -798,8 +799,8 @@ class TestAddMembersToAccessGroup():
 
         # Construct a dict representation of a AddGroupMembersRequestMembersItem model
         add_group_members_request_members_item_model = {}
-        add_group_members_request_members_item_model['iam_id'] = 'testString'
-        add_group_members_request_members_item_model['type'] = 'testString'
+        add_group_members_request_members_item_model['iam_id'] = 'IBMid-user1'
+        add_group_members_request_members_item_model['type'] = 'user'
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -827,7 +828,7 @@ class TestAddMembersToAccessGroup():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members')
-        mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
+        mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -836,8 +837,8 @@ class TestAddMembersToAccessGroup():
 
         # Construct a dict representation of a AddGroupMembersRequestMembersItem model
         add_group_members_request_members_item_model = {}
-        add_group_members_request_members_item_model['iam_id'] = 'testString'
-        add_group_members_request_members_item_model['type'] = 'testString'
+        add_group_members_request_members_item_model['iam_id'] = 'IBMid-user1'
+        add_group_members_request_members_item_model['type'] = 'user'
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -875,7 +876,7 @@ class TestListAccessGroupMembers():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id"}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -923,7 +924,7 @@ class TestListAccessGroupMembers():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id"}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -951,7 +952,7 @@ class TestListAccessGroupMembers():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/members')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id"}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1099,7 +1100,7 @@ class TestRemoveMembersFromAccessGroup():
 
         # Set up parameter values
         access_group_id = 'testString'
-        members = ['testString']
+        members = ['IBMId-user1', 'iam-ServiceId-123']
         transaction_id = 'testString'
 
         # Invoke method
@@ -1115,7 +1116,7 @@ class TestRemoveMembersFromAccessGroup():
         assert response.status_code == 207
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['members'] == ['testString']
+        assert req_body['members'] == ['IBMId-user1', 'iam-ServiceId-123']
 
 
     @responses.activate
@@ -1134,7 +1135,7 @@ class TestRemoveMembersFromAccessGroup():
 
         # Set up parameter values
         access_group_id = 'testString'
-        members = ['testString']
+        members = ['IBMId-user1', 'iam-ServiceId-123']
 
         # Invoke method
         response = service.remove_members_from_access_group(
@@ -1148,7 +1149,7 @@ class TestRemoveMembersFromAccessGroup():
         assert response.status_code == 207
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['members'] == ['testString']
+        assert req_body['members'] == ['IBMId-user1', 'iam-ServiceId-123']
 
 
     @responses.activate
@@ -1167,7 +1168,7 @@ class TestRemoveMembersFromAccessGroup():
 
         # Set up parameter values
         access_group_id = 'testString'
-        members = ['testString']
+        members = ['IBMId-user1', 'iam-ServiceId-123']
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1325,8 +1326,8 @@ class TestAddMemberToMultipleAccessGroups():
         # Set up parameter values
         account_id = 'testString'
         iam_id = 'testString'
-        type = 'testString'
-        groups = ['testString']
+        type = 'user'
+        groups = ['access-group-id-1']
         transaction_id = 'testString'
 
         # Invoke method
@@ -1348,8 +1349,8 @@ class TestAddMemberToMultipleAccessGroups():
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['type'] == 'testString'
-        assert req_body['groups'] == ['testString']
+        assert req_body['type'] == 'user'
+        assert req_body['groups'] == ['access-group-id-1']
 
 
     @responses.activate
@@ -1369,8 +1370,8 @@ class TestAddMemberToMultipleAccessGroups():
         # Set up parameter values
         account_id = 'testString'
         iam_id = 'testString'
-        type = 'testString'
-        groups = ['testString']
+        type = 'user'
+        groups = ['access-group-id-1']
 
         # Invoke method
         response = service.add_member_to_multiple_access_groups(
@@ -1390,8 +1391,8 @@ class TestAddMemberToMultipleAccessGroups():
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['type'] == 'testString'
-        assert req_body['groups'] == ['testString']
+        assert req_body['type'] == 'user'
+        assert req_body['groups'] == ['access-group-id-1']
 
 
     @responses.activate
@@ -1411,8 +1412,8 @@ class TestAddMemberToMultipleAccessGroups():
         # Set up parameter values
         account_id = 'testString'
         iam_id = 'testString'
-        type = 'testString'
-        groups = ['testString']
+        type = 'user'
+        groups = ['access-group-id-1']
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1457,7 +1458,7 @@ class TestAddAccessGroupRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules')
-        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1466,16 +1467,16 @@ class TestAddAccessGroupRule():
 
         # Construct a dict representation of a RuleConditions model
         rule_conditions_model = {}
-        rule_conditions_model['claim'] = 'testString'
-        rule_conditions_model['operator'] = 'testString'
-        rule_conditions_model['value'] = 'testString'
+        rule_conditions_model['claim'] = 'isManager'
+        rule_conditions_model['operator'] = 'EQUALS'
+        rule_conditions_model['value'] = 'true'
 
         # Set up parameter values
         access_group_id = 'testString'
-        expiration = 38
-        realm_name = 'testString'
+        expiration = 12
+        realm_name = 'https://idp.example.org/SAML2'
         conditions = [rule_conditions_model]
-        name = 'testString'
+        name = 'Manager group rule'
         transaction_id = 'testString'
 
         # Invoke method
@@ -1494,10 +1495,10 @@ class TestAddAccessGroupRule():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['expiration'] == 38
-        assert req_body['realm_name'] == 'testString'
+        assert req_body['expiration'] == 12
+        assert req_body['realm_name'] == 'https://idp.example.org/SAML2'
         assert req_body['conditions'] == [rule_conditions_model]
-        assert req_body['name'] == 'testString'
+        assert req_body['name'] == 'Manager group rule'
 
 
     @responses.activate
@@ -1507,7 +1508,7 @@ class TestAddAccessGroupRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules')
-        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1516,16 +1517,16 @@ class TestAddAccessGroupRule():
 
         # Construct a dict representation of a RuleConditions model
         rule_conditions_model = {}
-        rule_conditions_model['claim'] = 'testString'
-        rule_conditions_model['operator'] = 'testString'
-        rule_conditions_model['value'] = 'testString'
+        rule_conditions_model['claim'] = 'isManager'
+        rule_conditions_model['operator'] = 'EQUALS'
+        rule_conditions_model['value'] = 'true'
 
         # Set up parameter values
         access_group_id = 'testString'
-        expiration = 38
-        realm_name = 'testString'
+        expiration = 12
+        realm_name = 'https://idp.example.org/SAML2'
         conditions = [rule_conditions_model]
-        name = 'testString'
+        name = 'Manager group rule'
 
         # Invoke method
         response = service.add_access_group_rule(
@@ -1542,10 +1543,10 @@ class TestAddAccessGroupRule():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['expiration'] == 38
-        assert req_body['realm_name'] == 'testString'
+        assert req_body['expiration'] == 12
+        assert req_body['realm_name'] == 'https://idp.example.org/SAML2'
         assert req_body['conditions'] == [rule_conditions_model]
-        assert req_body['name'] == 'testString'
+        assert req_body['name'] == 'Manager group rule'
 
 
     @responses.activate
@@ -1555,7 +1556,7 @@ class TestAddAccessGroupRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules')
-        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1564,16 +1565,16 @@ class TestAddAccessGroupRule():
 
         # Construct a dict representation of a RuleConditions model
         rule_conditions_model = {}
-        rule_conditions_model['claim'] = 'testString'
-        rule_conditions_model['operator'] = 'testString'
-        rule_conditions_model['value'] = 'testString'
+        rule_conditions_model['claim'] = 'isManager'
+        rule_conditions_model['operator'] = 'EQUALS'
+        rule_conditions_model['value'] = 'true'
 
         # Set up parameter values
         access_group_id = 'testString'
-        expiration = 38
-        realm_name = 'testString'
+        expiration = 12
+        realm_name = 'https://idp.example.org/SAML2'
         conditions = [rule_conditions_model]
-        name = 'testString'
+        name = 'Manager group rule'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1610,7 +1611,7 @@ class TestListAccessGroupRules():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules')
-        mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1640,7 +1641,7 @@ class TestListAccessGroupRules():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules')
-        mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1668,7 +1669,7 @@ class TestListAccessGroupRules():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules')
-        mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1710,7 +1711,7 @@ class TestGetAccessGroupRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
-        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1742,7 +1743,7 @@ class TestGetAccessGroupRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
-        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1772,7 +1773,7 @@ class TestGetAccessGroupRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
-        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1816,7 +1817,7 @@ class TestReplaceAccessGroupRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
-        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -1825,18 +1826,18 @@ class TestReplaceAccessGroupRule():
 
         # Construct a dict representation of a RuleConditions model
         rule_conditions_model = {}
-        rule_conditions_model['claim'] = 'testString'
-        rule_conditions_model['operator'] = 'testString'
-        rule_conditions_model['value'] = 'testString'
+        rule_conditions_model['claim'] = 'isManager'
+        rule_conditions_model['operator'] = 'EQUALS'
+        rule_conditions_model['value'] = 'true'
 
         # Set up parameter values
         access_group_id = 'testString'
         rule_id = 'testString'
         if_match = 'testString'
-        expiration = 38
-        realm_name = 'testString'
+        expiration = 12
+        realm_name = 'https://idp.example.org/SAML2'
         conditions = [rule_conditions_model]
-        name = 'testString'
+        name = 'Manager group rule'
         transaction_id = 'testString'
 
         # Invoke method
@@ -1857,10 +1858,10 @@ class TestReplaceAccessGroupRule():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['expiration'] == 38
-        assert req_body['realm_name'] == 'testString'
+        assert req_body['expiration'] == 12
+        assert req_body['realm_name'] == 'https://idp.example.org/SAML2'
         assert req_body['conditions'] == [rule_conditions_model]
-        assert req_body['name'] == 'testString'
+        assert req_body['name'] == 'Manager group rule'
 
 
     @responses.activate
@@ -1870,7 +1871,7 @@ class TestReplaceAccessGroupRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
-        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -1879,18 +1880,18 @@ class TestReplaceAccessGroupRule():
 
         # Construct a dict representation of a RuleConditions model
         rule_conditions_model = {}
-        rule_conditions_model['claim'] = 'testString'
-        rule_conditions_model['operator'] = 'testString'
-        rule_conditions_model['value'] = 'testString'
+        rule_conditions_model['claim'] = 'isManager'
+        rule_conditions_model['operator'] = 'EQUALS'
+        rule_conditions_model['value'] = 'true'
 
         # Set up parameter values
         access_group_id = 'testString'
         rule_id = 'testString'
         if_match = 'testString'
-        expiration = 38
-        realm_name = 'testString'
+        expiration = 12
+        realm_name = 'https://idp.example.org/SAML2'
         conditions = [rule_conditions_model]
-        name = 'testString'
+        name = 'Manager group rule'
 
         # Invoke method
         response = service.replace_access_group_rule(
@@ -1909,10 +1910,10 @@ class TestReplaceAccessGroupRule():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['expiration'] == 38
-        assert req_body['realm_name'] == 'testString'
+        assert req_body['expiration'] == 12
+        assert req_body['realm_name'] == 'https://idp.example.org/SAML2'
         assert req_body['conditions'] == [rule_conditions_model]
-        assert req_body['name'] == 'testString'
+        assert req_body['name'] == 'Manager group rule'
 
 
     @responses.activate
@@ -1922,7 +1923,7 @@ class TestReplaceAccessGroupRule():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
-        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "created_at": "2019-01-01T12:00:00", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -1931,18 +1932,18 @@ class TestReplaceAccessGroupRule():
 
         # Construct a dict representation of a RuleConditions model
         rule_conditions_model = {}
-        rule_conditions_model['claim'] = 'testString'
-        rule_conditions_model['operator'] = 'testString'
-        rule_conditions_model['value'] = 'testString'
+        rule_conditions_model['claim'] = 'isManager'
+        rule_conditions_model['operator'] = 'EQUALS'
+        rule_conditions_model['value'] = 'true'
 
         # Set up parameter values
         access_group_id = 'testString'
         rule_id = 'testString'
         if_match = 'testString'
-        expiration = 38
-        realm_name = 'testString'
+        expiration = 12
+        realm_name = 'https://idp.example.org/SAML2'
         conditions = [rule_conditions_model]
-        name = 'testString'
+        name = 'Manager group rule'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -2088,7 +2089,7 @@ class TestGetAccountSettings():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/settings')
-        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
+        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2122,7 +2123,7 @@ class TestGetAccountSettings():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/settings')
-        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
+        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2154,7 +2155,7 @@ class TestGetAccountSettings():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/settings')
-        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
+        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2196,7 +2197,7 @@ class TestUpdateAccountSettings():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/settings')
-        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
+        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -2235,7 +2236,7 @@ class TestUpdateAccountSettings():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/settings')
-        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
+        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -2272,7 +2273,7 @@ class TestUpdateAccountSettings():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/groups/settings')
-        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
+        mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -2317,7 +2318,7 @@ class TestAccountSettings():
         # Construct a json representation of a AccountSettings model
         account_settings_model_json = {}
         account_settings_model_json['account_id'] = 'testString'
-        account_settings_model_json['last_modified_at'] = '2020-01-28T18:40:40.123456Z'
+        account_settings_model_json['last_modified_at'] = '2015-03-14T09:26:53.123456Z'
         account_settings_model_json['last_modified_by_id'] = 'testString'
         account_settings_model_json['public_access_enabled'] = True
 
@@ -2385,7 +2386,7 @@ class TestAddGroupMembersResponse():
         add_group_members_response_members_item_model = {} # AddGroupMembersResponseMembersItem
         add_group_members_response_members_item_model['iam_id'] = 'testString'
         add_group_members_response_members_item_model['type'] = 'testString'
-        add_group_members_response_members_item_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        add_group_members_response_members_item_model['created_at'] = '2015-03-14T09:26:53.123456Z'
         add_group_members_response_members_item_model['created_by_id'] = 'testString'
         add_group_members_response_members_item_model['status_code'] = 38
         add_group_members_response_members_item_model['trace'] = 'testString'
@@ -2430,7 +2431,7 @@ class TestAddGroupMembersResponseMembersItem():
         add_group_members_response_members_item_model_json = {}
         add_group_members_response_members_item_model_json['iam_id'] = 'testString'
         add_group_members_response_members_item_model_json['type'] = 'testString'
-        add_group_members_response_members_item_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
+        add_group_members_response_members_item_model_json['created_at'] = '2015-03-14T09:26:53.123456Z'
         add_group_members_response_members_item_model_json['created_by_id'] = 'testString'
         add_group_members_response_members_item_model_json['status_code'] = 38
         add_group_members_response_members_item_model_json['trace'] = 'testString'
@@ -2737,9 +2738,9 @@ class TestGroup():
         group_model_json['name'] = 'testString'
         group_model_json['description'] = 'testString'
         group_model_json['account_id'] = 'testString'
-        group_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
+        group_model_json['created_at'] = '2015-03-14T09:26:53.123456Z'
         group_model_json['created_by_id'] = 'testString'
-        group_model_json['last_modified_at'] = '2020-01-28T18:40:40.123456Z'
+        group_model_json['last_modified_at'] = '2015-03-14T09:26:53.123456Z'
         group_model_json['last_modified_by_id'] = 'testString'
         group_model_json['href'] = 'testString'
         group_model_json['is_federated'] = True
@@ -2781,7 +2782,7 @@ class TestGroupMembersList():
         list_group_members_response_member_model['email'] = 'testString'
         list_group_members_response_member_model['description'] = 'testString'
         list_group_members_response_member_model['href'] = 'testString'
-        list_group_members_response_member_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        list_group_members_response_member_model['created_at'] = '2015-03-14T09:26:53.123456Z'
         list_group_members_response_member_model['created_by_id'] = 'testString'
 
         # Construct a json representation of a GroupMembersList model
@@ -2830,9 +2831,9 @@ class TestGroupsList():
         group_model['name'] = 'testString'
         group_model['description'] = 'testString'
         group_model['account_id'] = 'testString'
-        group_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        group_model['created_at'] = '2015-03-14T09:26:53.123456Z'
         group_model['created_by_id'] = 'testString'
-        group_model['last_modified_at'] = '2020-01-28T18:40:40.123456Z'
+        group_model['last_modified_at'] = '2015-03-14T09:26:53.123456Z'
         group_model['last_modified_by_id'] = 'testString'
         group_model['href'] = 'testString'
         group_model['is_federated'] = True
@@ -2910,7 +2911,7 @@ class TestListGroupMembersResponseMember():
         list_group_members_response_member_model_json['email'] = 'testString'
         list_group_members_response_member_model_json['description'] = 'testString'
         list_group_members_response_member_model_json['href'] = 'testString'
-        list_group_members_response_member_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
+        list_group_members_response_member_model_json['created_at'] = '2015-03-14T09:26:53.123456Z'
         list_group_members_response_member_model_json['created_by_id'] = 'testString'
 
         # Construct a model instance of ListGroupMembersResponseMember by calling from_dict on the json representation
@@ -2942,7 +2943,7 @@ class TestRule():
 
         rule_conditions_model = {} # RuleConditions
         rule_conditions_model['claim'] = 'testString'
-        rule_conditions_model['operator'] = 'testString'
+        rule_conditions_model['operator'] = 'EQUALS'
         rule_conditions_model['value'] = 'testString'
 
         # Construct a json representation of a Rule model
@@ -2954,9 +2955,9 @@ class TestRule():
         rule_model_json['access_group_id'] = 'testString'
         rule_model_json['account_id'] = 'testString'
         rule_model_json['conditions'] = [rule_conditions_model]
-        rule_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
+        rule_model_json['created_at'] = '2015-03-14T09:26:53.123456Z'
         rule_model_json['created_by_id'] = 'testString'
-        rule_model_json['last_modified_at'] = '2020-01-28T18:40:40.123456Z'
+        rule_model_json['last_modified_at'] = '2015-03-14T09:26:53.123456Z'
         rule_model_json['last_modified_by_id'] = 'testString'
 
         # Construct a model instance of Rule by calling from_dict on the json representation
@@ -2987,7 +2988,7 @@ class TestRuleConditions():
         # Construct a json representation of a RuleConditions model
         rule_conditions_model_json = {}
         rule_conditions_model_json['claim'] = 'testString'
-        rule_conditions_model_json['operator'] = 'testString'
+        rule_conditions_model_json['operator'] = 'EQUALS'
         rule_conditions_model_json['value'] = 'testString'
 
         # Construct a model instance of RuleConditions by calling from_dict on the json representation
@@ -3019,7 +3020,7 @@ class TestRulesList():
 
         rule_conditions_model = {} # RuleConditions
         rule_conditions_model['claim'] = 'testString'
-        rule_conditions_model['operator'] = 'testString'
+        rule_conditions_model['operator'] = 'EQUALS'
         rule_conditions_model['value'] = 'testString'
 
         rule_model = {} # Rule
@@ -3030,9 +3031,9 @@ class TestRulesList():
         rule_model['access_group_id'] = 'testString'
         rule_model['account_id'] = 'testString'
         rule_model['conditions'] = [rule_conditions_model]
-        rule_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        rule_model['created_at'] = '2015-03-14T09:26:53.123456Z'
         rule_model['created_by_id'] = 'testString'
-        rule_model['last_modified_at'] = '2020-01-28T18:40:40.123456Z'
+        rule_model['last_modified_at'] = '2015-03-14T09:26:53.123456Z'
         rule_model['last_modified_by_id'] = 'testString'
 
         # Construct a json representation of a RulesList model
