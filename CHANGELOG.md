@@ -1,3 +1,10 @@
+## [0.18.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.2...v0.18.3) (2021-04-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependencies ([#101](https://github.com/IBM/platform-services-python-sdk/issues/101)) ([a75db9a](https://github.com/IBM/platform-services-python-sdk/commit/a75db9ac0e535f4bb89b8bc6104aa3baf5d19362))
+
 ## [0.18.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.1...v0.18.2) (2021-04-01)
 
 
