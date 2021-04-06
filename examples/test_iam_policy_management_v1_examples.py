@@ -156,6 +156,7 @@ class TestIamPolicyManagementV1Examples():
         update_policy request example
         """
         try:
+            global example_updated_policy_etag
             # begin-update_policy
 
             policy_subjects = PolicySubject(
@@ -173,18 +174,41 @@ class TestIamPolicyManagementV1Examples():
             updated_policy_roles = PolicyRole(
                 role_id='crn:v1:bluemix:public:iam::::role:Editor')
 
-            policy = iam_policy_management_service.update_policy(
+            response = iam_policy_management_service.update_policy(
                 type='access',
                 policy_id=example_policy_id,
                 if_match=example_policy_etag,
                 subjects=[policy_subjects],
                 roles=[updated_policy_roles],
                 resources=[policy_resources]
-            ).get_result()
+            )
+            policy = response.get_result()
 
             print('\nupdate_policy() result:\n' + json.dumps(policy, indent=2))
 
             # end-update_policy
+            example_updated_policy_etag = response.get_headers().get("Etag")
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_patch_policy_example(self):
+        """
+        patch_policy request example
+        """
+        try:
+            # begin-patch_policy
+
+            policy = iam_policy_management_service.patch_policy(
+                policy_id=example_policy_id,
+                if_match=example_updated_policy_etag,
+                state='active'
+            ).get_result()
+
+            print(json.dumps(policy, indent=2))
+
+            # end-patch_policy
 
         except ApiException as e:
             pytest.fail(str(e))

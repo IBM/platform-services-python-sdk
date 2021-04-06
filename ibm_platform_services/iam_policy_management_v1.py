@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-9b90c5f5-20210129-120415
+# IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
  
 """
 IAM Policy Management API
@@ -88,6 +88,7 @@ class IamPolicyManagementV1(BaseService):
         tag_value: str = None,
         sort: str = None,
         format: str = None,
+        state: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -96,7 +97,7 @@ class IamPolicyManagementV1(BaseService):
         Get policies and filter by attributes. While managing policies, you may want to
         retrieve policies in the account and filter by attribute values. This can be done
         through query parameters. Currently, only the following attributes are supported:
-        account_id, iam_id, access_group_id, type, service_type, sort and format.
+        account_id, iam_id, access_group_id, type, service_type, sort, format and state.
         account_id is a required query parameter. Only policies that have the specified
         attributes and that the caller has read access to are returned. If the caller does
         not have read access to any policies an empty array is returned.
@@ -115,6 +116,8 @@ class IamPolicyManagementV1(BaseService):
                fields (id, created_at, created_by_id, last_modified_at, etc).
         :param str format: (optional) Include additional data per policy returned
                [include_last_permit, display].
+        :param str state: (optional) The state of the policy, 'active' or
+               'deleted'.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `PolicyList` object
@@ -139,7 +142,8 @@ class IamPolicyManagementV1(BaseService):
             'tag_name': tag_name,
             'tag_value': tag_value,
             'sort': sort,
-            'format': format
+            'format': format,
+            'state': state
         }
 
         if 'headers' in kwargs:
@@ -174,8 +178,9 @@ class IamPolicyManagementV1(BaseService):
         want to create an access policy which grants access to a user, service-id, or an
         access group. They might also want to create an authorization policy and setup
         access between services.
-        ### Access To create an access policy, use **`"type": "access"`** in the body. The
-        possible subject attributes are **`iam_id`** and **`access_group_id`**. Use the
+        ### Access
+        To create an access policy, use **`"type": "access"`** in the body. The possible
+        subject attributes are **`iam_id`** and **`access_group_id`**. Use the
         **`iam_id`** subject attribute for assigning access for a user or service-id. Use
         the **`access_group_id`** subject attribute for assigning access for an access
         group. The roles must be a subset of a service's or the platform's supported
@@ -184,12 +189,13 @@ class IamPolicyManagementV1(BaseService):
         **`serviceType`**, **`serviceName`**,  or **`resourceGroupId`** attribute and the
         **`accountId`** attribute.` If the subject is a locked service-id, the request
         will fail.
-        ### Authorization Authorization policies are supported by services on a case by
-        case basis. Refer to service documentation to verify their support of
-        authorization policies. To create an authorization policy, use **`"type":
-        "authorization"`** in the body. The subject attributes must match the supported
-        authorization subjects of the resource. Multiple subject attributes might be
-        provided. The following attributes are supported:
+        ### Authorization
+        Authorization policies are supported by services on a case by case basis. Refer to
+        service documentation to verify their support of authorization policies. To create
+        an authorization policy, use **`"type": "authorization"`** in the body. The
+        subject attributes must match the supported authorization subjects of the
+        resource. Multiple subject attributes might be provided. The following attributes
+        are supported:
           serviceName, serviceInstance, region, resourceType, resource, accountId The
         policy roles must be a subset of the supported authorization roles supported by
         the target service. The user must also have the same level of access or greater to
@@ -272,8 +278,9 @@ class IamPolicyManagementV1(BaseService):
         Update a policy to grant access between a subject and a resource. A policy
         administrator might want to update an existing policy. The policy type cannot be
         changed (You cannot change an access policy to an authorization policy).
-        ### Access To update an access policy, use **`"type": "access"`** in the body. The
-        possible subject attributes are **`iam_id`** and **`access_group_id`**. Use the
+        ### Access
+        To update an access policy, use **`"type": "access"`** in the body. The possible
+        subject attributes are **`iam_id`** and **`access_group_id`**. Use the
         **`iam_id`** subject attribute for assigning access for a user or service-id. Use
         the **`access_group_id`** subject attribute for assigning access for an access
         group. The roles must be a subset of a service's or the platform's supported
@@ -282,10 +289,11 @@ class IamPolicyManagementV1(BaseService):
         **`serviceType`**, **`serviceName`**,  or **`resourceGroupId`** attribute and the
         **`accountId`** attribute.` If the subject is a locked service-id, the request
         will fail.
-        ### Authorization To update an authorization policy, use **`"type":
-        "authorization"`** in the body. The subject attributes must match the supported
-        authorization subjects of the resource. Multiple subject attributes might be
-        provided. The following attributes are supported:
+        ### Authorization
+        To update an authorization policy, use **`"type": "authorization"`** in the body.
+        The subject attributes must match the supported authorization subjects of the
+        resource. Multiple subject attributes might be provided. The following attributes
+        are supported:
           serviceName, serviceInstance, region, resourceType, resource, accountId The
         policy roles must be a subset of the supported authorization roles supported by
         the target service. The user must also have the same level of access or greater to
@@ -436,6 +444,68 @@ class IamPolicyManagementV1(BaseService):
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
+
+        response = self.send(request)
+        return response
+
+
+    def patch_policy(self,
+        policy_id: str,
+        if_match: str,
+        *,
+        state: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Restore a deleted policy by ID.
+
+        Restore a policy that has recently been deleted. A policy administrator might want
+        to restore a deleted policy. To restore a policy, use **`"state": "active"`** in
+        the body.
+
+        :param str policy_id: The policy ID.
+        :param str if_match: The revision number for updating a policy and must
+               match the ETag value of the existing policy. The Etag can be retrieved
+               using the GET /v1/policies/{policy_id} API and looking at the ETag response
+               header.
+        :param str state: (optional) The policy state; either 'active' or
+               'deleted'.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Policy` object
+        """
+
+        if policy_id is None:
+            raise ValueError('policy_id must be provided')
+        if if_match is None:
+            raise ValueError('if_match must be provided')
+        headers = {
+            'If-Match': if_match
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='patch_policy')
+        headers.update(sdk_headers)
+
+        data = {
+            'state': state
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['policy_id']
+        path_param_values = self.encode_path_vars(policy_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/policies/{policy_id}'.format(**path_param_dict)
+        request = self.prepare_request(method='PATCH',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
 
         response = self.send(request)
         return response
@@ -898,6 +968,7 @@ class Policy():
           was last modified.
     :attr str last_modified_by_id: (optional) The iam ID of the entity that last
           modified the policy.
+    :attr str state: (optional) The policy state; either 'active' or 'deleted'.
     """
 
     def __init__(self,
@@ -912,7 +983,8 @@ class Policy():
                  created_at: datetime = None,
                  created_by_id: str = None,
                  last_modified_at: datetime = None,
-                 last_modified_by_id: str = None) -> None:
+                 last_modified_by_id: str = None,
+                 state: str = None) -> None:
         """
         Initialize a Policy object.
 
@@ -925,6 +997,8 @@ class Policy():
                names (CRNs) granted by the policy.
         :param List[PolicyResource] resources: (optional) The resources associated
                with a policy.
+        :param str state: (optional) The policy state; either 'active' or
+               'deleted'.
         """
         self.id = id
         self.type = type
@@ -937,6 +1011,7 @@ class Policy():
         self.created_by_id = created_by_id
         self.last_modified_at = last_modified_at
         self.last_modified_by_id = last_modified_by_id
+        self.state = state
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'Policy':
@@ -964,6 +1039,8 @@ class Policy():
             args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
         if 'last_modified_by_id' in _dict:
             args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if 'state' in _dict:
+            args['state'] = _dict.get('state')
         return cls(**args)
 
     @classmethod
@@ -996,6 +1073,8 @@ class Policy():
             _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
         if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
             _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
         return _dict
 
     def _to_dict(self):
