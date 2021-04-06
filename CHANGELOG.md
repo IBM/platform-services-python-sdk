@@ -1,3 +1,10 @@
+## [0.18.4](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.3...v0.18.4) (2021-04-06)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** add restore policy functionality ([#96](https://github.com/IBM/platform-services-python-sdk/issues/96)) ([a1c5fa3](https://github.com/IBM/platform-services-python-sdk/commit/a1c5fa3f20e607c08621e7a6c04bdf7e2860c503))
+
 ## [0.18.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.2...v0.18.3) (2021-04-01)
 
 
