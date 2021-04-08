@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-bd714324-20210408-112704
  
 """
 The Enterprise Management API enables you to create and manage an enterprise, account
@@ -143,6 +143,7 @@ class EnterpriseManagementV1(BaseService):
         *,
         enterprise_id: str = None,
         parent_account_group_id: str = None,
+        next_docid: str = None,
         parent: str = None,
         limit: int = None,
         **kwargs
@@ -171,6 +172,10 @@ class EnterpriseManagementV1(BaseService):
         :param str parent_account_group_id: (optional) Get account groups that are
                either immediate children or are a part of the hierarchy for a given
                account group ID.
+        :param str next_docid: (optional) The first item to be returned in the page
+               of results. This value can be obtained from the next_url property from the
+               previous call of the operation. If not specified, then the first page of
+               results is returned.
         :param str parent: (optional) Get account groups that are either immediate
                children or are a part of the hierarchy for a given parent CRN.
         :param int limit: (optional) Return results up to this limit. Valid values
@@ -189,6 +194,7 @@ class EnterpriseManagementV1(BaseService):
         params = {
             'enterprise_id': enterprise_id,
             'parent_account_group_id': parent_account_group_id,
+            'next_docid': next_docid,
             'parent': parent,
             'limit': limit
         }
@@ -444,6 +450,7 @@ class EnterpriseManagementV1(BaseService):
         *,
         enterprise_id: str = None,
         account_group_id: str = None,
+        next_docid: str = None,
         parent: str = None,
         limit: int = None,
         **kwargs
@@ -470,6 +477,10 @@ class EnterpriseManagementV1(BaseService):
         :param str account_group_id: (optional) Get accounts that are either
                immediate children or are a part of the hierarchy for a given account group
                ID.
+        :param str next_docid: (optional) The first item to be returned in the page
+               of results. This value can be obtained from the next_url property from the
+               previous call of the operation. If not specified, then the first page of
+               results is returned.
         :param str parent: (optional) Get accounts that are either immediate
                children or are a part of the hierarchy for a given parent CRN.
         :param int limit: (optional) Return results up to this limit. Valid values
@@ -488,6 +499,7 @@ class EnterpriseManagementV1(BaseService):
         params = {
             'enterprise_id': enterprise_id,
             'account_group_id': account_group_id,
+            'next_docid': next_docid,
             'parent': parent,
             'limit': limit
         }
@@ -675,6 +687,7 @@ class EnterpriseManagementV1(BaseService):
         enterprise_account_id: str = None,
         account_group_id: str = None,
         account_id: str = None,
+        next_docid: str = None,
         limit: int = None,
         **kwargs
     ) -> DetailedResponse:
@@ -699,6 +712,10 @@ class EnterpriseManagementV1(BaseService):
         :param str account_group_id: (optional) Get enterprises for a given account
                group ID.
         :param str account_id: (optional) Get enterprises for a given account ID.
+        :param str next_docid: (optional) The first item to be returned in the page
+               of results. This value can be obtained from the next_url property from the
+               previous call of the operation. If not specified, then the first page of
+               results is returned.
         :param int limit: (optional) Return results up to this limit. Valid values
                are between `0` and `100`.
         :param dict headers: A `dict` containing the request headers
@@ -716,6 +733,7 @@ class EnterpriseManagementV1(BaseService):
             'enterprise_account_id': enterprise_account_id,
             'account_group_id': account_group_id,
             'account_id': account_id,
+            'next_docid': next_docid,
             'limit': limit
         }
 
