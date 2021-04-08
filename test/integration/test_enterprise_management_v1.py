@@ -23,7 +23,18 @@ from ibm_cloud_sdk_core import *
 from ibm_platform_services.enterprise_management_v1 import *
 
 # Config file name
-config_file = 'enterprise_management_v1.env'
+config_file = 'enterprise_management.env'
+
+first_example_account_group_name = 'Example Account Group'
+first_updated_example_account_group_name = 'Updated Example Account Group'
+second_example_account_group_name = 'Second Example Account Group'
+example_account_name = 'Example Account Name'
+updated_enterprise_name = 'Updated Enterprise Name'
+result_per_page = 1
+
+example_account_id = None
+first_example_account_group_id = None
+second_example_account_group_id = None
 
 class TestEnterpriseManagementV1():
     """
@@ -35,13 +46,20 @@ class TestEnterpriseManagementV1():
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
-            cls.enterprise_management_service = EnterpriseManagementV1.new_instance(
-                )
+            cls.enterprise_management_service = EnterpriseManagementV1.new_instance()
             assert cls.enterprise_management_service is not None
 
             cls.config = read_external_sources(
                 EnterpriseManagementV1.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
+
+            cls.enterprise_id = cls.config['ENTERPRISE_ID']
+            cls.account_id = cls.config['ACCOUNT_ID']
+            cls.account_iam_id = cls.config['ACCOUNT_IAM_ID']
+
+            assert cls.enterprise_id is not None
+            assert cls.account_id is not None
+            assert cls.account_iam_id is not None
 
         print('Setup complete.')
 
@@ -51,26 +69,39 @@ class TestEnterpriseManagementV1():
 
     @needscredentials
     def test_create_account_group(self):
+        global first_example_account_group_id, second_example_account_group_id
 
-        create_account_group_response = self.enterprise_management_service.create_account_group(
-            parent='testString',
-            name='testString',
-            primary_contact_iam_id='testString'
+        parent = 'crn:v1:bluemix:public:enterprise::a/' + self.account_id + '::enterprise:' + self.enterprise_id
+
+        create_first_example_account_group_response = self.enterprise_management_service.create_account_group(
+            parent=parent,
+            name=first_example_account_group_name,
+            primary_contact_iam_id=self.account_iam_id,
         )
 
-        assert create_account_group_response.get_status_code() == 201
-        create_account_group_response = create_account_group_response.get_result()
-        assert create_account_group_response is not None
+        assert create_first_example_account_group_response.get_status_code() == 201
+        create_first_example_account_group_response = create_first_example_account_group_response.get_result()
+        assert create_first_example_account_group_response is not None
+
+        first_example_account_group_id = create_first_example_account_group_response.get('account_group_id')
+
+        create_second_example_account_group_response = self.enterprise_management_service.create_account_group(
+            parent=parent,
+            name=second_example_account_group_name,
+            primary_contact_iam_id=self.account_iam_id,
+        )
+
+        assert create_second_example_account_group_response.get_status_code() == 201
+        create_second_example_account_group_response = create_second_example_account_group_response.get_result()
+        assert create_second_example_account_group_response is not None
+
+        second_example_account_group_id = create_second_example_account_group_response.get('account_group_id')
 
     @needscredentials
     def test_list_account_groups(self):
 
         list_account_groups_response = self.enterprise_management_service.list_account_groups(
-            enterprise_id='testString',
-            parent_account_group_id='testString',
-            next_docid='testString',
-            parent='testString',
-            limit=38
+            enterprise_id=self.enterprise_id,
         )
 
         assert list_account_groups_response.get_status_code() == 200
@@ -79,9 +110,10 @@ class TestEnterpriseManagementV1():
 
     @needscredentials
     def test_get_account_group(self):
+        assert first_example_account_group_id is not None
 
         get_account_group_response = self.enterprise_management_service.get_account_group(
-            account_group_id='testString'
+            account_group_id=first_example_account_group_id,
         )
 
         assert get_account_group_response.get_status_code() == 200
@@ -90,49 +122,41 @@ class TestEnterpriseManagementV1():
 
     @needscredentials
     def test_update_account_group(self):
+        assert first_example_account_group_id is not None
 
         update_account_group_response = self.enterprise_management_service.update_account_group(
-            account_group_id='testString',
-            name='testString',
-            primary_contact_iam_id='testString'
+            account_group_id=first_example_account_group_id,
+            name=first_example_account_group_name,
+            primary_contact_iam_id=self.account_iam_id,
         )
 
         assert update_account_group_response.get_status_code() == 204
 
     @needscredentials
-    def test_import_account_to_enterprise(self):
-
-        import_account_to_enterprise_response = self.enterprise_management_service.import_account_to_enterprise(
-            enterprise_id='testString',
-            account_id='testString',
-            parent='testString',
-            billing_unit_id='testString'
-        )
-
-        assert import_account_to_enterprise_response.get_status_code() == 202
-
-    @needscredentials
     def test_create_account(self):
+        global example_account_id
+
+        assert first_example_account_group_id is not None
+
+        parent = 'crn:v1:bluemix:public:enterprise::a/' + self.account_id + '::account-group:' + first_example_account_group_id
 
         create_account_response = self.enterprise_management_service.create_account(
-            parent='testString',
-            name='testString',
-            owner_iam_id='testString'
+            parent=parent,
+            name=example_account_name,
+            owner_iam_id=self.account_iam_id,
         )
 
-        assert create_account_response.get_status_code() == 201
+        assert create_account_response.get_status_code() == 202
         create_account_response = create_account_response.get_result()
         assert create_account_response is not None
+
+        example_account_id = create_account_response.get('account_id')
 
     @needscredentials
     def test_list_accounts(self):
 
         list_accounts_response = self.enterprise_management_service.list_accounts(
-            enterprise_id='testString',
-            account_group_id='testString',
-            next_docid='testString',
-            parent='testString',
-            limit=38
+            enterprise_id=self.enterprise_id,
         )
 
         assert list_accounts_response.get_status_code() == 200
@@ -141,9 +165,10 @@ class TestEnterpriseManagementV1():
 
     @needscredentials
     def test_get_account(self):
+        assert example_account_id is not None
 
         get_account_response = self.enterprise_management_service.get_account(
-            account_id='testString'
+            account_id=example_account_id,
         )
 
         assert get_account_response.get_status_code() == 200
@@ -152,37 +177,23 @@ class TestEnterpriseManagementV1():
 
     @needscredentials
     def test_update_account(self):
+        assert example_account_id is not None
+        assert second_example_account_group_id is not None
+
+        new_parent = 'crn:v1:bluemix:public:enterprise::a/' + self.account_id + '::account-group:' + second_example_account_group_id
 
         update_account_response = self.enterprise_management_service.update_account(
-            account_id='testString',
-            parent='testString'
+            account_id=example_account_id,
+            parent=new_parent,
         )
 
-        assert update_account_response.get_status_code() == 204
-
-    @needscredentials
-    def test_create_enterprise(self):
-
-        create_enterprise_response = self.enterprise_management_service.create_enterprise(
-            source_account_id='testString',
-            name='testString',
-            primary_contact_iam_id='testString',
-            domain='testString'
-        )
-
-        assert create_enterprise_response.get_status_code() == 202
-        create_enterprise_response = create_enterprise_response.get_result()
-        assert create_enterprise_response is not None
+        assert update_account_response.get_status_code() == 202
 
     @needscredentials
     def test_list_enterprises(self):
 
         list_enterprises_response = self.enterprise_management_service.list_enterprises(
-            enterprise_account_id='testString',
-            account_group_id='testString',
-            account_id='testString',
-            next_docid='testString',
-            limit=38
+            account_id=self.account_id,
         )
 
         assert list_enterprises_response.get_status_code() == 200
@@ -193,7 +204,7 @@ class TestEnterpriseManagementV1():
     def test_get_enterprise(self):
 
         get_enterprise_response = self.enterprise_management_service.get_enterprise(
-            enterprise_id='testString'
+            enterprise_id=self.enterprise_id,
         )
 
         assert get_enterprise_response.get_status_code() == 200
@@ -204,10 +215,9 @@ class TestEnterpriseManagementV1():
     def test_update_enterprise(self):
 
         update_enterprise_response = self.enterprise_management_service.update_enterprise(
-            enterprise_id='testString',
-            name='testString',
-            domain='testString',
-            primary_contact_iam_id='testString'
+            enterprise_id=self.enterprise_id,
+            name=updated_enterprise_name,
+            primary_contact_iam_id=self.account_iam_id,
         )
 
         assert update_enterprise_response.get_status_code() == 204
