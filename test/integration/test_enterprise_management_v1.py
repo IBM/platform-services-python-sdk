@@ -109,6 +109,33 @@ class TestEnterpriseManagementV1():
         assert list_account_groups_response is not None
 
     @needscredentials
+    def test_list_account_groups_with_pagination(self):
+
+        results_count = 0
+        doc_id = None
+
+        while True:
+            list_account_groups_response = self.enterprise_management_service.list_account_groups(
+                enterprise_id=self.enterprise_id,
+                limit=result_per_page,
+                next_docid=doc_id,
+            )
+
+            assert list_account_groups_response.get_status_code() == 200
+            list_account_groups_response = list_account_groups_response.get_result()
+            assert list_account_groups_response is not None
+
+            results_count += 1
+
+            next_url = list_account_groups_response.get('next_url')
+            if next_url is None:
+                break
+
+            doc_id = get_query_param(next_url, 'next_docid')
+
+        print(f'\nlist_account_groups() returned a total of {results_count} account groups.')
+
+    @needscredentials
     def test_get_account_group(self):
         assert first_example_account_group_id is not None
 
@@ -162,6 +189,33 @@ class TestEnterpriseManagementV1():
         assert list_accounts_response.get_status_code() == 200
         list_accounts_response = list_accounts_response.get_result()
         assert list_accounts_response is not None
+
+    @needscredentials
+    def test_list_accounts_with_pagination(self):
+
+        results_count = 0
+        doc_id = None
+
+        while True:
+            list_accounts_response = self.enterprise_management_service.list_accounts(
+                enterprise_id=self.enterprise_id,
+                limit=result_per_page,
+                next_docid=doc_id,
+            )
+
+            assert list_accounts_response.get_status_code() == 200
+            list_accounts_response = list_accounts_response.get_result()
+            assert list_accounts_response is not None
+
+            results_count += 1
+
+            next_url = list_accounts_response.get('next_url')
+            if next_url is None:
+                break
+
+            doc_id = get_query_param(next_url, 'next_docid')
+
+        print(f'\nlist_accounts() returned a total of {results_count} accounts.')
 
     @needscredentials
     def test_get_account(self):
