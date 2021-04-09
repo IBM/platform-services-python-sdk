@@ -224,9 +224,9 @@ class TestEnterpriseManagementV1Examples():
         print('\ncreate_account() result:')
 
         try:
-            # begin-create_account
-
             parent = 'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::account-group:' + first_account_group_id
+
+            # begin-create_account
 
             create_account_response = enterprise_management_service.create_account(
                 parent=parent,
