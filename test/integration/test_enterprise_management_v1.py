@@ -153,7 +153,7 @@ class TestEnterpriseManagementV1():
 
         update_account_group_response = self.enterprise_management_service.update_account_group(
             account_group_id=first_example_account_group_id,
-            name=first_example_account_group_name,
+            name=first_updated_example_account_group_name,
             primary_contact_iam_id=self.account_iam_id,
         )
 

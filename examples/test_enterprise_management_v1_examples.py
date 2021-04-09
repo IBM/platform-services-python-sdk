@@ -111,6 +111,8 @@ class TestEnterpriseManagementV1Examples():
         assert enterprise_account_id is not None
         assert enterprise_account_iam_id is not None
 
+        print('\ncreate_account_group() result:')
+
         try:
             parent = 'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::enterprise:' + enterprise_id
 
@@ -148,6 +150,8 @@ class TestEnterpriseManagementV1Examples():
         """
         assert enterprise_id is not None
 
+        print('\nlist_account_groups() result:')
+
         try:
             # begin-list_account_groups
 
@@ -168,6 +172,8 @@ class TestEnterpriseManagementV1Examples():
         get_account_group request example
         """
         assert first_account_group_id is not None
+
+        print('\nget_account_group() result:')
 
         try:
             # begin-get_account_group
@@ -190,12 +196,14 @@ class TestEnterpriseManagementV1Examples():
         """
         assert first_account_group_id is not None
 
+        print('\nupdate_account_group() result:')
+
         try:
             # begin-update_account_group
 
             response = enterprise_management_service.update_account_group(
                 account_group_id=first_account_group_id,
-                name=first_account_group_name,
+                name=first_updated_account_group_name,
                 primary_contact_iam_id=enterprise_account_iam_id,
             ).get_result()
 
@@ -211,9 +219,11 @@ class TestEnterpriseManagementV1Examples():
         """
         create_account request example
         """
-        try:
-            assert first_account_group_id is not None
+        assert first_account_group_id is not None
 
+        print('\ncreate_account() result:')
+
+        try:
             # begin-create_account
 
             parent = 'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::account-group:' + first_account_group_id
@@ -240,6 +250,7 @@ class TestEnterpriseManagementV1Examples():
         """
         import_account_to_enterprise request example
         """
+        print('\nimport_account_to_enterprise() result:')
 
         try:
             # begin-import_account_to_enterprise
@@ -263,6 +274,8 @@ class TestEnterpriseManagementV1Examples():
         """
         assert enterprise_id is not None
 
+        print('\nlist_accounts() result:')
+
         try:
             # begin-list_accounts
 
@@ -283,6 +296,9 @@ class TestEnterpriseManagementV1Examples():
         get_account request example
         """
         assert account_id is not None
+
+        print('\nget_account() result:')
+
         try:
             # begin-get_account
 
@@ -304,6 +320,8 @@ class TestEnterpriseManagementV1Examples():
         """
         assert account_id is not None
         assert second_account_group_id is not None
+
+        print('\nupdate_account() result:')
 
         try:
             new_parent = 'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::account-group:' + second_account_group_id
@@ -329,6 +347,8 @@ class TestEnterpriseManagementV1Examples():
         create_enterprise request example
         """
 
+        print('\ncreate_enterprise() result:')
+
         try:
             # begin-create_enterprise
 
@@ -352,6 +372,8 @@ class TestEnterpriseManagementV1Examples():
         """
         assert enterprise_account_id is not None
 
+        print('\nlist_enterprises() result:')
+
         try:
             # begin-list_enterprises
 
@@ -372,6 +394,8 @@ class TestEnterpriseManagementV1Examples():
         get_enterprise request example
         """
         assert enterprise_id is not None
+
+        print('\nget_enterprise() result:')
 
         try:
             # begin-get_enterprise
@@ -394,6 +418,8 @@ class TestEnterpriseManagementV1Examples():
         """
         assert enterprise_id is not None
         assert enterprise_account_iam_id is not None
+
+        print('\nupdate_enterprise() result:')
 
         try:
             # begin-update_enterprise
