@@ -100,17 +100,6 @@ class TestEnterpriseManagementV1():
     @needscredentials
     def test_list_account_groups(self):
 
-        list_account_groups_response = self.enterprise_management_service.list_account_groups(
-            enterprise_id=self.enterprise_id,
-        )
-
-        assert list_account_groups_response.get_status_code() == 200
-        list_account_groups_response = list_account_groups_response.get_result()
-        assert list_account_groups_response is not None
-
-    @needscredentials
-    def test_list_account_groups_with_pagination(self):
-
         results_count = 0
         doc_id = None
 
@@ -125,7 +114,7 @@ class TestEnterpriseManagementV1():
             list_account_groups_response = list_account_groups_response.get_result()
             assert list_account_groups_response is not None
 
-            results_count += 1
+            results_count += list_account_groups_response.get('rows_count')
 
             next_url = list_account_groups_response.get('next_url')
             if next_url is None:
@@ -182,17 +171,6 @@ class TestEnterpriseManagementV1():
     @needscredentials
     def test_list_accounts(self):
 
-        list_accounts_response = self.enterprise_management_service.list_accounts(
-            enterprise_id=self.enterprise_id,
-        )
-
-        assert list_accounts_response.get_status_code() == 200
-        list_accounts_response = list_accounts_response.get_result()
-        assert list_accounts_response is not None
-
-    @needscredentials
-    def test_list_accounts_with_pagination(self):
-
         results_count = 0
         doc_id = None
 
@@ -207,7 +185,7 @@ class TestEnterpriseManagementV1():
             list_accounts_response = list_accounts_response.get_result()
             assert list_accounts_response is not None
 
-            results_count += 1
+            results_count += list_accounts_response.get('rows_count')
 
             next_url = list_accounts_response.get('next_url')
             if next_url is None:
@@ -246,13 +224,27 @@ class TestEnterpriseManagementV1():
     @needscredentials
     def test_list_enterprises(self):
 
-        list_enterprises_response = self.enterprise_management_service.list_enterprises(
-            account_id=self.account_id,
-        )
+        results_count = 0
+        doc_ic = None
 
-        assert list_enterprises_response.get_status_code() == 200
-        list_enterprises_response = list_enterprises_response.get_result()
-        assert list_enterprises_response is not None
+        while True:
+            list_enterprises_response = self.enterprise_management_service.list_enterprises(
+                account_id=self.account_id,
+            )
+
+            assert list_enterprises_response.get_status_code() == 200
+            list_enterprises_response = list_enterprises_response.get_result()
+            assert list_enterprises_response is not None
+
+            results_count += list_enterprises_response.get('rows_count')
+
+            next_url = list_enterprises_response.get('next_url')
+            if next_url is None:
+                break
+
+            doc_ic = get_query_param('next_docid')
+
+        print(f'\nlist_enterprises() returned a total of {results_count} enterprises.')
 
     @needscredentials
     def test_get_enterprise(self):

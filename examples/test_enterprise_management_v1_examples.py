@@ -46,19 +46,13 @@ enterprise_management_service = None
 
 config = None
 
-first_account_group_name = 'Example Account Group'
-first_updated_account_group_name = 'Updated Example Account Group'
-second_account_group_name = 'Second Example Account Group'
-account_name = 'Example Account Name'
-updated_enterprise_name = 'Updated Enterprise Name'
-
 enterprise_id = None
 enterprise_account_id = None
 enterprise_account_iam_id = None
 
 account_id = None
-first_account_group_id = None
-second_account_group_id = None
+account_group_id = None
+new_parent_account_group_id = None
 
 
 ##############################################################################
@@ -114,13 +108,13 @@ class TestEnterpriseManagementV1Examples():
         print('\ncreate_account_group() result:')
 
         try:
-            parent = 'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::enterprise:' + enterprise_id
+            parent_crn = 'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::enterprise:' + enterprise_id
 
             # begin-create_account_group
 
             create_account_group_response = enterprise_management_service.create_account_group(
-                parent=parent,
-                name=first_account_group_name,
+                parent=parent_crn,
+                name='Example Account Group',
                 primary_contact_iam_id=enterprise_account_iam_id,
             ).get_result()
 
@@ -128,17 +122,17 @@ class TestEnterpriseManagementV1Examples():
 
             # end-create_account_group
 
-            global first_account_group_id
-            first_account_group_id = create_account_group_response.get('account_group_id')
+            global account_group_id
+            account_group_id = create_account_group_response.get('account_group_id')
 
-            create_second_account_group_response = enterprise_management_service.create_account_group(
-            parent=parent,
-            name=second_account_group_name,
-            primary_contact_iam_id=enterprise_account_iam_id,
+            create_parent_account_group_response = enterprise_management_service.create_account_group(
+                parent=parent_crn,
+                name='New Parent Account Group',
+                primary_contact_iam_id=enterprise_account_iam_id,
             )
 
-            global second_account_group_id
-            second_account_group_id = create_second_account_group_response.get('account_group_id')
+            global new_parent_account_group_id
+            new_parent_account_group_id = create_parent_account_group_response.get('account_group_id')
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -171,7 +165,7 @@ class TestEnterpriseManagementV1Examples():
         """
         get_account_group request example
         """
-        assert first_account_group_id is not None
+        assert account_group_id is not None
 
         print('\nget_account_group() result:')
 
@@ -179,7 +173,7 @@ class TestEnterpriseManagementV1Examples():
             # begin-get_account_group
 
             account_group = enterprise_management_service.get_account_group(
-                account_group_id=first_account_group_id,
+                account_group_id=account_group_id,
             ).get_result()
 
             print(json.dumps(account_group, indent=2))
@@ -194,7 +188,7 @@ class TestEnterpriseManagementV1Examples():
         """
         update_account_group request example
         """
-        assert first_account_group_id is not None
+        assert account_group_id is not None
 
         print('\nupdate_account_group() result:')
 
@@ -202,8 +196,8 @@ class TestEnterpriseManagementV1Examples():
             # begin-update_account_group
 
             response = enterprise_management_service.update_account_group(
-                account_group_id=first_account_group_id,
-                name=first_updated_account_group_name,
+                account_group_id=account_group_id,
+                name='Updated Account Group',
                 primary_contact_iam_id=enterprise_account_iam_id,
             ).get_result()
 
@@ -219,18 +213,18 @@ class TestEnterpriseManagementV1Examples():
         """
         create_account request example
         """
-        assert first_account_group_id is not None
+        assert account_group_id is not None
 
         print('\ncreate_account() result:')
 
         try:
-            parent = 'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::account-group:' + first_account_group_id
+            parent_crn = 'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::account-group:' + account_group_id
 
             # begin-create_account
 
             create_account_response = enterprise_management_service.create_account(
-                parent=parent,
-                name=account_name,
+                parent=parent_crn,
+                name='Example Account',
                 owner_iam_id=enterprise_account_iam_id,
             ).get_result()
 
@@ -253,11 +247,13 @@ class TestEnterpriseManagementV1Examples():
         print('\nimport_account_to_enterprise() result:')
 
         try:
+            account_id = 'standalone_account_id'
+
             # begin-import_account_to_enterprise
 
             response = enterprise_management_service.import_account_to_enterprise(
                 enterprise_id=enterprise_id,
-                account_id='standalone_account_id',
+                account_id=account_id,
             ).get_result()
 
             print(json.dumps(response, indent=2))
@@ -319,18 +315,18 @@ class TestEnterpriseManagementV1Examples():
         update_account request example
         """
         assert account_id is not None
-        assert second_account_group_id is not None
+        assert new_parent_account_group_id is not None
 
         print('\nupdate_account() result:')
 
         try:
-            new_parent = 'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::account-group:' + second_account_group_id
+            new_parent_crn = 'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::account-group:' + new_parent_account_group_id
 
             # begin-update_account
 
             response = enterprise_management_service.update_account(
                 account_id=account_id,
-                parent=new_parent,
+                parent=new_parent_crn,
             ).get_result()
 
             print(json.dumps(response, indent=2))
@@ -350,12 +346,15 @@ class TestEnterpriseManagementV1Examples():
         print('\ncreate_enterprise() result:')
 
         try:
+            account_id = 'standalone_account_id'
+            contact_iam_id = 'standalone_account_iam_id'
+
             # begin-create_enterprise
 
             create_enterprise_response = enterprise_management_service.create_enterprise(
-                source_account_id='standalone_account_id',
-                name='Example Enterprise Name',
-                primary_contact_iam_id='standalone_account_iam_id',
+                source_account_id=account_id,
+                name='Example Enterprise',
+                primary_contact_iam_id=contact_iam_id,
             ).get_result()
 
             print(json.dumps(create_enterprise_response, indent=2))
@@ -426,7 +425,7 @@ class TestEnterpriseManagementV1Examples():
 
             response = enterprise_management_service.update_enterprise(
                 enterprise_id=enterprise_id,
-                name=updated_enterprise_name,
+                name='Updated Enterprise Name',
                 primary_contact_iam_id=enterprise_account_iam_id,
             ).get_result()
 
