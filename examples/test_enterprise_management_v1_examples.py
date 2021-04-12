@@ -79,7 +79,8 @@ class TestEnterpriseManagementV1Examples():
 
             # Load the configuration
             global config
-            config = read_external_sources(EnterpriseManagementV1.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(
+                EnterpriseManagementV1.DEFAULT_SERVICE_NAME)
 
             global enterprise_id
             enterprise_id = config['ENTERPRISE_ID']
@@ -108,7 +109,8 @@ class TestEnterpriseManagementV1Examples():
         print('\ncreate_account_group() result:')
 
         try:
-            parent_crn = 'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::enterprise:' + enterprise_id
+            parent_crn = 'crn:v1:bluemix:public:enterprise::a/' + \
+                enterprise_account_id + '::enterprise:' + enterprise_id
 
             # begin-create_account_group
 
@@ -123,7 +125,8 @@ class TestEnterpriseManagementV1Examples():
             # end-create_account_group
 
             global account_group_id
-            account_group_id = create_account_group_response.get('account_group_id')
+            account_group_id = create_account_group_response.get(
+                'account_group_id')
 
             create_parent_account_group_response = enterprise_management_service.create_account_group(
                 parent=parent_crn,
@@ -132,7 +135,8 @@ class TestEnterpriseManagementV1Examples():
             )
 
             global new_parent_account_group_id
-            new_parent_account_group_id = create_parent_account_group_response.get('account_group_id')
+            new_parent_account_group_id = create_parent_account_group_response.get(
+                'account_group_id')
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -190,20 +194,19 @@ class TestEnterpriseManagementV1Examples():
         """
         assert account_group_id is not None
 
-        print('\nupdate_account_group() result:')
-
         try:
             # begin-update_account_group
 
             response = enterprise_management_service.update_account_group(
                 account_group_id=account_group_id,
-                name='Updated Account Group',
+                name='Updated Example Account Group',
                 primary_contact_iam_id=enterprise_account_iam_id,
-            ).get_result()
-
-            print(json.dumps(response, indent=2))
+            )
 
             # end-update_account_group
+
+            print('\nupdate_account_group() response status code: ',
+                  response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -218,7 +221,8 @@ class TestEnterpriseManagementV1Examples():
         print('\ncreate_account() result:')
 
         try:
-            parent_crn = 'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::account-group:' + account_group_id
+            parent_crn = 'crn:v1:bluemix:public:enterprise::a/' + \
+                enterprise_account_id + '::account-group:' + account_group_id
 
             # begin-create_account
 
@@ -244,21 +248,23 @@ class TestEnterpriseManagementV1Examples():
         """
         import_account_to_enterprise request example
         """
-        print('\nimport_account_to_enterprise() result:')
 
         try:
-            account_id = 'standalone_account_id'
+            import_account_id = '<accountid_to_be_imported>'
 
             # begin-import_account_to_enterprise
 
             response = enterprise_management_service.import_account_to_enterprise(
                 enterprise_id=enterprise_id,
-                account_id=account_id,
-            ).get_result()
+                account_id=import_account_id,
+            )
 
             print(json.dumps(response, indent=2))
 
             # end-import_account_to_enterprise
+
+            print('\nimport_account_to_enterprise() response status code: ',
+                  response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -317,21 +323,21 @@ class TestEnterpriseManagementV1Examples():
         assert account_id is not None
         assert new_parent_account_group_id is not None
 
-        print('\nupdate_account() result:')
-
         try:
-            new_parent_crn = 'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::account-group:' + new_parent_account_group_id
+            new_parent_crn = 'crn:v1:bluemix:public:enterprise::a/' + \
+                enterprise_account_id + '::account-group:' + new_parent_account_group_id
 
             # begin-update_account
 
             response = enterprise_management_service.update_account(
                 account_id=account_id,
                 parent=new_parent_crn,
-            ).get_result()
-
-            print(json.dumps(response, indent=2))
+            )
 
             # end-update_account
+
+            print('\nupdate_account() response status code: ',
+                  response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -346,13 +352,13 @@ class TestEnterpriseManagementV1Examples():
         print('\ncreate_enterprise() result:')
 
         try:
-            account_id = 'standalone_account_id'
-            contact_iam_id = 'standalone_account_iam_id'
+            src_account_id = '<standalone_account_id>'
+            contact_iam_id = '<standalone_account_iam_id>'
 
             # begin-create_enterprise
 
             create_enterprise_response = enterprise_management_service.create_enterprise(
-                source_account_id=account_id,
+                source_account_id=src_account_id,
                 name='Example Enterprise',
                 primary_contact_iam_id=contact_iam_id,
             ).get_result()
@@ -418,8 +424,6 @@ class TestEnterpriseManagementV1Examples():
         assert enterprise_id is not None
         assert enterprise_account_iam_id is not None
 
-        print('\nupdate_enterprise() result:')
-
         try:
             # begin-update_enterprise
 
@@ -427,11 +431,14 @@ class TestEnterpriseManagementV1Examples():
                 enterprise_id=enterprise_id,
                 name='Updated Example Enterprise',
                 primary_contact_iam_id=enterprise_account_iam_id,
-            ).get_result()
+            )
 
             print(json.dumps(response, indent=2))
 
             # end-update_enterprise
+
+            print('\nupdate_enterprise() response status code: ',
+                  response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
