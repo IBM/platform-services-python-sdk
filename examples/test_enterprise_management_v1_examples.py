@@ -425,7 +425,7 @@ class TestEnterpriseManagementV1Examples():
 
             response = enterprise_management_service.update_enterprise(
                 enterprise_id=enterprise_id,
-                name='Updated Enterprise Name',
+                name='Updated Example Enterprise',
                 primary_contact_iam_id=enterprise_account_iam_id,
             ).get_result()
 
