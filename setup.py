@@ -51,7 +51,7 @@ setup(
     install_requires=install_requires,
     tests_require=tests_require,
     author='IBM',
-    author_email='devexdev@us.ibm.com',
+    author_email='devxsdk@us.ibm.com',
     long_description=readme,
     long_description_content_type='text/markdown',
     url='https://github.com/IBM/platform-services-python-sdk',
