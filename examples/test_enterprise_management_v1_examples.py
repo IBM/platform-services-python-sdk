@@ -132,7 +132,7 @@ class TestEnterpriseManagementV1Examples():
                 parent=parent_crn,
                 name='New Parent Account Group',
                 primary_contact_iam_id=enterprise_account_iam_id,
-            )
+            ).get_result()
 
             global new_parent_account_group_id
             new_parent_account_group_id = create_parent_account_group_response.get(
@@ -432,8 +432,6 @@ class TestEnterpriseManagementV1Examples():
                 name='Updated Example Enterprise',
                 primary_contact_iam_id=enterprise_account_iam_id,
             )
-
-            print(json.dumps(response, indent=2))
 
             # end-update_enterprise
 
