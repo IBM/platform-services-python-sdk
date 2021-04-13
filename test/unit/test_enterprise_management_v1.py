@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ Unit Tests for EnterpriseManagementV1
 
 from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import inspect
 import json
 import pytest
@@ -145,7 +146,7 @@ class TestListAccountGroups():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/account-groups')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -155,6 +156,7 @@ class TestListAccountGroups():
         # Set up parameter values
         enterprise_id = 'testString'
         parent_account_group_id = 'testString'
+        next_docid = 'testString'
         parent = 'testString'
         limit = 38
 
@@ -162,6 +164,7 @@ class TestListAccountGroups():
         response = service.list_account_groups(
             enterprise_id=enterprise_id,
             parent_account_group_id=parent_account_group_id,
+            next_docid=next_docid,
             parent=parent,
             limit=limit,
             headers={}
@@ -175,6 +178,7 @@ class TestListAccountGroups():
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'enterprise_id={}'.format(enterprise_id) in query_string
         assert 'parent_account_group_id={}'.format(parent_account_group_id) in query_string
+        assert 'next_docid={}'.format(next_docid) in query_string
         assert 'parent={}'.format(parent) in query_string
         assert 'limit={}'.format(limit) in query_string
 
@@ -186,7 +190,7 @@ class TestListAccountGroups():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/account-groups')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -223,7 +227,7 @@ class TestGetAccountGroup():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/account-groups/testString')
-        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
+        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -251,7 +255,7 @@ class TestGetAccountGroup():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/account-groups/testString')
-        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
+        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -563,7 +567,7 @@ class TestListAccounts():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/accounts')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -573,6 +577,7 @@ class TestListAccounts():
         # Set up parameter values
         enterprise_id = 'testString'
         account_group_id = 'testString'
+        next_docid = 'testString'
         parent = 'testString'
         limit = 38
 
@@ -580,6 +585,7 @@ class TestListAccounts():
         response = service.list_accounts(
             enterprise_id=enterprise_id,
             account_group_id=account_group_id,
+            next_docid=next_docid,
             parent=parent,
             limit=limit,
             headers={}
@@ -593,6 +599,7 @@ class TestListAccounts():
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'enterprise_id={}'.format(enterprise_id) in query_string
         assert 'account_group_id={}'.format(account_group_id) in query_string
+        assert 'next_docid={}'.format(next_docid) in query_string
         assert 'parent={}'.format(parent) in query_string
         assert 'limit={}'.format(limit) in query_string
 
@@ -604,7 +611,7 @@ class TestListAccounts():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/accounts')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -641,7 +648,7 @@ class TestGetAccount():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/accounts/testString')
-        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
+        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -669,7 +676,7 @@ class TestGetAccount():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/accounts/testString')
-        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
+        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -879,7 +886,7 @@ class TestListEnterprises():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -890,6 +897,7 @@ class TestListEnterprises():
         enterprise_account_id = 'testString'
         account_group_id = 'testString'
         account_id = 'testString'
+        next_docid = 'testString'
         limit = 38
 
         # Invoke method
@@ -897,6 +905,7 @@ class TestListEnterprises():
             enterprise_account_id=enterprise_account_id,
             account_group_id=account_group_id,
             account_id=account_id,
+            next_docid=next_docid,
             limit=limit,
             headers={}
         )
@@ -910,6 +919,7 @@ class TestListEnterprises():
         assert 'enterprise_account_id={}'.format(enterprise_account_id) in query_string
         assert 'account_group_id={}'.format(account_group_id) in query_string
         assert 'account_id={}'.format(account_id) in query_string
+        assert 'next_docid={}'.format(next_docid) in query_string
         assert 'limit={}'.format(limit) in query_string
 
 
@@ -920,7 +930,7 @@ class TestListEnterprises():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}]}'
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -957,7 +967,7 @@ class TestGetEnterprise():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises/testString')
-        mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
+        mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -985,7 +995,7 @@ class TestGetEnterprise():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/enterprises/testString')
-        mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00", "updated_by": "updated_by"}'
+        mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1119,9 +1129,9 @@ class TestAccount():
         account_model_json['paid'] = True
         account_model_json['owner_email'] = 'testString'
         account_model_json['is_enterprise_account'] = True
-        account_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
+        account_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         account_model_json['created_by'] = 'testString'
-        account_model_json['updated_at'] = '2020-01-28T18:40:40.123456Z'
+        account_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         account_model_json['updated_by'] = 'testString'
 
         # Construct a model instance of Account by calling from_dict on the json representation
@@ -1162,9 +1172,9 @@ class TestAccountGroup():
         account_group_model_json['state'] = 'testString'
         account_group_model_json['primary_contact_iam_id'] = 'testString'
         account_group_model_json['primary_contact_email'] = 'testString'
-        account_group_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
+        account_group_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         account_group_model_json['created_by'] = 'testString'
-        account_group_model_json['updated_at'] = '2020-01-28T18:40:40.123456Z'
+        account_group_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         account_group_model_json['updated_by'] = 'testString'
 
         # Construct a model instance of AccountGroup by calling from_dict on the json representation
@@ -1291,9 +1301,9 @@ class TestEnterprise():
         enterprise_model_json['state'] = 'testString'
         enterprise_model_json['primary_contact_iam_id'] = 'testString'
         enterprise_model_json['primary_contact_email'] = 'testString'
-        enterprise_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
+        enterprise_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         enterprise_model_json['created_by'] = 'testString'
-        enterprise_model_json['updated_at'] = '2020-01-28T18:40:40.123456Z'
+        enterprise_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         enterprise_model_json['updated_by'] = 'testString'
 
         # Construct a model instance of Enterprise by calling from_dict on the json representation
@@ -1335,9 +1345,9 @@ class TestListAccountGroupsResponse():
         account_group_model['state'] = 'testString'
         account_group_model['primary_contact_iam_id'] = 'testString'
         account_group_model['primary_contact_email'] = 'testString'
-        account_group_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        account_group_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         account_group_model['created_by'] = 'testString'
-        account_group_model['updated_at'] = '2020-01-28T18:40:40.123456Z'
+        account_group_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         account_group_model['updated_by'] = 'testString'
 
         # Construct a json representation of a ListAccountGroupsResponse model
@@ -1387,9 +1397,9 @@ class TestListAccountsResponse():
         account_model['paid'] = True
         account_model['owner_email'] = 'testString'
         account_model['is_enterprise_account'] = True
-        account_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        account_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         account_model['created_by'] = 'testString'
-        account_model['updated_at'] = '2020-01-28T18:40:40.123456Z'
+        account_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         account_model['updated_by'] = 'testString'
 
         # Construct a json representation of a ListAccountsResponse model
@@ -1435,9 +1445,9 @@ class TestListEnterprisesResponse():
         enterprise_model['state'] = 'testString'
         enterprise_model['primary_contact_iam_id'] = 'testString'
         enterprise_model['primary_contact_email'] = 'testString'
-        enterprise_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        enterprise_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         enterprise_model['created_by'] = 'testString'
-        enterprise_model['updated_at'] = '2020-01-28T18:40:40.123456Z'
+        enterprise_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         enterprise_model['updated_by'] = 'testString'
 
         # Construct a json representation of a ListEnterprisesResponse model
