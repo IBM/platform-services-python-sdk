@@ -1,3 +1,10 @@
+## [0.18.5](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.4...v0.18.5) (2021-04-13)
+
+
+### Bug Fixes
+
+* **Enterprise Management:** update service after recent API changes and add examples ([#102](https://github.com/IBM/platform-services-python-sdk/issues/102)) ([6eaa326](https://github.com/IBM/platform-services-python-sdk/commit/6eaa326b8547d05a3efda47d5823927d199e6d68))
+
 ## [0.18.4](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.3...v0.18.4) (2021-04-06)
 
 
