@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-bd714324-20210408-112704
+# IBM OpenAPI SDK Code Generator Version: 3.30.0-bd714324-20210406-200538
  
 """
 The Enterprise Management API enables you to create and manage an enterprise, account
@@ -73,39 +73,46 @@ class EnterpriseManagementV1(BaseService):
 
 
     #########################
-    # accountGroupOperations
+    # Enterprise Operations
     #########################
 
 
-    def create_account_group(self,
-        parent: str,
+    def create_enterprise(self,
+        source_account_id: str,
         name: str,
         primary_contact_iam_id: str,
+        *,
+        domain: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
-        Create an account group.
+        Create an enterprise.
 
-        Create a new account group, which can be used to group together multiple accounts.
-        To create an account group, you must have an existing enterprise. The API creates
-        an account group entity under the parent that is specified in the payload of the
-        request. The request also takes in the name and the primary contact of this new
-        account group.
+        Create a new enterprise, which you can use to centrally manage multiple accounts.
+        To create an enterprise, you must have an active Subscription account.
+        <br/><br/>The API creates an enterprise entity, which is the root of the
+        enterprise hierarchy. It also creates a new enterprise account that is used to
+        manage the enterprise. All subscriptions, support entitlements, credits, and
+        discounts from the source subscription account are migrated to the enterprise
+        account, and the source account becomes a child account in the hierarchy. The user
+        that you assign as the enterprise primary contact is also assigned as the owner of
+        the enterprise account.
 
-        :param str parent: The CRN of the parent under which the account group will
-               be created. The parent can be an existing account group or the enterprise
-               itself.
-        :param str name: The name of the account group. This field must have 3 - 60
+        :param str source_account_id: The ID of the account that is used to create
+               the enterprise.
+        :param str name: The name of the enterprise. This field must have 3 - 60
                characters.
-        :param str primary_contact_iam_id: The IAM ID of the primary contact for
-               this account group, such as `IBMid-0123ABC`. The IAM ID must already exist.
+        :param str primary_contact_iam_id: The IAM ID of the enterprise primary
+               contact, such as `IBMid-0123ABC`. The IAM ID must already exist.
+        :param str domain: (optional) A domain or subdomain for the enterprise,
+               such as `example.com` or `my.example.com`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `CreateAccountGroupResponse` object
+        :rtype: DetailedResponse with `dict` result representing a `CreateEnterpriseResponse` object
         """
 
-        if parent is None:
-            raise ValueError('parent must be provided')
+        if source_account_id is None:
+            raise ValueError('source_account_id must be provided')
         if name is None:
             raise ValueError('name must be provided')
         if primary_contact_iam_id is None:
@@ -113,13 +120,14 @@ class EnterpriseManagementV1(BaseService):
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='create_account_group')
+                                      operation_id='create_enterprise')
         headers.update(sdk_headers)
 
         data = {
-            'parent': parent,
+            'source_account_id': source_account_id,
             'name': name,
-            'primary_contact_iam_id': primary_contact_iam_id
+            'primary_contact_iam_id': primary_contact_iam_id,
+            'domain': domain
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -129,7 +137,7 @@ class EnterpriseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/account-groups'
+        url = '/enterprises'
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
@@ -139,63 +147,58 @@ class EnterpriseManagementV1(BaseService):
         return response
 
 
-    def list_account_groups(self,
+    def list_enterprises(self,
         *,
-        enterprise_id: str = None,
-        parent_account_group_id: str = None,
+        enterprise_account_id: str = None,
+        account_group_id: str = None,
+        account_id: str = None,
         next_docid: str = None,
-        parent: str = None,
         limit: int = None,
         **kwargs
     ) -> DetailedResponse:
         """
-        List account groups.
+        List enterprises.
 
-        Retrieve all account groups based on the values that are passed in the query
-        parameters. If no query parameter is passed, all of the account groups in the
-        enterprise for which the calling identity has access are returned. <br/><br/>You
-        can use pagination parameters to filter the results. The `limit` field can be used
-        to limit the number of results that are displayed for this method.<br/><br/>This
-        method ensures that only the account groups that the user has access to are
-        returned. Access can be controlled either through a policy on a specific account
-        group, or account-level platform services access roles, such as Administrator,
-        Editor, Operator, or Viewer. When you call the method with the `enterprise_id`,
-        `parent_account_group_id` or `parent` query parameter, all of the account groups
-        that are immediate children of this entity are returned. Authentication is
-        performed on all account groups before they are returned to the user to ensure
-        that only those account groups are returned to which the calling identity has
-        access.
+        Retrieve all enterprises for a given ID by passing the IDs on query parameters. If
+        no ID is passed, the enterprises for which the calling identity is the primary
+        contact are returned. You can use pagination parameters to filter the results.
+        <br/><br/>This method ensures that only the enterprises that the user has access
+        to are returned. Access can be controlled either through a policy on a specific
+        enterprise, or account-level platform services access roles, such as
+        Administrator, Editor, Operator, or Viewer. When you call the method with the
+        `enterprise_account_id` or `account_id` query parameter, the account ID in the
+        token is compared with that in the query parameter. If these account IDs match,
+        authentication isn't performed and the enterprise information is returned. If the
+        account IDs don't match, authentication is performed and only then is the
+        enterprise information returned in the response.
 
-        :param str enterprise_id: (optional) Get account groups that are either
-               immediate children or are a part of the hierarchy for a given enterprise
-               ID.
-        :param str parent_account_group_id: (optional) Get account groups that are
-               either immediate children or are a part of the hierarchy for a given
-               account group ID.
+        :param str enterprise_account_id: (optional) Get enterprises for a given
+               enterprise account ID.
+        :param str account_group_id: (optional) Get enterprises for a given account
+               group ID.
+        :param str account_id: (optional) Get enterprises for a given account ID.
         :param str next_docid: (optional) The first item to be returned in the page
                of results. This value can be obtained from the next_url property from the
                previous call of the operation. If not specified, then the first page of
                results is returned.
-        :param str parent: (optional) Get account groups that are either immediate
-               children or are a part of the hierarchy for a given parent CRN.
         :param int limit: (optional) Return results up to this limit. Valid values
                are between `0` and `100`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ListAccountGroupsResponse` object
+        :rtype: DetailedResponse with `dict` result representing a `ListEnterprisesResponse` object
         """
 
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='list_account_groups')
+                                      operation_id='list_enterprises')
         headers.update(sdk_headers)
 
         params = {
-            'enterprise_id': enterprise_id,
-            'parent_account_group_id': parent_account_group_id,
+            'enterprise_account_id': enterprise_account_id,
+            'account_group_id': account_group_id,
+            'account_id': account_id,
             'next_docid': next_docid,
-            'parent': parent,
             'limit': limit
         }
 
@@ -203,7 +206,7 @@ class EnterpriseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/account-groups'
+        url = '/enterprises'
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -213,39 +216,38 @@ class EnterpriseManagementV1(BaseService):
         return response
 
 
-    def get_account_group(self,
-        account_group_id: str,
+    def get_enterprise(self,
+        enterprise_id: str,
         **kwargs
     ) -> DetailedResponse:
         """
-        Get account group by ID.
+        Get enterprise by ID.
 
-        Retrieve an account by the `account_group_id` parameter. All data related to the
-        account group is returned only if the caller has access to retrieve the account
-        group.
+        Retrieve an enterprise by the `enterprise_id` parameter. All data related to the
+        enterprise is returned only if the caller has access to retrieve the enterprise.
 
-        :param str account_group_id: The ID of the account group to retrieve.
+        :param str enterprise_id: The ID of the enterprise to retrieve.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `AccountGroup` object
+        :rtype: DetailedResponse with `dict` result representing a `Enterprise` object
         """
 
-        if account_group_id is None:
-            raise ValueError('account_group_id must be provided')
+        if enterprise_id is None:
+            raise ValueError('enterprise_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='get_account_group')
+                                      operation_id='get_enterprise')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        path_param_keys = ['account_group_id']
-        path_param_values = self.encode_path_vars(account_group_id)
+        path_param_keys = ['enterprise_id']
+        path_param_values = self.encode_path_vars(enterprise_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/account-groups/{account_group_id}'.format(**path_param_dict)
+        url = '/enterprises/{enterprise_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -254,39 +256,44 @@ class EnterpriseManagementV1(BaseService):
         return response
 
 
-    def update_account_group(self,
-        account_group_id: str,
+    def update_enterprise(self,
+        enterprise_id: str,
         *,
         name: str = None,
+        domain: str = None,
         primary_contact_iam_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
-        Update an account group.
+        Update an enterprise.
 
-        Update the name or IAM ID of the primary contact for an existing account group.
-        The new primary contact must already be a user in the enterprise account.
+        Update the name, domain, or IAM ID of the primary contact for an existing
+        enterprise. The new primary contact must already be a user in the enterprise
+        account.
 
-        :param str account_group_id: The ID of the account group to retrieve.
-        :param str name: (optional) The new name of the account group. This field
-               must have 3 - 60 characters.
+        :param str enterprise_id: The ID of the enterprise to retrieve.
+        :param str name: (optional) The new name of the enterprise. This field must
+               have 3 - 60 characters.
+        :param str domain: (optional) The new domain of the enterprise. This field
+               has a limit of 60 characters.
         :param str primary_contact_iam_id: (optional) The IAM ID of the user to be
-               the new primary contact for the account group.
+               the new primary contact for the enterprise.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
         """
 
-        if account_group_id is None:
-            raise ValueError('account_group_id must be provided')
+        if enterprise_id is None:
+            raise ValueError('enterprise_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='update_account_group')
+                                      operation_id='update_enterprise')
         headers.update(sdk_headers)
 
         data = {
             'name': name,
+            'domain': domain,
             'primary_contact_iam_id': primary_contact_iam_id
         }
         data = {k: v for (k, v) in data.items() if v is not None}
@@ -296,10 +303,10 @@ class EnterpriseManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        path_param_keys = ['account_group_id']
-        path_param_values = self.encode_path_vars(account_group_id)
+        path_param_keys = ['enterprise_id']
+        path_param_values = self.encode_path_vars(enterprise_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/account-groups/{account_group_id}'.format(**path_param_dict)
+        url = '/enterprises/{enterprise_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
@@ -309,7 +316,7 @@ class EnterpriseManagementV1(BaseService):
         return response
 
     #########################
-    # accountOperations
+    # Account Operations
     #########################
 
 
@@ -608,46 +615,39 @@ class EnterpriseManagementV1(BaseService):
         return response
 
     #########################
-    # enterpriseOperations
+    # Account Group Operations
     #########################
 
 
-    def create_enterprise(self,
-        source_account_id: str,
+    def create_account_group(self,
+        parent: str,
         name: str,
         primary_contact_iam_id: str,
-        *,
-        domain: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
-        Create an enterprise.
+        Create an account group.
 
-        Create a new enterprise, which you can use to centrally manage multiple accounts.
-        To create an enterprise, you must have an active Subscription account.
-        <br/><br/>The API creates an enterprise entity, which is the root of the
-        enterprise hierarchy. It also creates a new enterprise account that is used to
-        manage the enterprise. All subscriptions, support entitlements, credits, and
-        discounts from the source subscription account are migrated to the enterprise
-        account, and the source account becomes a child account in the hierarchy. The user
-        that you assign as the enterprise primary contact is also assigned as the owner of
-        the enterprise account.
+        Create a new account group, which can be used to group together multiple accounts.
+        To create an account group, you must have an existing enterprise. The API creates
+        an account group entity under the parent that is specified in the payload of the
+        request. The request also takes in the name and the primary contact of this new
+        account group.
 
-        :param str source_account_id: The ID of the account that is used to create
-               the enterprise.
-        :param str name: The name of the enterprise. This field must have 3 - 60
+        :param str parent: The CRN of the parent under which the account group will
+               be created. The parent can be an existing account group or the enterprise
+               itself.
+        :param str name: The name of the account group. This field must have 3 - 60
                characters.
-        :param str primary_contact_iam_id: The IAM ID of the enterprise primary
-               contact, such as `IBMid-0123ABC`. The IAM ID must already exist.
-        :param str domain: (optional) A domain or subdomain for the enterprise,
-               such as `example.com` or `my.example.com`.
+        :param str primary_contact_iam_id: The IAM ID of the primary contact for
+               this account group, such as `IBMid-0123ABC`. The IAM ID must already exist.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `CreateEnterpriseResponse` object
+        :rtype: DetailedResponse with `dict` result representing a `CreateAccountGroupResponse` object
         """
 
-        if source_account_id is None:
-            raise ValueError('source_account_id must be provided')
+        if parent is None:
+            raise ValueError('parent must be provided')
         if name is None:
             raise ValueError('name must be provided')
         if primary_contact_iam_id is None:
@@ -655,14 +655,13 @@ class EnterpriseManagementV1(BaseService):
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='create_enterprise')
+                                      operation_id='create_account_group')
         headers.update(sdk_headers)
 
         data = {
-            'source_account_id': source_account_id,
+            'parent': parent,
             'name': name,
-            'primary_contact_iam_id': primary_contact_iam_id,
-            'domain': domain
+            'primary_contact_iam_id': primary_contact_iam_id
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -672,7 +671,7 @@ class EnterpriseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/enterprises'
+        url = '/account-groups'
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
@@ -682,58 +681,63 @@ class EnterpriseManagementV1(BaseService):
         return response
 
 
-    def list_enterprises(self,
+    def list_account_groups(self,
         *,
-        enterprise_account_id: str = None,
-        account_group_id: str = None,
-        account_id: str = None,
+        enterprise_id: str = None,
+        parent_account_group_id: str = None,
         next_docid: str = None,
+        parent: str = None,
         limit: int = None,
         **kwargs
     ) -> DetailedResponse:
         """
-        List enterprises.
+        List account groups.
 
-        Retrieve all enterprises for a given ID by passing the IDs on query parameters. If
-        no ID is passed, the enterprises for which the calling identity is the primary
-        contact are returned. You can use pagination parameters to filter the results.
-        <br/><br/>This method ensures that only the enterprises that the user has access
-        to are returned. Access can be controlled either through a policy on a specific
-        enterprise, or account-level platform services access roles, such as
-        Administrator, Editor, Operator, or Viewer. When you call the method with the
-        `enterprise_account_id` or `account_id` query parameter, the account ID in the
-        token is compared with that in the query parameter. If these account IDs match,
-        authentication isn't performed and the enterprise information is returned. If the
-        account IDs don't match, authentication is performed and only then is the
-        enterprise information returned in the response.
+        Retrieve all account groups based on the values that are passed in the query
+        parameters. If no query parameter is passed, all of the account groups in the
+        enterprise for which the calling identity has access are returned. <br/><br/>You
+        can use pagination parameters to filter the results. The `limit` field can be used
+        to limit the number of results that are displayed for this method.<br/><br/>This
+        method ensures that only the account groups that the user has access to are
+        returned. Access can be controlled either through a policy on a specific account
+        group, or account-level platform services access roles, such as Administrator,
+        Editor, Operator, or Viewer. When you call the method with the `enterprise_id`,
+        `parent_account_group_id` or `parent` query parameter, all of the account groups
+        that are immediate children of this entity are returned. Authentication is
+        performed on all account groups before they are returned to the user to ensure
+        that only those account groups are returned to which the calling identity has
+        access.
 
-        :param str enterprise_account_id: (optional) Get enterprises for a given
-               enterprise account ID.
-        :param str account_group_id: (optional) Get enterprises for a given account
-               group ID.
-        :param str account_id: (optional) Get enterprises for a given account ID.
+        :param str enterprise_id: (optional) Get account groups that are either
+               immediate children or are a part of the hierarchy for a given enterprise
+               ID.
+        :param str parent_account_group_id: (optional) Get account groups that are
+               either immediate children or are a part of the hierarchy for a given
+               account group ID.
         :param str next_docid: (optional) The first item to be returned in the page
                of results. This value can be obtained from the next_url property from the
                previous call of the operation. If not specified, then the first page of
                results is returned.
+        :param str parent: (optional) Get account groups that are either immediate
+               children or are a part of the hierarchy for a given parent CRN.
         :param int limit: (optional) Return results up to this limit. Valid values
                are between `0` and `100`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ListEnterprisesResponse` object
+        :rtype: DetailedResponse with `dict` result representing a `ListAccountGroupsResponse` object
         """
 
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='list_enterprises')
+                                      operation_id='list_account_groups')
         headers.update(sdk_headers)
 
         params = {
-            'enterprise_account_id': enterprise_account_id,
-            'account_group_id': account_group_id,
-            'account_id': account_id,
+            'enterprise_id': enterprise_id,
+            'parent_account_group_id': parent_account_group_id,
             'next_docid': next_docid,
+            'parent': parent,
             'limit': limit
         }
 
@@ -741,7 +745,7 @@ class EnterpriseManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/enterprises'
+        url = '/account-groups'
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
@@ -751,38 +755,39 @@ class EnterpriseManagementV1(BaseService):
         return response
 
 
-    def get_enterprise(self,
-        enterprise_id: str,
+    def get_account_group(self,
+        account_group_id: str,
         **kwargs
     ) -> DetailedResponse:
         """
-        Get enterprise by ID.
+        Get account group by ID.
 
-        Retrieve an enterprise by the `enterprise_id` parameter. All data related to the
-        enterprise is returned only if the caller has access to retrieve the enterprise.
+        Retrieve an account by the `account_group_id` parameter. All data related to the
+        account group is returned only if the caller has access to retrieve the account
+        group.
 
-        :param str enterprise_id: The ID of the enterprise to retrieve.
+        :param str account_group_id: The ID of the account group to retrieve.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `Enterprise` object
+        :rtype: DetailedResponse with `dict` result representing a `AccountGroup` object
         """
 
-        if enterprise_id is None:
-            raise ValueError('enterprise_id must be provided')
+        if account_group_id is None:
+            raise ValueError('account_group_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='get_enterprise')
+                                      operation_id='get_account_group')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        path_param_keys = ['enterprise_id']
-        path_param_values = self.encode_path_vars(enterprise_id)
+        path_param_keys = ['account_group_id']
+        path_param_values = self.encode_path_vars(account_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/enterprises/{enterprise_id}'.format(**path_param_dict)
+        url = '/account-groups/{account_group_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
@@ -791,44 +796,39 @@ class EnterpriseManagementV1(BaseService):
         return response
 
 
-    def update_enterprise(self,
-        enterprise_id: str,
+    def update_account_group(self,
+        account_group_id: str,
         *,
         name: str = None,
-        domain: str = None,
         primary_contact_iam_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
-        Update an enterprise.
+        Update an account group.
 
-        Update the name, domain, or IAM ID of the primary contact for an existing
-        enterprise. The new primary contact must already be a user in the enterprise
-        account.
+        Update the name or IAM ID of the primary contact for an existing account group.
+        The new primary contact must already be a user in the enterprise account.
 
-        :param str enterprise_id: The ID of the enterprise to retrieve.
-        :param str name: (optional) The new name of the enterprise. This field must
-               have 3 - 60 characters.
-        :param str domain: (optional) The new domain of the enterprise. This field
-               has a limit of 60 characters.
+        :param str account_group_id: The ID of the account group to retrieve.
+        :param str name: (optional) The new name of the account group. This field
+               must have 3 - 60 characters.
         :param str primary_contact_iam_id: (optional) The IAM ID of the user to be
-               the new primary contact for the enterprise.
+               the new primary contact for the account group.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
         """
 
-        if enterprise_id is None:
-            raise ValueError('enterprise_id must be provided')
+        if account_group_id is None:
+            raise ValueError('account_group_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='update_enterprise')
+                                      operation_id='update_account_group')
         headers.update(sdk_headers)
 
         data = {
             'name': name,
-            'domain': domain,
             'primary_contact_iam_id': primary_contact_iam_id
         }
         data = {k: v for (k, v) in data.items() if v is not None}
@@ -838,10 +838,10 @@ class EnterpriseManagementV1(BaseService):
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
-        path_param_keys = ['enterprise_id']
-        path_param_values = self.encode_path_vars(enterprise_id)
+        path_param_keys = ['account_group_id']
+        path_param_values = self.encode_path_vars(account_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/enterprises/{enterprise_id}'.format(**path_param_dict)
+        url = '/account-groups/{account_group_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
