@@ -100,7 +100,7 @@ class TestEnterpriseManagementV1():
     @needscredentials
     def test_list_account_groups(self):
 
-        results_count = 0
+        results = []
         doc_id = None
 
         while True:
@@ -114,7 +114,7 @@ class TestEnterpriseManagementV1():
             list_account_groups_response = list_account_groups_response.get_result()
             assert list_account_groups_response is not None
 
-            results_count += list_account_groups_response.get('rows_count')
+            results.extend(list_account_groups_response.get('resources'))
 
             next_url = list_account_groups_response.get('next_url')
             if next_url is None:
@@ -122,7 +122,10 @@ class TestEnterpriseManagementV1():
 
             doc_id = get_query_param(next_url, 'next_docid')
 
-        print(f'\nlist_account_groups() returned a total of {results_count} account groups.')
+        assert any(r['id'] == first_example_account_group_id for r in results) is True
+        assert any(r['id'] == second_example_account_group_id for r in results) is True
+
+        print(f'\nlist_account_groups() returned a total of {len(results)} account groups.')
 
     @needscredentials
     def test_get_account_group(self):
@@ -171,12 +174,12 @@ class TestEnterpriseManagementV1():
     @needscredentials
     def test_list_accounts(self):
 
-        results_count = 0
+        results = []
         doc_id = None
 
         while True:
             list_accounts_response = self.enterprise_management_service.list_accounts(
-                enterprise_id=self.enterprise_id,
+                account_group_id=first_example_account_group_id,
                 limit=result_per_page,
                 next_docid=doc_id,
             )
@@ -185,7 +188,7 @@ class TestEnterpriseManagementV1():
             list_accounts_response = list_accounts_response.get_result()
             assert list_accounts_response is not None
 
-            results_count += list_accounts_response.get('rows_count')
+            results.extend(list_accounts_response.get('resources'))
 
             next_url = list_accounts_response.get('next_url')
             if next_url is None:
@@ -193,7 +196,9 @@ class TestEnterpriseManagementV1():
 
             doc_id = get_query_param(next_url, 'next_docid')
 
-        print(f'\nlist_accounts() returned a total of {results_count} accounts.')
+        assert any(r['id'] == example_account_id for r in results) is True
+
+        print(f'\nlist_accounts() returned a total of {len(results)} accounts.')
 
     @needscredentials
     def test_get_account(self):
@@ -224,7 +229,7 @@ class TestEnterpriseManagementV1():
     @needscredentials
     def test_list_enterprises(self):
 
-        results_count = 0
+        results = []
         doc_ic = None
 
         while True:
@@ -236,7 +241,7 @@ class TestEnterpriseManagementV1():
             list_enterprises_response = list_enterprises_response.get_result()
             assert list_enterprises_response is not None
 
-            results_count += list_enterprises_response.get('rows_count')
+            results.extend(list_enterprises_response.get('resources'))
 
             next_url = list_enterprises_response.get('next_url')
             if next_url is None:
@@ -244,7 +249,9 @@ class TestEnterpriseManagementV1():
 
             doc_ic = get_query_param('next_docid')
 
-        print(f'\nlist_enterprises() returned a total of {results_count} enterprises.')
+        assert any(r['id'] == self.enterprise_id for r in results) is True
+
+        print(f'\nlist_enterprises() returned a total of {len(results)} enterprises.')
 
     @needscredentials
     def test_get_enterprise(self):
