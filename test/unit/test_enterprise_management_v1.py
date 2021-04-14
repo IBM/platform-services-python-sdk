@@ -38,13 +38,13 @@ base_url = 'https://enterprise.cloud.ibm.com/v1'
 service.set_service_url(base_url)
 
 ##############################################################################
-# Start of Service: AccountGroupOperations
+# Start of Service: EnterpriseOperations
 ##############################################################################
 # region
 
-class TestCreateAccountGroup():
+class TestCreateEnterprise():
     """
-    Test Class for create_account_group
+    Test Class for create_enterprise
     """
 
     def preprocess_url(self, request_url: str):
@@ -57,77 +57,81 @@ class TestCreateAccountGroup():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_create_account_group_all_params(self):
+    def test_create_enterprise_all_params(self):
         """
-        create_account_group()
+        create_enterprise()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups')
-        mock_response = '{"account_group_id": "account_group_id"}'
+        url = self.preprocess_url(base_url + '/enterprises')
+        mock_response = '{"enterprise_id": "enterprise_id", "enterprise_account_id": "enterprise_account_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
                       content_type='application/json',
-                      status=201)
+                      status=202)
 
         # Set up parameter values
-        parent = 'testString'
+        source_account_id = 'testString'
         name = 'testString'
         primary_contact_iam_id = 'testString'
+        domain = 'testString'
 
         # Invoke method
-        response = service.create_account_group(
-            parent,
+        response = service.create_enterprise(
+            source_account_id,
             name,
             primary_contact_iam_id,
+            domain=domain,
             headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
-        assert response.status_code == 201
+        assert response.status_code == 202
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['parent'] == 'testString'
+        assert req_body['source_account_id'] == 'testString'
         assert req_body['name'] == 'testString'
         assert req_body['primary_contact_iam_id'] == 'testString'
+        assert req_body['domain'] == 'testString'
 
 
     @responses.activate
-    def test_create_account_group_value_error(self):
+    def test_create_enterprise_value_error(self):
         """
-        test_create_account_group_value_error()
+        test_create_enterprise_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups')
-        mock_response = '{"account_group_id": "account_group_id"}'
+        url = self.preprocess_url(base_url + '/enterprises')
+        mock_response = '{"enterprise_id": "enterprise_id", "enterprise_account_id": "enterprise_account_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
                       content_type='application/json',
-                      status=201)
+                      status=202)
 
         # Set up parameter values
-        parent = 'testString'
+        source_account_id = 'testString'
         name = 'testString'
         primary_contact_iam_id = 'testString'
+        domain = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
-            "parent": parent,
+            "source_account_id": source_account_id,
             "name": name,
             "primary_contact_iam_id": primary_contact_iam_id,
         }
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_account_group(**req_copy)
+                service.create_enterprise(**req_copy)
 
 
 
-class TestListAccountGroups():
+class TestListEnterprises():
     """
-    Test Class for list_account_groups
+    Test Class for list_enterprises
     """
 
     def preprocess_url(self, request_url: str):
@@ -140,13 +144,13 @@ class TestListAccountGroups():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_list_account_groups_all_params(self):
+    def test_list_enterprises_all_params(self):
         """
-        list_account_groups()
+        list_enterprises()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
+        url = self.preprocess_url(base_url + '/enterprises')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -154,18 +158,18 @@ class TestListAccountGroups():
                       status=200)
 
         # Set up parameter values
-        enterprise_id = 'testString'
-        parent_account_group_id = 'testString'
+        enterprise_account_id = 'testString'
+        account_group_id = 'testString'
+        account_id = 'testString'
         next_docid = 'testString'
-        parent = 'testString'
-        limit = 38
+        limit = 100
 
         # Invoke method
-        response = service.list_account_groups(
-            enterprise_id=enterprise_id,
-            parent_account_group_id=parent_account_group_id,
+        response = service.list_enterprises(
+            enterprise_account_id=enterprise_account_id,
+            account_group_id=account_group_id,
+            account_id=account_id,
             next_docid=next_docid,
-            parent=parent,
             limit=limit,
             headers={}
         )
@@ -176,21 +180,21 @@ class TestListAccountGroups():
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'enterprise_id={}'.format(enterprise_id) in query_string
-        assert 'parent_account_group_id={}'.format(parent_account_group_id) in query_string
+        assert 'enterprise_account_id={}'.format(enterprise_account_id) in query_string
+        assert 'account_group_id={}'.format(account_group_id) in query_string
+        assert 'account_id={}'.format(account_id) in query_string
         assert 'next_docid={}'.format(next_docid) in query_string
-        assert 'parent={}'.format(parent) in query_string
         assert 'limit={}'.format(limit) in query_string
 
 
     @responses.activate
-    def test_list_account_groups_required_params(self):
+    def test_list_enterprises_required_params(self):
         """
-        test_list_account_groups_required_params()
+        test_list_enterprises_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
+        url = self.preprocess_url(base_url + '/enterprises')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -198,7 +202,7 @@ class TestListAccountGroups():
                       status=200)
 
         # Invoke method
-        response = service.list_account_groups()
+        response = service.list_enterprises()
 
 
         # Check for correct operation
@@ -206,9 +210,9 @@ class TestListAccountGroups():
         assert response.status_code == 200
 
 
-class TestGetAccountGroup():
+class TestGetEnterprise():
     """
-    Test Class for get_account_group
+    Test Class for get_enterprise
     """
 
     def preprocess_url(self, request_url: str):
@@ -221,13 +225,13 @@ class TestGetAccountGroup():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_get_account_group_all_params(self):
+    def test_get_enterprise_all_params(self):
         """
-        get_account_group()
+        get_enterprise()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups/testString')
-        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
+        url = self.preprocess_url(base_url + '/enterprises/testString')
+        mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -235,11 +239,11 @@ class TestGetAccountGroup():
                       status=200)
 
         # Set up parameter values
-        account_group_id = 'testString'
+        enterprise_id = 'testString'
 
         # Invoke method
-        response = service.get_account_group(
-            account_group_id,
+        response = service.get_enterprise(
+            enterprise_id,
             headers={}
         )
 
@@ -249,13 +253,13 @@ class TestGetAccountGroup():
 
 
     @responses.activate
-    def test_get_account_group_value_error(self):
+    def test_get_enterprise_value_error(self):
         """
-        test_get_account_group_value_error()
+        test_get_enterprise_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups/testString')
-        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
+        url = self.preprocess_url(base_url + '/enterprises/testString')
+        mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -263,22 +267,22 @@ class TestGetAccountGroup():
                       status=200)
 
         # Set up parameter values
-        account_group_id = 'testString'
+        enterprise_id = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
-            "account_group_id": account_group_id,
+            "enterprise_id": enterprise_id,
         }
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_account_group(**req_copy)
+                service.get_enterprise(**req_copy)
 
 
 
-class TestUpdateAccountGroup():
+class TestUpdateEnterprise():
     """
-    Test Class for update_account_group
+    Test Class for update_enterprise
     """
 
     def preprocess_url(self, request_url: str):
@@ -291,25 +295,27 @@ class TestUpdateAccountGroup():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_update_account_group_all_params(self):
+    def test_update_enterprise_all_params(self):
         """
-        update_account_group()
+        update_enterprise()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups/testString')
+        url = self.preprocess_url(base_url + '/enterprises/testString')
         responses.add(responses.PATCH,
                       url,
                       status=204)
 
         # Set up parameter values
-        account_group_id = 'testString'
+        enterprise_id = 'testString'
         name = 'testString'
+        domain = 'testString'
         primary_contact_iam_id = 'testString'
 
         # Invoke method
-        response = service.update_account_group(
-            account_group_id,
+        response = service.update_enterprise(
+            enterprise_id,
             name=name,
+            domain=domain,
             primary_contact_iam_id=primary_contact_iam_id,
             headers={}
         )
@@ -320,39 +326,41 @@ class TestUpdateAccountGroup():
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['name'] == 'testString'
+        assert req_body['domain'] == 'testString'
         assert req_body['primary_contact_iam_id'] == 'testString'
 
 
     @responses.activate
-    def test_update_account_group_value_error(self):
+    def test_update_enterprise_value_error(self):
         """
-        test_update_account_group_value_error()
+        test_update_enterprise_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups/testString')
+        url = self.preprocess_url(base_url + '/enterprises/testString')
         responses.add(responses.PATCH,
                       url,
                       status=204)
 
         # Set up parameter values
-        account_group_id = 'testString'
+        enterprise_id = 'testString'
         name = 'testString'
+        domain = 'testString'
         primary_contact_iam_id = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
-            "account_group_id": account_group_id,
+            "enterprise_id": enterprise_id,
         }
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_account_group(**req_copy)
+                service.update_enterprise(**req_copy)
 
 
 
 # endregion
 ##############################################################################
-# End of Service: AccountGroupOperations
+# End of Service: EnterpriseOperations
 ##############################################################################
 
 ##############################################################################
@@ -579,7 +587,7 @@ class TestListAccounts():
         account_group_id = 'testString'
         next_docid = 'testString'
         parent = 'testString'
-        limit = 38
+        limit = 100
 
         # Invoke method
         response = service.list_accounts(
@@ -720,7 +728,7 @@ class TestUpdateAccount():
         url = self.preprocess_url(base_url + '/accounts/testString')
         responses.add(responses.PATCH,
                       url,
-                      status=204)
+                      status=202)
 
         # Set up parameter values
         account_id = 'testString'
@@ -735,7 +743,7 @@ class TestUpdateAccount():
 
         # Check for correct operation
         assert len(responses.calls) == 1
-        assert response.status_code == 204
+        assert response.status_code == 202
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['parent'] == 'testString'
@@ -750,7 +758,7 @@ class TestUpdateAccount():
         url = self.preprocess_url(base_url + '/accounts/testString')
         responses.add(responses.PATCH,
                       url,
-                      status=204)
+                      status=202)
 
         # Set up parameter values
         account_id = 'testString'
@@ -774,13 +782,13 @@ class TestUpdateAccount():
 ##############################################################################
 
 ##############################################################################
-# Start of Service: EnterpriseOperations
+# Start of Service: AccountGroupOperations
 ##############################################################################
 # region
 
-class TestCreateEnterprise():
+class TestCreateAccountGroup():
     """
-    Test Class for create_enterprise
+    Test Class for create_account_group
     """
 
     def preprocess_url(self, request_url: str):
@@ -793,81 +801,77 @@ class TestCreateEnterprise():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_create_enterprise_all_params(self):
+    def test_create_account_group_all_params(self):
         """
-        create_enterprise()
+        create_account_group()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises')
-        mock_response = '{"enterprise_id": "enterprise_id", "enterprise_account_id": "enterprise_account_id"}'
+        url = self.preprocess_url(base_url + '/account-groups')
+        mock_response = '{"account_group_id": "account_group_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
                       content_type='application/json',
-                      status=202)
+                      status=201)
 
         # Set up parameter values
-        source_account_id = 'testString'
+        parent = 'testString'
         name = 'testString'
         primary_contact_iam_id = 'testString'
-        domain = 'testString'
 
         # Invoke method
-        response = service.create_enterprise(
-            source_account_id,
+        response = service.create_account_group(
+            parent,
             name,
             primary_contact_iam_id,
-            domain=domain,
             headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
-        assert response.status_code == 202
+        assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['source_account_id'] == 'testString'
+        assert req_body['parent'] == 'testString'
         assert req_body['name'] == 'testString'
         assert req_body['primary_contact_iam_id'] == 'testString'
-        assert req_body['domain'] == 'testString'
 
 
     @responses.activate
-    def test_create_enterprise_value_error(self):
+    def test_create_account_group_value_error(self):
         """
-        test_create_enterprise_value_error()
+        test_create_account_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises')
-        mock_response = '{"enterprise_id": "enterprise_id", "enterprise_account_id": "enterprise_account_id"}'
+        url = self.preprocess_url(base_url + '/account-groups')
+        mock_response = '{"account_group_id": "account_group_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
                       content_type='application/json',
-                      status=202)
+                      status=201)
 
         # Set up parameter values
-        source_account_id = 'testString'
+        parent = 'testString'
         name = 'testString'
         primary_contact_iam_id = 'testString'
-        domain = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
-            "source_account_id": source_account_id,
+            "parent": parent,
             "name": name,
             "primary_contact_iam_id": primary_contact_iam_id,
         }
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_enterprise(**req_copy)
+                service.create_account_group(**req_copy)
 
 
 
-class TestListEnterprises():
+class TestListAccountGroups():
     """
-    Test Class for list_enterprises
+    Test Class for list_account_groups
     """
 
     def preprocess_url(self, request_url: str):
@@ -880,13 +884,13 @@ class TestListEnterprises():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_list_enterprises_all_params(self):
+    def test_list_account_groups_all_params(self):
         """
-        list_enterprises()
+        list_account_groups()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
+        url = self.preprocess_url(base_url + '/account-groups')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -894,18 +898,18 @@ class TestListEnterprises():
                       status=200)
 
         # Set up parameter values
-        enterprise_account_id = 'testString'
-        account_group_id = 'testString'
-        account_id = 'testString'
+        enterprise_id = 'testString'
+        parent_account_group_id = 'testString'
         next_docid = 'testString'
-        limit = 38
+        parent = 'testString'
+        limit = 100
 
         # Invoke method
-        response = service.list_enterprises(
-            enterprise_account_id=enterprise_account_id,
-            account_group_id=account_group_id,
-            account_id=account_id,
+        response = service.list_account_groups(
+            enterprise_id=enterprise_id,
+            parent_account_group_id=parent_account_group_id,
             next_docid=next_docid,
+            parent=parent,
             limit=limit,
             headers={}
         )
@@ -916,21 +920,21 @@ class TestListEnterprises():
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'enterprise_account_id={}'.format(enterprise_account_id) in query_string
-        assert 'account_group_id={}'.format(account_group_id) in query_string
-        assert 'account_id={}'.format(account_id) in query_string
+        assert 'enterprise_id={}'.format(enterprise_id) in query_string
+        assert 'parent_account_group_id={}'.format(parent_account_group_id) in query_string
         assert 'next_docid={}'.format(next_docid) in query_string
+        assert 'parent={}'.format(parent) in query_string
         assert 'limit={}'.format(limit) in query_string
 
 
     @responses.activate
-    def test_list_enterprises_required_params(self):
+    def test_list_account_groups_required_params(self):
         """
-        test_list_enterprises_required_params()
+        test_list_account_groups_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
+        url = self.preprocess_url(base_url + '/account-groups')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -938,7 +942,7 @@ class TestListEnterprises():
                       status=200)
 
         # Invoke method
-        response = service.list_enterprises()
+        response = service.list_account_groups()
 
 
         # Check for correct operation
@@ -946,9 +950,9 @@ class TestListEnterprises():
         assert response.status_code == 200
 
 
-class TestGetEnterprise():
+class TestGetAccountGroup():
     """
-    Test Class for get_enterprise
+    Test Class for get_account_group
     """
 
     def preprocess_url(self, request_url: str):
@@ -961,13 +965,13 @@ class TestGetEnterprise():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_get_enterprise_all_params(self):
+    def test_get_account_group_all_params(self):
         """
-        get_enterprise()
+        get_account_group()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString')
-        mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
+        url = self.preprocess_url(base_url + '/account-groups/testString')
+        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -975,11 +979,11 @@ class TestGetEnterprise():
                       status=200)
 
         # Set up parameter values
-        enterprise_id = 'testString'
+        account_group_id = 'testString'
 
         # Invoke method
-        response = service.get_enterprise(
-            enterprise_id,
+        response = service.get_account_group(
+            account_group_id,
             headers={}
         )
 
@@ -989,13 +993,13 @@ class TestGetEnterprise():
 
 
     @responses.activate
-    def test_get_enterprise_value_error(self):
+    def test_get_account_group_value_error(self):
         """
-        test_get_enterprise_value_error()
+        test_get_account_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString')
-        mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
+        url = self.preprocess_url(base_url + '/account-groups/testString')
+        mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1003,22 +1007,22 @@ class TestGetEnterprise():
                       status=200)
 
         # Set up parameter values
-        enterprise_id = 'testString'
+        account_group_id = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
-            "enterprise_id": enterprise_id,
+            "account_group_id": account_group_id,
         }
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_enterprise(**req_copy)
+                service.get_account_group(**req_copy)
 
 
 
-class TestUpdateEnterprise():
+class TestUpdateAccountGroup():
     """
-    Test Class for update_enterprise
+    Test Class for update_account_group
     """
 
     def preprocess_url(self, request_url: str):
@@ -1031,27 +1035,25 @@ class TestUpdateEnterprise():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_update_enterprise_all_params(self):
+    def test_update_account_group_all_params(self):
         """
-        update_enterprise()
+        update_account_group()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString')
+        url = self.preprocess_url(base_url + '/account-groups/testString')
         responses.add(responses.PATCH,
                       url,
                       status=204)
 
         # Set up parameter values
-        enterprise_id = 'testString'
+        account_group_id = 'testString'
         name = 'testString'
-        domain = 'testString'
         primary_contact_iam_id = 'testString'
 
         # Invoke method
-        response = service.update_enterprise(
-            enterprise_id,
+        response = service.update_account_group(
+            account_group_id,
             name=name,
-            domain=domain,
             primary_contact_iam_id=primary_contact_iam_id,
             headers={}
         )
@@ -1062,41 +1064,39 @@ class TestUpdateEnterprise():
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['name'] == 'testString'
-        assert req_body['domain'] == 'testString'
         assert req_body['primary_contact_iam_id'] == 'testString'
 
 
     @responses.activate
-    def test_update_enterprise_value_error(self):
+    def test_update_account_group_value_error(self):
         """
-        test_update_enterprise_value_error()
+        test_update_account_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString')
+        url = self.preprocess_url(base_url + '/account-groups/testString')
         responses.add(responses.PATCH,
                       url,
                       status=204)
 
         # Set up parameter values
-        enterprise_id = 'testString'
+        account_group_id = 'testString'
         name = 'testString'
-        domain = 'testString'
         primary_contact_iam_id = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
-            "enterprise_id": enterprise_id,
+            "account_group_id": account_group_id,
         }
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_enterprise(**req_copy)
+                service.update_account_group(**req_copy)
 
 
 
 # endregion
 ##############################################################################
-# End of Service: EnterpriseOperations
+# End of Service: AccountGroupOperations
 ##############################################################################
 
 
