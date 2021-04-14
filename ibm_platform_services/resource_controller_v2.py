@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-bd714324-20210408-112704
  
 """
 Manage lifecycle of your Cloud resources using Resource Controller APIs. Resources are
@@ -88,7 +88,8 @@ class ResourceControllerV2(BaseService):
         resource_plan_id: str = None,
         type: str = None,
         sub_type: str = None,
-        limit: str = None,
+        limit: int = None,
+        start: str = None,
         state: str = None,
         order_direction: str = None,
         updated_from: str = None,
@@ -115,7 +116,12 @@ class ResourceControllerV2(BaseService):
                `service_instance`.
         :param str sub_type: (optional) The sub-type of instance, for example,
                `cfaas`.
-        :param str limit: (optional) Limit on how many items should be returned.
+        :param int limit: (optional) Limit on how many items should be returned.
+        :param str start: (optional) An optional token that indicates the beginning
+               of the page of results to be returned. Any additional query parameters are
+               ignored if a page token is present. If omitted, the first page of results
+               is returned. This value is obtained from the 'next_url' field of the
+               operation response.
         :param str state: (optional) The state of the instance. If not specified,
                instances in state `active` and `provisioning` are returned.
         :param str order_direction: (optional) Order of results.
@@ -141,6 +147,7 @@ class ResourceControllerV2(BaseService):
             'type': type,
             'sub_type': sub_type,
             'limit': limit,
+            'start': start,
             'state': state,
             'order_direction': order_direction,
             'updated_from': updated_from,
@@ -300,7 +307,7 @@ class ResourceControllerV2(BaseService):
                aliases associated with the instance.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse
+        :rtype: DetailedResponse with `dict` result representing a `ResourceInstance` object
         """
 
         if id is None:
@@ -317,6 +324,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
         path_param_values = self.encode_path_vars(id)
@@ -399,6 +407,9 @@ class ResourceControllerV2(BaseService):
 
     def list_resource_aliases_for_instance(self,
         id: str,
+        *,
+        limit: int = None,
+        start: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -407,6 +418,12 @@ class ResourceControllerV2(BaseService):
         Get a list of all resource aliases for the instance.
 
         :param str id: The short or long ID of the instance.
+        :param int limit: (optional) Limit on how many items should be returned.
+        :param str start: (optional) An optional token that indicates the beginning
+               of the page of results to be returned. Any additional query parameters are
+               ignored if a page token is present. If omitted, the first page of results
+               is returned. This value is obtained from the 'next_url' field of the
+               operation response.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceAliasesList` object
@@ -420,6 +437,11 @@ class ResourceControllerV2(BaseService):
                                       operation_id='list_resource_aliases_for_instance')
         headers.update(sdk_headers)
 
+        params = {
+            'limit': limit,
+            'start': start
+        }
+
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
@@ -430,7 +452,8 @@ class ResourceControllerV2(BaseService):
         url = '/v2/resource_instances/{id}/resource_aliases'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
-                                       headers=headers)
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request)
         return response
@@ -438,6 +461,9 @@ class ResourceControllerV2(BaseService):
 
     def list_resource_keys_for_instance(self,
         id: str,
+        *,
+        limit: int = None,
+        start: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -446,6 +472,12 @@ class ResourceControllerV2(BaseService):
         Get a list of all the resource keys for the instance.
 
         :param str id: The short or long ID of the instance.
+        :param int limit: (optional) Limit on how many items should be returned.
+        :param str start: (optional) An optional token that indicates the beginning
+               of the page of results to be returned. Any additional query parameters are
+               ignored if a page token is present. If omitted, the first page of results
+               is returned. This value is obtained from the 'next_url' field of the
+               operation response.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceKeysList` object
@@ -459,6 +491,11 @@ class ResourceControllerV2(BaseService):
                                       operation_id='list_resource_keys_for_instance')
         headers.update(sdk_headers)
 
+        params = {
+            'limit': limit,
+            'start': start
+        }
+
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
@@ -469,7 +506,8 @@ class ResourceControllerV2(BaseService):
         url = '/v2/resource_instances/{id}/resource_keys'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
-                                       headers=headers)
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request)
         return response
@@ -565,7 +603,8 @@ class ResourceControllerV2(BaseService):
         name: str = None,
         resource_group_id: str = None,
         resource_id: str = None,
-        limit: str = None,
+        limit: int = None,
+        start: str = None,
         updated_from: str = None,
         updated_to: str = None,
         **kwargs
@@ -583,7 +622,12 @@ class ResourceControllerV2(BaseService):
                group.
         :param str resource_id: (optional) The unique ID of the offering. This
                value is provided by and stored in the global catalog.
-        :param str limit: (optional) Limit on how many items should be returned.
+        :param int limit: (optional) Limit on how many items should be returned.
+        :param str start: (optional) An optional token that indicates the beginning
+               of the page of results to be returned. Any additional query parameters are
+               ignored if a page token is present. If omitted, the first page of results
+               is returned. This value is obtained from the 'next_url' field of the
+               operation response.
         :param str updated_from: (optional) Start date inclusive filter.
         :param str updated_to: (optional) End date inclusive filter.
         :param dict headers: A `dict` containing the request headers
@@ -603,6 +647,7 @@ class ResourceControllerV2(BaseService):
             'resource_group_id': resource_group_id,
             'resource_id': resource_id,
             'limit': limit,
+            'start': start,
             'updated_from': updated_from,
             'updated_to': updated_to
         }
@@ -822,7 +867,8 @@ class ResourceControllerV2(BaseService):
         resource_group_id: str = None,
         resource_id: str = None,
         region_binding_id: str = None,
-        limit: str = None,
+        limit: int = None,
+        start: str = None,
         updated_from: str = None,
         updated_to: str = None,
         **kwargs
@@ -840,7 +886,12 @@ class ResourceControllerV2(BaseService):
         :param str region_binding_id: (optional) Short ID of the binding in the
                specific targeted environment, for example, service_binding_id in a given
                IBM Cloud environment.
-        :param str limit: (optional) Limit on how many items should be returned.
+        :param int limit: (optional) Limit on how many items should be returned.
+        :param str start: (optional) An optional token that indicates the beginning
+               of the page of results to be returned. Any additional query parameters are
+               ignored if a page token is present. If omitted, the first page of results
+               is returned. This value is obtained from the 'next_url' field of the
+               operation response.
         :param str updated_from: (optional) Start date inclusive filter.
         :param str updated_to: (optional) End date inclusive filter.
         :param dict headers: A `dict` containing the request headers
@@ -861,6 +912,7 @@ class ResourceControllerV2(BaseService):
             'resource_id': resource_id,
             'region_binding_id': region_binding_id,
             'limit': limit,
+            'start': start,
             'updated_from': updated_from,
             'updated_to': updated_to
         }
@@ -1088,7 +1140,8 @@ class ResourceControllerV2(BaseService):
         region_instance_id: str = None,
         resource_id: str = None,
         resource_group_id: str = None,
-        limit: str = None,
+        limit: int = None,
+        start: str = None,
         updated_from: str = None,
         updated_to: str = None,
         **kwargs
@@ -1107,7 +1160,12 @@ class ResourceControllerV2(BaseService):
         :param str resource_id: (optional) The unique ID of the offering (service
                name). This value is provided by and stored in the global catalog.
         :param str resource_group_id: (optional) Short ID of Resource group.
-        :param str limit: (optional) Limit on how many items should be returned.
+        :param int limit: (optional) Limit on how many items should be returned.
+        :param str start: (optional) An optional token that indicates the beginning
+               of the page of results to be returned. Any additional query parameters are
+               ignored if a page token is present. If omitted, the first page of results
+               is returned. This value is obtained from the 'next_url' field of the
+               operation response.
         :param str updated_from: (optional) Start date inclusive filter.
         :param str updated_to: (optional) End date inclusive filter.
         :param dict headers: A `dict` containing the request headers
@@ -1129,6 +1187,7 @@ class ResourceControllerV2(BaseService):
             'resource_id': resource_id,
             'resource_group_id': resource_group_id,
             'limit': limit,
+            'start': start,
             'updated_from': updated_from,
             'updated_to': updated_to
         }
@@ -1334,6 +1393,9 @@ class ResourceControllerV2(BaseService):
 
     def list_resource_bindings_for_alias(self,
         id: str,
+        *,
+        limit: int = None,
+        start: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -1342,6 +1404,12 @@ class ResourceControllerV2(BaseService):
         Get a list of all resource bindings for the alias.
 
         :param str id: The short or long ID of the alias.
+        :param int limit: (optional) Limit on how many items should be returned.
+        :param str start: (optional) An optional token that indicates the beginning
+               of the page of results to be returned. Any additional query parameters are
+               ignored if a page token is present. If omitted, the first page of results
+               is returned. This value is obtained from the 'next_url' field of the
+               operation response.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceBindingsList` object
@@ -1355,6 +1423,11 @@ class ResourceControllerV2(BaseService):
                                       operation_id='list_resource_bindings_for_alias')
         headers.update(sdk_headers)
 
+        params = {
+            'limit': limit,
+            'start': start
+        }
+
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
@@ -1365,7 +1438,8 @@ class ResourceControllerV2(BaseService):
         url = '/v2/resource_aliases/{id}/resource_bindings'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
-                                       headers=headers)
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request)
         return response
