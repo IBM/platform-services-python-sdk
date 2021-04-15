@@ -668,16 +668,17 @@ class TestResourceControllerV2Examples():
         """
         try:
             global instance_guid
+            print('\ndelete_resource_instance() result:')
             # begin-delete_resource_instance
 
-            response = resource_controller_service.delete_resource_instance(
+            resource_instance = resource_controller_service.delete_resource_instance(
                 id=instance_guid,
                 recursive=False
-            )
+            ).get_result()
+
+            print(json.dumps(resource_instance, indent=2))
 
             # end-delete_resource_instance
-            print('\ndelete_resource_instance() response status code: ',
-                  response.get_status_code())
 
             # wait for reclamation object to be created
             time.sleep(20)
