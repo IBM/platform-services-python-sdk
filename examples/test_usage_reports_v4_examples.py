@@ -111,6 +111,7 @@ class TestUsageReportsV4Examples():
         try:
             global account_id, billing_month
 
+            print('\nget_account_summary() result:')
             # begin-get_account_summary
 
             account_summary = usage_reports_service.get_account_summary(
@@ -118,7 +119,7 @@ class TestUsageReportsV4Examples():
                 billingmonth=billing_month
             ).get_result()
 
-            print('\nget_account_summary() result:\n' + json.dumps(account_summary, indent=2))
+            print(json.dumps(account_summary, indent=2))
 
             # end-get_account_summary
 
@@ -133,6 +134,7 @@ class TestUsageReportsV4Examples():
         try:
             global account_id, billing_month
 
+            print('\nget_account_usage() result:')
             # begin-get_account_usage
 
             account_usage = usage_reports_service.get_account_usage(
@@ -140,7 +142,7 @@ class TestUsageReportsV4Examples():
                 billingmonth=billing_month
             ).get_result()
 
-            print('\nget_account_usage() result:\n' + json.dumps(account_usage, indent=2))
+            print(json.dumps(account_usage, indent=2))
 
             # end-get_account_usage
 
@@ -155,6 +157,7 @@ class TestUsageReportsV4Examples():
         try:
             global account_id, resource_group_id, billing_month
 
+            print('\nget_resource_group_usage() result:')
             # begin-get_resource_group_usage
 
             resource_group_usage = usage_reports_service.get_resource_group_usage(
@@ -163,7 +166,7 @@ class TestUsageReportsV4Examples():
                 billingmonth=billing_month
             ).get_result()
 
-            print('\nget_resource_group_usage() result:\n' + json.dumps(resource_group_usage, indent=2))
+            print(json.dumps(resource_group_usage, indent=2))
 
             # end-get_resource_group_usage
 
@@ -178,6 +181,7 @@ class TestUsageReportsV4Examples():
         try:
             global account_id, org_id, billing_month
 
+            print('\nget_org_usage() result:')
             # begin-get_org_usage
 
             org_usage = usage_reports_service.get_org_usage(
@@ -186,7 +190,7 @@ class TestUsageReportsV4Examples():
                 billingmonth=billing_month
             ).get_result()
 
-            print('\nget_org_usage() result:\n' + json.dumps(org_usage, indent=2))
+            print(json.dumps(org_usage, indent=2))
 
             # end-get_org_usage
 
@@ -201,6 +205,7 @@ class TestUsageReportsV4Examples():
         try:
             global account_id, billing_month
 
+            print('\nget_resource_usage_account() result:')
             # begin-get_resource_usage_account
 
             instances_usage = usage_reports_service.get_resource_usage_account(
@@ -208,7 +213,7 @@ class TestUsageReportsV4Examples():
                 billingmonth=billing_month
             ).get_result()
 
-            print('\nget_resource_usage_account() result:\n' + json.dumps(instances_usage, indent=2))
+            print(json.dumps(instances_usage, indent=2))
 
             # end-get_resource_usage_account
 
@@ -223,6 +228,7 @@ class TestUsageReportsV4Examples():
         try:
             global account_id, resource_group_id, billing_month
 
+            print('\nget_resource_usage_resource_group() result:')
             # begin-get_resource_usage_resource_group
 
             instances_usage = usage_reports_service.get_resource_usage_resource_group(
@@ -231,7 +237,7 @@ class TestUsageReportsV4Examples():
                 billingmonth=billing_month
             ).get_result()
 
-            print('\nget_resource_usage_resource_group() result:\n' + json.dumps(instances_usage, indent=2))
+            print(json.dumps(instances_usage, indent=2))
 
             # end-get_resource_usage_resource_group
 
@@ -246,6 +252,7 @@ class TestUsageReportsV4Examples():
         try:
             global account_id, org_id, billing_month
 
+            print('\nget_resource_usage_org() result:')
             # begin-get_resource_usage_org
 
             instances_usage = usage_reports_service.get_resource_usage_org(
@@ -254,7 +261,7 @@ class TestUsageReportsV4Examples():
                 billingmonth=billing_month
             ).get_result()
 
-            print('\nget_resource_usage_org() result:\n' + json.dumps(instances_usage, indent=2))
+            print(json.dumps(instances_usage, indent=2))
 
             # end-get_resource_usage_org
 
