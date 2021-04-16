@@ -130,6 +130,8 @@ class TestUserManagementV1Examples():
         assert access_group_id is not None
 
         try:
+
+            print('\ninvite_users() result:')
             # begin-invite_users
 
             invite_user_model = {
@@ -158,7 +160,7 @@ class TestUserManagementV1Examples():
                 access_groups=[access_group_id]
             ).get_result()
 
-            print('\ninvite_users() result:\n' + json.dumps(invite_user_response, indent=2))
+            print(json.dumps(invite_user_response, indent=2))
 
             # end-invite_users
 
@@ -176,6 +178,8 @@ class TestUserManagementV1Examples():
         assert account_id is not None
 
         try:
+
+            print('\nlist_users() result:')
             # begin-list_users
 
             user_list = user_management_service.list_users(
@@ -184,7 +188,7 @@ class TestUserManagementV1Examples():
                 limit=100,
             ).get_result()
 
-            print('\nlist_users() result:\n' + json.dumps(user_list, indent=2))
+            print(json.dumps(user_list, indent=2))
 
             # end-list_users
 
@@ -200,6 +204,8 @@ class TestUserManagementV1Examples():
         assert delete_user_id is not None
 
         try:
+
+            print('\nremove_user() result:')
             # begin-remove_user
 
             response = user_management_admin_service.remove_user(
@@ -207,7 +213,7 @@ class TestUserManagementV1Examples():
                 iam_id=delete_user_id,
             ).get_result()
 
-            print('\nremove_user() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-remove_user
 
@@ -223,6 +229,8 @@ class TestUserManagementV1Examples():
         assert user_id is not None
 
         try:
+
+            print('\nget_user_profile() result:')
             # begin-get_user_profile
 
             user_profile = user_management_service.get_user_profile(
@@ -230,7 +238,7 @@ class TestUserManagementV1Examples():
                 iam_id=user_id,
             ).get_result()
 
-            print('\nget_user_profile()0 result:\n' + json.dumps(user_profile, indent=2))
+            print(json.dumps(user_profile, indent=2))
 
             # end-get_user_profile
 
@@ -246,6 +254,8 @@ class TestUserManagementV1Examples():
         assert user_id is not None
 
         try:
+
+            print('\nupdate_user_profile() result:')
             # begin-update_user_profile
 
             response = user_management_service.update_user_profile(
@@ -254,7 +264,7 @@ class TestUserManagementV1Examples():
                 phonenumber='123456789',
             ).get_result()
 
-            print('\nupdate_user_profile() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-update_user_profile
 
@@ -270,6 +280,8 @@ class TestUserManagementV1Examples():
         assert user_id is not None
 
         try:
+
+            print('\nget_user_settings() result:')
             # begin-get_user_settings
 
             user_settings = user_management_service.get_user_settings(
@@ -277,7 +289,7 @@ class TestUserManagementV1Examples():
                 iam_id=user_id,
             ).get_result()
 
-            print('\nget_user_settings() result:\n' + json.dumps(user_settings, indent=2))
+            print(json.dumps(user_settings, indent=2))
 
             # end-get_user_settings
 
@@ -293,6 +305,8 @@ class TestUserManagementV1Examples():
         assert user_id is not None
 
         try:
+
+            print('\nupdate_user_settings() result:')
             # begin-update_user_settings
 
             response = user_management_service.update_user_settings(
@@ -302,7 +316,7 @@ class TestUserManagementV1Examples():
                 allowed_ip_addresses='192.168.0.2,192.168.0.3',
             ).get_result()
 
-            print('\nupdate_user_settings() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-update_user_settings
 
