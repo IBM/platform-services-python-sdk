@@ -102,6 +102,8 @@ class TestResourceManagerV2Examples():
         assert example_user_account_id is not None
 
         try:
+
+            print('\ncreate_resource_group() result:')
             # begin-create_resource_group
 
             res_create_resource_group = resource_manager_service.create_resource_group(
@@ -109,7 +111,7 @@ class TestResourceManagerV2Examples():
                 name='ExampleGroup',
             ).get_result()
 
-            print('\ncreate_resource_group() result:\n' + json.dumps(res_create_resource_group, indent=2))
+            print(json.dumps(res_create_resource_group, indent=2))
 
             # end-create_resource_group
 
@@ -127,13 +129,15 @@ class TestResourceManagerV2Examples():
         assert resource_group_id is not None
 
         try:
+
+            print('\nget_resource_group() result:')
             # begin-get_resource_group
 
             resource_group = resource_manager_service.get_resource_group(
                 id=resource_group_id,
             ).get_result()
 
-            print('\nget_resource_group() result:\n' + json.dumps(resource_group, indent=2))
+            print(json.dumps(resource_group, indent=2))
 
             # end-get_resource_group
 
@@ -148,6 +152,8 @@ class TestResourceManagerV2Examples():
         assert resource_group_id is not None
 
         try:
+
+            print('\nupdate_resource_group() result:')
             # begin-update_resource_group
 
             resource_group = resource_manager_service.update_resource_group(
@@ -156,7 +162,7 @@ class TestResourceManagerV2Examples():
                 state='ACTIVE',
             ).get_result()
 
-            print('\nupdate_resource_group() result:\n' + json.dumps(resource_group, indent=2))
+            print(json.dumps(resource_group, indent=2))
 
             # end-update_resource_group
 
@@ -171,6 +177,8 @@ class TestResourceManagerV2Examples():
         assert example_user_account_id is not None
 
         try:
+
+            print('\nlist_resource_groups() result:')
             # begin-list_resource_groups
 
             resource_group_list = resource_manager_service.list_resource_groups(
@@ -178,7 +186,7 @@ class TestResourceManagerV2Examples():
                 include_deleted=True,
             ).get_result()
 
-            print('\nlist_resource_groups() result:\n' + json.dumps(resource_group_list, indent=2))
+            print(json.dumps(resource_group_list, indent=2))
 
             # end-list_resource_groups
 
@@ -193,13 +201,15 @@ class TestResourceManagerV2Examples():
         assert resource_group_id is not None
 
         try:
+
+            print('\ndelete_resource_group() result:')
             # begin-delete_resource_group
 
             response = delete_resource_manager_service.delete_resource_group(
                 id=resource_group_id,
             ).get_result()
 
-            print('\ndelete_resource_group() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-delete_resource_group
 
@@ -214,13 +224,15 @@ class TestResourceManagerV2Examples():
         assert example_quota_id is not None
 
         try:
+
+            print('\nget_quota_definition() result:')
             # begin-get_quota_definition
 
             quota_definition = resource_manager_service.get_quota_definition(
                 id=example_quota_id,
             ).get_result()
 
-            print('\nget_quota_definition() result:\n' + json.dumps(quota_definition, indent=2))
+            print(json.dumps(quota_definition, indent=2))
 
             # end-get_quota_definition
 
@@ -233,11 +245,13 @@ class TestResourceManagerV2Examples():
         list_quota_definitions request example
         """
         try:
+
+            print('\nlist_quota_definitions() result:')
             # begin-list_quota_definitions
 
             quota_definition_list = resource_manager_service.list_quota_definitions().get_result()
 
-            print('\nlist_quota_definitions() result:\n' + json.dumps(quota_definition_list, indent=2))
+            print(json.dumps(quota_definition_list, indent=2))
 
             # end-list_quota_definitions
 
