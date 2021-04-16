@@ -56,6 +56,7 @@ class TestEnterpriseBillingUnitsV1Examples():
     """
     Example Test Class for EnterpriseBillingUnitsV1
     """
+
     @classmethod
     def setup_class(cls):
         global enterprise_billing_units_service
@@ -92,12 +93,14 @@ class TestEnterpriseBillingUnitsV1Examples():
         """
         try:
             global billing_unit_id
+            print('\nget_billing_unit() result:')
+
             # begin-get_billing_unit
 
             billing_unit = enterprise_billing_units_service.get_billing_unit(
                 billing_unit_id=billing_unit_id).get_result()
 
-            print('\nget_billing_unit() result:\n' + json.dumps(billing_unit, indent=2))
+            print(json.dumps(billing_unit, indent=2))
 
             # end-get_billing_unit
 
@@ -111,12 +114,13 @@ class TestEnterpriseBillingUnitsV1Examples():
         """
         try:
             global enterprise_id
+            print('\nlist_billing_units() result:')
             # begin-list_billing_units
 
             billing_units_list = enterprise_billing_units_service.list_billing_units(
                 enterprise_id=enterprise_id).get_result()
 
-            print('\nlist_billing_units() result:\n' + json.dumps(billing_units_list, indent=2))
+            print(json.dumps(billing_units_list, indent=2))
 
             # end-list_billing_units
 
@@ -130,12 +134,13 @@ class TestEnterpriseBillingUnitsV1Examples():
         """
         try:
             global billing_unit_id
+            print('\nlist_billing_options() result:')
             # begin-list_billing_options
 
             billing_options_list = enterprise_billing_units_service.list_billing_options(
                 billing_unit_id=billing_unit_id).get_result()
 
-            print('\nlist_billing_options() result:\n' + json.dumps(billing_options_list, indent=2))
+            print(json.dumps(billing_options_list, indent=2))
 
             # end-list_billing_options
 
@@ -149,18 +154,19 @@ class TestEnterpriseBillingUnitsV1Examples():
         """
         try:
             global billing_unit_id
+            print('\nget_credit_pools() result:')
+
             # begin-get_credit_pools
 
             credit_pools_list = enterprise_billing_units_service.get_credit_pools(
                 billing_unit_id=billing_unit_id, type='PLATFORM').get_result()
 
-            print('\nget_credit_pools() result:\n' + json.dumps(credit_pools_list, indent=2))
+            print(json.dumps(credit_pools_list, indent=2))
 
             # end-get_credit_pools
 
         except ApiException as e:
             pytest.fail(str(e))
-
 
 # endregion
 ##############################################################################
