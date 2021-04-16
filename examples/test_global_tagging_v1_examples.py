@@ -85,13 +85,14 @@ class TestGlobalTaggingV1Examples():
         create_tag request example
         """
         try:
+            print('\ncreate_tag() result:')
             # begin-create_tag
 
             create_tag_results = global_tagging_service.create_tag(
                 tag_names=['env:example-access-tag'],
                 tag_type='access').get_result()
 
-            print('\ncreate_tag() result:\n' + json.dumps(create_tag_results, indent=2))
+            print(json.dumps(create_tag_results, indent=2))
 
             # end-create_tag
 
@@ -104,6 +105,7 @@ class TestGlobalTaggingV1Examples():
         list_tags request example
         """
         try:
+            print('\nlist_tags() result:')
             # begin-list_tags
 
             tag_list = global_tagging_service.list_tags(
@@ -113,7 +115,7 @@ class TestGlobalTaggingV1Examples():
                 providers=['ghost'],
                 order_by_name='asc').get_result()
 
-            print('\nlist_tags() result:\n' + json.dumps(tag_list, indent=2))
+            print(json.dumps(tag_list, indent=2))
 
             # end-list_tags
 
@@ -126,6 +128,7 @@ class TestGlobalTaggingV1Examples():
         attach_tag request example
         """
         try:
+            print('\nattach_tag() result:')
             # begin-attach_tag
 
             resource_model = {'resource_id': resource_crn}
@@ -135,7 +138,7 @@ class TestGlobalTaggingV1Examples():
                 tag_names=['tag_test_1', 'tag_test_2'],
                 tag_type='user').get_result()
 
-            print('\nattach_tag() result:\n' + json.dumps(tag_results, indent=2))
+            print(json.dumps(tag_results, indent=2))
 
             # end-attach_tag
 
@@ -148,6 +151,7 @@ class TestGlobalTaggingV1Examples():
         detach_tag request example
         """
         try:
+            print('\ndetach_tag() result:')
             # begin-detach_tag
 
             resource_model = {'resource_id': resource_crn}
@@ -157,7 +161,7 @@ class TestGlobalTaggingV1Examples():
                 tag_names=['tag_test_1', 'tag_test_2'],
                 tag_type='user').get_result()
 
-            print('\ndetach_tag() result:\n' + json.dumps(tag_results, indent=2))
+            print(json.dumps(tag_results, indent=2))
 
             # end-detach_tag
 
@@ -170,13 +174,14 @@ class TestGlobalTaggingV1Examples():
         delete_tag request example
         """
         try:
+            print('\ndelete_tag() result:')
             # begin-delete_tag
 
             delete_tag_results = global_tagging_service.delete_tag(
                 tag_name='env:example-access-tag',
                 tag_type='access').get_result()
 
-            print('\ndelete_tag() result:\n' + json.dumps(delete_tag_results, indent=2))
+            print(json.dumps(delete_tag_results, indent=2))
 
             # end-delete_tag
 
@@ -189,12 +194,13 @@ class TestGlobalTaggingV1Examples():
         delete_tag_all request example
         """
         try:
+            print('\ndelete_tag_all() result:')
             # begin-delete_tag_all
 
             delete_tags_result = global_tagging_service.delete_tag_all(
                 tag_type='user').get_result()
 
-            print('\ndelete_tag_all() result:\n' + json.dumps(delete_tags_result, indent=2))
+            print(json.dumps(delete_tags_result, indent=2))
 
             # end-delete_tag_all
 
