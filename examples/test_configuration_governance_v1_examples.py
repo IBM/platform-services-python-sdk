@@ -106,6 +106,7 @@ class TestConfigurationGovernanceV1Examples():
         create_rules request example
         """
         try:
+            print('\ncreate_rules() result:')
             # begin-create_rules
 
             target_resource_model = {
@@ -182,7 +183,7 @@ class TestConfigurationGovernanceV1Examples():
                             code=responseEntry['errors'][0]['code'],
                             message=responseEntry['errors'][0]['message'])
 
-            print('\ncreate_rules() result:\n' + json.dumps(create_rules_response, indent=2))
+            print(json.dumps(create_rules_response, indent=2))
 
             # end-create_rules
 
@@ -197,6 +198,7 @@ class TestConfigurationGovernanceV1Examples():
         create_attachments request example
         """
         try:
+            print('\ncreate_attachments() result:')
             # begin-create_attachments
 
             excluded_scope_model = {
@@ -219,7 +221,7 @@ class TestConfigurationGovernanceV1Examples():
                 rule_id=rule_id_link,
                 attachments=[attachment_request_model]).get_result()
 
-            print('\ncreate_attachments() result:\n' + json.dumps(create_attachments_response, indent=2))
+            print(json.dumps(create_attachments_response, indent=2))
 
             # end-create_attachments
 
@@ -235,13 +237,14 @@ class TestConfigurationGovernanceV1Examples():
         get_attachment request example
         """
         try:
+            print('\nget_attachment() result:')
             # begin-get_attachment
 
             attachment = configuration_governance_service.get_attachment(
                 rule_id=rule_id_link,
                 attachment_id=attachment_id_link).get_result()
 
-            print('\nget_attachment() result:\n' + json.dumps(attachment, indent=2))
+            print(json.dumps(attachment, indent=2))
 
             # end-get_attachment
 
@@ -258,12 +261,13 @@ class TestConfigurationGovernanceV1Examples():
         get_rule request example
         """
         try:
+            print('\nget_rule() result:')
             # begin-get_rule
 
             rule = configuration_governance_service.get_rule(
                 rule_id=rule_id_link).get_result()
 
-            print('\nget_rule() result:\n' + json.dumps(rule, indent=2))
+            print(json.dumps(rule, indent=2))
 
             # end-get_rule
 
@@ -279,12 +283,13 @@ class TestConfigurationGovernanceV1Examples():
         list_rules request example
         """
         try:
+            print('\nlist_rules() result:')
             # begin-list_rules
 
             rule_list = configuration_governance_service.list_rules(
                 account_id=account_id).get_result()
 
-            print('\nlist_rules() result:\n' + json.dumps(rule_list, indent=2))
+            print(json.dumps(rule_list, indent=2))
 
             # end-list_rules
 
@@ -297,6 +302,7 @@ class TestConfigurationGovernanceV1Examples():
         update_rule request example
         """
         try:
+            print('\nupdate_rule() result:')
             # begin-update_rule
 
             rule_target_attribute_model = {
@@ -337,7 +343,7 @@ class TestConfigurationGovernanceV1Examples():
                 rule_type='user_defined',
                 labels=['testString']).get_result()
 
-            print('\nupdate_rule() result:\n' + json.dumps(rule, indent=2))
+            print(json.dumps(rule, indent=2))
 
             # end-update_rule
 
@@ -350,12 +356,13 @@ class TestConfigurationGovernanceV1Examples():
         list_attachments request example
         """
         try:
+            print('\nlist_attachments() result:')
             # begin-list_attachments
 
             attachment_list = configuration_governance_service.list_attachments(
                 rule_id=rule_id_link).get_result()
 
-            print('\nlist_attachments() result:\n' + json.dumps(attachment_list, indent=2))
+            print(json.dumps(attachment_list, indent=2))
 
             # end-list_attachments
 
@@ -368,6 +375,7 @@ class TestConfigurationGovernanceV1Examples():
         update_attachment request example
         """
         try:
+            print('\nupdate_attachment() result:')
             # begin-update_attachment
 
             excluded_scope_model = {
@@ -388,7 +396,7 @@ class TestConfigurationGovernanceV1Examples():
                 },
                 excluded_scopes=[excluded_scope_model]).get_result()
 
-            print('\nupdate_attachment() result:\n' + json.dumps(attachment, indent=2))
+            print(json.dumps(attachment, indent=2))
 
             # end-update_attachment
 
@@ -407,9 +415,10 @@ class TestConfigurationGovernanceV1Examples():
                 rule_id=rule_id_link,
                 attachment_id=attachment_id_link).get_result()
 
-            print('\ndelete_attachment() result:\n' + json.dumps(response, indent=2))
-
             # end-delete_attachment
+
+            print('\ndelete_attachment() response status code: ',
+                  response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -425,9 +434,10 @@ class TestConfigurationGovernanceV1Examples():
             response = configuration_governance_service.delete_rule(
                 rule_id=rule_id_link).get_result()
 
-            print('\ndelete_rule() result:\n' + json.dumps(response, indent=2))
-
             # end-delete_rule
+
+            print('\ndelete_rule() response status code: ',
+                  response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
