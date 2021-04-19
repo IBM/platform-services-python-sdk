@@ -272,10 +272,10 @@ class TestGlobalCatalogV1Examples():
                 id=catalog_entry_id,
             ).get_result()
 
+            # end-restore_catalog_entry
+
             print('\nrestore_catalog_entry() response status code: ',
                   response.get_status_code())
-
-            # end-restore_catalog_entry
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -319,10 +319,10 @@ class TestGlobalCatalogV1Examples():
                 extendable=False,
             ).get_result()
 
+            # end-update_visibility
+
             print('\nupdate_visibility() response status code: ',
                   response.get_status_code())
-
-            # end-update_visibility
 
         except ApiException as e:
             print(
@@ -397,10 +397,10 @@ class TestGlobalCatalogV1Examples():
                 content_type='text/plain',
             ).get_result()
 
+            # end-upload_artifact
+
             print('\nupload_artifact() response status code: ',
                   response.get_status_code())
-
-            # end-upload_artifact
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -469,10 +469,10 @@ class TestGlobalCatalogV1Examples():
                 artifact_id='artifact.txt',
             ).get_result()
 
+            # end-delete_artifact
+
             print('\ndelete_artifact() response status code: ',
                   response.get_status_code())
-
-            # end-delete_artifact
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -491,10 +491,10 @@ class TestGlobalCatalogV1Examples():
             response = global_catalog_service.delete_catalog_entry(
                 id=catalog_entry_id).get_result()
 
+            # end-delete_catalog_entry
+
             print('\ndelete_catalog_entry() response status code: ',
                   response.get_status_code())
-
-            # end-delete_catalog_entry
 
         except ApiException as e:
             pytest.fail(str(e))
