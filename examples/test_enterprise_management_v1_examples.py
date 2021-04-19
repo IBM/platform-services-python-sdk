@@ -257,8 +257,6 @@ class TestEnterpriseManagementV1Examples():
                 account_id=import_account_id,
             )
 
-            print(json.dumps(response, indent=2))
-
             # end-import_account_to_enterprise
 
             print('\nimport_account_to_enterprise() response status code: ',
