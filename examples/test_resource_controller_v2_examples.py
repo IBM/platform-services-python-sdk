@@ -188,10 +188,10 @@ class TestResourceControllerV2Examples():
                 print(json.dumps(resource_instances_list, indent=2))
 
                 next_page_url = resource_instances_list.get('next_url')
-                if next_page_url is None:
-                    break
 
                 next_page_id = get_query_param(next_page_url, 'start')
+                if next_page_id is None:
+                    break
 
             # end-list_resource_instances
 
