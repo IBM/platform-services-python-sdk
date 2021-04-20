@@ -9,13 +9,10 @@
 [![CLA assistant](https://cla-assistant.io/readme/badge/IBM/platform-services-python-sdk)](https://cla-assistant.io/IBM/platform-services-python-sdk)
 
 
-# IBM Cloud Platform Services Python SDK Version 0.18.5
+# IBM Cloud Platform Services Python SDK Version 0.18.6
 
 Python client library to interact with various 
 [IBM Cloud Platform Service APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services).
-
-Disclaimer: this SDK is being released initially as a **pre-release** version.
-Changes might occur which impact applications that use this SDK.
 
 ## Table of Contents
 
@@ -83,13 +80,13 @@ Service Name | Imported Class Name
 To install, use `pip` or `easy_install`:
 
 ```bash
-pip install --upgrade "ibm-platform-services>=0.18.5"
+pip install --upgrade "ibm-platform-services>=0.18.6"
 ```
 
 or
 
 ```bash
-easy_install --upgrade "ibm-platform-services>=0.18.5"
+easy_install --upgrade "ibm-platform-services>=0.18.6"
 ```
 
 ## Using the SDK
