@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-bd714324-20210408-112704
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-77b4cbf2-20210420-134305
  
 """
 Manage lifecycle of your Cloud resources using Resource Controller APIs. Resources are
@@ -99,7 +99,9 @@ class ResourceControllerV2(BaseService):
         """
         Get a list of all resource instances.
 
-        Get a list of all resource instances.
+        View a list of all available resource instances. Resources is a broad term that
+        could mean anything from a service instance to a virtual machine associated with
+        the customer account.
 
         :param str guid: (optional) When you provision a new resource in the
                specified location for the selected plan, a GUID (globally unique
@@ -183,7 +185,9 @@ class ResourceControllerV2(BaseService):
         """
         Create (provision) a new resource instance.
 
-        Provision a new resource in the specified location for the selected plan.
+        When you provision a service you get an instance of that service. An instance
+        represents the resource with which you create, and additionally, represents a
+        chargeable record of which billing can occur.
 
         :param str name: The name of the instance. Must be 180 characters or less
                and cannot include any special characters other than `(space) - . _ :`.
@@ -259,7 +263,8 @@ class ResourceControllerV2(BaseService):
         """
         Get a resource instance.
 
-        Retrieve a resource instance by ID.
+        Retrieve a resource instance by ID. Find more details on a particular instance,
+        like when it was provisioned and who provisioned it.
 
         :param str id: The short or long ID of the instance.
         :param dict headers: A `dict` containing the request headers
@@ -300,14 +305,15 @@ class ResourceControllerV2(BaseService):
         """
         Delete a resource instance.
 
-        Delete a resource instance by ID.
+        Delete a resource instance by ID. If the resource instance has any resource keys
+        or aliases associated with it, use the `recursive=true` parameter to delete it.
 
         :param str id: The short or long ID of the instance.
         :param bool recursive: (optional) Will delete resource bindings, keys and
                aliases associated with the instance.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ResourceInstance` object
+        :rtype: DetailedResponse
         """
 
         if id is None:
@@ -324,7 +330,6 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
-        headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
         path_param_values = self.encode_path_vars(id)
@@ -351,7 +356,8 @@ class ResourceControllerV2(BaseService):
         """
         Update a resource instance.
 
-        Update a resource instance by ID.
+        You can use the ID to make updates to the resource instance, like changing the
+        name or plan.
 
         :param str id: The short or long ID of the instance.
         :param str name: (optional) The new name of the instance. Must be 180
@@ -415,7 +421,8 @@ class ResourceControllerV2(BaseService):
         """
         Get a list of all resource aliases for the instance.
 
-        Get a list of all resource aliases for the instance.
+        Retrieving a list of all resource aliases can help you find out who's using the
+        resource instance.
 
         :param str id: The short or long ID of the instance.
         :param int limit: (optional) Limit on how many items should be returned.
@@ -469,7 +476,8 @@ class ResourceControllerV2(BaseService):
         """
         Get a list of all the resource keys for the instance.
 
-        Get a list of all the resource keys for the instance.
+        You may have many resource keys for one resource instance. For example, you may
+        have a different resource key for each user or each role.
 
         :param str id: The short or long ID of the instance.
         :param int limit: (optional) Limit on how many items should be returned.
@@ -561,7 +569,8 @@ class ResourceControllerV2(BaseService):
         """
         Unlock a resource instance.
 
-        Unlocks a resource instance by ID.
+        Unlock a resource instance to update or delete it. Unlocking a resource instance
+        does not affect child resources like aliases, bindings or keys.
 
         :param str id: The short or long ID of the instance.
         :param dict headers: A `dict` containing the request headers
