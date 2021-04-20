@@ -215,10 +215,9 @@ class TestResourceControllerV2(unittest.TestCase):
             assert result.get('rows_count') >= 1
             assert result.get('rows_count') <= results_per_page
 
-            if result.get('next_url') is None:
-                break
-
             start = get_query_param(result.get('next_url'), 'start')
+            if start is None:
+                break
 
     def test_04_list_resource_instances_by_guid(self):
         customHeaders = {}
@@ -365,10 +364,9 @@ class TestResourceControllerV2(unittest.TestCase):
             assert result.get('rows_count') >= 1
             assert result.get('rows_count') <= results_per_page
 
-            if result.get('next_url') is None:
-                break
-
             start = get_query_param(result.get('next_url'), 'start')
+            if start is None:
+                break
 
     def test_10_list_resource_aliases_by_guid(self):
         customHeaders = {}
@@ -430,10 +428,9 @@ class TestResourceControllerV2(unittest.TestCase):
             assert len(result.get('resources')) == 1
             assert result.get('rows_count') == 1
 
-            if result.get('next_url') is None:
-                break
-
             start = get_query_param(result.get('next_url'), 'start')
+            if start is None:
+                break
 
     def test_12_create_resource_binding(self):
         customHeaders = {}
@@ -542,10 +539,9 @@ class TestResourceControllerV2(unittest.TestCase):
             assert result.get('rows_count') >= 1
             assert result.get('rows_count') <= results_per_page
 
-            if result.get('next_url') is None:
-                break
-
             start = get_query_param(result.get('next_url'), 'start')
+            if start is None:
+                break
 
     def test_16_list_resource_bindings_by_guid(self):
         customHeaders = {}
@@ -607,10 +603,9 @@ class TestResourceControllerV2(unittest.TestCase):
             assert len(result.get('resources')) == 1
             assert result.get('rows_count') == 1
 
-            if result.get('next_url') is None:
-                break
-
             start = get_query_param(result.get('next_url'), 'start')
+            if start is None:
+                break
 
     def test_18_create_resource_key_for_instance(self):
         customHeaders = {}
@@ -708,10 +703,9 @@ class TestResourceControllerV2(unittest.TestCase):
             assert result.get('rows_count') >= 1
             assert result.get('rows_count') <= results_per_page
 
-            if result.get('next_url') is None:
-                break
-
             start = get_query_param(result.get('next_url'), 'start')
+            if start is None:
+                break
 
     def test_22_list_resource_keys_by_guid(self):
         customHeaders = {}
@@ -770,10 +764,9 @@ class TestResourceControllerV2(unittest.TestCase):
             assert len(result.get('resources')) == 1
             assert result.get('rows_count') == 1
 
-            if result.get('next_url') is None:
-                break
-
             start = get_query_param(result.get('next_url'), 'start')
+            if start is None:
+                break
 
     def test_24_create_resource_key_for_alias(self):
         customHeaders = {}
