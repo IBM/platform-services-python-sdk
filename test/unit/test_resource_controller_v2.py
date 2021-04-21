@@ -78,7 +78,8 @@ class TestListResourceInstances():
         resource_plan_id = 'testString'
         type = 'testString'
         sub_type = 'testString'
-        limit = 'testString'
+        limit = 100
+        start = 'testString'
         state = 'active'
         order_direction = 'asc'
         updated_from = '2019-01-08T00:00:00.000Z'
@@ -94,6 +95,7 @@ class TestListResourceInstances():
             type=type,
             sub_type=sub_type,
             limit=limit,
+            start=start,
             state=state,
             order_direction=order_direction,
             updated_from=updated_from,
@@ -115,6 +117,7 @@ class TestListResourceInstances():
         assert 'type={}'.format(type) in query_string
         assert 'sub_type={}'.format(sub_type) in query_string
         assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
         assert 'state={}'.format(state) in query_string
         assert 'order_direction={}'.format(order_direction) in query_string
         assert 'updated_from={}'.format(updated_from) in query_string
@@ -173,10 +176,10 @@ class TestCreateResourceInstance():
                       status=201)
 
         # Set up parameter values
-        name = 'my-instance'
-        target = 'bluemix-us-south'
-        resource_group = '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
-        resource_plan_id = 'cloudant-standard'
+        name = 'ExampleResourceInstance'
+        target = 'global'
+        resource_group = '13aa3ee48c3b44ddb64c05c79f7ab8ef'
+        resource_plan_id = 'a10e4960-3685-11e9-b210-d663bd873d93'
         tags = ['testString']
         allow_cleanup = True
         parameters = {}
@@ -200,10 +203,10 @@ class TestCreateResourceInstance():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-instance'
-        assert req_body['target'] == 'bluemix-us-south'
-        assert req_body['resource_group'] == '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
-        assert req_body['resource_plan_id'] == 'cloudant-standard'
+        assert req_body['name'] == 'ExampleResourceInstance'
+        assert req_body['target'] == 'global'
+        assert req_body['resource_group'] == '13aa3ee48c3b44ddb64c05c79f7ab8ef'
+        assert req_body['resource_plan_id'] == 'a10e4960-3685-11e9-b210-d663bd873d93'
         assert req_body['tags'] == ['testString']
         assert req_body['allow_cleanup'] == True
         assert req_body['parameters'] == {}
@@ -224,10 +227,10 @@ class TestCreateResourceInstance():
                       status=201)
 
         # Set up parameter values
-        name = 'my-instance'
-        target = 'bluemix-us-south'
-        resource_group = '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
-        resource_plan_id = 'cloudant-standard'
+        name = 'ExampleResourceInstance'
+        target = 'global'
+        resource_group = '13aa3ee48c3b44ddb64c05c79f7ab8ef'
+        resource_plan_id = 'a10e4960-3685-11e9-b210-d663bd873d93'
         tags = ['testString']
         allow_cleanup = True
         parameters = {}
@@ -249,10 +252,10 @@ class TestCreateResourceInstance():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-instance'
-        assert req_body['target'] == 'bluemix-us-south'
-        assert req_body['resource_group'] == '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
-        assert req_body['resource_plan_id'] == 'cloudant-standard'
+        assert req_body['name'] == 'ExampleResourceInstance'
+        assert req_body['target'] == 'global'
+        assert req_body['resource_group'] == '13aa3ee48c3b44ddb64c05c79f7ab8ef'
+        assert req_body['resource_plan_id'] == 'a10e4960-3685-11e9-b210-d663bd873d93'
         assert req_body['tags'] == ['testString']
         assert req_body['allow_cleanup'] == True
         assert req_body['parameters'] == {}
@@ -273,10 +276,10 @@ class TestCreateResourceInstance():
                       status=201)
 
         # Set up parameter values
-        name = 'my-instance'
-        target = 'bluemix-us-south'
-        resource_group = '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
-        resource_plan_id = 'cloudant-standard'
+        name = 'ExampleResourceInstance'
+        target = 'global'
+        resource_group = '13aa3ee48c3b44ddb64c05c79f7ab8ef'
+        resource_plan_id = 'a10e4960-3685-11e9-b210-d663bd873d93'
         tags = ['testString']
         allow_cleanup = True
         parameters = {}
@@ -490,9 +493,9 @@ class TestUpdateResourceInstance():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-instance-name'
+        name = 'UpdatedExampleResourceInstance'
         parameters = {}
-        resource_plan_id = 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
+        resource_plan_id = 'testString'
         allow_cleanup = True
 
         # Invoke method
@@ -510,9 +513,9 @@ class TestUpdateResourceInstance():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-new-instance-name'
+        assert req_body['name'] == 'UpdatedExampleResourceInstance'
         assert req_body['parameters'] == {}
-        assert req_body['resource_plan_id'] == 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
+        assert req_body['resource_plan_id'] == 'testString'
         assert req_body['allow_cleanup'] == True
 
 
@@ -532,9 +535,9 @@ class TestUpdateResourceInstance():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-instance-name'
+        name = 'UpdatedExampleResourceInstance'
         parameters = {}
-        resource_plan_id = 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
+        resource_plan_id = 'testString'
         allow_cleanup = True
 
         # Pass in all but one required param and check for a ValueError
@@ -566,6 +569,43 @@ class TestListResourceAliasesForInstance():
     def test_list_resource_aliases_for_instance_all_params(self):
         """
         list_resource_aliases_for_instance()
+        """
+        # Set up mock
+        url = self.preprocess_url(base_url + '/v2/resource_instances/testString/resource_aliases')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        id = 'testString'
+        limit = 100
+        start = 'testString'
+
+        # Invoke method
+        response = service.list_resource_aliases_for_instance(
+            id,
+            limit=limit,
+            start=start,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
+
+
+    @responses.activate
+    def test_list_resource_aliases_for_instance_required_params(self):
+        """
+        test_list_resource_aliases_for_instance_required_params()
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances/testString/resource_aliases')
@@ -636,6 +676,43 @@ class TestListResourceKeysForInstance():
     def test_list_resource_keys_for_instance_all_params(self):
         """
         list_resource_keys_for_instance()
+        """
+        # Set up mock
+        url = self.preprocess_url(base_url + '/v2/resource_instances/testString/resource_keys')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        id = 'testString'
+        limit = 100
+        start = 'testString'
+
+        # Invoke method
+        response = service.list_resource_keys_for_instance(
+            id,
+            limit=limit,
+            start=start,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
+
+
+    @responses.activate
+    def test_list_resource_keys_for_instance_required_params(self):
+        """
+        test_list_resource_keys_for_instance_required_params()
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_instances/testString/resource_keys')
@@ -871,7 +948,8 @@ class TestListResourceKeys():
         name = 'testString'
         resource_group_id = 'testString'
         resource_id = 'testString'
-        limit = 'testString'
+        limit = 100
+        start = 'testString'
         updated_from = '2019-01-08T00:00:00.000Z'
         updated_to = '2019-01-08T00:00:00.000Z'
 
@@ -882,6 +960,7 @@ class TestListResourceKeys():
             resource_group_id=resource_group_id,
             resource_id=resource_id,
             limit=limit,
+            start=start,
             updated_from=updated_from,
             updated_to=updated_to,
             headers={}
@@ -898,6 +977,7 @@ class TestListResourceKeys():
         assert 'resource_group_id={}'.format(resource_group_id) in query_string
         assert 'resource_id={}'.format(resource_id) in query_string
         assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
         assert 'updated_from={}'.format(updated_from) in query_string
         assert 'updated_to={}'.format(updated_to) in query_string
 
@@ -959,10 +1039,10 @@ class TestCreateResourceKey():
         resource_key_post_parameters_model['foo'] = { 'foo': 'bar' }
 
         # Set up parameter values
-        name = 'my-key'
-        source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
+        name = 'ExampleResourceKey'
+        source = '381fd51a-f251-4f95-aff4-2b03fa8caa63'
         parameters = resource_key_post_parameters_model
-        role = 'Writer'
+        role = 'testString'
 
         # Invoke method
         response = service.create_resource_key(
@@ -978,10 +1058,10 @@ class TestCreateResourceKey():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-key'
-        assert req_body['source'] == '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
+        assert req_body['name'] == 'ExampleResourceKey'
+        assert req_body['source'] == '381fd51a-f251-4f95-aff4-2b03fa8caa63'
         assert req_body['parameters'] == resource_key_post_parameters_model
-        assert req_body['role'] == 'Writer'
+        assert req_body['role'] == 'testString'
 
 
     @responses.activate
@@ -1004,10 +1084,10 @@ class TestCreateResourceKey():
         resource_key_post_parameters_model['foo'] = { 'foo': 'bar' }
 
         # Set up parameter values
-        name = 'my-key'
-        source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
+        name = 'ExampleResourceKey'
+        source = '381fd51a-f251-4f95-aff4-2b03fa8caa63'
         parameters = resource_key_post_parameters_model
-        role = 'Writer'
+        role = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1185,7 +1265,7 @@ class TestUpdateResourceKey():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-key-name'
+        name = 'UpdatedExampleResourceKey'
 
         # Invoke method
         response = service.update_resource_key(
@@ -1199,7 +1279,7 @@ class TestUpdateResourceKey():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-new-key-name'
+        assert req_body['name'] == 'UpdatedExampleResourceKey'
 
 
     @responses.activate
@@ -1218,7 +1298,7 @@ class TestUpdateResourceKey():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-key-name'
+        name = 'UpdatedExampleResourceKey'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1276,7 +1356,8 @@ class TestListResourceBindings():
         resource_group_id = 'testString'
         resource_id = 'testString'
         region_binding_id = 'testString'
-        limit = 'testString'
+        limit = 100
+        start = 'testString'
         updated_from = '2019-01-08T00:00:00.000Z'
         updated_to = '2019-01-08T00:00:00.000Z'
 
@@ -1288,6 +1369,7 @@ class TestListResourceBindings():
             resource_id=resource_id,
             region_binding_id=region_binding_id,
             limit=limit,
+            start=start,
             updated_from=updated_from,
             updated_to=updated_to,
             headers={}
@@ -1305,6 +1387,7 @@ class TestListResourceBindings():
         assert 'resource_id={}'.format(resource_id) in query_string
         assert 'region_binding_id={}'.format(region_binding_id) in query_string
         assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
         assert 'updated_from={}'.format(updated_from) in query_string
         assert 'updated_to={}'.format(updated_to) in query_string
 
@@ -1366,11 +1449,11 @@ class TestCreateResourceBinding():
         resource_binding_post_parameters_model['foo'] = { 'foo': 'bar' }
 
         # Set up parameter values
-        source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
-        target = 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
-        name = 'my-binding'
+        source = 'faaec9d8-ec64-44d8-ab83-868632fac6a2'
+        target = 'crn:v1:staging:public:bluemix:us-south:s/e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7::cf-application:8d9457e0-1303-4f32-b4b3-5525575f6205'
+        name = 'ExampleResourceBinding'
         parameters = resource_binding_post_parameters_model
-        role = 'Writer'
+        role = 'testString'
 
         # Invoke method
         response = service.create_resource_binding(
@@ -1387,11 +1470,11 @@ class TestCreateResourceBinding():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['source'] == '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
-        assert req_body['target'] == 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
-        assert req_body['name'] == 'my-binding'
+        assert req_body['source'] == 'faaec9d8-ec64-44d8-ab83-868632fac6a2'
+        assert req_body['target'] == 'crn:v1:staging:public:bluemix:us-south:s/e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7::cf-application:8d9457e0-1303-4f32-b4b3-5525575f6205'
+        assert req_body['name'] == 'ExampleResourceBinding'
         assert req_body['parameters'] == resource_binding_post_parameters_model
-        assert req_body['role'] == 'Writer'
+        assert req_body['role'] == 'testString'
 
 
     @responses.activate
@@ -1414,11 +1497,11 @@ class TestCreateResourceBinding():
         resource_binding_post_parameters_model['foo'] = { 'foo': 'bar' }
 
         # Set up parameter values
-        source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
-        target = 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
-        name = 'my-binding'
+        source = 'faaec9d8-ec64-44d8-ab83-868632fac6a2'
+        target = 'crn:v1:staging:public:bluemix:us-south:s/e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7::cf-application:8d9457e0-1303-4f32-b4b3-5525575f6205'
+        name = 'ExampleResourceBinding'
         parameters = resource_binding_post_parameters_model
-        role = 'Writer'
+        role = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1596,7 +1679,7 @@ class TestUpdateResourceBinding():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-binding-name'
+        name = 'UpdatedExampleResourceBinding'
 
         # Invoke method
         response = service.update_resource_binding(
@@ -1610,7 +1693,7 @@ class TestUpdateResourceBinding():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-new-binding-name'
+        assert req_body['name'] == 'UpdatedExampleResourceBinding'
 
 
     @responses.activate
@@ -1629,7 +1712,7 @@ class TestUpdateResourceBinding():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-binding-name'
+        name = 'UpdatedExampleResourceBinding'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1688,7 +1771,8 @@ class TestListResourceAliases():
         region_instance_id = 'testString'
         resource_id = 'testString'
         resource_group_id = 'testString'
-        limit = 'testString'
+        limit = 100
+        start = 'testString'
         updated_from = '2019-01-08T00:00:00.000Z'
         updated_to = '2019-01-08T00:00:00.000Z'
 
@@ -1701,6 +1785,7 @@ class TestListResourceAliases():
             resource_id=resource_id,
             resource_group_id=resource_group_id,
             limit=limit,
+            start=start,
             updated_from=updated_from,
             updated_to=updated_to,
             headers={}
@@ -1719,6 +1804,7 @@ class TestListResourceAliases():
         assert 'resource_id={}'.format(resource_id) in query_string
         assert 'resource_group_id={}'.format(resource_group_id) in query_string
         assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
         assert 'updated_from={}'.format(updated_from) in query_string
         assert 'updated_to={}'.format(updated_to) in query_string
 
@@ -1775,9 +1861,9 @@ class TestCreateResourceAlias():
                       status=201)
 
         # Set up parameter values
-        name = 'my-alias'
-        source = 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
-        target = 'crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
+        name = 'ExampleResourceAlias'
+        source = '381fd51a-f251-4f95-aff4-2b03fa8caa63'
+        target = 'crn:v1:bluemix:public:bluemix:us-south:o/d35d4f0e-5076-4c89-9361-2522894b6548::cf-space:e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7'
 
         # Invoke method
         response = service.create_resource_alias(
@@ -1792,9 +1878,9 @@ class TestCreateResourceAlias():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-alias'
-        assert req_body['source'] == 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
-        assert req_body['target'] == 'crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
+        assert req_body['name'] == 'ExampleResourceAlias'
+        assert req_body['source'] == '381fd51a-f251-4f95-aff4-2b03fa8caa63'
+        assert req_body['target'] == 'crn:v1:bluemix:public:bluemix:us-south:o/d35d4f0e-5076-4c89-9361-2522894b6548::cf-space:e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7'
 
 
     @responses.activate
@@ -1812,9 +1898,9 @@ class TestCreateResourceAlias():
                       status=201)
 
         # Set up parameter values
-        name = 'my-alias'
-        source = 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
-        target = 'crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
+        name = 'ExampleResourceAlias'
+        source = '381fd51a-f251-4f95-aff4-2b03fa8caa63'
+        target = 'crn:v1:bluemix:public:bluemix:us-south:o/d35d4f0e-5076-4c89-9361-2522894b6548::cf-space:e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1993,7 +2079,7 @@ class TestUpdateResourceAlias():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-alias-name'
+        name = 'UpdatedExampleResourceAlias'
 
         # Invoke method
         response = service.update_resource_alias(
@@ -2007,7 +2093,7 @@ class TestUpdateResourceAlias():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-new-alias-name'
+        assert req_body['name'] == 'UpdatedExampleResourceAlias'
 
 
     @responses.activate
@@ -2026,7 +2112,7 @@ class TestUpdateResourceAlias():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-alias-name'
+        name = 'UpdatedExampleResourceAlias'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -2058,6 +2144,43 @@ class TestListResourceBindingsForAlias():
     def test_list_resource_bindings_for_alias_all_params(self):
         """
         list_resource_bindings_for_alias()
+        """
+        # Set up mock
+        url = self.preprocess_url(base_url + '/v2/resource_aliases/testString/resource_bindings')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        id = 'testString'
+        limit = 100
+        start = 'testString'
+
+        # Invoke method
+        response = service.list_resource_bindings_for_alias(
+            id,
+            limit=limit,
+            start=start,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
+
+
+    @responses.activate
+    def test_list_resource_bindings_for_alias_required_params(self):
+        """
+        test_list_resource_bindings_for_alias_required_params()
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/resource_aliases/testString/resource_bindings')
@@ -2361,7 +2484,7 @@ class TestPlanHistoryItem():
         # Construct a json representation of a PlanHistoryItem model
         plan_history_item_model_json = {}
         plan_history_item_model_json['resource_plan_id'] = 'testString'
-        plan_history_item_model_json['start_date'] = '2015-03-14T09:26:53.123456Z'
+        plan_history_item_model_json['start_date'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         plan_history_item_model_json['requestor_id'] = 'testString'
 
         # Construct a model instance of PlanHistoryItem by calling from_dict on the json representation
@@ -2402,9 +2525,9 @@ class TestReclamation():
         reclamation_model_json['state'] = 'testString'
         reclamation_model_json['target_time'] = 'testString'
         reclamation_model_json['custom_properties'] = {}
-        reclamation_model_json['created_at'] = '2015-03-14T09:26:53.123456Z'
+        reclamation_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         reclamation_model_json['created_by'] = 'testString'
-        reclamation_model_json['updated_at'] = '2015-03-14T09:26:53.123456Z'
+        reclamation_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         reclamation_model_json['updated_by'] = 'testString'
 
         # Construct a model instance of Reclamation by calling from_dict on the json representation
@@ -2446,9 +2569,9 @@ class TestReclamationsList():
         reclamation_model['state'] = 'testString'
         reclamation_model['target_time'] = 'testString'
         reclamation_model['custom_properties'] = {}
-        reclamation_model['created_at'] = '2015-03-14T09:26:53.123456Z'
+        reclamation_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         reclamation_model['created_by'] = 'testString'
-        reclamation_model['updated_at'] = '2015-03-14T09:26:53.123456Z'
+        reclamation_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         reclamation_model['updated_by'] = 'testString'
 
         # Construct a json representation of a ReclamationsList model
@@ -2485,9 +2608,9 @@ class TestResourceAlias():
         resource_alias_model_json['id'] = 'testString'
         resource_alias_model_json['guid'] = 'testString'
         resource_alias_model_json['url'] = 'testString'
-        resource_alias_model_json['created_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_alias_model_json['updated_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_alias_model_json['deleted_at'] = '2015-03-14T09:26:53.123456Z'
+        resource_alias_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_alias_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_alias_model_json['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         resource_alias_model_json['created_by'] = 'testString'
         resource_alias_model_json['updated_by'] = 'testString'
         resource_alias_model_json['deleted_by'] = 'testString'
@@ -2537,9 +2660,9 @@ class TestResourceAliasesList():
         resource_alias_model['id'] = 'testString'
         resource_alias_model['guid'] = 'testString'
         resource_alias_model['url'] = 'testString'
-        resource_alias_model['created_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_alias_model['updated_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_alias_model['deleted_at'] = '2015-03-14T09:26:53.123456Z'
+        resource_alias_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_alias_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_alias_model['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         resource_alias_model['created_by'] = 'testString'
         resource_alias_model['updated_by'] = 'testString'
         resource_alias_model['deleted_by'] = 'testString'
@@ -2604,9 +2727,9 @@ class TestResourceBinding():
         resource_binding_model_json['id'] = 'testString'
         resource_binding_model_json['guid'] = 'testString'
         resource_binding_model_json['url'] = 'testString'
-        resource_binding_model_json['created_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_binding_model_json['updated_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_binding_model_json['deleted_at'] = '2015-03-14T09:26:53.123456Z'
+        resource_binding_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_binding_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_binding_model_json['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         resource_binding_model_json['created_by'] = 'testString'
         resource_binding_model_json['updated_by'] = 'testString'
         resource_binding_model_json['deleted_by'] = 'testString'
@@ -2694,9 +2817,9 @@ class TestResourceBindingsList():
         resource_binding_model['id'] = 'testString'
         resource_binding_model['guid'] = 'testString'
         resource_binding_model['url'] = 'testString'
-        resource_binding_model['created_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_binding_model['updated_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_binding_model['deleted_at'] = '2015-03-14T09:26:53.123456Z'
+        resource_binding_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_binding_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_binding_model['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         resource_binding_model['created_by'] = 'testString'
         resource_binding_model['updated_by'] = 'testString'
         resource_binding_model['deleted_by'] = 'testString'
@@ -2750,7 +2873,7 @@ class TestResourceInstance():
 
         plan_history_item_model = {} # PlanHistoryItem
         plan_history_item_model['resource_plan_id'] = 'testString'
-        plan_history_item_model['start_date'] = '2015-03-14T09:26:53.123456Z'
+        plan_history_item_model['start_date'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         plan_history_item_model['requestor_id'] = 'testString'
 
         # Construct a json representation of a ResourceInstance model
@@ -2758,14 +2881,14 @@ class TestResourceInstance():
         resource_instance_model_json['id'] = 'testString'
         resource_instance_model_json['guid'] = 'testString'
         resource_instance_model_json['url'] = 'testString'
-        resource_instance_model_json['created_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_instance_model_json['updated_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_instance_model_json['deleted_at'] = '2015-03-14T09:26:53.123456Z'
+        resource_instance_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_instance_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_instance_model_json['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         resource_instance_model_json['created_by'] = 'testString'
         resource_instance_model_json['updated_by'] = 'testString'
         resource_instance_model_json['deleted_by'] = 'testString'
-        resource_instance_model_json['scheduled_reclaim_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_instance_model_json['restored_at'] = '2015-03-14T09:26:53.123456Z'
+        resource_instance_model_json['scheduled_reclaim_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_instance_model_json['restored_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         resource_instance_model_json['restored_by'] = 'testString'
         resource_instance_model_json['scheduled_reclaim_by'] = 'testString'
         resource_instance_model_json['name'] = 'testString'
@@ -2823,21 +2946,21 @@ class TestResourceInstancesList():
 
         plan_history_item_model = {} # PlanHistoryItem
         plan_history_item_model['resource_plan_id'] = 'testString'
-        plan_history_item_model['start_date'] = '2015-03-14T09:26:53.123456Z'
+        plan_history_item_model['start_date'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         plan_history_item_model['requestor_id'] = 'testString'
 
         resource_instance_model = {} # ResourceInstance
         resource_instance_model['id'] = 'testString'
         resource_instance_model['guid'] = 'testString'
         resource_instance_model['url'] = 'testString'
-        resource_instance_model['created_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_instance_model['updated_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_instance_model['deleted_at'] = '2015-03-14T09:26:53.123456Z'
+        resource_instance_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_instance_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_instance_model['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         resource_instance_model['created_by'] = 'testString'
         resource_instance_model['updated_by'] = 'testString'
         resource_instance_model['deleted_by'] = 'testString'
-        resource_instance_model['scheduled_reclaim_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_instance_model['restored_at'] = '2015-03-14T09:26:53.123456Z'
+        resource_instance_model['scheduled_reclaim_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_instance_model['restored_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         resource_instance_model['restored_by'] = 'testString'
         resource_instance_model['scheduled_reclaim_by'] = 'testString'
         resource_instance_model['name'] = 'testString'
@@ -2912,9 +3035,9 @@ class TestResourceKey():
         resource_key_model_json['id'] = 'testString'
         resource_key_model_json['guid'] = 'testString'
         resource_key_model_json['url'] = 'testString'
-        resource_key_model_json['created_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_key_model_json['updated_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_key_model_json['deleted_at'] = '2015-03-14T09:26:53.123456Z'
+        resource_key_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_key_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_key_model_json['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         resource_key_model_json['created_by'] = 'testString'
         resource_key_model_json['updated_by'] = 'testString'
         resource_key_model_json['deleted_by'] = 'testString'
@@ -3000,9 +3123,9 @@ class TestResourceKeysList():
         resource_key_model['id'] = 'testString'
         resource_key_model['guid'] = 'testString'
         resource_key_model['url'] = 'testString'
-        resource_key_model['created_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_key_model['updated_at'] = '2015-03-14T09:26:53.123456Z'
-        resource_key_model['deleted_at'] = '2015-03-14T09:26:53.123456Z'
+        resource_key_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_key_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_key_model['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         resource_key_model['created_by'] = 'testString'
         resource_key_model['updated_by'] = 'testString'
         resource_key_model['deleted_by'] = 'testString'
