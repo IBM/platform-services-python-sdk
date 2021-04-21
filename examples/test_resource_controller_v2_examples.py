@@ -21,7 +21,6 @@ import os
 import time
 import pytest
 from ibm_cloud_sdk_core import ApiException, read_external_sources
-from ibm_cloud_sdk_core.utils import get_query_param
 from ibm_platform_services.resource_controller_v2 import *
 
 #
@@ -176,22 +175,11 @@ class TestResourceControllerV2Examples():
             print('\nlist_resource_instances() result:')
             # begin-list_resource_instances
 
-            next_page_id = None
+            resource_instances_list = resource_controller_service.list_resource_instances(
+                name=resource_instance_name
+            ).get_result()
 
-            while True:
-                resource_instances_list = resource_controller_service.list_resource_instances(
-                    name=resource_instance_name,
-                    limit=100,
-                    start=next_page_id,
-                ).get_result()
-
-                print(json.dumps(resource_instances_list, indent=2))
-
-                next_page_url = resource_instances_list.get('next_url')
-
-                next_page_id = get_query_param(next_page_url, 'start')
-                if next_page_id is None:
-                    break
+            print(json.dumps(resource_instances_list, indent=2))
 
             # end-list_resource_instances
 
