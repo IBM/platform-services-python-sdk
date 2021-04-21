@@ -30,6 +30,8 @@ from ibm_platform_services.resource_controller_v2 import *
 # Read config file
 configFile = 'resource_controller.env'
 
+results_per_page = 20
+
 
 class TestResourceControllerV2(unittest.TestCase):
     """
@@ -195,14 +197,27 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test03-" + \
             self.transactionId
 
-        response = self.service.list_resource_instances(headers=customHeaders)
-        assert response is not None
-        assert response.get_status_code() == 200
+        start = None
 
-        result = response.get_result()
-        assert result is not None
-        assert len(result.get('resources')) >= 1
-        assert result.get('rows_count') >= 1
+        while True:
+            response = self.service.list_resource_instances(
+                limit=results_per_page,
+                start=start,
+                headers=customHeaders)
+
+            assert response is not None
+            assert response.get_status_code() == 200
+
+            result = response.get_result()
+            assert result is not None
+            assert len(result.get('resources')) >= 1
+            assert len(result.get('resources')) <= results_per_page
+            assert result.get('rows_count') >= 1
+            assert result.get('rows_count') <= results_per_page
+
+            start = get_query_param(result.get('next_url'), 'start')
+            if start is None:
+                break
 
     def test_04_list_resource_instances_by_guid(self):
         customHeaders = {}
@@ -331,14 +346,27 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test09-" + \
             self.transactionId
 
-        response = self.service.list_resource_aliases(headers=customHeaders)
-        assert response is not None
-        assert response.get_status_code() == 200
+        start = None
 
-        result = response.get_result()
-        assert result is not None
-        assert len(result.get('resources')) >= 1
-        assert result.get('rows_count') >= 1
+        while True:
+            response = self.service.list_resource_aliases(
+                limit=results_per_page,
+                start=start,
+                headers=customHeaders)
+
+            assert response is not None
+            assert response.get_status_code() == 200
+
+            result = response.get_result()
+            assert result is not None
+            assert len(result.get('resources')) >= 1
+            assert len(result.get('resources')) <= results_per_page
+            assert result.get('rows_count') >= 1
+            assert result.get('rows_count') <= results_per_page
+
+            start = get_query_param(result.get('next_url'), 'start')
+            if start is None:
+                break
 
     def test_10_list_resource_aliases_by_guid(self):
         customHeaders = {}
@@ -384,17 +412,25 @@ class TestResourceControllerV2(unittest.TestCase):
     def test_11a_list_resource_aliases_for_instance(self):
         assert self.testInstanceGuid is not None
 
-        response = self.service.list_resource_aliases_for_instance(
-            id=self.testInstanceGuid
-        )
+        start = None
 
-        assert response is not None
-        assert response.get_status_code() == 200
+        while True:
+            response = self.service.list_resource_aliases_for_instance(
+                id=self.testInstanceGuid,
+                limit=results_per_page,
+                start=start)
 
-        result = response.get_result()
-        assert result is not None
-        assert len(result.get('resources')) == 1
-        assert result.get('rows_count') == 1
+            assert response is not None
+            assert response.get_status_code() == 200
+
+            result = response.get_result()
+            assert result is not None
+            assert len(result.get('resources')) == 1
+            assert result.get('rows_count') == 1
+
+            start = get_query_param(result.get('next_url'), 'start')
+            if start is None:
+                break
 
     def test_12_create_resource_binding(self):
         customHeaders = {}
@@ -485,14 +521,27 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test15-" + \
             self.transactionId
 
-        response = self.service.list_resource_bindings(headers=customHeaders)
-        assert response is not None
-        assert response.get_status_code() == 200
+        start = None
 
-        result = response.get_result()
-        assert result is not None
-        assert len(result.get('resources')) >= 1
-        assert result.get('rows_count') >= 1
+        while True:
+            response = self.service.list_resource_bindings(
+                limit=results_per_page,
+                start=start,
+                headers=customHeaders)
+
+            assert response is not None
+            assert response.get_status_code() == 200
+
+            result = response.get_result()
+            assert result is not None
+            assert len(result.get('resources')) >= 1
+            assert len(result.get('resources')) <= results_per_page
+            assert result.get('rows_count') >= 1
+            assert result.get('rows_count') <= results_per_page
+
+            start = get_query_param(result.get('next_url'), 'start')
+            if start is None:
+                break
 
     def test_16_list_resource_bindings_by_guid(self):
         customHeaders = {}
@@ -538,17 +587,25 @@ class TestResourceControllerV2(unittest.TestCase):
     def test_17a_list_resource_bindings_for_alias(self):
         assert self.testAliasGuid is not None
 
-        response = self.service.list_resource_bindings_for_alias(
-            id=self.testAliasGuid
-        )
+        start = None
 
-        assert response is not None
-        assert response.get_status_code() == 200
+        while True:
+            response = self.service.list_resource_bindings_for_alias(
+                id=self.testAliasGuid,
+                limit=results_per_page,
+                start=start)
 
-        result = response.get_result()
-        assert result is not None
-        assert len(result.get('resources')) == 1
-        assert result.get('rows_count') == 1
+            assert response is not None
+            assert response.get_status_code() == 200
+
+            result = response.get_result()
+            assert result is not None
+            assert len(result.get('resources')) == 1
+            assert result.get('rows_count') == 1
+
+            start = get_query_param(result.get('next_url'), 'start')
+            if start is None:
+                break
 
     def test_18_create_resource_key_for_instance(self):
         customHeaders = {}
@@ -628,14 +685,27 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test21-" + \
             self.transactionId
 
-        response = self.service.list_resource_keys(headers=customHeaders)
-        assert response is not None
-        assert response.get_status_code() == 200
+        start = None
 
-        result = response.get_result()
-        assert result is not None
-        assert len(result.get('resources')) >= 1
-        assert result.get('rows_count') >= 1
+        while True:
+            response = self.service.list_resource_keys(
+                limit=results_per_page,
+                start=start,
+                headers=customHeaders)
+
+            assert response is not None
+            assert response.get_status_code() == 200
+
+            result = response.get_result()
+            assert result is not None
+            assert len(result.get('resources')) >= 1
+            assert len(result.get('resources')) <= results_per_page
+            assert result.get('rows_count') >= 1
+            assert result.get('rows_count') <= results_per_page
+
+            start = get_query_param(result.get('next_url'), 'start')
+            if start is None:
+                break
 
     def test_22_list_resource_keys_by_guid(self):
         customHeaders = {}
@@ -678,17 +748,25 @@ class TestResourceControllerV2(unittest.TestCase):
     def test_23a_list_resource_keys_for_instance(self):
         assert self.testInstanceGuid is not None
 
-        response = self.service.list_resource_keys_for_instance(
-            id=self.testInstanceGuid
-        )
+        start = None
 
-        assert response is not None
-        assert response.get_status_code() == 200
+        while True:
+            response = self.service.list_resource_keys_for_instance(
+                id=self.testInstanceGuid,
+                limit=results_per_page,
+                start=start)
 
-        result = response.get_result()
-        assert result is not None
-        assert len(result.get('resources')) == 1
-        assert result.get('rows_count') == 1
+            assert response is not None
+            assert response.get_status_code() == 200
+
+            result = response.get_result()
+            assert result is not None
+            assert len(result.get('resources')) == 1
+            assert result.get('rows_count') == 1
+
+            start = get_query_param(result.get('next_url'), 'start')
+            if start is None:
+                break
 
     def test_24_create_resource_key_for_alias(self):
         customHeaders = {}
