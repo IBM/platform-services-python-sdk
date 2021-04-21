@@ -99,6 +99,8 @@ class TestEnterpriseUsageReportsV1Examples():
         """
         try:
             global enterprise_id, billing_month
+
+            print('\nget_resource_usage_report() result:')
             # begin-get_resource_usage_report
 
             reports = enterprise_usage_reports_service.get_resource_usage_report(
@@ -107,7 +109,7 @@ class TestEnterpriseUsageReportsV1Examples():
                 limit=10
             ).get_result()
 
-            print('\nget_resource_usage_report() result:\n' + json.dumps(reports, indent=2))
+            print(json.dumps(reports, indent=2))
 
             # end-get_resource_usage_report
 

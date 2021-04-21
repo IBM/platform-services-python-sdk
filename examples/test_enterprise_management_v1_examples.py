@@ -106,12 +106,11 @@ class TestEnterpriseManagementV1Examples():
         assert enterprise_account_id is not None
         assert enterprise_account_iam_id is not None
 
-        print('\ncreate_account_group() result:')
-
         try:
             parent_crn = 'crn:v1:bluemix:public:enterprise::a/' + \
                 enterprise_account_id + '::enterprise:' + enterprise_id
 
+            print('\ncreate_account_group() result:')
             # begin-create_account_group
 
             create_account_group_response = enterprise_management_service.create_account_group(
@@ -148,9 +147,9 @@ class TestEnterpriseManagementV1Examples():
         """
         assert enterprise_id is not None
 
-        print('\nlist_account_groups() result:')
-
         try:
+
+            print('\nlist_account_groups() result:')
             # begin-list_account_groups
 
             list_account_groups_response = enterprise_management_service.list_account_groups(
@@ -171,9 +170,9 @@ class TestEnterpriseManagementV1Examples():
         """
         assert account_group_id is not None
 
-        print('\nget_account_group() result:')
-
         try:
+
+            print('\nget_account_group() result:')
             # begin-get_account_group
 
             account_group = enterprise_management_service.get_account_group(
@@ -218,12 +217,11 @@ class TestEnterpriseManagementV1Examples():
         """
         assert account_group_id is not None
 
-        print('\ncreate_account() result:')
-
         try:
             parent_crn = 'crn:v1:bluemix:public:enterprise::a/' + \
                 enterprise_account_id + '::account-group:' + account_group_id
 
+            print('\ncreate_account() result:')
             # begin-create_account
 
             create_account_response = enterprise_management_service.create_account(
@@ -259,8 +257,6 @@ class TestEnterpriseManagementV1Examples():
                 account_id=import_account_id,
             )
 
-            print(json.dumps(response, indent=2))
-
             # end-import_account_to_enterprise
 
             print('\nimport_account_to_enterprise() response status code: ',
@@ -276,9 +272,8 @@ class TestEnterpriseManagementV1Examples():
         """
         assert enterprise_id is not None
 
-        print('\nlist_accounts() result:')
-
         try:
+            print('\nlist_accounts() result:')
             # begin-list_accounts
 
             list_accounts_response = enterprise_management_service.list_accounts(
@@ -299,9 +294,8 @@ class TestEnterpriseManagementV1Examples():
         """
         assert account_id is not None
 
-        print('\nget_account() result:')
-
         try:
+            print('\nget_account() result:')
             # begin-get_account
 
             account = enterprise_management_service.get_account(
@@ -349,12 +343,11 @@ class TestEnterpriseManagementV1Examples():
         create_enterprise request example
         """
 
-        print('\ncreate_enterprise() result:')
-
         try:
             src_account_id = '<standalone_account_id>'
             contact_iam_id = '<standalone_account_iam_id>'
 
+            print('\ncreate_enterprise() result:')
             # begin-create_enterprise
 
             create_enterprise_response = enterprise_management_service.create_enterprise(
@@ -377,9 +370,8 @@ class TestEnterpriseManagementV1Examples():
         """
         assert enterprise_account_id is not None
 
-        print('\nlist_enterprises() result:')
-
         try:
+            print('\nlist_enterprises() result:')
             # begin-list_enterprises
 
             list_enterprises_response = enterprise_management_service.list_enterprises(
@@ -400,9 +392,8 @@ class TestEnterpriseManagementV1Examples():
         """
         assert enterprise_id is not None
 
-        print('\nget_enterprise() result:')
-
         try:
+            print('\nget_enterprise() result:')
             # begin-get_enterprise
 
             enterprise = enterprise_management_service.get_enterprise(

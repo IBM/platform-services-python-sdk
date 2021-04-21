@@ -34,6 +34,7 @@ from .iam_access_groups_v2 import IamAccessGroupsV2
 from .iam_identity_v1 import IamIdentityV1
 from .iam_policy_management_v1 import IamPolicyManagementV1
 from .open_service_broker_v1 import OpenServiceBrokerV1
+from .posture_management_v1 import PostureManagementV1
 from .resource_controller_v2 import ResourceControllerV2
 from .resource_manager_v2 import ResourceManagerV2
 from .usage_metering_v4 import UsageMeteringV4

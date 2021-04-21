@@ -101,6 +101,8 @@ class TestPostureManagementV1Examples():
         list_profiles request example
         """
         try:
+
+            print('\nlist_profiles() result:')
             # begin-list_profiles
 
             profiles_list = posture_management_service.list_profiles(
@@ -108,7 +110,7 @@ class TestPostureManagementV1Examples():
                 name=profile_name,
             ).get_result()
 
-            print('\nlist_profiles() result:\n' + json.dumps(profiles_list, indent=2))
+            print(json.dumps(profiles_list, indent=2))
 
             # end-list_profile
 
@@ -124,6 +126,8 @@ class TestPostureManagementV1Examples():
         list_scopes request example
         """
         try:
+
+            print('\nlist_scopes() result:')
             # begin-list_scopes
 
             scopes_list = posture_management_service.list_scopes(
@@ -131,7 +135,7 @@ class TestPostureManagementV1Examples():
                 name=scopes_name,
             ).get_result()
 
-            print('\nlist_scopes() result:\n' + json.dumps(scopes_list, indent=2))
+            print(json.dumps(scopes_list, indent=2))
 
             # end-list_scopes
 
@@ -147,6 +151,8 @@ class TestPostureManagementV1Examples():
         create_validation request example
         """
         try:
+
+            print('\ncreate_validation() result:')
             # begin-create_validation
 
             result = posture_management_service.create_validation(
@@ -156,7 +162,7 @@ class TestPostureManagementV1Examples():
                 group_profile_id=group_profile_id,
             ).get_result()
 
-            print('\ncreate_validation() result:\n' + json.dumps(result, indent=2))
+            print(json.dumps(result, indent=2))
 
             # end-create_validation
 

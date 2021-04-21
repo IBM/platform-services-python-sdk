@@ -127,13 +127,15 @@ class TestOpenServiceBrokerV1Examples():
         """
         try:
             global instanceId
+
+            print('\nget_service_instance_state() result:')
             # begin-get_service_instance_state
 
             response = open_service_broker_service.get_service_instance_state(
                 instance_id=instanceId
             ).get_result()
 
-            print('\nget_service_instance_state() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-get_service_instance_state
 
@@ -147,6 +149,8 @@ class TestOpenServiceBrokerV1Examples():
         """
         try:
             global instanceId, initiatorId, reasonCode
+
+            print('\nreplace_service_instance_state() result:')
             # begin-replace_service_instance_state
         
             response = open_service_broker_service.replace_service_instance_state(
@@ -156,7 +160,7 @@ class TestOpenServiceBrokerV1Examples():
                 reason_code=reasonCode
             ).get_result()
 
-            print('\nreplace_service_instance_state() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-replace_service_instance_state
 
@@ -170,6 +174,8 @@ class TestOpenServiceBrokerV1Examples():
         """
         try:
             global instanceId, orgGuid, planId, serviceId, accountId
+
+            print('\nreplace_service_instance() result:')
             # begin-replace_service_instance
 
             context = Context(
@@ -189,7 +195,7 @@ class TestOpenServiceBrokerV1Examples():
                 accepts_incomplete=True
             ).get_result()
 
-            print('\nreplace_service_instance() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-replace_service_instance
 
@@ -203,6 +209,8 @@ class TestOpenServiceBrokerV1Examples():
         """
         try:
             global instanceId, planId, serviceId, accountId
+
+            print('\nupdate_service_instance() result:')
             # begin-update_service_instance
 
             context = Context(
@@ -222,7 +230,7 @@ class TestOpenServiceBrokerV1Examples():
                 accepts_incomplete=True
             ).get_result()
 
-            print('\nupdate_service_instance() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-update_service_instance
 
@@ -235,11 +243,13 @@ class TestOpenServiceBrokerV1Examples():
         list_catalog request example
         """
         try:
+
+            print('\nlist_catalog() result:')
             # begin-list_catalog
 
             response = open_service_broker_service.list_catalog().get_result()
 
-            print('\nlist_catalog() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-list_catalog
 
@@ -253,6 +263,8 @@ class TestOpenServiceBrokerV1Examples():
         """
         try:
             global instanceId, operation, planId, serviceId
+
+            print('\nget_last_operation() result:')
             # begin-get_last_operation
 
             response = open_service_broker_service.get_last_operation(
@@ -262,7 +274,7 @@ class TestOpenServiceBrokerV1Examples():
                 service_id = serviceId
             ).get_result()
 
-            print('\nget_last_operation() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-get_last_operation
 
@@ -276,6 +288,8 @@ class TestOpenServiceBrokerV1Examples():
         """
         try:
             global instanceId, bindingId, appGuid, planId, serviceId, spaceGuid, accountId
+
+            print('\nreplace_service_binding() result:')
             # begin-replace_service_binding
 
             bindResource = BindResource(
@@ -292,7 +306,7 @@ class TestOpenServiceBrokerV1Examples():
                 parameters=pars
             ).get_result()
 
-            print('\nreplace_service_binding() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-replace_service_binding
 
@@ -306,6 +320,8 @@ class TestOpenServiceBrokerV1Examples():
         """
         try:
             global instanceId, planId, serviceId
+
+            print('\ndelete_service_instance() result:')
             # begin-delete_service_instance
 
             response = open_service_broker_service.delete_service_instance(
@@ -314,7 +330,7 @@ class TestOpenServiceBrokerV1Examples():
                 service_id=serviceId,
             ).get_result()
 
-            print('\ndelete_service_instance() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-delete_service_instance
 
@@ -328,6 +344,8 @@ class TestOpenServiceBrokerV1Examples():
         """
         try:
             global bindingId, instanceId, planId, serviceId
+
+            print('\ndelete_service_binding() result:')
             # begin-delete_service_binding
 
             response = open_service_broker_service.delete_service_binding(
@@ -337,7 +355,7 @@ class TestOpenServiceBrokerV1Examples():
                 service_id=serviceId,
             ).get_result()
 
-            print('\ndelete_service_binding() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-delete_service_binding
 

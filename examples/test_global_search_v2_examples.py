@@ -74,13 +74,14 @@ class TestGlobalSearchV2Examples():
         search request example
         """
         try:
+            print('\nsearch() result:')
             # begin-search
 
             response = global_search_service.search(query='GST-sdk-*',
                                                     fields=['*'])
             scan_result = response.get_result()
 
-            print('\nsearch() result:\n' + json.dumps(scan_result, indent=2))
+            print(json.dumps(scan_result, indent=2))
 
             # end-search
 
@@ -93,12 +94,13 @@ class TestGlobalSearchV2Examples():
         get_supported_types request example
         """
         try:
+            print('\nget_supported_types() result:')
             # begin-get_supported_types
 
             supported_types_list = global_search_service.get_supported_types(
             ).get_result()
 
-            print('\nget_supported_types() result:\n' + json.dumps(supported_types_list, indent=2))
+            print(json.dumps(supported_types_list, indent=2))
 
             # end-get_supported_types
 

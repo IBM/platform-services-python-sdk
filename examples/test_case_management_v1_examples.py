@@ -90,6 +90,7 @@ class TestCaseManagementV1Examples():
         create_case request example
         """
         try:
+            print('\ncreate_case() result:')
             # begin-createCase
 
             offering_type = OfferingType(
@@ -109,7 +110,7 @@ class TestCaseManagementV1Examples():
                 severity=4,
             ).get_result()
 
-            print('\ncreate_case() result:\n' + json.dumps(case, indent=2))
+            print(json.dumps(case, indent=2))
 
             # end-createCase
 
@@ -130,6 +131,7 @@ class TestCaseManagementV1Examples():
         assert case_number is not None
 
         try:
+            print('\nget_case() result:')
             # begin-getCase
 
             fields_to_return = [
@@ -144,7 +146,7 @@ class TestCaseManagementV1Examples():
                 fields=fields_to_return
             ).get_result()
 
-            print('\nget_case() result:\n' + json.dumps(case, indent=2))
+            print(json.dumps(case, indent=2))
 
             # end-getCase
 
@@ -157,6 +159,7 @@ class TestCaseManagementV1Examples():
         get_cases request example
         """
         try:
+            print('\nget_cases() result:')
             # begin-getCases
 
             case_list = case_management_service.get_cases(
@@ -166,7 +169,7 @@ class TestCaseManagementV1Examples():
                 sort=GetCasesEnums.Fields.UPDATED_AT,
             ).get_result()
 
-            print('\nget_cases() result:\n' + json.dumps(case_list, indent=2))
+            print(json.dumps(case_list, indent=2))
 
             # end-getCases
 
@@ -181,6 +184,7 @@ class TestCaseManagementV1Examples():
         assert case_number is not None
 
         try:
+            print('\nadd_comment() result:')
             # begin-addComment
 
             comment = case_management_service.add_comment(
@@ -188,7 +192,7 @@ class TestCaseManagementV1Examples():
                 comment='This is an example comment.'
             ).get_result()
 
-            print('\nadd_comment() result:\n' + json.dumps(comment, indent=2))
+            print(json.dumps(comment, indent=2))
 
             # end-addComment
 
@@ -203,6 +207,7 @@ class TestCaseManagementV1Examples():
         assert case_number is not None
 
         try:
+            print('\nadd_watchlist() result:')
             # begin-addWatchlist
 
             watchlist_users = [
@@ -214,7 +219,7 @@ class TestCaseManagementV1Examples():
                 watchlist=watchlist_users,
             ).get_result()
 
-            print('\nadd_watchlist() result:\n' + json.dumps(watchlist_add_response, indent=2))
+            print(json.dumps(watchlist_add_response, indent=2))
 
             # end-addWatchlist
 
@@ -229,6 +234,7 @@ class TestCaseManagementV1Examples():
         assert case_number is not None
 
         try:
+            print('\nremove_watchlist() result:')
             # begin-removeWatchlist
 
             watchlist_users = [
@@ -240,7 +246,7 @@ class TestCaseManagementV1Examples():
                 watchlist=watchlist_users,
             ).get_result()
 
-            print('\nremove_watchlist() result:\n' + json.dumps(watchlist, indent=2))
+            print(json.dumps(watchlist, indent=2))
 
             # end-removeWatchlist
 
@@ -256,6 +262,7 @@ class TestCaseManagementV1Examples():
         assert resource_crn is not None
 
         try:
+            print('\nadd_resource() result:')
             # begin-addResource
 
             resource = case_management_service.add_resource(
@@ -264,7 +271,7 @@ class TestCaseManagementV1Examples():
                 note='This resource is the service that is having the problem.',
             ).get_result()
 
-            print('\nadd_resource() result:\n' + json.dumps(resource, indent=2))
+            print(json.dumps(resource, indent=2))
 
             # end-addResource
 
@@ -279,6 +286,7 @@ class TestCaseManagementV1Examples():
         assert case_number is not None
 
         try:
+            print('\nupload_file() result:')
             # begin-uploadFile
 
             example_file_content = b'This is the content of the file to upload.'
@@ -296,7 +304,7 @@ class TestCaseManagementV1Examples():
                 file=files_to_upload,
             ).get_result()
 
-            print('\nupload_file() result:\n' + json.dumps(attachment, indent=2))
+            print(json.dumps(attachment, indent=2))
 
             # end-uploadFile
 
@@ -318,6 +326,7 @@ class TestCaseManagementV1Examples():
         assert attachment_id is not None
 
         try:
+            print('\ndownload_file() result:')
             # begin-downloadFile
 
             response = case_management_service.download_file(
@@ -327,9 +336,7 @@ class TestCaseManagementV1Examples():
 
             file = response.get_result()
 
-            print('\ndownload_file() result:\n')
-            print('Attachment content-type:', response.get_headers()['content-type'])
-            print('Attachment contents:', file.content)
+            print(file.content)
 
             # end-downloadFile
 
@@ -345,6 +352,7 @@ class TestCaseManagementV1Examples():
         assert attachment_id is not None
 
         try:
+            print('\ndelete_file() result:')
             # begin-deleteFile
 
             attachment_list = case_management_service.delete_file(
@@ -352,7 +360,7 @@ class TestCaseManagementV1Examples():
                 file_id=attachment_id
             ).get_result()
 
-            print('\ndelete_file() result:\n' + json.dumps(attachment_list, indent=2))
+            print(json.dumps(attachment_list, indent=2))
 
             # end-deleteFile
 
@@ -367,6 +375,7 @@ class TestCaseManagementV1Examples():
         assert case_number is not None
 
         try:
+            print('\nupdate_case_status() result:')
             # begin-updateCaseStatus
 
             status_payload_model = {
@@ -380,7 +389,7 @@ class TestCaseManagementV1Examples():
                 status_payload=status_payload_model
             ).get_result()
 
-            print('\nupdate_case_status() result:\n' + json.dumps(case, indent=2))
+            print(json.dumps(case, indent=2))
 
             # end-updateCaseStatus
 

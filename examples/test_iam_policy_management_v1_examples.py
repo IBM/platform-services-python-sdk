@@ -96,6 +96,8 @@ class TestIamPolicyManagementV1Examples():
         """
         try:
             global example_policy_id
+
+            print('\ncreate_policy() result:')
             # begin-create_policy
 
             policy_subjects = PolicySubject(
@@ -120,9 +122,10 @@ class TestIamPolicyManagementV1Examples():
                 resources=[policy_resources]
             ).get_result()
 
-            print('\ncreate_policy() result:\n' + json.dumps(policy, indent=2))
+            print(json.dumps(policy, indent=2))
 
             # end-create_policy
+
             example_policy_id = policy['id']
 
         except ApiException as e:
@@ -135,6 +138,8 @@ class TestIamPolicyManagementV1Examples():
         """
         try:
             global example_policy_etag
+
+            print('\nget_policy() result:')
             # begin-get_policy
 
             response = iam_policy_management_service.get_policy(
@@ -142,9 +147,10 @@ class TestIamPolicyManagementV1Examples():
             )
             policy = response.get_result()
 
-            print('\nget_policy() result:\n' + json.dumps(policy, indent=2))
+            print(json.dumps(policy, indent=2))
 
             # end-get_policy
+
             example_policy_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
@@ -157,6 +163,8 @@ class TestIamPolicyManagementV1Examples():
         """
         try:
             global example_updated_policy_etag
+
+            print('\nupdate_policy() result:')
             # begin-update_policy
 
             policy_subjects = PolicySubject(
@@ -184,9 +192,10 @@ class TestIamPolicyManagementV1Examples():
             )
             policy = response.get_result()
 
-            print('\nupdate_policy() result:\n' + json.dumps(policy, indent=2))
+            print(json.dumps(policy, indent=2))
 
             # end-update_policy
+
             example_updated_policy_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
@@ -198,6 +207,8 @@ class TestIamPolicyManagementV1Examples():
         patch_policy request example
         """
         try:
+
+            print('\npatch_policy() result:')
             # begin-patch_policy
 
             policy = iam_policy_management_service.patch_policy(
@@ -219,13 +230,15 @@ class TestIamPolicyManagementV1Examples():
         list_policies request example
         """
         try:
+
+            print('\nlist_policies() result:')
             # begin-list_policies
 
             policy_list = iam_policy_management_service.list_policies(
                 account_id=example_account_id, iam_id=example_user_id, format='include_last_permit'
             ).get_result()
 
-            print('\nlist_policies() result:\n' + json.dumps(policy_list, indent=2))
+            print(json.dumps(policy_list, indent=2))
 
             # end-list_policies
 
@@ -238,13 +251,15 @@ class TestIamPolicyManagementV1Examples():
         delete_policy request example
         """
         try:
+
+            print('\ndelete_policy() result:')
             # begin-delete_policy
 
             response = iam_policy_management_service.delete_policy(
                 policy_id=example_policy_id
             ).get_result()
 
-            print('\ndelete_policy() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-delete_policy
 
@@ -258,6 +273,8 @@ class TestIamPolicyManagementV1Examples():
         """
         try:
             global example_custom_role_id
+
+            print('\ncreate_role() result:')
             # begin-create_role
 
             custom_role = iam_policy_management_service.create_role(
@@ -268,9 +285,10 @@ class TestIamPolicyManagementV1Examples():
                 service_name=example_service_name
             ).get_result()
 
-            print('\ncreate_role() result:\n' + json.dumps(custom_role, indent=2))
+            print(json.dumps(custom_role, indent=2))
 
             # end-create_role
+
             example_custom_role_id = custom_role["id"]
 
         except ApiException as e:
@@ -283,6 +301,8 @@ class TestIamPolicyManagementV1Examples():
         """
         try:
             global example_custom_role_etag
+
+            print('\nget_role() result:')
             # begin-get_role
 
             response = iam_policy_management_service.get_role(
@@ -290,9 +310,10 @@ class TestIamPolicyManagementV1Examples():
             )
             custom_role = response.get_result()
 
-            print('\nget_role() result:\n' + json.dumps(custom_role, indent=2))
+            print(json.dumps(custom_role, indent=2))
 
             # end-get_role
+
             example_custom_role_etag = response.get_headers().get("Etag")
 
         except ApiException as e:
@@ -304,6 +325,8 @@ class TestIamPolicyManagementV1Examples():
         update_role request example
         """
         try:
+
+            print('\nupdate_role() result:')
             # begin-update_role
 
             updated_role_actions = [
@@ -314,7 +337,7 @@ class TestIamPolicyManagementV1Examples():
                 actions=updated_role_actions
             ).get_result()
 
-            print('\nupdate_role() result:\n' + json.dumps(custom_role, indent=2))
+            print(json.dumps(custom_role, indent=2))
 
             # end-update_role
 
@@ -327,13 +350,15 @@ class TestIamPolicyManagementV1Examples():
         list_roles request example
         """
         try:
+
+            print('\nlist_roles() result:')
             # begin-list_roles
 
             role_list = iam_policy_management_service.list_roles(
                 account_id=example_account_id
             ).get_result()
 
-            print('\nlist_roles() result:\n' + json.dumps(role_list, indent=2))
+            print(json.dumps(role_list, indent=2))
 
             # end-list_roles
 
@@ -346,13 +371,15 @@ class TestIamPolicyManagementV1Examples():
         delete_role request example
         """
         try:
+
+            print('\ndelete_role() result:')
             # begin-delete_role
 
             response = iam_policy_management_service.delete_role(
                 role_id=example_custom_role_id
             ).get_result()
 
-            print('\ndelete_role() result:\n' + json.dumps(response, indent=2))
+            print(json.dumps(response, indent=2))
 
             # end-delete_role
 
