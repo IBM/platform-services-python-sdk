@@ -1,3 +1,10 @@
+## [0.18.7](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.6...v0.18.7) (2021-04-21)
+
+
+### Bug Fixes
+
+* **Resource Controller:** update service after recent API changes ([#105](https://github.com/IBM/platform-services-python-sdk/issues/105)) ([698441a](https://github.com/IBM/platform-services-python-sdk/commit/698441a35fc2541472ab31c6f6f0289b13d41b83))
+
 ## [0.18.6](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.5...v0.18.6) (2021-04-14)
 
 
