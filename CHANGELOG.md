@@ -1,3 +1,10 @@
+## [0.18.8](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.7...v0.18.8) (2021-04-21)
+
+
+### Bug Fixes
+
+* update __init__.py and working examples ([#108](https://github.com/IBM/platform-services-python-sdk/issues/108)) ([9ef08e4](https://github.com/IBM/platform-services-python-sdk/commit/9ef08e4513d0a7ea16d517a36a823deedc5ee32b))
+
 ## [0.18.7](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.6...v0.18.7) (2021-04-21)
 
 
