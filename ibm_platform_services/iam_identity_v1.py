@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-e6cfc86e-20210308-084627
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-77b4cbf2-20210422-122303
  
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -40,7 +40,7 @@ from .common import get_sdk_headers
 class IamIdentityV1(BaseService):
     """The iam_identity V1 service."""
 
-    DEFAULT_SERVICE_URL = 'https://iam.cloud.ibm.com'
+    DEFAULT_SERVICE_URL = 'https://iam.test.cloud.ibm.com'
     DEFAULT_SERVICE_NAME = 'iam_identity'
 
     @classmethod
@@ -418,10 +418,9 @@ class IamIdentityV1(BaseService):
         """
         Deletes an API key.
 
-        Deletes an API key. Existing tokens will remain valid until expired. Refresh
-        tokens  will not work any more for this API key. Users can manage user API keys
-        for themself, or service ID API  keys for service IDs that are bound to an entity
-        they have access  to.
+        Deletes an API key. Existing tokens will remain valid until expired. Users can
+        manage user API keys for themself, or service ID API  keys for service IDs that
+        are bound to an entity they have access  to.
 
         :param str id: Unique ID of the API key.
         :param dict headers: A `dict` containing the request headers
@@ -995,6 +994,7 @@ class IamIdentityV1(BaseService):
         mfa: str = None,
         session_expiration_in_seconds: str = None,
         session_invalidation_in_seconds: str = None,
+        max_sessions_per_identity: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -1016,7 +1016,7 @@ class IamIdentityV1(BaseService):
                  * NOT_RESTRICTED - to remove access control
                  * NOT_SET - to unset a previously set value.
         :param str restrict_create_platform_apikey: (optional) Defines whether or
-               not creating a Service Id is access controlled. Valid values:
+               not creating platform API keys is access controlled. Valid values:
                  * RESTRICTED - to apply access control
                  * NOT_RESTRICTED - to remove access control
                  * NOT_SET - to 'unset' a previous set value.
@@ -1038,6 +1038,10 @@ class IamIdentityV1(BaseService):
                of time in seconds in which a session will be invalidated due  to
                inactivity. Valid values:
                  * Any whole number between '900' and '7200'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str max_sessions_per_identity: (optional) Defines the max allowed
+               sessions per identity required by the account. Value values:
+                 * Any whole number greater than 0
                  * NOT_SET - To unset account setting and use service default.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -1062,7 +1066,8 @@ class IamIdentityV1(BaseService):
             'allowed_ip_addresses': allowed_ip_addresses,
             'mfa': mfa,
             'session_expiration_in_seconds': session_expiration_in_seconds,
-            'session_invalidation_in_seconds': session_invalidation_in_seconds
+            'session_invalidation_in_seconds': session_invalidation_in_seconds,
+            'max_sessions_per_identity': max_sessions_per_identity
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -1142,8 +1147,8 @@ class AccountSettingsResponse():
             * RESTRICTED - to apply access control
             * NOT_RESTRICTED - to remove access control
             * NOT_SET - to 'unset' a previous set value.
-    :attr str restrict_create_platform_apikey: Defines whether or not creating a
-          Service Id is access controlled. Valid values:
+    :attr str restrict_create_platform_apikey: Defines whether or not creating
+          platform API keys is access controlled. Valid values:
             * RESTRICTED - to apply access control
             * NOT_RESTRICTED - to remove access control
             * NOT_SET - to 'unset' a previous set value.
@@ -1167,6 +1172,10 @@ class AccountSettingsResponse():
           in which a session will be invalidated due  to inactivity. Valid values:
             * Any whole number between '900' and '7200'
             * NOT_SET - To unset account setting and use service default.
+    :attr str max_sessions_per_identity: Defines the max allowed sessions per
+          identity required by the account. Valid values:
+            * Any whole number greater than 0
+            * NOT_SET - To unset account setting and use service default.
     """
 
     def __init__(self,
@@ -1178,6 +1187,7 @@ class AccountSettingsResponse():
                  mfa: str,
                  session_expiration_in_seconds: str,
                  session_invalidation_in_seconds: str,
+                 max_sessions_per_identity: str,
                  *,
                  context: 'ResponseContext' = None,
                  history: List['EnityHistoryRecord'] = None) -> None:
@@ -1191,7 +1201,7 @@ class AccountSettingsResponse():
                  * NOT_RESTRICTED - to remove access control
                  * NOT_SET - to 'unset' a previous set value.
         :param str restrict_create_platform_apikey: Defines whether or not creating
-               a Service Id is access controlled. Valid values:
+               platform API keys is access controlled. Valid values:
                  * RESTRICTED - to apply access control
                  * NOT_RESTRICTED - to remove access control
                  * NOT_SET - to 'unset' a previous set value.
@@ -1214,6 +1224,10 @@ class AccountSettingsResponse():
                values:
                  * Any whole number between '900' and '7200'
                  * NOT_SET - To unset account setting and use service default.
+        :param str max_sessions_per_identity: Defines the max allowed sessions per
+               identity required by the account. Valid values:
+                 * Any whole number greater than 0
+                 * NOT_SET - To unset account setting and use service default.
         :param ResponseContext context: (optional) Context with key properties for
                problem determination.
         :param List[EnityHistoryRecord] history: (optional) History of the Account
@@ -1229,6 +1243,7 @@ class AccountSettingsResponse():
         self.history = history
         self.session_expiration_in_seconds = session_expiration_in_seconds
         self.session_invalidation_in_seconds = session_invalidation_in_seconds
+        self.max_sessions_per_identity = max_sessions_per_identity
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'AccountSettingsResponse':
@@ -1270,6 +1285,10 @@ class AccountSettingsResponse():
             args['session_invalidation_in_seconds'] = _dict.get('session_invalidation_in_seconds')
         else:
             raise ValueError('Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON')
+        if 'max_sessions_per_identity' in _dict:
+            args['max_sessions_per_identity'] = _dict.get('max_sessions_per_identity')
+        else:
+            raise ValueError('Required property \'max_sessions_per_identity\' not present in AccountSettingsResponse JSON')
         return cls(**args)
 
     @classmethod
@@ -1300,6 +1319,8 @@ class AccountSettingsResponse():
             _dict['session_expiration_in_seconds'] = self.session_expiration_in_seconds
         if hasattr(self, 'session_invalidation_in_seconds') and self.session_invalidation_in_seconds is not None:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
+        if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
+            _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
         return _dict
 
     def _to_dict(self):
@@ -1334,7 +1355,8 @@ class AccountSettingsResponse():
 
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
-        Defines whether or not creating a Service Id is access controlled. Valid values:
+        Defines whether or not creating platform API keys is access controlled. Valid
+        values:
           * RESTRICTED - to apply access control
           * NOT_RESTRICTED - to remove access control
           * NOT_SET - to 'unset' a previous set value.
