@@ -45,27 +45,27 @@ Python client library to interact with various
 The IBM Cloud Platform Services Python SDK allows developers to programmatically interact with the following 
 IBM Cloud services:
 
-Service Name | Imported Class Name
---- | --- 
-[Case Management](https://cloud.ibm.com/apidocs/case-management) | CaseManagementV1
-[Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog) | CatalogManagementV1
-[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | ConfigurationGovernanceV1
-[Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit) | EnterpriseBillingUnitsV1
-[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | EnterpriseManagementV1
-[Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports) | EnterpriseUsageReportsV1
-[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | GlobalCatalogV1
-[Global Search](https://cloud.ibm.com/apidocs/search) | GlobalSearchV2
-[Global Tagging](https://cloud.ibm.com/apidocs/tagging) | GlobalTaggingV1
-[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | IamAccessGroupsV2
-[IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api) | IamIdentityV1
-[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | IamPolicyManagementV1
-[Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | OpenServiceBrokerV1
-[Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture) | posturemanagementv1
-[Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | ResourceControllerV2
-[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | ResourceManagerV2
-[Usage Metering](https://cloud.ibm.com/apidocs/usage-metering) | UsageMeteringV4
-[Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting) | UsageReportsV4
-[User Management](https://cloud.ibm.com/apidocs/user-management) | UserManagementV1
+Service Name | Module Name | Service Class Name
+--- | --- | ---
+[Case Management](https://cloud.ibm.com/apidocs/case-management) | case_management_v1 | CaseManagementV1
+[Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog) | catalog_management_v1 | CatalogManagementV1
+[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | configuration_governance_v1 | ConfigurationGovernanceV1
+[Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit) | enterprise_billing_units_v1 | EnterpriseBillingUnitsV1
+[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | enterprise_management_v1 | EnterpriseManagementV1
+[Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports) | enterprise_usage_reports_v1 | EnterpriseUsageReportsV1
+[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | global_catalog_v1 | GlobalCatalogV1
+[Global Search](https://cloud.ibm.com/apidocs/search) | global_search_v2 | GlobalSearchV2
+[Global Tagging](https://cloud.ibm.com/apidocs/tagging) | global_tagging_v1 | GlobalTaggingV1
+[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | iam_access_groups_v2 | IamAccessGroupsV2
+[IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api) | iam_identity_v1 | IamIdentityV1
+[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | iam_policy_management_v1 | IamPolicyManagementV1
+[Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | open_service_broker_v1 | OpenServiceBrokerV1
+[Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture) | posture_management_v1 | PostureManagementV1
+[Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | resource_controller_v2 | ResourceControllerV2
+[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | resource_manager_v2 | ResourceManagerV2
+[Usage Metering](https://cloud.ibm.com/apidocs/usage-metering) | usage_metering_v4 | UsageMeteringV4
+[Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting) | usage_reports_v4 | UsageReportsV4
+[User Management](https://cloud.ibm.com/apidocs/user-management) | user_management_v1 | UserManagementV1
 
 ## Prerequisites
 
@@ -77,16 +77,10 @@ Service Name | Imported Class Name
 
 ## Installation
 
-To install, use `pip` or `easy_install`:
+To install, use `pip`:
 
 ```bash
-pip install --upgrade "ibm-platform-services>=0.18.8"
-```
-
-or
-
-```bash
-easy_install --upgrade "ibm-platform-services>=0.18.8"
+pip install --upgrade ibm-platform-services
 ```
 
 ## Using the SDK
