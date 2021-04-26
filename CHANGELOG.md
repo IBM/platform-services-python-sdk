@@ -1,3 +1,10 @@
+## [0.18.9](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.8...v0.18.9) (2021-04-26)
+
+
+### Bug Fixes
+
+* **IAM Identity:** update service after recent API changes ([#109](https://github.com/IBM/platform-services-python-sdk/issues/109)) ([92bcda0](https://github.com/IBM/platform-services-python-sdk/commit/92bcda08252f7b291c00ba8af48d33bdf1c23c85))
+
 ## [0.18.8](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.7...v0.18.8) (2021-04-21)
 
 
