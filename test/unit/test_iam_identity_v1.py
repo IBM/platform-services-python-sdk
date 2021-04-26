@@ -19,6 +19,7 @@ Unit Tests for IamIdentityV1
 
 from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import inspect
 import json
 import pytest
@@ -1385,7 +1386,7 @@ class TestGetAccountSettings():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "RESTRICTED", "restrict_create_platform_apikey": "RESTRICTED", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "session_expiration_in_seconds", "session_invalidation_in_seconds": "session_invalidation_in_seconds"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "RESTRICTED", "restrict_create_platform_apikey": "RESTRICTED", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "session_expiration_in_seconds", "session_invalidation_in_seconds": "session_invalidation_in_seconds", "max_sessions_per_identity": "max_sessions_per_identity"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1419,7 +1420,7 @@ class TestGetAccountSettings():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "RESTRICTED", "restrict_create_platform_apikey": "RESTRICTED", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "session_expiration_in_seconds", "session_invalidation_in_seconds": "session_invalidation_in_seconds"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "RESTRICTED", "restrict_create_platform_apikey": "RESTRICTED", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "session_expiration_in_seconds", "session_invalidation_in_seconds": "session_invalidation_in_seconds", "max_sessions_per_identity": "max_sessions_per_identity"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1447,7 +1448,7 @@ class TestGetAccountSettings():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "RESTRICTED", "restrict_create_platform_apikey": "RESTRICTED", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "session_expiration_in_seconds", "session_invalidation_in_seconds": "session_invalidation_in_seconds"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "RESTRICTED", "restrict_create_platform_apikey": "RESTRICTED", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "session_expiration_in_seconds", "session_invalidation_in_seconds": "session_invalidation_in_seconds", "max_sessions_per_identity": "max_sessions_per_identity"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1489,7 +1490,7 @@ class TestUpdateAccountSettings():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "RESTRICTED", "restrict_create_platform_apikey": "RESTRICTED", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "session_expiration_in_seconds", "session_invalidation_in_seconds": "session_invalidation_in_seconds"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "RESTRICTED", "restrict_create_platform_apikey": "RESTRICTED", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "session_expiration_in_seconds", "session_invalidation_in_seconds": "session_invalidation_in_seconds", "max_sessions_per_identity": "max_sessions_per_identity"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -1505,6 +1506,7 @@ class TestUpdateAccountSettings():
         mfa = 'NONE'
         session_expiration_in_seconds = 'testString'
         session_invalidation_in_seconds = 'testString'
+        max_sessions_per_identity = 'testString'
 
         # Invoke method
         response = service.update_account_settings(
@@ -1516,6 +1518,7 @@ class TestUpdateAccountSettings():
             mfa=mfa,
             session_expiration_in_seconds=session_expiration_in_seconds,
             session_invalidation_in_seconds=session_invalidation_in_seconds,
+            max_sessions_per_identity=max_sessions_per_identity,
             headers={}
         )
 
@@ -1530,6 +1533,7 @@ class TestUpdateAccountSettings():
         assert req_body['mfa'] == 'NONE'
         assert req_body['session_expiration_in_seconds'] == 'testString'
         assert req_body['session_invalidation_in_seconds'] == 'testString'
+        assert req_body['max_sessions_per_identity'] == 'testString'
 
 
     @responses.activate
@@ -1539,7 +1543,7 @@ class TestUpdateAccountSettings():
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "RESTRICTED", "restrict_create_platform_apikey": "RESTRICTED", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "session_expiration_in_seconds", "session_invalidation_in_seconds": "session_invalidation_in_seconds"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "RESTRICTED", "restrict_create_platform_apikey": "RESTRICTED", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "session_expiration_in_seconds", "session_invalidation_in_seconds": "session_invalidation_in_seconds", "max_sessions_per_identity": "max_sessions_per_identity"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -1555,6 +1559,7 @@ class TestUpdateAccountSettings():
         mfa = 'NONE'
         session_expiration_in_seconds = 'testString'
         session_invalidation_in_seconds = 'testString'
+        max_sessions_per_identity = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1623,6 +1628,7 @@ class TestAccountSettingsResponse():
         account_settings_response_model_json['history'] = [enity_history_record_model]
         account_settings_response_model_json['session_expiration_in_seconds'] = 'testString'
         account_settings_response_model_json['session_invalidation_in_seconds'] = 'testString'
+        account_settings_response_model_json['max_sessions_per_identity'] = 'testString'
 
         # Construct a model instance of AccountSettingsResponse by calling from_dict on the json representation
         account_settings_response_model = AccountSettingsResponse.from_dict(account_settings_response_model_json)
@@ -1679,9 +1685,9 @@ class TestApiKey():
         api_key_model_json['entity_tag'] = 'testString'
         api_key_model_json['crn'] = 'testString'
         api_key_model_json['locked'] = True
-        api_key_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
+        api_key_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         api_key_model_json['created_by'] = 'testString'
-        api_key_model_json['modified_at'] = '2020-01-28T18:40:40.123456Z'
+        api_key_model_json['modified_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         api_key_model_json['name'] = 'testString'
         api_key_model_json['description'] = 'testString'
         api_key_model_json['iam_id'] = 'testString'
@@ -1775,9 +1781,9 @@ class TestApiKeyList():
         api_key_model['entity_tag'] = 'testString'
         api_key_model['crn'] = 'testString'
         api_key_model['locked'] = True
-        api_key_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        api_key_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         api_key_model['created_by'] = 'testString'
-        api_key_model['modified_at'] = '2020-01-28T18:40:40.123456Z'
+        api_key_model['modified_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         api_key_model['name'] = 'testString'
         api_key_model['description'] = 'testString'
         api_key_model['iam_id'] = 'testString'
@@ -1922,9 +1928,9 @@ class TestServiceId():
         api_key_model['entity_tag'] = 'testString'
         api_key_model['crn'] = 'testString'
         api_key_model['locked'] = True
-        api_key_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        api_key_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         api_key_model['created_by'] = 'testString'
-        api_key_model['modified_at'] = '2020-01-28T18:40:40.123456Z'
+        api_key_model['modified_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         api_key_model['name'] = 'testString'
         api_key_model['description'] = 'testString'
         api_key_model['iam_id'] = 'testString'
@@ -1940,8 +1946,8 @@ class TestServiceId():
         service_id_model_json['entity_tag'] = 'testString'
         service_id_model_json['crn'] = 'testString'
         service_id_model_json['locked'] = True
-        service_id_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
-        service_id_model_json['modified_at'] = '2020-01-28T18:40:40.123456Z'
+        service_id_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        service_id_model_json['modified_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         service_id_model_json['account_id'] = 'testString'
         service_id_model_json['name'] = 'testString'
         service_id_model_json['description'] = 'testString'
@@ -2003,9 +2009,9 @@ class TestServiceIdList():
         api_key_model['entity_tag'] = 'testString'
         api_key_model['crn'] = 'testString'
         api_key_model['locked'] = True
-        api_key_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        api_key_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         api_key_model['created_by'] = 'testString'
-        api_key_model['modified_at'] = '2020-01-28T18:40:40.123456Z'
+        api_key_model['modified_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         api_key_model['name'] = 'testString'
         api_key_model['description'] = 'testString'
         api_key_model['iam_id'] = 'testString'
@@ -2020,8 +2026,8 @@ class TestServiceIdList():
         service_id_model['entity_tag'] = 'testString'
         service_id_model['crn'] = 'testString'
         service_id_model['locked'] = True
-        service_id_model['created_at'] = '2020-01-28T18:40:40.123456Z'
-        service_id_model['modified_at'] = '2020-01-28T18:40:40.123456Z'
+        service_id_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        service_id_model['modified_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
         service_id_model['account_id'] = 'testString'
         service_id_model['name'] = 'testString'
         service_id_model['description'] = 'testString'

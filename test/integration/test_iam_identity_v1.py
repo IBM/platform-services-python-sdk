@@ -508,7 +508,8 @@ class TestIamIdentityV1():
             # allowed_ip_addresses='testString',
             mfa='NONE',
             session_expiration_in_seconds="86400",
-            session_invalidation_in_seconds="7200"
+            session_invalidation_in_seconds="7200",
+            max_sessions_per_identity='10',
         )
 
         assert update_account_settings_response.get_status_code() == 200
