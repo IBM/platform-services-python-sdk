@@ -34,7 +34,7 @@ service = IamIdentityV1(
     authenticator=NoAuthAuthenticator()
     )
 
-base_url = 'https://iam.test.cloud.ibm.com'
+base_url = 'https://iam.cloud.ibm.com'
 service.set_service_url(base_url)
 
 ##############################################################################
