@@ -30,12 +30,12 @@ import urllib
 from ibm_platform_services.resource_controller_v2 import *
 
 
-service = ResourceControllerV2(
+_service = ResourceControllerV2(
     authenticator=NoAuthAuthenticator()
     )
 
-base_url = 'https://resource-controller.cloud.ibm.com'
-service.set_service_url(base_url)
+_base_url = 'https://resource-controller.cloud.ibm.com'
+_service.set_service_url(_base_url)
 
 ##############################################################################
 # Start of Service: ResourceInstances
@@ -62,7 +62,7 @@ class TestListResourceInstances():
         list_resource_instances()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}]}'
         responses.add(responses.GET,
                       url,
@@ -81,12 +81,11 @@ class TestListResourceInstances():
         limit = 100
         start = 'testString'
         state = 'active'
-        order_direction = 'asc'
         updated_from = '2019-01-08T00:00:00.000Z'
         updated_to = '2019-01-08T00:00:00.000Z'
 
         # Invoke method
-        response = service.list_resource_instances(
+        response = _service.list_resource_instances(
             guid=guid,
             name=name,
             resource_group_id=resource_group_id,
@@ -97,7 +96,6 @@ class TestListResourceInstances():
             limit=limit,
             start=start,
             state=state,
-            order_direction=order_direction,
             updated_from=updated_from,
             updated_to=updated_to,
             headers={}
@@ -119,7 +117,6 @@ class TestListResourceInstances():
         assert 'limit={}'.format(limit) in query_string
         assert 'start={}'.format(start) in query_string
         assert 'state={}'.format(state) in query_string
-        assert 'order_direction={}'.format(order_direction) in query_string
         assert 'updated_from={}'.format(updated_from) in query_string
         assert 'updated_to={}'.format(updated_to) in query_string
 
@@ -130,7 +127,7 @@ class TestListResourceInstances():
         test_list_resource_instances_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}]}'
         responses.add(responses.GET,
                       url,
@@ -139,7 +136,7 @@ class TestListResourceInstances():
                       status=200)
 
         # Invoke method
-        response = service.list_resource_instances()
+        response = _service.list_resource_instances()
 
 
         # Check for correct operation
@@ -167,7 +164,7 @@ class TestCreateResourceInstance():
         create_resource_instance()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.POST,
                       url,
@@ -176,17 +173,17 @@ class TestCreateResourceInstance():
                       status=201)
 
         # Set up parameter values
-        name = 'ExampleResourceInstance'
-        target = 'global'
-        resource_group = '13aa3ee48c3b44ddb64c05c79f7ab8ef'
-        resource_plan_id = 'a10e4960-3685-11e9-b210-d663bd873d93'
+        name = 'my-instance'
+        target = 'bluemix-us-south'
+        resource_group = '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
+        resource_plan_id = 'cloudant-standard'
         tags = ['testString']
         allow_cleanup = True
         parameters = {}
         entity_lock = True
 
         # Invoke method
-        response = service.create_resource_instance(
+        response = _service.create_resource_instance(
             name,
             target,
             resource_group,
@@ -203,10 +200,10 @@ class TestCreateResourceInstance():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'ExampleResourceInstance'
-        assert req_body['target'] == 'global'
-        assert req_body['resource_group'] == '13aa3ee48c3b44ddb64c05c79f7ab8ef'
-        assert req_body['resource_plan_id'] == 'a10e4960-3685-11e9-b210-d663bd873d93'
+        assert req_body['name'] == 'my-instance'
+        assert req_body['target'] == 'bluemix-us-south'
+        assert req_body['resource_group'] == '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
+        assert req_body['resource_plan_id'] == 'cloudant-standard'
         assert req_body['tags'] == ['testString']
         assert req_body['allow_cleanup'] == True
         assert req_body['parameters'] == {}
@@ -218,7 +215,7 @@ class TestCreateResourceInstance():
         test_create_resource_instance_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.POST,
                       url,
@@ -227,16 +224,16 @@ class TestCreateResourceInstance():
                       status=201)
 
         # Set up parameter values
-        name = 'ExampleResourceInstance'
-        target = 'global'
-        resource_group = '13aa3ee48c3b44ddb64c05c79f7ab8ef'
-        resource_plan_id = 'a10e4960-3685-11e9-b210-d663bd873d93'
+        name = 'my-instance'
+        target = 'bluemix-us-south'
+        resource_group = '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
+        resource_plan_id = 'cloudant-standard'
         tags = ['testString']
         allow_cleanup = True
         parameters = {}
 
         # Invoke method
-        response = service.create_resource_instance(
+        response = _service.create_resource_instance(
             name,
             target,
             resource_group,
@@ -252,10 +249,10 @@ class TestCreateResourceInstance():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'ExampleResourceInstance'
-        assert req_body['target'] == 'global'
-        assert req_body['resource_group'] == '13aa3ee48c3b44ddb64c05c79f7ab8ef'
-        assert req_body['resource_plan_id'] == 'a10e4960-3685-11e9-b210-d663bd873d93'
+        assert req_body['name'] == 'my-instance'
+        assert req_body['target'] == 'bluemix-us-south'
+        assert req_body['resource_group'] == '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
+        assert req_body['resource_plan_id'] == 'cloudant-standard'
         assert req_body['tags'] == ['testString']
         assert req_body['allow_cleanup'] == True
         assert req_body['parameters'] == {}
@@ -267,7 +264,7 @@ class TestCreateResourceInstance():
         test_create_resource_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.POST,
                       url,
@@ -276,10 +273,10 @@ class TestCreateResourceInstance():
                       status=201)
 
         # Set up parameter values
-        name = 'ExampleResourceInstance'
-        target = 'global'
-        resource_group = '13aa3ee48c3b44ddb64c05c79f7ab8ef'
-        resource_plan_id = 'a10e4960-3685-11e9-b210-d663bd873d93'
+        name = 'my-instance'
+        target = 'bluemix-us-south'
+        resource_group = '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
+        resource_plan_id = 'cloudant-standard'
         tags = ['testString']
         allow_cleanup = True
         parameters = {}
@@ -294,7 +291,7 @@ class TestCreateResourceInstance():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_resource_instance(**req_copy)
+                _service.create_resource_instance(**req_copy)
 
 
 
@@ -318,7 +315,7 @@ class TestGetResourceInstance():
         get_resource_instance()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.GET,
                       url,
@@ -330,7 +327,7 @@ class TestGetResourceInstance():
         id = 'testString'
 
         # Invoke method
-        response = service.get_resource_instance(
+        response = _service.get_resource_instance(
             id,
             headers={}
         )
@@ -346,7 +343,7 @@ class TestGetResourceInstance():
         test_get_resource_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.GET,
                       url,
@@ -364,7 +361,7 @@ class TestGetResourceInstance():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_resource_instance(**req_copy)
+                _service.get_resource_instance(**req_copy)
 
 
 
@@ -388,7 +385,7 @@ class TestDeleteResourceInstance():
         delete_resource_instance()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString')
         responses.add(responses.DELETE,
                       url,
                       status=202)
@@ -398,7 +395,7 @@ class TestDeleteResourceInstance():
         recursive = True
 
         # Invoke method
-        response = service.delete_resource_instance(
+        response = _service.delete_resource_instance(
             id,
             recursive=recursive,
             headers={}
@@ -419,7 +416,7 @@ class TestDeleteResourceInstance():
         test_delete_resource_instance_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString')
         responses.add(responses.DELETE,
                       url,
                       status=202)
@@ -428,7 +425,7 @@ class TestDeleteResourceInstance():
         id = 'testString'
 
         # Invoke method
-        response = service.delete_resource_instance(
+        response = _service.delete_resource_instance(
             id,
             headers={}
         )
@@ -444,7 +441,7 @@ class TestDeleteResourceInstance():
         test_delete_resource_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString')
         responses.add(responses.DELETE,
                       url,
                       status=202)
@@ -459,7 +456,7 @@ class TestDeleteResourceInstance():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.delete_resource_instance(**req_copy)
+                _service.delete_resource_instance(**req_copy)
 
 
 
@@ -483,7 +480,7 @@ class TestUpdateResourceInstance():
         update_resource_instance()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.PATCH,
                       url,
@@ -493,13 +490,13 @@ class TestUpdateResourceInstance():
 
         # Set up parameter values
         id = 'testString'
-        name = 'UpdatedExampleResourceInstance'
+        name = 'my-new-instance-name'
         parameters = {}
-        resource_plan_id = 'testString'
+        resource_plan_id = 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
         allow_cleanup = True
 
         # Invoke method
-        response = service.update_resource_instance(
+        response = _service.update_resource_instance(
             id,
             name=name,
             parameters=parameters,
@@ -513,9 +510,9 @@ class TestUpdateResourceInstance():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'UpdatedExampleResourceInstance'
+        assert req_body['name'] == 'my-new-instance-name'
         assert req_body['parameters'] == {}
-        assert req_body['resource_plan_id'] == 'testString'
+        assert req_body['resource_plan_id'] == 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
         assert req_body['allow_cleanup'] == True
 
 
@@ -525,7 +522,7 @@ class TestUpdateResourceInstance():
         test_update_resource_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.PATCH,
                       url,
@@ -535,9 +532,9 @@ class TestUpdateResourceInstance():
 
         # Set up parameter values
         id = 'testString'
-        name = 'UpdatedExampleResourceInstance'
+        name = 'my-new-instance-name'
         parameters = {}
-        resource_plan_id = 'testString'
+        resource_plan_id = 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
         allow_cleanup = True
 
         # Pass in all but one required param and check for a ValueError
@@ -547,7 +544,7 @@ class TestUpdateResourceInstance():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_resource_instance(**req_copy)
+                _service.update_resource_instance(**req_copy)
 
 
 
@@ -571,7 +568,7 @@ class TestListResourceAliasesForInstance():
         list_resource_aliases_for_instance()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString/resource_aliases')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/resource_aliases')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -585,7 +582,7 @@ class TestListResourceAliasesForInstance():
         start = 'testString'
 
         # Invoke method
-        response = service.list_resource_aliases_for_instance(
+        response = _service.list_resource_aliases_for_instance(
             id,
             limit=limit,
             start=start,
@@ -608,7 +605,7 @@ class TestListResourceAliasesForInstance():
         test_list_resource_aliases_for_instance_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString/resource_aliases')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/resource_aliases')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -620,7 +617,7 @@ class TestListResourceAliasesForInstance():
         id = 'testString'
 
         # Invoke method
-        response = service.list_resource_aliases_for_instance(
+        response = _service.list_resource_aliases_for_instance(
             id,
             headers={}
         )
@@ -636,7 +633,7 @@ class TestListResourceAliasesForInstance():
         test_list_resource_aliases_for_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString/resource_aliases')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/resource_aliases')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -654,7 +651,7 @@ class TestListResourceAliasesForInstance():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.list_resource_aliases_for_instance(**req_copy)
+                _service.list_resource_aliases_for_instance(**req_copy)
 
 
 
@@ -678,7 +675,7 @@ class TestListResourceKeysForInstance():
         list_resource_keys_for_instance()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString/resource_keys')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/resource_keys')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -692,7 +689,7 @@ class TestListResourceKeysForInstance():
         start = 'testString'
 
         # Invoke method
-        response = service.list_resource_keys_for_instance(
+        response = _service.list_resource_keys_for_instance(
             id,
             limit=limit,
             start=start,
@@ -715,7 +712,7 @@ class TestListResourceKeysForInstance():
         test_list_resource_keys_for_instance_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString/resource_keys')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/resource_keys')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -727,7 +724,7 @@ class TestListResourceKeysForInstance():
         id = 'testString'
 
         # Invoke method
-        response = service.list_resource_keys_for_instance(
+        response = _service.list_resource_keys_for_instance(
             id,
             headers={}
         )
@@ -743,7 +740,7 @@ class TestListResourceKeysForInstance():
         test_list_resource_keys_for_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString/resource_keys')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/resource_keys')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -761,7 +758,7 @@ class TestListResourceKeysForInstance():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.list_resource_keys_for_instance(**req_copy)
+                _service.list_resource_keys_for_instance(**req_copy)
 
 
 
@@ -785,7 +782,7 @@ class TestLockResourceInstance():
         lock_resource_instance()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString/lock')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/lock')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.POST,
                       url,
@@ -797,7 +794,7 @@ class TestLockResourceInstance():
         id = 'testString'
 
         # Invoke method
-        response = service.lock_resource_instance(
+        response = _service.lock_resource_instance(
             id,
             headers={}
         )
@@ -813,7 +810,7 @@ class TestLockResourceInstance():
         test_lock_resource_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString/lock')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/lock')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.POST,
                       url,
@@ -831,7 +828,7 @@ class TestLockResourceInstance():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.lock_resource_instance(**req_copy)
+                _service.lock_resource_instance(**req_copy)
 
 
 
@@ -855,7 +852,7 @@ class TestUnlockResourceInstance():
         unlock_resource_instance()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString/lock')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/lock')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.DELETE,
                       url,
@@ -867,7 +864,7 @@ class TestUnlockResourceInstance():
         id = 'testString'
 
         # Invoke method
-        response = service.unlock_resource_instance(
+        response = _service.unlock_resource_instance(
             id,
             headers={}
         )
@@ -883,7 +880,7 @@ class TestUnlockResourceInstance():
         test_unlock_resource_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_instances/testString/lock')
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/lock')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.DELETE,
                       url,
@@ -901,7 +898,7 @@ class TestUnlockResourceInstance():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.unlock_resource_instance(**req_copy)
+                _service.unlock_resource_instance(**req_copy)
 
 
 
@@ -935,7 +932,7 @@ class TestListResourceKeys():
         list_resource_keys()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_keys')
+        url = self.preprocess_url(_base_url + '/v2/resource_keys')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -954,7 +951,7 @@ class TestListResourceKeys():
         updated_to = '2019-01-08T00:00:00.000Z'
 
         # Invoke method
-        response = service.list_resource_keys(
+        response = _service.list_resource_keys(
             guid=guid,
             name=name,
             resource_group_id=resource_group_id,
@@ -988,7 +985,7 @@ class TestListResourceKeys():
         test_list_resource_keys_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_keys')
+        url = self.preprocess_url(_base_url + '/v2/resource_keys')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -997,7 +994,7 @@ class TestListResourceKeys():
                       status=200)
 
         # Invoke method
-        response = service.list_resource_keys()
+        response = _service.list_resource_keys()
 
 
         # Check for correct operation
@@ -1025,7 +1022,7 @@ class TestCreateResourceKey():
         create_resource_key()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_keys')
+        url = self.preprocess_url(_base_url + '/v2/resource_keys')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.POST,
                       url,
@@ -1039,13 +1036,13 @@ class TestCreateResourceKey():
         resource_key_post_parameters_model['foo'] = { 'foo': 'bar' }
 
         # Set up parameter values
-        name = 'ExampleResourceKey'
-        source = '381fd51a-f251-4f95-aff4-2b03fa8caa63'
+        name = 'my-key'
+        source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
         parameters = resource_key_post_parameters_model
-        role = 'testString'
+        role = 'Writer'
 
         # Invoke method
-        response = service.create_resource_key(
+        response = _service.create_resource_key(
             name,
             source,
             parameters=parameters,
@@ -1058,10 +1055,10 @@ class TestCreateResourceKey():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'ExampleResourceKey'
-        assert req_body['source'] == '381fd51a-f251-4f95-aff4-2b03fa8caa63'
+        assert req_body['name'] == 'my-key'
+        assert req_body['source'] == '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
         assert req_body['parameters'] == resource_key_post_parameters_model
-        assert req_body['role'] == 'testString'
+        assert req_body['role'] == 'Writer'
 
 
     @responses.activate
@@ -1070,7 +1067,7 @@ class TestCreateResourceKey():
         test_create_resource_key_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_keys')
+        url = self.preprocess_url(_base_url + '/v2/resource_keys')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.POST,
                       url,
@@ -1084,10 +1081,10 @@ class TestCreateResourceKey():
         resource_key_post_parameters_model['foo'] = { 'foo': 'bar' }
 
         # Set up parameter values
-        name = 'ExampleResourceKey'
-        source = '381fd51a-f251-4f95-aff4-2b03fa8caa63'
+        name = 'my-key'
+        source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
         parameters = resource_key_post_parameters_model
-        role = 'testString'
+        role = 'Writer'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1097,7 +1094,7 @@ class TestCreateResourceKey():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_resource_key(**req_copy)
+                _service.create_resource_key(**req_copy)
 
 
 
@@ -1121,7 +1118,7 @@ class TestGetResourceKey():
         get_resource_key()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_keys/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_keys/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.GET,
                       url,
@@ -1133,7 +1130,7 @@ class TestGetResourceKey():
         id = 'testString'
 
         # Invoke method
-        response = service.get_resource_key(
+        response = _service.get_resource_key(
             id,
             headers={}
         )
@@ -1149,7 +1146,7 @@ class TestGetResourceKey():
         test_get_resource_key_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_keys/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_keys/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.GET,
                       url,
@@ -1167,7 +1164,7 @@ class TestGetResourceKey():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_resource_key(**req_copy)
+                _service.get_resource_key(**req_copy)
 
 
 
@@ -1191,7 +1188,7 @@ class TestDeleteResourceKey():
         delete_resource_key()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_keys/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_keys/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1200,7 +1197,7 @@ class TestDeleteResourceKey():
         id = 'testString'
 
         # Invoke method
-        response = service.delete_resource_key(
+        response = _service.delete_resource_key(
             id,
             headers={}
         )
@@ -1216,7 +1213,7 @@ class TestDeleteResourceKey():
         test_delete_resource_key_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_keys/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_keys/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1231,7 +1228,7 @@ class TestDeleteResourceKey():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.delete_resource_key(**req_copy)
+                _service.delete_resource_key(**req_copy)
 
 
 
@@ -1255,7 +1252,7 @@ class TestUpdateResourceKey():
         update_resource_key()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_keys/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_keys/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.PATCH,
                       url,
@@ -1265,10 +1262,10 @@ class TestUpdateResourceKey():
 
         # Set up parameter values
         id = 'testString'
-        name = 'UpdatedExampleResourceKey'
+        name = 'my-new-key-name'
 
         # Invoke method
-        response = service.update_resource_key(
+        response = _service.update_resource_key(
             id,
             name,
             headers={}
@@ -1279,7 +1276,7 @@ class TestUpdateResourceKey():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'UpdatedExampleResourceKey'
+        assert req_body['name'] == 'my-new-key-name'
 
 
     @responses.activate
@@ -1288,7 +1285,7 @@ class TestUpdateResourceKey():
         test_update_resource_key_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_keys/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_keys/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.PATCH,
                       url,
@@ -1298,7 +1295,7 @@ class TestUpdateResourceKey():
 
         # Set up parameter values
         id = 'testString'
-        name = 'UpdatedExampleResourceKey'
+        name = 'my-new-key-name'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1308,7 +1305,7 @@ class TestUpdateResourceKey():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_resource_key(**req_copy)
+                _service.update_resource_key(**req_copy)
 
 
 
@@ -1342,7 +1339,7 @@ class TestListResourceBindings():
         list_resource_bindings()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_bindings')
+        url = self.preprocess_url(_base_url + '/v2/resource_bindings')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -1362,7 +1359,7 @@ class TestListResourceBindings():
         updated_to = '2019-01-08T00:00:00.000Z'
 
         # Invoke method
-        response = service.list_resource_bindings(
+        response = _service.list_resource_bindings(
             guid=guid,
             name=name,
             resource_group_id=resource_group_id,
@@ -1398,7 +1395,7 @@ class TestListResourceBindings():
         test_list_resource_bindings_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_bindings')
+        url = self.preprocess_url(_base_url + '/v2/resource_bindings')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -1407,7 +1404,7 @@ class TestListResourceBindings():
                       status=200)
 
         # Invoke method
-        response = service.list_resource_bindings()
+        response = _service.list_resource_bindings()
 
 
         # Check for correct operation
@@ -1435,7 +1432,7 @@ class TestCreateResourceBinding():
         create_resource_binding()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_bindings')
+        url = self.preprocess_url(_base_url + '/v2/resource_bindings')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.POST,
                       url,
@@ -1449,14 +1446,14 @@ class TestCreateResourceBinding():
         resource_binding_post_parameters_model['foo'] = { 'foo': 'bar' }
 
         # Set up parameter values
-        source = 'faaec9d8-ec64-44d8-ab83-868632fac6a2'
-        target = 'crn:v1:staging:public:bluemix:us-south:s/e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7::cf-application:8d9457e0-1303-4f32-b4b3-5525575f6205'
-        name = 'ExampleResourceBinding'
+        source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
+        target = 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
+        name = 'my-binding'
         parameters = resource_binding_post_parameters_model
-        role = 'testString'
+        role = 'Writer'
 
         # Invoke method
-        response = service.create_resource_binding(
+        response = _service.create_resource_binding(
             source,
             target,
             name=name,
@@ -1470,11 +1467,11 @@ class TestCreateResourceBinding():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['source'] == 'faaec9d8-ec64-44d8-ab83-868632fac6a2'
-        assert req_body['target'] == 'crn:v1:staging:public:bluemix:us-south:s/e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7::cf-application:8d9457e0-1303-4f32-b4b3-5525575f6205'
-        assert req_body['name'] == 'ExampleResourceBinding'
+        assert req_body['source'] == '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
+        assert req_body['target'] == 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
+        assert req_body['name'] == 'my-binding'
         assert req_body['parameters'] == resource_binding_post_parameters_model
-        assert req_body['role'] == 'testString'
+        assert req_body['role'] == 'Writer'
 
 
     @responses.activate
@@ -1483,7 +1480,7 @@ class TestCreateResourceBinding():
         test_create_resource_binding_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_bindings')
+        url = self.preprocess_url(_base_url + '/v2/resource_bindings')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.POST,
                       url,
@@ -1497,11 +1494,11 @@ class TestCreateResourceBinding():
         resource_binding_post_parameters_model['foo'] = { 'foo': 'bar' }
 
         # Set up parameter values
-        source = 'faaec9d8-ec64-44d8-ab83-868632fac6a2'
-        target = 'crn:v1:staging:public:bluemix:us-south:s/e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7::cf-application:8d9457e0-1303-4f32-b4b3-5525575f6205'
-        name = 'ExampleResourceBinding'
+        source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
+        target = 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
+        name = 'my-binding'
         parameters = resource_binding_post_parameters_model
-        role = 'testString'
+        role = 'Writer'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1511,7 +1508,7 @@ class TestCreateResourceBinding():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_resource_binding(**req_copy)
+                _service.create_resource_binding(**req_copy)
 
 
 
@@ -1535,7 +1532,7 @@ class TestGetResourceBinding():
         get_resource_binding()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_bindings/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_bindings/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.GET,
                       url,
@@ -1547,7 +1544,7 @@ class TestGetResourceBinding():
         id = 'testString'
 
         # Invoke method
-        response = service.get_resource_binding(
+        response = _service.get_resource_binding(
             id,
             headers={}
         )
@@ -1563,7 +1560,7 @@ class TestGetResourceBinding():
         test_get_resource_binding_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_bindings/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_bindings/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.GET,
                       url,
@@ -1581,7 +1578,7 @@ class TestGetResourceBinding():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_resource_binding(**req_copy)
+                _service.get_resource_binding(**req_copy)
 
 
 
@@ -1605,7 +1602,7 @@ class TestDeleteResourceBinding():
         delete_resource_binding()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_bindings/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_bindings/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1614,7 +1611,7 @@ class TestDeleteResourceBinding():
         id = 'testString'
 
         # Invoke method
-        response = service.delete_resource_binding(
+        response = _service.delete_resource_binding(
             id,
             headers={}
         )
@@ -1630,7 +1627,7 @@ class TestDeleteResourceBinding():
         test_delete_resource_binding_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_bindings/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_bindings/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1645,7 +1642,7 @@ class TestDeleteResourceBinding():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.delete_resource_binding(**req_copy)
+                _service.delete_resource_binding(**req_copy)
 
 
 
@@ -1669,7 +1666,7 @@ class TestUpdateResourceBinding():
         update_resource_binding()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_bindings/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_bindings/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.PATCH,
                       url,
@@ -1679,10 +1676,10 @@ class TestUpdateResourceBinding():
 
         # Set up parameter values
         id = 'testString'
-        name = 'UpdatedExampleResourceBinding'
+        name = 'my-new-binding-name'
 
         # Invoke method
-        response = service.update_resource_binding(
+        response = _service.update_resource_binding(
             id,
             name,
             headers={}
@@ -1693,7 +1690,7 @@ class TestUpdateResourceBinding():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'UpdatedExampleResourceBinding'
+        assert req_body['name'] == 'my-new-binding-name'
 
 
     @responses.activate
@@ -1702,7 +1699,7 @@ class TestUpdateResourceBinding():
         test_update_resource_binding_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_bindings/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_bindings/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.PATCH,
                       url,
@@ -1712,7 +1709,7 @@ class TestUpdateResourceBinding():
 
         # Set up parameter values
         id = 'testString'
-        name = 'UpdatedExampleResourceBinding'
+        name = 'my-new-binding-name'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1722,7 +1719,7 @@ class TestUpdateResourceBinding():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_resource_binding(**req_copy)
+                _service.update_resource_binding(**req_copy)
 
 
 
@@ -1756,7 +1753,7 @@ class TestListResourceAliases():
         list_resource_aliases()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_aliases')
+        url = self.preprocess_url(_base_url + '/v2/resource_aliases')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -1777,7 +1774,7 @@ class TestListResourceAliases():
         updated_to = '2019-01-08T00:00:00.000Z'
 
         # Invoke method
-        response = service.list_resource_aliases(
+        response = _service.list_resource_aliases(
             guid=guid,
             name=name,
             resource_instance_id=resource_instance_id,
@@ -1815,7 +1812,7 @@ class TestListResourceAliases():
         test_list_resource_aliases_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_aliases')
+        url = self.preprocess_url(_base_url + '/v2/resource_aliases')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -1824,7 +1821,7 @@ class TestListResourceAliases():
                       status=200)
 
         # Invoke method
-        response = service.list_resource_aliases()
+        response = _service.list_resource_aliases()
 
 
         # Check for correct operation
@@ -1852,7 +1849,7 @@ class TestCreateResourceAlias():
         create_resource_alias()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_aliases')
+        url = self.preprocess_url(_base_url + '/v2/resource_aliases')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}'
         responses.add(responses.POST,
                       url,
@@ -1861,12 +1858,12 @@ class TestCreateResourceAlias():
                       status=201)
 
         # Set up parameter values
-        name = 'ExampleResourceAlias'
-        source = '381fd51a-f251-4f95-aff4-2b03fa8caa63'
-        target = 'crn:v1:bluemix:public:bluemix:us-south:o/d35d4f0e-5076-4c89-9361-2522894b6548::cf-space:e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7'
+        name = 'my-alias'
+        source = 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
+        target = 'crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
 
         # Invoke method
-        response = service.create_resource_alias(
+        response = _service.create_resource_alias(
             name,
             source,
             target,
@@ -1878,9 +1875,9 @@ class TestCreateResourceAlias():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'ExampleResourceAlias'
-        assert req_body['source'] == '381fd51a-f251-4f95-aff4-2b03fa8caa63'
-        assert req_body['target'] == 'crn:v1:bluemix:public:bluemix:us-south:o/d35d4f0e-5076-4c89-9361-2522894b6548::cf-space:e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7'
+        assert req_body['name'] == 'my-alias'
+        assert req_body['source'] == 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
+        assert req_body['target'] == 'crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
 
 
     @responses.activate
@@ -1889,7 +1886,7 @@ class TestCreateResourceAlias():
         test_create_resource_alias_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_aliases')
+        url = self.preprocess_url(_base_url + '/v2/resource_aliases')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}'
         responses.add(responses.POST,
                       url,
@@ -1898,9 +1895,9 @@ class TestCreateResourceAlias():
                       status=201)
 
         # Set up parameter values
-        name = 'ExampleResourceAlias'
-        source = '381fd51a-f251-4f95-aff4-2b03fa8caa63'
-        target = 'crn:v1:bluemix:public:bluemix:us-south:o/d35d4f0e-5076-4c89-9361-2522894b6548::cf-space:e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7'
+        name = 'my-alias'
+        source = 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
+        target = 'crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1911,7 +1908,7 @@ class TestCreateResourceAlias():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_resource_alias(**req_copy)
+                _service.create_resource_alias(**req_copy)
 
 
 
@@ -1935,7 +1932,7 @@ class TestGetResourceAlias():
         get_resource_alias()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_aliases/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}'
         responses.add(responses.GET,
                       url,
@@ -1947,7 +1944,7 @@ class TestGetResourceAlias():
         id = 'testString'
 
         # Invoke method
-        response = service.get_resource_alias(
+        response = _service.get_resource_alias(
             id,
             headers={}
         )
@@ -1963,7 +1960,7 @@ class TestGetResourceAlias():
         test_get_resource_alias_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_aliases/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}'
         responses.add(responses.GET,
                       url,
@@ -1981,7 +1978,7 @@ class TestGetResourceAlias():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_resource_alias(**req_copy)
+                _service.get_resource_alias(**req_copy)
 
 
 
@@ -2005,7 +2002,7 @@ class TestDeleteResourceAlias():
         delete_resource_alias()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_aliases/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2014,7 +2011,7 @@ class TestDeleteResourceAlias():
         id = 'testString'
 
         # Invoke method
-        response = service.delete_resource_alias(
+        response = _service.delete_resource_alias(
             id,
             headers={}
         )
@@ -2030,7 +2027,7 @@ class TestDeleteResourceAlias():
         test_delete_resource_alias_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_aliases/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2045,7 +2042,7 @@ class TestDeleteResourceAlias():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.delete_resource_alias(**req_copy)
+                _service.delete_resource_alias(**req_copy)
 
 
 
@@ -2069,7 +2066,7 @@ class TestUpdateResourceAlias():
         update_resource_alias()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_aliases/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}'
         responses.add(responses.PATCH,
                       url,
@@ -2079,10 +2076,10 @@ class TestUpdateResourceAlias():
 
         # Set up parameter values
         id = 'testString'
-        name = 'UpdatedExampleResourceAlias'
+        name = 'my-new-alias-name'
 
         # Invoke method
-        response = service.update_resource_alias(
+        response = _service.update_resource_alias(
             id,
             name,
             headers={}
@@ -2093,7 +2090,7 @@ class TestUpdateResourceAlias():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'UpdatedExampleResourceAlias'
+        assert req_body['name'] == 'my-new-alias-name'
 
 
     @responses.activate
@@ -2102,7 +2099,7 @@ class TestUpdateResourceAlias():
         test_update_resource_alias_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_aliases/testString')
+        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}'
         responses.add(responses.PATCH,
                       url,
@@ -2112,7 +2109,7 @@ class TestUpdateResourceAlias():
 
         # Set up parameter values
         id = 'testString'
-        name = 'UpdatedExampleResourceAlias'
+        name = 'my-new-alias-name'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -2122,7 +2119,7 @@ class TestUpdateResourceAlias():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_resource_alias(**req_copy)
+                _service.update_resource_alias(**req_copy)
 
 
 
@@ -2146,7 +2143,7 @@ class TestListResourceBindingsForAlias():
         list_resource_bindings_for_alias()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_aliases/testString/resource_bindings')
+        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString/resource_bindings')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -2160,7 +2157,7 @@ class TestListResourceBindingsForAlias():
         start = 'testString'
 
         # Invoke method
-        response = service.list_resource_bindings_for_alias(
+        response = _service.list_resource_bindings_for_alias(
             id,
             limit=limit,
             start=start,
@@ -2183,7 +2180,7 @@ class TestListResourceBindingsForAlias():
         test_list_resource_bindings_for_alias_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_aliases/testString/resource_bindings')
+        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString/resource_bindings')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -2195,7 +2192,7 @@ class TestListResourceBindingsForAlias():
         id = 'testString'
 
         # Invoke method
-        response = service.list_resource_bindings_for_alias(
+        response = _service.list_resource_bindings_for_alias(
             id,
             headers={}
         )
@@ -2211,7 +2208,7 @@ class TestListResourceBindingsForAlias():
         test_list_resource_bindings_for_alias_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resource_aliases/testString/resource_bindings')
+        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString/resource_bindings')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -2229,7 +2226,7 @@ class TestListResourceBindingsForAlias():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.list_resource_bindings_for_alias(**req_copy)
+                _service.list_resource_bindings_for_alias(**req_copy)
 
 
 
@@ -2263,7 +2260,7 @@ class TestListReclamations():
         list_reclamations()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/reclamations')
+        url = self.preprocess_url(_base_url + '/v1/reclamations')
         mock_response = '{"resources": [{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
@@ -2276,7 +2273,7 @@ class TestListReclamations():
         resource_instance_id = 'testString'
 
         # Invoke method
-        response = service.list_reclamations(
+        response = _service.list_reclamations(
             account_id=account_id,
             resource_instance_id=resource_instance_id,
             headers={}
@@ -2298,7 +2295,7 @@ class TestListReclamations():
         test_list_reclamations_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/reclamations')
+        url = self.preprocess_url(_base_url + '/v1/reclamations')
         mock_response = '{"resources": [{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
@@ -2307,7 +2304,7 @@ class TestListReclamations():
                       status=200)
 
         # Invoke method
-        response = service.list_reclamations()
+        response = _service.list_reclamations()
 
 
         # Check for correct operation
@@ -2335,7 +2332,7 @@ class TestRunReclamationAction():
         run_reclamation_action()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/reclamations/testString/actions/testString')
+        url = self.preprocess_url(_base_url + '/v1/reclamations/testString/actions/testString')
         mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.POST,
                       url,
@@ -2350,7 +2347,7 @@ class TestRunReclamationAction():
         comment = 'testString'
 
         # Invoke method
-        response = service.run_reclamation_action(
+        response = _service.run_reclamation_action(
             id,
             action_name,
             request_by=request_by,
@@ -2373,7 +2370,7 @@ class TestRunReclamationAction():
         test_run_reclamation_action_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/reclamations/testString/actions/testString')
+        url = self.preprocess_url(_base_url + '/v1/reclamations/testString/actions/testString')
         mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.POST,
                       url,
@@ -2386,7 +2383,7 @@ class TestRunReclamationAction():
         action_name = 'testString'
 
         # Invoke method
-        response = service.run_reclamation_action(
+        response = _service.run_reclamation_action(
             id,
             action_name,
             headers={}
@@ -2403,7 +2400,7 @@ class TestRunReclamationAction():
         test_run_reclamation_action_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/reclamations/testString/actions/testString')
+        url = self.preprocess_url(_base_url + '/v1/reclamations/testString/actions/testString')
         mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.POST,
                       url,
@@ -2423,7 +2420,7 @@ class TestRunReclamationAction():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.run_reclamation_action(**req_copy)
+                _service.run_reclamation_action(**req_copy)
 
 
 
@@ -2484,7 +2481,7 @@ class TestPlanHistoryItem():
         # Construct a json representation of a PlanHistoryItem model
         plan_history_item_model_json = {}
         plan_history_item_model_json['resource_plan_id'] = 'testString'
-        plan_history_item_model_json['start_date'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        plan_history_item_model_json['start_date'] = "2019-01-01T12:00:00Z"
         plan_history_item_model_json['requestor_id'] = 'testString'
 
         # Construct a model instance of PlanHistoryItem by calling from_dict on the json representation
@@ -2525,9 +2522,9 @@ class TestReclamation():
         reclamation_model_json['state'] = 'testString'
         reclamation_model_json['target_time'] = 'testString'
         reclamation_model_json['custom_properties'] = {}
-        reclamation_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        reclamation_model_json['created_at'] = "2019-01-01T12:00:00Z"
         reclamation_model_json['created_by'] = 'testString'
-        reclamation_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        reclamation_model_json['updated_at'] = "2019-01-01T12:00:00Z"
         reclamation_model_json['updated_by'] = 'testString'
 
         # Construct a model instance of Reclamation by calling from_dict on the json representation
@@ -2569,9 +2566,9 @@ class TestReclamationsList():
         reclamation_model['state'] = 'testString'
         reclamation_model['target_time'] = 'testString'
         reclamation_model['custom_properties'] = {}
-        reclamation_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        reclamation_model['created_at'] = "2019-01-01T12:00:00Z"
         reclamation_model['created_by'] = 'testString'
-        reclamation_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        reclamation_model['updated_at'] = "2019-01-01T12:00:00Z"
         reclamation_model['updated_by'] = 'testString'
 
         # Construct a json representation of a ReclamationsList model
@@ -2608,9 +2605,9 @@ class TestResourceAlias():
         resource_alias_model_json['id'] = 'testString'
         resource_alias_model_json['guid'] = 'testString'
         resource_alias_model_json['url'] = 'testString'
-        resource_alias_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_alias_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_alias_model_json['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_alias_model_json['created_at'] = "2019-01-01T12:00:00Z"
+        resource_alias_model_json['updated_at'] = "2019-01-01T12:00:00Z"
+        resource_alias_model_json['deleted_at'] = "2019-01-01T12:00:00Z"
         resource_alias_model_json['created_by'] = 'testString'
         resource_alias_model_json['updated_by'] = 'testString'
         resource_alias_model_json['deleted_by'] = 'testString'
@@ -2660,9 +2657,9 @@ class TestResourceAliasesList():
         resource_alias_model['id'] = 'testString'
         resource_alias_model['guid'] = 'testString'
         resource_alias_model['url'] = 'testString'
-        resource_alias_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_alias_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_alias_model['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_alias_model['created_at'] = "2019-01-01T12:00:00Z"
+        resource_alias_model['updated_at'] = "2019-01-01T12:00:00Z"
+        resource_alias_model['deleted_at'] = "2019-01-01T12:00:00Z"
         resource_alias_model['created_by'] = 'testString'
         resource_alias_model['updated_by'] = 'testString'
         resource_alias_model['deleted_by'] = 'testString'
@@ -2727,9 +2724,9 @@ class TestResourceBinding():
         resource_binding_model_json['id'] = 'testString'
         resource_binding_model_json['guid'] = 'testString'
         resource_binding_model_json['url'] = 'testString'
-        resource_binding_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_binding_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_binding_model_json['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_binding_model_json['created_at'] = "2019-01-01T12:00:00Z"
+        resource_binding_model_json['updated_at'] = "2019-01-01T12:00:00Z"
+        resource_binding_model_json['deleted_at'] = "2019-01-01T12:00:00Z"
         resource_binding_model_json['created_by'] = 'testString'
         resource_binding_model_json['updated_by'] = 'testString'
         resource_binding_model_json['deleted_by'] = 'testString'
@@ -2817,9 +2814,9 @@ class TestResourceBindingsList():
         resource_binding_model['id'] = 'testString'
         resource_binding_model['guid'] = 'testString'
         resource_binding_model['url'] = 'testString'
-        resource_binding_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_binding_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_binding_model['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_binding_model['created_at'] = "2019-01-01T12:00:00Z"
+        resource_binding_model['updated_at'] = "2019-01-01T12:00:00Z"
+        resource_binding_model['deleted_at'] = "2019-01-01T12:00:00Z"
         resource_binding_model['created_by'] = 'testString'
         resource_binding_model['updated_by'] = 'testString'
         resource_binding_model['deleted_by'] = 'testString'
@@ -2873,7 +2870,7 @@ class TestResourceInstance():
 
         plan_history_item_model = {} # PlanHistoryItem
         plan_history_item_model['resource_plan_id'] = 'testString'
-        plan_history_item_model['start_date'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        plan_history_item_model['start_date'] = "2019-01-01T12:00:00Z"
         plan_history_item_model['requestor_id'] = 'testString'
 
         # Construct a json representation of a ResourceInstance model
@@ -2881,14 +2878,14 @@ class TestResourceInstance():
         resource_instance_model_json['id'] = 'testString'
         resource_instance_model_json['guid'] = 'testString'
         resource_instance_model_json['url'] = 'testString'
-        resource_instance_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_instance_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_instance_model_json['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_instance_model_json['created_at'] = "2019-01-01T12:00:00Z"
+        resource_instance_model_json['updated_at'] = "2019-01-01T12:00:00Z"
+        resource_instance_model_json['deleted_at'] = "2019-01-01T12:00:00Z"
         resource_instance_model_json['created_by'] = 'testString'
         resource_instance_model_json['updated_by'] = 'testString'
         resource_instance_model_json['deleted_by'] = 'testString'
-        resource_instance_model_json['scheduled_reclaim_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_instance_model_json['restored_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_instance_model_json['scheduled_reclaim_at'] = "2019-01-01T12:00:00Z"
+        resource_instance_model_json['restored_at'] = "2019-01-01T12:00:00Z"
         resource_instance_model_json['restored_by'] = 'testString'
         resource_instance_model_json['scheduled_reclaim_by'] = 'testString'
         resource_instance_model_json['name'] = 'testString'
@@ -2946,21 +2943,21 @@ class TestResourceInstancesList():
 
         plan_history_item_model = {} # PlanHistoryItem
         plan_history_item_model['resource_plan_id'] = 'testString'
-        plan_history_item_model['start_date'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        plan_history_item_model['start_date'] = "2019-01-01T12:00:00Z"
         plan_history_item_model['requestor_id'] = 'testString'
 
         resource_instance_model = {} # ResourceInstance
         resource_instance_model['id'] = 'testString'
         resource_instance_model['guid'] = 'testString'
         resource_instance_model['url'] = 'testString'
-        resource_instance_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_instance_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_instance_model['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_instance_model['created_at'] = "2019-01-01T12:00:00Z"
+        resource_instance_model['updated_at'] = "2019-01-01T12:00:00Z"
+        resource_instance_model['deleted_at'] = "2019-01-01T12:00:00Z"
         resource_instance_model['created_by'] = 'testString'
         resource_instance_model['updated_by'] = 'testString'
         resource_instance_model['deleted_by'] = 'testString'
-        resource_instance_model['scheduled_reclaim_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_instance_model['restored_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_instance_model['scheduled_reclaim_at'] = "2019-01-01T12:00:00Z"
+        resource_instance_model['restored_at'] = "2019-01-01T12:00:00Z"
         resource_instance_model['restored_by'] = 'testString'
         resource_instance_model['scheduled_reclaim_by'] = 'testString'
         resource_instance_model['name'] = 'testString'
@@ -3035,9 +3032,9 @@ class TestResourceKey():
         resource_key_model_json['id'] = 'testString'
         resource_key_model_json['guid'] = 'testString'
         resource_key_model_json['url'] = 'testString'
-        resource_key_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_key_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_key_model_json['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_key_model_json['created_at'] = "2019-01-01T12:00:00Z"
+        resource_key_model_json['updated_at'] = "2019-01-01T12:00:00Z"
+        resource_key_model_json['deleted_at'] = "2019-01-01T12:00:00Z"
         resource_key_model_json['created_by'] = 'testString'
         resource_key_model_json['updated_by'] = 'testString'
         resource_key_model_json['deleted_by'] = 'testString'
@@ -3123,9 +3120,9 @@ class TestResourceKeysList():
         resource_key_model['id'] = 'testString'
         resource_key_model['guid'] = 'testString'
         resource_key_model['url'] = 'testString'
-        resource_key_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_key_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
-        resource_key_model['deleted_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        resource_key_model['created_at'] = "2019-01-01T12:00:00Z"
+        resource_key_model['updated_at'] = "2019-01-01T12:00:00Z"
+        resource_key_model['deleted_at'] = "2019-01-01T12:00:00Z"
         resource_key_model['created_by'] = 'testString'
         resource_key_model['updated_by'] = 'testString'
         resource_key_model['deleted_by'] = 'testString'
