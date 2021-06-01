@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-77b4cbf2-20210420-134305
+# IBM OpenAPI SDK Code Generator Version: 3.32.0-4c6a3129-20210514-210323
  
 """
 Manage lifecycle of your Cloud resources using Resource Controller APIs. Resources are
@@ -91,7 +91,6 @@ class ResourceControllerV2(BaseService):
         limit: int = None,
         start: str = None,
         state: str = None,
-        order_direction: str = None,
         updated_from: str = None,
         updated_to: str = None,
         **kwargs
@@ -126,7 +125,6 @@ class ResourceControllerV2(BaseService):
                operation response.
         :param str state: (optional) The state of the instance. If not specified,
                instances in state `active` and `provisioning` are returned.
-        :param str order_direction: (optional) Order of results.
         :param str updated_from: (optional) Start date inclusive filter.
         :param str updated_to: (optional) End date inclusive filter.
         :param dict headers: A `dict` containing the request headers
@@ -151,7 +149,6 @@ class ResourceControllerV2(BaseService):
             'limit': limit,
             'start': start,
             'state': state,
-            'order_direction': order_direction,
             'updated_from': updated_from,
             'updated_to': updated_to
         }
@@ -306,7 +303,7 @@ class ResourceControllerV2(BaseService):
         Delete a resource instance.
 
         Delete a resource instance by ID. If the resource instance has any resource keys
-        or aliases associated with it, use the `recursive=true` parameter to delete it.
+        or aliases associated with it, use the `recursive=true parameter` to delete it.
 
         :param str id: The short or long ID of the instance.
         :param bool recursive: (optional) Will delete resource bindings, keys and
@@ -621,7 +618,7 @@ class ResourceControllerV2(BaseService):
         """
         Get a list of all of the resource keys.
 
-        List all resource keys.
+        View all of the resource keys that exist for all of your resource instances.
 
         :param str guid: (optional) When you create a new key, a GUID (globally
                unique identifier) is assigned. This is a unique internal GUID managed by
@@ -686,7 +683,8 @@ class ResourceControllerV2(BaseService):
         """
         Create a new resource key.
 
-        Create a new resource key.
+        A resource key is a saved credential you can use to authenticate with a resource
+        instance.
 
         :param str name: The name of the key.
         :param str source: The short or long ID of resource instance or alias.
@@ -743,7 +741,8 @@ class ResourceControllerV2(BaseService):
         """
         Get resource key by ID.
 
-        Get resource key by ID.
+        View a resource key and all of its details, like the credentials for the key and
+        who created it.
 
         :param str id: The short or long ID of the key.
         :param dict headers: A `dict` containing the request headers
@@ -782,7 +781,8 @@ class ResourceControllerV2(BaseService):
         """
         Delete a resource key by ID.
 
-        Delete a resource key by ID.
+        Deleting a resource key does not affect any resource instance or resource alias
+        associated with the key.
 
         :param str id: The short or long ID of the key.
         :param dict headers: A `dict` containing the request headers
@@ -821,7 +821,7 @@ class ResourceControllerV2(BaseService):
         """
         Update a resource key.
 
-        Update a resource key by ID.
+        Use the resource key ID to update the name of the resource key.
 
         :param str id: The short or long ID of the key.
         :param str name: The new name of the key. Must be 180 characters or less
@@ -885,7 +885,7 @@ class ResourceControllerV2(BaseService):
         """
         Get a list of all resource bindings.
 
-        Get a list of all resource bindings.
+        View all of the resource bindings that exist for all of your resource aliases.
 
         :param str guid: (optional) The short ID of the binding.
         :param str name: (optional) The human-readable name of the binding.
@@ -952,7 +952,8 @@ class ResourceControllerV2(BaseService):
         """
         Create a new resource binding.
 
-        Create a new resource binding.
+        A resource binding connects credentials to a resource alias. The credentials are
+        in the form of a resource key.
 
         :param str source: The short or long ID of resource alias.
         :param str target: The CRN of application to bind to in a specific
@@ -1014,7 +1015,8 @@ class ResourceControllerV2(BaseService):
         """
         Get a resource binding.
 
-        Retrieve a resource binding by ID.
+        View a resource binding and all of its details, like who created it, the
+        credential, and the resource alias that the binding is associated with.
 
         :param str id: The short or long ID of the binding.
         :param dict headers: A `dict` containing the request headers
@@ -1053,7 +1055,8 @@ class ResourceControllerV2(BaseService):
         """
         Delete a resource binding.
 
-        Delete a resource binding by ID.
+        Deleting a resource binding does not affect the resource alias that the binding is
+        associated with.
 
         :param str id: The short or long ID of the binding.
         :param dict headers: A `dict` containing the request headers
@@ -1092,7 +1095,7 @@ class ResourceControllerV2(BaseService):
         """
         Update a resource binding.
 
-        Update a resource binding by ID.
+        Use the resource binding ID to update the name of the resource binding.
 
         :param str id: The short or long ID of the binding.
         :param str name: The new name of the binding. Must be 180 characters or
@@ -1158,7 +1161,7 @@ class ResourceControllerV2(BaseService):
         """
         Get a list of all resource aliases.
 
-        Get a list of all resource aliases.
+        View all of the resource aliases that exist for every resource instance.
 
         :param str guid: (optional) Short ID of the alias.
         :param str name: (optional) The human-readable name of the alias.
@@ -1278,7 +1281,8 @@ class ResourceControllerV2(BaseService):
         """
         Get a resource alias.
 
-        Retrieve a resource alias by ID.
+        View a resource alias and all of its details, like who created it and the resource
+        instance that it's associated with.
 
         :param str id: The short or long ID of the alias.
         :param dict headers: A `dict` containing the request headers
@@ -1317,7 +1321,8 @@ class ResourceControllerV2(BaseService):
         """
         Delete a resource alias.
 
-        Delete a resource alias by ID.
+        If the resource alias has any resource keys or bindings associated with it, you
+        must delete those child resources before deleting the resource alias.
 
         :param str id: The short or long ID of the alias.
         :param dict headers: A `dict` containing the request headers
@@ -1356,7 +1361,7 @@ class ResourceControllerV2(BaseService):
         """
         Update a resource alias.
 
-        Update a resource alias by ID.
+        Use the resource alias ID to update the name of the resource alias.
 
         :param str id: The short or long ID of the alias.
         :param str name: The new name of the alias. Must be 180 characters or less
@@ -1410,7 +1415,7 @@ class ResourceControllerV2(BaseService):
         """
         Get a list of all resource bindings for the alias.
 
-        Get a list of all resource bindings for the alias.
+        View all of the resource bindings associated with a specific resource alias.
 
         :param str id: The short or long ID of the alias.
         :param int limit: (optional) Limit on how many items should be returned.
@@ -1467,7 +1472,7 @@ class ResourceControllerV2(BaseService):
         """
         Get a list of all reclamations.
 
-        Get a list of all reclamations.
+        View all of the resource reclamations that exist for every resource instance.
 
         :param str account_id: (optional) An alpha-numeric value identifying the
                account ID.
@@ -1514,8 +1519,8 @@ class ResourceControllerV2(BaseService):
         """
         Perform a reclamation action.
 
-        Reclaim (provisionally delete) a resource so that it can no longer be used, or
-        restore a resource so that it's usable again.
+        Reclaim a resource instance so that it can no longer be used, or restore the
+        resource instance so that it's usable again.
 
         :param str id: The ID associated with the reclamation.
         :param str action_name: The reclamation action name. Specify `reclaim` to
@@ -1576,12 +1581,6 @@ class ListResourceInstancesEnums:
         ACTIVE = 'active'
         PROVISIONING = 'provisioning'
         REMOVED = 'removed'
-    class OrderDirection(str, Enum):
-        """
-        Order of results.
-        """
-        ASC = 'asc'
-        DESC = 'desc'
 
 
 ##############################################################################

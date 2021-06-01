@@ -686,7 +686,7 @@ class TestResourceControllerV2(unittest.TestCase):
             self.transactionId
 
         start = None
-
+        result_count = 0 
         while True:
             response = self.service.list_resource_keys(
                 limit=results_per_page,
@@ -698,14 +698,12 @@ class TestResourceControllerV2(unittest.TestCase):
 
             result = response.get_result()
             assert result is not None
-            assert len(result.get('resources')) >= 1
-            assert len(result.get('resources')) <= results_per_page
-            assert result.get('rows_count') >= 1
-            assert result.get('rows_count') <= results_per_page
+            result_count+= result.get('rows_count') 
 
             start = get_query_param(result.get('next_url'), 'start')
             if start is None:
                 break
+        assert result_count > 0
 
     def test_22_list_resource_keys_by_guid(self):
         customHeaders = {}
