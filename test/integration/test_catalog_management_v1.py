@@ -1,890 +1,3803 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
-# Licensed under the Apache License, Version 2.0 (the 'License');
+# Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
 #      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an 'AS IS' BASIS,
+# distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 """
 Integration Tests for CatalogManagementV1
 """
 
-import unittest
 import os
-from ibm_cloud_sdk_core import *
-from ibm_platform_services.catalog_management_v1 import *
-import pytest
-import time
+import sys
 
+import pytest
+from ibm_cloud_sdk_core import *
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+
+from ibm_platform_services.catalog_management_v1 import *
+
+# Config file name
 config_file = 'catalog_mgmt.env'
 
-sdk_label_prefix = 'python-sdk-IT'
+catalog_id = None
+offering_id = None
+object_id = None
+version_locator_id = None
+offering_instance_id = None
 
-timestamp = int(time.time())
-expectedAccount = '67d27f28d43948b2b3bda9138f251a13'
-expectedLabel = '{}-{}'.format(sdk_label_prefix, timestamp)
-expectedShortDesc = 'test'
-expectedURL = 'https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/{}'
-expectedOfferingsURL = 'https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/{}/offerings'
-fakeName = 'bogus'
-fakeVersionLocator = 'bogus.bogus'
-expectedOfferingName = "test-offering"
-expectedOfferingURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/{}/offerings/{}"
+kind_vpe: str = 'vpe'
+kind_roks: str = 'roks'
+kind_offering = 'offering'
+
+repo_type_git_public = 'git_public'
+object_name = 'object_created_by_python_sdk_4'
+region_us_south = 'us-south'
+namespace_python_sdk = 'python-sdk'
+import_offering_zip_url = 'https://github.com/rhm-samples/node-red-operator/blob/master/node-red-operator/bundle/0.0' \
+                          '.2/node-red-operator.v0.0.2.clusterserviceversion.yaml'
+
+label_python_sdk = 'python-sdk'
+
+bogus_revision = 'bogus-revision'
+bogus_version_locator_id = 'bogus-version-locator-id'
 
 
-class TestCatalogManagementV1(unittest.TestCase):
+class TestCatalogManagementV1():
     """
-    Integration Test Class for CaatalogManagementV1
+    Integration Test Class for CatalogManagementV1
     """
+
     @classmethod
     def setup_class(cls):
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
-            cls.service = CatalogManagementV1.new_instance()
+            cls.catalog_management_service = CatalogManagementV1.new_instance(
+            )
+            assert cls.catalog_management_service is not None
+
+            cls.catalog_management_service_not_authorized = CatalogManagementV1.new_instance(
+                'NOT_AUTHORIZED'
+            )
+            assert cls.catalog_management_service_not_authorized is not None
 
             cls.config = read_external_sources(
                 CatalogManagementV1.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
 
-            cls.gitToken = cls.config.get('GIT_TOKEN')
-            assert cls.gitToken is not None
+            cls.account_id = cls.config.get('ACCOUNT_ID')
+            assert cls.account_id is not None
 
-            cls.clean_catalogs(cls, expectedLabel)
+            cls.cluster_id = cls.config.get('CLUSTER_ID')
+            assert cls.cluster_id is not None
 
-            print('Finished setup.')
+            cls.git_token = cls.config.get('GIT_TOKEN')
+            assert cls.git_token is not None
+
+            cls.catalog_management_service.get_catalog_account()
+            authenticator_authorized = cls.catalog_management_service.get_authenticator()
+            token_manager_authorized = authenticator_authorized.token_manager
+            cls.refresh_token_authorized = token_manager_authorized.request_token()['refresh_token']
+            assert cls.refresh_token_authorized is not None
+
+            cls.catalog_management_service_not_authorized.get_catalog_account()
+            authenticator_unauthorized = cls.catalog_management_service_not_authorized.get_authenticator()
+            token_manager_unauthorized = authenticator_unauthorized.token_manager
+            cls.refresh_token_not_authorized = token_manager_unauthorized.request_token()['refresh_token']
+            assert cls.refresh_token_not_authorized is not None
+
+        print('Setup complete.')
+
+    needscredentials = pytest.mark.skipif(
+        not os.path.exists(config_file), reason="External configuration not available, skipping..."
+    )
+
+    ####
+    # Create Catalog
+    ####
+
+    @needscredentials
+    def test_create_catalog_returns_400_when_user_is_not_authorized(self):
+        try:
+            self.catalog_management_service_not_authorized.create_catalog(
+                label=label_python_sdk,
+                tags=['sdk', 'python'],
+                owning_account=self.account_id,
+                kind=kind_vpe
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_create_catalog_returns_400_when_backend_input_validation_fails(self):
+        try:
+            self.catalog_management_service.create_catalog(
+                label=label_python_sdk,
+                revision=bogus_revision,
+                tags=['sdk', 'python'],
+                owning_account=self.account_id,
+                kind=kind_vpe
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_create_catalog(self):
+        global catalog_id
+
+        # it fails 40% of the executions, dont know whether due to that the resource is created slowly in the background
+        # and the list requests hits the server before the resource is created or not. However, status 201 indicates
+        # that once the create_catalog() returns 201 the resource is available
+
+        create_catalog_response = self.catalog_management_service.create_catalog(
+            label=label_python_sdk,
+            tags=['sdk', 'python'],
+            kind=kind_vpe,
+            owning_account=self.account_id,
+        )
+        assert create_catalog_response.get_status_code() == 201
+        catalog = create_catalog_response.get_result()
+        assert catalog is not None
+        assert catalog['id'] is not None
+        catalog_id = catalog['id']
+
+    ####
+    # Get Catalog
+    ####
+
+    @needscredentials
+    def test_get_catalog_returns_404_when_no_such_catalog(self):
+        try:
+            assert catalog_id is not None
+
+            self.catalog_management_service.get_catalog(
+                catalog_identifier='invalid-' + catalog_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_catalog_returns_403_when_user_is_not_authorized(self):
+        try:
+            assert catalog_id is not None
+
+            self.catalog_management_service_not_authorized.get_catalog(
+                catalog_identifier=catalog_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_catalog(self):
+        assert catalog_id is not None
+
+        get_catalog_response = self.catalog_management_service.get_catalog(
+            catalog_identifier=catalog_id
+        )
+
+        assert get_catalog_response.get_status_code() == 200
+        catalog = get_catalog_response.get_result()
+        assert catalog is not None
+        assert catalog['id'] == catalog_id
+
+    ####
+    # Replace Catalog
+    ####
+
+    @needscredentials
+    def test_replace_catalog_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.replace_catalog(
+                catalog_identifier=catalog_id,
+                id=catalog_id,
+                owning_account=self.account_id,
+                kind=kind_vpe
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_replace_catalog_returns_400_when_backend_input_validation_fails(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service.replace_catalog(
+                catalog_identifier=catalog_id,
+                id='invalid-' + catalog_id,
+                owning_account=self.account_id,
+                kind=kind_vpe
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_replace_catalog_returns_404_when_no_such_catalog(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service.replace_catalog(
+                catalog_identifier='invalid-' + catalog_id,
+                id='invalid-' + catalog_id,
+                owning_account=self.account_id,
+                kind=kind_vpe
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_replace_catalog(self):
+        assert catalog_id is not None
+
+        update_tags = ['python', 'sdk', 'update']
+        replace_catalog_response = self.catalog_management_service.replace_catalog(
+            catalog_identifier=catalog_id,
+            id=catalog_id,
+            tags=update_tags,
+            owning_account=self.account_id,
+            kind=kind_vpe
+        )
+
+        assert replace_catalog_response.get_status_code() == 200
+        catalog = replace_catalog_response.get_result()
+        assert catalog is not None
+        assert catalog['tags'] == update_tags
+
+    ####
+    # List Catalog
+    ####
+
+    @needscredentials
+    def test_list_catalogs(self):
+        assert catalog_id is not None
+
+        list_catalogs_response = self.catalog_management_service.list_catalogs()
+
+        assert list_catalogs_response.get_status_code() == 200
+        catalog_search_result = list_catalogs_response.get_result()
+        assert catalog_search_result is not None
+
+        assert next((catalog for catalog in catalog_search_result['resources']
+                     if catalog['id'] == catalog_id),
+                    None) is not None
+
+    ####
+    # Create Offering
+    ####
+
+    @needscredentials
+    def test_create_offering_returns_404_when_no_such_catalog(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service.create_offering(
+                catalog_identifier='invalid-' + catalog_id,
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_create_offering_returns_400_when_backend_input_validation_fails(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service.create_offering(
+                catalog_identifier=catalog_id,
+                catalog_id=catalog_id,
+                name='offering created by python sdk',
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_create_offering_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.create_offering(
+                catalog_identifier=catalog_id,
+                id=catalog_id,
+                name='offering-created-by-python-sdk',
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_create_offering(self):
+        global offering_id
+        assert catalog_id is not None
+
+        create_offering_response = self.catalog_management_service.create_offering(
+            catalog_identifier=catalog_id,
+            label=label_python_sdk,
+            name='offering-created-by-python-sdk-3',
+        )
+
+        assert create_offering_response.get_status_code() == 201
+        offering = create_offering_response.get_result()
+
+        assert offering is not None
+        assert offering['id'] is not None
+        offering_id = offering['id']
+
+    ####
+    # Get Offering
+    ####
+
+    @needscredentials
+    def test_get_offering_returns_404_when_no_such_offering(self):
+        assert offering_id is not None
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service.get_offering(
+                catalog_identifier=catalog_id,
+                offering_id='invalid-' + offering_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_offering_returns_403_when_user_is_not_authorized(self):
+        assert offering_id is not None
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_offering(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_offering(self):
+        assert offering_id is not None
+        assert catalog_id is not None
+
+        get_offering_response = self.catalog_management_service.get_offering(
+            catalog_identifier=catalog_id,
+            offering_id=offering_id
+        )
+
+        assert get_offering_response.get_status_code() == 200
+        offering = get_offering_response.get_result()
+        assert offering is not None
+        assert offering['id'] == offering_id
+        assert offering['catalog_id'] == catalog_id
+
+    ####
+    # Replace Offering
+    ####
+
+    @needscredentials
+    def test_replace_offering_returns_404_when_no_such_offering(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service.replace_offering(
+                catalog_identifier=catalog_id,
+                offering_id='invalid-' + offering_id,
+                id='invalid-' + offering_id,
+                name='updated-offering-by-python-sdk',
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_replace_offering_returns_400_backend_input_validation_fails(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service.replace_offering(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id,
+                id=offering_id,
+                name='updated offering by python sdk',
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_replace_offering_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.replace_offering(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id,
+                id=offering_id,
+                name='updated-offering-by-python-sdk',
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_replace_offering_returns_409_when_conflict_occurs(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service.replace_offering(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id,
+                id=offering_id,
+                name='updated-offering-name-by-python-sdk',
+            )
+        except ApiException as e:
+            assert e.code == 409
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_replace_offering(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        # update conflict on revisions
+
+        updated_name = 'updated-offering-by-python-sdk'
+        replace_offering_response = self.catalog_management_service.replace_offering(
+            catalog_identifier=catalog_id,
+            offering_id=offering_id,
+            id=offering_id,
+            name=updated_name,
+        )
+
+        assert replace_offering_response.get_status_code() == 200
+        offering = replace_offering_response.get_result()
+        assert offering is not None
+        assert offering['id'] == offering_id
+        assert offering['catalog_id'] == catalog_id
+        assert offering['name'] == updated_name
+
+    ####
+    # List Offerings
+    ####
+
+    # pagination
+    @needscredentials
+    def test_list_offerings_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.list_offerings(
+                catalog_identifier=catalog_id,
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_list_offerings_returns_400_when_backend_input_validation_fails(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service.list_offerings(
+                catalog_identifier=catalog_id,
+                digest=True,
+                sort='bogus-sort-value'
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_list_offerings_returns_404_when_no_such_catalog(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service.list_offerings(
+                catalog_identifier='invalid-' + catalog_id,
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_list_offerings(self):
+        assert catalog_id is not None
+
+        list_offerings_response = self.catalog_management_service.list_offerings(
+            catalog_identifier=catalog_id,
+        )
+
+        assert list_offerings_response.get_status_code() == 200
+        offering_search_result = list_offerings_response.get_result()
+        assert offering_search_result is not None
+
+        assert next((offering for offering in offering_search_result['resources']
+                     if offering['id'] == offering_id), None) is not None
+
+    ####
+    # Import Offering
+    ####
+
+    @needscredentials
+    def test_import_offering_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.import_offering(
+                catalog_identifier=catalog_id,
+                tags=['python', 'sdk'],
+                target_kinds=[kind_vpe],
+                zipurl=import_offering_zip_url,
+                offering_id=offering_id,
+                target_version='0.0.3',
+                repo_type=repo_type_git_public,
+                x_auth_token=self.git_token
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_import_offering_returns_400_when_backend_input_validation_fails(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service.import_offering(
+                catalog_identifier=catalog_id,
+                tags=['python', 'sdk'],
+                target_kinds=['rocks'],
+                zipurl=import_offering_zip_url,
+                offering_id=offering_id,
+                target_version='0.0.2-patch',
+                repo_type=repo_type_git_public,
+                x_auth_token=self.git_token
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_import_offering_returns_404_when_no_such_catalog(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service.import_offering(
+                catalog_identifier='invalid-' + catalog_id,
+                tags=['python', 'sdk'],
+                target_kinds=[kind_roks],
+                zipurl=import_offering_zip_url,
+                offering_id=offering_id,
+                target_version='0.0.2',
+                repo_type=repo_type_git_public,
+                x_auth_token=self.git_token
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_import_offering(self):
+        global version_locator_id
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        import_offering_response = self.catalog_management_service.import_offering(
+            catalog_identifier=catalog_id,
+            tags=['python', 'sdk'],
+            target_kinds=[kind_roks],
+            zipurl=import_offering_zip_url,
+            offering_id=offering_id,
+            target_version='0.0.2',
+            repo_type=repo_type_git_public,
+            x_auth_token=self.git_token
+        )
+
+        assert import_offering_response.get_status_code() == 201
+        offering = import_offering_response.get_result()
+        assert offering is not None
+        assert offering['kinds'][0]['versions'][0]['version_locator'] is not None
+        version_locator_id = offering['kinds'][0]['versions'][0]['version_locator']
+
+    @needscredentials
+    def test_import_offering_returns_409_when_conflict_occurs(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service.import_offering(
+                catalog_identifier=catalog_id,
+                tags=['python', 'sdk'],
+                target_kinds=[kind_roks],
+                zipurl=import_offering_zip_url,
+                offering_id=offering_id,
+                target_version='0.0.2',
+                repo_type=repo_type_git_public,
+                x_auth_token=self.git_token
+            )
+
+        except ApiException as e:
+            assert e.code == 409
+
+    ####
+    # Reload Offering
+    ####
+
+    @needscredentials
+    def test_reload_offering_returns_404_when_no_such_offering(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service.reload_offering(
+                catalog_identifier=catalog_id,
+                offering_id='invalid-' + offering_id,
+                target_version='0.0.2',
+                target_kinds=kind_vpe,
+                zipurl=import_offering_zip_url,
+                repo_type=repo_type_git_public
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_reload_offering_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.reload_offering(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id,
+                target_version='0.0.2',
+                zipurl=import_offering_zip_url,
+                target_kinds=kind_vpe,
+                repo_type=repo_type_git_public
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_reload_offering(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        #  Error: Could not find a kind with a target/format value of roks:operator for the current offering, Code: 400
+
+        reload_offering_response = self.catalog_management_service.reload_offering(
+            catalog_identifier=catalog_id,
+            offering_id=offering_id,
+            target_version='0.0.2',
+            target_kinds=kind_vpe,
+            zipurl=import_offering_zip_url,
+            repo_type=repo_type_git_public
+        )
+
+        assert reload_offering_response.get_status_code() == 201
+        offering = reload_offering_response.get_result()
+        assert offering is not None
+
+    ####
+    # Create Object
+    ####
+
+    @needscredentials
+    def test_create_object_returns_400_when_backend_input_validation_fails(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        publish_object_model = {
+            'permit_ibm_public_publish': True,
+            'ibm_approved': True,
+            'public_approved': True,
+        }
+
+        state_model = {
+            'current': 'new',
+        }
+
+        try:
+            self.catalog_management_service.create_object(
+                catalog_identifier=catalog_id,
+                catalog_id=catalog_id,
+                name=object_name,
+                crn='crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com',
+                parent_id='bogus region name',
+                kind=kind_vpe,
+                publish=publish_object_model,
+                state=state_model,
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_create_object_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        publish_object_model = {
+            'permit_ibm_public_publish': True,
+            'ibm_approved': True,
+            'public_approved': True,
+        }
+
+        state_model = {
+            'current': 'new',
+        }
+
+        try:
+            self.catalog_management_service_not_authorized.create_object(
+                catalog_identifier=catalog_id,
+                catalog_id=catalog_id,
+                name=object_name,
+                crn='crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com',
+                parent_id=region_us_south,
+                kind=kind_vpe,
+                publish=publish_object_model,
+                state=state_model,
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_create_object_returns_404_when_no_such_catalog(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        publish_object_model = {
+            'permit_ibm_public_publish': True,
+            'ibm_approved': True,
+            'public_approved': True,
+        }
+
+        state_model = {
+            'current': 'new',
+        }
+
+        try:
+            self.catalog_management_service.create_object(
+                catalog_identifier='invalid-' + catalog_id,
+                catalog_id='invalid-' + catalog_id,
+                name=object_name,
+                crn='crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com',
+                url='test.ibm.hu',
+                parent_id=region_us_south,
+                kind=kind_vpe,
+                publish=publish_object_model,
+                state=state_model,
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_create_object(self):
+        global object_id
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        publish_object_model = {
+            'permit_ibm_public_publish': True,
+            'ibm_approved': True,
+            'public_approved': True,
+        }
+        state_model = {
+            'current': 'new',
+        }
+
+        create_object_response = self.catalog_management_service.create_object(
+            catalog_identifier=catalog_id,
+            catalog_id=catalog_id,
+            name=object_name,
+            crn='crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com',
+            parent_id=region_us_south,
+            kind=kind_vpe,
+            publish=publish_object_model,
+            state=state_model,
+        )
+
+        assert create_object_response.get_status_code() == 201
+        catalog_object = create_object_response.get_result()
+        assert catalog_object is not None
+        assert catalog_object['id'] is not None
+
+        object_id = catalog_object['id']
+
+    ####
+    # Get Offering Audit
+    ####
+
+    @needscredentials
+    def test_get_offering_audit_returns_200_when_no_such_offerings(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        get_offering_audit_response = self.catalog_management_service.get_offering_audit(
+            catalog_identifier=catalog_id,
+            offering_id='invalid-' + offering_id
+        )
+
+        assert get_offering_audit_response.get_status_code() == 200
+
+    @needscredentials
+    def test_get_offering_audit_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_offering_audit(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_offering_audit(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        get_offering_audit_response = self.catalog_management_service.get_offering_audit(
+            catalog_identifier=catalog_id,
+            offering_id=offering_id
+        )
+
+        assert get_offering_audit_response.get_status_code() == 200
+        audit_log = get_offering_audit_response.get_result()
+        assert audit_log is not None
+
+    ####
+    # Get Catalog Account
+    ####
+
+    @needscredentials
+    def test_get_catalog_account(self):
+        get_catalog_account_response = self.catalog_management_service.get_catalog_account()
+
+        assert get_catalog_account_response.get_status_code() == 200
+        account = get_catalog_account_response.get_result()
+        assert account is not None
+        assert account['id'] == self.account_id
+
+    ####
+    # Update Catalog Account
+    ####
+
+    @needscredentials
+    def test_update_catalog_account_returns_400_when_no_such_account(self):
+
+        try:
+            self.catalog_management_service.update_catalog_account(
+                id='invalid-' + self.account_id,
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_update_catalog_account_returns_403_when_user_is_not_authorized(self):
+
+        try:
+            self.catalog_management_service_not_authorized.update_catalog_account(
+                id=self.account_id,
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_update_catalog_account_returns_400_when_backend_input_validation_fails(self):
+
+        # user is not granted for this operation
+        # a body with failing data comes here
+
+        update_catalog_account_response = self.catalog_management_service.update_catalog_account(
+            id=self.account_id,
+            hide_ibm_cloud_catalog=True,
+        )
+
+        assert update_catalog_account_response.get_status_code() == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_update_catalog_account(self):
+
+        # user is not granted for this operation
+        # a body with failing data comes here
+
+        update_catalog_account_response = self.catalog_management_service.update_catalog_account(
+            id=self.account_id,
+        )
+
+        assert update_catalog_account_response.get_status_code() == 200
+
+    ####
+    # Get Catalog Account Audit
+    ####
+
+    @needscredentials
+    def test_get_catalog_account_audit_returns_403_when_user_is_not_authorized(self):
+        try:
+            self.catalog_management_service_not_authorized.get_catalog_account_audit()
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_catalog_account_audit(self):
+        get_catalog_account_audit_response = self.catalog_management_service.get_catalog_account_audit()
+
+        assert get_catalog_account_audit_response.get_status_code() == 200
+        audit_log = get_catalog_account_audit_response.get_result()
+        assert audit_log is not None
+
+    ####
+    # Get Catalog Account Filters
+    ####
+
+    @needscredentials
+    def test_get_catalog_account_filters_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_catalog_account_filters(
+                catalog=catalog_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_catalog_account_filters_returns_404_when_no_such_catalog(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service.get_catalog_account_filters(
+                catalog='invalid-' + catalog_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_catalog_account_filters(self):
+        assert catalog_id is not None
+        get_catalog_account_filters_response = self.catalog_management_service.get_catalog_account_filters(
+            catalog=catalog_id
+        )
+
+        assert get_catalog_account_filters_response.get_status_code() == 200
+        accumulated_filters = get_catalog_account_filters_response.get_result()
+        assert accumulated_filters is not None
+
+    ####
+    # Get Catalog Audit
+    ####
+    @needscredentials
+    def test_get_catalog_audit_returns_404_when_no_such_catalog(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service.get_catalog_audit(
+                catalog_identifier='invalid-' + catalog_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_catalog_audit_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_catalog_audit(
+                catalog_identifier=catalog_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_catalog_audit(self):
+        assert catalog_id is not None
+
+        get_catalog_audit_response = self.catalog_management_service.get_catalog_audit(
+            catalog_identifier=catalog_id
+        )
+
+        assert get_catalog_audit_response.get_status_code() == 200
+        audit_log = get_catalog_audit_response.get_result()
+        assert audit_log is not None
+
+    ####
+    # Get Consumption Offerings
+    ####
+
+    # pagination
+    @needscredentials
+    def test_get_consumption_offerings_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_consumption_offerings(
+                catalog=catalog_id,
+                select='all',
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_consumption_offerings_returns_404_when_no_such_catalog(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service.get_consumption_offerings(
+                catalog='invalid-' + catalog_id,
+                select='all',
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_consumption_offerings(self):
+        assert catalog_id is not None
+
+        get_consumption_offerings_response = self.catalog_management_service.get_consumption_offerings(
+            catalog=catalog_id,
+            select='all',
+        )
+
+        assert get_consumption_offerings_response.get_status_code() == 200
+        offering_search_result = get_consumption_offerings_response.get_result()
+        assert offering_search_result is not None
+
+    ####
+    # Import Offering Version
+    ####
+
+    @needscredentials
+    def test_import_offering_version_returns_400_when_backend_input_validation_fails(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service.import_offering_version(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id,
+                target_kinds=['rocks'],
+                zipurl=import_offering_zip_url,
+                target_version='0.0.3',
+                repo_type=repo_type_git_public
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_import_offering_version_returns_404_when_no_such_offerings(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service.import_offering_version(
+                catalog_identifier=catalog_id,
+                offering_id='invalid-' + offering_id,
+                target_kinds=[kind_roks],
+                zipurl=import_offering_zip_url,
+                target_version='0.0.3',
+                repo_type=repo_type_git_public
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_import_offering_version_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.import_offering_version(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id,
+                target_kinds=[kind_roks],
+                zipurl=import_offering_zip_url,
+                target_version='0.0.3',
+                repo_type=repo_type_git_public
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_import_offering_version(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        import_offering_version_response = self.catalog_management_service.import_offering_version(
+            catalog_identifier=catalog_id,
+            offering_id=offering_id,
+            target_kinds=[kind_roks],
+            zipurl=import_offering_zip_url,
+            target_version='0.0.3',
+            repo_type=repo_type_git_public
+        )
+
+        assert import_offering_version_response.get_status_code() == 201
+        offering = import_offering_version_response.get_result()
+        assert offering is not None
+
+    ####
+    # Replace Offering Icon
+    ####
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_replace_offering_icon_returns_404_when_no_such_offerings(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        # this feature is disabled
+
+        try:
+            self.catalog_management_service.replace_offering_icon(
+                catalog_identifier=catalog_id,
+                offering_id='invalid-' + offering_id,
+                file_name='filename.jpg'
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_replace_offering_icon_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        # this feature is disabled
+
+        try:
+            self.catalog_management_service_not_authorized.replace_offering_icon(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id,
+                file_name='filename.jpg'
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_replace_offering_icon(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        # this feature is disabled
+
+        replace_offering_icon_response = self.catalog_management_service.replace_offering_icon(
+            catalog_identifier=catalog_id,
+            offering_id=offering_id,
+            file_name='filename.jpg'
+        )
+
+        assert replace_offering_icon_response.get_status_code() == 200
+        offering = replace_offering_icon_response.get_result()
+        assert offering is not None
+
+    ####
+    # Update Offering IBM
+    ####
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_update_offering_ibm_returns_404_when_no_such_offerings(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        # once the user is granted for this operation 404 can be squeezed out from the system, until then it is disabled
+
+        try:
+            self.catalog_management_service.update_offering_ibm(
+                catalog_identifier=catalog_id,
+                offering_id='invalid-' + offering_id,
+                approval_type='allow_request',
+                approved='true'
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_update_offering_ibm_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.update_offering_ibm(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id,
+                approval_type='allow_request',
+                approved='true'
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_update_offering_ibm(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        # once the user is granted for this operation 404 can be squeezed out from the system, until then it is disabled
+
+        update_offering_ibm_response = self.catalog_management_service.update_offering_ibm(
+            catalog_identifier=catalog_id,
+            offering_id=offering_id,
+            approval_type='allow_request',
+            approved='true'
+        )
+
+        assert update_offering_ibm_response.get_status_code() == 200
+        approval_result = update_offering_ibm_response.get_result()
+        assert approval_result is not None
+
+    ####
+    # Get Offering Updates
+    ####
+
+    @needscredentials
+    def test_get_offering_updates_returns_400_when_backend_input_validation_fails(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service.get_offering_updates(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id,
+                version='0.0.2',
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                kind=kind_vpe
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_get_offering_updates_returns_404_when_no_such_offerings(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        # it always complaining about offering types which is somehow related to create/import offerings
+        # once this is resolved there is a chance we can squeeze a 404 out from the service
+
+        try:
+            self.catalog_management_service.get_offering_updates(
+                catalog_identifier=catalog_id,
+                offering_id='invalid-' + offering_id,
+                version='0.0.2',
+                kind=kind_vpe,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                namespace=namespace_python_sdk
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_offering_updates_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_offering_updates(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id,
+                kind=kind_roks,
+                version='0.0.2',
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                namespace=namespace_python_sdk
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_get_offering_updates(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        # I know nothing about these kind related things
+        # Error: Could not find kind[roks] for offering
+
+        get_offering_updates_response = self.catalog_management_service.get_offering_updates(
+            catalog_identifier=catalog_id,
+            offering_id=offering_id,
+            kind=kind_roks,
+            version='0.0.2',
+            cluster_id=self.cluster_id,
+            region=region_us_south,
+            namespace=namespace_python_sdk
+        )
+
+        assert get_offering_updates_response.get_status_code() == 200
+        list_version_update_descriptor = get_offering_updates_response.get_result()
+        assert list_version_update_descriptor is not None
+
+    ####
+    # Get Offering About
+    ####
+
+    @needscredentials
+    def test_get_offering_about_returns_400_when_backend_input_validation_fails(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.get_offering_about(
+                version_loc_id=bogus_version_locator_id
+            )
+
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_get_offering_about_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.get_offering_about(
+                version_loc_id='invalid-' + version_locator_id
+            )
+
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_offering_about_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_offering_about(
+                version_loc_id=version_locator_id
+            )
+
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_offering_about(self):
+        assert version_locator_id is not None
+
+        get_offering_about_response = self.catalog_management_service.get_offering_about(
+            version_loc_id=version_locator_id
+        )
+
+        assert get_offering_about_response.get_status_code() == 200
+        result = get_offering_about_response.get_result()
+        assert result is not None
+
+    ####
+    # Get Offering License
+    ####
+
+    @needscredentials
+    def test_get_offering_license_returns_400_when_backend_input_validation_fails(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.get_offering_license(
+                version_loc_id=bogus_version_locator_id,
+                license_id='license-id-is-needed'
+            )
+
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_get_offering_license_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.get_offering_license(
+                version_loc_id='invalid-' + version_locator_id,
+                license_id='license-id-is-needed'
+            )
+
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_get_offering_license_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_offering_license(
+                version_loc_id=version_locator_id,
+                license_id='license-id-is-needed'
+            )
+
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_get_offering_license(self):
+        assert version_locator_id is not None
+
+        get_offering_license_response = self.catalog_management_service.get_offering_license(
+            version_loc_id=version_locator_id,
+            license_id='license-id-is-needed'
+        )
+
+        assert get_offering_license_response.get_status_code() == 200
+        result = get_offering_license_response.get_result()
+        assert result is not None
+
+    ####
+    # Get Offering Container Images
+    ####
+
+    @needscredentials
+    def test_get_offering_container_images_returns_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.get_offering_container_images(
+                version_loc_id=bogus_version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_get_offering_container_images_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.get_offering_container_images(
+                version_loc_id='invalid-' + version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_offering_container_images_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_offering_container_images(
+                version_loc_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_offering_container_images(self):
+        assert version_locator_id is not None
+
+        get_offering_container_images_response = self.catalog_management_service.get_offering_container_images(
+            version_loc_id=version_locator_id
+        )
+
+        assert get_offering_container_images_response.get_status_code() == 200
+        image_manifest = get_offering_container_images_response.get_result()
+        assert image_manifest is not None
+
+    ####
+    # Deprecate Version
+    ####
+
+    @needscredentials
+    def test_deprecate_version_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.deprecate_version(
+                version_loc_id='invalid-' + version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_deprecate_version_returns_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.deprecate_version(
+                version_loc_id=bogus_version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_deprecate_version_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.deprecate_version(
+                version_loc_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_deprecate_version(self):
+        assert version_locator_id is not None
+
+        # the flow of different states
+        #  Error: Cannot request the state deprecated from the current state new.
+
+        deprecate_version_response = self.catalog_management_service.deprecate_version(
+            version_loc_id=version_locator_id
+        )
+
+        assert deprecate_version_response.get_status_code() == 202
+
+    ####
+    # Account Publish Version
+    ####
+
+    @needscredentials
+    def test_account_publish_version_returns_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.account_publish_version(
+                version_loc_id=bogus_version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_account_publish_version_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.account_publish_version(
+                version_loc_id='invalid-' + version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_account_publish_version_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.account_publish_version(
+                version_loc_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_account_publish_version(self):
+        assert version_locator_id is not None
+
+        # the flow of different states is unknown
+        #  Error: Cannot request the state account-published from the current state new.
+
+        account_publish_version_response = self.catalog_management_service.account_publish_version(
+            version_loc_id=version_locator_id
+        )
+
+        assert account_publish_version_response.get_status_code() == 202
+
+    ####
+    # IBM Publish Version
+    ####
+
+    @needscredentials
+    def test_ibm_publish_version_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.ibm_publish_version(
+                version_loc_id=bogus_version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_ibm_publish_version_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.ibm_publish_version(
+                version_loc_id='invalid-' + version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_ibm_publish_version_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.ibm_publish_version(
+                version_loc_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_ibm_publish_version(self):
+        assert version_locator_id is not None
+
+        # user is not allowed to publish
+
+        ibm_publish_version_response = self.catalog_management_service.ibm_publish_version(
+            version_loc_id=version_locator_id
+        )
+
+        assert ibm_publish_version_response.get_status_code() == 202
+
+    ####
+    # Public Publish Version
+    ####
+
+    @needscredentials
+    def test_public_publish_version_returns_400_when_backend_input_validation_fails(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.public_publish_version(
+                version_loc_id=bogus_version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_public_publish_version_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.public_publish_version(
+                version_loc_id='invalid-' + version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_public_publish_version_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.public_publish_version(
+                version_loc_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_public_publish_version(self):
+        assert version_locator_id is not None
+
+        # user is not granted
+
+        public_publish_version_response = self.catalog_management_service.public_publish_version(
+            version_loc_id=version_locator_id
+        )
+
+        assert public_publish_version_response.get_status_code() == 202
+
+    ####
+    # Commit Version
+    ####
+
+    @needscredentials
+    def test_commit_version_returns_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.commit_version(
+                version_loc_id=bogus_version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_commit_version_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.commit_version(
+                version_loc_id='invalid-' + version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_commit_version_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.commit_version(
+                version_loc_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_commit_version(self):
+        assert version_locator_id is not None
+
+        # workflow of versions is unknown for me
+        # Error: Could not find a working copy for the active version with id
+
+        commit_version_response = self.catalog_management_service.commit_version(
+            version_loc_id=version_locator_id
+        )
+
+        assert commit_version_response.get_status_code() == 200
+
+    ####
+    # Copy Version
+    ####
+
+    @needscredentials
+    def test_copy_version_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.copy_version(
+                version_loc_id=version_locator_id,
+                target_kinds=[kind_roks],
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_copy_version_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.copy_version(
+                version_loc_id='invalid-' + version_locator_id,
+                target_kinds=[kind_roks],
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_copy_version_returns_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.copy_version(
+                version_loc_id=bogus_version_locator_id,
+                target_kinds=[kind_roks],
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_copy_version(self):
+        assert version_locator_id is not None
+
+        # Error: Only helm charts can be copied to a new target at this time.
+
+        copy_version_response = self.catalog_management_service.copy_version(
+            version_loc_id=version_locator_id,
+            target_kinds=[kind_roks],
+        )
+
+        assert copy_version_response.get_status_code() == 200
+
+    ####
+    # Get Offering Working Copy
+    ####
+
+    @needscredentials
+    def test_get_offering_working_copy_returns_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.get_offering_working_copy(
+                version_loc_id=bogus_version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_get_offering_working_copy_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_offering_working_copy(
+                version_loc_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_offering_working_copy_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.get_offering_working_copy(
+                version_loc_id='invalid-' + version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_get_offering_working_copy(self):
+        assert version_locator_id is not None
+
+        # workflow problem
+        # Error: Cannot create a working copy for version 60cb36c3-39fd-40ed-9887-6bc98aa7b7be.  The version
+        # must be in a published state, deprecated state, or invalidated state to create a working copy
+
+        get_offering_working_copy_response = self.catalog_management_service.get_offering_working_copy(
+            version_loc_id=version_locator_id
+        )
+
+        assert get_offering_working_copy_response.get_status_code() == 200
+        version = get_offering_working_copy_response.get_result()
+        assert version is not None
+
+    ####
+    # Get Version
+    ####
+
+    @needscredentials
+    def test_get_version_returns_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.get_version(
+                version_loc_id=bogus_version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_get_version_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.get_version(
+                version_loc_id='invalid-' + version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_version_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_version(
+                version_loc_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_version(self):
+        assert version_locator_id is not None
+
+        get_version_response = self.catalog_management_service.get_version(
+            version_loc_id=version_locator_id
+        )
+
+        assert get_version_response.get_status_code() == 200
+        offering = get_version_response.get_result()
+        assert offering is not None
+
+    ####
+    # Get Cluster
+    ####
+
+    @needscredentials
+    def test_get_cluster_returns_403_when_user_is_not_authorized(self):
+
+        try:
+            self.catalog_management_service_not_authorized.get_cluster(
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                x_auth_refresh_token=self.refresh_token_not_authorized
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_cluster_returns_404_when_no_such_cluster(self):
+
+        try:
+            self.catalog_management_service.get_cluster(
+                cluster_id='invalid-' + self.cluster_id,
+                region=region_us_south,
+                x_auth_refresh_token=self.refresh_token_authorized
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_get_cluster(self):
+
+        # possibly this user doesn't have right to get the cluster details
+        # until it is not clear it is skipped
+        # The specified cluster could not be found. If applicable, make sure that you target the correct account
+        # and resource group."
+
+        get_cluster_response = self.catalog_management_service.get_cluster(
+            cluster_id=self.cluster_id,
+            region=region_us_south,
+            x_auth_refresh_token=self.refresh_token_authorized
+        )
+        assert get_cluster_response.get_status_code() == 200
+        cluster_info = get_cluster_response.get_result()
+        assert cluster_info is not None
+
+    ####
+    # Get Namespaces
+    ####
+
+    @needscredentials
+    def test_get_namespaces_returns_404_when_no_such_cluster(self):
+        try:
+            self.catalog_management_service.get_namespaces(
+                cluster_id='invalid-' + self.cluster_id,
+                region=region_us_south,
+                x_auth_refresh_token=self.refresh_token_authorized,
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_namespaces_returns_404_when_user_is_not_authorized(self):
+        try:
+            self.catalog_management_service_not_authorized.get_namespaces(
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                x_auth_refresh_token=self.refresh_token_not_authorized,
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_get_namespaces(self):
+
+        # possibly this user doesn't have right to get the cluster details
+        # until it is not clear it is skipped
+        # The specified cluster could not be found. If applicable, make sure that you target the correct account
+        # and resource group."
+
+        get_namespaces_response = self.catalog_management_service.get_namespaces(
+            cluster_id=self.cluster_id,
+            region=region_us_south,
+            x_auth_refresh_token=self.refresh_token_authorized,
+        )
+
+        assert get_namespaces_response.get_status_code() == 200
+        namespace_search_result = get_namespaces_response.get_result()
+        assert namespace_search_result is not None
+
+    ####
+    # Deploy Operators
+    ####
+
+    @needscredentials
+    def test_deploy_operators_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.deploy_operators(
+                x_auth_refresh_token=self.refresh_token_not_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                all_namespaces=True,
+                version_locator_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_deploy_operators_returns_404_when_no_such_cluster(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.deploy_operators(
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id='invalid-' + self.cluster_id,
+                region=region_us_south,
+                all_namespaces=True,
+                version_locator_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_deploy_operators_returns_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.deploy_operators(
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                all_namespaces=True,
+                version_locator_id=bogus_version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_deploy_operators(self):
+        assert version_locator_id is not None
+
+        # possibly this user doesn't have right to get the cluster details
+        # until it is not clear it is skipped
+        # The specified cluster could not be found. If applicable, make sure that you target the correct account
+        # and resource group."
+
+        deploy_operators_response = self.catalog_management_service.deploy_operators(
+            x_auth_refresh_token=self.refresh_token_authorized,
+            cluster_id=self.cluster_id,
+            region=region_us_south,
+            all_namespaces=True,
+            version_locator_id=version_locator_id
+        )
+
+        assert deploy_operators_response.get_status_code() == 200
+        list_operator_deploy_result = deploy_operators_response.get_result()
+        assert list_operator_deploy_result is not None
+
+    ####
+    # List Operators
+    ####
+
+    @needscredentials
+    def test_list_operators_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.list_operators(
+                x_auth_refresh_token=self.refresh_token_not_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                version_locator_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_list_operators_returns_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.list_operators(
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                version_locator_id=bogus_version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_list_operators_returns_404_when_no_such_cluster(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.list_operators(
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id='invalid-' + self.cluster_id,
+                region=region_us_south,
+                version_locator_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_list_operators(self):
+        assert version_locator_id is not None
+
+        # possibly this user doesn't have right to get the cluster details
+        # until it is not clear it is skipped
+        # The specified cluster could not be found. If applicable, make sure that you target the correct account
+        # and resource group."
+
+        list_operators_response = self.catalog_management_service.list_operators(
+            x_auth_refresh_token=self.refresh_token_authorized,
+            cluster_id=self.cluster_id,
+            region=region_us_south,
+            version_locator_id=version_locator_id
+        )
+
+        assert list_operators_response.get_status_code() == 200
+        list_operator_deploy_result = list_operators_response.get_result()
+        assert list_operator_deploy_result is not None
+
+    ####
+    # Replace Operators
+    ####
+
+    @needscredentials
+    def test_replace_operators_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.replace_operators(
+                x_auth_refresh_token=self.refresh_token_not_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                all_namespaces=True,
+                version_locator_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_replace_operators_returns_404_when_no_such_cluster(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.replace_operators(
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id='invalid-' + self.cluster_id,
+                region=region_us_south,
+                all_namespaces=True,
+                version_locator_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_replace_operators_returns_400_when_backend_input_validation_fails(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.replace_operators(
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                all_namespaces=True,
+                version_locator_id=bogus_version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_replace_operators(self):
+        assert version_locator_id is not None
+
+        # possibly this user doesn't have right to get the cluster details
+        # until it is not clear it is skipped
+        # The specified cluster could not be found. If applicable, make sure that you target the correct account
+        # and resource group."
+
+        replace_operators_response = self.catalog_management_service.replace_operators(
+            x_auth_refresh_token=self.refresh_token_authorized,
+            cluster_id=self.cluster_id,
+            region=region_us_south,
+            all_namespaces=True,
+            version_locator_id=version_locator_id
+        )
+
+        assert replace_operators_response.get_status_code() == 200
+        list_operator_deploy_result = replace_operators_response.get_result()
+        assert list_operator_deploy_result is not None
+
+    ####
+    # Install Version
+    ####
+
+    @needscredentials
+    def test_install_version_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.install_version(
+                version_loc_id=version_locator_id,
+                x_auth_refresh_token=self.refresh_token_not_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                version_locator_id=version_locator_id,
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_install_version_returns_404_when_no_such_cluster(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.install_version(
+                version_loc_id=version_locator_id,
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id='invalid-' + self.cluster_id,
+                region=region_us_south,
+                version_locator_id=version_locator_id,
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_install_version_returns_400_when_backend_input_validation_fails(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.install_version(
+                version_loc_id=bogus_version_locator_id,
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                version_locator_id=bogus_version_locator_id,
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_install_version(self):
+        assert version_locator_id is not None
+
+        # possibly this user doesn't have right to get the cluster details
+        # until it is not clear it is skipped
+        # The specified cluster could not be found. If applicable, make sure that you target the correct account
+        # and resource group."
+
+        install_version_response = self.catalog_management_service.install_version(
+            version_loc_id=version_locator_id,
+            x_auth_refresh_token=self.refresh_token_authorized,
+            cluster_id=self.cluster_id,
+            region=region_us_south,
+            version_locator_id=version_locator_id,
+        )
+
+        assert install_version_response.get_status_code() == 202
+
+    ####
+    # Preinstall Version
+    ####
+
+    @needscredentials
+    def test_preinstall_version_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.preinstall_version(
+                version_loc_id=version_locator_id,
+                x_auth_refresh_token=self.refresh_token_not_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                version_locator_id=version_locator_id,
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_preinstall_version_returns_404_when_no_such_cluster(self):
+
+        # it requires a version where preinstall script is installed
+        # but I don't know how to do it
+        # once it is done possible to squeeze a 404 from the cluster
+
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.preinstall_version(
+                version_loc_id=version_locator_id,
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id='invalid-' + self.cluster_id,
+                region=region_us_south,
+                version_locator_id=version_locator_id,
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_preinstall_version_returns_400_when_backend_input_validation_fails(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.preinstall_version(
+                version_loc_id=bogus_version_locator_id,
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                version_locator_id=bogus_version_locator_id,
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_preinstall_version(self):
+        assert version_locator_id is not None
+
+        # Error: Attempt to run pre-install script on a version that has no pre-install script specified
+
+        preinstall_version_response = self.catalog_management_service.preinstall_version(
+            version_loc_id=version_locator_id,
+            x_auth_refresh_token=self.refresh_token_authorized,
+            cluster_id=self.cluster_id,
+            region=region_us_south,
+            version_locator_id=version_locator_id,
+        )
+
+        assert preinstall_version_response.get_status_code() == 202
+
+    ####
+    # Get Preinstall
+    ####
+
+    @needscredentials
+    def test_get_preinstall_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_preinstall(
+                version_loc_id=version_locator_id,
+                x_auth_refresh_token=self.refresh_token_not_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_preinstall_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.get_preinstall(
+                version_loc_id='invalid-' + version_locator_id,
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_preinstall_returns_400_when_backend_input_validation_fails(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.get_preinstall(
+                version_loc_id=bogus_version_locator_id,
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_get_preinstall(self):
+        assert version_locator_id is not None
+
+        # Error: Attempt to get pre-install status on a version that has no pre-install script
+
+        get_preinstall_response = self.catalog_management_service.get_preinstall(
+            version_loc_id=version_locator_id,
+            x_auth_refresh_token=self.refresh_token_authorized,
+            cluster_id=self.cluster_id,
+            region=region_us_south,
+        )
+
+        assert get_preinstall_response.get_status_code() == 200
+        install_status = get_preinstall_response.get_result()
+        assert install_status is not None
+
+    ####
+    # Validate Install
+    ####
+
+    @needscredentials
+    def test_validate_install_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.validate_install(
+                version_loc_id=version_locator_id,
+                x_auth_refresh_token=self.refresh_token_not_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                version_locator_id=version_locator_id,
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_validate_install_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.validate_install(
+                version_loc_id='invalid' + version_locator_id,
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                version_locator_id='invalid-' + version_locator_id,
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_validate_install_returns_400_when_backend_input_validation_fails(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.validate_install(
+                version_loc_id=bogus_version_locator_id,
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                version_locator_id=bogus_version_locator_id,
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_validate_install(self):
+        assert version_locator_id is not None
+
+        # possibly this user doesn't have right to get the cluster details
+        # until it is not clear it is skipped
+        # The specified cluster could not be found. If applicable, make sure that you target the correct account
+        # and resource group."
+
+        validate_install_response = self.catalog_management_service.validate_install(
+            version_loc_id=version_locator_id,
+            x_auth_refresh_token=self.refresh_token_authorized,
+            cluster_id=self.cluster_id,
+            region=region_us_south,
+            version_locator_id=version_locator_id,
+        )
+
+        assert validate_install_response.get_status_code() == 202
+
+    ####
+    # Get Validation Status
+    ####
+
+    @needscredentials
+    def test_get_validation_status_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_validation_status(
+                version_loc_id=version_locator_id,
+                x_auth_refresh_token=self.refresh_token_not_authorized
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_validation_status_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.get_validation_status(
+                version_loc_id='invalid-' + version_locator_id,
+                x_auth_refresh_token=self.refresh_token_authorized
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_validation_status_returns_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.get_validation_status(
+                version_loc_id=bogus_version_locator_id,
+                x_auth_refresh_token=self.refresh_token_authorized
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_get_validation_status(self):
+        assert version_locator_id is not None
+
+        get_validation_status_response = self.catalog_management_service.get_validation_status(
+            version_loc_id=version_locator_id,
+            x_auth_refresh_token=self.refresh_token_authorized
+        )
+
+        assert get_validation_status_response.get_status_code() == 200
+        validation = get_validation_status_response.get_result()
+        assert validation is not None
+
+    ####
+    # Get Override Values
+    ####
+
+    @needscredentials
+    def test_get_override_values_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_override_values(
+                version_loc_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_override_values_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.get_override_values(
+                version_loc_id='invalid-' + version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_override_values_returns_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.get_override_values(
+                version_loc_id=bogus_version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_get_override_values(self):
+
+        # requires validation run before this operation
+
+        assert version_locator_id is not None
+
+        get_override_values_response = self.catalog_management_service.get_override_values(
+            version_loc_id=version_locator_id
+        )
+
+        assert get_override_values_response.get_status_code() == 200
+        result = get_override_values_response.get_result()
+        assert result is not None
+
+    ####
+    # Search Objects
+    ####
+
+    @needscredentials
+    def test_search_objects_returns_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.search_objects(
+                query='',
+                collapse=True,
+                digest=True
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_search_objects_returns_200_when_user_is_not_authorized(self):
+
+        search_objects_response = self.catalog_management_service_not_authorized.search_objects(
+            query='name: ' + object_name,
+            collapse=True,
+            digest=True
+        )
+
+        assert search_objects_response.get_status_code() == 200
+        object_search_result = search_objects_response.get_result()
+        assert object_search_result is not None
+
+    # pager?
+    @needscredentials
+    def test_search_objects(self):
+
+        search_objects_response = self.catalog_management_service.search_objects(
+            query='name: ' + object_name,
+            collapse=True,
+            digest=True
+        )
+
+        assert search_objects_response.get_status_code() == 200
+        object_search_result = search_objects_response.get_result()
+        assert object_search_result is not None
+
+    ####
+    # List Objects
+    ####
+
+    @needscredentials
+    def test_list_objects_returns_400_when_backend_input_validation_fails(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service.list_objects(
+                catalog_identifier=catalog_id,
+                name=' ',
+                sort=' '
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_list_objects_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.list_objects(
+                catalog_identifier=catalog_id,
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    # pager
+    @needscredentials
+    def test_list_objects(self):
+        assert catalog_id is not None
+
+        list_objects_response = self.catalog_management_service.list_objects(
+            catalog_identifier=catalog_id,
+        )
+
+        assert list_objects_response.get_status_code() == 200
+        object_list_result = list_objects_response.get_result()
+        assert object_list_result is not None
+
+        assert next((obj for obj in object_list_result['resources']
+                     if obj['id'] == object_id), None) is not None
+
+    ####
+    # Replace Object
+    ####
+
+    @needscredentials
+    def test_replace_object_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.replace_object(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id,
+                id=object_id,
+                name='updated-object-name-created-by-python-sdk',
+                parent_id=region_us_south,
+                kind=kind_vpe,
+                catalog_id=catalog_id,
+                data={}
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_replace_object_returns_404_when_no_such_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service.replace_object(
+                catalog_identifier=catalog_id,
+                object_identifier='invalid-' + object_id,
+                id='invalid-' + object_id,
+                name='updated-object-name-created-by-python-sdk',
+                parent_id=region_us_south,
+                kind=kind_vpe,
+                catalog_id=catalog_id,
+                data={}
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_replace_object_returns_400_when_backend_input_validation_fails(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service.replace_object(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id,
+                id=object_id,
+                name='updated object name created by python sdk',
+                parent_id=region_us_south,
+                kind=kind_vpe,
+                catalog_id=catalog_id,
+                data={}
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_replace_object(self):
+
+        # cannot change name of object, what can be changed?
+
+        assert catalog_id is not None
+        assert object_id is not None
+
+        replace_object_response = self.catalog_management_service.replace_object(
+            catalog_identifier=catalog_id,
+            object_identifier=object_id,
+            id=object_id,
+            name='updated-object-name-created-by-python-sdk',
+            parent_id=region_us_south,
+            kind=kind_vpe,
+            catalog_id=catalog_id,
+            data={}
+        )
+
+        assert replace_object_response.get_status_code() == 200
+        catalog_object = replace_object_response.get_result()
+        assert catalog_object is not None
+
+    ####
+    # Get Object
+    ####
+
+    @needscredentials
+    def test_get_object_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_object(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_object_returns_404_when_no_such_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service.get_object(
+                catalog_identifier=catalog_id,
+                object_identifier='invalid-' + object_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_get_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        get_object_response = self.catalog_management_service.get_object(
+            catalog_identifier=catalog_id,
+            object_identifier=object_id
+        )
+
+        assert get_object_response.get_status_code() == 200
+        catalog_object = get_object_response.get_result()
+        assert catalog_object is not None
+
+    ####
+    # Get Object Audit
+    ####
+
+    @needscredentials
+    def test_get_object_audit_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_object_audit(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_object_audit_returns_200_when_no_such_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        get_object_audit_response = self.catalog_management_service.get_object_audit(
+            catalog_identifier=catalog_id,
+            object_identifier='invalid-' + object_id
+        )
+
+        assert get_object_audit_response.get_status_code() == 200
+        audit_log = get_object_audit_response.get_result()
+        assert audit_log is not None
+
+    @needscredentials
+    def test_get_object_audit(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        get_object_audit_response = self.catalog_management_service.get_object_audit(
+            catalog_identifier=catalog_id,
+            object_identifier=object_id
+        )
+
+        assert get_object_audit_response.get_status_code() == 200
+        audit_log = get_object_audit_response.get_result()
+        assert audit_log is not None
+
+    ####
+    # Account Publish Object
+    ####
+
+    @needscredentials
+    def test_account_publish_object_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.account_publish_object(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_account_publish_object_returns_404_when_no_such_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service.account_publish_object(
+                catalog_identifier=catalog_id,
+                object_identifier='invalid-' + object_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_account_publish_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        account_publish_object_response = self.catalog_management_service.account_publish_object(
+            catalog_identifier=catalog_id,
+            object_identifier=object_id
+        )
+
+        assert account_publish_object_response.get_status_code() == 202
+
+    ####
+    # Shared Publish Object
+    ####
+
+    @needscredentials
+    def test_shared_publish_object_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.shared_publish_object(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_shared_publish_object_returns_404_when_no_such_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service.shared_publish_object(
+                catalog_identifier=catalog_id,
+                object_identifier='invalid-' + object_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_shared_publish_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        # Error: An invalid catalog object was provided
+
+        shared_publish_object_response = self.catalog_management_service.shared_publish_object(
+            catalog_identifier=catalog_id,
+            object_identifier=object_id
+        )
+
+        assert shared_publish_object_response.get_status_code() == 202
+
+    ####
+    # IBM Publish Object
+    ####
+
+    @needscredentials
+    def test_ibm_publish_object_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.ibm_publish_object(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_ibm_publish_object_returns_404_when_no_such_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service.ibm_publish_object(
+                catalog_identifier=catalog_id,
+                object_identifier='invalid-' + object_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_ibm_publish_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        # Error: Object not approved to request publishing to IBM for
+
+        ibm_publish_object_response = self.catalog_management_service.ibm_publish_object(
+            catalog_identifier=catalog_id,
+            object_identifier=object_id
+        )
+
+        assert ibm_publish_object_response.get_status_code() == 202
+
+    ####
+    # Public Publish Object
+    ####
+
+    @needscredentials
+    def test_public_publish_object_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.public_publish_object(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_public_publish_object_returns_404_when_no_such_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service.public_publish_object(
+                catalog_identifier=catalog_id,
+                object_identifier='invalid-' + object_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_public_publish_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        # Error: Object not approved to request publishing to IBM for
+
+        public_publish_object_response = self.catalog_management_service.public_publish_object(
+            catalog_identifier=catalog_id,
+            object_identifier=object_id
+        )
+
+        assert public_publish_object_response.get_status_code() == 202
+
+    ####
+    # Create Object Access
+    ####
+
+    @needscredentials
+    def test_create_object_access_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.create_object_access(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id,
+                account_identifier=self.account_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_create_object_access_returns_404_when_no_such_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service.create_object_access(
+                catalog_identifier=catalog_id,
+                object_identifier='invalid-' + object_id,
+                account_identifier=self.account_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_create_object_access(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        create_object_access_response = self.catalog_management_service.create_object_access(
+            catalog_identifier=catalog_id,
+            object_identifier=object_id,
+            account_identifier=self.account_id
+        )
+
+        assert create_object_access_response.get_status_code() == 201
+
+    ####
+    # Get Object Access List
+    ####
+
+    @needscredentials
+    def test_get_object_access_list_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_object_access_list(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id,
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_object_access_list_returns_200_when_no_such_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        get_object_access_list_response = self.catalog_management_service.get_object_access_list(
+            catalog_identifier=catalog_id,
+            object_identifier='invalid-' + object_id,
+        )
+
+        assert get_object_access_list_response.get_status_code() == 200
+        object_access_list_result = get_object_access_list_response.get_result()
+        assert object_access_list_result is not None
+
+    # pager
+    @needscredentials
+    def test_get_object_access_list(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        get_object_access_list_response = self.catalog_management_service.get_object_access_list(
+            catalog_identifier=catalog_id,
+            object_identifier=object_id,
+        )
+
+        assert get_object_access_list_response.get_status_code() == 200
+        object_access_list_result = get_object_access_list_response.get_result()
+        assert object_access_list_result is not None
+
+    ####
+    # Get Object Access
+    ####
+
+    @needscredentials
+    def test_get_object_access_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_object_access(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id,
+                account_identifier=self.account_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_get_object_access_returns_404_when_no_such_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service.get_object_access(
+                catalog_identifier=catalog_id,
+                object_identifier='invalid-' + object_id,
+                account_identifier=self.account_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_get_object_access(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        #  Error: Error loading version with id: 6e263640-4805-471d-a30c-d7667325581c.
+        #  e59ad442-d113-49e4-bcd4-5431990135fd: Error[404 Not Found]
+
+        get_object_access_response = self.catalog_management_service.get_object_access(
+            catalog_identifier=catalog_id,
+            object_identifier=object_id,
+            account_identifier=self.account_id
+        )
+
+        assert get_object_access_response.get_status_code() == 200
+        object_access = get_object_access_response.get_result()
+        assert object_access is not None
+
+    ####
+    # Add Object Access List
+    ####
+
+    @needscredentials
+    def test_add_object_access_list_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.add_object_access_list(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id,
+                accounts=[self.account_id]
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_add_object_access_list_returns_404_when_no_such_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service.add_object_access_list(
+                catalog_identifier=catalog_id,
+                object_identifier='invalid-' + object_id,
+                accounts=[self.account_id]
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_add_object_access_list(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        add_object_access_list_response = self.catalog_management_service.add_object_access_list(
+            catalog_identifier=catalog_id,
+            object_identifier=object_id,
+            accounts=[self.account_id]
+        )
+
+        assert add_object_access_list_response.get_status_code() == 201
+        access_list_bulk_response = add_object_access_list_response.get_result()
+        assert access_list_bulk_response is not None
+
+    ####
+    # Create Offering Instance
+    ####
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_create_offering_instance_returns_404_when_no_such_catalog(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        # don't know what kind_format is needed here, vpe, helm and offering don't work
+
+        try:
+            self.catalog_management_service.create_offering_instance(
+                x_auth_refresh_token=self.refresh_token_authorized,
+                id=offering_id,
+                catalog_id='invalid-' + catalog_id,
+                offering_id=offering_id,
+                kind_format=kind_vpe,
+                version='0.0.2',
+                cluster_id=self.cluster_id,
+                cluster_region=region_us_south,
+                cluster_all_namespaces=True
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_create_offering_instance_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        # don't know what kind_format is needed here, vpe, helm and offering don't work
+
+        try:
+            self.catalog_management_service_not_authorized.create_offering_instance(
+                x_auth_refresh_token=self.refresh_token_authorized,
+                id=offering_id,
+                catalog_id=catalog_id,
+                offering_id=offering_id,
+                kind_format=kind_vpe,
+                version='0.0.2',
+                cluster_id=self.cluster_id,
+                cluster_region=region_us_south,
+                cluster_all_namespaces=True
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_create_offering_instance_returns_400_when_backend_input_validation_fails(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service.create_offering_instance(
+                x_auth_refresh_token=self.refresh_token_authorized,
+                id=offering_id,
+                catalog_id=catalog_id,
+                offering_id=offering_id,
+                kind_format='bogus kind',
+                version='0.0.2',
+                cluster_id=self.cluster_id,
+                cluster_region=region_us_south,
+                cluster_all_namespaces=True
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_create_offering_instance(self):
+        global offering_instance_id
+
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        create_offering_instance_response = self.catalog_management_service.create_offering_instance(
+            x_auth_refresh_token=self.refresh_token_authorized,
+            id=offering_id,
+            catalog_id=catalog_id,
+            offering_id=offering_id,
+            kind_format=kind_vpe,
+            version='0.0.2',
+            cluster_id=self.cluster_id,
+            cluster_region=region_us_south,
+            cluster_all_namespaces=True
+        )
+
+        assert create_offering_instance_response.get_status_code() == 201
+        offering_instance_id = create_offering_instance_response.get_result()
+        assert offering_instance_id is not None
+        assert offering_instance_id['id'] is not None
+        offering_instance_id = offering_instance_id['id']
+
+    ####
+    # Get Offering Instance
+    ####
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_get_offering_instance_returns_403_when_user_is_not_authorized(self):
+        assert offering_instance_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.get_offering_instance(
+                instance_identifier=offering_instance_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_get_offering_instance_returns_404_when_no_such_offering_instance(self):
+        assert offering_instance_id is not None
+
+        try:
+            self.catalog_management_service.get_offering_instance(
+                instance_identifier='invalid-' + offering_instance_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_get_offering_instance(self):
+        assert offering_instance_id is not None
+
+        get_offering_instance_response = self.catalog_management_service.get_offering_instance(
+            instance_identifier=offering_instance_id
+        )
+
+        assert get_offering_instance_response.get_status_code() == 200
+        offering_instance = get_offering_instance_response.get_result()
+        assert offering_instance is not None
+
+    ####
+    # Put Offering Instance
+    ####
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_put_offering_instance_returns_403_when_user_is_not_authorized(self):
+        assert offering_instance_id is not None
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.put_offering_instance(
+                instance_identifier=offering_instance_id,
+                x_auth_refresh_token=self.refresh_token_authorized,
+                id=offering_instance_id,
+                catalog_id=catalog_id,
+                offering_id=offering_id,
+                kind_format=kind_vpe,
+                version='0.0.3',
+                cluster_id=self.cluster_id,
+                cluster_region=region_us_south,
+                cluster_all_namespaces=True
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_put_offering_instance_returns_404_when_no_such_catalog(self):
+        assert offering_instance_id is not None
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service.put_offering_instance(
+                instance_identifier=offering_instance_id,
+                x_auth_refresh_token=self.refresh_token_authorized,
+                id=offering_instance_id,
+                catalog_id='invalid-' + catalog_id,
+                offering_id=offering_id,
+                kind_format=kind_vpe,
+                version='0.0.3',
+                cluster_id=self.cluster_id,
+                cluster_region=region_us_south,
+                cluster_all_namespaces=True
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_put_offering_instance_returns_400_when_backend_input_validation_fails(self):
+        assert offering_instance_id is not None
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service.put_offering_instance(
+                instance_identifier=offering_instance_id,
+                x_auth_refresh_token=self.refresh_token_authorized,
+                id=offering_instance_id,
+                catalog_id=catalog_id,
+                offering_id=offering_id,
+                kind_format='bogus kind',
+                version='0.0.3',
+                cluster_id=self.cluster_id,
+                cluster_region=region_us_south,
+                cluster_all_namespaces=True
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_put_offering_instance(self):
+        assert offering_instance_id is not None
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        put_offering_instance_response = self.catalog_management_service.put_offering_instance(
+            instance_identifier=offering_instance_id,
+            x_auth_refresh_token=self.refresh_token_authorized,
+            id=offering_instance_id,
+            catalog_id=catalog_id,
+            offering_id=offering_id,
+            kind_format=kind_vpe,
+            version='0.0.3',
+            cluster_id=self.cluster_id,
+            cluster_region=region_us_south,
+            cluster_all_namespaces=True
+        )
+
+        assert put_offering_instance_response.get_status_code() == 200
+        offering_instance = put_offering_instance_response.get_result()
+        assert offering_instance is not None
+
+    ####
+    # Delete Version
+    ####
+
+    @needscredentials
+    def test_delete_version_returns_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.delete_version(
+                version_loc_id=bogus_version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    def test_delete_version_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.delete_version(
+                version_loc_id='invalid-' + version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_delete_version_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.delete_version(
+                version_loc_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_delete_version(self):
+        assert version_locator_id is not None
+
+        delete_version_response = self.catalog_management_service.delete_version(
+            version_loc_id=version_locator_id
+        )
+
+        assert delete_version_response.get_status_code() == 200
+
+    ####
+    # Delete Operators
+    ####
+
+    @needscredentials
+    def test_delete_operators_returns_403_when_user_is_not_authorized(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.delete_operators(
+                x_auth_refresh_token=self.refresh_token_not_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                version_locator_id=version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_delete_operators_returns_404_when_no_such_version(self):
+        assert version_locator_id is not None
+
+        try:
+            self.catalog_management_service.delete_operators(
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                version_locator_id='invalid-' + version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_delete_operators_returns_400_when_backend_input_validation_fails(self):
+
+        try:
+            self.catalog_management_service.delete_operators(
+                x_auth_refresh_token=self.refresh_token_authorized,
+                cluster_id=self.cluster_id,
+                region=region_us_south,
+                version_locator_id=bogus_version_locator_id
+            )
+        except ApiException as e:
+            assert e.code == 400
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_delete_operators(self):
+        assert version_locator_id is not None
+
+        # Error: Error loading version with id: fdeefb18-57aa-4390-a9e0-b66b551db803.
+        # 2c187aa6-5009-4a2f-8f57-86533d2d3a18: Error[404 Not Found] -
+        # Version not found: Catalog[fdeefb18-57aa-4390-a9e0-b66b551db803]:Version[2c187aa6-5009-4a2f-8f57-86533d2d3a18]
+
+        delete_operators_response = self.catalog_management_service.delete_operators(
+            x_auth_refresh_token=self.refresh_token_authorized,
+            cluster_id=self.cluster_id,
+            region=region_us_south,
+            version_locator_id=version_locator_id
+        )
+
+        assert delete_operators_response.get_status_code() == 200
+
+    ####
+    # Delete Offering Instance
+    ####
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_delete_offering_instance_returns_403_when_user_is_not_authorized(self):
+        assert offering_instance_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.delete_offering_instance(
+                instance_identifier=offering_instance_id,
+                x_auth_refresh_token=self.refresh_token_not_authorized
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_delete_offering_instance_returns_404_when_no_such_offering_instance(self):
+        assert offering_instance_id is not None
+
+        try:
+            self.catalog_management_service.delete_offering_instance(
+                instance_identifier='invalid-' + offering_instance_id,
+                x_auth_refresh_token=self.refresh_token_authorized
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    @pytest.mark.skip
+    def test_delete_offering_instance(self):
+        assert offering_instance_id is not None
+
+        delete_offering_instance_response = self.catalog_management_service.delete_offering_instance(
+            instance_identifier=offering_instance_id,
+            x_auth_refresh_token=self.refresh_token_authorized
+        )
+
+        assert delete_offering_instance_response.get_status_code() == 200
+
+    ####
+    # Delete Object Access List
+    ####
+
+    @needscredentials
+    def test_delete_object_access_list_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.delete_object_access_list(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id,
+                accounts=[self.account_id]
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_delete_object_access_list_returns_404_when_no_such_catalog(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service.delete_object_access_list(
+                catalog_identifier='invalid-' + catalog_id,
+                object_identifier=object_id,
+                accounts=[self.account_id]
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_delete_object_access_list(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        delete_object_access_list_response = self.catalog_management_service.delete_object_access_list(
+            catalog_identifier=catalog_id,
+            object_identifier=object_id,
+            accounts=[self.account_id]
+        )
+
+        assert delete_object_access_list_response.get_status_code() == 200
+        access_list_bulk_response = delete_object_access_list_response.get_result()
+        assert access_list_bulk_response is not None
+
+    ####
+    # Delete Object Access
+    ####
+
+    @needscredentials
+    def test_delete_object_access_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.delete_object_access(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id,
+                account_identifier=self.account_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_delete_object_access_returns_404_when_no_such_catalog(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service.delete_object_access(
+                catalog_identifier='invalid-' + catalog_id,
+                object_identifier=object_id,
+                account_identifier=self.account_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_delete_object_access(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        delete_object_access_response = self.catalog_management_service.delete_object_access(
+            catalog_identifier=catalog_id,
+            object_identifier=object_id,
+            account_identifier=self.account_id
+        )
+
+        assert delete_object_access_response.get_status_code() == 200
+
+    ####
+    # Delete Object
+    ####
+
+    @needscredentials
+    def test_delete_object_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.delete_object(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_delete_object_returns_200_when_no_such_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        delete_object_response = self.catalog_management_service.delete_object(
+            catalog_identifier=catalog_id,
+            object_identifier='invalid-' + object_id
+        )
+
+        assert delete_object_response.get_status_code() == 200
+
+    @needscredentials
+    def test_delete_object(self):
+        assert catalog_id is not None
+        assert object_id is not None
+
+        delete_object_response = self.catalog_management_service.delete_object(
+            catalog_identifier=catalog_id,
+            object_identifier=object_id
+        )
+
+        assert delete_object_response.get_status_code() == 200
+
+    ####
+    # Delete Offering
+    ####
+
+    @needscredentials
+    def test_delete_offering_returns_200_when_no_such_offering(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        delete_offering_response = self.catalog_management_service.delete_offering(
+            catalog_identifier=catalog_id,
+            offering_id='invalid-' + offering_id
+        )
+
+        assert delete_offering_response.get_status_code() == 200
+
+    @needscredentials
+    def test_delete_offering_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.delete_offering(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_delete_offering(self):
+        assert catalog_id is not None
+        assert offering_id is not None
+
+        delete_offering_response = self.catalog_management_service.delete_offering(
+            catalog_identifier=catalog_id,
+            offering_id=offering_id
+        )
+
+        assert delete_offering_response.get_status_code() == 200
+
+    ####
+    # Delete Catalog
+    ####
+
+    @needscredentials
+    def test_delete_catalog_returns_404_when_no_such_catalog(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service.delete_catalog(
+                catalog_identifier='invalid-' + catalog_id
+            )
+        except ApiException as e:
+            assert e.code == 404
+
+    @needscredentials
+    def test_delete_catalog_returns_403_when_user_is_not_authorized(self):
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service_not_authorized.delete_catalog(
+                catalog_identifier=catalog_id
+            )
+        except ApiException as e:
+            assert e.code == 403
+
+    @needscredentials
+    def test_delete_catalog(self):
+        assert catalog_id is not None
+
+        delete_catalog_response = self.catalog_management_service.delete_catalog(
+            catalog_identifier=catalog_id
+        )
+
+        assert delete_catalog_response.get_status_code() == 200
 
     @classmethod
     def teardown_class(cls):
-        cls.clean_catalogs(cls, expectedLabel)
-
-    needscredentials = pytest.mark.skipif(
-        not os.path.exists(config_file),
-        reason="External configuration not available, skipping...")
-
-    def clean_catalogs(self, label):
-        print('Cleaning catalogs...')
-        result = self.service.list_catalogs().get_result()
-        if result is not None:
-            resources = result.get('resources')
-            # print("Catalogs to clean up: ", json.dumps(resources, indent=2))
-            for resource in resources:
-                label = resource.get('label')
-                if label.startswith(sdk_label_prefix):
-                    catalog_id = resource.get('id')
-                    print('Deleting catalog id={}, label={}'.format(
-                        catalog_id, label))
-                    self.service.delete_catalog(catalog_identifier=catalog_id)
-        print('Finished cleaning catalogs.')
-
-    def test_get_catalog_account(self):
-        response = self.service.get_catalog_account()
-
-        assert response is not None
-        assert response.get_status_code() == 200
-
-        result = response.get_result()
-        assert result.get('id') == expectedAccount
-        assert result.get('account_filters').get('include_all') is True
-        assert result.get('account_filters').get('category_filters') is None
-        assert result.get('account_filters').get('id_filters').get(
-            'include') is None
-        assert result.get('account_filters').get('id_filters').get(
-            'exclude') is None
-
-    def test_get_catalog_account_filters(self):
-        response = self.service.get_catalog_account_filters()
-
-        assert response is not None
-        assert response.get_status_code() == 200
-
-        result = response.get_result()
-        assert result.get('account_filters')[0].get('include_all') is True
-        assert result.get('account_filters')[0].get('category_filters') is None
-        assert result.get('account_filters')[0].get('id_filters').get(
-            'include') is None
-        assert result.get('account_filters')[0].get('id_filters').get(
-            'exclude') is None
-
-    def test_list_catalogs(self):
-        catalogCount = 0
-        catalogIndex = -1
-
-        createResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        createResult = createResponse.get_result()
-
-        listResponse = self.service.list_catalogs()
-
-        self.service.delete_catalog(catalog_identifier=createResult.get('id'))
-
-        if listResponse.get_result() is not None:
-            for i, resource in enumerate(
-                    listResponse.get_result().get('resources')):
-                if resource.get('label') == expectedLabel:
-                    catalogCount = catalogCount + 1
-                    catalogIndex = i
-
-        assert listResponse is not None
-        assert listResponse.get_status_code() == 200
-
-        listResult = listResponse.get_result()
-        assert listResult.get('offset') == 0
-        assert listResult.get('limit') == 0
-        assert catalogCount == 1
-        assert listResult.get('last') is None
-        assert listResult.get('prev') is None
-        assert listResult.get('next') is None
-
-        resources = listResult.get('resources')
-        assert resources is not None
-        assert resources[catalogIndex].get('label') == expectedLabel
-        assert resources[catalogIndex].get(
-            'short_description') == expectedShortDesc
-        assert resources[catalogIndex].get('url') == expectedURL.format(
-            createResult.get('id'))
-        assert resources[catalogIndex].get(
-            'offerings_url') == expectedOfferingsURL.format(
-                createResult.get('id'))
-        assert resources[catalogIndex].get('owning_account') == expectedAccount
-        assert resources[catalogIndex].get('catalog_filters').get(
-            'include_all') is False
-        assert resources[catalogIndex].get('catalog_filters').get(
-            'category_filters') is None
-        assert resources[catalogIndex].get('catalog_filters').get(
-            'id_filters').get('include') is None
-        assert resources[catalogIndex].get('catalog_filters').get(
-            'id_filters').get('exclude') is None
-
-    def test_create_catalog(self):
-        response = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-
-        assert response is not None
-        assert response.get_status_code() == 201
-
-        result = response.get_result()
-
-        self.service.delete_catalog(catalog_identifier=result.get('id'))
-
-        assert result.get('label') == expectedLabel
-        assert result.get('short_description') == expectedShortDesc
-        assert result.get('url') == expectedURL.format(result.get('id'))
-        assert result.get('offerings_url') == expectedOfferingsURL.format(
-            result.get('id'))
-        assert result.get('owning_account') == expectedAccount
-        assert result.get('catalog_filters').get('include_all') is False
-        assert result.get('catalog_filters').get('category_filters') is None
-        assert result.get('catalog_filters').get('id_filters').get(
-            'include') is None
-        assert result.get('catalog_filters').get('id_filters').get(
-            'exclude') is None
-
-    def test_get_catalog(self):
-        createResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        createResult = createResponse.get_result()
-
-        getResponse = self.service.get_catalog(
-            catalog_identifier=createResult.get('id'))
-        getResult = getResponse.get_result()
-
-        assert getResponse is not None
-        assert getResponse.get_status_code() == 200
-
-        self.service.delete_catalog(catalog_identifier=createResult.get('id'))
-
-        assert getResult.get('label') == expectedLabel
-        assert getResult.get('short_description') == expectedShortDesc
-        assert getResult.get('url') == expectedURL.format(getResult.get('id'))
-        assert getResult.get('offerings_url') == expectedOfferingsURL.format(
-            getResult.get('id'))
-        assert getResult.get('owning_account') == expectedAccount
-        assert getResult.get('catalog_filters').get('include_all') is False
-        assert getResult.get('catalog_filters').get('category_filters') is None
-        assert getResult.get('catalog_filters').get('id_filters').get(
-            'include') is None
-        assert getResult.get('catalog_filters').get('id_filters').get(
-            'exclude') is None
-
-    def test_get_catalog_failure(self):
-        with pytest.raises(ApiException) as e:
-            self.service.get_catalog(catalog_identifier=fakeName)
-        assert e.value.code == 404
-
-    def test_update_catalog(self):
-        expectedLabelUpdated = "test2"
-        expectedShortDescUpdated = "integration-test-update"
-
-        createResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        createResult = createResponse.get_result()
-
-        updateResponse = self.service.replace_catalog(
-            catalog_identifier=createResult.get('id'),
-            id=createResult.get('id'),
-            label=expectedLabelUpdated,
-            short_description=expectedShortDescUpdated)
-        updateResult = updateResponse.get_result()
-
-        self.service.delete_catalog(catalog_identifier=createResult.get('id'))
-
-        assert updateResponse is not None
-        assert updateResponse.get_status_code() == 200
-
-        assert updateResult.get('label') == expectedLabelUpdated
-        assert updateResult.get(
-            'short_description') == expectedShortDescUpdated
-        # assert updateResult.get('url') == expectedURL.format(createResult.get('id'))
-        # assert updateResult.get('offerings_url') == expectedOfferingsURL.format(createResult.get('id'))
-        # assert updateResult.get('owning_account') == expectedAccount
-        assert updateResult.get('catalog_filters').get('include_all') is True
-        assert updateResult.get('catalog_filters').get(
-            'category_filters') is None
-        assert updateResult.get('catalog_filters').get('id_filters').get(
-            'include') is None
-        assert updateResult.get('catalog_filters').get('id_filters').get(
-            'exclude') is None
-
-    def test_update_catalog_failure(self):
-        with pytest.raises(ApiException) as e:
-            self.service.replace_catalog(catalog_identifier=fakeName,
-                                         id=fakeName)
-        assert e.value.code == 404
-
-    def test_delete_catalog(self):
-        createResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        createResult = createResponse.get_result()
-
-        deleteResponse = self.service.delete_catalog(
-            catalog_identifier=createResult.get('id'),
-            id=createResult.get('id'))
-
-        assert deleteResponse is not None
-        assert deleteResponse.get_status_code() == 200
-
-    def test_delete_catalog_failure(self):
-        deleteResponse = self.service.delete_catalog(
-            catalog_identifier=fakeName, id=fakeName)
-
-        assert deleteResponse is not None
-        assert deleteResponse.get_status_code() == 200
-
-    def test_create_offering(self):
-        catalogResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        catalogResult = catalogResponse.get_result()
-
-        offeringResponse = self.service.create_offering(
-            catalog_identifier=catalogResult.get('id'),
-            name=expectedOfferingName,
-            label=expectedLabel)
-        offeringResult = offeringResponse.get_result()
-
-        self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
-
-        assert offeringResponse is not None
-        assert offeringResponse.get_status_code() == 201
-        assert offeringResult.get('name') == expectedOfferingName
-        assert offeringResult.get('url') == expectedOfferingURL.format(
-            catalogResult.get('id'), offeringResult.get('id'))
-        assert offeringResult.get('label') == expectedLabel
-
-    def test_get_offering(self):
-        catalogResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        catalogResult = catalogResponse.get_result()
-
-        offeringResponse = self.service.create_offering(
-            catalog_identifier=catalogResult.get('id'),
-            name=expectedOfferingName,
-            label=expectedLabel)
-        offeringResult = offeringResponse.get_result()
-
-        getResponse = self.service.get_offering(
-            catalog_identifier=catalogResult.get('id'),
-            offering_id=offeringResult.get('id'))
-        getResult = getResponse.get_result()
-
-        self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
-
-        assert getResponse is not None
-        assert getResponse.get_status_code() == 200
-        assert getResult.get('name') == expectedOfferingName
-        assert getResult.get('url') == expectedOfferingURL.format(
-            catalogResult.get('id'), offeringResult.get('id'))
-        assert getResult.get('label') == expectedLabel
-
-    def test_get_offering_failure(self):
-        createResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        createResult = createResponse.get_result()
-
-        with pytest.raises(ApiException) as e:
-            self.service.get_offering(
-                catalog_identifier=createResult.get('id'),
-                offering_id=fakeName)
-        assert e.value.code == 404
-
-        self.service.delete_catalog(catalog_identifier=createResult.get('id'))
-
-        with pytest.raises(ApiException) as e:
-            self.service.get_offering(
-                catalog_identifier=createResult.get('id'),
-                offering_id=fakeName)
-        assert e.value.code == 403
-
-    def test_list_offerings(self):
-        expectedFirst = "/api/v1-beta/catalogs/{}/offerings?limit=100&sort=label"
-        expectedLast = "/api/v1-beta/catalogs/{}/offerings?limit=100&sort=label"
-
-        catalogResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        catalogResult = catalogResponse.get_result()
-
-        offeringResponse = self.service.create_offering(
-            catalog_identifier=catalogResult.get('id'),
-            name=expectedOfferingName,
-            label=expectedLabel)
-        offeringResult = offeringResponse.get_result()
-
-        listResponse = self.service.list_offerings(
-            catalog_identifier=catalogResult.get('id'))
-        listResult = listResponse.get_result()
-
-        self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
-
-        assert listResponse is not None
-        assert listResponse.get_status_code() == 200
-        assert listResult.get('offset') == 0
-        assert listResult.get('limit') == 100
-        assert listResult.get('total_count') == 1
-        assert listResult.get('resource_count') == 1
-        assert listResult.get('first') == expectedFirst.format(
-            catalogResult.get('id'))
-        assert listResult.get('last') == expectedLast.format(
-            catalogResult.get('id'))
-
-        resources = listResult.get('resources')
-        assert resources is not None
-        assert resources[0].get('id') == offeringResult.get('id')
-        assert resources[0].get('url') == expectedOfferingURL.format(
-            catalogResult.get('id'), offeringResult.get('id'))
-        assert resources[0].get('label') == expectedLabel
-        assert resources[0].get('name') == expectedOfferingName
-        assert resources[0].get('catalog_id') == catalogResult.get('id')
-        assert resources[0].get('catalog_name') == expectedLabel
-
-    def test_delete_offering(self):
-        catalogResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        catalogResult = catalogResponse.get_result()
-
-        offeringResponse = self.service.create_offering(
-            catalog_identifier=catalogResult.get('id'),
-            name=expectedOfferingName,
-            label=expectedLabel)
-        offeringResult = offeringResponse.get_result()
-
-        deleteResponse = self.service.delete_offering(
-            catalog_identifier=catalogResult.get('id'),
-            offering_id=offeringResult.get('id'))
-
-        self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
-
-        assert deleteResponse is not None
-        assert deleteResponse.get_status_code() == 200
-
-    def test_delete_offering_failure(self):
-        catalogResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        catalogResult = catalogResponse.get_result()
-
-        deleteResponse = self.service.delete_offering(
-            catalog_identifier=catalogResult.get('id'), offering_id=fakeName)
-
-        self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
-
-        assert deleteResponse is not None
-        assert deleteResponse.get_status_code() == 200
-
-        with pytest.raises(ApiException) as e:
-            self.service.delete_offering(
-                catalog_identifier=catalogResult.get('id'),
-                offering_id=fakeName)
-        assert e.value.code == 403
-
-    def test_update_offering(self):
-        expectedLabelUpdate = "test-update"
-        expectedShortDescUpdate = "test-desc-update"
-
-        catalogResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        catalogResult = catalogResponse.get_result()
-
-        offeringResponse = self.service.create_offering(
-            catalog_identifier=catalogResult.get('id'),
-            name=expectedOfferingName,
-            label=expectedLabel)
-        offeringResult = offeringResponse.get_result()
-
-        updateResponse = self.service.replace_offering(
-            catalog_identifier=catalogResult.get('id'),
-            offering_id=offeringResult.get('id'),
-            id=offeringResult.get('id'),
-            rev=offeringResult.get('_rev'),
-            label=expectedLabelUpdate,
-            short_description=expectedShortDescUpdate)
-        updateResult = updateResponse.get_result()
-
-        self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
-
-        assert updateResponse is not None
-        assert updateResponse.get_status_code() == 200
-        assert updateResult.get('short_description') == expectedShortDescUpdate
-        assert updateResult.get('url') == expectedOfferingURL.format(
-            catalogResult.get('id'), offeringResult.get('id'))
-        assert updateResult.get('label') == expectedLabelUpdate
-
-    def test_update_offering_failure(self):
-        createResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        createResult = createResponse.get_result()
-
-        with pytest.raises(ApiException) as e:
-            self.service.replace_offering(
-                catalog_identifier=createResult.get('id'),
-                offering_id=fakeName,
-                id=fakeName,
-                rev=fakeName)
-        assert e.value.code == 404
-
-        self.service.delete_catalog(catalog_identifier=createResult.get('id'))
-
-        with pytest.raises(ApiException) as e:
-            self.service.replace_offering(
-                catalog_identifier=createResult.get('id'),
-                offering_id=fakeName,
-                id=fakeName,
-                rev=fakeName)
-        assert e.value.code == 403
-
-    def test_get_consumption_offerings(self):
-        getResponse = self.service.get_consumption_offerings()
-        assert getResponse is not None
-        assert getResponse.get_status_code() == 200
-
-        getResult = getResponse.get_result()
-        assert getResult.get('offset') == 0
-        assert getResult.get('limit') > 0
-        assert getResult.get('total_count') > 0
-        assert getResult.get('last') is not None
-        assert getResult.get('prev') is None
-        assert getResult.get('next') is not None
-        assert getResult.get('resources') is not None
-
-    def test_import_offering(self):
-        expectedOfferingZipURL = 'https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml'
-        expectedOfferingTargetKind = 'roks'
-        expectedOfferingVersion = "0.4.0"
-        expectedJenkinsOfferingName = 'jenkins-operator'
-        expectedJenkinsOfferingLabel = 'Jenkins Operator'
-        expectedJenkinsOfferingShortDesc = 'Kubernetes native operator which fully manages Jenkins on Openshift.'
-
-        catalogResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        catalogResult = catalogResponse.get_result()
-
-        offeringResponse = self.service.import_offering(
-            catalog_identifier=catalogResult.get('id'),
-            zipurl=expectedOfferingZipURL,
-            x_auth_token=self.gitToken)
-        offeringResult = offeringResponse.get_result()
-
-        self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
-
-        assert offeringResponse is not None
-        assert offeringResponse.get_status_code() == 201
-        assert offeringResult.get('name') == expectedJenkinsOfferingName
-        assert offeringResult.get('url') == expectedOfferingURL.format(
-            catalogResult.get('id'), offeringResult.get('id'))
-        assert offeringResult.get('label') == expectedJenkinsOfferingLabel
-        assert offeringResult.get(
-            'short_description') == expectedJenkinsOfferingShortDesc
-        assert offeringResult.get('catalog_name') == expectedLabel
-        assert offeringResult.get('catalog_id') == catalogResult.get('id')
-        assert offeringResult.get('kinds') is not None
-        assert offeringResult.get('kinds')[0].get(
-            'target_kind') == expectedOfferingTargetKind
-        assert offeringResult.get('kinds')[0].get('versions') is not None
-        assert offeringResult.get('kinds')[0].get('versions')[0].get(
-            'version') == expectedOfferingVersion
-        assert offeringResult.get('kinds')[0].get('versions')[0].get(
-            'tgz_url') == expectedOfferingZipURL
-
-    def test_import_offering_version(self):
-        expectedOfferingZipURL = 'https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.3.31/jenkins-operator.v0.3.31.clusterserviceversion.yaml'
-        expectedOfferingZipURLUpdate = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml"
-        expectedOfferingTargetKind = 'roks'
-        expectedOfferingVersion = "0.3.31"
-        expectedOfferingVersionUpdate = "0.4.0"
-        expectedJenkinsOfferingName = 'jenkins-operator'
-        expectedJenkinsOfferingLabel = 'Jenkins Operator'
-        expectedJenkinsOfferingShortDesc = 'Kubernetes native operator which fully manages Jenkins on Openshift.'
-
-        catalogResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        catalogResult = catalogResponse.get_result()
-
-        offeringResponse = self.service.import_offering(
-            catalog_identifier=catalogResult.get('id'),
-            zipurl=expectedOfferingZipURL,
-            x_auth_token=self.gitToken)
-        offeringResult = offeringResponse.get_result()
-
-        versionResponse = self.service.import_offering_version(
-            catalog_identifier=catalogResult.get('id'),
-            offering_id=offeringResult.get('id'),
-            zipurl=expectedOfferingZipURLUpdate,
-            x_auth_token=self.gitToken)
-        versionResult = versionResponse.get_result()
-
-        self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
-
-        assert versionResponse is not None
-        assert versionResponse.get_status_code() == 201
-        assert versionResult.get('name') == expectedJenkinsOfferingName
-        assert versionResult.get('url') == expectedOfferingURL.format(
-            catalogResult.get('id'), offeringResult.get('id'))
-        assert versionResult.get('label') == expectedJenkinsOfferingLabel
-        assert versionResult.get(
-            'short_description') == expectedJenkinsOfferingShortDesc
-        assert versionResult.get('catalog_name') == expectedLabel
-        assert versionResult.get('catalog_id') == catalogResult.get('id')
-        assert versionResult.get('kinds') is not None
-        assert versionResult.get('kinds')[0].get(
-            'target_kind') == expectedOfferingTargetKind
-        assert versionResult.get('kinds')[0].get('versions') is not None
-        assert versionResult.get('kinds')[0].get('versions')[0].get(
-            'version') == expectedOfferingVersion
-        assert versionResult.get('kinds')[0].get('versions')[0].get(
-            'tgz_url') == expectedOfferingZipURL
-        assert versionResult.get('kinds')[0].get('versions')[1].get(
-            'version') == expectedOfferingVersionUpdate
-        assert versionResult.get('kinds')[0].get('versions')[1].get(
-            'tgz_url') == expectedOfferingZipURLUpdate
-
-    def test_import_offering_version_failure(self):
-        expectedOfferingZipURL = 'https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.3.31/jenkins-operator.v0.3.31.clusterserviceversion.yaml'
-
-        createResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        createResult = createResponse.get_result()
-
-        with pytest.raises(ApiException) as e:
-            self.service.import_offering_version(
-                catalog_identifier=createResult.get('id'),
-                offering_id=fakeName,
-                zipurl=expectedOfferingZipURL,
-                x_auth_token=self.gitToken)
-        assert e.value.code == 404
-
-        self.service.delete_catalog(catalog_identifier=createResult.get('id'))
-
-        with pytest.raises(ApiException) as e:
-            self.service.import_offering_version(
-                catalog_identifier=createResult.get('id'),
-                offering_id=fakeName,
-                zipurl=expectedOfferingZipURL,
-                x_auth_token=self.gitToken)
-        assert e.value.code == 403
-
-    def test_reload_offering(self):
-        expectedOfferingZipURL = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml"
-        expectedOfferingTargetKind = 'roks'
-        expectedOfferingVersion = "0.4.0"
-        expectedJenkinsOfferingName = 'jenkins-operator'
-        expectedJenkinsOfferingLabel = 'Jenkins Operator'
-        expectedJenkinsOfferingShortDesc = 'Kubernetes native operator which fully manages Jenkins on Openshift.'
-
-        catalogResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        catalogResult = catalogResponse.get_result()
-
-        offeringResponse = self.service.import_offering(
-            catalog_identifier=catalogResult.get('id'),
-            zipurl=expectedOfferingZipURL,
-            x_auth_token=self.gitToken)
-        offeringResult = offeringResponse.get_result()
-
-        reloadResponse = self.service.reload_offering(
-            catalog_identifier=catalogResult.get('id'),
-            offering_id=offeringResult.get('id'),
-            zipurl=expectedOfferingZipURL,
-            target_version=expectedOfferingVersion,
-            x_auth_token=self.gitToken)
-        reloadResult = reloadResponse.get_result()
-
-        self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
-
-        assert reloadResponse is not None
-        assert reloadResponse.get_status_code() == 200
-        assert reloadResult.get('name') == expectedJenkinsOfferingName
-        assert reloadResult.get('url') == expectedOfferingURL.format(
-            catalogResult.get('id'), offeringResult.get('id'))
-        assert reloadResult.get('label') == expectedJenkinsOfferingLabel
-        assert reloadResult.get(
-            'short_description') == expectedJenkinsOfferingShortDesc
-        assert reloadResult.get('catalog_name') == expectedLabel
-        assert reloadResult.get('catalog_id') == catalogResult.get('id')
-        assert reloadResult.get('kinds') is not None
-        assert reloadResult.get('kinds')[0].get(
-            'target_kind') == expectedOfferingTargetKind
-        assert reloadResult.get('kinds')[0].get('versions') is not None
-        assert reloadResult.get('kinds')[0].get('versions')[0].get(
-            'version') == expectedOfferingVersion
-        assert reloadResult.get('kinds')[0].get('versions')[0].get(
-            'tgz_url') == expectedOfferingZipURL
-
-    def test_reload_offering_failure(self):
-        expectedOfferingZipURL = 'https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.3.31/jenkins-operator.v0.3.31.clusterserviceversion.yaml'
-        expectedOfferingVersion = "0.4.0"
-
-        createResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        createResult = createResponse.get_result()
-
-        with pytest.raises(ApiException) as e:
-            self.service.reload_offering(
-                catalog_identifier=createResult.get('id'),
-                offering_id=fakeName,
-                zipurl=expectedOfferingZipURL,
-                target_version=expectedOfferingVersion)
-        assert e.value.code == 404
-
-        self.service.delete_catalog(catalog_identifier=createResult.get('id'))
-
-        with pytest.raises(ApiException) as e:
-            self.service.reload_offering(
-                catalog_identifier=createResult.get('id'),
-                offering_id=fakeName,
-                zipurl=expectedOfferingZipURL,
-                target_version=expectedOfferingVersion)
-        assert e.value.code == 403
-
-    def test_get_version(self):
-        expectedOfferingZipURL = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml"
-        expectedOfferingTargetKind = 'roks'
-        expectedOfferingVersion = "0.4.0"
-        expectedJenkinsOfferingName = 'jenkins-operator'
-        expectedJenkinsOfferingLabel = 'Jenkins Operator'
-        expectedJenkinsOfferingShortDesc = 'Kubernetes native operator which fully manages Jenkins on Openshift.'
-
-        catalogResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        catalogResult = catalogResponse.get_result()
-
-        offeringResponse = self.service.import_offering(
-            catalog_identifier=catalogResult.get('id'),
-            zipurl=expectedOfferingZipURL,
-            x_auth_token=self.gitToken)
-        offeringResult = offeringResponse.get_result()
-
-        reloadResponse = self.service.get_version(
-            version_loc_id=offeringResult.get('kinds')[0].get(
-                'versions')[0].get('version_locator'))
-        reloadResult = reloadResponse.get_result()
-
-        self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
-
-        assert reloadResponse is not None
-        assert reloadResponse.get_status_code() == 200
-        assert reloadResult.get('name') == expectedJenkinsOfferingName
-        assert reloadResult.get('url') == expectedOfferingURL.format(
-            catalogResult.get('id'), offeringResult.get('id'))
-        assert reloadResult.get('label') == expectedJenkinsOfferingLabel
-        assert reloadResult.get(
-            'short_description') == expectedJenkinsOfferingShortDesc
-        assert reloadResult.get('catalog_name') == expectedLabel
-        assert reloadResult.get('catalog_id') == catalogResult.get('id')
-        assert reloadResult.get('kinds') is not None
-        assert reloadResult.get('kinds')[0].get(
-            'target_kind') == expectedOfferingTargetKind
-        assert reloadResult.get('kinds')[0].get('versions') is not None
-        assert reloadResult.get('kinds')[0].get('versions')[0].get(
-            'version') == expectedOfferingVersion
-        assert reloadResult.get('kinds')[0].get('versions')[0].get(
-            'tgz_url') == expectedOfferingZipURL
-
-    def test_get_version_failure(self):
-        with pytest.raises(ApiException) as e:
-            self.service.get_version(version_loc_id=fakeVersionLocator)
-        assert e.value.code == 404
-
-    def test_delete_version(self):
-        expectedOfferingZipURL = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml"
-
-        catalogResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        catalogResult = catalogResponse.get_result()
-
-        offeringResponse = self.service.import_offering(
-            catalog_identifier=catalogResult.get('id'),
-            zipurl=expectedOfferingZipURL,
-            x_auth_token=self.gitToken)
-        offeringResult = offeringResponse.get_result()
-
-        reloadResponse = self.service.delete_version(
-            version_loc_id=offeringResult.get('kinds')[0].get(
-                'versions')[0].get('version_locator'))
-
-        self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
-
-        assert reloadResponse is not None
-        assert reloadResponse.get_status_code() == 200
-
-    def test_delete_version_failure(self):
-        with pytest.raises(ApiException) as e:
-            self.service.delete_version(version_loc_id=fakeVersionLocator)
-        assert e.value.code == 404
-
-    def test_get_version_about(self):
-        expectedOfferingZipURL = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml"
-
-        catalogResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        catalogResult = catalogResponse.get_result()
-
-        offeringResponse = self.service.import_offering(
-            catalog_identifier=catalogResult.get('id'),
-            zipurl=expectedOfferingZipURL,
-            x_auth_token=self.gitToken)
-        offeringResult = offeringResponse.get_result()
-
-        getResponse = self.service.get_version_about(
-            version_loc_id=offeringResult.get('kinds')[0].get(
-                'versions')[0].get('version_locator'))
-        getResult = getResponse.get_result()
-
-        self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
-
-        assert getResponse is not None
-        assert getResponse.get_status_code() == 200
-        assert getResult is not None
-
-    def test_get_version_about_failure(self):
-        with pytest.raises(ApiException) as e:
-            self.service.get_version_about(version_loc_id=fakeVersionLocator)
-        assert e.value.code == 404
-
-    def test_get_version_updates(self):
-        expectedOfferingZipURL = 'https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.3.31/jenkins-operator.v0.3.31.clusterserviceversion.yaml'
-        expectedOfferingZipURLUpdate = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml"
-        expectedOfferingVersionUpdate = "0.4.0"
-
-        catalogResponse = self.service.create_catalog(
-            label=expectedLabel, short_description=expectedShortDesc)
-        catalogResult = catalogResponse.get_result()
-
-        offeringResponse = self.service.import_offering(
-            catalog_identifier=catalogResult.get('id'),
-            zipurl=expectedOfferingZipURL,
-            x_auth_token=self.gitToken)
-        offeringResult = offeringResponse.get_result()
-
-        versionResponse = self.service.import_offering_version(
-            catalog_identifier=catalogResult.get('id'),
-            offering_id=offeringResult.get('id'),
-            zipurl=expectedOfferingZipURLUpdate,
-            x_auth_token=self.gitToken)
-        versionResult = versionResponse.get_result()
-
-        updateResponse = self.service.get_version_updates(
-            version_loc_id=offeringResult.get('kinds')[0].get(
-                'versions')[0].get('version_locator'))
-        updateResult = updateResponse.get_result()
-
-        self.service.delete_catalog(catalog_identifier=catalogResult.get('id'))
-
-        assert updateResponse is not None
-        assert updateResponse.get_status_code() == 200
-        assert updateResult is not None
-        assert updateResult[0].get('version_locator') == versionResult.get(
-            'kinds')[0].get('versions')[1].get('version_locator')
-        assert updateResult[0].get('version') == expectedOfferingVersionUpdate
-        assert updateResult[0].get(
-            'package_version') == expectedOfferingVersionUpdate
-        assert updateResult[0].get('can_update') is True
-
-    def test_get_version_updates_failure(self):
-        with pytest.raises(ApiException) as e:
-            self.service.get_version_updates(version_loc_id=fakeVersionLocator)
-        assert e.value.code == 404
-
-    def test_get_license_providers(self):
-        expectedTotalResults = 1
-        expectedTotalPages = 1
-        expectedName = "IBM Passport Advantage"
-        expectedOfferingType = "content"
-        expectedCreateURL = "https://www.ibm.com/software/passportadvantage/aboutpassport.html"
-        expectedInfoURL = "https://www.ibm.com/software/passportadvantage/"
-        expectedURL = "/v1/licensing/license_providers/11cabc37-c4a7-410b-894d-8cb3586423f1"
-        expectedState = "active"
-
-        listResponse = self.service.get_license_providers()
-
-        assert listResponse is not None
-        assert listResponse.get_status_code() == 200
-
-        listResult = listResponse.get_result()
-        assert listResult.get('total_results') == expectedTotalResults
-        assert listResult.get('total_pages') == expectedTotalPages
-
-        resources = listResult.get('resources')
-        assert resources is not None
-        assert len(resources) == 1
-        assert resources[0].get('name') == expectedName
-        assert resources[0].get('offering_type') == expectedOfferingType
-        assert resources[0].get('create_url') == expectedCreateURL
-        assert resources[0].get('info_url') == expectedInfoURL
-        assert resources[0].get('url') == expectedURL
-        assert resources[0].get('state') == expectedState
-
-    def test_list_license_entitlements(self):
-        expectedResourceCount = 0
-        expectedTotalResults = 0
-        expectedTotalPages = 1
-
-        listResponse = self.service.list_license_entitlements()
-
-        assert listResponse is not None
-        assert listResponse.get_status_code() == 200
-
-        listResult = listResponse.get_result()
-        assert listResult.get('total_results') == expectedTotalResults
-        assert listResult.get('total_pages') == expectedTotalPages
-
-        resources = listResult.get('resources')
-        assert len(resources) == expectedResourceCount
-
-    def test_search_license_versions(self):
-        with pytest.raises(ApiException) as e:
-            self.service.search_license_versions(q=fakeName)
-        assert e.value.code == 403
-
-    def test_search_license_offerings(self):
-        with pytest.raises(ApiException) as e:
-            self.service.search_license_offerings(q=fakeName)
-        assert e.value.code == 403
-
-
-if __name__ == '__main__':
-    unittest.main()
+        try:
+            cls.catalog_management_service.delete_object(
+                catalog_identifier=catalog_id,
+                object_identifier=object_id
+            )
+        except ApiException:
+            print("Object is already deleted.")
+
+        try:
+            cls.catalog_management_service.delete_offering(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id
+            )
+        except ApiException:
+            print("Offering is already deleted.")
+
+        try:
+            cls.catalog_management_service.delete_catalog(
+                catalog_identifier=catalog_id
+            )
+        except ApiException:
+            print("Catalog is already deleted.")
