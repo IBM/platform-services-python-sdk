@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-a8493a65-20210115-083246
+# IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
  
 """
 Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete a tag
@@ -115,15 +115,16 @@ class GlobalTaggingV1(BaseService):
                provider, `ghost`, `ims` or `ghost,ims`, where the tag exists and the
                number of attached resources.
         :param List[str] providers: (optional) Select a provider. Supported values
-               are `ghost` and `ims`. To list GhoST tags and infrastructure tags use
-               `ghost,ims`. `service` and `access` tags can only be attached to GhoST
-               onboarded resources, so you should not set this parameter when listing
-               them.
+               are `ghost` and `ims`. To list both Global Search and Tagging tags and
+               infrastructure tags, use `ghost,ims`. `service` and `access` tags can only
+               be attached to resources that are onboarded to Global Search and Tagging,
+               so you should not set this parameter when listing them.
         :param str attached_to: (optional) If you want to return only the list of
                tags attached to a specified resource, pass the ID of the resource on this
-               parameter. For GhoST onboarded resources, the resource ID is the CRN; for
-               IMS resources, it is the IMS ID. When using this parameter, you must
-               specify the appropriate provider (`ims` or `ghost`).
+               parameter. For resources that are onboarded to Global Search and Tagging,
+               the resource ID is the CRN; for IMS resources, it is the IMS ID. When using
+               this parameter, you must specify the appropriate provider (`ims` or
+               `ghost`).
         :param int offset: (optional) The offset is the index of the item from
                which you want to start returning data from.
         :param int limit: (optional) The number of tags to return.
@@ -311,7 +312,8 @@ class GlobalTaggingV1(BaseService):
 
         :param str tag_name: The name of tag to be deleted.
         :param List[str] providers: (optional) Select a provider. Supported values
-               are `ghost` and `ims`. To delete tag both in GhoST in IMS, use `ghost,ims`.
+               are `ghost` and `ims`. To delete tags both in Global Search and Tagging and
+               in IMS, use `ghost,ims`.
         :param str impersonate_user: (optional) The user on whose behalf the delete
                operation must be performed (_for administrators only_).
         :param str account_id: (optional) The ID of the billing account to delete
@@ -370,14 +372,7 @@ class GlobalTaggingV1(BaseService):
         """
         Attach tags.
 
-        Attaches one or more tags to one or more resources. To attach a `user` tag on a
-        resource, you must have the access listed in the [Granting users access to tag
-        resources](https://cloud.ibm.com/docs/account?topic=account-access) documentation.
-        To attach a `service` tag, you must be an authorized service. If that is the case,
-        then you can attach a `service` tag with your registered `prefix` to any resource
-        in any account. The account ID must be set through the `account_id` query
-        parameter. To attach an `access` tag, you must be the resource administrator
-        within the account. You can attach only `access` tags already existing.
+        Attaches one or more tags to one or more resources.
 
         :param List[Resource] resources: List of resources on which the tag or tags
                should be attached.
@@ -449,14 +444,7 @@ class GlobalTaggingV1(BaseService):
         """
         Detach tags.
 
-        Detaches one or more tags from one or more resources. To detach a `user` tag on a
-        resource you must have the permissions listed in the [Granting users access to tag
-        resources](https://cloud.ibm.com/docs/account?topic=account-access) documentation.
-        To detach a `service` tag you must be an authorized Service. If that is the case,
-        then you can detach a `service` tag with your registered `prefix` from any
-        resource in any account. The account ID must be set through the `account_id` query
-        parameter. To detach an `access` tag, you must be the resource administrator
-        within the account.
+        Detaches one or more tags from one or more resources.
 
         :param List[Resource] resources: List of resources on which the tag or tags
                should be detached.
@@ -530,10 +518,10 @@ class ListTagsEnums:
         ACCESS = 'access'
     class Providers(str, Enum):
         """
-        Select a provider. Supported values are `ghost` and `ims`. To list GhoST tags and
-        infrastructure tags use `ghost,ims`. `service` and `access` tags can only be
-        attached to GhoST onboarded resources, so you should not set this parameter when
-        listing them.
+        Select a provider. Supported values are `ghost` and `ims`. To list both Global
+        Search and Tagging tags and infrastructure tags, use `ghost,ims`. `service` and
+        `access` tags can only be attached to resources that are onboarded to Global
+        Search and Tagging, so you should not set this parameter when listing them.
         """
         GHOST = 'ghost'
         IMS = 'ims'
@@ -586,8 +574,8 @@ class DeleteTagEnums:
 
     class Providers(str, Enum):
         """
-        Select a provider. Supported values are `ghost` and `ims`. To delete tag both in
-        GhoST in IMS, use `ghost,ims`.
+        Select a provider. Supported values are `ghost` and `ims`. To delete tags both in
+        Global Search and Tagging and in IMS, use `ghost,ims`.
         """
         GHOST = 'ghost'
         IMS = 'ims'

@@ -25,7 +25,7 @@ import re
 import requests
 import responses
 import urllib
-from platform_services.global_search_v2 import *
+from ibm_platform_services.global_search_v2 import *
 
 
 _service = GlobalSearchV2(
