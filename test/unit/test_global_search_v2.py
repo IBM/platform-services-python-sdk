@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,12 +28,12 @@ import urllib
 from ibm_platform_services.global_search_v2 import *
 
 
-service = GlobalSearchV2(
+_service = GlobalSearchV2(
     authenticator=NoAuthAuthenticator()
     )
 
-base_url = 'https://api.global-search-tagging.cloud.ibm.com'
-service.set_service_url(base_url)
+_base_url = 'https://api.global-search-tagging.cloud.ibm.com'
+_service.set_service_url(_base_url)
 
 ##############################################################################
 # Start of Service: Search
@@ -60,7 +60,7 @@ class TestSearch():
         search()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v3/resources/search')
+        url = self.preprocess_url(_base_url + '/v3/resources/search')
         mock_response = '{"search_cursor": "search_cursor", "limit": 5, "items": [{"crn": "crn"}]}'
         responses.add(responses.POST,
                       url,
@@ -79,7 +79,7 @@ class TestSearch():
         sort = ['testString']
 
         # Invoke method
-        response = service.search(
+        response = _service.search(
             query=query,
             fields=fields,
             search_cursor=search_cursor,
@@ -114,7 +114,7 @@ class TestSearch():
         test_search_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v3/resources/search')
+        url = self.preprocess_url(_base_url + '/v3/resources/search')
         mock_response = '{"search_cursor": "search_cursor", "limit": 5, "items": [{"crn": "crn"}]}'
         responses.add(responses.POST,
                       url,
@@ -128,7 +128,7 @@ class TestSearch():
         search_cursor = 'testString'
 
         # Invoke method
-        response = service.search(
+        response = _service.search(
             query=query,
             fields=fields,
             search_cursor=search_cursor,
@@ -175,7 +175,7 @@ class TestGetSupportedTypes():
         get_supported_types()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/resources/supported_types')
+        url = self.preprocess_url(_base_url + '/v2/resources/supported_types')
         mock_response = '{"supported_types": ["supported_types"]}'
         responses.add(responses.GET,
                       url,
@@ -184,7 +184,7 @@ class TestGetSupportedTypes():
                       status=200)
 
         # Invoke method
-        response = service.get_supported_types()
+        response = _service.get_supported_types()
 
 
         # Check for correct operation
@@ -202,7 +202,7 @@ class TestGetSupportedTypes():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestResultItem():
+class ResultItemUnitTests():
     """
     Test Class for ResultItem
     """
@@ -232,7 +232,7 @@ class TestResultItem():
         result_item_model_json2 = result_item_model.to_dict()
         assert result_item_model_json2 == result_item_model_json
 
-class TestScanResult():
+class ScanResultUnitTests():
     """
     Test Class for ScanResult
     """
@@ -269,7 +269,7 @@ class TestScanResult():
         scan_result_model_json2 = scan_result_model.to_dict()
         assert scan_result_model_json2 == scan_result_model_json
 
-class TestSupportedTypesList():
+class SupportedTypesListUnitTests():
     """
     Test Class for SupportedTypesList
     """
