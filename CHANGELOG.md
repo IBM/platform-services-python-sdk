@@ -1,3 +1,10 @@
+## [0.18.11](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.10...v0.18.11) (2021-06-14)
+
+
+### Bug Fixes
+
+* **Global Search/Tagging:** regenerated services with latest API definition ([#116](https://github.com/IBM/platform-services-python-sdk/issues/116)) ([2ac6736](https://github.com/IBM/platform-services-python-sdk/commit/2ac673660dce5413355b88fe12307cb2ccf1007c))
+
 ## [0.18.10](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.9...v0.18.10) (2021-06-01)
 
 
