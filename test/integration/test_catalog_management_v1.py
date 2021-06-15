@@ -507,7 +507,7 @@ class TestCatalogManagementV1():
         fetch = True
         limit = 50
         offset = 0
-        search_result_length = 0
+        amount_of_offerings = 0
         is_offering_found = False
 
         while fetch:
@@ -522,7 +522,7 @@ class TestCatalogManagementV1():
             assert offering_search_result is not None
 
             if (offering_search_result['resources'] is not None) and (len(offering_search_result['resources'])) > 0:
-                search_result_length += len(offering_search_result['resources'])
+                amount_of_offerings += len(offering_search_result['resources'])
                 offset += 50
 
                 if not is_offering_found:
@@ -533,7 +533,7 @@ class TestCatalogManagementV1():
 
             assert is_offering_found is not False
 
-        print('Amount of offerings is: ' + str(search_result_length))
+        print('Amount of offerings is: ' + str(amount_of_offerings))
 
     ####
     # Import Offering
@@ -2623,7 +2623,7 @@ class TestCatalogManagementV1():
         fetch = True
         limit = 50
         offset = 0
-        result_length = 0
+        amount_of_objects = 0
 
         while fetch:
             search_objects_response = self.catalog_management_service_authorized.search_objects(
@@ -2639,12 +2639,12 @@ class TestCatalogManagementV1():
             assert object_search_result is not None
 
             if (object_search_result['resources'] is not None) and (len(object_search_result['resources']) > 0):
-                result_length += len(object_search_result['resources'])
+                amount_of_objects += len(object_search_result['resources'])
                 offset += 50
             else:
                 fetch = False
 
-        print('Object search result length: ' + str(result_length))
+        print('Amount of objects: ' + str(amount_of_objects))
 
     ####
     # List Objects
