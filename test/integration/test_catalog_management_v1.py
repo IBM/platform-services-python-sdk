@@ -533,6 +533,8 @@ class TestCatalogManagementV1():
 
             assert is_offering_found is not False
 
+        print('Amount of offerings is: ' + str(search_result_length))
+
     ####
     # Import Offering
     ####
