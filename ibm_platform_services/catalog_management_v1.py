@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.32.0-4c6a3129-20210514-210323
+# IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
  
 """
 This is the API to use for managing private catalogs for IBM Cloud. Private catalogs
@@ -3923,6 +3923,7 @@ class CatalogManagementV1(BaseService):
         x_auth_refresh_token: str,
         *,
         id: str = None,
+        rev: str = None,
         url: str = None,
         crn: str = None,
         label: str = None,
@@ -3934,6 +3935,12 @@ class CatalogManagementV1(BaseService):
         cluster_region: str = None,
         cluster_namespaces: List[str] = None,
         cluster_all_namespaces: bool = None,
+        schematics_workspace_id: str = None,
+        resource_group_id: str = None,
+        install_plan: str = None,
+        channel: str = None,
+        metadata: dict = None,
+        last_operation: 'OfferingInstanceLastOperation' = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -3943,6 +3950,7 @@ class CatalogManagementV1(BaseService):
 
         :param str x_auth_refresh_token: IAM Refresh token.
         :param str id: (optional) provisioned instance ID (part of the CRN).
+        :param str rev: (optional) Cloudant revision.
         :param str url: (optional) url reference to this object.
         :param str crn: (optional) platform CRN for this instance.
         :param str label: (optional) the label for this instance.
@@ -3960,6 +3968,19 @@ class CatalogManagementV1(BaseService):
                to install into.
         :param bool cluster_all_namespaces: (optional) designate to install into
                all namespaces.
+        :param str schematics_workspace_id: (optional) Id of the schematics
+               workspace, for offering instances provisioned through schematics.
+        :param str resource_group_id: (optional) Id of the resource group to
+               provision the offering instance into.
+        :param str install_plan: (optional) Type of install plan (also known as
+               approval strategy) for operator subscriptions. Can be either automatic,
+               which automatically upgrades operators to the latest in a channel, or
+               manual, which requires approval on the cluster.
+        :param str channel: (optional) Channel to pin the operator subscription to.
+        :param dict metadata: (optional) Map of metadata values for this offering
+               instance.
+        :param OfferingInstanceLastOperation last_operation: (optional) the last
+               operation performed and status.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `OfferingInstance` object
@@ -3967,6 +3988,8 @@ class CatalogManagementV1(BaseService):
 
         if x_auth_refresh_token is None:
             raise ValueError('x_auth_refresh_token must be provided')
+        if last_operation is not None:
+            last_operation = convert_model(last_operation)
         headers = {
             'X-Auth-Refresh-Token': x_auth_refresh_token
         }
@@ -3977,6 +4000,7 @@ class CatalogManagementV1(BaseService):
 
         data = {
             'id': id,
+            '_rev': rev,
             'url': url,
             'crn': crn,
             'label': label,
@@ -3987,7 +4011,13 @@ class CatalogManagementV1(BaseService):
             'cluster_id': cluster_id,
             'cluster_region': cluster_region,
             'cluster_namespaces': cluster_namespaces,
-            'cluster_all_namespaces': cluster_all_namespaces
+            'cluster_all_namespaces': cluster_all_namespaces,
+            'schematics_workspace_id': schematics_workspace_id,
+            'resource_group_id': resource_group_id,
+            'install_plan': install_plan,
+            'channel': channel,
+            'metadata': metadata,
+            'last_operation': last_operation
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -4051,6 +4081,7 @@ class CatalogManagementV1(BaseService):
         x_auth_refresh_token: str,
         *,
         id: str = None,
+        rev: str = None,
         url: str = None,
         crn: str = None,
         label: str = None,
@@ -4062,6 +4093,12 @@ class CatalogManagementV1(BaseService):
         cluster_region: str = None,
         cluster_namespaces: List[str] = None,
         cluster_all_namespaces: bool = None,
+        schematics_workspace_id: str = None,
+        resource_group_id: str = None,
+        install_plan: str = None,
+        channel: str = None,
+        metadata: dict = None,
+        last_operation: 'OfferingInstanceLastOperation' = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -4072,6 +4109,7 @@ class CatalogManagementV1(BaseService):
         :param str instance_identifier: Version Instance identifier.
         :param str x_auth_refresh_token: IAM Refresh token.
         :param str id: (optional) provisioned instance ID (part of the CRN).
+        :param str rev: (optional) Cloudant revision.
         :param str url: (optional) url reference to this object.
         :param str crn: (optional) platform CRN for this instance.
         :param str label: (optional) the label for this instance.
@@ -4089,6 +4127,19 @@ class CatalogManagementV1(BaseService):
                to install into.
         :param bool cluster_all_namespaces: (optional) designate to install into
                all namespaces.
+        :param str schematics_workspace_id: (optional) Id of the schematics
+               workspace, for offering instances provisioned through schematics.
+        :param str resource_group_id: (optional) Id of the resource group to
+               provision the offering instance into.
+        :param str install_plan: (optional) Type of install plan (also known as
+               approval strategy) for operator subscriptions. Can be either automatic,
+               which automatically upgrades operators to the latest in a channel, or
+               manual, which requires approval on the cluster.
+        :param str channel: (optional) Channel to pin the operator subscription to.
+        :param dict metadata: (optional) Map of metadata values for this offering
+               instance.
+        :param OfferingInstanceLastOperation last_operation: (optional) the last
+               operation performed and status.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `OfferingInstance` object
@@ -4098,6 +4149,8 @@ class CatalogManagementV1(BaseService):
             raise ValueError('instance_identifier must be provided')
         if x_auth_refresh_token is None:
             raise ValueError('x_auth_refresh_token must be provided')
+        if last_operation is not None:
+            last_operation = convert_model(last_operation)
         headers = {
             'X-Auth-Refresh-Token': x_auth_refresh_token
         }
@@ -4108,6 +4161,7 @@ class CatalogManagementV1(BaseService):
 
         data = {
             'id': id,
+            '_rev': rev,
             'url': url,
             'crn': crn,
             'label': label,
@@ -4118,7 +4172,13 @@ class CatalogManagementV1(BaseService):
             'cluster_id': cluster_id,
             'cluster_region': cluster_region,
             'cluster_namespaces': cluster_namespaces,
-            'cluster_all_namespaces': cluster_all_namespaces
+            'cluster_all_namespaces': cluster_all_namespaces,
+            'schematics_workspace_id': schematics_workspace_id,
+            'resource_group_id': resource_group_id,
+            'install_plan': install_plan,
+            'channel': channel,
+            'metadata': metadata,
+            'last_operation': last_operation
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -7648,6 +7708,7 @@ class OfferingInstance():
     A offering instance resource (provision instance of a catalog offering).
 
     :attr str id: (optional) provisioned instance ID (part of the CRN).
+    :attr str rev: (optional) Cloudant revision.
     :attr str url: (optional) url reference to this object.
     :attr str crn: (optional) platform CRN for this instance.
     :attr str label: (optional) the label for this instance.
@@ -7663,11 +7724,25 @@ class OfferingInstance():
           install into.
     :attr bool cluster_all_namespaces: (optional) designate to install into all
           namespaces.
+    :attr str schematics_workspace_id: (optional) Id of the schematics workspace,
+          for offering instances provisioned through schematics.
+    :attr str resource_group_id: (optional) Id of the resource group to provision
+          the offering instance into.
+    :attr str install_plan: (optional) Type of install plan (also known as approval
+          strategy) for operator subscriptions. Can be either automatic, which
+          automatically upgrades operators to the latest in a channel, or manual, which
+          requires approval on the cluster.
+    :attr str channel: (optional) Channel to pin the operator subscription to.
+    :attr dict metadata: (optional) Map of metadata values for this offering
+          instance.
+    :attr OfferingInstanceLastOperation last_operation: (optional) the last
+          operation performed and status.
     """
 
     def __init__(self,
                  *,
                  id: str = None,
+                 rev: str = None,
                  url: str = None,
                  crn: str = None,
                  label: str = None,
@@ -7678,11 +7753,18 @@ class OfferingInstance():
                  cluster_id: str = None,
                  cluster_region: str = None,
                  cluster_namespaces: List[str] = None,
-                 cluster_all_namespaces: bool = None) -> None:
+                 cluster_all_namespaces: bool = None,
+                 schematics_workspace_id: str = None,
+                 resource_group_id: str = None,
+                 install_plan: str = None,
+                 channel: str = None,
+                 metadata: dict = None,
+                 last_operation: 'OfferingInstanceLastOperation' = None) -> None:
         """
         Initialize a OfferingInstance object.
 
         :param str id: (optional) provisioned instance ID (part of the CRN).
+        :param str rev: (optional) Cloudant revision.
         :param str url: (optional) url reference to this object.
         :param str crn: (optional) platform CRN for this instance.
         :param str label: (optional) the label for this instance.
@@ -7700,8 +7782,22 @@ class OfferingInstance():
                to install into.
         :param bool cluster_all_namespaces: (optional) designate to install into
                all namespaces.
+        :param str schematics_workspace_id: (optional) Id of the schematics
+               workspace, for offering instances provisioned through schematics.
+        :param str resource_group_id: (optional) Id of the resource group to
+               provision the offering instance into.
+        :param str install_plan: (optional) Type of install plan (also known as
+               approval strategy) for operator subscriptions. Can be either automatic,
+               which automatically upgrades operators to the latest in a channel, or
+               manual, which requires approval on the cluster.
+        :param str channel: (optional) Channel to pin the operator subscription to.
+        :param dict metadata: (optional) Map of metadata values for this offering
+               instance.
+        :param OfferingInstanceLastOperation last_operation: (optional) the last
+               operation performed and status.
         """
         self.id = id
+        self.rev = rev
         self.url = url
         self.crn = crn
         self.label = label
@@ -7713,6 +7809,12 @@ class OfferingInstance():
         self.cluster_region = cluster_region
         self.cluster_namespaces = cluster_namespaces
         self.cluster_all_namespaces = cluster_all_namespaces
+        self.schematics_workspace_id = schematics_workspace_id
+        self.resource_group_id = resource_group_id
+        self.install_plan = install_plan
+        self.channel = channel
+        self.metadata = metadata
+        self.last_operation = last_operation
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'OfferingInstance':
@@ -7720,6 +7822,8 @@ class OfferingInstance():
         args = {}
         if 'id' in _dict:
             args['id'] = _dict.get('id')
+        if '_rev' in _dict:
+            args['rev'] = _dict.get('_rev')
         if 'url' in _dict:
             args['url'] = _dict.get('url')
         if 'crn' in _dict:
@@ -7742,6 +7846,18 @@ class OfferingInstance():
             args['cluster_namespaces'] = _dict.get('cluster_namespaces')
         if 'cluster_all_namespaces' in _dict:
             args['cluster_all_namespaces'] = _dict.get('cluster_all_namespaces')
+        if 'schematics_workspace_id' in _dict:
+            args['schematics_workspace_id'] = _dict.get('schematics_workspace_id')
+        if 'resource_group_id' in _dict:
+            args['resource_group_id'] = _dict.get('resource_group_id')
+        if 'install_plan' in _dict:
+            args['install_plan'] = _dict.get('install_plan')
+        if 'channel' in _dict:
+            args['channel'] = _dict.get('channel')
+        if 'metadata' in _dict:
+            args['metadata'] = _dict.get('metadata')
+        if 'last_operation' in _dict:
+            args['last_operation'] = OfferingInstanceLastOperation.from_dict(_dict.get('last_operation'))
         return cls(**args)
 
     @classmethod
@@ -7754,6 +7870,8 @@ class OfferingInstance():
         _dict = {}
         if hasattr(self, 'id') and self.id is not None:
             _dict['id'] = self.id
+        if hasattr(self, 'rev') and self.rev is not None:
+            _dict['_rev'] = self.rev
         if hasattr(self, 'url') and self.url is not None:
             _dict['url'] = self.url
         if hasattr(self, 'crn') and self.crn is not None:
@@ -7776,6 +7894,18 @@ class OfferingInstance():
             _dict['cluster_namespaces'] = self.cluster_namespaces
         if hasattr(self, 'cluster_all_namespaces') and self.cluster_all_namespaces is not None:
             _dict['cluster_all_namespaces'] = self.cluster_all_namespaces
+        if hasattr(self, 'schematics_workspace_id') and self.schematics_workspace_id is not None:
+            _dict['schematics_workspace_id'] = self.schematics_workspace_id
+        if hasattr(self, 'resource_group_id') and self.resource_group_id is not None:
+            _dict['resource_group_id'] = self.resource_group_id
+        if hasattr(self, 'install_plan') and self.install_plan is not None:
+            _dict['install_plan'] = self.install_plan
+        if hasattr(self, 'channel') and self.channel is not None:
+            _dict['channel'] = self.channel
+        if hasattr(self, 'metadata') and self.metadata is not None:
+            _dict['metadata'] = self.metadata
+        if hasattr(self, 'last_operation') and self.last_operation is not None:
+            _dict['last_operation'] = self.last_operation.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -7793,6 +7923,95 @@ class OfferingInstance():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'OfferingInstance') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class OfferingInstanceLastOperation():
+    """
+    the last operation performed and status.
+
+    :attr str operation: (optional) last operation performed.
+    :attr str state: (optional) state after the last operation performed.
+    :attr str message: (optional) additional information about the last operation.
+    :attr str transaction_id: (optional) transaction id from the last operation.
+    :attr str updated: (optional) Date and time last updated.
+    """
+
+    def __init__(self,
+                 *,
+                 operation: str = None,
+                 state: str = None,
+                 message: str = None,
+                 transaction_id: str = None,
+                 updated: str = None) -> None:
+        """
+        Initialize a OfferingInstanceLastOperation object.
+
+        :param str operation: (optional) last operation performed.
+        :param str state: (optional) state after the last operation performed.
+        :param str message: (optional) additional information about the last
+               operation.
+        :param str transaction_id: (optional) transaction id from the last
+               operation.
+        :param str updated: (optional) Date and time last updated.
+        """
+        self.operation = operation
+        self.state = state
+        self.message = message
+        self.transaction_id = transaction_id
+        self.updated = updated
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'OfferingInstanceLastOperation':
+        """Initialize a OfferingInstanceLastOperation object from a json dictionary."""
+        args = {}
+        if 'operation' in _dict:
+            args['operation'] = _dict.get('operation')
+        if 'state' in _dict:
+            args['state'] = _dict.get('state')
+        if 'message' in _dict:
+            args['message'] = _dict.get('message')
+        if 'transaction_id' in _dict:
+            args['transaction_id'] = _dict.get('transaction_id')
+        if 'updated' in _dict:
+            args['updated'] = _dict.get('updated')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a OfferingInstanceLastOperation object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'operation') and self.operation is not None:
+            _dict['operation'] = self.operation
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
+        if hasattr(self, 'message') and self.message is not None:
+            _dict['message'] = self.message
+        if hasattr(self, 'transaction_id') and self.transaction_id is not None:
+            _dict['transaction_id'] = self.transaction_id
+        if hasattr(self, 'updated') and self.updated is not None:
+            _dict['updated'] = self.updated
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this OfferingInstanceLastOperation object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'OfferingInstanceLastOperation') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'OfferingInstanceLastOperation') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 

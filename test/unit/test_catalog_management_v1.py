@@ -6455,16 +6455,25 @@ class TestCreateOfferingInstance():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings')
-        mock_response = '{"id": "id", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true}'
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
                       content_type='application/json',
                       status=201)
 
+        # Construct a dict representation of a OfferingInstanceLastOperation model
+        offering_instance_last_operation_model = {}
+        offering_instance_last_operation_model['operation'] = 'testString'
+        offering_instance_last_operation_model['state'] = 'testString'
+        offering_instance_last_operation_model['message'] = 'testString'
+        offering_instance_last_operation_model['transaction_id'] = 'testString'
+        offering_instance_last_operation_model['updated'] = 'testString'
+
         # Set up parameter values
         x_auth_refresh_token = 'testString'
         id = 'testString'
+        rev = 'testString'
         url = 'testString'
         crn = 'testString'
         label = 'testString'
@@ -6476,11 +6485,18 @@ class TestCreateOfferingInstance():
         cluster_region = 'testString'
         cluster_namespaces = ['testString']
         cluster_all_namespaces = True
+        schematics_workspace_id = 'testString'
+        resource_group_id = 'testString'
+        install_plan = 'testString'
+        channel = 'testString'
+        metadata = {}
+        last_operation = offering_instance_last_operation_model
 
         # Invoke method
         response = _service.create_offering_instance(
             x_auth_refresh_token,
             id=id,
+            rev=rev,
             url=url,
             crn=crn,
             label=label,
@@ -6492,6 +6508,12 @@ class TestCreateOfferingInstance():
             cluster_region=cluster_region,
             cluster_namespaces=cluster_namespaces,
             cluster_all_namespaces=cluster_all_namespaces,
+            schematics_workspace_id=schematics_workspace_id,
+            resource_group_id=resource_group_id,
+            install_plan=install_plan,
+            channel=channel,
+            metadata=metadata,
+            last_operation=last_operation,
             headers={}
         )
 
@@ -6501,6 +6523,7 @@ class TestCreateOfferingInstance():
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['id'] == 'testString'
+        assert req_body['_rev'] == 'testString'
         assert req_body['url'] == 'testString'
         assert req_body['crn'] == 'testString'
         assert req_body['label'] == 'testString'
@@ -6512,6 +6535,12 @@ class TestCreateOfferingInstance():
         assert req_body['cluster_region'] == 'testString'
         assert req_body['cluster_namespaces'] == ['testString']
         assert req_body['cluster_all_namespaces'] == True
+        assert req_body['schematics_workspace_id'] == 'testString'
+        assert req_body['resource_group_id'] == 'testString'
+        assert req_body['install_plan'] == 'testString'
+        assert req_body['channel'] == 'testString'
+        assert req_body['metadata'] == {}
+        assert req_body['last_operation'] == offering_instance_last_operation_model
 
 
     @responses.activate
@@ -6521,7 +6550,7 @@ class TestCreateOfferingInstance():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings')
-        mock_response = '{"id": "id", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true}'
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -6549,7 +6578,7 @@ class TestCreateOfferingInstance():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings')
-        mock_response = '{"id": "id", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true}'
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -6591,7 +6620,7 @@ class TestGetOfferingInstance():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings/testString')
-        mock_response = '{"id": "id", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true}'
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -6619,7 +6648,7 @@ class TestGetOfferingInstance():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings/testString')
-        mock_response = '{"id": "id", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true}'
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -6661,17 +6690,26 @@ class TestPutOfferingInstance():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings/testString')
-        mock_response = '{"id": "id", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true}'
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
                       content_type='application/json',
                       status=200)
 
+        # Construct a dict representation of a OfferingInstanceLastOperation model
+        offering_instance_last_operation_model = {}
+        offering_instance_last_operation_model['operation'] = 'testString'
+        offering_instance_last_operation_model['state'] = 'testString'
+        offering_instance_last_operation_model['message'] = 'testString'
+        offering_instance_last_operation_model['transaction_id'] = 'testString'
+        offering_instance_last_operation_model['updated'] = 'testString'
+
         # Set up parameter values
         instance_identifier = 'testString'
         x_auth_refresh_token = 'testString'
         id = 'testString'
+        rev = 'testString'
         url = 'testString'
         crn = 'testString'
         label = 'testString'
@@ -6683,12 +6721,19 @@ class TestPutOfferingInstance():
         cluster_region = 'testString'
         cluster_namespaces = ['testString']
         cluster_all_namespaces = True
+        schematics_workspace_id = 'testString'
+        resource_group_id = 'testString'
+        install_plan = 'testString'
+        channel = 'testString'
+        metadata = {}
+        last_operation = offering_instance_last_operation_model
 
         # Invoke method
         response = _service.put_offering_instance(
             instance_identifier,
             x_auth_refresh_token,
             id=id,
+            rev=rev,
             url=url,
             crn=crn,
             label=label,
@@ -6700,6 +6745,12 @@ class TestPutOfferingInstance():
             cluster_region=cluster_region,
             cluster_namespaces=cluster_namespaces,
             cluster_all_namespaces=cluster_all_namespaces,
+            schematics_workspace_id=schematics_workspace_id,
+            resource_group_id=resource_group_id,
+            install_plan=install_plan,
+            channel=channel,
+            metadata=metadata,
+            last_operation=last_operation,
             headers={}
         )
 
@@ -6709,6 +6760,7 @@ class TestPutOfferingInstance():
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['id'] == 'testString'
+        assert req_body['_rev'] == 'testString'
         assert req_body['url'] == 'testString'
         assert req_body['crn'] == 'testString'
         assert req_body['label'] == 'testString'
@@ -6720,6 +6772,12 @@ class TestPutOfferingInstance():
         assert req_body['cluster_region'] == 'testString'
         assert req_body['cluster_namespaces'] == ['testString']
         assert req_body['cluster_all_namespaces'] == True
+        assert req_body['schematics_workspace_id'] == 'testString'
+        assert req_body['resource_group_id'] == 'testString'
+        assert req_body['install_plan'] == 'testString'
+        assert req_body['channel'] == 'testString'
+        assert req_body['metadata'] == {}
+        assert req_body['last_operation'] == offering_instance_last_operation_model
 
 
     @responses.activate
@@ -6729,7 +6787,7 @@ class TestPutOfferingInstance():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings/testString')
-        mock_response = '{"id": "id", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true}'
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -6759,7 +6817,7 @@ class TestPutOfferingInstance():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings/testString')
-        mock_response = '{"id": "id", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true}'
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -6860,7 +6918,7 @@ class TestDeleteOfferingInstance():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestAccessListBulkResponse():
+class AccessListBulkResponseUnitTests():
     """
     Test Class for AccessListBulkResponse
     """
@@ -6889,7 +6947,7 @@ class TestAccessListBulkResponse():
         access_list_bulk_response_model_json2 = access_list_bulk_response_model.to_dict()
         assert access_list_bulk_response_model_json2 == access_list_bulk_response_model_json
 
-class TestAccount():
+class AccountUnitTests():
     """
     Test Class for Account
     """
@@ -6938,7 +6996,7 @@ class TestAccount():
         account_model_json2 = account_model.to_dict()
         assert account_model_json2 == account_model_json
 
-class TestAccumulatedFilters():
+class AccumulatedFiltersUnitTests():
     """
     Test Class for AccumulatedFilters
     """
@@ -6994,7 +7052,7 @@ class TestAccumulatedFilters():
         accumulated_filters_model_json2 = accumulated_filters_model.to_dict()
         assert accumulated_filters_model_json2 == accumulated_filters_model_json
 
-class TestAccumulatedFiltersCatalogFiltersItem():
+class AccumulatedFiltersCatalogFiltersItemUnitTests():
     """
     Test Class for AccumulatedFiltersCatalogFiltersItem
     """
@@ -7046,7 +7104,7 @@ class TestAccumulatedFiltersCatalogFiltersItem():
         accumulated_filters_catalog_filters_item_model_json2 = accumulated_filters_catalog_filters_item_model.to_dict()
         assert accumulated_filters_catalog_filters_item_model_json2 == accumulated_filters_catalog_filters_item_model_json
 
-class TestAccumulatedFiltersCatalogFiltersItemCatalog():
+class AccumulatedFiltersCatalogFiltersItemCatalogUnitTests():
     """
     Test Class for AccumulatedFiltersCatalogFiltersItemCatalog
     """
@@ -7076,7 +7134,7 @@ class TestAccumulatedFiltersCatalogFiltersItemCatalog():
         accumulated_filters_catalog_filters_item_catalog_model_json2 = accumulated_filters_catalog_filters_item_catalog_model.to_dict()
         assert accumulated_filters_catalog_filters_item_catalog_model_json2 == accumulated_filters_catalog_filters_item_catalog_model_json
 
-class TestApprovalResult():
+class ApprovalResultUnitTests():
     """
     Test Class for ApprovalResult
     """
@@ -7108,7 +7166,7 @@ class TestApprovalResult():
         approval_result_model_json2 = approval_result_model.to_dict()
         assert approval_result_model_json2 == approval_result_model_json
 
-class TestAuditLog():
+class AuditLogUnitTests():
     """
     Test Class for AuditLog
     """
@@ -7148,7 +7206,7 @@ class TestAuditLog():
         audit_log_model_json2 = audit_log_model.to_dict()
         assert audit_log_model_json2 == audit_log_model_json
 
-class TestAuditRecord():
+class AuditRecordUnitTests():
     """
     Test Class for AuditRecord
     """
@@ -7183,7 +7241,7 @@ class TestAuditRecord():
         audit_record_model_json2 = audit_record_model.to_dict()
         assert audit_record_model_json2 == audit_record_model_json
 
-class TestCatalog():
+class CatalogUnitTests():
     """
     Test Class for Catalog
     """
@@ -7275,7 +7333,7 @@ class TestCatalog():
         catalog_model_json2 = catalog_model.to_dict()
         assert catalog_model_json2 == catalog_model_json
 
-class TestCatalogObject():
+class CatalogObjectUnitTests():
     """
     Test Class for CatalogObject
     """
@@ -7338,7 +7396,7 @@ class TestCatalogObject():
         catalog_object_model_json2 = catalog_object_model.to_dict()
         assert catalog_object_model_json2 == catalog_object_model_json
 
-class TestCatalogSearchResult():
+class CatalogSearchResultUnitTests():
     """
     Test Class for CatalogSearchResult
     """
@@ -7434,7 +7492,7 @@ class TestCatalogSearchResult():
         catalog_search_result_model_json2 = catalog_search_result_model.to_dict()
         assert catalog_search_result_model_json2 == catalog_search_result_model_json
 
-class TestCategoryFilter():
+class CategoryFilterUnitTests():
     """
     Test Class for CategoryFilter
     """
@@ -7469,7 +7527,7 @@ class TestCategoryFilter():
         category_filter_model_json2 = category_filter_model.to_dict()
         assert category_filter_model_json2 == category_filter_model_json
 
-class TestClusterInfo():
+class ClusterInfoUnitTests():
     """
     Test Class for ClusterInfo
     """
@@ -7502,7 +7560,7 @@ class TestClusterInfo():
         cluster_info_model_json2 = cluster_info_model.to_dict()
         assert cluster_info_model_json2 == cluster_info_model_json
 
-class TestConfiguration():
+class ConfigurationUnitTests():
     """
     Test Class for Configuration
     """
@@ -7538,7 +7596,7 @@ class TestConfiguration():
         configuration_model_json2 = configuration_model.to_dict()
         assert configuration_model_json2 == configuration_model_json
 
-class TestDeployRequestBodySchematics():
+class DeployRequestBodySchematicsUnitTests():
     """
     Test Class for DeployRequestBodySchematics
     """
@@ -7570,7 +7628,7 @@ class TestDeployRequestBodySchematics():
         deploy_request_body_schematics_model_json2 = deploy_request_body_schematics_model.to_dict()
         assert deploy_request_body_schematics_model_json2 == deploy_request_body_schematics_model_json
 
-class TestDeployment():
+class DeploymentUnitTests():
     """
     Test Class for Deployment
     """
@@ -7607,7 +7665,7 @@ class TestDeployment():
         deployment_model_json2 = deployment_model.to_dict()
         assert deployment_model_json2 == deployment_model_json
 
-class TestFeature():
+class FeatureUnitTests():
     """
     Test Class for Feature
     """
@@ -7637,7 +7695,7 @@ class TestFeature():
         feature_model_json2 = feature_model.to_dict()
         assert feature_model_json2 == feature_model_json
 
-class TestFilterTerms():
+class FilterTermsUnitTests():
     """
     Test Class for FilterTerms
     """
@@ -7666,7 +7724,7 @@ class TestFilterTerms():
         filter_terms_model_json2 = filter_terms_model.to_dict()
         assert filter_terms_model_json2 == filter_terms_model_json
 
-class TestFilters():
+class FiltersUnitTests():
     """
     Test Class for Filters
     """
@@ -7710,7 +7768,7 @@ class TestFilters():
         filters_model_json2 = filters_model.to_dict()
         assert filters_model_json2 == filters_model_json
 
-class TestIDFilter():
+class IDFilterUnitTests():
     """
     Test Class for IDFilter
     """
@@ -7745,7 +7803,7 @@ class TestIDFilter():
         id_filter_model_json2 = id_filter_model.to_dict()
         assert id_filter_model_json2 == id_filter_model_json
 
-class TestImage():
+class ImageUnitTests():
     """
     Test Class for Image
     """
@@ -7774,7 +7832,7 @@ class TestImage():
         image_model_json2 = image_model.to_dict()
         assert image_model_json2 == image_model_json
 
-class TestImageManifest():
+class ImageManifestUnitTests():
     """
     Test Class for ImageManifest
     """
@@ -7809,7 +7867,7 @@ class TestImageManifest():
         image_manifest_model_json2 = image_manifest_model.to_dict()
         assert image_manifest_model_json2 == image_manifest_model_json
 
-class TestInstallStatus():
+class InstallStatusUnitTests():
     """
     Test Class for InstallStatus
     """
@@ -7860,7 +7918,7 @@ class TestInstallStatus():
         install_status_model_json2 = install_status_model.to_dict()
         assert install_status_model_json2 == install_status_model_json
 
-class TestInstallStatusContentMgmt():
+class InstallStatusContentMgmtUnitTests():
     """
     Test Class for InstallStatusContentMgmt
     """
@@ -7890,7 +7948,7 @@ class TestInstallStatusContentMgmt():
         install_status_content_mgmt_model_json2 = install_status_content_mgmt_model.to_dict()
         assert install_status_content_mgmt_model_json2 == install_status_content_mgmt_model_json
 
-class TestInstallStatusMetadata():
+class InstallStatusMetadataUnitTests():
     """
     Test Class for InstallStatusMetadata
     """
@@ -7923,7 +7981,7 @@ class TestInstallStatusMetadata():
         install_status_metadata_model_json2 = install_status_metadata_model.to_dict()
         assert install_status_metadata_model_json2 == install_status_metadata_model_json
 
-class TestInstallStatusRelease():
+class InstallStatusReleaseUnitTests():
     """
     Test Class for InstallStatusRelease
     """
@@ -7956,7 +8014,7 @@ class TestInstallStatusRelease():
         install_status_release_model_json2 = install_status_release_model.to_dict()
         assert install_status_release_model_json2 == install_status_release_model_json
 
-class TestKind():
+class KindUnitTests():
     """
     Test Class for Kind
     """
@@ -8107,7 +8165,7 @@ class TestKind():
         kind_model_json2 = kind_model.to_dict()
         assert kind_model_json2 == kind_model_json
 
-class TestLicense():
+class LicenseUnitTests():
     """
     Test Class for License
     """
@@ -8140,7 +8198,7 @@ class TestLicense():
         license_model_json2 = license_model.to_dict()
         assert license_model_json2 == license_model_json
 
-class TestNamespaceSearchResult():
+class NamespaceSearchResultUnitTests():
     """
     Test Class for NamespaceSearchResult
     """
@@ -8177,7 +8235,7 @@ class TestNamespaceSearchResult():
         namespace_search_result_model_json2 = namespace_search_result_model.to_dict()
         assert namespace_search_result_model_json2 == namespace_search_result_model_json
 
-class TestObjectAccess():
+class ObjectAccessUnitTests():
     """
     Test Class for ObjectAccess
     """
@@ -8210,7 +8268,7 @@ class TestObjectAccess():
         object_access_model_json2 = object_access_model.to_dict()
         assert object_access_model_json2 == object_access_model_json
 
-class TestObjectAccessListResult():
+class ObjectAccessListResultUnitTests():
     """
     Test Class for ObjectAccessListResult
     """
@@ -8256,7 +8314,7 @@ class TestObjectAccessListResult():
         object_access_list_result_model_json2 = object_access_list_result_model.to_dict()
         assert object_access_list_result_model_json2 == object_access_list_result_model_json
 
-class TestObjectListResult():
+class ObjectListResultUnitTests():
     """
     Test Class for ObjectListResult
     """
@@ -8330,7 +8388,7 @@ class TestObjectListResult():
         object_list_result_model_json2 = object_list_result_model.to_dict()
         assert object_list_result_model_json2 == object_list_result_model_json
 
-class TestObjectSearchResult():
+class ObjectSearchResultUnitTests():
     """
     Test Class for ObjectSearchResult
     """
@@ -8404,7 +8462,7 @@ class TestObjectSearchResult():
         object_search_result_model_json2 = object_search_result_model.to_dict()
         assert object_search_result_model_json2 == object_search_result_model_json
 
-class TestOffering():
+class OfferingUnitTests():
     """
     Test Class for Offering
     """
@@ -8599,7 +8657,7 @@ class TestOffering():
         offering_model_json2 = offering_model.to_dict()
         assert offering_model_json2 == offering_model_json
 
-class TestOfferingInstance():
+class OfferingInstanceUnitTests():
     """
     Test Class for OfferingInstance
     """
@@ -8609,9 +8667,19 @@ class TestOfferingInstance():
         Test serialization/deserialization for OfferingInstance
         """
 
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        offering_instance_last_operation_model = {} # OfferingInstanceLastOperation
+        offering_instance_last_operation_model['operation'] = 'testString'
+        offering_instance_last_operation_model['state'] = 'testString'
+        offering_instance_last_operation_model['message'] = 'testString'
+        offering_instance_last_operation_model['transaction_id'] = 'testString'
+        offering_instance_last_operation_model['updated'] = 'testString'
+
         # Construct a json representation of a OfferingInstance model
         offering_instance_model_json = {}
         offering_instance_model_json['id'] = 'testString'
+        offering_instance_model_json['_rev'] = 'testString'
         offering_instance_model_json['url'] = 'testString'
         offering_instance_model_json['crn'] = 'testString'
         offering_instance_model_json['label'] = 'testString'
@@ -8623,6 +8691,12 @@ class TestOfferingInstance():
         offering_instance_model_json['cluster_region'] = 'testString'
         offering_instance_model_json['cluster_namespaces'] = ['testString']
         offering_instance_model_json['cluster_all_namespaces'] = True
+        offering_instance_model_json['schematics_workspace_id'] = 'testString'
+        offering_instance_model_json['resource_group_id'] = 'testString'
+        offering_instance_model_json['install_plan'] = 'testString'
+        offering_instance_model_json['channel'] = 'testString'
+        offering_instance_model_json['metadata'] = {}
+        offering_instance_model_json['last_operation'] = offering_instance_last_operation_model
 
         # Construct a model instance of OfferingInstance by calling from_dict on the json representation
         offering_instance_model = OfferingInstance.from_dict(offering_instance_model_json)
@@ -8639,7 +8713,40 @@ class TestOfferingInstance():
         offering_instance_model_json2 = offering_instance_model.to_dict()
         assert offering_instance_model_json2 == offering_instance_model_json
 
-class TestOfferingSearchResult():
+class OfferingInstanceLastOperationUnitTests():
+    """
+    Test Class for OfferingInstanceLastOperation
+    """
+
+    def test_offering_instance_last_operation_serialization(self):
+        """
+        Test serialization/deserialization for OfferingInstanceLastOperation
+        """
+
+        # Construct a json representation of a OfferingInstanceLastOperation model
+        offering_instance_last_operation_model_json = {}
+        offering_instance_last_operation_model_json['operation'] = 'testString'
+        offering_instance_last_operation_model_json['state'] = 'testString'
+        offering_instance_last_operation_model_json['message'] = 'testString'
+        offering_instance_last_operation_model_json['transaction_id'] = 'testString'
+        offering_instance_last_operation_model_json['updated'] = 'testString'
+
+        # Construct a model instance of OfferingInstanceLastOperation by calling from_dict on the json representation
+        offering_instance_last_operation_model = OfferingInstanceLastOperation.from_dict(offering_instance_last_operation_model_json)
+        assert offering_instance_last_operation_model != False
+
+        # Construct a model instance of OfferingInstanceLastOperation by calling from_dict on the json representation
+        offering_instance_last_operation_model_dict = OfferingInstanceLastOperation.from_dict(offering_instance_last_operation_model_json).__dict__
+        offering_instance_last_operation_model2 = OfferingInstanceLastOperation(**offering_instance_last_operation_model_dict)
+
+        # Verify the model instances are equivalent
+        assert offering_instance_last_operation_model == offering_instance_last_operation_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        offering_instance_last_operation_model_json2 = offering_instance_last_operation_model.to_dict()
+        assert offering_instance_last_operation_model_json2 == offering_instance_last_operation_model_json
+
+class OfferingSearchResultUnitTests():
     """
     Test Class for OfferingSearchResult
     """
@@ -8845,7 +8952,7 @@ class TestOfferingSearchResult():
         offering_search_result_model_json2 = offering_search_result_model.to_dict()
         assert offering_search_result_model_json2 == offering_search_result_model_json
 
-class TestOperatorDeployResult():
+class OperatorDeployResultUnitTests():
     """
     Test Class for OperatorDeployResult
     """
@@ -8881,7 +8988,7 @@ class TestOperatorDeployResult():
         operator_deploy_result_model_json2 = operator_deploy_result_model.to_dict()
         assert operator_deploy_result_model_json2 == operator_deploy_result_model_json
 
-class TestPlan():
+class PlanUnitTests():
     """
     Test Class for Plan
     """
@@ -8937,7 +9044,7 @@ class TestPlan():
         plan_model_json2 = plan_model.to_dict()
         assert plan_model_json2 == plan_model_json
 
-class TestPublishObject():
+class PublishObjectUnitTests():
     """
     Test Class for PublishObject
     """
@@ -8970,7 +9077,7 @@ class TestPublishObject():
         publish_object_model_json2 = publish_object_model.to_dict()
         assert publish_object_model_json2 == publish_object_model_json
 
-class TestRating():
+class RatingUnitTests():
     """
     Test Class for Rating
     """
@@ -9002,7 +9109,7 @@ class TestRating():
         rating_model_json2 = rating_model.to_dict()
         assert rating_model_json2 == rating_model_json
 
-class TestRepoInfo():
+class RepoInfoUnitTests():
     """
     Test Class for RepoInfo
     """
@@ -9032,7 +9139,7 @@ class TestRepoInfo():
         repo_info_model_json2 = repo_info_model.to_dict()
         assert repo_info_model_json2 == repo_info_model_json
 
-class TestResource():
+class ResourceUnitTests():
     """
     Test Class for Resource
     """
@@ -9062,7 +9169,7 @@ class TestResource():
         resource_model_json2 = resource_model.to_dict()
         assert resource_model_json2 == resource_model_json
 
-class TestScript():
+class ScriptUnitTests():
     """
     Test Class for Script
     """
@@ -9095,7 +9202,7 @@ class TestScript():
         script_model_json2 = script_model.to_dict()
         assert script_model_json2 == script_model_json
 
-class TestState():
+class StateUnitTests():
     """
     Test Class for State
     """
@@ -9128,7 +9235,7 @@ class TestState():
         state_model_json2 = state_model.to_dict()
         assert state_model_json2 == state_model_json
 
-class TestSyndicationAuthorization():
+class SyndicationAuthorizationUnitTests():
     """
     Test Class for SyndicationAuthorization
     """
@@ -9158,7 +9265,7 @@ class TestSyndicationAuthorization():
         syndication_authorization_model_json2 = syndication_authorization_model.to_dict()
         assert syndication_authorization_model_json2 == syndication_authorization_model_json
 
-class TestSyndicationCluster():
+class SyndicationClusterUnitTests():
     """
     Test Class for SyndicationCluster
     """
@@ -9193,7 +9300,7 @@ class TestSyndicationCluster():
         syndication_cluster_model_json2 = syndication_cluster_model.to_dict()
         assert syndication_cluster_model_json2 == syndication_cluster_model_json
 
-class TestSyndicationHistory():
+class SyndicationHistoryUnitTests():
     """
     Test Class for SyndicationHistory
     """
@@ -9235,7 +9342,7 @@ class TestSyndicationHistory():
         syndication_history_model_json2 = syndication_history_model.to_dict()
         assert syndication_history_model_json2 == syndication_history_model_json
 
-class TestSyndicationResource():
+class SyndicationResourceUnitTests():
     """
     Test Class for SyndicationResource
     """
@@ -9287,7 +9394,7 @@ class TestSyndicationResource():
         syndication_resource_model_json2 = syndication_resource_model.to_dict()
         assert syndication_resource_model_json2 == syndication_resource_model_json
 
-class TestValidation():
+class ValidationUnitTests():
     """
     Test Class for Validation
     """
@@ -9320,7 +9427,7 @@ class TestValidation():
         validation_model_json2 = validation_model.to_dict()
         assert validation_model_json2 == validation_model_json
 
-class TestVersion():
+class VersionUnitTests():
     """
     Test Class for Version
     """
@@ -9430,7 +9537,7 @@ class TestVersion():
         version_model_json2 = version_model.to_dict()
         assert version_model_json2 == version_model_json
 
-class TestVersionEntitlement():
+class VersionEntitlementUnitTests():
     """
     Test Class for VersionEntitlement
     """
@@ -9463,7 +9570,7 @@ class TestVersionEntitlement():
         version_entitlement_model_json2 = version_entitlement_model.to_dict()
         assert version_entitlement_model_json2 == version_entitlement_model_json
 
-class TestVersionUpdateDescriptor():
+class VersionUpdateDescriptorUnitTests():
     """
     Test Class for VersionUpdateDescriptor
     """
