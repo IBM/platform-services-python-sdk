@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-46891d34-20210426-162952
+# IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
  
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -2091,7 +2091,9 @@ class ServiceId():
     :attr List[str] unique_instance_crns: (optional) Optional list of CRNs (string
           array) which point to the services connected to the service ID.
     :attr List[EnityHistoryRecord] history: (optional) History of the Service ID.
-    :attr ApiKey apikey: Response body format for API key V1 REST requests.
+    :attr ApiKey apikey: (optional) Api key details for the Service ID. The
+          apikey is only included in the response when creating a Service ID with an
+          apikey.
     """
 
     def __init__(self,
@@ -2101,7 +2103,6 @@ class ServiceId():
                  locked: bool,
                  account_id: str,
                  name: str,
-                 apikey: 'ApiKey',
                  *,
                  context: 'ResponseContext' = None,
                  entity_tag: str = None,
@@ -2109,7 +2110,8 @@ class ServiceId():
                  modified_at: datetime = None,
                  description: str = None,
                  unique_instance_crns: List[str] = None,
-                 history: List['EnityHistoryRecord'] = None) -> None:
+                 history: List['EnityHistoryRecord'] = None,
+                 apikey: 'ApiKey' = None) -> None:
         """
         Initialize a ServiceId object.
 
@@ -2123,7 +2125,6 @@ class ServiceId():
         :param str name: Name of the Service Id. The name is not checked for
                uniqueness. Therefore multiple names with the same value can exist. Access
                is done via the UUID of the Service Id.
-        :param ApiKey apikey: Response body format for API key V1 REST requests.
         :param ResponseContext context: (optional) Context with key properties for
                problem determination.
         :param str entity_tag: (optional) Version of the service ID details object.
@@ -2140,6 +2141,9 @@ class ServiceId():
                (string array) which point to the services connected to the service ID.
         :param List[EnityHistoryRecord] history: (optional) History of the Service
                ID.
+        :param ApiKey apikey: (optional) Api key details for the Service
+               ID. The apikey is only included in the response when creating a Service ID
+               with an apikey.
         """
         self.context = context
         self.id = id
@@ -2200,8 +2204,6 @@ class ServiceId():
             args['history'] = [EnityHistoryRecord.from_dict(x) for x in _dict.get('history')]
         if 'apikey' in _dict:
             args['apikey'] = ApiKey.from_dict(_dict.get('apikey'))
-        else:
-            raise ValueError('Required property \'apikey\' not present in ServiceId JSON')
         return cls(**args)
 
     @classmethod
