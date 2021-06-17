@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ Unit Tests for CatalogManagementV1
 
 from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import inspect
 import json
 import pytest
@@ -29,12 +30,12 @@ import urllib
 from ibm_platform_services.catalog_management_v1 import *
 
 
-service = CatalogManagementV1(
+_service = CatalogManagementV1(
     authenticator=NoAuthAuthenticator()
     )
 
-base_url = 'https://cm.globalcatalog.cloud.ibm.com/api/v1-beta'
-service.set_service_url(base_url)
+_base_url = 'https://cm.globalcatalog.cloud.ibm.com/api/v1-beta'
+_service.set_service_url(_base_url)
 
 ##############################################################################
 # Start of Service: Account
@@ -61,8 +62,8 @@ class TestGetCatalogAccount():
         get_catalog_account()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogaccount')
-        mock_response = '{"id": "id", "account_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}}'
+        url = self.preprocess_url(_base_url + '/catalogaccount')
+        mock_response = '{"id": "id", "hide_IBM_cloud_catalog": true, "account_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -70,7 +71,7 @@ class TestGetCatalogAccount():
                       status=200)
 
         # Invoke method
-        response = service.get_catalog_account()
+        response = _service.get_catalog_account()
 
 
         # Check for correct operation
@@ -98,7 +99,7 @@ class TestUpdateCatalogAccount():
         update_catalog_account()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogaccount')
+        url = self.preprocess_url(_base_url + '/catalogaccount')
         responses.add(responses.PUT,
                       url,
                       status=200)
@@ -125,11 +126,13 @@ class TestUpdateCatalogAccount():
 
         # Set up parameter values
         id = 'testString'
+        hide_ibm_cloud_catalog = True
         account_filters = filters_model
 
         # Invoke method
-        response = service.update_catalog_account(
+        response = _service.update_catalog_account(
             id=id,
+            hide_ibm_cloud_catalog=hide_ibm_cloud_catalog,
             account_filters=account_filters,
             headers={}
         )
@@ -140,6 +143,7 @@ class TestUpdateCatalogAccount():
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['id'] == 'testString'
+        assert req_body['hide_IBM_cloud_catalog'] == True
         assert req_body['account_filters'] == filters_model
 
 
@@ -149,13 +153,13 @@ class TestUpdateCatalogAccount():
         test_update_catalog_account_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogaccount')
+        url = self.preprocess_url(_base_url + '/catalogaccount')
         responses.add(responses.PUT,
                       url,
                       status=200)
 
         # Invoke method
-        response = service.update_catalog_account()
+        response = _service.update_catalog_account()
 
 
         # Check for correct operation
@@ -183,42 +187,16 @@ class TestGetCatalogAccountAudit():
         get_catalog_account_audit()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogaccount/audit')
+        url = self.preprocess_url(_base_url + '/catalogaccount/audit')
+        mock_response = '{"list": [{"id": "id", "created": "2019-01-01T12:00:00.000Z", "change_type": "change_type", "target_type": "target_type", "target_id": "target_id", "who_delegate_email": "who_delegate_email", "message": "message"}]}'
         responses.add(responses.GET,
                       url,
-                      status=200)
-
-        # Set up parameter values
-        id = 'testString'
-
-        # Invoke method
-        response = service.get_catalog_account_audit(
-            id=id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'id={}'.format(id) in query_string
-
-
-    @responses.activate
-    def test_get_catalog_account_audit_required_params(self):
-        """
-        test_get_catalog_account_audit_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/catalogaccount/audit')
-        responses.add(responses.GET,
-                      url,
+                      body=mock_response,
+                      content_type='application/json',
                       status=200)
 
         # Invoke method
-        response = service.get_catalog_account_audit()
+        response = _service.get_catalog_account_audit()
 
 
         # Check for correct operation
@@ -246,7 +224,7 @@ class TestGetCatalogAccountFilters():
         get_catalog_account_filters()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogaccount/filters')
+        url = self.preprocess_url(_base_url + '/catalogaccount/filters')
         mock_response = '{"account_filters": [{"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}], "catalog_filters": [{"catalog": {"id": "id", "name": "name"}, "filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}}]}'
         responses.add(responses.GET,
                       url,
@@ -258,7 +236,7 @@ class TestGetCatalogAccountFilters():
         catalog = 'testString'
 
         # Invoke method
-        response = service.get_catalog_account_filters(
+        response = _service.get_catalog_account_filters(
             catalog=catalog,
             headers={}
         )
@@ -278,7 +256,7 @@ class TestGetCatalogAccountFilters():
         test_get_catalog_account_filters_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogaccount/filters')
+        url = self.preprocess_url(_base_url + '/catalogaccount/filters')
         mock_response = '{"account_filters": [{"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}], "catalog_filters": [{"catalog": {"id": "id", "name": "name"}, "filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}}]}'
         responses.add(responses.GET,
                       url,
@@ -287,7 +265,7 @@ class TestGetCatalogAccountFilters():
                       status=200)
 
         # Invoke method
-        response = service.get_catalog_account_filters()
+        response = _service.get_catalog_account_filters()
 
 
         # Check for correct operation
@@ -325,8 +303,8 @@ class TestListCatalogs():
         list_catalogs()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00"}}}]}'
+        url = self.preprocess_url(_base_url + '/catalogs')
+        mock_response = '{"total_count": 11, "resources": [{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -334,7 +312,7 @@ class TestListCatalogs():
                       status=200)
 
         # Invoke method
-        response = service.list_catalogs()
+        response = _service.list_catalogs()
 
 
         # Check for correct operation
@@ -362,8 +340,8 @@ class TestCreateCatalog():
         create_catalog()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs')
-        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00"}}}'
+        url = self.preprocess_url(_base_url + '/catalogs')
+        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -409,12 +387,12 @@ class TestCreateCatalog():
         syndication_history_model = {}
         syndication_history_model['namespaces'] = ['testString']
         syndication_history_model['clusters'] = [syndication_cluster_model]
-        syndication_history_model['last_run'] = '2020-01-28T18:40:40.123456Z'
+        syndication_history_model['last_run'] = "2019-01-01T12:00:00Z"
 
         # Construct a dict representation of a SyndicationAuthorization model
         syndication_authorization_model = {}
         syndication_authorization_model['token'] = 'testString'
-        syndication_authorization_model['last_run'] = '2020-01-28T18:40:40.123456Z'
+        syndication_authorization_model['last_run'] = "2019-01-01T12:00:00Z"
 
         # Construct a dict representation of a SyndicationResource model
         syndication_resource_model = {}
@@ -430,37 +408,29 @@ class TestCreateCatalog():
         short_description = 'testString'
         catalog_icon_url = 'testString'
         tags = ['testString']
-        url = 'testString'
-        crn = 'testString'
-        offerings_url = 'testString'
         features = [feature_model]
         disabled = True
-        created = datetime.fromtimestamp(1580236840.123456, timezone.utc)
-        updated = datetime.fromtimestamp(1580236840.123456, timezone.utc)
         resource_group_id = 'testString'
         owning_account = 'testString'
         catalog_filters = filters_model
         syndication_settings = syndication_resource_model
+        kind = 'testString'
 
         # Invoke method
-        response = service.create_catalog(
+        response = _service.create_catalog(
             id=id,
             rev=rev,
             label=label,
             short_description=short_description,
             catalog_icon_url=catalog_icon_url,
             tags=tags,
-            url=url,
-            crn=crn,
-            offerings_url=offerings_url,
             features=features,
             disabled=disabled,
-            created=created,
-            updated=updated,
             resource_group_id=resource_group_id,
             owning_account=owning_account,
             catalog_filters=catalog_filters,
             syndication_settings=syndication_settings,
+            kind=kind,
             headers={}
         )
 
@@ -475,17 +445,13 @@ class TestCreateCatalog():
         assert req_body['short_description'] == 'testString'
         assert req_body['catalog_icon_url'] == 'testString'
         assert req_body['tags'] == ['testString']
-        assert req_body['url'] == 'testString'
-        assert req_body['crn'] == 'testString'
-        assert req_body['offerings_url'] == 'testString'
         assert req_body['features'] == [feature_model]
         assert req_body['disabled'] == True
-        assert req_body['created'] == '2020-01-28T18:40:40.123456Z'
-        assert req_body['updated'] == '2020-01-28T18:40:40.123456Z'
         assert req_body['resource_group_id'] == 'testString'
         assert req_body['owning_account'] == 'testString'
         assert req_body['catalog_filters'] == filters_model
         assert req_body['syndication_settings'] == syndication_resource_model
+        assert req_body['kind'] == 'testString'
 
 
     @responses.activate
@@ -494,8 +460,8 @@ class TestCreateCatalog():
         test_create_catalog_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs')
-        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00"}}}'
+        url = self.preprocess_url(_base_url + '/catalogs')
+        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -503,7 +469,7 @@ class TestCreateCatalog():
                       status=201)
 
         # Invoke method
-        response = service.create_catalog()
+        response = _service.create_catalog()
 
 
         # Check for correct operation
@@ -531,8 +497,8 @@ class TestGetCatalog():
         get_catalog()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00"}}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -543,7 +509,7 @@ class TestGetCatalog():
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = service.get_catalog(
+        response = _service.get_catalog(
             catalog_identifier,
             headers={}
         )
@@ -559,8 +525,8 @@ class TestGetCatalog():
         test_get_catalog_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00"}}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -577,7 +543,7 @@ class TestGetCatalog():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_catalog(**req_copy)
+                _service.get_catalog(**req_copy)
 
 
 
@@ -601,8 +567,8 @@ class TestReplaceCatalog():
         replace_catalog()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00"}}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -648,12 +614,12 @@ class TestReplaceCatalog():
         syndication_history_model = {}
         syndication_history_model['namespaces'] = ['testString']
         syndication_history_model['clusters'] = [syndication_cluster_model]
-        syndication_history_model['last_run'] = '2020-01-28T18:40:40.123456Z'
+        syndication_history_model['last_run'] = "2019-01-01T12:00:00Z"
 
         # Construct a dict representation of a SyndicationAuthorization model
         syndication_authorization_model = {}
         syndication_authorization_model['token'] = 'testString'
-        syndication_authorization_model['last_run'] = '2020-01-28T18:40:40.123456Z'
+        syndication_authorization_model['last_run'] = "2019-01-01T12:00:00Z"
 
         # Construct a dict representation of a SyndicationResource model
         syndication_resource_model = {}
@@ -670,20 +636,16 @@ class TestReplaceCatalog():
         short_description = 'testString'
         catalog_icon_url = 'testString'
         tags = ['testString']
-        url = 'testString'
-        crn = 'testString'
-        offerings_url = 'testString'
         features = [feature_model]
         disabled = True
-        created = datetime.fromtimestamp(1580236840.123456, timezone.utc)
-        updated = datetime.fromtimestamp(1580236840.123456, timezone.utc)
         resource_group_id = 'testString'
         owning_account = 'testString'
         catalog_filters = filters_model
         syndication_settings = syndication_resource_model
+        kind = 'testString'
 
         # Invoke method
-        response = service.replace_catalog(
+        response = _service.replace_catalog(
             catalog_identifier,
             id=id,
             rev=rev,
@@ -691,17 +653,13 @@ class TestReplaceCatalog():
             short_description=short_description,
             catalog_icon_url=catalog_icon_url,
             tags=tags,
-            url=url,
-            crn=crn,
-            offerings_url=offerings_url,
             features=features,
             disabled=disabled,
-            created=created,
-            updated=updated,
             resource_group_id=resource_group_id,
             owning_account=owning_account,
             catalog_filters=catalog_filters,
             syndication_settings=syndication_settings,
+            kind=kind,
             headers={}
         )
 
@@ -716,17 +674,13 @@ class TestReplaceCatalog():
         assert req_body['short_description'] == 'testString'
         assert req_body['catalog_icon_url'] == 'testString'
         assert req_body['tags'] == ['testString']
-        assert req_body['url'] == 'testString'
-        assert req_body['crn'] == 'testString'
-        assert req_body['offerings_url'] == 'testString'
         assert req_body['features'] == [feature_model]
         assert req_body['disabled'] == True
-        assert req_body['created'] == '2020-01-28T18:40:40.123456Z'
-        assert req_body['updated'] == '2020-01-28T18:40:40.123456Z'
         assert req_body['resource_group_id'] == 'testString'
         assert req_body['owning_account'] == 'testString'
         assert req_body['catalog_filters'] == filters_model
         assert req_body['syndication_settings'] == syndication_resource_model
+        assert req_body['kind'] == 'testString'
 
 
     @responses.activate
@@ -735,8 +689,8 @@ class TestReplaceCatalog():
         test_replace_catalog_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00"}}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -747,7 +701,7 @@ class TestReplaceCatalog():
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = service.replace_catalog(
+        response = _service.replace_catalog(
             catalog_identifier,
             headers={}
         )
@@ -763,8 +717,8 @@ class TestReplaceCatalog():
         test_replace_catalog_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00"}}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -781,7 +735,7 @@ class TestReplaceCatalog():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.replace_catalog(**req_copy)
+                _service.replace_catalog(**req_copy)
 
 
 
@@ -805,7 +759,7 @@ class TestDeleteCatalog():
         delete_catalog()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString')
+        url = self.preprocess_url(_base_url + '/catalogs/testString')
         responses.add(responses.DELETE,
                       url,
                       status=200)
@@ -814,7 +768,7 @@ class TestDeleteCatalog():
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = service.delete_catalog(
+        response = _service.delete_catalog(
             catalog_identifier,
             headers={}
         )
@@ -830,7 +784,7 @@ class TestDeleteCatalog():
         test_delete_catalog_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString')
+        url = self.preprocess_url(_base_url + '/catalogs/testString')
         responses.add(responses.DELETE,
                       url,
                       status=200)
@@ -845,7 +799,7 @@ class TestDeleteCatalog():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.delete_catalog(**req_copy)
+                _service.delete_catalog(**req_copy)
 
 
 
@@ -869,47 +823,19 @@ class TestGetCatalogAudit():
         get_catalog_audit()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/audit')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/audit')
+        mock_response = '{"list": [{"id": "id", "created": "2019-01-01T12:00:00.000Z", "change_type": "change_type", "target_type": "target_type", "target_id": "target_id", "who_delegate_email": "who_delegate_email", "message": "message"}]}'
         responses.add(responses.GET,
                       url,
-                      status=200)
-
-        # Set up parameter values
-        catalog_identifier = 'testString'
-        id = 'testString'
-
-        # Invoke method
-        response = service.get_catalog_audit(
-            catalog_identifier,
-            id=id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'id={}'.format(id) in query_string
-
-
-    @responses.activate
-    def test_get_catalog_audit_required_params(self):
-        """
-        test_get_catalog_audit_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/audit')
-        responses.add(responses.GET,
-                      url,
+                      body=mock_response,
+                      content_type='application/json',
                       status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = service.get_catalog_audit(
+        response = _service.get_catalog_audit(
             catalog_identifier,
             headers={}
         )
@@ -925,9 +851,12 @@ class TestGetCatalogAudit():
         test_get_catalog_audit_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/audit')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/audit')
+        mock_response = '{"list": [{"id": "id", "created": "2019-01-01T12:00:00.000Z", "change_type": "change_type", "target_type": "target_type", "target_id": "target_id", "who_delegate_email": "who_delegate_email", "message": "message"}]}'
         responses.add(responses.GET,
                       url,
+                      body=mock_response,
+                      content_type='application/json',
                       status=200)
 
         # Set up parameter values
@@ -940,320 +869,13 @@ class TestGetCatalogAudit():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_catalog_audit(**req_copy)
+                _service.get_catalog_audit(**req_copy)
 
 
 
 # endregion
 ##############################################################################
 # End of Service: Catalogs
-##############################################################################
-
-##############################################################################
-# Start of Service: Enterprise
-##############################################################################
-# region
-
-class TestGetEnterprise():
-    """
-    Test Class for get_enterprise
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_get_enterprise_all_params(self):
-        """
-        get_enterprise()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "account_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "account_groups": {"keys": {"id": "id", "account_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}}}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        enterprise_id = 'testString'
-
-        # Invoke method
-        response = service.get_enterprise(
-            enterprise_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-
-    @responses.activate
-    def test_get_enterprise_value_error(self):
-        """
-        test_get_enterprise_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "account_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "account_groups": {"keys": {"id": "id", "account_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}}}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        enterprise_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "enterprise_id": enterprise_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.get_enterprise(**req_copy)
-
-
-
-class TestReplaceEnterprise():
-    """
-    Test Class for replace_enterprise
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_replace_enterprise_all_params(self):
-        """
-        replace_enterprise()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString')
-        responses.add(responses.PUT,
-                      url,
-                      status=200)
-
-        # Construct a dict representation of a FilterTerms model
-        filter_terms_model = {}
-        filter_terms_model['filter_terms'] = ['testString']
-
-        # Construct a dict representation of a CategoryFilter model
-        category_filter_model = {}
-        category_filter_model['include'] = True
-        category_filter_model['filter'] = filter_terms_model
-
-        # Construct a dict representation of a IDFilter model
-        id_filter_model = {}
-        id_filter_model['include'] = filter_terms_model
-        id_filter_model['exclude'] = filter_terms_model
-
-        # Construct a dict representation of a Filters model
-        filters_model = {}
-        filters_model['include_all'] = True
-        filters_model['category_filters'] = {}
-        filters_model['id_filters'] = id_filter_model
-
-        # Construct a dict representation of a AccountGroup model
-        account_group_model = {}
-        account_group_model['id'] = 'testString'
-        account_group_model['account_filters'] = filters_model
-
-        # Construct a dict representation of a EnterpriseAccountGroups model
-        enterprise_account_groups_model = {}
-        enterprise_account_groups_model['keys'] = account_group_model
-
-        # Set up parameter values
-        enterprise_id = 'testString'
-        id = 'testString'
-        rev = 'testString'
-        account_filters = filters_model
-        account_groups = enterprise_account_groups_model
-
-        # Invoke method
-        response = service.replace_enterprise(
-            enterprise_id,
-            id=id,
-            rev=rev,
-            account_filters=account_filters,
-            account_groups=account_groups,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['id'] == 'testString'
-        assert req_body['_rev'] == 'testString'
-        assert req_body['account_filters'] == filters_model
-        assert req_body['account_groups'] == enterprise_account_groups_model
-
-
-    @responses.activate
-    def test_replace_enterprise_required_params(self):
-        """
-        test_replace_enterprise_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString')
-        responses.add(responses.PUT,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        enterprise_id = 'testString'
-
-        # Invoke method
-        response = service.replace_enterprise(
-            enterprise_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-
-    @responses.activate
-    def test_replace_enterprise_value_error(self):
-        """
-        test_replace_enterprise_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString')
-        responses.add(responses.PUT,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        enterprise_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "enterprise_id": enterprise_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.replace_enterprise(**req_copy)
-
-
-
-class TestGetEnterprisesAudit():
-    """
-    Test Class for get_enterprises_audit
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_get_enterprises_audit_all_params(self):
-        """
-        get_enterprises_audit()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString/audit')
-        responses.add(responses.GET,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        enterprise_id = 'testString'
-        id = 'testString'
-
-        # Invoke method
-        response = service.get_enterprises_audit(
-            enterprise_id,
-            id=id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'id={}'.format(id) in query_string
-
-
-    @responses.activate
-    def test_get_enterprises_audit_required_params(self):
-        """
-        test_get_enterprises_audit_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString/audit')
-        responses.add(responses.GET,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        enterprise_id = 'testString'
-
-        # Invoke method
-        response = service.get_enterprises_audit(
-            enterprise_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-
-    @responses.activate
-    def test_get_enterprises_audit_value_error(self):
-        """
-        test_get_enterprises_audit_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString/audit')
-        responses.add(responses.GET,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        enterprise_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "enterprise_id": enterprise_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.get_enterprises_audit(**req_copy)
-
-
-
-# endregion
-##############################################################################
-# End of Service: Enterprise
 ##############################################################################
 
 ##############################################################################
@@ -1281,8 +903,8 @@ class TestGetConsumptionOfferings():
         get_consumption_offerings()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/offerings')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}]}'
+        url = self.preprocess_url(_base_url + '/offerings')
+        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1294,11 +916,11 @@ class TestGetConsumptionOfferings():
         catalog = 'testString'
         select = 'all'
         include_hidden = True
-        limit = 38
+        limit = 1000
         offset = 38
 
         # Invoke method
-        response = service.get_consumption_offerings(
+        response = _service.get_consumption_offerings(
             digest=digest,
             catalog=catalog,
             select=select,
@@ -1328,8 +950,8 @@ class TestGetConsumptionOfferings():
         test_get_consumption_offerings_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/offerings')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}]}'
+        url = self.preprocess_url(_base_url + '/offerings')
+        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1337,7 +959,7 @@ class TestGetConsumptionOfferings():
                       status=200)
 
         # Invoke method
-        response = service.get_consumption_offerings()
+        response = _service.get_consumption_offerings()
 
 
         # Check for correct operation
@@ -1365,8 +987,8 @@ class TestListOfferings():
         list_offerings()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}]}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings')
+        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1376,13 +998,13 @@ class TestListOfferings():
         # Set up parameter values
         catalog_identifier = 'testString'
         digest = True
-        limit = 38
+        limit = 1000
         offset = 38
         name = 'testString'
         sort = 'testString'
 
         # Invoke method
-        response = service.list_offerings(
+        response = _service.list_offerings(
             catalog_identifier,
             digest=digest,
             limit=limit,
@@ -1411,8 +1033,8 @@ class TestListOfferings():
         test_list_offerings_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}]}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings')
+        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1423,7 +1045,7 @@ class TestListOfferings():
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = service.list_offerings(
+        response = _service.list_offerings(
             catalog_identifier,
             headers={}
         )
@@ -1439,8 +1061,8 @@ class TestListOfferings():
         test_list_offerings_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}]}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings')
+        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1457,7 +1079,7 @@ class TestListOfferings():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.list_offerings(**req_copy)
+                _service.list_offerings(**req_copy)
 
 
 
@@ -1481,8 +1103,8 @@ class TestCreateOffering():
         create_offering()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1514,11 +1136,11 @@ class TestCreateOffering():
 
         # Construct a dict representation of a Validation model
         validation_model = {}
-        validation_model['validated'] = '2020-01-28T18:40:40.123456Z'
-        validation_model['requested'] = '2020-01-28T18:40:40.123456Z'
+        validation_model['validated'] = "2019-01-01T12:00:00Z"
+        validation_model['requested'] = "2019-01-01T12:00:00Z"
         validation_model['state'] = 'testString'
         validation_model['last_operation'] = 'testString'
-        validation_model['target'] = { 'foo': 'bar' }
+        validation_model['target'] = {}
 
         # Construct a dict representation of a Resource model
         resource_model = {}
@@ -1552,9 +1174,9 @@ class TestCreateOffering():
         # Construct a dict representation of a State model
         state_model = {}
         state_model['current'] = 'testString'
-        state_model['current_entered'] = '2020-01-28T18:40:40.123456Z'
+        state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
-        state_model['pending_requested'] = '2020-01-28T18:40:40.123456Z'
+        state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
         # Construct a dict representation of a Version model
@@ -1564,8 +1186,8 @@ class TestCreateOffering():
         version_model['crn'] = 'testString'
         version_model['version'] = 'testString'
         version_model['sha'] = 'testString'
-        version_model['created'] = '2020-01-28T18:40:40.123456Z'
-        version_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        version_model['created'] = "2019-01-01T12:00:00Z"
+        version_model['updated'] = "2019-01-01T12:00:00Z"
         version_model['offering_id'] = 'testString'
         version_model['catalog_id'] = 'testString'
         version_model['kind_id'] = 'testString'
@@ -1574,7 +1196,7 @@ class TestCreateOffering():
         version_model['source_url'] = 'testString'
         version_model['tgz_url'] = 'testString'
         version_model['configuration'] = [configuration_model]
-        version_model['metadata'] = { 'foo': 'bar' }
+        version_model['metadata'] = {}
         version_model['validation'] = validation_model
         version_model['required_resources'] = [resource_model]
         version_model['single_instance'] = True
@@ -1598,10 +1220,10 @@ class TestCreateOffering():
         deployment_model['name'] = 'testString'
         deployment_model['short_description'] = 'testString'
         deployment_model['long_description'] = 'testString'
-        deployment_model['metadata'] = { 'foo': 'bar' }
+        deployment_model['metadata'] = {}
         deployment_model['tags'] = ['testString']
-        deployment_model['created'] = '2020-01-28T18:40:40.123456Z'
-        deployment_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        deployment_model['created'] = "2019-01-01T12:00:00Z"
+        deployment_model['updated'] = "2019-01-01T12:00:00Z"
 
         # Construct a dict representation of a Plan model
         plan_model = {}
@@ -1610,11 +1232,11 @@ class TestCreateOffering():
         plan_model['name'] = 'testString'
         plan_model['short_description'] = 'testString'
         plan_model['long_description'] = 'testString'
-        plan_model['metadata'] = { 'foo': 'bar' }
+        plan_model['metadata'] = {}
         plan_model['tags'] = ['testString']
         plan_model['additional_features'] = [feature_model]
-        plan_model['created'] = '2020-01-28T18:40:40.123456Z'
-        plan_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        plan_model['created'] = "2019-01-01T12:00:00Z"
+        plan_model['updated'] = "2019-01-01T12:00:00Z"
         plan_model['deployments'] = [deployment_model]
 
         # Construct a dict representation of a Kind model
@@ -1622,12 +1244,12 @@ class TestCreateOffering():
         kind_model['id'] = 'testString'
         kind_model['format_kind'] = 'testString'
         kind_model['target_kind'] = 'testString'
-        kind_model['metadata'] = { 'foo': 'bar' }
+        kind_model['metadata'] = {}
         kind_model['install_description'] = 'testString'
         kind_model['tags'] = ['testString']
         kind_model['additional_features'] = [feature_model]
-        kind_model['created'] = '2020-01-28T18:40:40.123456Z'
-        kind_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        kind_model['created'] = "2019-01-01T12:00:00Z"
+        kind_model['updated'] = "2019-01-01T12:00:00Z"
         kind_model['versions'] = [version_model]
         kind_model['plans'] = [plan_model]
 
@@ -1648,9 +1270,10 @@ class TestCreateOffering():
         offering_docs_url = 'testString'
         offering_support_url = 'testString'
         tags = ['testString']
+        keywords = ['testString']
         rating = rating_model
-        created = datetime.fromtimestamp(1580236840.123456, timezone.utc)
-        updated = datetime.fromtimestamp(1580236840.123456, timezone.utc)
+        created = string_to_datetime('2019-01-01T12:00:00.000Z')
+        updated = string_to_datetime('2019-01-01T12:00:00.000Z')
         short_description = 'testString'
         long_description = 'testString'
         features = [feature_model]
@@ -1664,14 +1287,14 @@ class TestCreateOffering():
         portal_ui_url = 'testString'
         catalog_id = 'testString'
         catalog_name = 'testString'
-        metadata = { 'foo': 'bar' }
+        metadata = {}
         disclaimer = 'testString'
         hidden = True
         provider = 'testString'
         repo_info = repo_info_model
 
         # Invoke method
-        response = service.create_offering(
+        response = _service.create_offering(
             catalog_identifier,
             id=id,
             rev=rev,
@@ -1683,6 +1306,7 @@ class TestCreateOffering():
             offering_docs_url=offering_docs_url,
             offering_support_url=offering_support_url,
             tags=tags,
+            keywords=keywords,
             rating=rating,
             created=created,
             updated=updated,
@@ -1722,9 +1346,10 @@ class TestCreateOffering():
         assert req_body['offering_docs_url'] == 'testString'
         assert req_body['offering_support_url'] == 'testString'
         assert req_body['tags'] == ['testString']
+        assert req_body['keywords'] == ['testString']
         assert req_body['rating'] == rating_model
-        assert req_body['created'] == '2020-01-28T18:40:40.123456Z'
-        assert req_body['updated'] == '2020-01-28T18:40:40.123456Z'
+        assert req_body['created'] == "2019-01-01T12:00:00Z"
+        assert req_body['updated'] == "2019-01-01T12:00:00Z"
         assert req_body['short_description'] == 'testString'
         assert req_body['long_description'] == 'testString'
         assert req_body['features'] == [feature_model]
@@ -1738,7 +1363,7 @@ class TestCreateOffering():
         assert req_body['portal_ui_url'] == 'testString'
         assert req_body['catalog_id'] == 'testString'
         assert req_body['catalog_name'] == 'testString'
-        assert req_body['metadata'] == { 'foo': 'bar' }
+        assert req_body['metadata'] == {}
         assert req_body['disclaimer'] == 'testString'
         assert req_body['hidden'] == True
         assert req_body['provider'] == 'testString'
@@ -1751,8 +1376,8 @@ class TestCreateOffering():
         test_create_offering_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1763,7 +1388,7 @@ class TestCreateOffering():
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = service.create_offering(
+        response = _service.create_offering(
             catalog_identifier,
             headers={}
         )
@@ -1779,8 +1404,8 @@ class TestCreateOffering():
         test_create_offering_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1797,7 +1422,7 @@ class TestCreateOffering():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_offering(**req_copy)
+                _service.create_offering(**req_copy)
 
 
 
@@ -1821,8 +1446,8 @@ class TestImportOfferingVersion():
         import_offering_version()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/version')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/version')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1834,14 +1459,15 @@ class TestImportOfferingVersion():
         offering_id = 'testString'
         tags = ['testString']
         target_kinds = ['testString']
-        content = [38]
+        content = b'This is a mock byte array value.'
         zipurl = 'testString'
         target_version = 'testString'
         include_config = True
+        is_vsi = True
         repo_type = 'testString'
 
         # Invoke method
-        response = service.import_offering_version(
+        response = _service.import_offering_version(
             catalog_identifier,
             offering_id,
             tags=tags,
@@ -1850,6 +1476,7 @@ class TestImportOfferingVersion():
             zipurl=zipurl,
             target_version=target_version,
             include_config=include_config,
+            is_vsi=is_vsi,
             repo_type=repo_type,
             headers={}
         )
@@ -1863,12 +1490,13 @@ class TestImportOfferingVersion():
         assert 'zipurl={}'.format(zipurl) in query_string
         assert 'targetVersion={}'.format(target_version) in query_string
         assert 'includeConfig={}'.format('true' if include_config else 'false') in query_string
+        assert 'isVSI={}'.format('true' if is_vsi else 'false') in query_string
         assert 'repoType={}'.format(repo_type) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['tags'] == ['testString']
         assert req_body['target_kinds'] == ['testString']
-        assert req_body['content'] == [38]
+        assert req_body['content'] == 'VGhpcyBpcyBhIG1vY2sgYnl0ZSBhcnJheSB2YWx1ZS4='
 
 
     @responses.activate
@@ -1877,8 +1505,8 @@ class TestImportOfferingVersion():
         test_import_offering_version_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/version')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/version')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1890,7 +1518,7 @@ class TestImportOfferingVersion():
         offering_id = 'testString'
 
         # Invoke method
-        response = service.import_offering_version(
+        response = _service.import_offering_version(
             catalog_identifier,
             offering_id,
             headers={}
@@ -1907,8 +1535,8 @@ class TestImportOfferingVersion():
         test_import_offering_version_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/version')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/version')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1927,7 +1555,7 @@ class TestImportOfferingVersion():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.import_offering_version(**req_copy)
+                _service.import_offering_version(**req_copy)
 
 
 
@@ -1951,8 +1579,8 @@ class TestImportOffering():
         import_offering()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/import/offerings')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/import/offerings')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1963,16 +1591,17 @@ class TestImportOffering():
         catalog_identifier = 'testString'
         tags = ['testString']
         target_kinds = ['testString']
-        content = [38]
+        content = b'This is a mock byte array value.'
         zipurl = 'testString'
         offering_id = 'testString'
         target_version = 'testString'
         include_config = True
+        is_vsi = True
         repo_type = 'testString'
         x_auth_token = 'testString'
 
         # Invoke method
-        response = service.import_offering(
+        response = _service.import_offering(
             catalog_identifier,
             tags=tags,
             target_kinds=target_kinds,
@@ -1981,6 +1610,7 @@ class TestImportOffering():
             offering_id=offering_id,
             target_version=target_version,
             include_config=include_config,
+            is_vsi=is_vsi,
             repo_type=repo_type,
             x_auth_token=x_auth_token,
             headers={}
@@ -1996,12 +1626,13 @@ class TestImportOffering():
         assert 'offeringID={}'.format(offering_id) in query_string
         assert 'targetVersion={}'.format(target_version) in query_string
         assert 'includeConfig={}'.format('true' if include_config else 'false') in query_string
+        assert 'isVSI={}'.format('true' if is_vsi else 'false') in query_string
         assert 'repoType={}'.format(repo_type) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['tags'] == ['testString']
         assert req_body['target_kinds'] == ['testString']
-        assert req_body['content'] == [38]
+        assert req_body['content'] == 'VGhpcyBpcyBhIG1vY2sgYnl0ZSBhcnJheSB2YWx1ZS4='
 
 
     @responses.activate
@@ -2010,8 +1641,8 @@ class TestImportOffering():
         test_import_offering_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/import/offerings')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/import/offerings')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -2022,7 +1653,7 @@ class TestImportOffering():
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = service.import_offering(
+        response = _service.import_offering(
             catalog_identifier,
             headers={}
         )
@@ -2038,8 +1669,8 @@ class TestImportOffering():
         test_import_offering_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/import/offerings')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/import/offerings')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -2056,7 +1687,7 @@ class TestImportOffering():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.import_offering(**req_copy)
+                _service.import_offering(**req_copy)
 
 
 
@@ -2080,8 +1711,8 @@ class TestReloadOffering():
         reload_offering()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/reload')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/reload')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -2094,12 +1725,12 @@ class TestReloadOffering():
         target_version = 'testString'
         tags = ['testString']
         target_kinds = ['testString']
-        content = [38]
+        content = b'This is a mock byte array value.'
         zipurl = 'testString'
         repo_type = 'testString'
 
         # Invoke method
-        response = service.reload_offering(
+        response = _service.reload_offering(
             catalog_identifier,
             offering_id,
             target_version,
@@ -2124,7 +1755,7 @@ class TestReloadOffering():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['tags'] == ['testString']
         assert req_body['target_kinds'] == ['testString']
-        assert req_body['content'] == [38]
+        assert req_body['content'] == 'VGhpcyBpcyBhIG1vY2sgYnl0ZSBhcnJheSB2YWx1ZS4='
 
 
     @responses.activate
@@ -2133,8 +1764,8 @@ class TestReloadOffering():
         test_reload_offering_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/reload')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/reload')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -2147,7 +1778,7 @@ class TestReloadOffering():
         target_version = 'testString'
 
         # Invoke method
-        response = service.reload_offering(
+        response = _service.reload_offering(
             catalog_identifier,
             offering_id,
             target_version,
@@ -2169,8 +1800,8 @@ class TestReloadOffering():
         test_reload_offering_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/reload')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/reload')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -2191,7 +1822,7 @@ class TestReloadOffering():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.reload_offering(**req_copy)
+                _service.reload_offering(**req_copy)
 
 
 
@@ -2215,8 +1846,8 @@ class TestGetOffering():
         get_offering()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2228,7 +1859,7 @@ class TestGetOffering():
         offering_id = 'testString'
 
         # Invoke method
-        response = service.get_offering(
+        response = _service.get_offering(
             catalog_identifier,
             offering_id,
             headers={}
@@ -2245,8 +1876,8 @@ class TestGetOffering():
         test_get_offering_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2265,7 +1896,7 @@ class TestGetOffering():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_offering(**req_copy)
+                _service.get_offering(**req_copy)
 
 
 
@@ -2289,8 +1920,8 @@ class TestReplaceOffering():
         replace_offering()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00"}}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -2322,11 +1953,11 @@ class TestReplaceOffering():
 
         # Construct a dict representation of a Validation model
         validation_model = {}
-        validation_model['validated'] = '2020-01-28T18:40:40.123456Z'
-        validation_model['requested'] = '2020-01-28T18:40:40.123456Z'
+        validation_model['validated'] = "2019-01-01T12:00:00Z"
+        validation_model['requested'] = "2019-01-01T12:00:00Z"
         validation_model['state'] = 'testString'
         validation_model['last_operation'] = 'testString'
-        validation_model['target'] = { 'foo': 'bar' }
+        validation_model['target'] = {}
 
         # Construct a dict representation of a Resource model
         resource_model = {}
@@ -2360,9 +1991,9 @@ class TestReplaceOffering():
         # Construct a dict representation of a State model
         state_model = {}
         state_model['current'] = 'testString'
-        state_model['current_entered'] = '2020-01-28T18:40:40.123456Z'
+        state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
-        state_model['pending_requested'] = '2020-01-28T18:40:40.123456Z'
+        state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
         # Construct a dict representation of a Version model
@@ -2372,8 +2003,8 @@ class TestReplaceOffering():
         version_model['crn'] = 'testString'
         version_model['version'] = 'testString'
         version_model['sha'] = 'testString'
-        version_model['created'] = '2020-01-28T18:40:40.123456Z'
-        version_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        version_model['created'] = "2019-01-01T12:00:00Z"
+        version_model['updated'] = "2019-01-01T12:00:00Z"
         version_model['offering_id'] = 'testString'
         version_model['catalog_id'] = 'testString'
         version_model['kind_id'] = 'testString'
@@ -2382,7 +2013,7 @@ class TestReplaceOffering():
         version_model['source_url'] = 'testString'
         version_model['tgz_url'] = 'testString'
         version_model['configuration'] = [configuration_model]
-        version_model['metadata'] = { 'foo': 'bar' }
+        version_model['metadata'] = {}
         version_model['validation'] = validation_model
         version_model['required_resources'] = [resource_model]
         version_model['single_instance'] = True
@@ -2406,10 +2037,10 @@ class TestReplaceOffering():
         deployment_model['name'] = 'testString'
         deployment_model['short_description'] = 'testString'
         deployment_model['long_description'] = 'testString'
-        deployment_model['metadata'] = { 'foo': 'bar' }
+        deployment_model['metadata'] = {}
         deployment_model['tags'] = ['testString']
-        deployment_model['created'] = '2020-01-28T18:40:40.123456Z'
-        deployment_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        deployment_model['created'] = "2019-01-01T12:00:00Z"
+        deployment_model['updated'] = "2019-01-01T12:00:00Z"
 
         # Construct a dict representation of a Plan model
         plan_model = {}
@@ -2418,11 +2049,11 @@ class TestReplaceOffering():
         plan_model['name'] = 'testString'
         plan_model['short_description'] = 'testString'
         plan_model['long_description'] = 'testString'
-        plan_model['metadata'] = { 'foo': 'bar' }
+        plan_model['metadata'] = {}
         plan_model['tags'] = ['testString']
         plan_model['additional_features'] = [feature_model]
-        plan_model['created'] = '2020-01-28T18:40:40.123456Z'
-        plan_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        plan_model['created'] = "2019-01-01T12:00:00Z"
+        plan_model['updated'] = "2019-01-01T12:00:00Z"
         plan_model['deployments'] = [deployment_model]
 
         # Construct a dict representation of a Kind model
@@ -2430,12 +2061,12 @@ class TestReplaceOffering():
         kind_model['id'] = 'testString'
         kind_model['format_kind'] = 'testString'
         kind_model['target_kind'] = 'testString'
-        kind_model['metadata'] = { 'foo': 'bar' }
+        kind_model['metadata'] = {}
         kind_model['install_description'] = 'testString'
         kind_model['tags'] = ['testString']
         kind_model['additional_features'] = [feature_model]
-        kind_model['created'] = '2020-01-28T18:40:40.123456Z'
-        kind_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        kind_model['created'] = "2019-01-01T12:00:00Z"
+        kind_model['updated'] = "2019-01-01T12:00:00Z"
         kind_model['versions'] = [version_model]
         kind_model['plans'] = [plan_model]
 
@@ -2457,9 +2088,10 @@ class TestReplaceOffering():
         offering_docs_url = 'testString'
         offering_support_url = 'testString'
         tags = ['testString']
+        keywords = ['testString']
         rating = rating_model
-        created = datetime.fromtimestamp(1580236840.123456, timezone.utc)
-        updated = datetime.fromtimestamp(1580236840.123456, timezone.utc)
+        created = string_to_datetime('2019-01-01T12:00:00.000Z')
+        updated = string_to_datetime('2019-01-01T12:00:00.000Z')
         short_description = 'testString'
         long_description = 'testString'
         features = [feature_model]
@@ -2473,14 +2105,14 @@ class TestReplaceOffering():
         portal_ui_url = 'testString'
         catalog_id = 'testString'
         catalog_name = 'testString'
-        metadata = { 'foo': 'bar' }
+        metadata = {}
         disclaimer = 'testString'
         hidden = True
         provider = 'testString'
         repo_info = repo_info_model
 
         # Invoke method
-        response = service.replace_offering(
+        response = _service.replace_offering(
             catalog_identifier,
             offering_id,
             id=id,
@@ -2493,6 +2125,7 @@ class TestReplaceOffering():
             offering_docs_url=offering_docs_url,
             offering_support_url=offering_support_url,
             tags=tags,
+            keywords=keywords,
             rating=rating,
             created=created,
             updated=updated,
@@ -2532,9 +2165,10 @@ class TestReplaceOffering():
         assert req_body['offering_docs_url'] == 'testString'
         assert req_body['offering_support_url'] == 'testString'
         assert req_body['tags'] == ['testString']
+        assert req_body['keywords'] == ['testString']
         assert req_body['rating'] == rating_model
-        assert req_body['created'] == '2020-01-28T18:40:40.123456Z'
-        assert req_body['updated'] == '2020-01-28T18:40:40.123456Z'
+        assert req_body['created'] == "2019-01-01T12:00:00Z"
+        assert req_body['updated'] == "2019-01-01T12:00:00Z"
         assert req_body['short_description'] == 'testString'
         assert req_body['long_description'] == 'testString'
         assert req_body['features'] == [feature_model]
@@ -2548,7 +2182,7 @@ class TestReplaceOffering():
         assert req_body['portal_ui_url'] == 'testString'
         assert req_body['catalog_id'] == 'testString'
         assert req_body['catalog_name'] == 'testString'
-        assert req_body['metadata'] == { 'foo': 'bar' }
+        assert req_body['metadata'] == {}
         assert req_body['disclaimer'] == 'testString'
         assert req_body['hidden'] == True
         assert req_body['provider'] == 'testString'
@@ -2561,8 +2195,8 @@ class TestReplaceOffering():
         test_replace_offering_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00"}}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -2574,7 +2208,7 @@ class TestReplaceOffering():
         offering_id = 'testString'
 
         # Invoke method
-        response = service.replace_offering(
+        response = _service.replace_offering(
             catalog_identifier,
             offering_id,
             headers={}
@@ -2591,8 +2225,8 @@ class TestReplaceOffering():
         test_replace_offering_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00"}}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -2611,7 +2245,7 @@ class TestReplaceOffering():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.replace_offering(**req_copy)
+                _service.replace_offering(**req_copy)
 
 
 
@@ -2635,7 +2269,7 @@ class TestDeleteOffering():
         delete_offering()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
         responses.add(responses.DELETE,
                       url,
                       status=200)
@@ -2645,7 +2279,7 @@ class TestDeleteOffering():
         offering_id = 'testString'
 
         # Invoke method
-        response = service.delete_offering(
+        response = _service.delete_offering(
             catalog_identifier,
             offering_id,
             headers={}
@@ -2662,7 +2296,7 @@ class TestDeleteOffering():
         test_delete_offering_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
         responses.add(responses.DELETE,
                       url,
                       status=200)
@@ -2679,7 +2313,7 @@ class TestDeleteOffering():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.delete_offering(**req_copy)
+                _service.delete_offering(**req_copy)
 
 
 
@@ -2703,42 +2337,12 @@ class TestGetOfferingAudit():
         get_offering_audit()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/audit')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/audit')
+        mock_response = '{"list": [{"id": "id", "created": "2019-01-01T12:00:00.000Z", "change_type": "change_type", "target_type": "target_type", "target_id": "target_id", "who_delegate_email": "who_delegate_email", "message": "message"}]}'
         responses.add(responses.GET,
                       url,
-                      status=200)
-
-        # Set up parameter values
-        catalog_identifier = 'testString'
-        offering_id = 'testString'
-        id = 'testString'
-
-        # Invoke method
-        response = service.get_offering_audit(
-            catalog_identifier,
-            offering_id,
-            id=id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'id={}'.format(id) in query_string
-
-
-    @responses.activate
-    def test_get_offering_audit_required_params(self):
-        """
-        test_get_offering_audit_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/audit')
-        responses.add(responses.GET,
-                      url,
+                      body=mock_response,
+                      content_type='application/json',
                       status=200)
 
         # Set up parameter values
@@ -2746,7 +2350,7 @@ class TestGetOfferingAudit():
         offering_id = 'testString'
 
         # Invoke method
-        response = service.get_offering_audit(
+        response = _service.get_offering_audit(
             catalog_identifier,
             offering_id,
             headers={}
@@ -2763,9 +2367,12 @@ class TestGetOfferingAudit():
         test_get_offering_audit_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/audit')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/audit')
+        mock_response = '{"list": [{"id": "id", "created": "2019-01-01T12:00:00.000Z", "change_type": "change_type", "target_type": "target_type", "target_id": "target_id", "who_delegate_email": "who_delegate_email", "message": "message"}]}'
         responses.add(responses.GET,
                       url,
+                      body=mock_response,
+                      content_type='application/json',
                       status=200)
 
         # Set up parameter values
@@ -2780,7 +2387,7 @@ class TestGetOfferingAudit():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_offering_audit(**req_copy)
+                _service.get_offering_audit(**req_copy)
 
 
 
@@ -2804,8 +2411,8 @@ class TestReplaceOfferingIcon():
         replace_offering_icon()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/icon/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/icon/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -2818,7 +2425,7 @@ class TestReplaceOfferingIcon():
         file_name = 'testString'
 
         # Invoke method
-        response = service.replace_offering_icon(
+        response = _service.replace_offering_icon(
             catalog_identifier,
             offering_id,
             file_name,
@@ -2836,8 +2443,8 @@ class TestReplaceOfferingIcon():
         test_replace_offering_icon_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/icon/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/icon/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -2858,7 +2465,7 @@ class TestReplaceOfferingIcon():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.replace_offering_icon(**req_copy)
+                _service.replace_offering_icon(**req_copy)
 
 
 
@@ -2882,7 +2489,7 @@ class TestUpdateOfferingIbm():
         update_offering_ibm()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/publish/allow_request/true')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/publish/allow_request/true')
         mock_response = '{"allow_request": false, "ibm": false, "public": true, "changed": false}'
         responses.add(responses.POST,
                       url,
@@ -2897,7 +2504,7 @@ class TestUpdateOfferingIbm():
         approved = 'true'
 
         # Invoke method
-        response = service.update_offering_ibm(
+        response = _service.update_offering_ibm(
             catalog_identifier,
             offering_id,
             approval_type,
@@ -2916,7 +2523,7 @@ class TestUpdateOfferingIbm():
         test_update_offering_ibm_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/publish/allow_request/true')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/publish/allow_request/true')
         mock_response = '{"allow_request": false, "ibm": false, "public": true, "changed": false}'
         responses.add(responses.POST,
                       url,
@@ -2940,7 +2547,140 @@ class TestUpdateOfferingIbm():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_offering_ibm(**req_copy)
+                _service.update_offering_ibm(**req_copy)
+
+
+
+class TestGetOfferingUpdates():
+    """
+    Test Class for get_offering_updates
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_get_offering_updates_all_params(self):
+        """
+        get_offering_updates()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/updates')
+        mock_response = '[{"version_locator": "version_locator", "version": "version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "package_version": "package_version", "can_update": true, "messages": {"mapKey": "inner"}}]'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        offering_id = 'testString'
+        kind = 'testString'
+        version = 'testString'
+        cluster_id = 'testString'
+        region = 'testString'
+        resource_group_id = 'testString'
+        namespace = 'testString'
+
+        # Invoke method
+        response = _service.get_offering_updates(
+            catalog_identifier,
+            offering_id,
+            kind,
+            version=version,
+            cluster_id=cluster_id,
+            region=region,
+            resource_group_id=resource_group_id,
+            namespace=namespace,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'kind={}'.format(kind) in query_string
+        assert 'version={}'.format(version) in query_string
+        assert 'cluster_id={}'.format(cluster_id) in query_string
+        assert 'region={}'.format(region) in query_string
+        assert 'resource_group_id={}'.format(resource_group_id) in query_string
+        assert 'namespace={}'.format(namespace) in query_string
+
+
+    @responses.activate
+    def test_get_offering_updates_required_params(self):
+        """
+        test_get_offering_updates_required_params()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/updates')
+        mock_response = '[{"version_locator": "version_locator", "version": "version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "package_version": "package_version", "can_update": true, "messages": {"mapKey": "inner"}}]'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        offering_id = 'testString'
+        kind = 'testString'
+
+        # Invoke method
+        response = _service.get_offering_updates(
+            catalog_identifier,
+            offering_id,
+            kind,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'kind={}'.format(kind) in query_string
+
+
+    @responses.activate
+    def test_get_offering_updates_value_error(self):
+        """
+        test_get_offering_updates_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/updates')
+        mock_response = '[{"version_locator": "version_locator", "version": "version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "package_version": "package_version", "can_update": true, "messages": {"mapKey": "inner"}}]'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        offering_id = 'testString'
+        kind = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "catalog_identifier": catalog_identifier,
+            "offering_id": offering_id,
+            "kind": kind,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_offering_updates(**req_copy)
 
 
 
@@ -2954,9 +2694,9 @@ class TestUpdateOfferingIbm():
 ##############################################################################
 # region
 
-class TestGetVersionAbout():
+class TestGetOfferingAbout():
     """
-    Test Class for get_version_about
+    Test Class for get_offering_about
     """
 
     def preprocess_url(self, request_url: str):
@@ -2969,12 +2709,12 @@ class TestGetVersionAbout():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_get_version_about_all_params(self):
+    def test_get_offering_about_all_params(self):
         """
-        get_version_about()
+        get_offering_about()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/about')
+        url = self.preprocess_url(_base_url + '/versions/testString/about')
         mock_response = '"operation_response"'
         responses.add(responses.GET,
                       url,
@@ -2986,7 +2726,7 @@ class TestGetVersionAbout():
         version_loc_id = 'testString'
 
         # Invoke method
-        response = service.get_version_about(
+        response = _service.get_offering_about(
             version_loc_id,
             headers={}
         )
@@ -2997,12 +2737,12 @@ class TestGetVersionAbout():
 
 
     @responses.activate
-    def test_get_version_about_value_error(self):
+    def test_get_offering_about_value_error(self):
         """
-        test_get_version_about_value_error()
+        test_get_offering_about_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/about')
+        url = self.preprocess_url(_base_url + '/versions/testString/about')
         mock_response = '"operation_response"'
         responses.add(responses.GET,
                       url,
@@ -3020,13 +2760,13 @@ class TestGetVersionAbout():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_version_about(**req_copy)
+                _service.get_offering_about(**req_copy)
 
 
 
-class TestGetVersionLicense():
+class TestGetOfferingLicense():
     """
-    Test Class for get_version_license
+    Test Class for get_offering_license
     """
 
     def preprocess_url(self, request_url: str):
@@ -3039,14 +2779,17 @@ class TestGetVersionLicense():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_get_version_license_all_params(self):
+    def test_get_offering_license_all_params(self):
         """
-        get_version_license()
+        get_offering_license()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/licenses/testString')
+        url = self.preprocess_url(_base_url + '/versions/testString/licenses/testString')
+        mock_response = '"operation_response"'
         responses.add(responses.GET,
                       url,
+                      body=mock_response,
+                      content_type='text/plain',
                       status=200)
 
         # Set up parameter values
@@ -3054,7 +2797,7 @@ class TestGetVersionLicense():
         license_id = 'testString'
 
         # Invoke method
-        response = service.get_version_license(
+        response = _service.get_offering_license(
             version_loc_id,
             license_id,
             headers={}
@@ -3066,14 +2809,17 @@ class TestGetVersionLicense():
 
 
     @responses.activate
-    def test_get_version_license_value_error(self):
+    def test_get_offering_license_value_error(self):
         """
-        test_get_version_license_value_error()
+        test_get_offering_license_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/licenses/testString')
+        url = self.preprocess_url(_base_url + '/versions/testString/licenses/testString')
+        mock_response = '"operation_response"'
         responses.add(responses.GET,
                       url,
+                      body=mock_response,
+                      content_type='text/plain',
                       status=200)
 
         # Set up parameter values
@@ -3088,13 +2834,13 @@ class TestGetVersionLicense():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_version_license(**req_copy)
+                _service.get_offering_license(**req_copy)
 
 
 
-class TestGetVersionContainerImages():
+class TestGetOfferingContainerImages():
     """
-    Test Class for get_version_container_images
+    Test Class for get_offering_container_images
     """
 
     def preprocess_url(self, request_url: str):
@@ -3107,12 +2853,12 @@ class TestGetVersionContainerImages():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_get_version_container_images_all_params(self):
+    def test_get_offering_container_images_all_params(self):
         """
-        get_version_container_images()
+        get_offering_container_images()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/containerImages')
+        url = self.preprocess_url(_base_url + '/versions/testString/containerImages')
         mock_response = '{"description": "description", "images": [{"image": "image"}]}'
         responses.add(responses.GET,
                       url,
@@ -3124,7 +2870,7 @@ class TestGetVersionContainerImages():
         version_loc_id = 'testString'
 
         # Invoke method
-        response = service.get_version_container_images(
+        response = _service.get_offering_container_images(
             version_loc_id,
             headers={}
         )
@@ -3135,12 +2881,12 @@ class TestGetVersionContainerImages():
 
 
     @responses.activate
-    def test_get_version_container_images_value_error(self):
+    def test_get_offering_container_images_value_error(self):
         """
-        test_get_version_container_images_value_error()
+        test_get_offering_container_images_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/containerImages')
+        url = self.preprocess_url(_base_url + '/versions/testString/containerImages')
         mock_response = '{"description": "description", "images": [{"image": "image"}]}'
         responses.add(responses.GET,
                       url,
@@ -3158,7 +2904,7 @@ class TestGetVersionContainerImages():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_version_container_images(**req_copy)
+                _service.get_offering_container_images(**req_copy)
 
 
 
@@ -3182,7 +2928,7 @@ class TestDeprecateVersion():
         deprecate_version()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/deprecate')
+        url = self.preprocess_url(_base_url + '/versions/testString/deprecate')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -3191,7 +2937,7 @@ class TestDeprecateVersion():
         version_loc_id = 'testString'
 
         # Invoke method
-        response = service.deprecate_version(
+        response = _service.deprecate_version(
             version_loc_id,
             headers={}
         )
@@ -3207,7 +2953,7 @@ class TestDeprecateVersion():
         test_deprecate_version_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/deprecate')
+        url = self.preprocess_url(_base_url + '/versions/testString/deprecate')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -3222,7 +2968,7 @@ class TestDeprecateVersion():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.deprecate_version(**req_copy)
+                _service.deprecate_version(**req_copy)
 
 
 
@@ -3246,7 +2992,7 @@ class TestAccountPublishVersion():
         account_publish_version()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/account-publish')
+        url = self.preprocess_url(_base_url + '/versions/testString/account-publish')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -3255,7 +3001,7 @@ class TestAccountPublishVersion():
         version_loc_id = 'testString'
 
         # Invoke method
-        response = service.account_publish_version(
+        response = _service.account_publish_version(
             version_loc_id,
             headers={}
         )
@@ -3271,7 +3017,7 @@ class TestAccountPublishVersion():
         test_account_publish_version_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/account-publish')
+        url = self.preprocess_url(_base_url + '/versions/testString/account-publish')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -3286,7 +3032,7 @@ class TestAccountPublishVersion():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.account_publish_version(**req_copy)
+                _service.account_publish_version(**req_copy)
 
 
 
@@ -3310,7 +3056,7 @@ class TestIbmPublishVersion():
         ibm_publish_version()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/ibm-publish')
+        url = self.preprocess_url(_base_url + '/versions/testString/ibm-publish')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -3319,7 +3065,7 @@ class TestIbmPublishVersion():
         version_loc_id = 'testString'
 
         # Invoke method
-        response = service.ibm_publish_version(
+        response = _service.ibm_publish_version(
             version_loc_id,
             headers={}
         )
@@ -3335,7 +3081,7 @@ class TestIbmPublishVersion():
         test_ibm_publish_version_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/ibm-publish')
+        url = self.preprocess_url(_base_url + '/versions/testString/ibm-publish')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -3350,7 +3096,7 @@ class TestIbmPublishVersion():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.ibm_publish_version(**req_copy)
+                _service.ibm_publish_version(**req_copy)
 
 
 
@@ -3374,7 +3120,7 @@ class TestPublicPublishVersion():
         public_publish_version()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/public-publish')
+        url = self.preprocess_url(_base_url + '/versions/testString/public-publish')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -3383,7 +3129,7 @@ class TestPublicPublishVersion():
         version_loc_id = 'testString'
 
         # Invoke method
-        response = service.public_publish_version(
+        response = _service.public_publish_version(
             version_loc_id,
             headers={}
         )
@@ -3399,7 +3145,7 @@ class TestPublicPublishVersion():
         test_public_publish_version_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/public-publish')
+        url = self.preprocess_url(_base_url + '/versions/testString/public-publish')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -3414,7 +3160,7 @@ class TestPublicPublishVersion():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.public_publish_version(**req_copy)
+                _service.public_publish_version(**req_copy)
 
 
 
@@ -3438,7 +3184,7 @@ class TestCommitVersion():
         commit_version()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/commit')
+        url = self.preprocess_url(_base_url + '/versions/testString/commit')
         responses.add(responses.POST,
                       url,
                       status=200)
@@ -3447,7 +3193,7 @@ class TestCommitVersion():
         version_loc_id = 'testString'
 
         # Invoke method
-        response = service.commit_version(
+        response = _service.commit_version(
             version_loc_id,
             headers={}
         )
@@ -3463,7 +3209,7 @@ class TestCommitVersion():
         test_commit_version_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/commit')
+        url = self.preprocess_url(_base_url + '/versions/testString/commit')
         responses.add(responses.POST,
                       url,
                       status=200)
@@ -3478,7 +3224,7 @@ class TestCommitVersion():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.commit_version(**req_copy)
+                _service.commit_version(**req_copy)
 
 
 
@@ -3502,7 +3248,7 @@ class TestCopyVersion():
         copy_version()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/copy')
+        url = self.preprocess_url(_base_url + '/versions/testString/copy')
         responses.add(responses.POST,
                       url,
                       status=200)
@@ -3511,10 +3257,10 @@ class TestCopyVersion():
         version_loc_id = 'testString'
         tags = ['testString']
         target_kinds = ['testString']
-        content = [38]
+        content = b'This is a mock byte array value.'
 
         # Invoke method
-        response = service.copy_version(
+        response = _service.copy_version(
             version_loc_id,
             tags=tags,
             target_kinds=target_kinds,
@@ -3529,7 +3275,7 @@ class TestCopyVersion():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['tags'] == ['testString']
         assert req_body['target_kinds'] == ['testString']
-        assert req_body['content'] == [38]
+        assert req_body['content'] == 'VGhpcyBpcyBhIG1vY2sgYnl0ZSBhcnJheSB2YWx1ZS4='
 
 
     @responses.activate
@@ -3538,7 +3284,7 @@ class TestCopyVersion():
         test_copy_version_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/copy')
+        url = self.preprocess_url(_base_url + '/versions/testString/copy')
         responses.add(responses.POST,
                       url,
                       status=200)
@@ -3547,7 +3293,7 @@ class TestCopyVersion():
         version_loc_id = 'testString'
 
         # Invoke method
-        response = service.copy_version(
+        response = _service.copy_version(
             version_loc_id,
             headers={}
         )
@@ -3563,7 +3309,7 @@ class TestCopyVersion():
         test_copy_version_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/copy')
+        url = self.preprocess_url(_base_url + '/versions/testString/copy')
         responses.add(responses.POST,
                       url,
                       status=200)
@@ -3578,13 +3324,13 @@ class TestCopyVersion():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.copy_version(**req_copy)
+                _service.copy_version(**req_copy)
 
 
 
-class TestGetVersionWorkingCopy():
+class TestGetOfferingWorkingCopy():
     """
-    Test Class for get_version_working_copy
+    Test Class for get_offering_working_copy
     """
 
     def preprocess_url(self, request_url: str):
@@ -3597,13 +3343,13 @@ class TestGetVersionWorkingCopy():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_get_version_working_copy_all_params(self):
+    def test_get_offering_working_copy_all_params(self):
         """
-        get_version_working_copy()
+        get_offering_working_copy()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/workingcopy')
-        mock_response = '{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}'
+        url = self.preprocess_url(_base_url + '/versions/testString/workingcopy')
+        mock_response = '{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -3614,7 +3360,7 @@ class TestGetVersionWorkingCopy():
         version_loc_id = 'testString'
 
         # Invoke method
-        response = service.get_version_working_copy(
+        response = _service.get_offering_working_copy(
             version_loc_id,
             headers={}
         )
@@ -3625,13 +3371,13 @@ class TestGetVersionWorkingCopy():
 
 
     @responses.activate
-    def test_get_version_working_copy_value_error(self):
+    def test_get_offering_working_copy_value_error(self):
         """
-        test_get_version_working_copy_value_error()
+        test_get_offering_working_copy_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/workingcopy')
-        mock_response = '{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}'
+        url = self.preprocess_url(_base_url + '/versions/testString/workingcopy')
+        mock_response = '{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -3648,120 +3394,7 @@ class TestGetVersionWorkingCopy():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_version_working_copy(**req_copy)
-
-
-
-class TestGetVersionUpdates():
-    """
-    Test Class for get_version_updates
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_get_version_updates_all_params(self):
-        """
-        get_version_updates()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/updates')
-        mock_response = '[{"version_locator": "version_locator", "version": "version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "package_version": "package_version", "can_update": true, "messages": {"anyKey": "anyValue"}}]'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        version_loc_id = 'testString'
-        cluster_id = 'testString'
-        region = 'testString'
-        resource_group_id = 'testString'
-        namespace = 'testString'
-
-        # Invoke method
-        response = service.get_version_updates(
-            version_loc_id,
-            cluster_id=cluster_id,
-            region=region,
-            resource_group_id=resource_group_id,
-            namespace=namespace,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'cluster_id={}'.format(cluster_id) in query_string
-        assert 'region={}'.format(region) in query_string
-        assert 'resource_group_id={}'.format(resource_group_id) in query_string
-        assert 'namespace={}'.format(namespace) in query_string
-
-
-    @responses.activate
-    def test_get_version_updates_required_params(self):
-        """
-        test_get_version_updates_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/updates')
-        mock_response = '[{"version_locator": "version_locator", "version": "version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "package_version": "package_version", "can_update": true, "messages": {"anyKey": "anyValue"}}]'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        version_loc_id = 'testString'
-
-        # Invoke method
-        response = service.get_version_updates(
-            version_loc_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-
-    @responses.activate
-    def test_get_version_updates_value_error(self):
-        """
-        test_get_version_updates_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/updates')
-        mock_response = '[{"version_locator": "version_locator", "version": "version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "package_version": "package_version", "can_update": true, "messages": {"anyKey": "anyValue"}}]'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        version_loc_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "version_loc_id": version_loc_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.get_version_updates(**req_copy)
+                _service.get_offering_working_copy(**req_copy)
 
 
 
@@ -3785,8 +3418,8 @@ class TestGetVersion():
         get_version()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/versions/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -3797,7 +3430,7 @@ class TestGetVersion():
         version_loc_id = 'testString'
 
         # Invoke method
-        response = service.get_version(
+        response = _service.get_version(
             version_loc_id,
             headers={}
         )
@@ -3813,8 +3446,8 @@ class TestGetVersion():
         test_get_version_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString')
-        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"anyKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"anyKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"anyKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"anyKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
+        url = self.preprocess_url(_base_url + '/versions/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": {"anyKey": "anyValue"}, "value_constraint": "value_constraint", "description": "description", "required": true, "options": [{"anyKey": "anyValue"}], "hidden": true}], "metadata": {"mapKey": {"anyKey": "anyValue"}}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}, "required_resources": [{"type": "mem", "value": {"anyKey": "anyValue"}}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "repo_info": {"token": "token", "type": "type"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -3831,7 +3464,7 @@ class TestGetVersion():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_version(**req_copy)
+                _service.get_version(**req_copy)
 
 
 
@@ -3855,7 +3488,7 @@ class TestDeleteVersion():
         delete_version()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString')
+        url = self.preprocess_url(_base_url + '/versions/testString')
         responses.add(responses.DELETE,
                       url,
                       status=200)
@@ -3864,7 +3497,7 @@ class TestDeleteVersion():
         version_loc_id = 'testString'
 
         # Invoke method
-        response = service.delete_version(
+        response = _service.delete_version(
             version_loc_id,
             headers={}
         )
@@ -3880,7 +3513,7 @@ class TestDeleteVersion():
         test_delete_version_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString')
+        url = self.preprocess_url(_base_url + '/versions/testString')
         responses.add(responses.DELETE,
                       url,
                       status=200)
@@ -3895,75 +3528,7 @@ class TestDeleteVersion():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.delete_version(**req_copy)
-
-
-
-class TestListVersions():
-    """
-    Test Class for list_versions
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_list_versions_all_params(self):
-        """
-        list_versions()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/versions')
-        responses.add(responses.GET,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        q = 'testString'
-
-        # Invoke method
-        response = service.list_versions(
-            q,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'q={}'.format(q) in query_string
-
-
-    @responses.activate
-    def test_list_versions_value_error(self):
-        """
-        test_list_versions_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/versions')
-        responses.add(responses.GET,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        q = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "q": q,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.list_versions(**req_copy)
+                _service.delete_version(**req_copy)
 
 
 
@@ -3973,250 +3538,9 @@ class TestListVersions():
 ##############################################################################
 
 ##############################################################################
-# Start of Service: Repo
-##############################################################################
-# region
-
-class TestGetRepos():
-    """
-    Test Class for get_repos
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_get_repos_all_params(self):
-        """
-        get_repos()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/repo/testString/entries')
-        mock_response = '{"chart": {"api_version": "api_version", "created": "2019-01-01T12:00:00", "description": "description", "deprecated": true, "digest": "digest", "home": "home", "icon": "icon", "keywords": ["keywords"], "maintainers": [{"email": "email", "name": "name"}], "name": "name", "tiller_version": "tiller_version", "urls": ["urls"], "sources": ["sources"], "version": "version", "appVersion": "app_version"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        type = 'testString'
-        repourl = 'testString'
-
-        # Invoke method
-        response = service.get_repos(
-            type,
-            repourl,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'repourl={}'.format(repourl) in query_string
-
-
-    @responses.activate
-    def test_get_repos_value_error(self):
-        """
-        test_get_repos_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/repo/testString/entries')
-        mock_response = '{"chart": {"api_version": "api_version", "created": "2019-01-01T12:00:00", "description": "description", "deprecated": true, "digest": "digest", "home": "home", "icon": "icon", "keywords": ["keywords"], "maintainers": [{"email": "email", "name": "name"}], "name": "name", "tiller_version": "tiller_version", "urls": ["urls"], "sources": ["sources"], "version": "version", "appVersion": "app_version"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        type = 'testString'
-        repourl = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "type": type,
-            "repourl": repourl,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.get_repos(**req_copy)
-
-
-
-class TestGetRepo():
-    """
-    Test Class for get_repo
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_get_repo_all_params(self):
-        """
-        get_repo()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/repo/testString')
-        mock_response = '{"chart": {"Chart.yaml": {"name": "name", "description": "description", "icon": "icon", "version": "version", "appVersion": "app_version"}, "sha": {"anyKey": "anyValue"}, "README.md": "readme_md", "values-metadata": {"anyKey": "anyValue"}, "license-metadata": {"anyKey": "anyValue"}}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        type = 'testString'
-        charturl = 'testString'
-
-        # Invoke method
-        response = service.get_repo(
-            type,
-            charturl,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'charturl={}'.format(charturl) in query_string
-
-
-    @responses.activate
-    def test_get_repo_value_error(self):
-        """
-        test_get_repo_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/repo/testString')
-        mock_response = '{"chart": {"Chart.yaml": {"name": "name", "description": "description", "icon": "icon", "version": "version", "appVersion": "app_version"}, "sha": {"anyKey": "anyValue"}, "README.md": "readme_md", "values-metadata": {"anyKey": "anyValue"}, "license-metadata": {"anyKey": "anyValue"}}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        type = 'testString'
-        charturl = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "type": type,
-            "charturl": charturl,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.get_repo(**req_copy)
-
-
-
-# endregion
-##############################################################################
-# End of Service: Repo
-##############################################################################
-
-##############################################################################
 # Start of Service: Deploy
 ##############################################################################
 # region
-
-class TestListClusters():
-    """
-    Test Class for list_clusters
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_list_clusters_all_params(self):
-        """
-        list_clusters()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/clusters')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "id": "id", "name": "name", "region": "region"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        limit = 38
-        offset = 38
-        type = 'testString'
-
-        # Invoke method
-        response = service.list_clusters(
-            limit=limit,
-            offset=offset,
-            type=type,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'limit={}'.format(limit) in query_string
-        assert 'offset={}'.format(offset) in query_string
-        assert 'type={}'.format(type) in query_string
-
-
-    @responses.activate
-    def test_list_clusters_required_params(self):
-        """
-        test_list_clusters_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/clusters')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "id": "id", "name": "name", "region": "region"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Invoke method
-        response = service.list_clusters()
-
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
 
 class TestGetCluster():
     """
@@ -4238,7 +3562,7 @@ class TestGetCluster():
         get_cluster()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/clusters/testString')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/clusters/testString')
         mock_response = '{"resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "id": "id", "name": "name", "region": "region"}'
         responses.add(responses.GET,
                       url,
@@ -4252,7 +3576,7 @@ class TestGetCluster():
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = service.get_cluster(
+        response = _service.get_cluster(
             cluster_id,
             region,
             x_auth_refresh_token,
@@ -4274,7 +3598,7 @@ class TestGetCluster():
         test_get_cluster_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/clusters/testString')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/clusters/testString')
         mock_response = '{"resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "id": "id", "name": "name", "region": "region"}'
         responses.add(responses.GET,
                       url,
@@ -4296,7 +3620,7 @@ class TestGetCluster():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_cluster(**req_copy)
+                _service.get_cluster(**req_copy)
 
 
 
@@ -4320,7 +3644,7 @@ class TestGetNamespaces():
         get_namespaces()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/clusters/testString/namespaces')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/clusters/testString/namespaces')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": ["resources"]}'
         responses.add(responses.GET,
                       url,
@@ -4332,11 +3656,11 @@ class TestGetNamespaces():
         cluster_id = 'testString'
         region = 'testString'
         x_auth_refresh_token = 'testString'
-        limit = 38
+        limit = 1000
         offset = 38
 
         # Invoke method
-        response = service.get_namespaces(
+        response = _service.get_namespaces(
             cluster_id,
             region,
             x_auth_refresh_token,
@@ -4362,7 +3686,7 @@ class TestGetNamespaces():
         test_get_namespaces_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/clusters/testString/namespaces')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/clusters/testString/namespaces')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": ["resources"]}'
         responses.add(responses.GET,
                       url,
@@ -4376,7 +3700,7 @@ class TestGetNamespaces():
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = service.get_namespaces(
+        response = _service.get_namespaces(
             cluster_id,
             region,
             x_auth_refresh_token,
@@ -4398,7 +3722,7 @@ class TestGetNamespaces():
         test_get_namespaces_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/clusters/testString/namespaces')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/clusters/testString/namespaces')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": ["resources"]}'
         responses.add(responses.GET,
                       url,
@@ -4420,13 +3744,13 @@ class TestGetNamespaces():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_namespaces(**req_copy)
+                _service.get_namespaces(**req_copy)
 
 
 
-class TestCreateOperator():
+class TestDeployOperators():
     """
-    Test Class for create_operator
+    Test Class for deploy_operators
     """
 
     def preprocess_url(self, request_url: str):
@@ -4439,12 +3763,12 @@ class TestCreateOperator():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_create_operator_all_params(self):
+    def test_deploy_operators_all_params(self):
         """
-        create_operator()
+        deploy_operators()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/olm/operator')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
         responses.add(responses.POST,
                       url,
@@ -4461,7 +3785,7 @@ class TestCreateOperator():
         version_locator_id = 'testString'
 
         # Invoke method
-        response = service.create_operator(
+        response = _service.deploy_operators(
             x_auth_refresh_token,
             cluster_id=cluster_id,
             region=region,
@@ -4484,12 +3808,12 @@ class TestCreateOperator():
 
 
     @responses.activate
-    def test_create_operator_required_params(self):
+    def test_deploy_operators_required_params(self):
         """
-        test_create_operator_required_params()
+        test_deploy_operators_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/olm/operator')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
         responses.add(responses.POST,
                       url,
@@ -4501,7 +3825,7 @@ class TestCreateOperator():
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = service.create_operator(
+        response = _service.deploy_operators(
             x_auth_refresh_token,
             headers={}
         )
@@ -4512,12 +3836,12 @@ class TestCreateOperator():
 
 
     @responses.activate
-    def test_create_operator_value_error(self):
+    def test_deploy_operators_value_error(self):
         """
-        test_create_operator_value_error()
+        test_deploy_operators_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/olm/operator')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
         responses.add(responses.POST,
                       url,
@@ -4535,7 +3859,7 @@ class TestCreateOperator():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_operator(**req_copy)
+                _service.deploy_operators(**req_copy)
 
 
 
@@ -4559,7 +3883,7 @@ class TestListOperators():
         list_operators()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/olm/operator')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
         responses.add(responses.GET,
                       url,
@@ -4574,7 +3898,7 @@ class TestListOperators():
         version_locator_id = 'testString'
 
         # Invoke method
-        response = service.list_operators(
+        response = _service.list_operators(
             x_auth_refresh_token,
             cluster_id,
             region,
@@ -4599,7 +3923,7 @@ class TestListOperators():
         test_list_operators_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/olm/operator')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
         responses.add(responses.GET,
                       url,
@@ -4623,13 +3947,13 @@ class TestListOperators():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.list_operators(**req_copy)
+                _service.list_operators(**req_copy)
 
 
 
-class TestReplaceOperator():
+class TestReplaceOperators():
     """
-    Test Class for replace_operator
+    Test Class for replace_operators
     """
 
     def preprocess_url(self, request_url: str):
@@ -4642,12 +3966,12 @@ class TestReplaceOperator():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_replace_operator_all_params(self):
+    def test_replace_operators_all_params(self):
         """
-        replace_operator()
+        replace_operators()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/olm/operator')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
         responses.add(responses.PUT,
                       url,
@@ -4664,7 +3988,7 @@ class TestReplaceOperator():
         version_locator_id = 'testString'
 
         # Invoke method
-        response = service.replace_operator(
+        response = _service.replace_operators(
             x_auth_refresh_token,
             cluster_id=cluster_id,
             region=region,
@@ -4687,12 +4011,12 @@ class TestReplaceOperator():
 
 
     @responses.activate
-    def test_replace_operator_required_params(self):
+    def test_replace_operators_required_params(self):
         """
-        test_replace_operator_required_params()
+        test_replace_operators_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/olm/operator')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
         responses.add(responses.PUT,
                       url,
@@ -4704,7 +4028,7 @@ class TestReplaceOperator():
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = service.replace_operator(
+        response = _service.replace_operators(
             x_auth_refresh_token,
             headers={}
         )
@@ -4715,12 +4039,12 @@ class TestReplaceOperator():
 
 
     @responses.activate
-    def test_replace_operator_value_error(self):
+    def test_replace_operators_value_error(self):
         """
-        test_replace_operator_value_error()
+        test_replace_operators_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/olm/operator')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
         responses.add(responses.PUT,
                       url,
@@ -4738,13 +4062,13 @@ class TestReplaceOperator():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.replace_operator(**req_copy)
+                _service.replace_operators(**req_copy)
 
 
 
-class TestDeleteOperator():
+class TestDeleteOperators():
     """
-    Test Class for delete_operator
+    Test Class for delete_operators
     """
 
     def preprocess_url(self, request_url: str):
@@ -4757,12 +4081,12 @@ class TestDeleteOperator():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_delete_operator_all_params(self):
+    def test_delete_operators_all_params(self):
         """
-        delete_operator()
+        delete_operators()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/olm/operator')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         responses.add(responses.DELETE,
                       url,
                       status=200)
@@ -4774,7 +4098,7 @@ class TestDeleteOperator():
         version_locator_id = 'testString'
 
         # Invoke method
-        response = service.delete_operator(
+        response = _service.delete_operators(
             x_auth_refresh_token,
             cluster_id,
             region,
@@ -4794,12 +4118,12 @@ class TestDeleteOperator():
 
 
     @responses.activate
-    def test_delete_operator_value_error(self):
+    def test_delete_operators_value_error(self):
         """
-        test_delete_operator_value_error()
+        test_delete_operators_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/kubernetes/olm/operator')
+        url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         responses.add(responses.DELETE,
                       url,
                       status=200)
@@ -4820,7 +4144,7 @@ class TestDeleteOperator():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.delete_operator(**req_copy)
+                _service.delete_operators(**req_copy)
 
 
 
@@ -4844,7 +4168,7 @@ class TestInstallVersion():
         install_version()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/install')
+        url = self.preprocess_url(_base_url + '/versions/testString/install')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -4862,7 +4186,7 @@ class TestInstallVersion():
         cluster_id = 'testString'
         region = 'testString'
         namespace = 'testString'
-        override_values = { 'foo': 'bar' }
+        override_values = {}
         entitlement_apikey = 'testString'
         schematics = deploy_request_body_schematics_model
         script = 'testString'
@@ -4875,7 +4199,7 @@ class TestInstallVersion():
         vcenter_datastore = 'testString'
 
         # Invoke method
-        response = service.install_version(
+        response = _service.install_version(
             version_loc_id,
             x_auth_refresh_token,
             cluster_id=cluster_id,
@@ -4903,7 +4227,7 @@ class TestInstallVersion():
         assert req_body['cluster_id'] == 'testString'
         assert req_body['region'] == 'testString'
         assert req_body['namespace'] == 'testString'
-        assert req_body['override_values'] == { 'foo': 'bar' }
+        assert req_body['override_values'] == {}
         assert req_body['entitlement_apikey'] == 'testString'
         assert req_body['schematics'] == deploy_request_body_schematics_model
         assert req_body['script'] == 'testString'
@@ -4922,7 +4246,7 @@ class TestInstallVersion():
         test_install_version_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/install')
+        url = self.preprocess_url(_base_url + '/versions/testString/install')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -4932,7 +4256,7 @@ class TestInstallVersion():
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = service.install_version(
+        response = _service.install_version(
             version_loc_id,
             x_auth_refresh_token,
             headers={}
@@ -4949,7 +4273,7 @@ class TestInstallVersion():
         test_install_version_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/install')
+        url = self.preprocess_url(_base_url + '/versions/testString/install')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -4966,7 +4290,7 @@ class TestInstallVersion():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.install_version(**req_copy)
+                _service.install_version(**req_copy)
 
 
 
@@ -4990,7 +4314,7 @@ class TestPreinstallVersion():
         preinstall_version()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/preinstall')
+        url = self.preprocess_url(_base_url + '/versions/testString/preinstall')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -5008,7 +4332,7 @@ class TestPreinstallVersion():
         cluster_id = 'testString'
         region = 'testString'
         namespace = 'testString'
-        override_values = { 'foo': 'bar' }
+        override_values = {}
         entitlement_apikey = 'testString'
         schematics = deploy_request_body_schematics_model
         script = 'testString'
@@ -5021,7 +4345,7 @@ class TestPreinstallVersion():
         vcenter_datastore = 'testString'
 
         # Invoke method
-        response = service.preinstall_version(
+        response = _service.preinstall_version(
             version_loc_id,
             x_auth_refresh_token,
             cluster_id=cluster_id,
@@ -5049,7 +4373,7 @@ class TestPreinstallVersion():
         assert req_body['cluster_id'] == 'testString'
         assert req_body['region'] == 'testString'
         assert req_body['namespace'] == 'testString'
-        assert req_body['override_values'] == { 'foo': 'bar' }
+        assert req_body['override_values'] == {}
         assert req_body['entitlement_apikey'] == 'testString'
         assert req_body['schematics'] == deploy_request_body_schematics_model
         assert req_body['script'] == 'testString'
@@ -5068,7 +4392,7 @@ class TestPreinstallVersion():
         test_preinstall_version_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/preinstall')
+        url = self.preprocess_url(_base_url + '/versions/testString/preinstall')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -5078,7 +4402,7 @@ class TestPreinstallVersion():
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = service.preinstall_version(
+        response = _service.preinstall_version(
             version_loc_id,
             x_auth_refresh_token,
             headers={}
@@ -5095,7 +4419,7 @@ class TestPreinstallVersion():
         test_preinstall_version_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/preinstall')
+        url = self.preprocess_url(_base_url + '/versions/testString/preinstall')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -5112,7 +4436,7 @@ class TestPreinstallVersion():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.preinstall_version(**req_copy)
+                _service.preinstall_version(**req_copy)
 
 
 
@@ -5136,8 +4460,8 @@ class TestGetPreinstall():
         get_preinstall()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/preinstall')
-        mock_response = '{"metadata": {"cluster_id": "cluster_id", "region": "region", "namespace": "namespace", "workspace_id": "workspace_id", "workspace_name": "workspace_name"}, "release": {"deployments": [{"anyKey": "anyValue"}], "replicasets": [{"anyKey": "anyValue"}], "statefulsets": [{"anyKey": "anyValue"}], "pods": [{"anyKey": "anyValue"}], "errors": [{"anyKey": "anyValue"}]}, "content_mgmt": {"pods": [{"anyKey": "anyValue"}], "errors": [{"anyKey": "anyValue"}]}}'
+        url = self.preprocess_url(_base_url + '/versions/testString/preinstall')
+        mock_response = '{"metadata": {"cluster_id": "cluster_id", "region": "region", "namespace": "namespace", "workspace_id": "workspace_id", "workspace_name": "workspace_name"}, "release": {"deployments": [{"mapKey": {"anyKey": "anyValue"}}], "replicasets": [{"mapKey": {"anyKey": "anyValue"}}], "statefulsets": [{"mapKey": {"anyKey": "anyValue"}}], "pods": [{"mapKey": {"anyKey": "anyValue"}}], "errors": [{"mapKey": "inner"}]}, "content_mgmt": {"pods": [{"mapKey": "inner"}], "errors": [{"mapKey": "inner"}]}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -5152,7 +4476,7 @@ class TestGetPreinstall():
         namespace = 'testString'
 
         # Invoke method
-        response = service.get_preinstall(
+        response = _service.get_preinstall(
             version_loc_id,
             x_auth_refresh_token,
             cluster_id=cluster_id,
@@ -5178,8 +4502,8 @@ class TestGetPreinstall():
         test_get_preinstall_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/preinstall')
-        mock_response = '{"metadata": {"cluster_id": "cluster_id", "region": "region", "namespace": "namespace", "workspace_id": "workspace_id", "workspace_name": "workspace_name"}, "release": {"deployments": [{"anyKey": "anyValue"}], "replicasets": [{"anyKey": "anyValue"}], "statefulsets": [{"anyKey": "anyValue"}], "pods": [{"anyKey": "anyValue"}], "errors": [{"anyKey": "anyValue"}]}, "content_mgmt": {"pods": [{"anyKey": "anyValue"}], "errors": [{"anyKey": "anyValue"}]}}'
+        url = self.preprocess_url(_base_url + '/versions/testString/preinstall')
+        mock_response = '{"metadata": {"cluster_id": "cluster_id", "region": "region", "namespace": "namespace", "workspace_id": "workspace_id", "workspace_name": "workspace_name"}, "release": {"deployments": [{"mapKey": {"anyKey": "anyValue"}}], "replicasets": [{"mapKey": {"anyKey": "anyValue"}}], "statefulsets": [{"mapKey": {"anyKey": "anyValue"}}], "pods": [{"mapKey": {"anyKey": "anyValue"}}], "errors": [{"mapKey": "inner"}]}, "content_mgmt": {"pods": [{"mapKey": "inner"}], "errors": [{"mapKey": "inner"}]}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -5191,7 +4515,7 @@ class TestGetPreinstall():
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = service.get_preinstall(
+        response = _service.get_preinstall(
             version_loc_id,
             x_auth_refresh_token,
             headers={}
@@ -5208,8 +4532,8 @@ class TestGetPreinstall():
         test_get_preinstall_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/preinstall')
-        mock_response = '{"metadata": {"cluster_id": "cluster_id", "region": "region", "namespace": "namespace", "workspace_id": "workspace_id", "workspace_name": "workspace_name"}, "release": {"deployments": [{"anyKey": "anyValue"}], "replicasets": [{"anyKey": "anyValue"}], "statefulsets": [{"anyKey": "anyValue"}], "pods": [{"anyKey": "anyValue"}], "errors": [{"anyKey": "anyValue"}]}, "content_mgmt": {"pods": [{"anyKey": "anyValue"}], "errors": [{"anyKey": "anyValue"}]}}'
+        url = self.preprocess_url(_base_url + '/versions/testString/preinstall')
+        mock_response = '{"metadata": {"cluster_id": "cluster_id", "region": "region", "namespace": "namespace", "workspace_id": "workspace_id", "workspace_name": "workspace_name"}, "release": {"deployments": [{"mapKey": {"anyKey": "anyValue"}}], "replicasets": [{"mapKey": {"anyKey": "anyValue"}}], "statefulsets": [{"mapKey": {"anyKey": "anyValue"}}], "pods": [{"mapKey": {"anyKey": "anyValue"}}], "errors": [{"mapKey": "inner"}]}, "content_mgmt": {"pods": [{"mapKey": "inner"}], "errors": [{"mapKey": "inner"}]}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -5228,13 +4552,13 @@ class TestGetPreinstall():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_preinstall(**req_copy)
+                _service.get_preinstall(**req_copy)
 
 
 
-class TestValidationInstall():
+class TestValidateInstall():
     """
-    Test Class for validation_install
+    Test Class for validate_install
     """
 
     def preprocess_url(self, request_url: str):
@@ -5247,12 +4571,12 @@ class TestValidationInstall():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_validation_install_all_params(self):
+    def test_validate_install_all_params(self):
         """
-        validation_install()
+        validate_install()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/validation/install')
+        url = self.preprocess_url(_base_url + '/versions/testString/validation/install')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -5270,7 +4594,7 @@ class TestValidationInstall():
         cluster_id = 'testString'
         region = 'testString'
         namespace = 'testString'
-        override_values = { 'foo': 'bar' }
+        override_values = {}
         entitlement_apikey = 'testString'
         schematics = deploy_request_body_schematics_model
         script = 'testString'
@@ -5283,7 +4607,7 @@ class TestValidationInstall():
         vcenter_datastore = 'testString'
 
         # Invoke method
-        response = service.validation_install(
+        response = _service.validate_install(
             version_loc_id,
             x_auth_refresh_token,
             cluster_id=cluster_id,
@@ -5311,7 +4635,7 @@ class TestValidationInstall():
         assert req_body['cluster_id'] == 'testString'
         assert req_body['region'] == 'testString'
         assert req_body['namespace'] == 'testString'
-        assert req_body['override_values'] == { 'foo': 'bar' }
+        assert req_body['override_values'] == {}
         assert req_body['entitlement_apikey'] == 'testString'
         assert req_body['schematics'] == deploy_request_body_schematics_model
         assert req_body['script'] == 'testString'
@@ -5325,12 +4649,12 @@ class TestValidationInstall():
 
 
     @responses.activate
-    def test_validation_install_required_params(self):
+    def test_validate_install_required_params(self):
         """
-        test_validation_install_required_params()
+        test_validate_install_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/validation/install')
+        url = self.preprocess_url(_base_url + '/versions/testString/validation/install')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -5340,7 +4664,7 @@ class TestValidationInstall():
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = service.validation_install(
+        response = _service.validate_install(
             version_loc_id,
             x_auth_refresh_token,
             headers={}
@@ -5352,12 +4676,12 @@ class TestValidationInstall():
 
 
     @responses.activate
-    def test_validation_install_value_error(self):
+    def test_validate_install_value_error(self):
         """
-        test_validation_install_value_error()
+        test_validate_install_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/validation/install')
+        url = self.preprocess_url(_base_url + '/versions/testString/validation/install')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -5374,7 +4698,7 @@ class TestValidationInstall():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.validation_install(**req_copy)
+                _service.validate_install(**req_copy)
 
 
 
@@ -5398,8 +4722,8 @@ class TestGetValidationStatus():
         get_validation_status()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/validation/install')
-        mock_response = '{"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}'
+        url = self.preprocess_url(_base_url + '/versions/testString/validation/install')
+        mock_response = '{"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -5411,7 +4735,7 @@ class TestGetValidationStatus():
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = service.get_validation_status(
+        response = _service.get_validation_status(
             version_loc_id,
             x_auth_refresh_token,
             headers={}
@@ -5428,8 +4752,8 @@ class TestGetValidationStatus():
         test_get_validation_status_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/validation/install')
-        mock_response = '{"validated": "2019-01-01T12:00:00", "requested": "2019-01-01T12:00:00", "state": "state", "last_operation": "last_operation", "target": {"anyKey": "anyValue"}}'
+        url = self.preprocess_url(_base_url + '/versions/testString/validation/install')
+        mock_response = '{"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": {"anyKey": "anyValue"}}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -5448,7 +4772,7 @@ class TestGetValidationStatus():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_validation_status(**req_copy)
+                _service.get_validation_status(**req_copy)
 
 
 
@@ -5472,7 +4796,7 @@ class TestGetOverrideValues():
         get_override_values()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/validation/overridevalues')
+        url = self.preprocess_url(_base_url + '/versions/testString/validation/overridevalues')
         mock_response = '{"mapKey": {"anyKey": "anyValue"}}'
         responses.add(responses.GET,
                       url,
@@ -5484,7 +4808,7 @@ class TestGetOverrideValues():
         version_loc_id = 'testString'
 
         # Invoke method
-        response = service.get_override_values(
+        response = _service.get_override_values(
             version_loc_id,
             headers={}
         )
@@ -5500,7 +4824,7 @@ class TestGetOverrideValues():
         test_get_override_values_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/validation/overridevalues')
+        url = self.preprocess_url(_base_url + '/versions/testString/validation/overridevalues')
         mock_response = '{"mapKey": {"anyKey": "anyValue"}}'
         responses.add(responses.GET,
                       url,
@@ -5518,936 +4842,13 @@ class TestGetOverrideValues():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_override_values(**req_copy)
+                _service.get_override_values(**req_copy)
 
-
-
-class TestGetSchematicsWorkspaces():
-    """
-    Test Class for get_schematics_workspaces
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_get_schematics_workspaces_all_params(self):
-        """
-        get_schematics_workspaces()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/workspaces')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "type": ["type"], "description": "description", "tags": ["tags"], "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "status": "status", "workspace_status": {"frozen": true, "locked": true}, "template_ref": "template_ref", "template_repo": {"repo_url": "repo_url", "chart_name": "chart_name", "script_name": "script_name", "uninstall_script_name": "uninstall_script_name", "folder_name": "folder_name", "repo_sha_value": "repo_sha_value"}, "template_data": [{"anyKey": "anyValue"}], "runtime_data": {"id": "id", "engine_name": "engine_name", "engine_version": "engine_version", "state_store_url": "state_store_url", "log_store_url": "log_store_url"}, "shared_data": {"anyKey": "anyValue"}, "catalog_ref": {"item_id": "item_id", "item_name": "item_name", "item_url": "item_url"}}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        version_loc_id = 'testString'
-        x_auth_refresh_token = 'testString'
-
-        # Invoke method
-        response = service.get_schematics_workspaces(
-            version_loc_id,
-            x_auth_refresh_token,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-
-    @responses.activate
-    def test_get_schematics_workspaces_value_error(self):
-        """
-        test_get_schematics_workspaces_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/workspaces')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "type": ["type"], "description": "description", "tags": ["tags"], "created_at": "2019-01-01T12:00:00", "created_by": "created_by", "status": "status", "workspace_status": {"frozen": true, "locked": true}, "template_ref": "template_ref", "template_repo": {"repo_url": "repo_url", "chart_name": "chart_name", "script_name": "script_name", "uninstall_script_name": "uninstall_script_name", "folder_name": "folder_name", "repo_sha_value": "repo_sha_value"}, "template_data": [{"anyKey": "anyValue"}], "runtime_data": {"id": "id", "engine_name": "engine_name", "engine_version": "engine_version", "state_store_url": "state_store_url", "log_store_url": "log_store_url"}, "shared_data": {"anyKey": "anyValue"}, "catalog_ref": {"item_id": "item_id", "item_name": "item_name", "item_url": "item_url"}}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        version_loc_id = 'testString'
-        x_auth_refresh_token = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "version_loc_id": version_loc_id,
-            "x_auth_refresh_token": x_auth_refresh_token,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.get_schematics_workspaces(**req_copy)
-
-
-
-class TestCanDeploySchematics():
-    """
-    Test Class for can_deploy_schematics
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_can_deploy_schematics_all_params(self):
-        """
-        can_deploy_schematics()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/candeploy')
-        mock_response = '{"pre_install": {"anyKey": "anyValue"}, "install": {"anyKey": "anyValue"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        version_loc_id = 'testString'
-        cluster_id = 'testString'
-        region = 'testString'
-        namespace = 'testString'
-        resource_group_id = 'testString'
-
-        # Invoke method
-        response = service.can_deploy_schematics(
-            version_loc_id,
-            cluster_id,
-            region,
-            namespace=namespace,
-            resource_group_id=resource_group_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'cluster_id={}'.format(cluster_id) in query_string
-        assert 'region={}'.format(region) in query_string
-        assert 'namespace={}'.format(namespace) in query_string
-        assert 'resource_group_id={}'.format(resource_group_id) in query_string
-
-
-    @responses.activate
-    def test_can_deploy_schematics_required_params(self):
-        """
-        test_can_deploy_schematics_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/candeploy')
-        mock_response = '{"pre_install": {"anyKey": "anyValue"}, "install": {"anyKey": "anyValue"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        version_loc_id = 'testString'
-        cluster_id = 'testString'
-        region = 'testString'
-
-        # Invoke method
-        response = service.can_deploy_schematics(
-            version_loc_id,
-            cluster_id,
-            region,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'cluster_id={}'.format(cluster_id) in query_string
-        assert 'region={}'.format(region) in query_string
-
-
-    @responses.activate
-    def test_can_deploy_schematics_value_error(self):
-        """
-        test_can_deploy_schematics_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/versions/testString/candeploy')
-        mock_response = '{"pre_install": {"anyKey": "anyValue"}, "install": {"anyKey": "anyValue"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        version_loc_id = 'testString'
-        cluster_id = 'testString'
-        region = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "version_loc_id": version_loc_id,
-            "cluster_id": cluster_id,
-            "region": region,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.can_deploy_schematics(**req_copy)
-
-
-
-class TestGetResourceGroups():
-    """
-    Test Class for get_resource_groups
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_get_resource_groups_all_params(self):
-        """
-        get_resource_groups()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/deploy/schematics/resourcegroups')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "crn": "crn", "account_id": "account_id", "state": "state", "default": false}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Invoke method
-        response = service.get_resource_groups()
-
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
 
 
 # endregion
 ##############################################################################
 # End of Service: Deploy
-##############################################################################
-
-##############################################################################
-# Start of Service: Licensing
-##############################################################################
-# region
-
-class TestGetLicenseProviders():
-    """
-    Test Class for get_license_providers
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_get_license_providers_all_params(self):
-        """
-        get_license_providers()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/license/license_providers')
-        mock_response = '{"total_results": 13, "total_pages": 11, "prev_url": "prev_url", "next_url": "next_url", "resources": [{"name": "name", "short_description": "short_description", "id": "id", "licence_type": "licence_type", "offering_type": "offering_type", "create_url": "create_url", "info_url": "info_url", "url": "url", "crn": "crn", "state": "state"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Invoke method
-        response = service.get_license_providers()
-
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-
-class TestListLicenseEntitlements():
-    """
-    Test Class for list_license_entitlements
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_list_license_entitlements_all_params(self):
-        """
-        list_license_entitlements()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/license/entitlements')
-        mock_response = '{"total_results": 13, "total_pages": 11, "prev_url": "prev_url", "next_url": "next_url", "resources": [{"name": "name", "id": "id", "crn": "crn", "url": "url", "offering_type": "offering_type", "state": "state", "effective_from": "effective_from", "effective_until": "effective_until", "account_id": "account_id", "owner_id": "owner_id", "version_id": "version_id", "license_offering_id": "license_offering_id", "license_id": "license_id", "license_owner_id": "license_owner_id", "license_type": "license_type", "license_provider_id": "license_provider_id", "license_provider_url": "license_provider_url", "license_product_id": "license_product_id", "namespace_repository": "namespace_repository", "apikey": "apikey", "create_by": "create_by", "update_by": "update_by", "create_at": "create_at", "updated_at": "updated_at", "history": [{"action": "action", "user": "user", "date": "date"}], "offering_list": [{"id": "id", "name": "name", "label": "label", "offering_icon_url": "offering_icon_url", "account_id": "account_id", "catalog_id": "catalog_id"}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        account_id = 'testString'
-        license_product_id = 'testString'
-        version_id = 'testString'
-        state = 'testString'
-
-        # Invoke method
-        response = service.list_license_entitlements(
-            account_id=account_id,
-            license_product_id=license_product_id,
-            version_id=version_id,
-            state=state,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'account_id={}'.format(account_id) in query_string
-        assert 'license_product_id={}'.format(license_product_id) in query_string
-        assert 'version_id={}'.format(version_id) in query_string
-        assert 'state={}'.format(state) in query_string
-
-
-    @responses.activate
-    def test_list_license_entitlements_required_params(self):
-        """
-        test_list_license_entitlements_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/license/entitlements')
-        mock_response = '{"total_results": 13, "total_pages": 11, "prev_url": "prev_url", "next_url": "next_url", "resources": [{"name": "name", "id": "id", "crn": "crn", "url": "url", "offering_type": "offering_type", "state": "state", "effective_from": "effective_from", "effective_until": "effective_until", "account_id": "account_id", "owner_id": "owner_id", "version_id": "version_id", "license_offering_id": "license_offering_id", "license_id": "license_id", "license_owner_id": "license_owner_id", "license_type": "license_type", "license_provider_id": "license_provider_id", "license_provider_url": "license_provider_url", "license_product_id": "license_product_id", "namespace_repository": "namespace_repository", "apikey": "apikey", "create_by": "create_by", "update_by": "update_by", "create_at": "create_at", "updated_at": "updated_at", "history": [{"action": "action", "user": "user", "date": "date"}], "offering_list": [{"id": "id", "name": "name", "label": "label", "offering_icon_url": "offering_icon_url", "account_id": "account_id", "catalog_id": "catalog_id"}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Invoke method
-        response = service.list_license_entitlements()
-
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-
-class TestCreateLicenseEntitlement():
-    """
-    Test Class for create_license_entitlement
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_create_license_entitlement_all_params(self):
-        """
-        create_license_entitlement()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/license/entitlements')
-        mock_response = '{"name": "name", "id": "id", "crn": "crn", "url": "url", "offering_type": "offering_type", "state": "state", "effective_from": "effective_from", "effective_until": "effective_until", "account_id": "account_id", "owner_id": "owner_id", "version_id": "version_id", "license_offering_id": "license_offering_id", "license_id": "license_id", "license_owner_id": "license_owner_id", "license_type": "license_type", "license_provider_id": "license_provider_id", "license_provider_url": "license_provider_url", "license_product_id": "license_product_id", "namespace_repository": "namespace_repository", "apikey": "apikey", "create_by": "create_by", "update_by": "update_by", "create_at": "create_at", "updated_at": "updated_at", "history": [{"action": "action", "user": "user", "date": "date"}], "offering_list": [{"id": "id", "name": "name", "label": "label", "offering_icon_url": "offering_icon_url", "account_id": "account_id", "catalog_id": "catalog_id"}]}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        name = 'testString'
-        effective_from = 'testString'
-        effective_until = 'testString'
-        version_id = 'testString'
-        license_id = 'testString'
-        license_owner_id = 'testString'
-        license_provider_id = 'testString'
-        license_product_id = 'testString'
-        account_id = 'testString'
-
-        # Invoke method
-        response = service.create_license_entitlement(
-            name=name,
-            effective_from=effective_from,
-            effective_until=effective_until,
-            version_id=version_id,
-            license_id=license_id,
-            license_owner_id=license_owner_id,
-            license_provider_id=license_provider_id,
-            license_product_id=license_product_id,
-            account_id=account_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'account_id={}'.format(account_id) in query_string
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'testString'
-        assert req_body['effective_from'] == 'testString'
-        assert req_body['effective_until'] == 'testString'
-        assert req_body['version_id'] == 'testString'
-        assert req_body['license_id'] == 'testString'
-        assert req_body['license_owner_id'] == 'testString'
-        assert req_body['license_provider_id'] == 'testString'
-        assert req_body['license_product_id'] == 'testString'
-
-
-    @responses.activate
-    def test_create_license_entitlement_required_params(self):
-        """
-        test_create_license_entitlement_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/license/entitlements')
-        mock_response = '{"name": "name", "id": "id", "crn": "crn", "url": "url", "offering_type": "offering_type", "state": "state", "effective_from": "effective_from", "effective_until": "effective_until", "account_id": "account_id", "owner_id": "owner_id", "version_id": "version_id", "license_offering_id": "license_offering_id", "license_id": "license_id", "license_owner_id": "license_owner_id", "license_type": "license_type", "license_provider_id": "license_provider_id", "license_provider_url": "license_provider_url", "license_product_id": "license_product_id", "namespace_repository": "namespace_repository", "apikey": "apikey", "create_by": "create_by", "update_by": "update_by", "create_at": "create_at", "updated_at": "updated_at", "history": [{"action": "action", "user": "user", "date": "date"}], "offering_list": [{"id": "id", "name": "name", "label": "label", "offering_icon_url": "offering_icon_url", "account_id": "account_id", "catalog_id": "catalog_id"}]}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Invoke method
-        response = service.create_license_entitlement()
-
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-
-class TestGetLicenseEntitlements():
-    """
-    Test Class for get_license_entitlements
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_get_license_entitlements_all_params(self):
-        """
-        get_license_entitlements()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/license/entitlements/productID/testString')
-        mock_response = '{"total_results": 13, "total_pages": 11, "prev_url": "prev_url", "next_url": "next_url", "resources": [{"name": "name", "id": "id", "crn": "crn", "url": "url", "offering_type": "offering_type", "state": "state", "effective_from": "effective_from", "effective_until": "effective_until", "account_id": "account_id", "owner_id": "owner_id", "version_id": "version_id", "license_offering_id": "license_offering_id", "license_id": "license_id", "license_owner_id": "license_owner_id", "license_type": "license_type", "license_provider_id": "license_provider_id", "license_provider_url": "license_provider_url", "license_product_id": "license_product_id", "namespace_repository": "namespace_repository", "apikey": "apikey", "create_by": "create_by", "update_by": "update_by", "create_at": "create_at", "updated_at": "updated_at", "history": [{"action": "action", "user": "user", "date": "date"}], "offering_list": [{"id": "id", "name": "name", "label": "label", "offering_icon_url": "offering_icon_url", "account_id": "account_id", "catalog_id": "catalog_id"}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        license_product_id = 'testString'
-        account_id = 'testString'
-        version_id = 'testString'
-
-        # Invoke method
-        response = service.get_license_entitlements(
-            license_product_id,
-            account_id=account_id,
-            version_id=version_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'account_id={}'.format(account_id) in query_string
-        assert 'version_id={}'.format(version_id) in query_string
-
-
-    @responses.activate
-    def test_get_license_entitlements_required_params(self):
-        """
-        test_get_license_entitlements_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/license/entitlements/productID/testString')
-        mock_response = '{"total_results": 13, "total_pages": 11, "prev_url": "prev_url", "next_url": "next_url", "resources": [{"name": "name", "id": "id", "crn": "crn", "url": "url", "offering_type": "offering_type", "state": "state", "effective_from": "effective_from", "effective_until": "effective_until", "account_id": "account_id", "owner_id": "owner_id", "version_id": "version_id", "license_offering_id": "license_offering_id", "license_id": "license_id", "license_owner_id": "license_owner_id", "license_type": "license_type", "license_provider_id": "license_provider_id", "license_provider_url": "license_provider_url", "license_product_id": "license_product_id", "namespace_repository": "namespace_repository", "apikey": "apikey", "create_by": "create_by", "update_by": "update_by", "create_at": "create_at", "updated_at": "updated_at", "history": [{"action": "action", "user": "user", "date": "date"}], "offering_list": [{"id": "id", "name": "name", "label": "label", "offering_icon_url": "offering_icon_url", "account_id": "account_id", "catalog_id": "catalog_id"}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        license_product_id = 'testString'
-
-        # Invoke method
-        response = service.get_license_entitlements(
-            license_product_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-
-    @responses.activate
-    def test_get_license_entitlements_value_error(self):
-        """
-        test_get_license_entitlements_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/license/entitlements/productID/testString')
-        mock_response = '{"total_results": 13, "total_pages": 11, "prev_url": "prev_url", "next_url": "next_url", "resources": [{"name": "name", "id": "id", "crn": "crn", "url": "url", "offering_type": "offering_type", "state": "state", "effective_from": "effective_from", "effective_until": "effective_until", "account_id": "account_id", "owner_id": "owner_id", "version_id": "version_id", "license_offering_id": "license_offering_id", "license_id": "license_id", "license_owner_id": "license_owner_id", "license_type": "license_type", "license_provider_id": "license_provider_id", "license_provider_url": "license_provider_url", "license_product_id": "license_product_id", "namespace_repository": "namespace_repository", "apikey": "apikey", "create_by": "create_by", "update_by": "update_by", "create_at": "create_at", "updated_at": "updated_at", "history": [{"action": "action", "user": "user", "date": "date"}], "offering_list": [{"id": "id", "name": "name", "label": "label", "offering_icon_url": "offering_icon_url", "account_id": "account_id", "catalog_id": "catalog_id"}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        license_product_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "license_product_id": license_product_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.get_license_entitlements(**req_copy)
-
-
-
-class TestDeleteLicenseEntitlement():
-    """
-    Test Class for delete_license_entitlement
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_delete_license_entitlement_all_params(self):
-        """
-        delete_license_entitlement()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/license/entitlements/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        entitlement_id = 'testString'
-        account_id = 'testString'
-
-        # Invoke method
-        response = service.delete_license_entitlement(
-            entitlement_id,
-            account_id=account_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'account_id={}'.format(account_id) in query_string
-
-
-    @responses.activate
-    def test_delete_license_entitlement_required_params(self):
-        """
-        test_delete_license_entitlement_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/license/entitlements/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        entitlement_id = 'testString'
-
-        # Invoke method
-        response = service.delete_license_entitlement(
-            entitlement_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-
-    @responses.activate
-    def test_delete_license_entitlement_value_error(self):
-        """
-        test_delete_license_entitlement_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/license/entitlements/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        entitlement_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "entitlement_id": entitlement_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.delete_license_entitlement(**req_copy)
-
-
-
-class TestGetLicenses():
-    """
-    Test Class for get_licenses
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_get_licenses_all_params(self):
-        """
-        get_licenses()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/license/licenses')
-        mock_response = '{"total_results": 13, "total_pages": 11, "prev_url": "prev_url", "next_url": "next_url", "resources": [{"name": "name", "offering_type": "offering_type", "seats_allowed": "seats_allowed", "seats_used": "seats_used", "owner_id": "owner_id", "license_offering_id": "license_offering_id", "license_id": "license_id", "license_owner_id": "license_owner_id", "license_type": "license_type", "license_provider_id": "license_provider_id", "license_product_id": "license_product_id", "license_provider_url": "license_provider_url", "effective_from": "effective_from", "effective_until": "effective_until", "internal": true, "offering_list": [{"id": "id", "name": "name", "label": "label", "offering_icon_url": "offering_icon_url", "account_id": "account_id", "catalog_id": "catalog_id"}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        license_provider_id = 'testString'
-        account_id = 'testString'
-        name = 'testString'
-        license_type = 'testString'
-        license_product_id = 'testString'
-
-        # Invoke method
-        response = service.get_licenses(
-            license_provider_id,
-            account_id=account_id,
-            name=name,
-            license_type=license_type,
-            license_product_id=license_product_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'license_provider_id={}'.format(license_provider_id) in query_string
-        assert 'account_id={}'.format(account_id) in query_string
-        assert 'name={}'.format(name) in query_string
-        assert 'license_type={}'.format(license_type) in query_string
-        assert 'license_product_id={}'.format(license_product_id) in query_string
-
-
-    @responses.activate
-    def test_get_licenses_required_params(self):
-        """
-        test_get_licenses_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/license/licenses')
-        mock_response = '{"total_results": 13, "total_pages": 11, "prev_url": "prev_url", "next_url": "next_url", "resources": [{"name": "name", "offering_type": "offering_type", "seats_allowed": "seats_allowed", "seats_used": "seats_used", "owner_id": "owner_id", "license_offering_id": "license_offering_id", "license_id": "license_id", "license_owner_id": "license_owner_id", "license_type": "license_type", "license_provider_id": "license_provider_id", "license_product_id": "license_product_id", "license_provider_url": "license_provider_url", "effective_from": "effective_from", "effective_until": "effective_until", "internal": true, "offering_list": [{"id": "id", "name": "name", "label": "label", "offering_icon_url": "offering_icon_url", "account_id": "account_id", "catalog_id": "catalog_id"}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        license_provider_id = 'testString'
-
-        # Invoke method
-        response = service.get_licenses(
-            license_provider_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'license_provider_id={}'.format(license_provider_id) in query_string
-
-
-    @responses.activate
-    def test_get_licenses_value_error(self):
-        """
-        test_get_licenses_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/license/licenses')
-        mock_response = '{"total_results": 13, "total_pages": 11, "prev_url": "prev_url", "next_url": "next_url", "resources": [{"name": "name", "offering_type": "offering_type", "seats_allowed": "seats_allowed", "seats_used": "seats_used", "owner_id": "owner_id", "license_offering_id": "license_offering_id", "license_id": "license_id", "license_owner_id": "license_owner_id", "license_type": "license_type", "license_provider_id": "license_provider_id", "license_product_id": "license_product_id", "license_provider_url": "license_provider_url", "effective_from": "effective_from", "effective_until": "effective_until", "internal": true, "offering_list": [{"id": "id", "name": "name", "label": "label", "offering_icon_url": "offering_icon_url", "account_id": "account_id", "catalog_id": "catalog_id"}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        license_provider_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "license_provider_id": license_provider_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.get_licenses(**req_copy)
-
-
-
-# endregion
-##############################################################################
-# End of Service: Licensing
-##############################################################################
-
-##############################################################################
-# Start of Service: CrossAccountSearch
-##############################################################################
-# region
-
-class TestSearchLicenseVersions():
-    """
-    Test Class for search_license_versions
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_search_license_versions_all_params(self):
-        """
-        search_license_versions()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/search/license/versions')
-        responses.add(responses.GET,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        q = 'testString'
-
-        # Invoke method
-        response = service.search_license_versions(
-            q,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'q={}'.format(q) in query_string
-
-
-    @responses.activate
-    def test_search_license_versions_value_error(self):
-        """
-        test_search_license_versions_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/search/license/versions')
-        responses.add(responses.GET,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        q = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "q": q,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.search_license_versions(**req_copy)
-
-
-
-class TestSearchLicenseOfferings():
-    """
-    Test Class for search_license_offerings
-    """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
-    @responses.activate
-    def test_search_license_offerings_all_params(self):
-        """
-        search_license_offerings()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/search/license/offerings')
-        responses.add(responses.GET,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        q = 'testString'
-
-        # Invoke method
-        response = service.search_license_offerings(
-            q,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'q={}'.format(q) in query_string
-
-
-    @responses.activate
-    def test_search_license_offerings_value_error(self):
-        """
-        test_search_license_offerings_value_error()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/search/license/offerings')
-        responses.add(responses.GET,
-                      url,
-                      status=200)
-
-        # Set up parameter values
-        q = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "q": q,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                service.search_license_offerings(**req_copy)
-
-
-
-# endregion
-##############################################################################
-# End of Service: CrossAccountSearch
 ##############################################################################
 
 ##############################################################################
@@ -6475,8 +4876,8 @@ class TestSearchObjects():
         search_objects()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/objects')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "order": [5], "fields": {"catalog_id": "catalog_id", "name": "name", "parent_id": "parent_id", "label": "label", "updated": "2019-01-01T12:00:00", "kind": "kind", "parent_name": "parent_name"}}]}'
+        url = self.preprocess_url(_base_url + '/objects')
+        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": {"anyKey": "anyValue"}}}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -6485,16 +4886,18 @@ class TestSearchObjects():
 
         # Set up parameter values
         query = 'testString'
-        limit = 38
+        limit = 1000
         offset = 38
         collapse = True
+        digest = True
 
         # Invoke method
-        response = service.search_objects(
+        response = _service.search_objects(
             query,
             limit=limit,
             offset=offset,
             collapse=collapse,
+            digest=digest,
             headers={}
         )
 
@@ -6508,6 +4911,7 @@ class TestSearchObjects():
         assert 'limit={}'.format(limit) in query_string
         assert 'offset={}'.format(offset) in query_string
         assert 'collapse={}'.format('true' if collapse else 'false') in query_string
+        assert 'digest={}'.format('true' if digest else 'false') in query_string
 
 
     @responses.activate
@@ -6516,8 +4920,8 @@ class TestSearchObjects():
         test_search_objects_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/objects')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "order": [5], "fields": {"catalog_id": "catalog_id", "name": "name", "parent_id": "parent_id", "label": "label", "updated": "2019-01-01T12:00:00", "kind": "kind", "parent_name": "parent_name"}}]}'
+        url = self.preprocess_url(_base_url + '/objects')
+        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": {"anyKey": "anyValue"}}}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -6528,7 +4932,7 @@ class TestSearchObjects():
         query = 'testString'
 
         # Invoke method
-        response = service.search_objects(
+        response = _service.search_objects(
             query,
             headers={}
         )
@@ -6548,8 +4952,8 @@ class TestSearchObjects():
         test_search_objects_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/objects')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "order": [5], "fields": {"catalog_id": "catalog_id", "name": "name", "parent_id": "parent_id", "label": "label", "updated": "2019-01-01T12:00:00", "kind": "kind", "parent_name": "parent_name"}}]}'
+        url = self.preprocess_url(_base_url + '/objects')
+        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": {"anyKey": "anyValue"}}}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -6566,7 +4970,7 @@ class TestSearchObjects():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.search_objects(**req_copy)
+                _service.search_objects(**req_copy)
 
 
 
@@ -6590,8 +4994,8 @@ class TestListObjects():
         list_objects()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/objects')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "allow_list": ["allow_list"], "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"anyKey": "anyValue"}}]}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects')
+        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": {"anyKey": "anyValue"}}}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -6600,13 +5004,13 @@ class TestListObjects():
 
         # Set up parameter values
         catalog_identifier = 'testString'
-        limit = 38
+        limit = 1000
         offset = 38
         name = 'testString'
         sort = 'testString'
 
         # Invoke method
-        response = service.list_objects(
+        response = _service.list_objects(
             catalog_identifier,
             limit=limit,
             offset=offset,
@@ -6633,8 +5037,8 @@ class TestListObjects():
         test_list_objects_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/objects')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "allow_list": ["allow_list"], "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"anyKey": "anyValue"}}]}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects')
+        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": {"anyKey": "anyValue"}}}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -6645,7 +5049,7 @@ class TestListObjects():
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = service.list_objects(
+        response = _service.list_objects(
             catalog_identifier,
             headers={}
         )
@@ -6661,8 +5065,8 @@ class TestListObjects():
         test_list_objects_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/objects')
-        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "allow_list": ["allow_list"], "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"anyKey": "anyValue"}}]}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects')
+        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": {"anyKey": "anyValue"}}}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -6679,7 +5083,7 @@ class TestListObjects():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.list_objects(**req_copy)
+                _service.list_objects(**req_copy)
 
 
 
@@ -6703,8 +5107,8 @@ class TestCreateObject():
         create_object()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/objects')
-        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "allow_list": ["allow_list"], "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"anyKey": "anyValue"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects')
+        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": {"anyKey": "anyValue"}}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -6722,9 +5126,9 @@ class TestCreateObject():
         # Construct a dict representation of a State model
         state_model = {}
         state_model['current'] = 'testString'
-        state_model['current_entered'] = '2020-01-28T18:40:40.123456Z'
+        state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
-        state_model['pending_requested'] = '2020-01-28T18:40:40.123456Z'
+        state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
         # Set up parameter values
@@ -6735,12 +5139,11 @@ class TestCreateObject():
         crn = 'testString'
         url = 'testString'
         parent_id = 'testString'
-        allow_list = ['testString']
         label_i18n = 'testString'
         label = 'testString'
         tags = ['testString']
-        created = datetime.fromtimestamp(1580236840.123456, timezone.utc)
-        updated = datetime.fromtimestamp(1580236840.123456, timezone.utc)
+        created = string_to_datetime('2019-01-01T12:00:00.000Z')
+        updated = string_to_datetime('2019-01-01T12:00:00.000Z')
         short_description = 'testString'
         short_description_i18n = 'testString'
         kind = 'testString'
@@ -6748,10 +5151,10 @@ class TestCreateObject():
         state = state_model
         catalog_id = 'testString'
         catalog_name = 'testString'
-        data = { 'foo': 'bar' }
+        data = {}
 
         # Invoke method
-        response = service.create_object(
+        response = _service.create_object(
             catalog_identifier,
             id=id,
             name=name,
@@ -6759,7 +5162,6 @@ class TestCreateObject():
             crn=crn,
             url=url,
             parent_id=parent_id,
-            allow_list=allow_list,
             label_i18n=label_i18n,
             label=label,
             tags=tags,
@@ -6787,12 +5189,11 @@ class TestCreateObject():
         assert req_body['crn'] == 'testString'
         assert req_body['url'] == 'testString'
         assert req_body['parent_id'] == 'testString'
-        assert req_body['allow_list'] == ['testString']
         assert req_body['label_i18n'] == 'testString'
         assert req_body['label'] == 'testString'
         assert req_body['tags'] == ['testString']
-        assert req_body['created'] == '2020-01-28T18:40:40.123456Z'
-        assert req_body['updated'] == '2020-01-28T18:40:40.123456Z'
+        assert req_body['created'] == "2019-01-01T12:00:00Z"
+        assert req_body['updated'] == "2019-01-01T12:00:00Z"
         assert req_body['short_description'] == 'testString'
         assert req_body['short_description_i18n'] == 'testString'
         assert req_body['kind'] == 'testString'
@@ -6800,7 +5201,7 @@ class TestCreateObject():
         assert req_body['state'] == state_model
         assert req_body['catalog_id'] == 'testString'
         assert req_body['catalog_name'] == 'testString'
-        assert req_body['data'] == { 'foo': 'bar' }
+        assert req_body['data'] == {}
 
 
     @responses.activate
@@ -6809,8 +5210,8 @@ class TestCreateObject():
         test_create_object_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/objects')
-        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "allow_list": ["allow_list"], "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"anyKey": "anyValue"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects')
+        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": {"anyKey": "anyValue"}}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -6821,7 +5222,7 @@ class TestCreateObject():
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = service.create_object(
+        response = _service.create_object(
             catalog_identifier,
             headers={}
         )
@@ -6837,8 +5238,8 @@ class TestCreateObject():
         test_create_object_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/objects')
-        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "allow_list": ["allow_list"], "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"anyKey": "anyValue"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects')
+        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": {"anyKey": "anyValue"}}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -6855,7 +5256,7 @@ class TestCreateObject():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_object(**req_copy)
+                _service.create_object(**req_copy)
 
 
 
@@ -6879,8 +5280,8 @@ class TestGetObject():
         get_object()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/objects/testString')
-        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "allow_list": ["allow_list"], "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"anyKey": "anyValue"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString')
+        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": {"anyKey": "anyValue"}}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -6892,7 +5293,7 @@ class TestGetObject():
         object_identifier = 'testString'
 
         # Invoke method
-        response = service.get_object(
+        response = _service.get_object(
             catalog_identifier,
             object_identifier,
             headers={}
@@ -6909,8 +5310,8 @@ class TestGetObject():
         test_get_object_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/objects/testString')
-        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "allow_list": ["allow_list"], "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"anyKey": "anyValue"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString')
+        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": {"anyKey": "anyValue"}}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -6929,7 +5330,7 @@ class TestGetObject():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_object(**req_copy)
+                _service.get_object(**req_copy)
 
 
 
@@ -6953,8 +5354,8 @@ class TestReplaceObject():
         replace_object()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/objects/testString')
-        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "allow_list": ["allow_list"], "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"anyKey": "anyValue"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString')
+        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": {"anyKey": "anyValue"}}}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -6972,9 +5373,9 @@ class TestReplaceObject():
         # Construct a dict representation of a State model
         state_model = {}
         state_model['current'] = 'testString'
-        state_model['current_entered'] = '2020-01-28T18:40:40.123456Z'
+        state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
-        state_model['pending_requested'] = '2020-01-28T18:40:40.123456Z'
+        state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
         # Set up parameter values
@@ -6986,12 +5387,11 @@ class TestReplaceObject():
         crn = 'testString'
         url = 'testString'
         parent_id = 'testString'
-        allow_list = ['testString']
         label_i18n = 'testString'
         label = 'testString'
         tags = ['testString']
-        created = datetime.fromtimestamp(1580236840.123456, timezone.utc)
-        updated = datetime.fromtimestamp(1580236840.123456, timezone.utc)
+        created = string_to_datetime('2019-01-01T12:00:00.000Z')
+        updated = string_to_datetime('2019-01-01T12:00:00.000Z')
         short_description = 'testString'
         short_description_i18n = 'testString'
         kind = 'testString'
@@ -6999,10 +5399,10 @@ class TestReplaceObject():
         state = state_model
         catalog_id = 'testString'
         catalog_name = 'testString'
-        data = { 'foo': 'bar' }
+        data = {}
 
         # Invoke method
-        response = service.replace_object(
+        response = _service.replace_object(
             catalog_identifier,
             object_identifier,
             id=id,
@@ -7011,7 +5411,6 @@ class TestReplaceObject():
             crn=crn,
             url=url,
             parent_id=parent_id,
-            allow_list=allow_list,
             label_i18n=label_i18n,
             label=label,
             tags=tags,
@@ -7039,12 +5438,11 @@ class TestReplaceObject():
         assert req_body['crn'] == 'testString'
         assert req_body['url'] == 'testString'
         assert req_body['parent_id'] == 'testString'
-        assert req_body['allow_list'] == ['testString']
         assert req_body['label_i18n'] == 'testString'
         assert req_body['label'] == 'testString'
         assert req_body['tags'] == ['testString']
-        assert req_body['created'] == '2020-01-28T18:40:40.123456Z'
-        assert req_body['updated'] == '2020-01-28T18:40:40.123456Z'
+        assert req_body['created'] == "2019-01-01T12:00:00Z"
+        assert req_body['updated'] == "2019-01-01T12:00:00Z"
         assert req_body['short_description'] == 'testString'
         assert req_body['short_description_i18n'] == 'testString'
         assert req_body['kind'] == 'testString'
@@ -7052,7 +5450,7 @@ class TestReplaceObject():
         assert req_body['state'] == state_model
         assert req_body['catalog_id'] == 'testString'
         assert req_body['catalog_name'] == 'testString'
-        assert req_body['data'] == { 'foo': 'bar' }
+        assert req_body['data'] == {}
 
 
     @responses.activate
@@ -7061,8 +5459,8 @@ class TestReplaceObject():
         test_replace_object_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/objects/testString')
-        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "allow_list": ["allow_list"], "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"anyKey": "anyValue"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString')
+        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": {"anyKey": "anyValue"}}}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -7074,7 +5472,7 @@ class TestReplaceObject():
         object_identifier = 'testString'
 
         # Invoke method
-        response = service.replace_object(
+        response = _service.replace_object(
             catalog_identifier,
             object_identifier,
             headers={}
@@ -7091,8 +5489,8 @@ class TestReplaceObject():
         test_replace_object_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/objects/testString')
-        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "allow_list": ["allow_list"], "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00", "updated": "2019-01-01T12:00:00", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00", "pending": "pending", "pending_requested": "2019-01-01T12:00:00", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"anyKey": "anyValue"}}'
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString')
+        mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": {"anyKey": "anyValue"}}}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -7111,7 +5509,7 @@ class TestReplaceObject():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.replace_object(**req_copy)
+                _service.replace_object(**req_copy)
 
 
 
@@ -7135,7 +5533,7 @@ class TestDeleteObject():
         delete_object()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/objects/testString')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString')
         responses.add(responses.DELETE,
                       url,
                       status=200)
@@ -7145,7 +5543,7 @@ class TestDeleteObject():
         object_identifier = 'testString'
 
         # Invoke method
-        response = service.delete_object(
+        response = _service.delete_object(
             catalog_identifier,
             object_identifier,
             headers={}
@@ -7162,7 +5560,7 @@ class TestDeleteObject():
         test_delete_object_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/objects/testString')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString')
         responses.add(responses.DELETE,
                       url,
                       status=200)
@@ -7179,7 +5577,7 @@ class TestDeleteObject():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.delete_object(**req_copy)
+                _service.delete_object(**req_copy)
 
 
 
@@ -7203,42 +5601,12 @@ class TestGetObjectAudit():
         get_object_audit()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/audit')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/audit')
+        mock_response = '{"list": [{"id": "id", "created": "2019-01-01T12:00:00.000Z", "change_type": "change_type", "target_type": "target_type", "target_id": "target_id", "who_delegate_email": "who_delegate_email", "message": "message"}]}'
         responses.add(responses.GET,
                       url,
-                      status=200)
-
-        # Set up parameter values
-        catalog_identifier = 'testString'
-        object_identifier = 'testString'
-        id = 'testString'
-
-        # Invoke method
-        response = service.get_object_audit(
-            catalog_identifier,
-            object_identifier,
-            id=id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'id={}'.format(id) in query_string
-
-
-    @responses.activate
-    def test_get_object_audit_required_params(self):
-        """
-        test_get_object_audit_required_params()
-        """
-        # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/audit')
-        responses.add(responses.GET,
-                      url,
+                      body=mock_response,
+                      content_type='application/json',
                       status=200)
 
         # Set up parameter values
@@ -7246,7 +5614,7 @@ class TestGetObjectAudit():
         object_identifier = 'testString'
 
         # Invoke method
-        response = service.get_object_audit(
+        response = _service.get_object_audit(
             catalog_identifier,
             object_identifier,
             headers={}
@@ -7263,9 +5631,12 @@ class TestGetObjectAudit():
         test_get_object_audit_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/catalogs/testString/offerings/testString/audit')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/audit')
+        mock_response = '{"list": [{"id": "id", "created": "2019-01-01T12:00:00.000Z", "change_type": "change_type", "target_type": "target_type", "target_id": "target_id", "who_delegate_email": "who_delegate_email", "message": "message"}]}'
         responses.add(responses.GET,
                       url,
+                      body=mock_response,
+                      content_type='application/json',
                       status=200)
 
         # Set up parameter values
@@ -7280,7 +5651,776 @@ class TestGetObjectAudit():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_object_audit(**req_copy)
+                _service.get_object_audit(**req_copy)
+
+
+
+class TestAccountPublishObject():
+    """
+    Test Class for account_publish_object
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_account_publish_object_all_params(self):
+        """
+        account_publish_object()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/account-publish')
+        responses.add(responses.POST,
+                      url,
+                      status=202)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+
+        # Invoke method
+        response = _service.account_publish_object(
+            catalog_identifier,
+            object_identifier,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+
+
+    @responses.activate
+    def test_account_publish_object_value_error(self):
+        """
+        test_account_publish_object_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/account-publish')
+        responses.add(responses.POST,
+                      url,
+                      status=202)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "catalog_identifier": catalog_identifier,
+            "object_identifier": object_identifier,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.account_publish_object(**req_copy)
+
+
+
+class TestSharedPublishObject():
+    """
+    Test Class for shared_publish_object
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_shared_publish_object_all_params(self):
+        """
+        shared_publish_object()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/shared-publish')
+        responses.add(responses.POST,
+                      url,
+                      status=202)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+
+        # Invoke method
+        response = _service.shared_publish_object(
+            catalog_identifier,
+            object_identifier,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+
+
+    @responses.activate
+    def test_shared_publish_object_value_error(self):
+        """
+        test_shared_publish_object_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/shared-publish')
+        responses.add(responses.POST,
+                      url,
+                      status=202)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "catalog_identifier": catalog_identifier,
+            "object_identifier": object_identifier,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.shared_publish_object(**req_copy)
+
+
+
+class TestIbmPublishObject():
+    """
+    Test Class for ibm_publish_object
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_ibm_publish_object_all_params(self):
+        """
+        ibm_publish_object()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/ibm-publish')
+        responses.add(responses.POST,
+                      url,
+                      status=202)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+
+        # Invoke method
+        response = _service.ibm_publish_object(
+            catalog_identifier,
+            object_identifier,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+
+
+    @responses.activate
+    def test_ibm_publish_object_value_error(self):
+        """
+        test_ibm_publish_object_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/ibm-publish')
+        responses.add(responses.POST,
+                      url,
+                      status=202)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "catalog_identifier": catalog_identifier,
+            "object_identifier": object_identifier,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.ibm_publish_object(**req_copy)
+
+
+
+class TestPublicPublishObject():
+    """
+    Test Class for public_publish_object
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_public_publish_object_all_params(self):
+        """
+        public_publish_object()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/public-publish')
+        responses.add(responses.POST,
+                      url,
+                      status=202)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+
+        # Invoke method
+        response = _service.public_publish_object(
+            catalog_identifier,
+            object_identifier,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+
+
+    @responses.activate
+    def test_public_publish_object_value_error(self):
+        """
+        test_public_publish_object_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/public-publish')
+        responses.add(responses.POST,
+                      url,
+                      status=202)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "catalog_identifier": catalog_identifier,
+            "object_identifier": object_identifier,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.public_publish_object(**req_copy)
+
+
+
+class TestCreateObjectAccess():
+    """
+    Test Class for create_object_access
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_create_object_access_all_params(self):
+        """
+        create_object_access()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access/testString')
+        responses.add(responses.POST,
+                      url,
+                      status=201)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+        account_identifier = 'testString'
+
+        # Invoke method
+        response = _service.create_object_access(
+            catalog_identifier,
+            object_identifier,
+            account_identifier,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+
+
+    @responses.activate
+    def test_create_object_access_value_error(self):
+        """
+        test_create_object_access_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access/testString')
+        responses.add(responses.POST,
+                      url,
+                      status=201)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+        account_identifier = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "catalog_identifier": catalog_identifier,
+            "object_identifier": object_identifier,
+            "account_identifier": account_identifier,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_object_access(**req_copy)
+
+
+
+class TestGetObjectAccess():
+    """
+    Test Class for get_object_access
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_get_object_access_all_params(self):
+        """
+        get_object_access()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access/testString')
+        mock_response = '{"id": "id", "account": "account", "catalog_id": "catalog_id", "target_id": "target_id", "create": "2019-01-01T12:00:00.000Z"}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+        account_identifier = 'testString'
+
+        # Invoke method
+        response = _service.get_object_access(
+            catalog_identifier,
+            object_identifier,
+            account_identifier,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+
+    @responses.activate
+    def test_get_object_access_value_error(self):
+        """
+        test_get_object_access_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access/testString')
+        mock_response = '{"id": "id", "account": "account", "catalog_id": "catalog_id", "target_id": "target_id", "create": "2019-01-01T12:00:00.000Z"}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+        account_identifier = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "catalog_identifier": catalog_identifier,
+            "object_identifier": object_identifier,
+            "account_identifier": account_identifier,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_object_access(**req_copy)
+
+
+
+class TestDeleteObjectAccess():
+    """
+    Test Class for delete_object_access
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_delete_object_access_all_params(self):
+        """
+        delete_object_access()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access/testString')
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+        account_identifier = 'testString'
+
+        # Invoke method
+        response = _service.delete_object_access(
+            catalog_identifier,
+            object_identifier,
+            account_identifier,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+
+    @responses.activate
+    def test_delete_object_access_value_error(self):
+        """
+        test_delete_object_access_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access/testString')
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+        account_identifier = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "catalog_identifier": catalog_identifier,
+            "object_identifier": object_identifier,
+            "account_identifier": account_identifier,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_object_access(**req_copy)
+
+
+
+class TestGetObjectAccessList():
+    """
+    Test Class for get_object_access_list
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_get_object_access_list_all_params(self):
+        """
+        get_object_access_list()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access')
+        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "account": "account", "catalog_id": "catalog_id", "target_id": "target_id", "create": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+        limit = 1000
+        offset = 38
+
+        # Invoke method
+        response = _service.get_object_access_list(
+            catalog_identifier,
+            object_identifier,
+            limit=limit,
+            offset=offset,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'limit={}'.format(limit) in query_string
+        assert 'offset={}'.format(offset) in query_string
+
+
+    @responses.activate
+    def test_get_object_access_list_required_params(self):
+        """
+        test_get_object_access_list_required_params()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access')
+        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "account": "account", "catalog_id": "catalog_id", "target_id": "target_id", "create": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+
+        # Invoke method
+        response = _service.get_object_access_list(
+            catalog_identifier,
+            object_identifier,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+
+    @responses.activate
+    def test_get_object_access_list_value_error(self):
+        """
+        test_get_object_access_list_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access')
+        mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "account": "account", "catalog_id": "catalog_id", "target_id": "target_id", "create": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "catalog_identifier": catalog_identifier,
+            "object_identifier": object_identifier,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_object_access_list(**req_copy)
+
+
+
+class TestDeleteObjectAccessList():
+    """
+    Test Class for delete_object_access_list
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_delete_object_access_list_all_params(self):
+        """
+        delete_object_access_list()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access')
+        mock_response = '{"errors": {"mapKey": "inner"}}'
+        responses.add(responses.DELETE,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+        accounts = ['testString']
+
+        # Invoke method
+        response = _service.delete_object_access_list(
+            catalog_identifier,
+            object_identifier,
+            accounts,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body == accounts
+
+
+    @responses.activate
+    def test_delete_object_access_list_value_error(self):
+        """
+        test_delete_object_access_list_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access')
+        mock_response = '{"errors": {"mapKey": "inner"}}'
+        responses.add(responses.DELETE,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+        accounts = ['testString']
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "catalog_identifier": catalog_identifier,
+            "object_identifier": object_identifier,
+            "accounts": accounts,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_object_access_list(**req_copy)
+
+
+
+class TestAddObjectAccessList():
+    """
+    Test Class for add_object_access_list
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_add_object_access_list_all_params(self):
+        """
+        add_object_access_list()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access')
+        mock_response = '{"errors": {"mapKey": "inner"}}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+        accounts = ['testString']
+
+        # Invoke method
+        response = _service.add_object_access_list(
+            catalog_identifier,
+            object_identifier,
+            accounts,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body == accounts
+
+
+    @responses.activate
+    def test_add_object_access_list_value_error(self):
+        """
+        test_add_object_access_list_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access')
+        mock_response = '{"errors": {"mapKey": "inner"}}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        catalog_identifier = 'testString'
+        object_identifier = 'testString'
+        accounts = ['testString']
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "catalog_identifier": catalog_identifier,
+            "object_identifier": object_identifier,
+            "accounts": accounts,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.add_object_access_list(**req_copy)
 
 
 
@@ -7289,12 +6429,525 @@ class TestGetObjectAudit():
 # End of Service: Objects
 ##############################################################################
 
+##############################################################################
+# Start of Service: Instances
+##############################################################################
+# region
+
+class TestCreateOfferingInstance():
+    """
+    Test Class for create_offering_instance
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_create_offering_instance_all_params(self):
+        """
+        create_offering_instance()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/instances/offerings')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
+
+        # Construct a dict representation of a OfferingInstanceLastOperation model
+        offering_instance_last_operation_model = {}
+        offering_instance_last_operation_model['operation'] = 'testString'
+        offering_instance_last_operation_model['state'] = 'testString'
+        offering_instance_last_operation_model['message'] = 'testString'
+        offering_instance_last_operation_model['transaction_id'] = 'testString'
+        offering_instance_last_operation_model['updated'] = 'testString'
+
+        # Set up parameter values
+        x_auth_refresh_token = 'testString'
+        id = 'testString'
+        rev = 'testString'
+        url = 'testString'
+        crn = 'testString'
+        label = 'testString'
+        catalog_id = 'testString'
+        offering_id = 'testString'
+        kind_format = 'testString'
+        version = 'testString'
+        cluster_id = 'testString'
+        cluster_region = 'testString'
+        cluster_namespaces = ['testString']
+        cluster_all_namespaces = True
+        schematics_workspace_id = 'testString'
+        resource_group_id = 'testString'
+        install_plan = 'testString'
+        channel = 'testString'
+        metadata = {}
+        last_operation = offering_instance_last_operation_model
+
+        # Invoke method
+        response = _service.create_offering_instance(
+            x_auth_refresh_token,
+            id=id,
+            rev=rev,
+            url=url,
+            crn=crn,
+            label=label,
+            catalog_id=catalog_id,
+            offering_id=offering_id,
+            kind_format=kind_format,
+            version=version,
+            cluster_id=cluster_id,
+            cluster_region=cluster_region,
+            cluster_namespaces=cluster_namespaces,
+            cluster_all_namespaces=cluster_all_namespaces,
+            schematics_workspace_id=schematics_workspace_id,
+            resource_group_id=resource_group_id,
+            install_plan=install_plan,
+            channel=channel,
+            metadata=metadata,
+            last_operation=last_operation,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['id'] == 'testString'
+        assert req_body['_rev'] == 'testString'
+        assert req_body['url'] == 'testString'
+        assert req_body['crn'] == 'testString'
+        assert req_body['label'] == 'testString'
+        assert req_body['catalog_id'] == 'testString'
+        assert req_body['offering_id'] == 'testString'
+        assert req_body['kind_format'] == 'testString'
+        assert req_body['version'] == 'testString'
+        assert req_body['cluster_id'] == 'testString'
+        assert req_body['cluster_region'] == 'testString'
+        assert req_body['cluster_namespaces'] == ['testString']
+        assert req_body['cluster_all_namespaces'] == True
+        assert req_body['schematics_workspace_id'] == 'testString'
+        assert req_body['resource_group_id'] == 'testString'
+        assert req_body['install_plan'] == 'testString'
+        assert req_body['channel'] == 'testString'
+        assert req_body['metadata'] == {}
+        assert req_body['last_operation'] == offering_instance_last_operation_model
+
+
+    @responses.activate
+    def test_create_offering_instance_required_params(self):
+        """
+        test_create_offering_instance_required_params()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/instances/offerings')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
+
+        # Set up parameter values
+        x_auth_refresh_token = 'testString'
+
+        # Invoke method
+        response = _service.create_offering_instance(
+            x_auth_refresh_token,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+
+
+    @responses.activate
+    def test_create_offering_instance_value_error(self):
+        """
+        test_create_offering_instance_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/instances/offerings')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
+
+        # Set up parameter values
+        x_auth_refresh_token = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "x_auth_refresh_token": x_auth_refresh_token,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_offering_instance(**req_copy)
+
+
+
+class TestGetOfferingInstance():
+    """
+    Test Class for get_offering_instance
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_get_offering_instance_all_params(self):
+        """
+        get_offering_instance()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/instances/offerings/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_identifier = 'testString'
+
+        # Invoke method
+        response = _service.get_offering_instance(
+            instance_identifier,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+
+    @responses.activate
+    def test_get_offering_instance_value_error(self):
+        """
+        test_get_offering_instance_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/instances/offerings/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_identifier = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_identifier": instance_identifier,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_offering_instance(**req_copy)
+
+
+
+class TestPutOfferingInstance():
+    """
+    Test Class for put_offering_instance
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_put_offering_instance_all_params(self):
+        """
+        put_offering_instance()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/instances/offerings/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Construct a dict representation of a OfferingInstanceLastOperation model
+        offering_instance_last_operation_model = {}
+        offering_instance_last_operation_model['operation'] = 'testString'
+        offering_instance_last_operation_model['state'] = 'testString'
+        offering_instance_last_operation_model['message'] = 'testString'
+        offering_instance_last_operation_model['transaction_id'] = 'testString'
+        offering_instance_last_operation_model['updated'] = 'testString'
+
+        # Set up parameter values
+        instance_identifier = 'testString'
+        x_auth_refresh_token = 'testString'
+        id = 'testString'
+        rev = 'testString'
+        url = 'testString'
+        crn = 'testString'
+        label = 'testString'
+        catalog_id = 'testString'
+        offering_id = 'testString'
+        kind_format = 'testString'
+        version = 'testString'
+        cluster_id = 'testString'
+        cluster_region = 'testString'
+        cluster_namespaces = ['testString']
+        cluster_all_namespaces = True
+        schematics_workspace_id = 'testString'
+        resource_group_id = 'testString'
+        install_plan = 'testString'
+        channel = 'testString'
+        metadata = {}
+        last_operation = offering_instance_last_operation_model
+
+        # Invoke method
+        response = _service.put_offering_instance(
+            instance_identifier,
+            x_auth_refresh_token,
+            id=id,
+            rev=rev,
+            url=url,
+            crn=crn,
+            label=label,
+            catalog_id=catalog_id,
+            offering_id=offering_id,
+            kind_format=kind_format,
+            version=version,
+            cluster_id=cluster_id,
+            cluster_region=cluster_region,
+            cluster_namespaces=cluster_namespaces,
+            cluster_all_namespaces=cluster_all_namespaces,
+            schematics_workspace_id=schematics_workspace_id,
+            resource_group_id=resource_group_id,
+            install_plan=install_plan,
+            channel=channel,
+            metadata=metadata,
+            last_operation=last_operation,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['id'] == 'testString'
+        assert req_body['_rev'] == 'testString'
+        assert req_body['url'] == 'testString'
+        assert req_body['crn'] == 'testString'
+        assert req_body['label'] == 'testString'
+        assert req_body['catalog_id'] == 'testString'
+        assert req_body['offering_id'] == 'testString'
+        assert req_body['kind_format'] == 'testString'
+        assert req_body['version'] == 'testString'
+        assert req_body['cluster_id'] == 'testString'
+        assert req_body['cluster_region'] == 'testString'
+        assert req_body['cluster_namespaces'] == ['testString']
+        assert req_body['cluster_all_namespaces'] == True
+        assert req_body['schematics_workspace_id'] == 'testString'
+        assert req_body['resource_group_id'] == 'testString'
+        assert req_body['install_plan'] == 'testString'
+        assert req_body['channel'] == 'testString'
+        assert req_body['metadata'] == {}
+        assert req_body['last_operation'] == offering_instance_last_operation_model
+
+
+    @responses.activate
+    def test_put_offering_instance_required_params(self):
+        """
+        test_put_offering_instance_required_params()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/instances/offerings/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_identifier = 'testString'
+        x_auth_refresh_token = 'testString'
+
+        # Invoke method
+        response = _service.put_offering_instance(
+            instance_identifier,
+            x_auth_refresh_token,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+
+    @responses.activate
+    def test_put_offering_instance_value_error(self):
+        """
+        test_put_offering_instance_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/instances/offerings/testString')
+        mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": {"anyKey": "anyValue"}}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_identifier = 'testString'
+        x_auth_refresh_token = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_identifier": instance_identifier,
+            "x_auth_refresh_token": x_auth_refresh_token,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.put_offering_instance(**req_copy)
+
+
+
+class TestDeleteOfferingInstance():
+    """
+    Test Class for delete_offering_instance
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+
+    @responses.activate
+    def test_delete_offering_instance_all_params(self):
+        """
+        delete_offering_instance()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/instances/offerings/testString')
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
+
+        # Set up parameter values
+        instance_identifier = 'testString'
+        x_auth_refresh_token = 'testString'
+
+        # Invoke method
+        response = _service.delete_offering_instance(
+            instance_identifier,
+            x_auth_refresh_token,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+
+    @responses.activate
+    def test_delete_offering_instance_value_error(self):
+        """
+        test_delete_offering_instance_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/instances/offerings/testString')
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
+
+        # Set up parameter values
+        instance_identifier = 'testString'
+        x_auth_refresh_token = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_identifier": instance_identifier,
+            "x_auth_refresh_token": x_auth_refresh_token,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_offering_instance(**req_copy)
+
+
+
+# endregion
+##############################################################################
+# End of Service: Instances
+##############################################################################
+
 
 ##############################################################################
 # Start of Model Tests
 ##############################################################################
 # region
-class TestAccount():
+class AccessListBulkResponseUnitTests():
+    """
+    Test Class for AccessListBulkResponse
+    """
+
+    def test_access_list_bulk_response_serialization(self):
+        """
+        Test serialization/deserialization for AccessListBulkResponse
+        """
+
+        # Construct a json representation of a AccessListBulkResponse model
+        access_list_bulk_response_model_json = {}
+        access_list_bulk_response_model_json['errors'] = {}
+
+        # Construct a model instance of AccessListBulkResponse by calling from_dict on the json representation
+        access_list_bulk_response_model = AccessListBulkResponse.from_dict(access_list_bulk_response_model_json)
+        assert access_list_bulk_response_model != False
+
+        # Construct a model instance of AccessListBulkResponse by calling from_dict on the json representation
+        access_list_bulk_response_model_dict = AccessListBulkResponse.from_dict(access_list_bulk_response_model_json).__dict__
+        access_list_bulk_response_model2 = AccessListBulkResponse(**access_list_bulk_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert access_list_bulk_response_model == access_list_bulk_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        access_list_bulk_response_model_json2 = access_list_bulk_response_model.to_dict()
+        assert access_list_bulk_response_model_json2 == access_list_bulk_response_model_json
+
+class AccountUnitTests():
     """
     Test Class for Account
     """
@@ -7325,6 +6978,7 @@ class TestAccount():
         # Construct a json representation of a Account model
         account_model_json = {}
         account_model_json['id'] = 'testString'
+        account_model_json['hide_IBM_cloud_catalog'] = True
         account_model_json['account_filters'] = filters_model
 
         # Construct a model instance of Account by calling from_dict on the json representation
@@ -7342,55 +6996,7 @@ class TestAccount():
         account_model_json2 = account_model.to_dict()
         assert account_model_json2 == account_model_json
 
-class TestAccountGroup():
-    """
-    Test Class for AccountGroup
-    """
-
-    def test_account_group_serialization(self):
-        """
-        Test serialization/deserialization for AccountGroup
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        filter_terms_model = {} # FilterTerms
-        filter_terms_model['filter_terms'] = ['testString']
-
-        category_filter_model = {} # CategoryFilter
-        category_filter_model['include'] = True
-        category_filter_model['filter'] = filter_terms_model
-
-        id_filter_model = {} # IDFilter
-        id_filter_model['include'] = filter_terms_model
-        id_filter_model['exclude'] = filter_terms_model
-
-        filters_model = {} # Filters
-        filters_model['include_all'] = True
-        filters_model['category_filters'] = {}
-        filters_model['id_filters'] = id_filter_model
-
-        # Construct a json representation of a AccountGroup model
-        account_group_model_json = {}
-        account_group_model_json['id'] = 'testString'
-        account_group_model_json['account_filters'] = filters_model
-
-        # Construct a model instance of AccountGroup by calling from_dict on the json representation
-        account_group_model = AccountGroup.from_dict(account_group_model_json)
-        assert account_group_model != False
-
-        # Construct a model instance of AccountGroup by calling from_dict on the json representation
-        account_group_model_dict = AccountGroup.from_dict(account_group_model_json).__dict__
-        account_group_model2 = AccountGroup(**account_group_model_dict)
-
-        # Verify the model instances are equivalent
-        assert account_group_model == account_group_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        account_group_model_json2 = account_group_model.to_dict()
-        assert account_group_model_json2 == account_group_model_json
-
-class TestAccumulatedFilters():
+class AccumulatedFiltersUnitTests():
     """
     Test Class for AccumulatedFilters
     """
@@ -7446,7 +7052,7 @@ class TestAccumulatedFilters():
         accumulated_filters_model_json2 = accumulated_filters_model.to_dict()
         assert accumulated_filters_model_json2 == accumulated_filters_model_json
 
-class TestAccumulatedFiltersCatalogFiltersItem():
+class AccumulatedFiltersCatalogFiltersItemUnitTests():
     """
     Test Class for AccumulatedFiltersCatalogFiltersItem
     """
@@ -7498,7 +7104,7 @@ class TestAccumulatedFiltersCatalogFiltersItem():
         accumulated_filters_catalog_filters_item_model_json2 = accumulated_filters_catalog_filters_item_model.to_dict()
         assert accumulated_filters_catalog_filters_item_model_json2 == accumulated_filters_catalog_filters_item_model_json
 
-class TestAccumulatedFiltersCatalogFiltersItemCatalog():
+class AccumulatedFiltersCatalogFiltersItemCatalogUnitTests():
     """
     Test Class for AccumulatedFiltersCatalogFiltersItemCatalog
     """
@@ -7528,7 +7134,7 @@ class TestAccumulatedFiltersCatalogFiltersItemCatalog():
         accumulated_filters_catalog_filters_item_catalog_model_json2 = accumulated_filters_catalog_filters_item_catalog_model.to_dict()
         assert accumulated_filters_catalog_filters_item_catalog_model_json2 == accumulated_filters_catalog_filters_item_catalog_model_json
 
-class TestApprovalResult():
+class ApprovalResultUnitTests():
     """
     Test Class for ApprovalResult
     """
@@ -7560,7 +7166,82 @@ class TestApprovalResult():
         approval_result_model_json2 = approval_result_model.to_dict()
         assert approval_result_model_json2 == approval_result_model_json
 
-class TestCatalog():
+class AuditLogUnitTests():
+    """
+    Test Class for AuditLog
+    """
+
+    def test_audit_log_serialization(self):
+        """
+        Test serialization/deserialization for AuditLog
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        audit_record_model = {} # AuditRecord
+        audit_record_model['id'] = 'testString'
+        audit_record_model['created'] = "2019-01-01T12:00:00Z"
+        audit_record_model['change_type'] = 'testString'
+        audit_record_model['target_type'] = 'testString'
+        audit_record_model['target_id'] = 'testString'
+        audit_record_model['who_delegate_email'] = 'testString'
+        audit_record_model['message'] = 'testString'
+
+        # Construct a json representation of a AuditLog model
+        audit_log_model_json = {}
+        audit_log_model_json['list'] = [audit_record_model]
+
+        # Construct a model instance of AuditLog by calling from_dict on the json representation
+        audit_log_model = AuditLog.from_dict(audit_log_model_json)
+        assert audit_log_model != False
+
+        # Construct a model instance of AuditLog by calling from_dict on the json representation
+        audit_log_model_dict = AuditLog.from_dict(audit_log_model_json).__dict__
+        audit_log_model2 = AuditLog(**audit_log_model_dict)
+
+        # Verify the model instances are equivalent
+        assert audit_log_model == audit_log_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        audit_log_model_json2 = audit_log_model.to_dict()
+        assert audit_log_model_json2 == audit_log_model_json
+
+class AuditRecordUnitTests():
+    """
+    Test Class for AuditRecord
+    """
+
+    def test_audit_record_serialization(self):
+        """
+        Test serialization/deserialization for AuditRecord
+        """
+
+        # Construct a json representation of a AuditRecord model
+        audit_record_model_json = {}
+        audit_record_model_json['id'] = 'testString'
+        audit_record_model_json['created'] = "2019-01-01T12:00:00Z"
+        audit_record_model_json['change_type'] = 'testString'
+        audit_record_model_json['target_type'] = 'testString'
+        audit_record_model_json['target_id'] = 'testString'
+        audit_record_model_json['who_delegate_email'] = 'testString'
+        audit_record_model_json['message'] = 'testString'
+
+        # Construct a model instance of AuditRecord by calling from_dict on the json representation
+        audit_record_model = AuditRecord.from_dict(audit_record_model_json)
+        assert audit_record_model != False
+
+        # Construct a model instance of AuditRecord by calling from_dict on the json representation
+        audit_record_model_dict = AuditRecord.from_dict(audit_record_model_json).__dict__
+        audit_record_model2 = AuditRecord(**audit_record_model_dict)
+
+        # Verify the model instances are equivalent
+        assert audit_record_model == audit_record_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        audit_record_model_json2 = audit_record_model.to_dict()
+        assert audit_record_model_json2 == audit_record_model_json
+
+class CatalogUnitTests():
     """
     Test Class for Catalog
     """
@@ -7604,11 +7285,11 @@ class TestCatalog():
         syndication_history_model = {} # SyndicationHistory
         syndication_history_model['namespaces'] = ['testString']
         syndication_history_model['clusters'] = [syndication_cluster_model]
-        syndication_history_model['last_run'] = '2020-01-28T18:40:40.123456Z'
+        syndication_history_model['last_run'] = "2019-01-01T12:00:00Z"
 
         syndication_authorization_model = {} # SyndicationAuthorization
         syndication_authorization_model['token'] = 'testString'
-        syndication_authorization_model['last_run'] = '2020-01-28T18:40:40.123456Z'
+        syndication_authorization_model['last_run'] = "2019-01-01T12:00:00Z"
 
         syndication_resource_model = {} # SyndicationResource
         syndication_resource_model['remove_related_components'] = True
@@ -7629,12 +7310,13 @@ class TestCatalog():
         catalog_model_json['offerings_url'] = 'testString'
         catalog_model_json['features'] = [feature_model]
         catalog_model_json['disabled'] = True
-        catalog_model_json['created'] = '2020-01-28T18:40:40.123456Z'
-        catalog_model_json['updated'] = '2020-01-28T18:40:40.123456Z'
+        catalog_model_json['created'] = "2019-01-01T12:00:00Z"
+        catalog_model_json['updated'] = "2019-01-01T12:00:00Z"
         catalog_model_json['resource_group_id'] = 'testString'
         catalog_model_json['owning_account'] = 'testString'
         catalog_model_json['catalog_filters'] = filters_model
         catalog_model_json['syndication_settings'] = syndication_resource_model
+        catalog_model_json['kind'] = 'testString'
 
         # Construct a model instance of Catalog by calling from_dict on the json representation
         catalog_model = Catalog.from_dict(catalog_model_json)
@@ -7651,7 +7333,70 @@ class TestCatalog():
         catalog_model_json2 = catalog_model.to_dict()
         assert catalog_model_json2 == catalog_model_json
 
-class TestCatalogSearchResult():
+class CatalogObjectUnitTests():
+    """
+    Test Class for CatalogObject
+    """
+
+    def test_catalog_object_serialization(self):
+        """
+        Test serialization/deserialization for CatalogObject
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        publish_object_model = {} # PublishObject
+        publish_object_model['permit_ibm_public_publish'] = True
+        publish_object_model['ibm_approved'] = True
+        publish_object_model['public_approved'] = True
+        publish_object_model['portal_approval_record'] = 'testString'
+        publish_object_model['portal_url'] = 'testString'
+
+        state_model = {} # State
+        state_model['current'] = 'testString'
+        state_model['current_entered'] = "2019-01-01T12:00:00Z"
+        state_model['pending'] = 'testString'
+        state_model['pending_requested'] = "2019-01-01T12:00:00Z"
+        state_model['previous'] = 'testString'
+
+        # Construct a json representation of a CatalogObject model
+        catalog_object_model_json = {}
+        catalog_object_model_json['id'] = 'testString'
+        catalog_object_model_json['name'] = 'testString'
+        catalog_object_model_json['_rev'] = 'testString'
+        catalog_object_model_json['crn'] = 'testString'
+        catalog_object_model_json['url'] = 'testString'
+        catalog_object_model_json['parent_id'] = 'testString'
+        catalog_object_model_json['label_i18n'] = 'testString'
+        catalog_object_model_json['label'] = 'testString'
+        catalog_object_model_json['tags'] = ['testString']
+        catalog_object_model_json['created'] = "2019-01-01T12:00:00Z"
+        catalog_object_model_json['updated'] = "2019-01-01T12:00:00Z"
+        catalog_object_model_json['short_description'] = 'testString'
+        catalog_object_model_json['short_description_i18n'] = 'testString'
+        catalog_object_model_json['kind'] = 'testString'
+        catalog_object_model_json['publish'] = publish_object_model
+        catalog_object_model_json['state'] = state_model
+        catalog_object_model_json['catalog_id'] = 'testString'
+        catalog_object_model_json['catalog_name'] = 'testString'
+        catalog_object_model_json['data'] = {}
+
+        # Construct a model instance of CatalogObject by calling from_dict on the json representation
+        catalog_object_model = CatalogObject.from_dict(catalog_object_model_json)
+        assert catalog_object_model != False
+
+        # Construct a model instance of CatalogObject by calling from_dict on the json representation
+        catalog_object_model_dict = CatalogObject.from_dict(catalog_object_model_json).__dict__
+        catalog_object_model2 = CatalogObject(**catalog_object_model_dict)
+
+        # Verify the model instances are equivalent
+        assert catalog_object_model == catalog_object_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        catalog_object_model_json2 = catalog_object_model.to_dict()
+        assert catalog_object_model_json2 == catalog_object_model_json
+
+class CatalogSearchResultUnitTests():
     """
     Test Class for CatalogSearchResult
     """
@@ -7695,11 +7440,11 @@ class TestCatalogSearchResult():
         syndication_history_model = {} # SyndicationHistory
         syndication_history_model['namespaces'] = ['testString']
         syndication_history_model['clusters'] = [syndication_cluster_model]
-        syndication_history_model['last_run'] = '2020-01-28T18:40:40.123456Z'
+        syndication_history_model['last_run'] = "2019-01-01T12:00:00Z"
 
         syndication_authorization_model = {} # SyndicationAuthorization
         syndication_authorization_model['token'] = 'testString'
-        syndication_authorization_model['last_run'] = '2020-01-28T18:40:40.123456Z'
+        syndication_authorization_model['last_run'] = "2019-01-01T12:00:00Z"
 
         syndication_resource_model = {} # SyndicationResource
         syndication_resource_model['remove_related_components'] = True
@@ -7719,23 +7464,17 @@ class TestCatalogSearchResult():
         catalog_model['offerings_url'] = 'testString'
         catalog_model['features'] = [feature_model]
         catalog_model['disabled'] = True
-        catalog_model['created'] = '2020-01-28T18:40:40.123456Z'
-        catalog_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        catalog_model['created'] = "2019-01-01T12:00:00Z"
+        catalog_model['updated'] = "2019-01-01T12:00:00Z"
         catalog_model['resource_group_id'] = 'testString'
         catalog_model['owning_account'] = 'testString'
         catalog_model['catalog_filters'] = filters_model
         catalog_model['syndication_settings'] = syndication_resource_model
+        catalog_model['kind'] = 'testString'
 
         # Construct a json representation of a CatalogSearchResult model
         catalog_search_result_model_json = {}
-        catalog_search_result_model_json['offset'] = 38
-        catalog_search_result_model_json['limit'] = 38
         catalog_search_result_model_json['total_count'] = 38
-        catalog_search_result_model_json['resource_count'] = 38
-        catalog_search_result_model_json['first'] = 'testString'
-        catalog_search_result_model_json['last'] = 'testString'
-        catalog_search_result_model_json['prev'] = 'testString'
-        catalog_search_result_model_json['next'] = 'testString'
         catalog_search_result_model_json['resources'] = [catalog_model]
 
         # Construct a model instance of CatalogSearchResult by calling from_dict on the json representation
@@ -7753,7 +7492,7 @@ class TestCatalogSearchResult():
         catalog_search_result_model_json2 = catalog_search_result_model.to_dict()
         assert catalog_search_result_model_json2 == catalog_search_result_model_json
 
-class TestCategoryFilter():
+class CategoryFilterUnitTests():
     """
     Test Class for CategoryFilter
     """
@@ -7788,7 +7527,7 @@ class TestCategoryFilter():
         category_filter_model_json2 = category_filter_model.to_dict()
         assert category_filter_model_json2 == category_filter_model_json
 
-class TestClusterInfo():
+class ClusterInfoUnitTests():
     """
     Test Class for ClusterInfo
     """
@@ -7821,53 +7560,7 @@ class TestClusterInfo():
         cluster_info_model_json2 = cluster_info_model.to_dict()
         assert cluster_info_model_json2 == cluster_info_model_json
 
-class TestClusterSearchResult():
-    """
-    Test Class for ClusterSearchResult
-    """
-
-    def test_cluster_search_result_serialization(self):
-        """
-        Test serialization/deserialization for ClusterSearchResult
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        cluster_info_model = {} # ClusterInfo
-        cluster_info_model['resource_group_id'] = 'testString'
-        cluster_info_model['resource_group_name'] = 'testString'
-        cluster_info_model['id'] = 'testString'
-        cluster_info_model['name'] = 'testString'
-        cluster_info_model['region'] = 'testString'
-
-        # Construct a json representation of a ClusterSearchResult model
-        cluster_search_result_model_json = {}
-        cluster_search_result_model_json['offset'] = 38
-        cluster_search_result_model_json['limit'] = 38
-        cluster_search_result_model_json['total_count'] = 38
-        cluster_search_result_model_json['resource_count'] = 38
-        cluster_search_result_model_json['first'] = 'testString'
-        cluster_search_result_model_json['last'] = 'testString'
-        cluster_search_result_model_json['prev'] = 'testString'
-        cluster_search_result_model_json['next'] = 'testString'
-        cluster_search_result_model_json['resources'] = [cluster_info_model]
-
-        # Construct a model instance of ClusterSearchResult by calling from_dict on the json representation
-        cluster_search_result_model = ClusterSearchResult.from_dict(cluster_search_result_model_json)
-        assert cluster_search_result_model != False
-
-        # Construct a model instance of ClusterSearchResult by calling from_dict on the json representation
-        cluster_search_result_model_dict = ClusterSearchResult.from_dict(cluster_search_result_model_json).__dict__
-        cluster_search_result_model2 = ClusterSearchResult(**cluster_search_result_model_dict)
-
-        # Verify the model instances are equivalent
-        assert cluster_search_result_model == cluster_search_result_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        cluster_search_result_model_json2 = cluster_search_result_model.to_dict()
-        assert cluster_search_result_model_json2 == cluster_search_result_model_json
-
-class TestConfiguration():
+class ConfigurationUnitTests():
     """
     Test Class for Configuration
     """
@@ -7903,7 +7596,7 @@ class TestConfiguration():
         configuration_model_json2 = configuration_model.to_dict()
         assert configuration_model_json2 == configuration_model_json
 
-class TestDeployRequestBodySchematics():
+class DeployRequestBodySchematicsUnitTests():
     """
     Test Class for DeployRequestBodySchematics
     """
@@ -7935,37 +7628,7 @@ class TestDeployRequestBodySchematics():
         deploy_request_body_schematics_model_json2 = deploy_request_body_schematics_model.to_dict()
         assert deploy_request_body_schematics_model_json2 == deploy_request_body_schematics_model_json
 
-class TestDeployRequirementsCheck():
-    """
-    Test Class for DeployRequirementsCheck
-    """
-
-    def test_deploy_requirements_check_serialization(self):
-        """
-        Test serialization/deserialization for DeployRequirementsCheck
-        """
-
-        # Construct a json representation of a DeployRequirementsCheck model
-        deploy_requirements_check_model_json = {}
-        deploy_requirements_check_model_json['pre_install'] = { 'foo': 'bar' }
-        deploy_requirements_check_model_json['install'] = { 'foo': 'bar' }
-
-        # Construct a model instance of DeployRequirementsCheck by calling from_dict on the json representation
-        deploy_requirements_check_model = DeployRequirementsCheck.from_dict(deploy_requirements_check_model_json)
-        assert deploy_requirements_check_model != False
-
-        # Construct a model instance of DeployRequirementsCheck by calling from_dict on the json representation
-        deploy_requirements_check_model_dict = DeployRequirementsCheck.from_dict(deploy_requirements_check_model_json).__dict__
-        deploy_requirements_check_model2 = DeployRequirementsCheck(**deploy_requirements_check_model_dict)
-
-        # Verify the model instances are equivalent
-        assert deploy_requirements_check_model == deploy_requirements_check_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        deploy_requirements_check_model_json2 = deploy_requirements_check_model.to_dict()
-        assert deploy_requirements_check_model_json2 == deploy_requirements_check_model_json
-
-class TestDeployment():
+class DeploymentUnitTests():
     """
     Test Class for Deployment
     """
@@ -7982,10 +7645,10 @@ class TestDeployment():
         deployment_model_json['name'] = 'testString'
         deployment_model_json['short_description'] = 'testString'
         deployment_model_json['long_description'] = 'testString'
-        deployment_model_json['metadata'] = { 'foo': 'bar' }
+        deployment_model_json['metadata'] = {}
         deployment_model_json['tags'] = ['testString']
-        deployment_model_json['created'] = '2020-01-28T18:40:40.123456Z'
-        deployment_model_json['updated'] = '2020-01-28T18:40:40.123456Z'
+        deployment_model_json['created'] = "2019-01-01T12:00:00Z"
+        deployment_model_json['updated'] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of Deployment by calling from_dict on the json representation
         deployment_model = Deployment.from_dict(deployment_model_json)
@@ -8002,115 +7665,7 @@ class TestDeployment():
         deployment_model_json2 = deployment_model.to_dict()
         assert deployment_model_json2 == deployment_model_json
 
-class TestEnterprise():
-    """
-    Test Class for Enterprise
-    """
-
-    def test_enterprise_serialization(self):
-        """
-        Test serialization/deserialization for Enterprise
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        filter_terms_model = {} # FilterTerms
-        filter_terms_model['filter_terms'] = ['testString']
-
-        category_filter_model = {} # CategoryFilter
-        category_filter_model['include'] = True
-        category_filter_model['filter'] = filter_terms_model
-
-        id_filter_model = {} # IDFilter
-        id_filter_model['include'] = filter_terms_model
-        id_filter_model['exclude'] = filter_terms_model
-
-        filters_model = {} # Filters
-        filters_model['include_all'] = True
-        filters_model['category_filters'] = {}
-        filters_model['id_filters'] = id_filter_model
-
-        account_group_model = {} # AccountGroup
-        account_group_model['id'] = 'testString'
-        account_group_model['account_filters'] = filters_model
-
-        enterprise_account_groups_model = {} # EnterpriseAccountGroups
-        enterprise_account_groups_model['keys'] = account_group_model
-
-        # Construct a json representation of a Enterprise model
-        enterprise_model_json = {}
-        enterprise_model_json['id'] = 'testString'
-        enterprise_model_json['_rev'] = 'testString'
-        enterprise_model_json['account_filters'] = filters_model
-        enterprise_model_json['account_groups'] = enterprise_account_groups_model
-
-        # Construct a model instance of Enterprise by calling from_dict on the json representation
-        enterprise_model = Enterprise.from_dict(enterprise_model_json)
-        assert enterprise_model != False
-
-        # Construct a model instance of Enterprise by calling from_dict on the json representation
-        enterprise_model_dict = Enterprise.from_dict(enterprise_model_json).__dict__
-        enterprise_model2 = Enterprise(**enterprise_model_dict)
-
-        # Verify the model instances are equivalent
-        assert enterprise_model == enterprise_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        enterprise_model_json2 = enterprise_model.to_dict()
-        assert enterprise_model_json2 == enterprise_model_json
-
-class TestEnterpriseAccountGroups():
-    """
-    Test Class for EnterpriseAccountGroups
-    """
-
-    def test_enterprise_account_groups_serialization(self):
-        """
-        Test serialization/deserialization for EnterpriseAccountGroups
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        filter_terms_model = {} # FilterTerms
-        filter_terms_model['filter_terms'] = ['testString']
-
-        category_filter_model = {} # CategoryFilter
-        category_filter_model['include'] = True
-        category_filter_model['filter'] = filter_terms_model
-
-        id_filter_model = {} # IDFilter
-        id_filter_model['include'] = filter_terms_model
-        id_filter_model['exclude'] = filter_terms_model
-
-        filters_model = {} # Filters
-        filters_model['include_all'] = True
-        filters_model['category_filters'] = {}
-        filters_model['id_filters'] = id_filter_model
-
-        account_group_model = {} # AccountGroup
-        account_group_model['id'] = 'testString'
-        account_group_model['account_filters'] = filters_model
-
-        # Construct a json representation of a EnterpriseAccountGroups model
-        enterprise_account_groups_model_json = {}
-        enterprise_account_groups_model_json['keys'] = account_group_model
-
-        # Construct a model instance of EnterpriseAccountGroups by calling from_dict on the json representation
-        enterprise_account_groups_model = EnterpriseAccountGroups.from_dict(enterprise_account_groups_model_json)
-        assert enterprise_account_groups_model != False
-
-        # Construct a model instance of EnterpriseAccountGroups by calling from_dict on the json representation
-        enterprise_account_groups_model_dict = EnterpriseAccountGroups.from_dict(enterprise_account_groups_model_json).__dict__
-        enterprise_account_groups_model2 = EnterpriseAccountGroups(**enterprise_account_groups_model_dict)
-
-        # Verify the model instances are equivalent
-        assert enterprise_account_groups_model == enterprise_account_groups_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        enterprise_account_groups_model_json2 = enterprise_account_groups_model.to_dict()
-        assert enterprise_account_groups_model_json2 == enterprise_account_groups_model_json
-
-class TestFeature():
+class FeatureUnitTests():
     """
     Test Class for Feature
     """
@@ -8140,7 +7695,7 @@ class TestFeature():
         feature_model_json2 = feature_model.to_dict()
         assert feature_model_json2 == feature_model_json
 
-class TestFilterTerms():
+class FilterTermsUnitTests():
     """
     Test Class for FilterTerms
     """
@@ -8169,7 +7724,7 @@ class TestFilterTerms():
         filter_terms_model_json2 = filter_terms_model.to_dict()
         assert filter_terms_model_json2 == filter_terms_model_json
 
-class TestFilters():
+class FiltersUnitTests():
     """
     Test Class for Filters
     """
@@ -8213,228 +7768,7 @@ class TestFilters():
         filters_model_json2 = filters_model.to_dict()
         assert filters_model_json2 == filters_model_json
 
-class TestHelmChart():
-    """
-    Test Class for HelmChart
-    """
-
-    def test_helm_chart_serialization(self):
-        """
-        Test serialization/deserialization for HelmChart
-        """
-
-        # Construct a json representation of a HelmChart model
-        helm_chart_model_json = {}
-        helm_chart_model_json['name'] = 'testString'
-        helm_chart_model_json['description'] = 'testString'
-        helm_chart_model_json['icon'] = 'testString'
-        helm_chart_model_json['version'] = 'testString'
-        helm_chart_model_json['appVersion'] = 'testString'
-
-        # Construct a model instance of HelmChart by calling from_dict on the json representation
-        helm_chart_model = HelmChart.from_dict(helm_chart_model_json)
-        assert helm_chart_model != False
-
-        # Construct a model instance of HelmChart by calling from_dict on the json representation
-        helm_chart_model_dict = HelmChart.from_dict(helm_chart_model_json).__dict__
-        helm_chart_model2 = HelmChart(**helm_chart_model_dict)
-
-        # Verify the model instances are equivalent
-        assert helm_chart_model == helm_chart_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        helm_chart_model_json2 = helm_chart_model.to_dict()
-        assert helm_chart_model_json2 == helm_chart_model_json
-
-class TestHelmPackage():
-    """
-    Test Class for HelmPackage
-    """
-
-    def test_helm_package_serialization(self):
-        """
-        Test serialization/deserialization for HelmPackage
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        helm_chart_model = {} # HelmChart
-        helm_chart_model['name'] = 'testString'
-        helm_chart_model['description'] = 'testString'
-        helm_chart_model['icon'] = 'testString'
-        helm_chart_model['version'] = 'testString'
-        helm_chart_model['appVersion'] = 'testString'
-
-        helm_package_chart_model = {} # HelmPackageChart
-        helm_package_chart_model['Chart.yaml'] = helm_chart_model
-        helm_package_chart_model['sha'] = { 'foo': 'bar' }
-        helm_package_chart_model['README.md'] = 'testString'
-        helm_package_chart_model['values-metadata'] = { 'foo': 'bar' }
-        helm_package_chart_model['license-metadata'] = { 'foo': 'bar' }
-
-        # Construct a json representation of a HelmPackage model
-        helm_package_model_json = {}
-        helm_package_model_json['chart'] = helm_package_chart_model
-
-        # Construct a model instance of HelmPackage by calling from_dict on the json representation
-        helm_package_model = HelmPackage.from_dict(helm_package_model_json)
-        assert helm_package_model != False
-
-        # Construct a model instance of HelmPackage by calling from_dict on the json representation
-        helm_package_model_dict = HelmPackage.from_dict(helm_package_model_json).__dict__
-        helm_package_model2 = HelmPackage(**helm_package_model_dict)
-
-        # Verify the model instances are equivalent
-        assert helm_package_model == helm_package_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        helm_package_model_json2 = helm_package_model.to_dict()
-        assert helm_package_model_json2 == helm_package_model_json
-
-class TestHelmPackageChart():
-    """
-    Test Class for HelmPackageChart
-    """
-
-    def test_helm_package_chart_serialization(self):
-        """
-        Test serialization/deserialization for HelmPackageChart
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        helm_chart_model = {} # HelmChart
-        helm_chart_model['name'] = 'testString'
-        helm_chart_model['description'] = 'testString'
-        helm_chart_model['icon'] = 'testString'
-        helm_chart_model['version'] = 'testString'
-        helm_chart_model['appVersion'] = 'testString'
-
-        # Construct a json representation of a HelmPackageChart model
-        helm_package_chart_model_json = {}
-        helm_package_chart_model_json['Chart.yaml'] = helm_chart_model
-        helm_package_chart_model_json['sha'] = { 'foo': 'bar' }
-        helm_package_chart_model_json['README.md'] = 'testString'
-        helm_package_chart_model_json['values-metadata'] = { 'foo': 'bar' }
-        helm_package_chart_model_json['license-metadata'] = { 'foo': 'bar' }
-
-        # Construct a model instance of HelmPackageChart by calling from_dict on the json representation
-        helm_package_chart_model = HelmPackageChart.from_dict(helm_package_chart_model_json)
-        assert helm_package_chart_model != False
-
-        # Construct a model instance of HelmPackageChart by calling from_dict on the json representation
-        helm_package_chart_model_dict = HelmPackageChart.from_dict(helm_package_chart_model_json).__dict__
-        helm_package_chart_model2 = HelmPackageChart(**helm_package_chart_model_dict)
-
-        # Verify the model instances are equivalent
-        assert helm_package_chart_model == helm_package_chart_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        helm_package_chart_model_json2 = helm_package_chart_model.to_dict()
-        assert helm_package_chart_model_json2 == helm_package_chart_model_json
-
-class TestHelmRepoList():
-    """
-    Test Class for HelmRepoList
-    """
-
-    def test_helm_repo_list_serialization(self):
-        """
-        Test serialization/deserialization for HelmRepoList
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        maintainers_model = {} # Maintainers
-        maintainers_model['email'] = 'testString'
-        maintainers_model['name'] = 'testString'
-
-        helm_repo_list_chart_model = {} # HelmRepoListChart
-        helm_repo_list_chart_model['api_version'] = 'testString'
-        helm_repo_list_chart_model['created'] = '2020-01-28T18:40:40.123456Z'
-        helm_repo_list_chart_model['description'] = 'testString'
-        helm_repo_list_chart_model['deprecated'] = True
-        helm_repo_list_chart_model['digest'] = 'testString'
-        helm_repo_list_chart_model['home'] = 'testString'
-        helm_repo_list_chart_model['icon'] = 'testString'
-        helm_repo_list_chart_model['keywords'] = ['testString']
-        helm_repo_list_chart_model['maintainers'] = [maintainers_model]
-        helm_repo_list_chart_model['name'] = 'testString'
-        helm_repo_list_chart_model['tiller_version'] = 'testString'
-        helm_repo_list_chart_model['urls'] = ['testString']
-        helm_repo_list_chart_model['sources'] = ['testString']
-        helm_repo_list_chart_model['version'] = 'testString'
-        helm_repo_list_chart_model['appVersion'] = 'testString'
-
-        # Construct a json representation of a HelmRepoList model
-        helm_repo_list_model_json = {}
-        helm_repo_list_model_json['chart'] = helm_repo_list_chart_model
-
-        # Construct a model instance of HelmRepoList by calling from_dict on the json representation
-        helm_repo_list_model = HelmRepoList.from_dict(helm_repo_list_model_json)
-        assert helm_repo_list_model != False
-
-        # Construct a model instance of HelmRepoList by calling from_dict on the json representation
-        helm_repo_list_model_dict = HelmRepoList.from_dict(helm_repo_list_model_json).__dict__
-        helm_repo_list_model2 = HelmRepoList(**helm_repo_list_model_dict)
-
-        # Verify the model instances are equivalent
-        assert helm_repo_list_model == helm_repo_list_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        helm_repo_list_model_json2 = helm_repo_list_model.to_dict()
-        assert helm_repo_list_model_json2 == helm_repo_list_model_json
-
-class TestHelmRepoListChart():
-    """
-    Test Class for HelmRepoListChart
-    """
-
-    def test_helm_repo_list_chart_serialization(self):
-        """
-        Test serialization/deserialization for HelmRepoListChart
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        maintainers_model = {} # Maintainers
-        maintainers_model['email'] = 'testString'
-        maintainers_model['name'] = 'testString'
-
-        # Construct a json representation of a HelmRepoListChart model
-        helm_repo_list_chart_model_json = {}
-        helm_repo_list_chart_model_json['api_version'] = 'testString'
-        helm_repo_list_chart_model_json['created'] = '2020-01-28T18:40:40.123456Z'
-        helm_repo_list_chart_model_json['description'] = 'testString'
-        helm_repo_list_chart_model_json['deprecated'] = True
-        helm_repo_list_chart_model_json['digest'] = 'testString'
-        helm_repo_list_chart_model_json['home'] = 'testString'
-        helm_repo_list_chart_model_json['icon'] = 'testString'
-        helm_repo_list_chart_model_json['keywords'] = ['testString']
-        helm_repo_list_chart_model_json['maintainers'] = [maintainers_model]
-        helm_repo_list_chart_model_json['name'] = 'testString'
-        helm_repo_list_chart_model_json['tiller_version'] = 'testString'
-        helm_repo_list_chart_model_json['urls'] = ['testString']
-        helm_repo_list_chart_model_json['sources'] = ['testString']
-        helm_repo_list_chart_model_json['version'] = 'testString'
-        helm_repo_list_chart_model_json['appVersion'] = 'testString'
-
-        # Construct a model instance of HelmRepoListChart by calling from_dict on the json representation
-        helm_repo_list_chart_model = HelmRepoListChart.from_dict(helm_repo_list_chart_model_json)
-        assert helm_repo_list_chart_model != False
-
-        # Construct a model instance of HelmRepoListChart by calling from_dict on the json representation
-        helm_repo_list_chart_model_dict = HelmRepoListChart.from_dict(helm_repo_list_chart_model_json).__dict__
-        helm_repo_list_chart_model2 = HelmRepoListChart(**helm_repo_list_chart_model_dict)
-
-        # Verify the model instances are equivalent
-        assert helm_repo_list_chart_model == helm_repo_list_chart_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        helm_repo_list_chart_model_json2 = helm_repo_list_chart_model.to_dict()
-        assert helm_repo_list_chart_model_json2 == helm_repo_list_chart_model_json
-
-class TestIDFilter():
+class IDFilterUnitTests():
     """
     Test Class for IDFilter
     """
@@ -8469,7 +7803,7 @@ class TestIDFilter():
         id_filter_model_json2 = id_filter_model.to_dict()
         assert id_filter_model_json2 == id_filter_model_json
 
-class TestImage():
+class ImageUnitTests():
     """
     Test Class for Image
     """
@@ -8498,7 +7832,7 @@ class TestImage():
         image_model_json2 = image_model.to_dict()
         assert image_model_json2 == image_model_json
 
-class TestImageManifest():
+class ImageManifestUnitTests():
     """
     Test Class for ImageManifest
     """
@@ -8533,7 +7867,7 @@ class TestImageManifest():
         image_manifest_model_json2 = image_manifest_model.to_dict()
         assert image_manifest_model_json2 == image_manifest_model_json
 
-class TestInstallStatus():
+class InstallStatusUnitTests():
     """
     Test Class for InstallStatus
     """
@@ -8553,15 +7887,15 @@ class TestInstallStatus():
         install_status_metadata_model['workspace_name'] = 'testString'
 
         install_status_release_model = {} # InstallStatusRelease
-        install_status_release_model['deployments'] = [{ 'foo': 'bar' }]
-        install_status_release_model['replicasets'] = [{ 'foo': 'bar' }]
-        install_status_release_model['statefulsets'] = [{ 'foo': 'bar' }]
-        install_status_release_model['pods'] = [{ 'foo': 'bar' }]
-        install_status_release_model['errors'] = [{ 'foo': 'bar' }]
+        install_status_release_model['deployments'] = [{}]
+        install_status_release_model['replicasets'] = [{}]
+        install_status_release_model['statefulsets'] = [{}]
+        install_status_release_model['pods'] = [{}]
+        install_status_release_model['errors'] = [{}]
 
         install_status_content_mgmt_model = {} # InstallStatusContentMgmt
-        install_status_content_mgmt_model['pods'] = [{ 'foo': 'bar' }]
-        install_status_content_mgmt_model['errors'] = [{ 'foo': 'bar' }]
+        install_status_content_mgmt_model['pods'] = [{}]
+        install_status_content_mgmt_model['errors'] = [{}]
 
         # Construct a json representation of a InstallStatus model
         install_status_model_json = {}
@@ -8584,7 +7918,7 @@ class TestInstallStatus():
         install_status_model_json2 = install_status_model.to_dict()
         assert install_status_model_json2 == install_status_model_json
 
-class TestInstallStatusContentMgmt():
+class InstallStatusContentMgmtUnitTests():
     """
     Test Class for InstallStatusContentMgmt
     """
@@ -8596,8 +7930,8 @@ class TestInstallStatusContentMgmt():
 
         # Construct a json representation of a InstallStatusContentMgmt model
         install_status_content_mgmt_model_json = {}
-        install_status_content_mgmt_model_json['pods'] = [{ 'foo': 'bar' }]
-        install_status_content_mgmt_model_json['errors'] = [{ 'foo': 'bar' }]
+        install_status_content_mgmt_model_json['pods'] = [{}]
+        install_status_content_mgmt_model_json['errors'] = [{}]
 
         # Construct a model instance of InstallStatusContentMgmt by calling from_dict on the json representation
         install_status_content_mgmt_model = InstallStatusContentMgmt.from_dict(install_status_content_mgmt_model_json)
@@ -8614,7 +7948,7 @@ class TestInstallStatusContentMgmt():
         install_status_content_mgmt_model_json2 = install_status_content_mgmt_model.to_dict()
         assert install_status_content_mgmt_model_json2 == install_status_content_mgmt_model_json
 
-class TestInstallStatusMetadata():
+class InstallStatusMetadataUnitTests():
     """
     Test Class for InstallStatusMetadata
     """
@@ -8647,7 +7981,7 @@ class TestInstallStatusMetadata():
         install_status_metadata_model_json2 = install_status_metadata_model.to_dict()
         assert install_status_metadata_model_json2 == install_status_metadata_model_json
 
-class TestInstallStatusRelease():
+class InstallStatusReleaseUnitTests():
     """
     Test Class for InstallStatusRelease
     """
@@ -8659,11 +7993,11 @@ class TestInstallStatusRelease():
 
         # Construct a json representation of a InstallStatusRelease model
         install_status_release_model_json = {}
-        install_status_release_model_json['deployments'] = [{ 'foo': 'bar' }]
-        install_status_release_model_json['replicasets'] = [{ 'foo': 'bar' }]
-        install_status_release_model_json['statefulsets'] = [{ 'foo': 'bar' }]
-        install_status_release_model_json['pods'] = [{ 'foo': 'bar' }]
-        install_status_release_model_json['errors'] = [{ 'foo': 'bar' }]
+        install_status_release_model_json['deployments'] = [{}]
+        install_status_release_model_json['replicasets'] = [{}]
+        install_status_release_model_json['statefulsets'] = [{}]
+        install_status_release_model_json['pods'] = [{}]
+        install_status_release_model_json['errors'] = [{}]
 
         # Construct a model instance of InstallStatusRelease by calling from_dict on the json representation
         install_status_release_model = InstallStatusRelease.from_dict(install_status_release_model_json)
@@ -8680,7 +8014,7 @@ class TestInstallStatusRelease():
         install_status_release_model_json2 = install_status_release_model.to_dict()
         assert install_status_release_model_json2 == install_status_release_model_json
 
-class TestKind():
+class KindUnitTests():
     """
     Test Class for Kind
     """
@@ -8707,11 +8041,11 @@ class TestKind():
         configuration_model['hidden'] = True
 
         validation_model = {} # Validation
-        validation_model['validated'] = '2020-01-28T18:40:40.123456Z'
-        validation_model['requested'] = '2020-01-28T18:40:40.123456Z'
+        validation_model['validated'] = "2019-01-01T12:00:00Z"
+        validation_model['requested'] = "2019-01-01T12:00:00Z"
         validation_model['state'] = 'testString'
         validation_model['last_operation'] = 'testString'
-        validation_model['target'] = { 'foo': 'bar' }
+        validation_model['target'] = {}
 
         resource_model = {} # Resource
         resource_model['type'] = 'mem'
@@ -8740,9 +8074,9 @@ class TestKind():
 
         state_model = {} # State
         state_model['current'] = 'testString'
-        state_model['current_entered'] = '2020-01-28T18:40:40.123456Z'
+        state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
-        state_model['pending_requested'] = '2020-01-28T18:40:40.123456Z'
+        state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
         version_model = {} # Version
@@ -8751,8 +8085,8 @@ class TestKind():
         version_model['crn'] = 'testString'
         version_model['version'] = 'testString'
         version_model['sha'] = 'testString'
-        version_model['created'] = '2020-01-28T18:40:40.123456Z'
-        version_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        version_model['created'] = "2019-01-01T12:00:00Z"
+        version_model['updated'] = "2019-01-01T12:00:00Z"
         version_model['offering_id'] = 'testString'
         version_model['catalog_id'] = 'testString'
         version_model['kind_id'] = 'testString'
@@ -8761,7 +8095,7 @@ class TestKind():
         version_model['source_url'] = 'testString'
         version_model['tgz_url'] = 'testString'
         version_model['configuration'] = [configuration_model]
-        version_model['metadata'] = { 'foo': 'bar' }
+        version_model['metadata'] = {}
         version_model['validation'] = validation_model
         version_model['required_resources'] = [resource_model]
         version_model['single_instance'] = True
@@ -8784,10 +8118,10 @@ class TestKind():
         deployment_model['name'] = 'testString'
         deployment_model['short_description'] = 'testString'
         deployment_model['long_description'] = 'testString'
-        deployment_model['metadata'] = { 'foo': 'bar' }
+        deployment_model['metadata'] = {}
         deployment_model['tags'] = ['testString']
-        deployment_model['created'] = '2020-01-28T18:40:40.123456Z'
-        deployment_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        deployment_model['created'] = "2019-01-01T12:00:00Z"
+        deployment_model['updated'] = "2019-01-01T12:00:00Z"
 
         plan_model = {} # Plan
         plan_model['id'] = 'testString'
@@ -8795,11 +8129,11 @@ class TestKind():
         plan_model['name'] = 'testString'
         plan_model['short_description'] = 'testString'
         plan_model['long_description'] = 'testString'
-        plan_model['metadata'] = { 'foo': 'bar' }
+        plan_model['metadata'] = {}
         plan_model['tags'] = ['testString']
         plan_model['additional_features'] = [feature_model]
-        plan_model['created'] = '2020-01-28T18:40:40.123456Z'
-        plan_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        plan_model['created'] = "2019-01-01T12:00:00Z"
+        plan_model['updated'] = "2019-01-01T12:00:00Z"
         plan_model['deployments'] = [deployment_model]
 
         # Construct a json representation of a Kind model
@@ -8807,12 +8141,12 @@ class TestKind():
         kind_model_json['id'] = 'testString'
         kind_model_json['format_kind'] = 'testString'
         kind_model_json['target_kind'] = 'testString'
-        kind_model_json['metadata'] = { 'foo': 'bar' }
+        kind_model_json['metadata'] = {}
         kind_model_json['install_description'] = 'testString'
         kind_model_json['tags'] = ['testString']
         kind_model_json['additional_features'] = [feature_model]
-        kind_model_json['created'] = '2020-01-28T18:40:40.123456Z'
-        kind_model_json['updated'] = '2020-01-28T18:40:40.123456Z'
+        kind_model_json['created'] = "2019-01-01T12:00:00Z"
+        kind_model_json['updated'] = "2019-01-01T12:00:00Z"
         kind_model_json['versions'] = [version_model]
         kind_model_json['plans'] = [plan_model]
 
@@ -8831,7 +8165,7 @@ class TestKind():
         kind_model_json2 = kind_model.to_dict()
         assert kind_model_json2 == kind_model_json
 
-class TestLicense():
+class LicenseUnitTests():
     """
     Test Class for License
     """
@@ -8864,447 +8198,7 @@ class TestLicense():
         license_model_json2 = license_model.to_dict()
         assert license_model_json2 == license_model_json
 
-class TestLicenseEntitlement():
-    """
-    Test Class for LicenseEntitlement
-    """
-
-    def test_license_entitlement_serialization(self):
-        """
-        Test serialization/deserialization for LicenseEntitlement
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        license_entitlement_history_item_model = {} # LicenseEntitlementHistoryItem
-        license_entitlement_history_item_model['action'] = 'testString'
-        license_entitlement_history_item_model['user'] = 'testString'
-        license_entitlement_history_item_model['date'] = 'testString'
-
-        license_offering_reference_model = {} # LicenseOfferingReference
-        license_offering_reference_model['id'] = 'testString'
-        license_offering_reference_model['name'] = 'testString'
-        license_offering_reference_model['label'] = 'testString'
-        license_offering_reference_model['offering_icon_url'] = 'testString'
-        license_offering_reference_model['account_id'] = 'testString'
-        license_offering_reference_model['catalog_id'] = 'testString'
-
-        # Construct a json representation of a LicenseEntitlement model
-        license_entitlement_model_json = {}
-        license_entitlement_model_json['name'] = 'testString'
-        license_entitlement_model_json['id'] = 'testString'
-        license_entitlement_model_json['crn'] = 'testString'
-        license_entitlement_model_json['url'] = 'testString'
-        license_entitlement_model_json['offering_type'] = 'testString'
-        license_entitlement_model_json['state'] = 'testString'
-        license_entitlement_model_json['effective_from'] = 'testString'
-        license_entitlement_model_json['effective_until'] = 'testString'
-        license_entitlement_model_json['account_id'] = 'testString'
-        license_entitlement_model_json['owner_id'] = 'testString'
-        license_entitlement_model_json['version_id'] = 'testString'
-        license_entitlement_model_json['license_offering_id'] = 'testString'
-        license_entitlement_model_json['license_id'] = 'testString'
-        license_entitlement_model_json['license_owner_id'] = 'testString'
-        license_entitlement_model_json['license_type'] = 'testString'
-        license_entitlement_model_json['license_provider_id'] = 'testString'
-        license_entitlement_model_json['license_provider_url'] = 'testString'
-        license_entitlement_model_json['license_product_id'] = 'testString'
-        license_entitlement_model_json['namespace_repository'] = 'testString'
-        license_entitlement_model_json['apikey'] = 'testString'
-        license_entitlement_model_json['create_by'] = 'testString'
-        license_entitlement_model_json['update_by'] = 'testString'
-        license_entitlement_model_json['create_at'] = 'testString'
-        license_entitlement_model_json['updated_at'] = 'testString'
-        license_entitlement_model_json['history'] = [license_entitlement_history_item_model]
-        license_entitlement_model_json['offering_list'] = [license_offering_reference_model]
-
-        # Construct a model instance of LicenseEntitlement by calling from_dict on the json representation
-        license_entitlement_model = LicenseEntitlement.from_dict(license_entitlement_model_json)
-        assert license_entitlement_model != False
-
-        # Construct a model instance of LicenseEntitlement by calling from_dict on the json representation
-        license_entitlement_model_dict = LicenseEntitlement.from_dict(license_entitlement_model_json).__dict__
-        license_entitlement_model2 = LicenseEntitlement(**license_entitlement_model_dict)
-
-        # Verify the model instances are equivalent
-        assert license_entitlement_model == license_entitlement_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        license_entitlement_model_json2 = license_entitlement_model.to_dict()
-        assert license_entitlement_model_json2 == license_entitlement_model_json
-
-class TestLicenseEntitlementHistoryItem():
-    """
-    Test Class for LicenseEntitlementHistoryItem
-    """
-
-    def test_license_entitlement_history_item_serialization(self):
-        """
-        Test serialization/deserialization for LicenseEntitlementHistoryItem
-        """
-
-        # Construct a json representation of a LicenseEntitlementHistoryItem model
-        license_entitlement_history_item_model_json = {}
-        license_entitlement_history_item_model_json['action'] = 'testString'
-        license_entitlement_history_item_model_json['user'] = 'testString'
-        license_entitlement_history_item_model_json['date'] = 'testString'
-
-        # Construct a model instance of LicenseEntitlementHistoryItem by calling from_dict on the json representation
-        license_entitlement_history_item_model = LicenseEntitlementHistoryItem.from_dict(license_entitlement_history_item_model_json)
-        assert license_entitlement_history_item_model != False
-
-        # Construct a model instance of LicenseEntitlementHistoryItem by calling from_dict on the json representation
-        license_entitlement_history_item_model_dict = LicenseEntitlementHistoryItem.from_dict(license_entitlement_history_item_model_json).__dict__
-        license_entitlement_history_item_model2 = LicenseEntitlementHistoryItem(**license_entitlement_history_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert license_entitlement_history_item_model == license_entitlement_history_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        license_entitlement_history_item_model_json2 = license_entitlement_history_item_model.to_dict()
-        assert license_entitlement_history_item_model_json2 == license_entitlement_history_item_model_json
-
-class TestLicenseEntitlements():
-    """
-    Test Class for LicenseEntitlements
-    """
-
-    def test_license_entitlements_serialization(self):
-        """
-        Test serialization/deserialization for LicenseEntitlements
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        license_entitlement_history_item_model = {} # LicenseEntitlementHistoryItem
-        license_entitlement_history_item_model['action'] = 'testString'
-        license_entitlement_history_item_model['user'] = 'testString'
-        license_entitlement_history_item_model['date'] = 'testString'
-
-        license_offering_reference_model = {} # LicenseOfferingReference
-        license_offering_reference_model['id'] = 'testString'
-        license_offering_reference_model['name'] = 'testString'
-        license_offering_reference_model['label'] = 'testString'
-        license_offering_reference_model['offering_icon_url'] = 'testString'
-        license_offering_reference_model['account_id'] = 'testString'
-        license_offering_reference_model['catalog_id'] = 'testString'
-
-        license_entitlement_model = {} # LicenseEntitlement
-        license_entitlement_model['name'] = 'testString'
-        license_entitlement_model['id'] = 'testString'
-        license_entitlement_model['crn'] = 'testString'
-        license_entitlement_model['url'] = 'testString'
-        license_entitlement_model['offering_type'] = 'testString'
-        license_entitlement_model['state'] = 'testString'
-        license_entitlement_model['effective_from'] = 'testString'
-        license_entitlement_model['effective_until'] = 'testString'
-        license_entitlement_model['account_id'] = 'testString'
-        license_entitlement_model['owner_id'] = 'testString'
-        license_entitlement_model['version_id'] = 'testString'
-        license_entitlement_model['license_offering_id'] = 'testString'
-        license_entitlement_model['license_id'] = 'testString'
-        license_entitlement_model['license_owner_id'] = 'testString'
-        license_entitlement_model['license_type'] = 'testString'
-        license_entitlement_model['license_provider_id'] = 'testString'
-        license_entitlement_model['license_provider_url'] = 'testString'
-        license_entitlement_model['license_product_id'] = 'testString'
-        license_entitlement_model['namespace_repository'] = 'testString'
-        license_entitlement_model['apikey'] = 'testString'
-        license_entitlement_model['create_by'] = 'testString'
-        license_entitlement_model['update_by'] = 'testString'
-        license_entitlement_model['create_at'] = 'testString'
-        license_entitlement_model['updated_at'] = 'testString'
-        license_entitlement_model['history'] = [license_entitlement_history_item_model]
-        license_entitlement_model['offering_list'] = [license_offering_reference_model]
-
-        # Construct a json representation of a LicenseEntitlements model
-        license_entitlements_model_json = {}
-        license_entitlements_model_json['total_results'] = 38
-        license_entitlements_model_json['total_pages'] = 38
-        license_entitlements_model_json['prev_url'] = 'testString'
-        license_entitlements_model_json['next_url'] = 'testString'
-        license_entitlements_model_json['resources'] = [license_entitlement_model]
-
-        # Construct a model instance of LicenseEntitlements by calling from_dict on the json representation
-        license_entitlements_model = LicenseEntitlements.from_dict(license_entitlements_model_json)
-        assert license_entitlements_model != False
-
-        # Construct a model instance of LicenseEntitlements by calling from_dict on the json representation
-        license_entitlements_model_dict = LicenseEntitlements.from_dict(license_entitlements_model_json).__dict__
-        license_entitlements_model2 = LicenseEntitlements(**license_entitlements_model_dict)
-
-        # Verify the model instances are equivalent
-        assert license_entitlements_model == license_entitlements_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        license_entitlements_model_json2 = license_entitlements_model.to_dict()
-        assert license_entitlements_model_json2 == license_entitlements_model_json
-
-class TestLicenseObject():
-    """
-    Test Class for LicenseObject
-    """
-
-    def test_license_object_serialization(self):
-        """
-        Test serialization/deserialization for LicenseObject
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        license_offering_reference_model = {} # LicenseOfferingReference
-        license_offering_reference_model['id'] = 'testString'
-        license_offering_reference_model['name'] = 'testString'
-        license_offering_reference_model['label'] = 'testString'
-        license_offering_reference_model['offering_icon_url'] = 'testString'
-        license_offering_reference_model['account_id'] = 'testString'
-        license_offering_reference_model['catalog_id'] = 'testString'
-
-        # Construct a json representation of a LicenseObject model
-        license_object_model_json = {}
-        license_object_model_json['name'] = 'testString'
-        license_object_model_json['offering_type'] = 'testString'
-        license_object_model_json['seats_allowed'] = 'testString'
-        license_object_model_json['seats_used'] = 'testString'
-        license_object_model_json['owner_id'] = 'testString'
-        license_object_model_json['license_offering_id'] = 'testString'
-        license_object_model_json['license_id'] = 'testString'
-        license_object_model_json['license_owner_id'] = 'testString'
-        license_object_model_json['license_type'] = 'testString'
-        license_object_model_json['license_provider_id'] = 'testString'
-        license_object_model_json['license_product_id'] = 'testString'
-        license_object_model_json['license_provider_url'] = 'testString'
-        license_object_model_json['effective_from'] = 'testString'
-        license_object_model_json['effective_until'] = 'testString'
-        license_object_model_json['internal'] = True
-        license_object_model_json['offering_list'] = [license_offering_reference_model]
-
-        # Construct a model instance of LicenseObject by calling from_dict on the json representation
-        license_object_model = LicenseObject.from_dict(license_object_model_json)
-        assert license_object_model != False
-
-        # Construct a model instance of LicenseObject by calling from_dict on the json representation
-        license_object_model_dict = LicenseObject.from_dict(license_object_model_json).__dict__
-        license_object_model2 = LicenseObject(**license_object_model_dict)
-
-        # Verify the model instances are equivalent
-        assert license_object_model == license_object_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        license_object_model_json2 = license_object_model.to_dict()
-        assert license_object_model_json2 == license_object_model_json
-
-class TestLicenseOfferingReference():
-    """
-    Test Class for LicenseOfferingReference
-    """
-
-    def test_license_offering_reference_serialization(self):
-        """
-        Test serialization/deserialization for LicenseOfferingReference
-        """
-
-        # Construct a json representation of a LicenseOfferingReference model
-        license_offering_reference_model_json = {}
-        license_offering_reference_model_json['id'] = 'testString'
-        license_offering_reference_model_json['name'] = 'testString'
-        license_offering_reference_model_json['label'] = 'testString'
-        license_offering_reference_model_json['offering_icon_url'] = 'testString'
-        license_offering_reference_model_json['account_id'] = 'testString'
-        license_offering_reference_model_json['catalog_id'] = 'testString'
-
-        # Construct a model instance of LicenseOfferingReference by calling from_dict on the json representation
-        license_offering_reference_model = LicenseOfferingReference.from_dict(license_offering_reference_model_json)
-        assert license_offering_reference_model != False
-
-        # Construct a model instance of LicenseOfferingReference by calling from_dict on the json representation
-        license_offering_reference_model_dict = LicenseOfferingReference.from_dict(license_offering_reference_model_json).__dict__
-        license_offering_reference_model2 = LicenseOfferingReference(**license_offering_reference_model_dict)
-
-        # Verify the model instances are equivalent
-        assert license_offering_reference_model == license_offering_reference_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        license_offering_reference_model_json2 = license_offering_reference_model.to_dict()
-        assert license_offering_reference_model_json2 == license_offering_reference_model_json
-
-class TestLicenseProvider():
-    """
-    Test Class for LicenseProvider
-    """
-
-    def test_license_provider_serialization(self):
-        """
-        Test serialization/deserialization for LicenseProvider
-        """
-
-        # Construct a json representation of a LicenseProvider model
-        license_provider_model_json = {}
-        license_provider_model_json['name'] = 'testString'
-        license_provider_model_json['short_description'] = 'testString'
-        license_provider_model_json['id'] = 'testString'
-        license_provider_model_json['licence_type'] = 'testString'
-        license_provider_model_json['offering_type'] = 'testString'
-        license_provider_model_json['create_url'] = 'testString'
-        license_provider_model_json['info_url'] = 'testString'
-        license_provider_model_json['url'] = 'testString'
-        license_provider_model_json['crn'] = 'testString'
-        license_provider_model_json['state'] = 'testString'
-
-        # Construct a model instance of LicenseProvider by calling from_dict on the json representation
-        license_provider_model = LicenseProvider.from_dict(license_provider_model_json)
-        assert license_provider_model != False
-
-        # Construct a model instance of LicenseProvider by calling from_dict on the json representation
-        license_provider_model_dict = LicenseProvider.from_dict(license_provider_model_json).__dict__
-        license_provider_model2 = LicenseProvider(**license_provider_model_dict)
-
-        # Verify the model instances are equivalent
-        assert license_provider_model == license_provider_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        license_provider_model_json2 = license_provider_model.to_dict()
-        assert license_provider_model_json2 == license_provider_model_json
-
-class TestLicenseProviders():
-    """
-    Test Class for LicenseProviders
-    """
-
-    def test_license_providers_serialization(self):
-        """
-        Test serialization/deserialization for LicenseProviders
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        license_provider_model = {} # LicenseProvider
-        license_provider_model['name'] = 'testString'
-        license_provider_model['short_description'] = 'testString'
-        license_provider_model['id'] = 'testString'
-        license_provider_model['licence_type'] = 'testString'
-        license_provider_model['offering_type'] = 'testString'
-        license_provider_model['create_url'] = 'testString'
-        license_provider_model['info_url'] = 'testString'
-        license_provider_model['url'] = 'testString'
-        license_provider_model['crn'] = 'testString'
-        license_provider_model['state'] = 'testString'
-
-        # Construct a json representation of a LicenseProviders model
-        license_providers_model_json = {}
-        license_providers_model_json['total_results'] = 38
-        license_providers_model_json['total_pages'] = 38
-        license_providers_model_json['prev_url'] = 'testString'
-        license_providers_model_json['next_url'] = 'testString'
-        license_providers_model_json['resources'] = [license_provider_model]
-
-        # Construct a model instance of LicenseProviders by calling from_dict on the json representation
-        license_providers_model = LicenseProviders.from_dict(license_providers_model_json)
-        assert license_providers_model != False
-
-        # Construct a model instance of LicenseProviders by calling from_dict on the json representation
-        license_providers_model_dict = LicenseProviders.from_dict(license_providers_model_json).__dict__
-        license_providers_model2 = LicenseProviders(**license_providers_model_dict)
-
-        # Verify the model instances are equivalent
-        assert license_providers_model == license_providers_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        license_providers_model_json2 = license_providers_model.to_dict()
-        assert license_providers_model_json2 == license_providers_model_json
-
-class TestLicenses():
-    """
-    Test Class for Licenses
-    """
-
-    def test_licenses_serialization(self):
-        """
-        Test serialization/deserialization for Licenses
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        license_offering_reference_model = {} # LicenseOfferingReference
-        license_offering_reference_model['id'] = 'testString'
-        license_offering_reference_model['name'] = 'testString'
-        license_offering_reference_model['label'] = 'testString'
-        license_offering_reference_model['offering_icon_url'] = 'testString'
-        license_offering_reference_model['account_id'] = 'testString'
-        license_offering_reference_model['catalog_id'] = 'testString'
-
-        license_object_model = {} # LicenseObject
-        license_object_model['name'] = 'testString'
-        license_object_model['offering_type'] = 'testString'
-        license_object_model['seats_allowed'] = 'testString'
-        license_object_model['seats_used'] = 'testString'
-        license_object_model['owner_id'] = 'testString'
-        license_object_model['license_offering_id'] = 'testString'
-        license_object_model['license_id'] = 'testString'
-        license_object_model['license_owner_id'] = 'testString'
-        license_object_model['license_type'] = 'testString'
-        license_object_model['license_provider_id'] = 'testString'
-        license_object_model['license_product_id'] = 'testString'
-        license_object_model['license_provider_url'] = 'testString'
-        license_object_model['effective_from'] = 'testString'
-        license_object_model['effective_until'] = 'testString'
-        license_object_model['internal'] = True
-        license_object_model['offering_list'] = [license_offering_reference_model]
-
-        # Construct a json representation of a Licenses model
-        licenses_model_json = {}
-        licenses_model_json['total_results'] = 38
-        licenses_model_json['total_pages'] = 38
-        licenses_model_json['prev_url'] = 'testString'
-        licenses_model_json['next_url'] = 'testString'
-        licenses_model_json['resources'] = [license_object_model]
-
-        # Construct a model instance of Licenses by calling from_dict on the json representation
-        licenses_model = Licenses.from_dict(licenses_model_json)
-        assert licenses_model != False
-
-        # Construct a model instance of Licenses by calling from_dict on the json representation
-        licenses_model_dict = Licenses.from_dict(licenses_model_json).__dict__
-        licenses_model2 = Licenses(**licenses_model_dict)
-
-        # Verify the model instances are equivalent
-        assert licenses_model == licenses_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        licenses_model_json2 = licenses_model.to_dict()
-        assert licenses_model_json2 == licenses_model_json
-
-class TestMaintainers():
-    """
-    Test Class for Maintainers
-    """
-
-    def test_maintainers_serialization(self):
-        """
-        Test serialization/deserialization for Maintainers
-        """
-
-        # Construct a json representation of a Maintainers model
-        maintainers_model_json = {}
-        maintainers_model_json['email'] = 'testString'
-        maintainers_model_json['name'] = 'testString'
-
-        # Construct a model instance of Maintainers by calling from_dict on the json representation
-        maintainers_model = Maintainers.from_dict(maintainers_model_json)
-        assert maintainers_model != False
-
-        # Construct a model instance of Maintainers by calling from_dict on the json representation
-        maintainers_model_dict = Maintainers.from_dict(maintainers_model_json).__dict__
-        maintainers_model2 = Maintainers(**maintainers_model_dict)
-
-        # Verify the model instances are equivalent
-        assert maintainers_model == maintainers_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        maintainers_model_json2 = maintainers_model.to_dict()
-        assert maintainers_model_json2 == maintainers_model_json
-
-class TestNamespaceSearchResult():
+class NamespaceSearchResultUnitTests():
     """
     Test Class for NamespaceSearchResult
     """
@@ -9341,148 +8235,86 @@ class TestNamespaceSearchResult():
         namespace_search_result_model_json2 = namespace_search_result_model.to_dict()
         assert namespace_search_result_model_json2 == namespace_search_result_model_json
 
-class TestObject():
+class ObjectAccessUnitTests():
     """
-    Test Class for Object
+    Test Class for ObjectAccess
     """
 
-    def test_object_serialization(self):
+    def test_object_access_serialization(self):
         """
-        Test serialization/deserialization for Object
+        Test serialization/deserialization for ObjectAccess
+        """
+
+        # Construct a json representation of a ObjectAccess model
+        object_access_model_json = {}
+        object_access_model_json['id'] = 'testString'
+        object_access_model_json['account'] = 'testString'
+        object_access_model_json['catalog_id'] = 'testString'
+        object_access_model_json['target_id'] = 'testString'
+        object_access_model_json['create'] = "2019-01-01T12:00:00Z"
+
+        # Construct a model instance of ObjectAccess by calling from_dict on the json representation
+        object_access_model = ObjectAccess.from_dict(object_access_model_json)
+        assert object_access_model != False
+
+        # Construct a model instance of ObjectAccess by calling from_dict on the json representation
+        object_access_model_dict = ObjectAccess.from_dict(object_access_model_json).__dict__
+        object_access_model2 = ObjectAccess(**object_access_model_dict)
+
+        # Verify the model instances are equivalent
+        assert object_access_model == object_access_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        object_access_model_json2 = object_access_model.to_dict()
+        assert object_access_model_json2 == object_access_model_json
+
+class ObjectAccessListResultUnitTests():
+    """
+    Test Class for ObjectAccessListResult
+    """
+
+    def test_object_access_list_result_serialization(self):
+        """
+        Test serialization/deserialization for ObjectAccessListResult
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        publish_object_model = {} # PublishObject
-        publish_object_model['permit_ibm_public_publish'] = True
-        publish_object_model['ibm_approved'] = True
-        publish_object_model['public_approved'] = True
-        publish_object_model['portal_approval_record'] = 'testString'
-        publish_object_model['portal_url'] = 'testString'
+        object_access_model = {} # ObjectAccess
+        object_access_model['id'] = 'testString'
+        object_access_model['account'] = 'testString'
+        object_access_model['catalog_id'] = 'testString'
+        object_access_model['target_id'] = 'testString'
+        object_access_model['create'] = "2019-01-01T12:00:00Z"
 
-        state_model = {} # State
-        state_model['current'] = 'testString'
-        state_model['current_entered'] = '2020-01-28T18:40:40.123456Z'
-        state_model['pending'] = 'testString'
-        state_model['pending_requested'] = '2020-01-28T18:40:40.123456Z'
-        state_model['previous'] = 'testString'
+        # Construct a json representation of a ObjectAccessListResult model
+        object_access_list_result_model_json = {}
+        object_access_list_result_model_json['offset'] = 38
+        object_access_list_result_model_json['limit'] = 38
+        object_access_list_result_model_json['total_count'] = 38
+        object_access_list_result_model_json['resource_count'] = 38
+        object_access_list_result_model_json['first'] = 'testString'
+        object_access_list_result_model_json['last'] = 'testString'
+        object_access_list_result_model_json['prev'] = 'testString'
+        object_access_list_result_model_json['next'] = 'testString'
+        object_access_list_result_model_json['resources'] = [object_access_model]
 
-        # Construct a json representation of a Object model
-        object_model_json = {}
-        object_model_json['id'] = 'testString'
-        object_model_json['name'] = 'testString'
-        object_model_json['_rev'] = 'testString'
-        object_model_json['crn'] = 'testString'
-        object_model_json['url'] = 'testString'
-        object_model_json['parent_id'] = 'testString'
-        object_model_json['allow_list'] = ['testString']
-        object_model_json['label_i18n'] = 'testString'
-        object_model_json['label'] = 'testString'
-        object_model_json['tags'] = ['testString']
-        object_model_json['created'] = '2020-01-28T18:40:40.123456Z'
-        object_model_json['updated'] = '2020-01-28T18:40:40.123456Z'
-        object_model_json['short_description'] = 'testString'
-        object_model_json['short_description_i18n'] = 'testString'
-        object_model_json['kind'] = 'testString'
-        object_model_json['publish'] = publish_object_model
-        object_model_json['state'] = state_model
-        object_model_json['catalog_id'] = 'testString'
-        object_model_json['catalog_name'] = 'testString'
-        object_model_json['data'] = { 'foo': 'bar' }
+        # Construct a model instance of ObjectAccessListResult by calling from_dict on the json representation
+        object_access_list_result_model = ObjectAccessListResult.from_dict(object_access_list_result_model_json)
+        assert object_access_list_result_model != False
 
-        # Construct a model instance of Object by calling from_dict on the json representation
-        object_model = Object.from_dict(object_model_json)
-        assert object_model != False
-
-        # Construct a model instance of Object by calling from_dict on the json representation
-        object_model_dict = Object.from_dict(object_model_json).__dict__
-        object_model2 = Object(**object_model_dict)
+        # Construct a model instance of ObjectAccessListResult by calling from_dict on the json representation
+        object_access_list_result_model_dict = ObjectAccessListResult.from_dict(object_access_list_result_model_json).__dict__
+        object_access_list_result_model2 = ObjectAccessListResult(**object_access_list_result_model_dict)
 
         # Verify the model instances are equivalent
-        assert object_model == object_model2
+        assert object_access_list_result_model == object_access_list_result_model2
 
         # Convert model instance back to dict and verify no loss of data
-        object_model_json2 = object_model.to_dict()
-        assert object_model_json2 == object_model_json
+        object_access_list_result_model_json2 = object_access_list_result_model.to_dict()
+        assert object_access_list_result_model_json2 == object_access_list_result_model_json
 
-class TestObjectDigest():
-    """
-    Test Class for ObjectDigest
-    """
-
-    def test_object_digest_serialization(self):
-        """
-        Test serialization/deserialization for ObjectDigest
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        object_digest_fields_model = {} # ObjectDigestFields
-        object_digest_fields_model['catalog_id'] = 'testString'
-        object_digest_fields_model['name'] = 'testString'
-        object_digest_fields_model['parent_id'] = 'testString'
-        object_digest_fields_model['label'] = 'testString'
-        object_digest_fields_model['updated'] = '2020-01-28T18:40:40.123456Z'
-        object_digest_fields_model['kind'] = 'testString'
-        object_digest_fields_model['parent_name'] = 'testString'
-
-        # Construct a json representation of a ObjectDigest model
-        object_digest_model_json = {}
-        object_digest_model_json['id'] = 'testString'
-        object_digest_model_json['order'] = [72.5]
-        object_digest_model_json['fields'] = object_digest_fields_model
-
-        # Construct a model instance of ObjectDigest by calling from_dict on the json representation
-        object_digest_model = ObjectDigest.from_dict(object_digest_model_json)
-        assert object_digest_model != False
-
-        # Construct a model instance of ObjectDigest by calling from_dict on the json representation
-        object_digest_model_dict = ObjectDigest.from_dict(object_digest_model_json).__dict__
-        object_digest_model2 = ObjectDigest(**object_digest_model_dict)
-
-        # Verify the model instances are equivalent
-        assert object_digest_model == object_digest_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        object_digest_model_json2 = object_digest_model.to_dict()
-        assert object_digest_model_json2 == object_digest_model_json
-
-class TestObjectDigestFields():
-    """
-    Test Class for ObjectDigestFields
-    """
-
-    def test_object_digest_fields_serialization(self):
-        """
-        Test serialization/deserialization for ObjectDigestFields
-        """
-
-        # Construct a json representation of a ObjectDigestFields model
-        object_digest_fields_model_json = {}
-        object_digest_fields_model_json['catalog_id'] = 'testString'
-        object_digest_fields_model_json['name'] = 'testString'
-        object_digest_fields_model_json['parent_id'] = 'testString'
-        object_digest_fields_model_json['label'] = 'testString'
-        object_digest_fields_model_json['updated'] = '2020-01-28T18:40:40.123456Z'
-        object_digest_fields_model_json['kind'] = 'testString'
-        object_digest_fields_model_json['parent_name'] = 'testString'
-
-        # Construct a model instance of ObjectDigestFields by calling from_dict on the json representation
-        object_digest_fields_model = ObjectDigestFields.from_dict(object_digest_fields_model_json)
-        assert object_digest_fields_model != False
-
-        # Construct a model instance of ObjectDigestFields by calling from_dict on the json representation
-        object_digest_fields_model_dict = ObjectDigestFields.from_dict(object_digest_fields_model_json).__dict__
-        object_digest_fields_model2 = ObjectDigestFields(**object_digest_fields_model_dict)
-
-        # Verify the model instances are equivalent
-        assert object_digest_fields_model == object_digest_fields_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        object_digest_fields_model_json2 = object_digest_fields_model.to_dict()
-        assert object_digest_fields_model_json2 == object_digest_fields_model_json
-
-class TestObjectListResult():
+class ObjectListResultUnitTests():
     """
     Test Class for ObjectListResult
     """
@@ -9503,32 +8335,31 @@ class TestObjectListResult():
 
         state_model = {} # State
         state_model['current'] = 'testString'
-        state_model['current_entered'] = '2020-01-28T18:40:40.123456Z'
+        state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
-        state_model['pending_requested'] = '2020-01-28T18:40:40.123456Z'
+        state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
-        object_model = {} # Object
-        object_model['id'] = 'testString'
-        object_model['name'] = 'testString'
-        object_model['_rev'] = 'testString'
-        object_model['crn'] = 'testString'
-        object_model['url'] = 'testString'
-        object_model['parent_id'] = 'testString'
-        object_model['allow_list'] = ['testString']
-        object_model['label_i18n'] = 'testString'
-        object_model['label'] = 'testString'
-        object_model['tags'] = ['testString']
-        object_model['created'] = '2020-01-28T18:40:40.123456Z'
-        object_model['updated'] = '2020-01-28T18:40:40.123456Z'
-        object_model['short_description'] = 'testString'
-        object_model['short_description_i18n'] = 'testString'
-        object_model['kind'] = 'testString'
-        object_model['publish'] = publish_object_model
-        object_model['state'] = state_model
-        object_model['catalog_id'] = 'testString'
-        object_model['catalog_name'] = 'testString'
-        object_model['data'] = { 'foo': 'bar' }
+        catalog_object_model = {} # CatalogObject
+        catalog_object_model['id'] = 'testString'
+        catalog_object_model['name'] = 'testString'
+        catalog_object_model['_rev'] = 'testString'
+        catalog_object_model['crn'] = 'testString'
+        catalog_object_model['url'] = 'testString'
+        catalog_object_model['parent_id'] = 'testString'
+        catalog_object_model['label_i18n'] = 'testString'
+        catalog_object_model['label'] = 'testString'
+        catalog_object_model['tags'] = ['testString']
+        catalog_object_model['created'] = "2019-01-01T12:00:00Z"
+        catalog_object_model['updated'] = "2019-01-01T12:00:00Z"
+        catalog_object_model['short_description'] = 'testString'
+        catalog_object_model['short_description_i18n'] = 'testString'
+        catalog_object_model['kind'] = 'testString'
+        catalog_object_model['publish'] = publish_object_model
+        catalog_object_model['state'] = state_model
+        catalog_object_model['catalog_id'] = 'testString'
+        catalog_object_model['catalog_name'] = 'testString'
+        catalog_object_model['data'] = {}
 
         # Construct a json representation of a ObjectListResult model
         object_list_result_model_json = {}
@@ -9540,7 +8371,7 @@ class TestObjectListResult():
         object_list_result_model_json['last'] = 'testString'
         object_list_result_model_json['prev'] = 'testString'
         object_list_result_model_json['next'] = 'testString'
-        object_list_result_model_json['resources'] = [object_model]
+        object_list_result_model_json['resources'] = [catalog_object_model]
 
         # Construct a model instance of ObjectListResult by calling from_dict on the json representation
         object_list_result_model = ObjectListResult.from_dict(object_list_result_model_json)
@@ -9557,7 +8388,7 @@ class TestObjectListResult():
         object_list_result_model_json2 = object_list_result_model.to_dict()
         assert object_list_result_model_json2 == object_list_result_model_json
 
-class TestObjectSearchResult():
+class ObjectSearchResultUnitTests():
     """
     Test Class for ObjectSearchResult
     """
@@ -9569,19 +8400,40 @@ class TestObjectSearchResult():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        object_digest_fields_model = {} # ObjectDigestFields
-        object_digest_fields_model['catalog_id'] = 'testString'
-        object_digest_fields_model['name'] = 'testString'
-        object_digest_fields_model['parent_id'] = 'testString'
-        object_digest_fields_model['label'] = 'testString'
-        object_digest_fields_model['updated'] = '2020-01-28T18:40:40.123456Z'
-        object_digest_fields_model['kind'] = 'testString'
-        object_digest_fields_model['parent_name'] = 'testString'
+        publish_object_model = {} # PublishObject
+        publish_object_model['permit_ibm_public_publish'] = True
+        publish_object_model['ibm_approved'] = True
+        publish_object_model['public_approved'] = True
+        publish_object_model['portal_approval_record'] = 'testString'
+        publish_object_model['portal_url'] = 'testString'
 
-        object_digest_model = {} # ObjectDigest
-        object_digest_model['id'] = 'testString'
-        object_digest_model['order'] = [72.5]
-        object_digest_model['fields'] = object_digest_fields_model
+        state_model = {} # State
+        state_model['current'] = 'testString'
+        state_model['current_entered'] = "2019-01-01T12:00:00Z"
+        state_model['pending'] = 'testString'
+        state_model['pending_requested'] = "2019-01-01T12:00:00Z"
+        state_model['previous'] = 'testString'
+
+        catalog_object_model = {} # CatalogObject
+        catalog_object_model['id'] = 'testString'
+        catalog_object_model['name'] = 'testString'
+        catalog_object_model['_rev'] = 'testString'
+        catalog_object_model['crn'] = 'testString'
+        catalog_object_model['url'] = 'testString'
+        catalog_object_model['parent_id'] = 'testString'
+        catalog_object_model['label_i18n'] = 'testString'
+        catalog_object_model['label'] = 'testString'
+        catalog_object_model['tags'] = ['testString']
+        catalog_object_model['created'] = "2019-01-01T12:00:00Z"
+        catalog_object_model['updated'] = "2019-01-01T12:00:00Z"
+        catalog_object_model['short_description'] = 'testString'
+        catalog_object_model['short_description_i18n'] = 'testString'
+        catalog_object_model['kind'] = 'testString'
+        catalog_object_model['publish'] = publish_object_model
+        catalog_object_model['state'] = state_model
+        catalog_object_model['catalog_id'] = 'testString'
+        catalog_object_model['catalog_name'] = 'testString'
+        catalog_object_model['data'] = {}
 
         # Construct a json representation of a ObjectSearchResult model
         object_search_result_model_json = {}
@@ -9593,7 +8445,7 @@ class TestObjectSearchResult():
         object_search_result_model_json['last'] = 'testString'
         object_search_result_model_json['prev'] = 'testString'
         object_search_result_model_json['next'] = 'testString'
-        object_search_result_model_json['resources'] = [object_digest_model]
+        object_search_result_model_json['resources'] = [catalog_object_model]
 
         # Construct a model instance of ObjectSearchResult by calling from_dict on the json representation
         object_search_result_model = ObjectSearchResult.from_dict(object_search_result_model_json)
@@ -9610,7 +8462,7 @@ class TestObjectSearchResult():
         object_search_result_model_json2 = object_search_result_model.to_dict()
         assert object_search_result_model_json2 == object_search_result_model_json
 
-class TestOffering():
+class OfferingUnitTests():
     """
     Test Class for Offering
     """
@@ -9643,11 +8495,11 @@ class TestOffering():
         configuration_model['hidden'] = True
 
         validation_model = {} # Validation
-        validation_model['validated'] = '2020-01-28T18:40:40.123456Z'
-        validation_model['requested'] = '2020-01-28T18:40:40.123456Z'
+        validation_model['validated'] = "2019-01-01T12:00:00Z"
+        validation_model['requested'] = "2019-01-01T12:00:00Z"
         validation_model['state'] = 'testString'
         validation_model['last_operation'] = 'testString'
-        validation_model['target'] = { 'foo': 'bar' }
+        validation_model['target'] = {}
 
         resource_model = {} # Resource
         resource_model['type'] = 'mem'
@@ -9676,9 +8528,9 @@ class TestOffering():
 
         state_model = {} # State
         state_model['current'] = 'testString'
-        state_model['current_entered'] = '2020-01-28T18:40:40.123456Z'
+        state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
-        state_model['pending_requested'] = '2020-01-28T18:40:40.123456Z'
+        state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
         version_model = {} # Version
@@ -9687,8 +8539,8 @@ class TestOffering():
         version_model['crn'] = 'testString'
         version_model['version'] = 'testString'
         version_model['sha'] = 'testString'
-        version_model['created'] = '2020-01-28T18:40:40.123456Z'
-        version_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        version_model['created'] = "2019-01-01T12:00:00Z"
+        version_model['updated'] = "2019-01-01T12:00:00Z"
         version_model['offering_id'] = 'testString'
         version_model['catalog_id'] = 'testString'
         version_model['kind_id'] = 'testString'
@@ -9697,7 +8549,7 @@ class TestOffering():
         version_model['source_url'] = 'testString'
         version_model['tgz_url'] = 'testString'
         version_model['configuration'] = [configuration_model]
-        version_model['metadata'] = { 'foo': 'bar' }
+        version_model['metadata'] = {}
         version_model['validation'] = validation_model
         version_model['required_resources'] = [resource_model]
         version_model['single_instance'] = True
@@ -9720,10 +8572,10 @@ class TestOffering():
         deployment_model['name'] = 'testString'
         deployment_model['short_description'] = 'testString'
         deployment_model['long_description'] = 'testString'
-        deployment_model['metadata'] = { 'foo': 'bar' }
+        deployment_model['metadata'] = {}
         deployment_model['tags'] = ['testString']
-        deployment_model['created'] = '2020-01-28T18:40:40.123456Z'
-        deployment_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        deployment_model['created'] = "2019-01-01T12:00:00Z"
+        deployment_model['updated'] = "2019-01-01T12:00:00Z"
 
         plan_model = {} # Plan
         plan_model['id'] = 'testString'
@@ -9731,23 +8583,23 @@ class TestOffering():
         plan_model['name'] = 'testString'
         plan_model['short_description'] = 'testString'
         plan_model['long_description'] = 'testString'
-        plan_model['metadata'] = { 'foo': 'bar' }
+        plan_model['metadata'] = {}
         plan_model['tags'] = ['testString']
         plan_model['additional_features'] = [feature_model]
-        plan_model['created'] = '2020-01-28T18:40:40.123456Z'
-        plan_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        plan_model['created'] = "2019-01-01T12:00:00Z"
+        plan_model['updated'] = "2019-01-01T12:00:00Z"
         plan_model['deployments'] = [deployment_model]
 
         kind_model = {} # Kind
         kind_model['id'] = 'testString'
         kind_model['format_kind'] = 'testString'
         kind_model['target_kind'] = 'testString'
-        kind_model['metadata'] = { 'foo': 'bar' }
+        kind_model['metadata'] = {}
         kind_model['install_description'] = 'testString'
         kind_model['tags'] = ['testString']
         kind_model['additional_features'] = [feature_model]
-        kind_model['created'] = '2020-01-28T18:40:40.123456Z'
-        kind_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        kind_model['created'] = "2019-01-01T12:00:00Z"
+        kind_model['updated'] = "2019-01-01T12:00:00Z"
         kind_model['versions'] = [version_model]
         kind_model['plans'] = [plan_model]
 
@@ -9767,9 +8619,10 @@ class TestOffering():
         offering_model_json['offering_docs_url'] = 'testString'
         offering_model_json['offering_support_url'] = 'testString'
         offering_model_json['tags'] = ['testString']
+        offering_model_json['keywords'] = ['testString']
         offering_model_json['rating'] = rating_model
-        offering_model_json['created'] = '2020-01-28T18:40:40.123456Z'
-        offering_model_json['updated'] = '2020-01-28T18:40:40.123456Z'
+        offering_model_json['created'] = "2019-01-01T12:00:00Z"
+        offering_model_json['updated'] = "2019-01-01T12:00:00Z"
         offering_model_json['short_description'] = 'testString'
         offering_model_json['long_description'] = 'testString'
         offering_model_json['features'] = [feature_model]
@@ -9783,7 +8636,7 @@ class TestOffering():
         offering_model_json['portal_ui_url'] = 'testString'
         offering_model_json['catalog_id'] = 'testString'
         offering_model_json['catalog_name'] = 'testString'
-        offering_model_json['metadata'] = { 'foo': 'bar' }
+        offering_model_json['metadata'] = {}
         offering_model_json['disclaimer'] = 'testString'
         offering_model_json['hidden'] = True
         offering_model_json['provider'] = 'testString'
@@ -9804,7 +8657,96 @@ class TestOffering():
         offering_model_json2 = offering_model.to_dict()
         assert offering_model_json2 == offering_model_json
 
-class TestOfferingSearchResult():
+class OfferingInstanceUnitTests():
+    """
+    Test Class for OfferingInstance
+    """
+
+    def test_offering_instance_serialization(self):
+        """
+        Test serialization/deserialization for OfferingInstance
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        offering_instance_last_operation_model = {} # OfferingInstanceLastOperation
+        offering_instance_last_operation_model['operation'] = 'testString'
+        offering_instance_last_operation_model['state'] = 'testString'
+        offering_instance_last_operation_model['message'] = 'testString'
+        offering_instance_last_operation_model['transaction_id'] = 'testString'
+        offering_instance_last_operation_model['updated'] = 'testString'
+
+        # Construct a json representation of a OfferingInstance model
+        offering_instance_model_json = {}
+        offering_instance_model_json['id'] = 'testString'
+        offering_instance_model_json['_rev'] = 'testString'
+        offering_instance_model_json['url'] = 'testString'
+        offering_instance_model_json['crn'] = 'testString'
+        offering_instance_model_json['label'] = 'testString'
+        offering_instance_model_json['catalog_id'] = 'testString'
+        offering_instance_model_json['offering_id'] = 'testString'
+        offering_instance_model_json['kind_format'] = 'testString'
+        offering_instance_model_json['version'] = 'testString'
+        offering_instance_model_json['cluster_id'] = 'testString'
+        offering_instance_model_json['cluster_region'] = 'testString'
+        offering_instance_model_json['cluster_namespaces'] = ['testString']
+        offering_instance_model_json['cluster_all_namespaces'] = True
+        offering_instance_model_json['schematics_workspace_id'] = 'testString'
+        offering_instance_model_json['resource_group_id'] = 'testString'
+        offering_instance_model_json['install_plan'] = 'testString'
+        offering_instance_model_json['channel'] = 'testString'
+        offering_instance_model_json['metadata'] = {}
+        offering_instance_model_json['last_operation'] = offering_instance_last_operation_model
+
+        # Construct a model instance of OfferingInstance by calling from_dict on the json representation
+        offering_instance_model = OfferingInstance.from_dict(offering_instance_model_json)
+        assert offering_instance_model != False
+
+        # Construct a model instance of OfferingInstance by calling from_dict on the json representation
+        offering_instance_model_dict = OfferingInstance.from_dict(offering_instance_model_json).__dict__
+        offering_instance_model2 = OfferingInstance(**offering_instance_model_dict)
+
+        # Verify the model instances are equivalent
+        assert offering_instance_model == offering_instance_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        offering_instance_model_json2 = offering_instance_model.to_dict()
+        assert offering_instance_model_json2 == offering_instance_model_json
+
+class OfferingInstanceLastOperationUnitTests():
+    """
+    Test Class for OfferingInstanceLastOperation
+    """
+
+    def test_offering_instance_last_operation_serialization(self):
+        """
+        Test serialization/deserialization for OfferingInstanceLastOperation
+        """
+
+        # Construct a json representation of a OfferingInstanceLastOperation model
+        offering_instance_last_operation_model_json = {}
+        offering_instance_last_operation_model_json['operation'] = 'testString'
+        offering_instance_last_operation_model_json['state'] = 'testString'
+        offering_instance_last_operation_model_json['message'] = 'testString'
+        offering_instance_last_operation_model_json['transaction_id'] = 'testString'
+        offering_instance_last_operation_model_json['updated'] = 'testString'
+
+        # Construct a model instance of OfferingInstanceLastOperation by calling from_dict on the json representation
+        offering_instance_last_operation_model = OfferingInstanceLastOperation.from_dict(offering_instance_last_operation_model_json)
+        assert offering_instance_last_operation_model != False
+
+        # Construct a model instance of OfferingInstanceLastOperation by calling from_dict on the json representation
+        offering_instance_last_operation_model_dict = OfferingInstanceLastOperation.from_dict(offering_instance_last_operation_model_json).__dict__
+        offering_instance_last_operation_model2 = OfferingInstanceLastOperation(**offering_instance_last_operation_model_dict)
+
+        # Verify the model instances are equivalent
+        assert offering_instance_last_operation_model == offering_instance_last_operation_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        offering_instance_last_operation_model_json2 = offering_instance_last_operation_model.to_dict()
+        assert offering_instance_last_operation_model_json2 == offering_instance_last_operation_model_json
+
+class OfferingSearchResultUnitTests():
     """
     Test Class for OfferingSearchResult
     """
@@ -9837,11 +8779,11 @@ class TestOfferingSearchResult():
         configuration_model['hidden'] = True
 
         validation_model = {} # Validation
-        validation_model['validated'] = '2020-01-28T18:40:40.123456Z'
-        validation_model['requested'] = '2020-01-28T18:40:40.123456Z'
+        validation_model['validated'] = "2019-01-01T12:00:00Z"
+        validation_model['requested'] = "2019-01-01T12:00:00Z"
         validation_model['state'] = 'testString'
         validation_model['last_operation'] = 'testString'
-        validation_model['target'] = { 'foo': 'bar' }
+        validation_model['target'] = {}
 
         resource_model = {} # Resource
         resource_model['type'] = 'mem'
@@ -9870,9 +8812,9 @@ class TestOfferingSearchResult():
 
         state_model = {} # State
         state_model['current'] = 'testString'
-        state_model['current_entered'] = '2020-01-28T18:40:40.123456Z'
+        state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
-        state_model['pending_requested'] = '2020-01-28T18:40:40.123456Z'
+        state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
         version_model = {} # Version
@@ -9881,8 +8823,8 @@ class TestOfferingSearchResult():
         version_model['crn'] = 'testString'
         version_model['version'] = 'testString'
         version_model['sha'] = 'testString'
-        version_model['created'] = '2020-01-28T18:40:40.123456Z'
-        version_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        version_model['created'] = "2019-01-01T12:00:00Z"
+        version_model['updated'] = "2019-01-01T12:00:00Z"
         version_model['offering_id'] = 'testString'
         version_model['catalog_id'] = 'testString'
         version_model['kind_id'] = 'testString'
@@ -9891,7 +8833,7 @@ class TestOfferingSearchResult():
         version_model['source_url'] = 'testString'
         version_model['tgz_url'] = 'testString'
         version_model['configuration'] = [configuration_model]
-        version_model['metadata'] = { 'foo': 'bar' }
+        version_model['metadata'] = {}
         version_model['validation'] = validation_model
         version_model['required_resources'] = [resource_model]
         version_model['single_instance'] = True
@@ -9914,10 +8856,10 @@ class TestOfferingSearchResult():
         deployment_model['name'] = 'testString'
         deployment_model['short_description'] = 'testString'
         deployment_model['long_description'] = 'testString'
-        deployment_model['metadata'] = { 'foo': 'bar' }
+        deployment_model['metadata'] = {}
         deployment_model['tags'] = ['testString']
-        deployment_model['created'] = '2020-01-28T18:40:40.123456Z'
-        deployment_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        deployment_model['created'] = "2019-01-01T12:00:00Z"
+        deployment_model['updated'] = "2019-01-01T12:00:00Z"
 
         plan_model = {} # Plan
         plan_model['id'] = 'testString'
@@ -9925,23 +8867,23 @@ class TestOfferingSearchResult():
         plan_model['name'] = 'testString'
         plan_model['short_description'] = 'testString'
         plan_model['long_description'] = 'testString'
-        plan_model['metadata'] = { 'foo': 'bar' }
+        plan_model['metadata'] = {}
         plan_model['tags'] = ['testString']
         plan_model['additional_features'] = [feature_model]
-        plan_model['created'] = '2020-01-28T18:40:40.123456Z'
-        plan_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        plan_model['created'] = "2019-01-01T12:00:00Z"
+        plan_model['updated'] = "2019-01-01T12:00:00Z"
         plan_model['deployments'] = [deployment_model]
 
         kind_model = {} # Kind
         kind_model['id'] = 'testString'
         kind_model['format_kind'] = 'testString'
         kind_model['target_kind'] = 'testString'
-        kind_model['metadata'] = { 'foo': 'bar' }
+        kind_model['metadata'] = {}
         kind_model['install_description'] = 'testString'
         kind_model['tags'] = ['testString']
         kind_model['additional_features'] = [feature_model]
-        kind_model['created'] = '2020-01-28T18:40:40.123456Z'
-        kind_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        kind_model['created'] = "2019-01-01T12:00:00Z"
+        kind_model['updated'] = "2019-01-01T12:00:00Z"
         kind_model['versions'] = [version_model]
         kind_model['plans'] = [plan_model]
 
@@ -9960,9 +8902,10 @@ class TestOfferingSearchResult():
         offering_model['offering_docs_url'] = 'testString'
         offering_model['offering_support_url'] = 'testString'
         offering_model['tags'] = ['testString']
+        offering_model['keywords'] = ['testString']
         offering_model['rating'] = rating_model
-        offering_model['created'] = '2020-01-28T18:40:40.123456Z'
-        offering_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        offering_model['created'] = "2019-01-01T12:00:00Z"
+        offering_model['updated'] = "2019-01-01T12:00:00Z"
         offering_model['short_description'] = 'testString'
         offering_model['long_description'] = 'testString'
         offering_model['features'] = [feature_model]
@@ -9976,7 +8919,7 @@ class TestOfferingSearchResult():
         offering_model['portal_ui_url'] = 'testString'
         offering_model['catalog_id'] = 'testString'
         offering_model['catalog_name'] = 'testString'
-        offering_model['metadata'] = { 'foo': 'bar' }
+        offering_model['metadata'] = {}
         offering_model['disclaimer'] = 'testString'
         offering_model['hidden'] = True
         offering_model['provider'] = 'testString'
@@ -10009,7 +8952,7 @@ class TestOfferingSearchResult():
         offering_search_result_model_json2 = offering_search_result_model.to_dict()
         assert offering_search_result_model_json2 == offering_search_result_model_json
 
-class TestOperatorDeployResult():
+class OperatorDeployResultUnitTests():
     """
     Test Class for OperatorDeployResult
     """
@@ -10045,7 +8988,7 @@ class TestOperatorDeployResult():
         operator_deploy_result_model_json2 = operator_deploy_result_model.to_dict()
         assert operator_deploy_result_model_json2 == operator_deploy_result_model_json
 
-class TestPlan():
+class PlanUnitTests():
     """
     Test Class for Plan
     """
@@ -10067,10 +9010,10 @@ class TestPlan():
         deployment_model['name'] = 'testString'
         deployment_model['short_description'] = 'testString'
         deployment_model['long_description'] = 'testString'
-        deployment_model['metadata'] = { 'foo': 'bar' }
+        deployment_model['metadata'] = {}
         deployment_model['tags'] = ['testString']
-        deployment_model['created'] = '2020-01-28T18:40:40.123456Z'
-        deployment_model['updated'] = '2020-01-28T18:40:40.123456Z'
+        deployment_model['created'] = "2019-01-01T12:00:00Z"
+        deployment_model['updated'] = "2019-01-01T12:00:00Z"
 
         # Construct a json representation of a Plan model
         plan_model_json = {}
@@ -10079,11 +9022,11 @@ class TestPlan():
         plan_model_json['name'] = 'testString'
         plan_model_json['short_description'] = 'testString'
         plan_model_json['long_description'] = 'testString'
-        plan_model_json['metadata'] = { 'foo': 'bar' }
+        plan_model_json['metadata'] = {}
         plan_model_json['tags'] = ['testString']
         plan_model_json['additional_features'] = [feature_model]
-        plan_model_json['created'] = '2020-01-28T18:40:40.123456Z'
-        plan_model_json['updated'] = '2020-01-28T18:40:40.123456Z'
+        plan_model_json['created'] = "2019-01-01T12:00:00Z"
+        plan_model_json['updated'] = "2019-01-01T12:00:00Z"
         plan_model_json['deployments'] = [deployment_model]
 
         # Construct a model instance of Plan by calling from_dict on the json representation
@@ -10101,7 +9044,7 @@ class TestPlan():
         plan_model_json2 = plan_model.to_dict()
         assert plan_model_json2 == plan_model_json
 
-class TestPublishObject():
+class PublishObjectUnitTests():
     """
     Test Class for PublishObject
     """
@@ -10134,7 +9077,7 @@ class TestPublishObject():
         publish_object_model_json2 = publish_object_model.to_dict()
         assert publish_object_model_json2 == publish_object_model_json
 
-class TestRating():
+class RatingUnitTests():
     """
     Test Class for Rating
     """
@@ -10166,7 +9109,7 @@ class TestRating():
         rating_model_json2 = rating_model.to_dict()
         assert rating_model_json2 == rating_model_json
 
-class TestRepoInfo():
+class RepoInfoUnitTests():
     """
     Test Class for RepoInfo
     """
@@ -10196,7 +9139,7 @@ class TestRepoInfo():
         repo_info_model_json2 = repo_info_model.to_dict()
         assert repo_info_model_json2 == repo_info_model_json
 
-class TestResource():
+class ResourceUnitTests():
     """
     Test Class for Resource
     """
@@ -10226,365 +9169,7 @@ class TestResource():
         resource_model_json2 = resource_model.to_dict()
         assert resource_model_json2 == resource_model_json
 
-class TestResourceGroup():
-    """
-    Test Class for ResourceGroup
-    """
-
-    def test_resource_group_serialization(self):
-        """
-        Test serialization/deserialization for ResourceGroup
-        """
-
-        # Construct a json representation of a ResourceGroup model
-        resource_group_model_json = {}
-        resource_group_model_json['id'] = 'testString'
-        resource_group_model_json['name'] = 'testString'
-        resource_group_model_json['crn'] = 'testString'
-        resource_group_model_json['account_id'] = 'testString'
-        resource_group_model_json['state'] = 'testString'
-        resource_group_model_json['default'] = True
-
-        # Construct a model instance of ResourceGroup by calling from_dict on the json representation
-        resource_group_model = ResourceGroup.from_dict(resource_group_model_json)
-        assert resource_group_model != False
-
-        # Construct a model instance of ResourceGroup by calling from_dict on the json representation
-        resource_group_model_dict = ResourceGroup.from_dict(resource_group_model_json).__dict__
-        resource_group_model2 = ResourceGroup(**resource_group_model_dict)
-
-        # Verify the model instances are equivalent
-        assert resource_group_model == resource_group_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        resource_group_model_json2 = resource_group_model.to_dict()
-        assert resource_group_model_json2 == resource_group_model_json
-
-class TestResourceGroups():
-    """
-    Test Class for ResourceGroups
-    """
-
-    def test_resource_groups_serialization(self):
-        """
-        Test serialization/deserialization for ResourceGroups
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        resource_group_model = {} # ResourceGroup
-        resource_group_model['id'] = 'testString'
-        resource_group_model['name'] = 'testString'
-        resource_group_model['crn'] = 'testString'
-        resource_group_model['account_id'] = 'testString'
-        resource_group_model['state'] = 'testString'
-        resource_group_model['default'] = True
-
-        # Construct a json representation of a ResourceGroups model
-        resource_groups_model_json = {}
-        resource_groups_model_json['offset'] = 38
-        resource_groups_model_json['limit'] = 38
-        resource_groups_model_json['total_count'] = 38
-        resource_groups_model_json['resource_count'] = 38
-        resource_groups_model_json['first'] = 'testString'
-        resource_groups_model_json['last'] = 'testString'
-        resource_groups_model_json['prev'] = 'testString'
-        resource_groups_model_json['next'] = 'testString'
-        resource_groups_model_json['resources'] = [resource_group_model]
-
-        # Construct a model instance of ResourceGroups by calling from_dict on the json representation
-        resource_groups_model = ResourceGroups.from_dict(resource_groups_model_json)
-        assert resource_groups_model != False
-
-        # Construct a model instance of ResourceGroups by calling from_dict on the json representation
-        resource_groups_model_dict = ResourceGroups.from_dict(resource_groups_model_json).__dict__
-        resource_groups_model2 = ResourceGroups(**resource_groups_model_dict)
-
-        # Verify the model instances are equivalent
-        assert resource_groups_model == resource_groups_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        resource_groups_model_json2 = resource_groups_model.to_dict()
-        assert resource_groups_model_json2 == resource_groups_model_json
-
-class TestSchematicsWorkspace():
-    """
-    Test Class for SchematicsWorkspace
-    """
-
-    def test_schematics_workspace_serialization(self):
-        """
-        Test serialization/deserialization for SchematicsWorkspace
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        schematics_workspace_workspace_status_model = {} # SchematicsWorkspaceWorkspaceStatus
-        schematics_workspace_workspace_status_model['frozen'] = True
-        schematics_workspace_workspace_status_model['locked'] = True
-
-        schematics_workspace_template_repo_model = {} # SchematicsWorkspaceTemplateRepo
-        schematics_workspace_template_repo_model['repo_url'] = 'testString'
-        schematics_workspace_template_repo_model['chart_name'] = 'testString'
-        schematics_workspace_template_repo_model['script_name'] = 'testString'
-        schematics_workspace_template_repo_model['uninstall_script_name'] = 'testString'
-        schematics_workspace_template_repo_model['folder_name'] = 'testString'
-        schematics_workspace_template_repo_model['repo_sha_value'] = 'testString'
-
-        schematics_workspace_runtime_data_model = {} # SchematicsWorkspaceRuntimeData
-        schematics_workspace_runtime_data_model['id'] = 'testString'
-        schematics_workspace_runtime_data_model['engine_name'] = 'testString'
-        schematics_workspace_runtime_data_model['engine_version'] = 'testString'
-        schematics_workspace_runtime_data_model['state_store_url'] = 'testString'
-        schematics_workspace_runtime_data_model['log_store_url'] = 'testString'
-
-        schematics_workspace_catalog_ref_model = {} # SchematicsWorkspaceCatalogRef
-        schematics_workspace_catalog_ref_model['item_id'] = 'testString'
-        schematics_workspace_catalog_ref_model['item_name'] = 'testString'
-        schematics_workspace_catalog_ref_model['item_url'] = 'testString'
-
-        # Construct a json representation of a SchematicsWorkspace model
-        schematics_workspace_model_json = {}
-        schematics_workspace_model_json['id'] = 'testString'
-        schematics_workspace_model_json['name'] = 'testString'
-        schematics_workspace_model_json['type'] = ['testString']
-        schematics_workspace_model_json['description'] = 'testString'
-        schematics_workspace_model_json['tags'] = ['testString']
-        schematics_workspace_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
-        schematics_workspace_model_json['created_by'] = 'testString'
-        schematics_workspace_model_json['status'] = 'testString'
-        schematics_workspace_model_json['workspace_status'] = schematics_workspace_workspace_status_model
-        schematics_workspace_model_json['template_ref'] = 'testString'
-        schematics_workspace_model_json['template_repo'] = schematics_workspace_template_repo_model
-        schematics_workspace_model_json['template_data'] = [{ 'foo': 'bar' }]
-        schematics_workspace_model_json['runtime_data'] = schematics_workspace_runtime_data_model
-        schematics_workspace_model_json['shared_data'] = { 'foo': 'bar' }
-        schematics_workspace_model_json['catalog_ref'] = schematics_workspace_catalog_ref_model
-
-        # Construct a model instance of SchematicsWorkspace by calling from_dict on the json representation
-        schematics_workspace_model = SchematicsWorkspace.from_dict(schematics_workspace_model_json)
-        assert schematics_workspace_model != False
-
-        # Construct a model instance of SchematicsWorkspace by calling from_dict on the json representation
-        schematics_workspace_model_dict = SchematicsWorkspace.from_dict(schematics_workspace_model_json).__dict__
-        schematics_workspace_model2 = SchematicsWorkspace(**schematics_workspace_model_dict)
-
-        # Verify the model instances are equivalent
-        assert schematics_workspace_model == schematics_workspace_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        schematics_workspace_model_json2 = schematics_workspace_model.to_dict()
-        assert schematics_workspace_model_json2 == schematics_workspace_model_json
-
-class TestSchematicsWorkspaceCatalogRef():
-    """
-    Test Class for SchematicsWorkspaceCatalogRef
-    """
-
-    def test_schematics_workspace_catalog_ref_serialization(self):
-        """
-        Test serialization/deserialization for SchematicsWorkspaceCatalogRef
-        """
-
-        # Construct a json representation of a SchematicsWorkspaceCatalogRef model
-        schematics_workspace_catalog_ref_model_json = {}
-        schematics_workspace_catalog_ref_model_json['item_id'] = 'testString'
-        schematics_workspace_catalog_ref_model_json['item_name'] = 'testString'
-        schematics_workspace_catalog_ref_model_json['item_url'] = 'testString'
-
-        # Construct a model instance of SchematicsWorkspaceCatalogRef by calling from_dict on the json representation
-        schematics_workspace_catalog_ref_model = SchematicsWorkspaceCatalogRef.from_dict(schematics_workspace_catalog_ref_model_json)
-        assert schematics_workspace_catalog_ref_model != False
-
-        # Construct a model instance of SchematicsWorkspaceCatalogRef by calling from_dict on the json representation
-        schematics_workspace_catalog_ref_model_dict = SchematicsWorkspaceCatalogRef.from_dict(schematics_workspace_catalog_ref_model_json).__dict__
-        schematics_workspace_catalog_ref_model2 = SchematicsWorkspaceCatalogRef(**schematics_workspace_catalog_ref_model_dict)
-
-        # Verify the model instances are equivalent
-        assert schematics_workspace_catalog_ref_model == schematics_workspace_catalog_ref_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        schematics_workspace_catalog_ref_model_json2 = schematics_workspace_catalog_ref_model.to_dict()
-        assert schematics_workspace_catalog_ref_model_json2 == schematics_workspace_catalog_ref_model_json
-
-class TestSchematicsWorkspaceRuntimeData():
-    """
-    Test Class for SchematicsWorkspaceRuntimeData
-    """
-
-    def test_schematics_workspace_runtime_data_serialization(self):
-        """
-        Test serialization/deserialization for SchematicsWorkspaceRuntimeData
-        """
-
-        # Construct a json representation of a SchematicsWorkspaceRuntimeData model
-        schematics_workspace_runtime_data_model_json = {}
-        schematics_workspace_runtime_data_model_json['id'] = 'testString'
-        schematics_workspace_runtime_data_model_json['engine_name'] = 'testString'
-        schematics_workspace_runtime_data_model_json['engine_version'] = 'testString'
-        schematics_workspace_runtime_data_model_json['state_store_url'] = 'testString'
-        schematics_workspace_runtime_data_model_json['log_store_url'] = 'testString'
-
-        # Construct a model instance of SchematicsWorkspaceRuntimeData by calling from_dict on the json representation
-        schematics_workspace_runtime_data_model = SchematicsWorkspaceRuntimeData.from_dict(schematics_workspace_runtime_data_model_json)
-        assert schematics_workspace_runtime_data_model != False
-
-        # Construct a model instance of SchematicsWorkspaceRuntimeData by calling from_dict on the json representation
-        schematics_workspace_runtime_data_model_dict = SchematicsWorkspaceRuntimeData.from_dict(schematics_workspace_runtime_data_model_json).__dict__
-        schematics_workspace_runtime_data_model2 = SchematicsWorkspaceRuntimeData(**schematics_workspace_runtime_data_model_dict)
-
-        # Verify the model instances are equivalent
-        assert schematics_workspace_runtime_data_model == schematics_workspace_runtime_data_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        schematics_workspace_runtime_data_model_json2 = schematics_workspace_runtime_data_model.to_dict()
-        assert schematics_workspace_runtime_data_model_json2 == schematics_workspace_runtime_data_model_json
-
-class TestSchematicsWorkspaceSearchResult():
-    """
-    Test Class for SchematicsWorkspaceSearchResult
-    """
-
-    def test_schematics_workspace_search_result_serialization(self):
-        """
-        Test serialization/deserialization for SchematicsWorkspaceSearchResult
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        schematics_workspace_workspace_status_model = {} # SchematicsWorkspaceWorkspaceStatus
-        schematics_workspace_workspace_status_model['frozen'] = True
-        schematics_workspace_workspace_status_model['locked'] = True
-
-        schematics_workspace_template_repo_model = {} # SchematicsWorkspaceTemplateRepo
-        schematics_workspace_template_repo_model['repo_url'] = 'testString'
-        schematics_workspace_template_repo_model['chart_name'] = 'testString'
-        schematics_workspace_template_repo_model['script_name'] = 'testString'
-        schematics_workspace_template_repo_model['uninstall_script_name'] = 'testString'
-        schematics_workspace_template_repo_model['folder_name'] = 'testString'
-        schematics_workspace_template_repo_model['repo_sha_value'] = 'testString'
-
-        schematics_workspace_runtime_data_model = {} # SchematicsWorkspaceRuntimeData
-        schematics_workspace_runtime_data_model['id'] = 'testString'
-        schematics_workspace_runtime_data_model['engine_name'] = 'testString'
-        schematics_workspace_runtime_data_model['engine_version'] = 'testString'
-        schematics_workspace_runtime_data_model['state_store_url'] = 'testString'
-        schematics_workspace_runtime_data_model['log_store_url'] = 'testString'
-
-        schematics_workspace_catalog_ref_model = {} # SchematicsWorkspaceCatalogRef
-        schematics_workspace_catalog_ref_model['item_id'] = 'testString'
-        schematics_workspace_catalog_ref_model['item_name'] = 'testString'
-        schematics_workspace_catalog_ref_model['item_url'] = 'testString'
-
-        schematics_workspace_model = {} # SchematicsWorkspace
-        schematics_workspace_model['id'] = 'testString'
-        schematics_workspace_model['name'] = 'testString'
-        schematics_workspace_model['type'] = ['testString']
-        schematics_workspace_model['description'] = 'testString'
-        schematics_workspace_model['tags'] = ['testString']
-        schematics_workspace_model['created_at'] = '2020-01-28T18:40:40.123456Z'
-        schematics_workspace_model['created_by'] = 'testString'
-        schematics_workspace_model['status'] = 'testString'
-        schematics_workspace_model['workspace_status'] = schematics_workspace_workspace_status_model
-        schematics_workspace_model['template_ref'] = 'testString'
-        schematics_workspace_model['template_repo'] = schematics_workspace_template_repo_model
-        schematics_workspace_model['template_data'] = [{ 'foo': 'bar' }]
-        schematics_workspace_model['runtime_data'] = schematics_workspace_runtime_data_model
-        schematics_workspace_model['shared_data'] = { 'foo': 'bar' }
-        schematics_workspace_model['catalog_ref'] = schematics_workspace_catalog_ref_model
-
-        # Construct a json representation of a SchematicsWorkspaceSearchResult model
-        schematics_workspace_search_result_model_json = {}
-        schematics_workspace_search_result_model_json['offset'] = 38
-        schematics_workspace_search_result_model_json['limit'] = 38
-        schematics_workspace_search_result_model_json['total_count'] = 38
-        schematics_workspace_search_result_model_json['resource_count'] = 38
-        schematics_workspace_search_result_model_json['first'] = 'testString'
-        schematics_workspace_search_result_model_json['last'] = 'testString'
-        schematics_workspace_search_result_model_json['prev'] = 'testString'
-        schematics_workspace_search_result_model_json['next'] = 'testString'
-        schematics_workspace_search_result_model_json['resources'] = [schematics_workspace_model]
-
-        # Construct a model instance of SchematicsWorkspaceSearchResult by calling from_dict on the json representation
-        schematics_workspace_search_result_model = SchematicsWorkspaceSearchResult.from_dict(schematics_workspace_search_result_model_json)
-        assert schematics_workspace_search_result_model != False
-
-        # Construct a model instance of SchematicsWorkspaceSearchResult by calling from_dict on the json representation
-        schematics_workspace_search_result_model_dict = SchematicsWorkspaceSearchResult.from_dict(schematics_workspace_search_result_model_json).__dict__
-        schematics_workspace_search_result_model2 = SchematicsWorkspaceSearchResult(**schematics_workspace_search_result_model_dict)
-
-        # Verify the model instances are equivalent
-        assert schematics_workspace_search_result_model == schematics_workspace_search_result_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        schematics_workspace_search_result_model_json2 = schematics_workspace_search_result_model.to_dict()
-        assert schematics_workspace_search_result_model_json2 == schematics_workspace_search_result_model_json
-
-class TestSchematicsWorkspaceTemplateRepo():
-    """
-    Test Class for SchematicsWorkspaceTemplateRepo
-    """
-
-    def test_schematics_workspace_template_repo_serialization(self):
-        """
-        Test serialization/deserialization for SchematicsWorkspaceTemplateRepo
-        """
-
-        # Construct a json representation of a SchematicsWorkspaceTemplateRepo model
-        schematics_workspace_template_repo_model_json = {}
-        schematics_workspace_template_repo_model_json['repo_url'] = 'testString'
-        schematics_workspace_template_repo_model_json['chart_name'] = 'testString'
-        schematics_workspace_template_repo_model_json['script_name'] = 'testString'
-        schematics_workspace_template_repo_model_json['uninstall_script_name'] = 'testString'
-        schematics_workspace_template_repo_model_json['folder_name'] = 'testString'
-        schematics_workspace_template_repo_model_json['repo_sha_value'] = 'testString'
-
-        # Construct a model instance of SchematicsWorkspaceTemplateRepo by calling from_dict on the json representation
-        schematics_workspace_template_repo_model = SchematicsWorkspaceTemplateRepo.from_dict(schematics_workspace_template_repo_model_json)
-        assert schematics_workspace_template_repo_model != False
-
-        # Construct a model instance of SchematicsWorkspaceTemplateRepo by calling from_dict on the json representation
-        schematics_workspace_template_repo_model_dict = SchematicsWorkspaceTemplateRepo.from_dict(schematics_workspace_template_repo_model_json).__dict__
-        schematics_workspace_template_repo_model2 = SchematicsWorkspaceTemplateRepo(**schematics_workspace_template_repo_model_dict)
-
-        # Verify the model instances are equivalent
-        assert schematics_workspace_template_repo_model == schematics_workspace_template_repo_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        schematics_workspace_template_repo_model_json2 = schematics_workspace_template_repo_model.to_dict()
-        assert schematics_workspace_template_repo_model_json2 == schematics_workspace_template_repo_model_json
-
-class TestSchematicsWorkspaceWorkspaceStatus():
-    """
-    Test Class for SchematicsWorkspaceWorkspaceStatus
-    """
-
-    def test_schematics_workspace_workspace_status_serialization(self):
-        """
-        Test serialization/deserialization for SchematicsWorkspaceWorkspaceStatus
-        """
-
-        # Construct a json representation of a SchematicsWorkspaceWorkspaceStatus model
-        schematics_workspace_workspace_status_model_json = {}
-        schematics_workspace_workspace_status_model_json['frozen'] = True
-        schematics_workspace_workspace_status_model_json['locked'] = True
-
-        # Construct a model instance of SchematicsWorkspaceWorkspaceStatus by calling from_dict on the json representation
-        schematics_workspace_workspace_status_model = SchematicsWorkspaceWorkspaceStatus.from_dict(schematics_workspace_workspace_status_model_json)
-        assert schematics_workspace_workspace_status_model != False
-
-        # Construct a model instance of SchematicsWorkspaceWorkspaceStatus by calling from_dict on the json representation
-        schematics_workspace_workspace_status_model_dict = SchematicsWorkspaceWorkspaceStatus.from_dict(schematics_workspace_workspace_status_model_json).__dict__
-        schematics_workspace_workspace_status_model2 = SchematicsWorkspaceWorkspaceStatus(**schematics_workspace_workspace_status_model_dict)
-
-        # Verify the model instances are equivalent
-        assert schematics_workspace_workspace_status_model == schematics_workspace_workspace_status_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        schematics_workspace_workspace_status_model_json2 = schematics_workspace_workspace_status_model.to_dict()
-        assert schematics_workspace_workspace_status_model_json2 == schematics_workspace_workspace_status_model_json
-
-class TestScript():
+class ScriptUnitTests():
     """
     Test Class for Script
     """
@@ -10617,7 +9202,7 @@ class TestScript():
         script_model_json2 = script_model.to_dict()
         assert script_model_json2 == script_model_json
 
-class TestState():
+class StateUnitTests():
     """
     Test Class for State
     """
@@ -10630,9 +9215,9 @@ class TestState():
         # Construct a json representation of a State model
         state_model_json = {}
         state_model_json['current'] = 'testString'
-        state_model_json['current_entered'] = '2020-01-28T18:40:40.123456Z'
+        state_model_json['current_entered'] = "2019-01-01T12:00:00Z"
         state_model_json['pending'] = 'testString'
-        state_model_json['pending_requested'] = '2020-01-28T18:40:40.123456Z'
+        state_model_json['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model_json['previous'] = 'testString'
 
         # Construct a model instance of State by calling from_dict on the json representation
@@ -10650,7 +9235,7 @@ class TestState():
         state_model_json2 = state_model.to_dict()
         assert state_model_json2 == state_model_json
 
-class TestSyndicationAuthorization():
+class SyndicationAuthorizationUnitTests():
     """
     Test Class for SyndicationAuthorization
     """
@@ -10663,7 +9248,7 @@ class TestSyndicationAuthorization():
         # Construct a json representation of a SyndicationAuthorization model
         syndication_authorization_model_json = {}
         syndication_authorization_model_json['token'] = 'testString'
-        syndication_authorization_model_json['last_run'] = '2020-01-28T18:40:40.123456Z'
+        syndication_authorization_model_json['last_run'] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of SyndicationAuthorization by calling from_dict on the json representation
         syndication_authorization_model = SyndicationAuthorization.from_dict(syndication_authorization_model_json)
@@ -10680,7 +9265,7 @@ class TestSyndicationAuthorization():
         syndication_authorization_model_json2 = syndication_authorization_model.to_dict()
         assert syndication_authorization_model_json2 == syndication_authorization_model_json
 
-class TestSyndicationCluster():
+class SyndicationClusterUnitTests():
     """
     Test Class for SyndicationCluster
     """
@@ -10715,7 +9300,7 @@ class TestSyndicationCluster():
         syndication_cluster_model_json2 = syndication_cluster_model.to_dict()
         assert syndication_cluster_model_json2 == syndication_cluster_model_json
 
-class TestSyndicationHistory():
+class SyndicationHistoryUnitTests():
     """
     Test Class for SyndicationHistory
     """
@@ -10740,7 +9325,7 @@ class TestSyndicationHistory():
         syndication_history_model_json = {}
         syndication_history_model_json['namespaces'] = ['testString']
         syndication_history_model_json['clusters'] = [syndication_cluster_model]
-        syndication_history_model_json['last_run'] = '2020-01-28T18:40:40.123456Z'
+        syndication_history_model_json['last_run'] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of SyndicationHistory by calling from_dict on the json representation
         syndication_history_model = SyndicationHistory.from_dict(syndication_history_model_json)
@@ -10757,7 +9342,7 @@ class TestSyndicationHistory():
         syndication_history_model_json2 = syndication_history_model.to_dict()
         assert syndication_history_model_json2 == syndication_history_model_json
 
-class TestSyndicationResource():
+class SyndicationResourceUnitTests():
     """
     Test Class for SyndicationResource
     """
@@ -10781,11 +9366,11 @@ class TestSyndicationResource():
         syndication_history_model = {} # SyndicationHistory
         syndication_history_model['namespaces'] = ['testString']
         syndication_history_model['clusters'] = [syndication_cluster_model]
-        syndication_history_model['last_run'] = '2020-01-28T18:40:40.123456Z'
+        syndication_history_model['last_run'] = "2019-01-01T12:00:00Z"
 
         syndication_authorization_model = {} # SyndicationAuthorization
         syndication_authorization_model['token'] = 'testString'
-        syndication_authorization_model['last_run'] = '2020-01-28T18:40:40.123456Z'
+        syndication_authorization_model['last_run'] = "2019-01-01T12:00:00Z"
 
         # Construct a json representation of a SyndicationResource model
         syndication_resource_model_json = {}
@@ -10809,7 +9394,7 @@ class TestSyndicationResource():
         syndication_resource_model_json2 = syndication_resource_model.to_dict()
         assert syndication_resource_model_json2 == syndication_resource_model_json
 
-class TestValidation():
+class ValidationUnitTests():
     """
     Test Class for Validation
     """
@@ -10821,11 +9406,11 @@ class TestValidation():
 
         # Construct a json representation of a Validation model
         validation_model_json = {}
-        validation_model_json['validated'] = '2020-01-28T18:40:40.123456Z'
-        validation_model_json['requested'] = '2020-01-28T18:40:40.123456Z'
+        validation_model_json['validated'] = "2019-01-01T12:00:00Z"
+        validation_model_json['requested'] = "2019-01-01T12:00:00Z"
         validation_model_json['state'] = 'testString'
         validation_model_json['last_operation'] = 'testString'
-        validation_model_json['target'] = { 'foo': 'bar' }
+        validation_model_json['target'] = {}
 
         # Construct a model instance of Validation by calling from_dict on the json representation
         validation_model = Validation.from_dict(validation_model_json)
@@ -10842,7 +9427,7 @@ class TestValidation():
         validation_model_json2 = validation_model.to_dict()
         assert validation_model_json2 == validation_model_json
 
-class TestVersion():
+class VersionUnitTests():
     """
     Test Class for Version
     """
@@ -10865,11 +9450,11 @@ class TestVersion():
         configuration_model['hidden'] = True
 
         validation_model = {} # Validation
-        validation_model['validated'] = '2020-01-28T18:40:40.123456Z'
-        validation_model['requested'] = '2020-01-28T18:40:40.123456Z'
+        validation_model['validated'] = "2019-01-01T12:00:00Z"
+        validation_model['requested'] = "2019-01-01T12:00:00Z"
         validation_model['state'] = 'testString'
         validation_model['last_operation'] = 'testString'
-        validation_model['target'] = { 'foo': 'bar' }
+        validation_model['target'] = {}
 
         resource_model = {} # Resource
         resource_model['type'] = 'mem'
@@ -10898,9 +9483,9 @@ class TestVersion():
 
         state_model = {} # State
         state_model['current'] = 'testString'
-        state_model['current_entered'] = '2020-01-28T18:40:40.123456Z'
+        state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
-        state_model['pending_requested'] = '2020-01-28T18:40:40.123456Z'
+        state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
         # Construct a json representation of a Version model
@@ -10910,8 +9495,8 @@ class TestVersion():
         version_model_json['crn'] = 'testString'
         version_model_json['version'] = 'testString'
         version_model_json['sha'] = 'testString'
-        version_model_json['created'] = '2020-01-28T18:40:40.123456Z'
-        version_model_json['updated'] = '2020-01-28T18:40:40.123456Z'
+        version_model_json['created'] = "2019-01-01T12:00:00Z"
+        version_model_json['updated'] = "2019-01-01T12:00:00Z"
         version_model_json['offering_id'] = 'testString'
         version_model_json['catalog_id'] = 'testString'
         version_model_json['kind_id'] = 'testString'
@@ -10920,7 +9505,7 @@ class TestVersion():
         version_model_json['source_url'] = 'testString'
         version_model_json['tgz_url'] = 'testString'
         version_model_json['configuration'] = [configuration_model]
-        version_model_json['metadata'] = { 'foo': 'bar' }
+        version_model_json['metadata'] = {}
         version_model_json['validation'] = validation_model
         version_model_json['required_resources'] = [resource_model]
         version_model_json['single_instance'] = True
@@ -10952,7 +9537,7 @@ class TestVersion():
         version_model_json2 = version_model.to_dict()
         assert version_model_json2 == version_model_json
 
-class TestVersionEntitlement():
+class VersionEntitlementUnitTests():
     """
     Test Class for VersionEntitlement
     """
@@ -10985,7 +9570,7 @@ class TestVersionEntitlement():
         version_entitlement_model_json2 = version_entitlement_model.to_dict()
         assert version_entitlement_model_json2 == version_entitlement_model_json
 
-class TestVersionUpdateDescriptor():
+class VersionUpdateDescriptorUnitTests():
     """
     Test Class for VersionUpdateDescriptor
     """
@@ -10999,9 +9584,9 @@ class TestVersionUpdateDescriptor():
 
         state_model = {} # State
         state_model['current'] = 'testString'
-        state_model['current_entered'] = '2020-01-28T18:40:40.123456Z'
+        state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
-        state_model['pending_requested'] = '2020-01-28T18:40:40.123456Z'
+        state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
         resource_model = {} # Resource
@@ -11016,7 +9601,7 @@ class TestVersionUpdateDescriptor():
         version_update_descriptor_model_json['required_resources'] = [resource_model]
         version_update_descriptor_model_json['package_version'] = 'testString'
         version_update_descriptor_model_json['can_update'] = True
-        version_update_descriptor_model_json['messages'] = { 'foo': 'bar' }
+        version_update_descriptor_model_json['messages'] = {}
 
         # Construct a model instance of VersionUpdateDescriptor by calling from_dict on the json representation
         version_update_descriptor_model = VersionUpdateDescriptor.from_dict(version_update_descriptor_model_json)
