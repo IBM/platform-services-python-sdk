@@ -18,11 +18,9 @@ Integration Tests for CatalogManagementV1
 """
 
 import os
-import sys
 
 import pytest
 from ibm_cloud_sdk_core import *
-from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
 from ibm_platform_services.catalog_management_v1 import *
 
@@ -41,6 +39,7 @@ kind_offering = 'offering'
 
 repo_type_git_public = 'git_public'
 object_name = 'object_created_by_python_sdk_4'
+object_crn = 'crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com'
 region_us_south = 'us-south'
 namespace_python_sdk = 'python-sdk'
 import_offering_zip_url = 'https://github.com/rhm-samples/node-red-operator/blob/master/node-red-operator/bundle/0.0' \
@@ -81,8 +80,8 @@ class TestCatalogManagementV1():
             cls.cluster_id = cls.config.get('CLUSTER_ID')
             assert cls.cluster_id is not None
 
-            cls.git_token = cls.config.get('GIT_TOKEN')
-            assert cls.git_token is not None
+            cls.git_auth_token = cls.config.get('GIT_TOKEN')
+            assert cls.git_auth_token is not None
 
             cls.catalog_management_service_authorized.get_catalog_account()
             authenticator_authorized = cls.catalog_management_service_authorized.get_authenticator()
@@ -387,7 +386,7 @@ class TestCatalogManagementV1():
                 catalog_identifier=catalog_id,
                 offering_id='invalid-' + offering_id,
                 id='invalid-' + offering_id,
-                name='updated-offering-by-python-sdk',
+                name='updated-offering-name-by-python-sdk',
             )
         except ApiException as e:
             assert e.code == 404
@@ -402,7 +401,7 @@ class TestCatalogManagementV1():
                 catalog_identifier=catalog_id,
                 offering_id=offering_id,
                 id=offering_id,
-                name='updated offering by python sdk',
+                name='updated offering name by python sdk',
             )
         except ApiException as e:
             assert e.code == 400
@@ -417,7 +416,7 @@ class TestCatalogManagementV1():
                 catalog_identifier=catalog_id,
                 offering_id=offering_id,
                 id=offering_id,
-                name='updated-offering-by-python-sdk',
+                name='updated-offering-name-by-python-sdk',
             )
         except ApiException as e:
             assert e.code == 403
@@ -426,6 +425,8 @@ class TestCatalogManagementV1():
     def test_replace_offering_returns_409_when_conflict_occurs(self):
         assert catalog_id is not None
         assert offering_id is not None
+
+        # once the version related conflict is resolved this test requires a conflict case
 
         try:
             self.catalog_management_service_authorized.replace_offering(
@@ -445,12 +446,12 @@ class TestCatalogManagementV1():
 
         # update conflict on revisions
 
-        updated_name = 'updated-offering-by-python-sdk'
+        updated_offering_name = 'updated-offering-by-python-sdk'
         replace_offering_response = self.catalog_management_service_authorized.replace_offering(
             catalog_identifier=catalog_id,
             offering_id=offering_id,
             id=offering_id,
-            name=updated_name,
+            name=updated_offering_name,
         )
 
         assert replace_offering_response.get_status_code() == 200
@@ -458,13 +459,12 @@ class TestCatalogManagementV1():
         assert offering is not None
         assert offering['id'] == offering_id
         assert offering['catalog_id'] == catalog_id
-        assert offering['name'] == updated_name
+        assert offering['name'] == updated_offering_name
 
     ####
     # List Offerings
     ####
 
-    # pagination
     @needscredentials
     def test_list_offerings_returns_403_when_user_is_not_authorized(self):
         assert catalog_id is not None
@@ -553,7 +553,7 @@ class TestCatalogManagementV1():
                 offering_id=offering_id,
                 target_version='0.0.3',
                 repo_type=repo_type_git_public,
-                x_auth_token=self.git_token
+                x_auth_token=self.git_auth_token
             )
         except ApiException as e:
             assert e.code == 403
@@ -572,7 +572,7 @@ class TestCatalogManagementV1():
                 offering_id=offering_id,
                 target_version='0.0.2-patch',
                 repo_type=repo_type_git_public,
-                x_auth_token=self.git_token
+                x_auth_token=self.git_auth_token
             )
         except ApiException as e:
             assert e.code == 400
@@ -591,7 +591,7 @@ class TestCatalogManagementV1():
                 offering_id=offering_id,
                 target_version='0.0.2',
                 repo_type=repo_type_git_public,
-                x_auth_token=self.git_token
+                x_auth_token=self.git_auth_token
             )
         except ApiException as e:
             assert e.code == 404
@@ -610,7 +610,7 @@ class TestCatalogManagementV1():
             offering_id=offering_id,
             target_version='0.0.2',
             repo_type=repo_type_git_public,
-            x_auth_token=self.git_token
+            x_auth_token=self.git_auth_token
         )
 
         assert import_offering_response.get_status_code() == 201
@@ -633,7 +633,7 @@ class TestCatalogManagementV1():
                 offering_id=offering_id,
                 target_version='0.0.2',
                 repo_type=repo_type_git_public,
-                x_auth_token=self.git_token
+                x_auth_token=self.git_auth_token
             )
 
         except ApiException as e:
@@ -653,7 +653,7 @@ class TestCatalogManagementV1():
                 catalog_identifier=catalog_id,
                 offering_id='invalid-' + offering_id,
                 target_version='0.0.2',
-                target_kinds=kind_vpe,
+                target_kinds=kind_roks,
                 zipurl=import_offering_zip_url,
                 repo_type=repo_type_git_public
             )
@@ -689,7 +689,7 @@ class TestCatalogManagementV1():
             catalog_identifier=catalog_id,
             offering_id=offering_id,
             target_version='0.0.2',
-            target_kinds=kind_vpe,
+            target_kinds=kind_roks,
             zipurl=import_offering_zip_url,
             repo_type=repo_type_git_public
         )
@@ -721,7 +721,7 @@ class TestCatalogManagementV1():
                 catalog_identifier=catalog_id,
                 catalog_id=catalog_id,
                 name=object_name,
-                crn='crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com',
+                crn=object_crn,
                 parent_id='bogus region name',
                 kind=kind_vpe,
                 publish=publish_object_model,
@@ -749,7 +749,7 @@ class TestCatalogManagementV1():
                 catalog_identifier=catalog_id,
                 catalog_id=catalog_id,
                 name=object_name,
-                crn='crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com',
+                crn=object_crn,
                 parent_id=region_us_south,
                 kind=kind_vpe,
                 publish=publish_object_model,
@@ -777,8 +777,7 @@ class TestCatalogManagementV1():
                 catalog_identifier='invalid-' + catalog_id,
                 catalog_id='invalid-' + catalog_id,
                 name=object_name,
-                crn='crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com',
-                url='test.ibm.hu',
+                crn=object_crn,
                 parent_id=region_us_south,
                 kind=kind_vpe,
                 publish=publish_object_model,
@@ -805,7 +804,7 @@ class TestCatalogManagementV1():
             catalog_identifier=catalog_id,
             catalog_id=catalog_id,
             name=object_name,
-            crn='crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com',
+            crn=object_crn,
             parent_id=region_us_south,
             kind=kind_vpe,
             publish=publish_object_model,
@@ -925,6 +924,7 @@ class TestCatalogManagementV1():
         )
 
         assert update_catalog_account_response.get_status_code() == 200
+        assert update_catalog_account_response.get_result() is not None
 
     ####
     # Get Catalog Account Audit
@@ -942,8 +942,7 @@ class TestCatalogManagementV1():
         get_catalog_account_audit_response = self.catalog_management_service_authorized.get_catalog_account_audit()
 
         assert get_catalog_account_audit_response.get_status_code() == 200
-        audit_log = get_catalog_account_audit_response.get_result()
-        assert audit_log is not None
+        assert get_catalog_account_audit_response.get_result() is not None
 
     ####
     # Get Catalog Account Filters
@@ -1023,7 +1022,6 @@ class TestCatalogManagementV1():
     # Get Consumption Offerings
     ####
 
-    # pagination
     @needscredentials
     def test_get_consumption_offerings_returns_403_when_user_is_not_authorized(self):
         assert catalog_id is not None
@@ -1744,7 +1742,7 @@ class TestCatalogManagementV1():
     def test_commit_version(self):
         assert version_locator_id is not None
 
-        # workflow of versions is unknown for me
+        # workflow of versions
         # Error: Could not find a working copy for the active version with id
 
         commit_version_response = self.catalog_management_service_authorized.commit_version(
@@ -2627,7 +2625,7 @@ class TestCatalogManagementV1():
 
         while fetch:
             search_objects_response = self.catalog_management_service_authorized.search_objects(
-                query='name: offer*',
+                query='name: object*',
                 collapse=True,
                 digest=True,
                 limit=limit,
