@@ -32,6 +32,8 @@ offering_id = None
 object_id = None
 version_locator_id = None
 offering_instance_id = None
+offerings = []
+objects = []
 
 kind_vpe = 'vpe'
 kind_roks = 'roks'
@@ -311,20 +313,26 @@ class TestCatalogManagementV1():
     @needscredentials
     def test_create_offering(self):
         global offering_id
+        global offerings
         assert catalog_id is not None
 
-        create_offering_response = self.catalog_management_service_authorized.create_offering(
-            catalog_identifier=catalog_id,
-            label=label_python_sdk,
-            name='offering-created-by-python-sdk-3',
-        )
+        for i in range(2):
+            create_offering_response = self.catalog_management_service_authorized.create_offering(
+                catalog_identifier=catalog_id,
+                label=label_python_sdk,
+                name='offering-created-by-python-sdk-'+str(i),
+            )
 
-        assert create_offering_response.get_status_code() == 201
-        offering = create_offering_response.get_result()
+            assert create_offering_response.get_status_code() == 201
+            offering = create_offering_response.get_result()
 
-        assert offering is not None
-        assert offering['id'] is not None
-        offering_id = offering['id']
+            assert offering is not None
+            assert offering['id'] is not None
+            print('offering id: '+offering['id'])
+            if offering_id is None:
+                offering_id = offering['id']
+
+            offerings.append(offering['id'])
 
     ####
     # Get Offering
@@ -504,13 +512,12 @@ class TestCatalogManagementV1():
     def test_list_offerings(self):
         assert catalog_id is not None
 
-        fetch = True
-        limit = 50
+        limit = 1
         offset = 0
         amount_of_offerings = 0
         is_offering_found = False
 
-        while fetch:
+        while offset > 0:
             list_offerings_response = self.catalog_management_service_authorized.list_offerings(
                 catalog_identifier=catalog_id,
                 limit=limit,
@@ -521,17 +528,13 @@ class TestCatalogManagementV1():
             offering_search_result = list_offerings_response.get_result()
             assert offering_search_result is not None
 
-            if (offering_search_result['resources'] is not None) and (len(offering_search_result['resources'])) > 0:
-                amount_of_offerings += len(offering_search_result['resources'])
-                offset += 50
+            offset_value = get_query_param(offering_search_result.next, 'offset')
+            print('offset value: '+offset_value)
 
-                if not is_offering_found:
-                    is_offering_found = next((offering for offering in offering_search_result['resources']
-                                              if offering['id'] == offering_id), False)
+            if offset_value is None:
+                offset = offset_value
             else:
-                fetch = False
-
-            assert is_offering_found is not False
+                offset = 0
 
         print('Amount of offerings is: '+str(amount_of_offerings))
 
@@ -3798,12 +3801,12 @@ class TestCatalogManagementV1():
         assert catalog_id is not None
         assert offering_id is not None
 
-        delete_offering_response = self.catalog_management_service_authorized.delete_offering(
-            catalog_identifier=catalog_id,
-            offering_id=offering_id,
-        )
-
-        assert delete_offering_response.get_status_code() == 200
+        for i in offerings:
+            delete_offering_response = self.catalog_management_service_authorized.delete_offering(
+                catalog_identifier=catalog_id,
+                offering_id=i,
+            )
+            assert delete_offering_response.get_status_code() == 200
 
     ####
     # Delete Catalog
