@@ -238,7 +238,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_replace_offering_example(self):
         """
         replace_offering request example
@@ -316,7 +316,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_reload_offering_example(self):
         """
         reload_offering request example
@@ -333,7 +333,6 @@ class TestCatalogManagementV1Examples():
                 offering_id=offering_id,
                 target_version='0.0.2',
                 repo_type='git_public',
-                x_auth_token=git_auth_token_for_public_repo
             ).get_result()
 
             print(json.dumps(offering, indent=2))
@@ -424,7 +423,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_update_catalog_account_example(self):
         """
         update_catalog_account request example
@@ -549,7 +548,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_replace_offering_icon_example(self):
         """
         replace_offering_icon request example
@@ -572,7 +571,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_update_offering_ibm_example(self):
         """
         update_offering_ibm request example
@@ -596,7 +595,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_get_offering_updates_example(self):
         """
         get_offering_updates request example
@@ -623,7 +622,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_get_offering_about_example(self):
         """
         get_offering_about request example
@@ -644,7 +643,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_get_offering_license_example(self):
         """
         get_offering_license request example
@@ -686,7 +685,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_deprecate_version_example(self):
         """
         deprecate_version request example
@@ -705,7 +704,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_account_publish_version_example(self):
         """
         account_publish_version request example
@@ -724,7 +723,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_ibm_publish_version_example(self):
         """
         ibm_publish_version request example
@@ -743,7 +742,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_public_publish_version_example(self):
         """
         public_publish_version request example
@@ -762,7 +761,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_commit_version_example(self):
         """
         commit_version request example
@@ -781,7 +780,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_copy_version_example(self):
         """
         copy_version request example
@@ -801,7 +800,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_get_offering_working_copy_example(self):
         """
         get_offering_working_copy request example
@@ -842,7 +841,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_get_cluster_example(self):
         """
         get_cluster request example
@@ -865,7 +864,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_get_namespaces_example(self):
         """
         get_namespaces request example
@@ -888,7 +887,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_deploy_operators_example(self):
         """
         deploy_operators request example
@@ -913,7 +912,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_list_operators_example(self):
         """
         list_operators request example
@@ -937,7 +936,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_replace_operators_example(self):
         """
         replace_operators request example
@@ -962,7 +961,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_install_version_example(self):
         """
         install_version request example
@@ -985,7 +984,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_preinstall_version_example(self):
         """
         preinstall_version request example
@@ -1008,7 +1007,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_get_preinstall_example(self):
         """
         get_preinstall request example
@@ -1032,7 +1031,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_validate_install_example(self):
         """
         validate_install request example
@@ -1076,7 +1075,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_get_override_values_example(self):
         """
         get_override_values request example
@@ -1143,7 +1142,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_replace_object_example(self):
         """
         replace_object request example
@@ -1231,7 +1230,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_shared_publish_object_example(self):
         """
         shared_publish_object request example
@@ -1251,7 +1250,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_ibm_publish_object_example(self):
         """
         ibm_publish_object request example
@@ -1271,7 +1270,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_public_publish_object_example(self):
         """
         public_publish_object request example
@@ -1376,7 +1375,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_create_offering_instance_example(self):
         """
         create_offering_instance request example
@@ -1409,7 +1408,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_get_offering_instance_example(self):
         """
         get_offering_instance request example
@@ -1430,7 +1429,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_put_offering_instance_example(self):
         """
         put_offering_instance request example
@@ -1478,7 +1477,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_delete_operators_example(self):
         """
         delete_operators request example
@@ -1500,7 +1499,7 @@ class TestCatalogManagementV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    @pytest.mark.skip(reason = 'Skip by design')
+    @pytest.mark.skip(reason='Skip by design')
     def test_delete_offering_instance_example(self):
         """
         delete_offering_instance request example
