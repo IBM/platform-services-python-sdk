@@ -439,7 +439,7 @@ class TestCatalogManagementV1():
             assert e.code == 409
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_replace_offering(self):
         assert catalog_id is not None
         assert offering_id is not None
@@ -678,7 +678,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_reload_offering(self):
         assert catalog_id is not None
         assert offering_id is not None
@@ -899,7 +899,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_update_catalog_account_returns_400_when_backend_input_validation_fails(self):
 
         # user is not granted for this operation
@@ -913,7 +913,7 @@ class TestCatalogManagementV1():
         assert update_catalog_account_response.get_status_code() == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_update_catalog_account(self):
 
         # user is not granted for this operation
@@ -1137,7 +1137,7 @@ class TestCatalogManagementV1():
     ####
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_replace_offering_icon_returns_404_when_no_such_offerings(self):
         assert catalog_id is not None
         assert offering_id is not None
@@ -1154,7 +1154,7 @@ class TestCatalogManagementV1():
             assert e.code == 404
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_replace_offering_icon_returns_403_when_user_is_not_authorized(self):
         assert catalog_id is not None
         assert offering_id is not None
@@ -1171,7 +1171,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_replace_offering_icon(self):
         assert catalog_id is not None
         assert offering_id is not None
@@ -1193,7 +1193,7 @@ class TestCatalogManagementV1():
     ####
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_update_offering_ibm_returns_400_when_backend_input_validation_fails(self):
         assert catalog_id is not None
         assert offering_id is not None
@@ -1211,7 +1211,7 @@ class TestCatalogManagementV1():
             assert e.code == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_update_offering_ibm_returns_404_when_no_such_offerings(self):
         assert catalog_id is not None
         assert offering_id is not None
@@ -1244,7 +1244,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_update_offering_ibm(self):
         assert catalog_id is not None
         assert offering_id is not None
@@ -1284,7 +1284,7 @@ class TestCatalogManagementV1():
             assert e.code == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_offering_updates_returns_404_when_no_such_offerings(self):
         assert catalog_id is not None
         assert offering_id is not None
@@ -1324,7 +1324,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_offering_updates(self):
         assert catalog_id is not None
         assert offering_id is not None
@@ -1428,7 +1428,7 @@ class TestCatalogManagementV1():
             assert e.code == 404
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_offering_license_returns_403_when_user_is_not_authorized(self):
         assert version_locator_id is not None
 
@@ -1442,7 +1442,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_offering_license(self):
         assert version_locator_id is not None
 
@@ -1540,7 +1540,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_deprecate_version(self):
         assert version_locator_id is not None
 
@@ -1590,7 +1590,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_account_publish_version(self):
         assert version_locator_id is not None
 
@@ -1640,7 +1640,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_ibm_publish_version(self):
         assert version_locator_id is not None
 
@@ -1689,7 +1689,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_public_publish_version(self):
         assert version_locator_id is not None
 
@@ -1738,7 +1738,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_commit_version(self):
         assert version_locator_id is not None
 
@@ -1791,7 +1791,7 @@ class TestCatalogManagementV1():
             assert e.code == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_copy_version(self):
         assert version_locator_id is not None
 
@@ -1841,7 +1841,7 @@ class TestCatalogManagementV1():
             assert e.code == 404
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_offering_working_copy(self):
         assert version_locator_id is not None
 
@@ -1910,7 +1910,7 @@ class TestCatalogManagementV1():
     ####
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_cluster_returns_403_when_user_is_not_authorized(self):
 
         # possibly this user doesn't have right to execute this operation
@@ -1937,7 +1937,7 @@ class TestCatalogManagementV1():
             assert e.code == 404
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_cluster(self):
 
         # possibly this user doesn't have right to get the cluster details
@@ -1970,7 +1970,7 @@ class TestCatalogManagementV1():
             assert e.code == 404
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_namespaces_returns_403_when_user_is_not_authorized(self):
 
         # possibly this user doesn't have right to get the cluster details
@@ -1988,7 +1988,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_namespaces(self):
 
         # possibly this user doesn't have right to get the cluster details
@@ -2055,7 +2055,7 @@ class TestCatalogManagementV1():
             assert e.code == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_deploy_operators(self):
         assert version_locator_id is not None
 
@@ -2122,7 +2122,7 @@ class TestCatalogManagementV1():
             assert e.code == 404
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_list_operators(self):
         assert version_locator_id is not None
 
@@ -2191,7 +2191,7 @@ class TestCatalogManagementV1():
             assert e.code == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_replace_operators(self):
         assert version_locator_id is not None
 
@@ -2261,7 +2261,7 @@ class TestCatalogManagementV1():
             assert e.code == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_install_version(self):
         assert version_locator_id is not None
 
@@ -2300,7 +2300,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_preinstall_version_returns_404_when_no_such_cluster(self):
 
         # it requires a version where preinstall script is installed
@@ -2335,7 +2335,7 @@ class TestCatalogManagementV1():
             assert e.code == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_preinstall_version(self):
         assert version_locator_id is not None
 
@@ -2397,7 +2397,7 @@ class TestCatalogManagementV1():
             assert e.code == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_preinstall(self):
         assert version_locator_id is not None
 
@@ -2463,7 +2463,7 @@ class TestCatalogManagementV1():
             assert e.code == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_validate_install(self):
         assert version_locator_id is not None
 
@@ -2571,7 +2571,7 @@ class TestCatalogManagementV1():
             assert e.code == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_override_values(self):
 
         # requires validation run before this operation
@@ -2768,7 +2768,7 @@ class TestCatalogManagementV1():
             assert e.code == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_replace_object(self):
 
         # cannot change name of object, what can be changed?
@@ -2953,7 +2953,7 @@ class TestCatalogManagementV1():
             assert e.code == 404
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_shared_publish_object(self):
         assert catalog_id is not None
         assert object_id is not None
@@ -2998,7 +2998,7 @@ class TestCatalogManagementV1():
             assert e.code == 404
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_ibm_publish_object(self):
         assert catalog_id is not None
         assert object_id is not None
@@ -3043,7 +3043,7 @@ class TestCatalogManagementV1():
             assert e.code == 404
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_public_publish_object(self):
         assert catalog_id is not None
         assert object_id is not None
@@ -3181,7 +3181,7 @@ class TestCatalogManagementV1():
             assert e.code == 404
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_object_access(self):
         assert catalog_id is not None
         assert object_id is not None
@@ -3251,7 +3251,7 @@ class TestCatalogManagementV1():
     ####
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_create_offering_instance_returns_404_when_no_such_catalog(self):
         assert catalog_id is not None
         assert offering_id is not None
@@ -3274,7 +3274,7 @@ class TestCatalogManagementV1():
             assert e.code == 404
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_create_offering_instance_returns_403_when_user_is_not_authorized(self):
         assert catalog_id is not None
         assert offering_id is not None
@@ -3317,7 +3317,7 @@ class TestCatalogManagementV1():
             assert e.code == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_create_offering_instance(self):
         global offering_instance_id
 
@@ -3347,7 +3347,7 @@ class TestCatalogManagementV1():
     ####
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_offering_instance_returns_403_when_user_is_not_authorized(self):
         assert offering_instance_id is not None
 
@@ -3359,7 +3359,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_offering_instance_returns_404_when_no_such_offering_instance(self):
         assert offering_instance_id is not None
 
@@ -3371,7 +3371,7 @@ class TestCatalogManagementV1():
             assert e.code == 404
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_get_offering_instance(self):
         assert offering_instance_id is not None
 
@@ -3388,7 +3388,7 @@ class TestCatalogManagementV1():
     ####
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_put_offering_instance_returns_403_when_user_is_not_authorized(self):
         assert offering_instance_id is not None
         assert catalog_id is not None
@@ -3411,7 +3411,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_put_offering_instance_returns_404_when_no_such_catalog(self):
         assert offering_instance_id is not None
         assert catalog_id is not None
@@ -3434,7 +3434,7 @@ class TestCatalogManagementV1():
             assert e.code == 404
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_put_offering_instance_returns_400_when_backend_input_validation_fails(self):
         assert offering_instance_id is not None
         assert catalog_id is not None
@@ -3457,7 +3457,7 @@ class TestCatalogManagementV1():
             assert e.code == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_put_offering_instance(self):
         assert offering_instance_id is not None
         assert catalog_id is not None
@@ -3572,7 +3572,7 @@ class TestCatalogManagementV1():
             assert e.code == 400
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_delete_operators(self):
         assert version_locator_id is not None
 
@@ -3594,7 +3594,7 @@ class TestCatalogManagementV1():
     ####
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_delete_offering_instance_returns_403_when_user_is_not_authorized(self):
         assert offering_instance_id is not None
 
@@ -3607,7 +3607,7 @@ class TestCatalogManagementV1():
             assert e.code == 403
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_delete_offering_instance_returns_404_when_no_such_offering_instance(self):
         assert offering_instance_id is not None
 
@@ -3620,7 +3620,7 @@ class TestCatalogManagementV1():
             assert e.code == 404
 
     @needscredentials
-    @pytest.mark.skip
+    @pytest.mark.skip(reason='Skipped by design')
     def test_delete_offering_instance(self):
         assert offering_instance_id is not None
 
