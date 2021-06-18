@@ -33,8 +33,8 @@ object_id = None
 version_locator_id = None
 offering_instance_id = None
 
-kind_vpe: str = 'vpe'
-kind_roks: str = 'roks'
+kind_vpe = 'vpe'
+kind_roks = 'roks'
 kind_offering = 'offering'
 
 repo_type_git_public = 'git_public'
