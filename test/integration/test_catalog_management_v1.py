@@ -32,15 +32,15 @@ offering_id = None
 object_id = None
 version_locator_id = None
 offering_instance_id = None
-offerings = []
-objects = []
+created_offering_ids = []
+created_object_ids = []
 
 kind_vpe = 'vpe'
 kind_roks = 'roks'
 kind_offering = 'offering'
 
 repo_type_git_public = 'git_public'
-object_name = 'object_created_by_python_sdk_4'
+object_name = 'object_created_by_python_sdk_5'
 object_crn = 'crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com'
 region_us_south = 'us-south'
 namespace_python_sdk = 'python-sdk'
@@ -313,7 +313,7 @@ class TestCatalogManagementV1():
     @needscredentials
     def test_create_offering(self):
         global offering_id
-        global offerings
+        global created_offering_ids
         assert catalog_id is not None
 
         for i in range(2):
@@ -332,7 +332,7 @@ class TestCatalogManagementV1():
             if offering_id is None:
                 offering_id = offering['id']
 
-            offerings.append(offering['id'])
+            created_offering_ids.append(offering['id'])
 
     ####
     # Get Offering
@@ -515,7 +515,6 @@ class TestCatalogManagementV1():
         limit = 1
         offset = 0
         amount_of_offerings = 0
-        is_offering_found = False
 
         while offset > 0:
             list_offerings_response = self.catalog_management_service_authorized.list_offerings(
@@ -792,34 +791,40 @@ class TestCatalogManagementV1():
     @needscredentials
     def test_create_object(self):
         global object_id
+        global created_object_ids
         assert catalog_id is not None
 
-        publish_object_model = {
-            'permit_ibm_public_publish': True,
-            'ibm_approved': True,
-            'public_approved': True,
-        }
-        state_model = {
-            'current': 'new',
-        }
+        for i in range(2):
+            publish_object_model = {
+                'permit_ibm_public_publish': True,
+                'ibm_approved': True,
+                'public_approved': True,
+            }
+            state_model = {
+                'current': 'new',
+            }
 
-        create_object_response = self.catalog_management_service_authorized.create_object(
-            catalog_identifier=catalog_id,
-            catalog_id=catalog_id,
-            name=object_name,
-            crn=object_crn,
-            parent_id=region_us_south,
-            kind=kind_vpe,
-            publish=publish_object_model,
-            state=state_model,
-        )
+            name = object_name+'_'+str(i)
+            create_object_response = self.catalog_management_service_authorized.create_object(
+                catalog_identifier=catalog_id,
+                catalog_id=catalog_id,
+                name=name,
+                crn=object_crn,
+                parent_id=region_us_south,
+                kind=kind_vpe,
+                publish=publish_object_model,
+                state=state_model,
+            )
 
-        assert create_object_response.get_status_code() == 201
-        catalog_object = create_object_response.get_result()
-        assert catalog_object is not None
-        assert catalog_object['id'] is not None
+            assert create_object_response.get_status_code() == 201
+            catalog_object = create_object_response.get_result()
+            assert catalog_object is not None
+            assert catalog_object['id'] is not None
 
-        object_id = catalog_object['id']
+            if object_id is None:
+                object_id = catalog_object['id']
+
+            created_object_ids.append(catalog_object['id'])
 
     ####
     # Get Offering Audit
@@ -2621,12 +2626,10 @@ class TestCatalogManagementV1():
     @needscredentials
     def test_search_objects(self):
 
-        fetch = True
-        limit = 50
+        limit = 1
         offset = 0
-        amount_of_objects = 0
 
-        while fetch:
+        while offset > 0:
             search_objects_response = self.catalog_management_service_authorized.search_objects(
                 query='name: object*',
                 collapse=True,
@@ -2638,14 +2641,11 @@ class TestCatalogManagementV1():
             assert search_objects_response.get_status_code() == 200
             object_search_result = search_objects_response.get_result()
             assert object_search_result is not None
-
-            if (object_search_result['resources'] is not None) and (len(object_search_result['resources']) > 0):
-                amount_of_objects += len(object_search_result['resources'])
-                offset += 50
+            offset_value = get_query_param(object_search_result.next, 'offset')
+            if offset_value is not None:
+                offset = offset_value
             else:
-                fetch = False
-
-        print('Amount of objects: '+str(amount_of_objects))
+                offset = 0
 
     ####
     # List Objects
@@ -2679,13 +2679,10 @@ class TestCatalogManagementV1():
     def test_list_objects(self):
         assert catalog_id is not None
 
-        fetch = True
-        is_object_found = False
-        amount_of_objects = 0
-        limit = 50
+        limit = 1
         offset = 0
 
-        while fetch:
+        while offset > 0:
             list_objects_response = self.catalog_management_service_authorized.list_objects(
                 catalog_identifier=catalog_id,
                 limit=limit,
@@ -2695,19 +2692,11 @@ class TestCatalogManagementV1():
             assert list_objects_response.get_status_code() == 200
             object_list_result = list_objects_response.get_result()
             assert object_list_result is not None
-            if (object_list_result['resources'] is not None) and (len(object_list_result['resources'])) > 0:
-                result_length = len(object_list_result['resources'])
-                amount_of_objects += result_length
-                offset += 50
-
-                if not is_object_found:
-                    is_object_found = next((obj for obj in object_list_result['resources'] if obj['id'] == object_id),
-                                           False)
+            offset_value = get_query_param(object_list_result.next, 'offset');
+            if offset_value is not None:
+                offset = offset_value
             else:
-                fetch = False
-
-        assert is_object_found is not False
-        print('Amount of objects: '+str(amount_of_objects))
+                offset = 0
 
     ####
     # Replace Object
@@ -3760,12 +3749,12 @@ class TestCatalogManagementV1():
         assert catalog_id is not None
         assert object_id is not None
 
-        delete_object_response = self.catalog_management_service_authorized.delete_object(
-            catalog_identifier=catalog_id,
-            object_identifier=object_id,
-        )
-
-        assert delete_object_response.get_status_code() == 200
+        for created_object_id in created_object_ids:
+            delete_object_response = self.catalog_management_service_authorized.delete_object(
+                catalog_identifier=catalog_id,
+                object_identifier=created_object_id,
+            )
+            assert delete_object_response.get_status_code() == 200
 
     ####
     # Delete Offering
@@ -3801,7 +3790,7 @@ class TestCatalogManagementV1():
         assert catalog_id is not None
         assert offering_id is not None
 
-        for i in offerings:
+        for i in created_offering_ids:
             delete_offering_response = self.catalog_management_service_authorized.delete_offering(
                 catalog_identifier=catalog_id,
                 offering_id=i,
