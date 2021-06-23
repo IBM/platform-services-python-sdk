@@ -17,10 +17,10 @@
 Examples for CatalogManagementV1
 """
 
-from ibm_cloud_sdk_core import ApiException, read_external_sources
-from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import os
 import pytest
+from ibm_cloud_sdk_core import ApiException, read_external_sources
+from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 from ibm_platform_services.catalog_management_v1 import *
 
 #
