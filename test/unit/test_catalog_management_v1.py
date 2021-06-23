@@ -6918,7 +6918,7 @@ class TestDeleteOfferingInstance():
 # Start of Model Tests
 ##############################################################################
 # region
-class AccessListBulkResponseUnitTests():
+class TestModel_AccessListBulkResponse():
     """
     Test Class for AccessListBulkResponse
     """
@@ -6947,7 +6947,7 @@ class AccessListBulkResponseUnitTests():
         access_list_bulk_response_model_json2 = access_list_bulk_response_model.to_dict()
         assert access_list_bulk_response_model_json2 == access_list_bulk_response_model_json
 
-class AccountUnitTests():
+class TestModel_Account():
     """
     Test Class for Account
     """
@@ -6996,7 +6996,7 @@ class AccountUnitTests():
         account_model_json2 = account_model.to_dict()
         assert account_model_json2 == account_model_json
 
-class AccumulatedFiltersUnitTests():
+class TestModel_AccumulatedFilters():
     """
     Test Class for AccumulatedFilters
     """
@@ -7052,7 +7052,7 @@ class AccumulatedFiltersUnitTests():
         accumulated_filters_model_json2 = accumulated_filters_model.to_dict()
         assert accumulated_filters_model_json2 == accumulated_filters_model_json
 
-class AccumulatedFiltersCatalogFiltersItemUnitTests():
+class TestModel_AccumulatedFiltersCatalogFiltersItem():
     """
     Test Class for AccumulatedFiltersCatalogFiltersItem
     """
@@ -7104,7 +7104,7 @@ class AccumulatedFiltersCatalogFiltersItemUnitTests():
         accumulated_filters_catalog_filters_item_model_json2 = accumulated_filters_catalog_filters_item_model.to_dict()
         assert accumulated_filters_catalog_filters_item_model_json2 == accumulated_filters_catalog_filters_item_model_json
 
-class AccumulatedFiltersCatalogFiltersItemCatalogUnitTests():
+class TestModel_AccumulatedFiltersCatalogFiltersItemCatalog():
     """
     Test Class for AccumulatedFiltersCatalogFiltersItemCatalog
     """
@@ -7134,7 +7134,7 @@ class AccumulatedFiltersCatalogFiltersItemCatalogUnitTests():
         accumulated_filters_catalog_filters_item_catalog_model_json2 = accumulated_filters_catalog_filters_item_catalog_model.to_dict()
         assert accumulated_filters_catalog_filters_item_catalog_model_json2 == accumulated_filters_catalog_filters_item_catalog_model_json
 
-class ApprovalResultUnitTests():
+class TestModel_ApprovalResult():
     """
     Test Class for ApprovalResult
     """
@@ -7166,7 +7166,7 @@ class ApprovalResultUnitTests():
         approval_result_model_json2 = approval_result_model.to_dict()
         assert approval_result_model_json2 == approval_result_model_json
 
-class AuditLogUnitTests():
+class TestModel_AuditLog():
     """
     Test Class for AuditLog
     """
@@ -7206,7 +7206,7 @@ class AuditLogUnitTests():
         audit_log_model_json2 = audit_log_model.to_dict()
         assert audit_log_model_json2 == audit_log_model_json
 
-class AuditRecordUnitTests():
+class TestModel_AuditRecord():
     """
     Test Class for AuditRecord
     """
@@ -7241,7 +7241,7 @@ class AuditRecordUnitTests():
         audit_record_model_json2 = audit_record_model.to_dict()
         assert audit_record_model_json2 == audit_record_model_json
 
-class CatalogUnitTests():
+class TestModel_Catalog():
     """
     Test Class for Catalog
     """
@@ -7333,7 +7333,7 @@ class CatalogUnitTests():
         catalog_model_json2 = catalog_model.to_dict()
         assert catalog_model_json2 == catalog_model_json
 
-class CatalogObjectUnitTests():
+class TestModel_CatalogObject():
     """
     Test Class for CatalogObject
     """
@@ -7396,7 +7396,7 @@ class CatalogObjectUnitTests():
         catalog_object_model_json2 = catalog_object_model.to_dict()
         assert catalog_object_model_json2 == catalog_object_model_json
 
-class CatalogSearchResultUnitTests():
+class TestModel_CatalogSearchResult():
     """
     Test Class for CatalogSearchResult
     """
@@ -7492,7 +7492,7 @@ class CatalogSearchResultUnitTests():
         catalog_search_result_model_json2 = catalog_search_result_model.to_dict()
         assert catalog_search_result_model_json2 == catalog_search_result_model_json
 
-class CategoryFilterUnitTests():
+class TestModel_CategoryFilter():
     """
     Test Class for CategoryFilter
     """
@@ -7527,7 +7527,7 @@ class CategoryFilterUnitTests():
         category_filter_model_json2 = category_filter_model.to_dict()
         assert category_filter_model_json2 == category_filter_model_json
 
-class ClusterInfoUnitTests():
+class TestModel_ClusterInfo():
     """
     Test Class for ClusterInfo
     """
@@ -7560,7 +7560,7 @@ class ClusterInfoUnitTests():
         cluster_info_model_json2 = cluster_info_model.to_dict()
         assert cluster_info_model_json2 == cluster_info_model_json
 
-class ConfigurationUnitTests():
+class TestModel_Configuration():
     """
     Test Class for Configuration
     """
@@ -7596,7 +7596,7 @@ class ConfigurationUnitTests():
         configuration_model_json2 = configuration_model.to_dict()
         assert configuration_model_json2 == configuration_model_json
 
-class DeployRequestBodySchematicsUnitTests():
+class TestModel_DeployRequestBodySchematics():
     """
     Test Class for DeployRequestBodySchematics
     """
@@ -7628,7 +7628,7 @@ class DeployRequestBodySchematicsUnitTests():
         deploy_request_body_schematics_model_json2 = deploy_request_body_schematics_model.to_dict()
         assert deploy_request_body_schematics_model_json2 == deploy_request_body_schematics_model_json
 
-class DeploymentUnitTests():
+class TestModel_Deployment():
     """
     Test Class for Deployment
     """
@@ -7665,7 +7665,7 @@ class DeploymentUnitTests():
         deployment_model_json2 = deployment_model.to_dict()
         assert deployment_model_json2 == deployment_model_json
 
-class FeatureUnitTests():
+class TestModel_Feature():
     """
     Test Class for Feature
     """
@@ -7695,7 +7695,7 @@ class FeatureUnitTests():
         feature_model_json2 = feature_model.to_dict()
         assert feature_model_json2 == feature_model_json
 
-class FilterTermsUnitTests():
+class TestModel_FilterTerms():
     """
     Test Class for FilterTerms
     """
@@ -7724,7 +7724,7 @@ class FilterTermsUnitTests():
         filter_terms_model_json2 = filter_terms_model.to_dict()
         assert filter_terms_model_json2 == filter_terms_model_json
 
-class FiltersUnitTests():
+class TestModel_Filters():
     """
     Test Class for Filters
     """
@@ -7768,7 +7768,7 @@ class FiltersUnitTests():
         filters_model_json2 = filters_model.to_dict()
         assert filters_model_json2 == filters_model_json
 
-class IDFilterUnitTests():
+class TestModel_IDFilter():
     """
     Test Class for IDFilter
     """
@@ -7803,7 +7803,7 @@ class IDFilterUnitTests():
         id_filter_model_json2 = id_filter_model.to_dict()
         assert id_filter_model_json2 == id_filter_model_json
 
-class ImageUnitTests():
+class TestModel_Image():
     """
     Test Class for Image
     """
@@ -7832,7 +7832,7 @@ class ImageUnitTests():
         image_model_json2 = image_model.to_dict()
         assert image_model_json2 == image_model_json
 
-class ImageManifestUnitTests():
+class TestModel_ImageManifest():
     """
     Test Class for ImageManifest
     """
@@ -7867,7 +7867,7 @@ class ImageManifestUnitTests():
         image_manifest_model_json2 = image_manifest_model.to_dict()
         assert image_manifest_model_json2 == image_manifest_model_json
 
-class InstallStatusUnitTests():
+class TestModel_InstallStatus():
     """
     Test Class for InstallStatus
     """
@@ -7918,7 +7918,7 @@ class InstallStatusUnitTests():
         install_status_model_json2 = install_status_model.to_dict()
         assert install_status_model_json2 == install_status_model_json
 
-class InstallStatusContentMgmtUnitTests():
+class TestModel_InstallStatusContentMgmt():
     """
     Test Class for InstallStatusContentMgmt
     """
@@ -7948,7 +7948,7 @@ class InstallStatusContentMgmtUnitTests():
         install_status_content_mgmt_model_json2 = install_status_content_mgmt_model.to_dict()
         assert install_status_content_mgmt_model_json2 == install_status_content_mgmt_model_json
 
-class InstallStatusMetadataUnitTests():
+class TestModel_InstallStatusMetadata():
     """
     Test Class for InstallStatusMetadata
     """
@@ -7981,7 +7981,7 @@ class InstallStatusMetadataUnitTests():
         install_status_metadata_model_json2 = install_status_metadata_model.to_dict()
         assert install_status_metadata_model_json2 == install_status_metadata_model_json
 
-class InstallStatusReleaseUnitTests():
+class TestModel_InstallStatusRelease():
     """
     Test Class for InstallStatusRelease
     """
@@ -8014,7 +8014,7 @@ class InstallStatusReleaseUnitTests():
         install_status_release_model_json2 = install_status_release_model.to_dict()
         assert install_status_release_model_json2 == install_status_release_model_json
 
-class KindUnitTests():
+class TestModel_Kind():
     """
     Test Class for Kind
     """
@@ -8165,7 +8165,7 @@ class KindUnitTests():
         kind_model_json2 = kind_model.to_dict()
         assert kind_model_json2 == kind_model_json
 
-class LicenseUnitTests():
+class TestModel_License():
     """
     Test Class for License
     """
@@ -8198,7 +8198,7 @@ class LicenseUnitTests():
         license_model_json2 = license_model.to_dict()
         assert license_model_json2 == license_model_json
 
-class NamespaceSearchResultUnitTests():
+class TestModel_NamespaceSearchResult():
     """
     Test Class for NamespaceSearchResult
     """
@@ -8235,7 +8235,7 @@ class NamespaceSearchResultUnitTests():
         namespace_search_result_model_json2 = namespace_search_result_model.to_dict()
         assert namespace_search_result_model_json2 == namespace_search_result_model_json
 
-class ObjectAccessUnitTests():
+class TestModel_ObjectAccess():
     """
     Test Class for ObjectAccess
     """
@@ -8268,7 +8268,7 @@ class ObjectAccessUnitTests():
         object_access_model_json2 = object_access_model.to_dict()
         assert object_access_model_json2 == object_access_model_json
 
-class ObjectAccessListResultUnitTests():
+class TestModel_ObjectAccessListResult():
     """
     Test Class for ObjectAccessListResult
     """
@@ -8314,7 +8314,7 @@ class ObjectAccessListResultUnitTests():
         object_access_list_result_model_json2 = object_access_list_result_model.to_dict()
         assert object_access_list_result_model_json2 == object_access_list_result_model_json
 
-class ObjectListResultUnitTests():
+class TestModel_ObjectListResult():
     """
     Test Class for ObjectListResult
     """
@@ -8388,7 +8388,7 @@ class ObjectListResultUnitTests():
         object_list_result_model_json2 = object_list_result_model.to_dict()
         assert object_list_result_model_json2 == object_list_result_model_json
 
-class ObjectSearchResultUnitTests():
+class TestModel_ObjectSearchResult():
     """
     Test Class for ObjectSearchResult
     """
@@ -8462,7 +8462,7 @@ class ObjectSearchResultUnitTests():
         object_search_result_model_json2 = object_search_result_model.to_dict()
         assert object_search_result_model_json2 == object_search_result_model_json
 
-class OfferingUnitTests():
+class TestModel_Offering():
     """
     Test Class for Offering
     """
@@ -8657,7 +8657,7 @@ class OfferingUnitTests():
         offering_model_json2 = offering_model.to_dict()
         assert offering_model_json2 == offering_model_json
 
-class OfferingInstanceUnitTests():
+class TestModel_OfferingInstance():
     """
     Test Class for OfferingInstance
     """
@@ -8713,7 +8713,7 @@ class OfferingInstanceUnitTests():
         offering_instance_model_json2 = offering_instance_model.to_dict()
         assert offering_instance_model_json2 == offering_instance_model_json
 
-class OfferingInstanceLastOperationUnitTests():
+class TestModel_OfferingInstanceLastOperation():
     """
     Test Class for OfferingInstanceLastOperation
     """
@@ -8746,7 +8746,7 @@ class OfferingInstanceLastOperationUnitTests():
         offering_instance_last_operation_model_json2 = offering_instance_last_operation_model.to_dict()
         assert offering_instance_last_operation_model_json2 == offering_instance_last_operation_model_json
 
-class OfferingSearchResultUnitTests():
+class TestModel_OfferingSearchResult():
     """
     Test Class for OfferingSearchResult
     """
@@ -8952,7 +8952,7 @@ class OfferingSearchResultUnitTests():
         offering_search_result_model_json2 = offering_search_result_model.to_dict()
         assert offering_search_result_model_json2 == offering_search_result_model_json
 
-class OperatorDeployResultUnitTests():
+class TestModel_OperatorDeployResult():
     """
     Test Class for OperatorDeployResult
     """
@@ -8988,7 +8988,7 @@ class OperatorDeployResultUnitTests():
         operator_deploy_result_model_json2 = operator_deploy_result_model.to_dict()
         assert operator_deploy_result_model_json2 == operator_deploy_result_model_json
 
-class PlanUnitTests():
+class TestModel_Plan():
     """
     Test Class for Plan
     """
@@ -9044,7 +9044,7 @@ class PlanUnitTests():
         plan_model_json2 = plan_model.to_dict()
         assert plan_model_json2 == plan_model_json
 
-class PublishObjectUnitTests():
+class TestModel_PublishObject():
     """
     Test Class for PublishObject
     """
@@ -9077,7 +9077,7 @@ class PublishObjectUnitTests():
         publish_object_model_json2 = publish_object_model.to_dict()
         assert publish_object_model_json2 == publish_object_model_json
 
-class RatingUnitTests():
+class TestModel_Rating():
     """
     Test Class for Rating
     """
@@ -9109,7 +9109,7 @@ class RatingUnitTests():
         rating_model_json2 = rating_model.to_dict()
         assert rating_model_json2 == rating_model_json
 
-class RepoInfoUnitTests():
+class TestModel_RepoInfo():
     """
     Test Class for RepoInfo
     """
@@ -9139,7 +9139,7 @@ class RepoInfoUnitTests():
         repo_info_model_json2 = repo_info_model.to_dict()
         assert repo_info_model_json2 == repo_info_model_json
 
-class ResourceUnitTests():
+class TestModel_Resource():
     """
     Test Class for Resource
     """
@@ -9169,7 +9169,7 @@ class ResourceUnitTests():
         resource_model_json2 = resource_model.to_dict()
         assert resource_model_json2 == resource_model_json
 
-class ScriptUnitTests():
+class TestModel_Script():
     """
     Test Class for Script
     """
@@ -9202,7 +9202,7 @@ class ScriptUnitTests():
         script_model_json2 = script_model.to_dict()
         assert script_model_json2 == script_model_json
 
-class StateUnitTests():
+class TestModel_State():
     """
     Test Class for State
     """
@@ -9235,7 +9235,7 @@ class StateUnitTests():
         state_model_json2 = state_model.to_dict()
         assert state_model_json2 == state_model_json
 
-class SyndicationAuthorizationUnitTests():
+class TestModel_SyndicationAuthorization():
     """
     Test Class for SyndicationAuthorization
     """
@@ -9265,7 +9265,7 @@ class SyndicationAuthorizationUnitTests():
         syndication_authorization_model_json2 = syndication_authorization_model.to_dict()
         assert syndication_authorization_model_json2 == syndication_authorization_model_json
 
-class SyndicationClusterUnitTests():
+class TestModel_SyndicationCluster():
     """
     Test Class for SyndicationCluster
     """
@@ -9300,7 +9300,7 @@ class SyndicationClusterUnitTests():
         syndication_cluster_model_json2 = syndication_cluster_model.to_dict()
         assert syndication_cluster_model_json2 == syndication_cluster_model_json
 
-class SyndicationHistoryUnitTests():
+class TestModel_SyndicationHistory():
     """
     Test Class for SyndicationHistory
     """
@@ -9342,7 +9342,7 @@ class SyndicationHistoryUnitTests():
         syndication_history_model_json2 = syndication_history_model.to_dict()
         assert syndication_history_model_json2 == syndication_history_model_json
 
-class SyndicationResourceUnitTests():
+class TestModel_SyndicationResource():
     """
     Test Class for SyndicationResource
     """
@@ -9394,7 +9394,7 @@ class SyndicationResourceUnitTests():
         syndication_resource_model_json2 = syndication_resource_model.to_dict()
         assert syndication_resource_model_json2 == syndication_resource_model_json
 
-class ValidationUnitTests():
+class TestModel_Validation():
     """
     Test Class for Validation
     """
@@ -9427,7 +9427,7 @@ class ValidationUnitTests():
         validation_model_json2 = validation_model.to_dict()
         assert validation_model_json2 == validation_model_json
 
-class VersionUnitTests():
+class TestModel_Version():
     """
     Test Class for Version
     """
@@ -9537,7 +9537,7 @@ class VersionUnitTests():
         version_model_json2 = version_model.to_dict()
         assert version_model_json2 == version_model_json
 
-class VersionEntitlementUnitTests():
+class TestModel_VersionEntitlement():
     """
     Test Class for VersionEntitlement
     """
@@ -9570,7 +9570,7 @@ class VersionEntitlementUnitTests():
         version_entitlement_model_json2 = version_entitlement_model.to_dict()
         assert version_entitlement_model_json2 == version_entitlement_model_json
 
-class VersionUpdateDescriptorUnitTests():
+class TestModel_VersionUpdateDescriptor():
     """
     Test Class for VersionUpdateDescriptor
     """
