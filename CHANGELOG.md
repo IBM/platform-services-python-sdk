@@ -1,3 +1,10 @@
+## [0.18.13](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.12...v0.18.13) (2021-06-25)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** update service after recent api changes ([#121](https://github.com/IBM/platform-services-python-sdk/issues/121)) ([ef86f65](https://github.com/IBM/platform-services-python-sdk/commit/ef86f6514c9d509032f802b3674dbfa6242753be))
+
 ## [0.18.12](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.11...v0.18.12) (2021-06-15)
 
 
