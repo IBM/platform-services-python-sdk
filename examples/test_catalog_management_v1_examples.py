@@ -31,6 +31,9 @@ from ibm_platform_services.catalog_management_v1 import *
 # CATALOG_MANAGEMENT_AUTH_TYPE=iam
 # CATALOG_MANAGEMENT_APIKEY=<IAM apikey>
 # CATALOG_MANAGEMENT_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
+# CATALOG_MANAGEMENT_CLUSTER_ID=<ID of the cluster>
+# CATALOG_MANAGEMENT_ACCOUNT_ID=<ID of the Account>
+# CATALOG_MANAGEMENT_GIT_TOKEN=<Token used in communication with Git repository>
 #
 # These configuration properties can be exported as environment variables, or stored
 # in a configuration file and then:
@@ -163,7 +166,7 @@ class TestCatalogManagementV1Examples():
                 id=catalog_id,
                 tags=['python', 'sdk', 'updated'],
                 owning_account=account_id,
-                kind='vpe'
+                kind='vpe',
             ).get_result()
 
             print(json.dumps(catalog, indent=2))
