@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
+# IBM OpenAPI SDK Code Generator Version: 3.34.1-ad041667-20210617-195430
  
 """
 The IAM Access Groups API allows for the management of access groups (Create, Read,
@@ -101,8 +101,8 @@ class IamAccessGroupsV2(BaseService):
                IAM ID. If a user IAM ID is specified in iam_id then then account_id must
                match the account of the Authorization token.
         :param str name: Assign the specified name to the access group. This field
-               is case-sensitive and has a limit of 100 characters. The group name has to
-               be unique within an account.
+               is case-insensitive and has a limit of 100 characters. The group name has
+               to be unique within an account.
         :param str description: (optional) Assign an optional description for the
                access group. This field has a limit of 250 characters.
         :param str transaction_id: (optional) An optional transaction ID can be
@@ -318,7 +318,7 @@ class IamAccessGroupsV2(BaseService):
                updated. This can be found in the Create/Get access group response ETag
                header.
         :param str name: (optional) Assign the specified name to the access group.
-               This field is case-sensitive and has a limit of 100 characters. The group
+               This field is case-insensitive and has a limit of 100 characters. The group
                name has to be unique within an account.
         :param str description: (optional) Assign an optional description for the
                access group. This field has a limit of 250 characters.

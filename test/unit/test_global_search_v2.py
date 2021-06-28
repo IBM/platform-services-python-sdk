@@ -202,7 +202,7 @@ class TestGetSupportedTypes():
 # Start of Model Tests
 ##############################################################################
 # region
-class ResultItemUnitTests():
+class TestModel_ResultItem():
     """
     Test Class for ResultItem
     """
@@ -232,7 +232,7 @@ class ResultItemUnitTests():
         result_item_model_json2 = result_item_model.to_dict()
         assert result_item_model_json2 == result_item_model_json
 
-class ScanResultUnitTests():
+class TestModel_ScanResult():
     """
     Test Class for ScanResult
     """
@@ -269,7 +269,7 @@ class ScanResultUnitTests():
         scan_result_model_json2 = scan_result_model.to_dict()
         assert scan_result_model_json2 == scan_result_model_json
 
-class SupportedTypesListUnitTests():
+class TestModel_SupportedTypesList():
     """
     Test Class for SupportedTypesList
     """
