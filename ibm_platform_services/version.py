@@ -1,4 +1,4 @@
 """
 Version of platform_services
 """
-__version__ = '0.18.14'
+__version__ = '0.18.15'
