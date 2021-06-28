@@ -746,7 +746,7 @@ class TestDetachTag():
 # Start of Model Tests
 ##############################################################################
 # region
-class CreateTagResultsUnitTests():
+class TestModel_CreateTagResults():
     """
     Test Class for CreateTagResults
     """
@@ -781,7 +781,7 @@ class CreateTagResultsUnitTests():
         create_tag_results_model_json2 = create_tag_results_model.to_dict()
         assert create_tag_results_model_json2 == create_tag_results_model_json
 
-class CreateTagResultsResultsItemUnitTests():
+class TestModel_CreateTagResultsResultsItem():
     """
     Test Class for CreateTagResultsResultsItem
     """
@@ -811,7 +811,7 @@ class CreateTagResultsResultsItemUnitTests():
         create_tag_results_results_item_model_json2 = create_tag_results_results_item_model.to_dict()
         assert create_tag_results_results_item_model_json2 == create_tag_results_results_item_model_json
 
-class DeleteTagResultsUnitTests():
+class TestModel_DeleteTagResults():
     """
     Test Class for DeleteTagResults
     """
@@ -847,7 +847,7 @@ class DeleteTagResultsUnitTests():
         delete_tag_results_model_json2 = delete_tag_results_model.to_dict()
         assert delete_tag_results_model_json2 == delete_tag_results_model_json
 
-class DeleteTagResultsItemUnitTests():
+class TestModel_DeleteTagResultsItem():
     """
     Test Class for DeleteTagResultsItem
     """
@@ -878,7 +878,7 @@ class DeleteTagResultsItemUnitTests():
         delete_tag_results_item_model_json2 = delete_tag_results_item_model.to_dict()
         assert delete_tag_results_item_model_json2 == delete_tag_results_item_model_json
 
-class DeleteTagsResultUnitTests():
+class TestModel_DeleteTagsResult():
     """
     Test Class for DeleteTagsResult
     """
@@ -915,7 +915,7 @@ class DeleteTagsResultUnitTests():
         delete_tags_result_model_json2 = delete_tags_result_model.to_dict()
         assert delete_tags_result_model_json2 == delete_tags_result_model_json
 
-class DeleteTagsResultItemUnitTests():
+class TestModel_DeleteTagsResultItem():
     """
     Test Class for DeleteTagsResultItem
     """
@@ -945,7 +945,7 @@ class DeleteTagsResultItemUnitTests():
         delete_tags_result_item_model_json2 = delete_tags_result_item_model.to_dict()
         assert delete_tags_result_item_model_json2 == delete_tags_result_item_model_json
 
-class ResourceUnitTests():
+class TestModel_Resource():
     """
     Test Class for Resource
     """
@@ -975,7 +975,7 @@ class ResourceUnitTests():
         resource_model_json2 = resource_model.to_dict()
         assert resource_model_json2 == resource_model_json
 
-class TagUnitTests():
+class TestModel_Tag():
     """
     Test Class for Tag
     """
@@ -1004,7 +1004,7 @@ class TagUnitTests():
         tag_model_json2 = tag_model.to_dict()
         assert tag_model_json2 == tag_model_json
 
-class TagListUnitTests():
+class TestModel_TagList():
     """
     Test Class for TagList
     """
@@ -1041,7 +1041,7 @@ class TagListUnitTests():
         tag_list_model_json2 = tag_list_model.to_dict()
         assert tag_list_model_json2 == tag_list_model_json
 
-class TagResultsUnitTests():
+class TestModel_TagResults():
     """
     Test Class for TagResults
     """
@@ -1076,7 +1076,7 @@ class TagResultsUnitTests():
         tag_results_model_json2 = tag_results_model.to_dict()
         assert tag_results_model_json2 == tag_results_model_json
 
-class TagResultsItemUnitTests():
+class TestModel_TagResultsItem():
     """
     Test Class for TagResultsItem
     """

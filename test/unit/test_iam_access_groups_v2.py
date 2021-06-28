@@ -30,12 +30,12 @@ import urllib
 from ibm_platform_services.iam_access_groups_v2 import *
 
 
-service = IamAccessGroupsV2(
+_service = IamAccessGroupsV2(
     authenticator=NoAuthAuthenticator()
     )
 
-base_url = 'https://iam.cloud.ibm.com/v2'
-service.set_service_url(base_url)
+_base_url = 'https://iam.cloud.ibm.com/v2'
+_service.set_service_url(_base_url)
 
 ##############################################################################
 # Start of Service: AccessGroupOperations
@@ -62,7 +62,7 @@ class TestCreateAccessGroup():
         create_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups')
+        url = self.preprocess_url(_base_url + '/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
@@ -77,7 +77,7 @@ class TestCreateAccessGroup():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.create_access_group(
+        response = _service.create_access_group(
             account_id,
             name,
             description=description,
@@ -104,7 +104,7 @@ class TestCreateAccessGroup():
         test_create_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups')
+        url = self.preprocess_url(_base_url + '/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
@@ -118,7 +118,7 @@ class TestCreateAccessGroup():
         description = 'Group for managers'
 
         # Invoke method
-        response = service.create_access_group(
+        response = _service.create_access_group(
             account_id,
             name,
             description=description,
@@ -144,7 +144,7 @@ class TestCreateAccessGroup():
         test_create_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups')
+        url = self.preprocess_url(_base_url + '/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
@@ -165,7 +165,7 @@ class TestCreateAccessGroup():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_access_group(**req_copy)
+                _service.create_access_group(**req_copy)
 
 
 
@@ -189,7 +189,7 @@ class TestListAccessGroups():
         list_access_groups()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups')
+        url = self.preprocess_url(_base_url + '/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
@@ -208,7 +208,7 @@ class TestListAccessGroups():
         hide_public_access = True
 
         # Invoke method
-        response = service.list_access_groups(
+        response = _service.list_access_groups(
             account_id,
             transaction_id=transaction_id,
             iam_id=iam_id,
@@ -241,7 +241,7 @@ class TestListAccessGroups():
         test_list_access_groups_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups')
+        url = self.preprocess_url(_base_url + '/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
@@ -253,7 +253,7 @@ class TestListAccessGroups():
         account_id = 'testString'
 
         # Invoke method
-        response = service.list_access_groups(
+        response = _service.list_access_groups(
             account_id,
             headers={}
         )
@@ -273,7 +273,7 @@ class TestListAccessGroups():
         test_list_access_groups_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups')
+        url = self.preprocess_url(_base_url + '/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
@@ -291,7 +291,7 @@ class TestListAccessGroups():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.list_access_groups(**req_copy)
+                _service.list_access_groups(**req_copy)
 
 
 
@@ -315,7 +315,7 @@ class TestGetAccessGroup():
         get_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
@@ -329,7 +329,7 @@ class TestGetAccessGroup():
         show_federated = True
 
         # Invoke method
-        response = service.get_access_group(
+        response = _service.get_access_group(
             access_group_id,
             transaction_id=transaction_id,
             show_federated=show_federated,
@@ -351,7 +351,7 @@ class TestGetAccessGroup():
         test_get_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
@@ -363,7 +363,7 @@ class TestGetAccessGroup():
         access_group_id = 'testString'
 
         # Invoke method
-        response = service.get_access_group(
+        response = _service.get_access_group(
             access_group_id,
             headers={}
         )
@@ -379,7 +379,7 @@ class TestGetAccessGroup():
         test_get_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
@@ -397,7 +397,7 @@ class TestGetAccessGroup():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_access_group(**req_copy)
+                _service.get_access_group(**req_copy)
 
 
 
@@ -421,7 +421,7 @@ class TestUpdateAccessGroup():
         update_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
@@ -437,7 +437,7 @@ class TestUpdateAccessGroup():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.update_access_group(
+        response = _service.update_access_group(
             access_group_id,
             if_match,
             name=name,
@@ -461,7 +461,7 @@ class TestUpdateAccessGroup():
         test_update_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
@@ -476,7 +476,7 @@ class TestUpdateAccessGroup():
         description = 'Group for awesome managers.'
 
         # Invoke method
-        response = service.update_access_group(
+        response = _service.update_access_group(
             access_group_id,
             if_match,
             name=name,
@@ -499,7 +499,7 @@ class TestUpdateAccessGroup():
         test_update_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
@@ -521,7 +521,7 @@ class TestUpdateAccessGroup():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_access_group(**req_copy)
+                _service.update_access_group(**req_copy)
 
 
 
@@ -545,7 +545,7 @@ class TestDeleteAccessGroup():
         delete_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -556,7 +556,7 @@ class TestDeleteAccessGroup():
         force = True
 
         # Invoke method
-        response = service.delete_access_group(
+        response = _service.delete_access_group(
             access_group_id,
             transaction_id=transaction_id,
             force=force,
@@ -578,7 +578,7 @@ class TestDeleteAccessGroup():
         test_delete_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -587,7 +587,7 @@ class TestDeleteAccessGroup():
         access_group_id = 'testString'
 
         # Invoke method
-        response = service.delete_access_group(
+        response = _service.delete_access_group(
             access_group_id,
             headers={}
         )
@@ -603,7 +603,7 @@ class TestDeleteAccessGroup():
         test_delete_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -618,7 +618,7 @@ class TestDeleteAccessGroup():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.delete_access_group(**req_copy)
+                _service.delete_access_group(**req_copy)
 
 
 
@@ -652,7 +652,7 @@ class TestIsMemberOfAccessGroup():
         is_member_of_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/members/testString')
         responses.add(responses.HEAD,
                       url,
                       status=204)
@@ -663,7 +663,7 @@ class TestIsMemberOfAccessGroup():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.is_member_of_access_group(
+        response = _service.is_member_of_access_group(
             access_group_id,
             iam_id,
             transaction_id=transaction_id,
@@ -681,7 +681,7 @@ class TestIsMemberOfAccessGroup():
         test_is_member_of_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/members/testString')
         responses.add(responses.HEAD,
                       url,
                       status=204)
@@ -691,7 +691,7 @@ class TestIsMemberOfAccessGroup():
         iam_id = 'testString'
 
         # Invoke method
-        response = service.is_member_of_access_group(
+        response = _service.is_member_of_access_group(
             access_group_id,
             iam_id,
             headers={}
@@ -708,7 +708,7 @@ class TestIsMemberOfAccessGroup():
         test_is_member_of_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/members/testString')
         responses.add(responses.HEAD,
                       url,
                       status=204)
@@ -725,7 +725,7 @@ class TestIsMemberOfAccessGroup():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.is_member_of_access_group(**req_copy)
+                _service.is_member_of_access_group(**req_copy)
 
 
 
@@ -749,7 +749,7 @@ class TestAddMembersToAccessGroup():
         add_members_to_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members')
+        url = self.preprocess_url(_base_url + '/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -768,7 +768,7 @@ class TestAddMembersToAccessGroup():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.add_members_to_access_group(
+        response = _service.add_members_to_access_group(
             access_group_id,
             members=members,
             transaction_id=transaction_id,
@@ -789,7 +789,7 @@ class TestAddMembersToAccessGroup():
         test_add_members_to_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members')
+        url = self.preprocess_url(_base_url + '/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -807,7 +807,7 @@ class TestAddMembersToAccessGroup():
         members = [add_group_members_request_members_item_model]
 
         # Invoke method
-        response = service.add_members_to_access_group(
+        response = _service.add_members_to_access_group(
             access_group_id,
             members=members,
             headers={}
@@ -827,7 +827,7 @@ class TestAddMembersToAccessGroup():
         test_add_members_to_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members')
+        url = self.preprocess_url(_base_url + '/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -851,7 +851,7 @@ class TestAddMembersToAccessGroup():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.add_members_to_access_group(**req_copy)
+                _service.add_members_to_access_group(**req_copy)
 
 
 
@@ -875,7 +875,7 @@ class TestListAccessGroupMembers():
         list_access_group_members()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members')
+        url = self.preprocess_url(_base_url + '/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -893,7 +893,7 @@ class TestListAccessGroupMembers():
         sort = 'testString'
 
         # Invoke method
-        response = service.list_access_group_members(
+        response = _service.list_access_group_members(
             access_group_id,
             transaction_id=transaction_id,
             limit=limit,
@@ -923,7 +923,7 @@ class TestListAccessGroupMembers():
         test_list_access_group_members_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members')
+        url = self.preprocess_url(_base_url + '/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -935,7 +935,7 @@ class TestListAccessGroupMembers():
         access_group_id = 'testString'
 
         # Invoke method
-        response = service.list_access_group_members(
+        response = _service.list_access_group_members(
             access_group_id,
             headers={}
         )
@@ -951,7 +951,7 @@ class TestListAccessGroupMembers():
         test_list_access_group_members_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members')
+        url = self.preprocess_url(_base_url + '/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -969,7 +969,7 @@ class TestListAccessGroupMembers():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.list_access_group_members(**req_copy)
+                _service.list_access_group_members(**req_copy)
 
 
 
@@ -993,7 +993,7 @@ class TestRemoveMemberFromAccessGroup():
         remove_member_from_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/members/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1004,7 +1004,7 @@ class TestRemoveMemberFromAccessGroup():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.remove_member_from_access_group(
+        response = _service.remove_member_from_access_group(
             access_group_id,
             iam_id,
             transaction_id=transaction_id,
@@ -1022,7 +1022,7 @@ class TestRemoveMemberFromAccessGroup():
         test_remove_member_from_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/members/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1032,7 +1032,7 @@ class TestRemoveMemberFromAccessGroup():
         iam_id = 'testString'
 
         # Invoke method
-        response = service.remove_member_from_access_group(
+        response = _service.remove_member_from_access_group(
             access_group_id,
             iam_id,
             headers={}
@@ -1049,7 +1049,7 @@ class TestRemoveMemberFromAccessGroup():
         test_remove_member_from_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/members/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1066,7 +1066,7 @@ class TestRemoveMemberFromAccessGroup():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.remove_member_from_access_group(**req_copy)
+                _service.remove_member_from_access_group(**req_copy)
 
 
 
@@ -1090,7 +1090,7 @@ class TestRemoveMembersFromAccessGroup():
         remove_members_from_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members/delete')
+        url = self.preprocess_url(_base_url + '/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.POST,
                       url,
@@ -1104,7 +1104,7 @@ class TestRemoveMembersFromAccessGroup():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.remove_members_from_access_group(
+        response = _service.remove_members_from_access_group(
             access_group_id,
             members=members,
             transaction_id=transaction_id,
@@ -1125,7 +1125,7 @@ class TestRemoveMembersFromAccessGroup():
         test_remove_members_from_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members/delete')
+        url = self.preprocess_url(_base_url + '/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.POST,
                       url,
@@ -1138,7 +1138,7 @@ class TestRemoveMembersFromAccessGroup():
         members = ['IBMId-user1', 'iam-ServiceId-123']
 
         # Invoke method
-        response = service.remove_members_from_access_group(
+        response = _service.remove_members_from_access_group(
             access_group_id,
             members=members,
             headers={}
@@ -1158,7 +1158,7 @@ class TestRemoveMembersFromAccessGroup():
         test_remove_members_from_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/members/delete')
+        url = self.preprocess_url(_base_url + '/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.POST,
                       url,
@@ -1177,7 +1177,7 @@ class TestRemoveMembersFromAccessGroup():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.remove_members_from_access_group(**req_copy)
+                _service.remove_members_from_access_group(**req_copy)
 
 
 
@@ -1201,7 +1201,7 @@ class TestRemoveMemberFromAllAccessGroups():
         remove_member_from_all_access_groups()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
+        url = self.preprocess_url(_base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.DELETE,
                       url,
@@ -1215,7 +1215,7 @@ class TestRemoveMemberFromAllAccessGroups():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.remove_member_from_all_access_groups(
+        response = _service.remove_member_from_all_access_groups(
             account_id,
             iam_id,
             transaction_id=transaction_id,
@@ -1237,7 +1237,7 @@ class TestRemoveMemberFromAllAccessGroups():
         test_remove_member_from_all_access_groups_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
+        url = self.preprocess_url(_base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.DELETE,
                       url,
@@ -1250,7 +1250,7 @@ class TestRemoveMemberFromAllAccessGroups():
         iam_id = 'testString'
 
         # Invoke method
-        response = service.remove_member_from_all_access_groups(
+        response = _service.remove_member_from_all_access_groups(
             account_id,
             iam_id,
             headers={}
@@ -1271,7 +1271,7 @@ class TestRemoveMemberFromAllAccessGroups():
         test_remove_member_from_all_access_groups_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
+        url = self.preprocess_url(_base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.DELETE,
                       url,
@@ -1291,7 +1291,7 @@ class TestRemoveMemberFromAllAccessGroups():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.remove_member_from_all_access_groups(**req_copy)
+                _service.remove_member_from_all_access_groups(**req_copy)
 
 
 
@@ -1315,7 +1315,7 @@ class TestAddMemberToMultipleAccessGroups():
         add_member_to_multiple_access_groups()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
+        url = self.preprocess_url(_base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -1331,7 +1331,7 @@ class TestAddMemberToMultipleAccessGroups():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.add_member_to_multiple_access_groups(
+        response = _service.add_member_to_multiple_access_groups(
             account_id,
             iam_id,
             type=type,
@@ -1359,7 +1359,7 @@ class TestAddMemberToMultipleAccessGroups():
         test_add_member_to_multiple_access_groups_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
+        url = self.preprocess_url(_base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -1374,7 +1374,7 @@ class TestAddMemberToMultipleAccessGroups():
         groups = ['access-group-id-1']
 
         # Invoke method
-        response = service.add_member_to_multiple_access_groups(
+        response = _service.add_member_to_multiple_access_groups(
             account_id,
             iam_id,
             type=type,
@@ -1401,7 +1401,7 @@ class TestAddMemberToMultipleAccessGroups():
         test_add_member_to_multiple_access_groups_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/_allgroups/members/testString')
+        url = self.preprocess_url(_base_url + '/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -1423,7 +1423,7 @@ class TestAddMemberToMultipleAccessGroups():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.add_member_to_multiple_access_groups(**req_copy)
+                _service.add_member_to_multiple_access_groups(**req_copy)
 
 
 
@@ -1457,7 +1457,7 @@ class TestAddAccessGroupRule():
         add_access_group_rule()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
@@ -1480,7 +1480,7 @@ class TestAddAccessGroupRule():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.add_access_group_rule(
+        response = _service.add_access_group_rule(
             access_group_id,
             expiration,
             realm_name,
@@ -1507,7 +1507,7 @@ class TestAddAccessGroupRule():
         test_add_access_group_rule_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
@@ -1529,7 +1529,7 @@ class TestAddAccessGroupRule():
         name = 'Manager group rule'
 
         # Invoke method
-        response = service.add_access_group_rule(
+        response = _service.add_access_group_rule(
             access_group_id,
             expiration,
             realm_name,
@@ -1555,7 +1555,7 @@ class TestAddAccessGroupRule():
         test_add_access_group_rule_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
@@ -1586,7 +1586,7 @@ class TestAddAccessGroupRule():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.add_access_group_rule(**req_copy)
+                _service.add_access_group_rule(**req_copy)
 
 
 
@@ -1610,7 +1610,7 @@ class TestListAccessGroupRules():
         list_access_group_rules()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -1623,7 +1623,7 @@ class TestListAccessGroupRules():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.list_access_group_rules(
+        response = _service.list_access_group_rules(
             access_group_id,
             transaction_id=transaction_id,
             headers={}
@@ -1640,7 +1640,7 @@ class TestListAccessGroupRules():
         test_list_access_group_rules_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -1652,7 +1652,7 @@ class TestListAccessGroupRules():
         access_group_id = 'testString'
 
         # Invoke method
-        response = service.list_access_group_rules(
+        response = _service.list_access_group_rules(
             access_group_id,
             headers={}
         )
@@ -1668,7 +1668,7 @@ class TestListAccessGroupRules():
         test_list_access_group_rules_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -1686,7 +1686,7 @@ class TestListAccessGroupRules():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.list_access_group_rules(**req_copy)
+                _service.list_access_group_rules(**req_copy)
 
 
 
@@ -1710,7 +1710,7 @@ class TestGetAccessGroupRule():
         get_access_group_rule()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
@@ -1724,7 +1724,7 @@ class TestGetAccessGroupRule():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.get_access_group_rule(
+        response = _service.get_access_group_rule(
             access_group_id,
             rule_id,
             transaction_id=transaction_id,
@@ -1742,7 +1742,7 @@ class TestGetAccessGroupRule():
         test_get_access_group_rule_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
@@ -1755,7 +1755,7 @@ class TestGetAccessGroupRule():
         rule_id = 'testString'
 
         # Invoke method
-        response = service.get_access_group_rule(
+        response = _service.get_access_group_rule(
             access_group_id,
             rule_id,
             headers={}
@@ -1772,7 +1772,7 @@ class TestGetAccessGroupRule():
         test_get_access_group_rule_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
@@ -1792,7 +1792,7 @@ class TestGetAccessGroupRule():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_access_group_rule(**req_copy)
+                _service.get_access_group_rule(**req_copy)
 
 
 
@@ -1816,7 +1816,7 @@ class TestReplaceAccessGroupRule():
         replace_access_group_rule()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
@@ -1841,7 +1841,7 @@ class TestReplaceAccessGroupRule():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.replace_access_group_rule(
+        response = _service.replace_access_group_rule(
             access_group_id,
             rule_id,
             if_match,
@@ -1870,7 +1870,7 @@ class TestReplaceAccessGroupRule():
         test_replace_access_group_rule_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
@@ -1894,7 +1894,7 @@ class TestReplaceAccessGroupRule():
         name = 'Manager group rule'
 
         # Invoke method
-        response = service.replace_access_group_rule(
+        response = _service.replace_access_group_rule(
             access_group_id,
             rule_id,
             if_match,
@@ -1922,7 +1922,7 @@ class TestReplaceAccessGroupRule():
         test_replace_access_group_rule_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
@@ -1957,7 +1957,7 @@ class TestReplaceAccessGroupRule():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.replace_access_group_rule(**req_copy)
+                _service.replace_access_group_rule(**req_copy)
 
 
 
@@ -1981,7 +1981,7 @@ class TestRemoveAccessGroupRule():
         remove_access_group_rule()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1992,7 +1992,7 @@ class TestRemoveAccessGroupRule():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.remove_access_group_rule(
+        response = _service.remove_access_group_rule(
             access_group_id,
             rule_id,
             transaction_id=transaction_id,
@@ -2010,7 +2010,7 @@ class TestRemoveAccessGroupRule():
         test_remove_access_group_rule_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2020,7 +2020,7 @@ class TestRemoveAccessGroupRule():
         rule_id = 'testString'
 
         # Invoke method
-        response = service.remove_access_group_rule(
+        response = _service.remove_access_group_rule(
             access_group_id,
             rule_id,
             headers={}
@@ -2037,7 +2037,7 @@ class TestRemoveAccessGroupRule():
         test_remove_access_group_rule_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2054,7 +2054,7 @@ class TestRemoveAccessGroupRule():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.remove_access_group_rule(**req_copy)
+                _service.remove_access_group_rule(**req_copy)
 
 
 
@@ -2088,7 +2088,7 @@ class TestGetAccountSettings():
         get_account_settings()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/settings')
+        url = self.preprocess_url(_base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.GET,
                       url,
@@ -2101,7 +2101,7 @@ class TestGetAccountSettings():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.get_account_settings(
+        response = _service.get_account_settings(
             account_id,
             transaction_id=transaction_id,
             headers={}
@@ -2122,7 +2122,7 @@ class TestGetAccountSettings():
         test_get_account_settings_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/settings')
+        url = self.preprocess_url(_base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.GET,
                       url,
@@ -2134,7 +2134,7 @@ class TestGetAccountSettings():
         account_id = 'testString'
 
         # Invoke method
-        response = service.get_account_settings(
+        response = _service.get_account_settings(
             account_id,
             headers={}
         )
@@ -2154,7 +2154,7 @@ class TestGetAccountSettings():
         test_get_account_settings_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/settings')
+        url = self.preprocess_url(_base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.GET,
                       url,
@@ -2172,7 +2172,7 @@ class TestGetAccountSettings():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_account_settings(**req_copy)
+                _service.get_account_settings(**req_copy)
 
 
 
@@ -2196,7 +2196,7 @@ class TestUpdateAccountSettings():
         update_account_settings()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/settings')
+        url = self.preprocess_url(_base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.PATCH,
                       url,
@@ -2210,7 +2210,7 @@ class TestUpdateAccountSettings():
         transaction_id = 'testString'
 
         # Invoke method
-        response = service.update_account_settings(
+        response = _service.update_account_settings(
             account_id,
             public_access_enabled=public_access_enabled,
             transaction_id=transaction_id,
@@ -2235,7 +2235,7 @@ class TestUpdateAccountSettings():
         test_update_account_settings_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/settings')
+        url = self.preprocess_url(_base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.PATCH,
                       url,
@@ -2248,7 +2248,7 @@ class TestUpdateAccountSettings():
         public_access_enabled = True
 
         # Invoke method
-        response = service.update_account_settings(
+        response = _service.update_account_settings(
             account_id,
             public_access_enabled=public_access_enabled,
             headers={}
@@ -2272,7 +2272,7 @@ class TestUpdateAccountSettings():
         test_update_account_settings_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/groups/settings')
+        url = self.preprocess_url(_base_url + '/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.PATCH,
                       url,
@@ -2291,7 +2291,7 @@ class TestUpdateAccountSettings():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_account_settings(**req_copy)
+                _service.update_account_settings(**req_copy)
 
 
 
@@ -2305,7 +2305,7 @@ class TestUpdateAccountSettings():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestAccountSettings():
+class TestModel_AccountSettings():
     """
     Test Class for AccountSettings
     """
@@ -2318,7 +2318,7 @@ class TestAccountSettings():
         # Construct a json representation of a AccountSettings model
         account_settings_model_json = {}
         account_settings_model_json['account_id'] = 'testString'
-        account_settings_model_json['last_modified_at'] = '2015-03-14T09:26:53.123456Z'
+        account_settings_model_json['last_modified_at'] = "2019-01-01T12:00:00Z"
         account_settings_model_json['last_modified_by_id'] = 'testString'
         account_settings_model_json['public_access_enabled'] = True
 
@@ -2337,7 +2337,7 @@ class TestAccountSettings():
         account_settings_model_json2 = account_settings_model.to_dict()
         assert account_settings_model_json2 == account_settings_model_json
 
-class TestAddGroupMembersRequestMembersItem():
+class TestModel_AddGroupMembersRequestMembersItem():
     """
     Test Class for AddGroupMembersRequestMembersItem
     """
@@ -2367,7 +2367,7 @@ class TestAddGroupMembersRequestMembersItem():
         add_group_members_request_members_item_model_json2 = add_group_members_request_members_item_model.to_dict()
         assert add_group_members_request_members_item_model_json2 == add_group_members_request_members_item_model_json
 
-class TestAddGroupMembersResponse():
+class TestModel_AddGroupMembersResponse():
     """
     Test Class for AddGroupMembersResponse
     """
@@ -2386,7 +2386,7 @@ class TestAddGroupMembersResponse():
         add_group_members_response_members_item_model = {} # AddGroupMembersResponseMembersItem
         add_group_members_response_members_item_model['iam_id'] = 'testString'
         add_group_members_response_members_item_model['type'] = 'testString'
-        add_group_members_response_members_item_model['created_at'] = '2015-03-14T09:26:53.123456Z'
+        add_group_members_response_members_item_model['created_at'] = "2019-01-01T12:00:00Z"
         add_group_members_response_members_item_model['created_by_id'] = 'testString'
         add_group_members_response_members_item_model['status_code'] = 38
         add_group_members_response_members_item_model['trace'] = 'testString'
@@ -2411,7 +2411,7 @@ class TestAddGroupMembersResponse():
         add_group_members_response_model_json2 = add_group_members_response_model.to_dict()
         assert add_group_members_response_model_json2 == add_group_members_response_model_json
 
-class TestAddGroupMembersResponseMembersItem():
+class TestModel_AddGroupMembersResponseMembersItem():
     """
     Test Class for AddGroupMembersResponseMembersItem
     """
@@ -2431,7 +2431,7 @@ class TestAddGroupMembersResponseMembersItem():
         add_group_members_response_members_item_model_json = {}
         add_group_members_response_members_item_model_json['iam_id'] = 'testString'
         add_group_members_response_members_item_model_json['type'] = 'testString'
-        add_group_members_response_members_item_model_json['created_at'] = '2015-03-14T09:26:53.123456Z'
+        add_group_members_response_members_item_model_json['created_at'] = "2019-01-01T12:00:00Z"
         add_group_members_response_members_item_model_json['created_by_id'] = 'testString'
         add_group_members_response_members_item_model_json['status_code'] = 38
         add_group_members_response_members_item_model_json['trace'] = 'testString'
@@ -2452,7 +2452,7 @@ class TestAddGroupMembersResponseMembersItem():
         add_group_members_response_members_item_model_json2 = add_group_members_response_members_item_model.to_dict()
         assert add_group_members_response_members_item_model_json2 == add_group_members_response_members_item_model_json
 
-class TestAddMembershipMultipleGroupsResponse():
+class TestModel_AddMembershipMultipleGroupsResponse():
     """
     Test Class for AddMembershipMultipleGroupsResponse
     """
@@ -2494,7 +2494,7 @@ class TestAddMembershipMultipleGroupsResponse():
         add_membership_multiple_groups_response_model_json2 = add_membership_multiple_groups_response_model.to_dict()
         assert add_membership_multiple_groups_response_model_json2 == add_membership_multiple_groups_response_model_json
 
-class TestAddMembershipMultipleGroupsResponseGroupsItem():
+class TestModel_AddMembershipMultipleGroupsResponseGroupsItem():
     """
     Test Class for AddMembershipMultipleGroupsResponseGroupsItem
     """
@@ -2532,7 +2532,7 @@ class TestAddMembershipMultipleGroupsResponseGroupsItem():
         add_membership_multiple_groups_response_groups_item_model_json2 = add_membership_multiple_groups_response_groups_item_model.to_dict()
         assert add_membership_multiple_groups_response_groups_item_model_json2 == add_membership_multiple_groups_response_groups_item_model_json
 
-class TestDeleteFromAllGroupsResponse():
+class TestModel_DeleteFromAllGroupsResponse():
     """
     Test Class for DeleteFromAllGroupsResponse
     """
@@ -2574,7 +2574,7 @@ class TestDeleteFromAllGroupsResponse():
         delete_from_all_groups_response_model_json2 = delete_from_all_groups_response_model.to_dict()
         assert delete_from_all_groups_response_model_json2 == delete_from_all_groups_response_model_json
 
-class TestDeleteFromAllGroupsResponseGroupsItem():
+class TestModel_DeleteFromAllGroupsResponseGroupsItem():
     """
     Test Class for DeleteFromAllGroupsResponseGroupsItem
     """
@@ -2612,7 +2612,7 @@ class TestDeleteFromAllGroupsResponseGroupsItem():
         delete_from_all_groups_response_groups_item_model_json2 = delete_from_all_groups_response_groups_item_model.to_dict()
         assert delete_from_all_groups_response_groups_item_model_json2 == delete_from_all_groups_response_groups_item_model_json
 
-class TestDeleteGroupBulkMembersResponse():
+class TestModel_DeleteGroupBulkMembersResponse():
     """
     Test Class for DeleteGroupBulkMembersResponse
     """
@@ -2654,7 +2654,7 @@ class TestDeleteGroupBulkMembersResponse():
         delete_group_bulk_members_response_model_json2 = delete_group_bulk_members_response_model.to_dict()
         assert delete_group_bulk_members_response_model_json2 == delete_group_bulk_members_response_model_json
 
-class TestDeleteGroupBulkMembersResponseMembersItem():
+class TestModel_DeleteGroupBulkMembersResponseMembersItem():
     """
     Test Class for DeleteGroupBulkMembersResponseMembersItem
     """
@@ -2692,7 +2692,7 @@ class TestDeleteGroupBulkMembersResponseMembersItem():
         delete_group_bulk_members_response_members_item_model_json2 = delete_group_bulk_members_response_members_item_model.to_dict()
         assert delete_group_bulk_members_response_members_item_model_json2 == delete_group_bulk_members_response_members_item_model_json
 
-class TestError():
+class TestModel_Error():
     """
     Test Class for Error
     """
@@ -2722,7 +2722,7 @@ class TestError():
         error_model_json2 = error_model.to_dict()
         assert error_model_json2 == error_model_json
 
-class TestGroup():
+class TestModel_Group():
     """
     Test Class for Group
     """
@@ -2738,9 +2738,9 @@ class TestGroup():
         group_model_json['name'] = 'testString'
         group_model_json['description'] = 'testString'
         group_model_json['account_id'] = 'testString'
-        group_model_json['created_at'] = '2015-03-14T09:26:53.123456Z'
+        group_model_json['created_at'] = "2019-01-01T12:00:00Z"
         group_model_json['created_by_id'] = 'testString'
-        group_model_json['last_modified_at'] = '2015-03-14T09:26:53.123456Z'
+        group_model_json['last_modified_at'] = "2019-01-01T12:00:00Z"
         group_model_json['last_modified_by_id'] = 'testString'
         group_model_json['href'] = 'testString'
         group_model_json['is_federated'] = True
@@ -2760,7 +2760,7 @@ class TestGroup():
         group_model_json2 = group_model.to_dict()
         assert group_model_json2 == group_model_json
 
-class TestGroupMembersList():
+class TestModel_GroupMembersList():
     """
     Test Class for GroupMembersList
     """
@@ -2782,7 +2782,7 @@ class TestGroupMembersList():
         list_group_members_response_member_model['email'] = 'testString'
         list_group_members_response_member_model['description'] = 'testString'
         list_group_members_response_member_model['href'] = 'testString'
-        list_group_members_response_member_model['created_at'] = '2015-03-14T09:26:53.123456Z'
+        list_group_members_response_member_model['created_at'] = "2019-01-01T12:00:00Z"
         list_group_members_response_member_model['created_by_id'] = 'testString'
 
         # Construct a json representation of a GroupMembersList model
@@ -2811,7 +2811,7 @@ class TestGroupMembersList():
         group_members_list_model_json2 = group_members_list_model.to_dict()
         assert group_members_list_model_json2 == group_members_list_model_json
 
-class TestGroupsList():
+class TestModel_GroupsList():
     """
     Test Class for GroupsList
     """
@@ -2831,9 +2831,9 @@ class TestGroupsList():
         group_model['name'] = 'testString'
         group_model['description'] = 'testString'
         group_model['account_id'] = 'testString'
-        group_model['created_at'] = '2015-03-14T09:26:53.123456Z'
+        group_model['created_at'] = "2019-01-01T12:00:00Z"
         group_model['created_by_id'] = 'testString'
-        group_model['last_modified_at'] = '2015-03-14T09:26:53.123456Z'
+        group_model['last_modified_at'] = "2019-01-01T12:00:00Z"
         group_model['last_modified_by_id'] = 'testString'
         group_model['href'] = 'testString'
         group_model['is_federated'] = True
@@ -2864,7 +2864,7 @@ class TestGroupsList():
         groups_list_model_json2 = groups_list_model.to_dict()
         assert groups_list_model_json2 == groups_list_model_json
 
-class TestHrefStruct():
+class TestModel_HrefStruct():
     """
     Test Class for HrefStruct
     """
@@ -2893,7 +2893,7 @@ class TestHrefStruct():
         href_struct_model_json2 = href_struct_model.to_dict()
         assert href_struct_model_json2 == href_struct_model_json
 
-class TestListGroupMembersResponseMember():
+class TestModel_ListGroupMembersResponseMember():
     """
     Test Class for ListGroupMembersResponseMember
     """
@@ -2911,7 +2911,7 @@ class TestListGroupMembersResponseMember():
         list_group_members_response_member_model_json['email'] = 'testString'
         list_group_members_response_member_model_json['description'] = 'testString'
         list_group_members_response_member_model_json['href'] = 'testString'
-        list_group_members_response_member_model_json['created_at'] = '2015-03-14T09:26:53.123456Z'
+        list_group_members_response_member_model_json['created_at'] = "2019-01-01T12:00:00Z"
         list_group_members_response_member_model_json['created_by_id'] = 'testString'
 
         # Construct a model instance of ListGroupMembersResponseMember by calling from_dict on the json representation
@@ -2929,7 +2929,7 @@ class TestListGroupMembersResponseMember():
         list_group_members_response_member_model_json2 = list_group_members_response_member_model.to_dict()
         assert list_group_members_response_member_model_json2 == list_group_members_response_member_model_json
 
-class TestRule():
+class TestModel_Rule():
     """
     Test Class for Rule
     """
@@ -2955,9 +2955,9 @@ class TestRule():
         rule_model_json['access_group_id'] = 'testString'
         rule_model_json['account_id'] = 'testString'
         rule_model_json['conditions'] = [rule_conditions_model]
-        rule_model_json['created_at'] = '2015-03-14T09:26:53.123456Z'
+        rule_model_json['created_at'] = "2019-01-01T12:00:00Z"
         rule_model_json['created_by_id'] = 'testString'
-        rule_model_json['last_modified_at'] = '2015-03-14T09:26:53.123456Z'
+        rule_model_json['last_modified_at'] = "2019-01-01T12:00:00Z"
         rule_model_json['last_modified_by_id'] = 'testString'
 
         # Construct a model instance of Rule by calling from_dict on the json representation
@@ -2975,7 +2975,7 @@ class TestRule():
         rule_model_json2 = rule_model.to_dict()
         assert rule_model_json2 == rule_model_json
 
-class TestRuleConditions():
+class TestModel_RuleConditions():
     """
     Test Class for RuleConditions
     """
@@ -3006,7 +3006,7 @@ class TestRuleConditions():
         rule_conditions_model_json2 = rule_conditions_model.to_dict()
         assert rule_conditions_model_json2 == rule_conditions_model_json
 
-class TestRulesList():
+class TestModel_RulesList():
     """
     Test Class for RulesList
     """
@@ -3031,9 +3031,9 @@ class TestRulesList():
         rule_model['access_group_id'] = 'testString'
         rule_model['account_id'] = 'testString'
         rule_model['conditions'] = [rule_conditions_model]
-        rule_model['created_at'] = '2015-03-14T09:26:53.123456Z'
+        rule_model['created_at'] = "2019-01-01T12:00:00Z"
         rule_model['created_by_id'] = 'testString'
-        rule_model['last_modified_at'] = '2015-03-14T09:26:53.123456Z'
+        rule_model['last_modified_at'] = "2019-01-01T12:00:00Z"
         rule_model['last_modified_by_id'] = 'testString'
 
         # Construct a json representation of a RulesList model
