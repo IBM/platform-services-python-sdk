@@ -1,3 +1,10 @@
+## [0.18.14](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.13...v0.18.14) (2021-06-28)
+
+
+### Bug Fixes
+
+* **catalog-management:** update catalog mgmt service sdk after recent api changes ([5a34914](https://github.com/IBM/platform-services-python-sdk/commit/5a3491421c40c13fbaedfa245cab4fb9960477a4))
+
 ## [0.18.13](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.12...v0.18.13) (2021-06-25)
 
 
