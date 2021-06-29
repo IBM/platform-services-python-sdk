@@ -1,3 +1,10 @@
+# [0.19.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.15...v0.19.0) (2021-06-29)
+
+
+### Features
+
+* **cloudshell:** add service, tests and examples to project ([c17980a](https://github.com/IBM/platform-services-python-sdk/commit/c17980a602a5a61291e74080623153439ad9273b))
+
 ## [0.18.15](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.14...v0.18.15) (2021-06-28)
 
 
