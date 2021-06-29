@@ -30,6 +30,7 @@ from ibm_platform_services.ibm_cloud_shell_v1 import *
 # IBM_CLOUD_SHELL_AUTH_TYPE=iam
 # IBM_CLOUD_SHELL_APIKEY=<IAM apikey>
 # IBM_CLOUD_SHELL_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
+# IBM_CLOUD_SHELL_ACCOUNT_ID=<IBM Cloud account ID
 #
 # These configuration properties can be exported as environment variables, or stored
 # in a configuration file and then:
@@ -41,6 +42,7 @@ ibm_cloud_shell_service = None
 
 config = None
 
+account_id = None
 
 ##############################################################################
 # Start of Examples for Service: IbmCloudShellV1
@@ -69,6 +71,9 @@ class TestIbmCloudShellV1Examples():
             global config
             config = read_external_sources(IbmCloudShellV1.DEFAULT_SERVICE_NAME)
 
+            global account_id
+            account_id = config['ACCOUNT_ID']
+
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
@@ -76,33 +81,37 @@ class TestIbmCloudShellV1Examples():
     )
 
     @needscredentials
-    def test_get_account_settings_by_id_example(self):
+    def test_get_account_settings_example(self):
         """
-        get_account_settings_by_id request example
+        get_account_settings request example
         """
-        try:
-            print('\nget_account_settings_by_id() result:')
-            # begin-get_account_settings_by_id
+        assert account_id is not None
 
-            account_settings = ibm_cloud_shell_service.get_account_settings_by_id(
-                account_id='12345678-abcd-1a2b-a1b2-1234567890ab'
+        try:
+            print('\nget_account_settings() result:')
+            # begin-get_account_settings
+
+            account_settings = ibm_cloud_shell_service.get_account_settings(
+                account_id=account_id
             ).get_result()
 
             print(json.dumps(account_settings, indent=2))
 
-            # end-get_account_settings_by_id
+            # end-get_account_settings
 
         except ApiException as e:
             pytest.fail(str(e))
 
     @needscredentials
-    def test_update_account_settings_by_id_example(self):
+    def test_update_account_settings_example(self):
         """
-        update_account_settings_by_id request example
+        update_account_settings request example
         """
+        assert account_id is not None
+
         try:
-            print('\nupdate_account_settings_by_id() result:')
-            # begin-update_account_settings_by_id
+            print('\nupdate_account_settings() result:')
+            # begin-update_account_settings
 
             feature_model = [{
                 'enabled': True,
@@ -126,26 +135,19 @@ class TestIbmCloudShellV1Examples():
                 'key': 'us-south',
             }]
             
-            account_settings = ibm_cloud_shell_service.update_account_settings_by_id(
-                account_id='12345678-abcd-1a2b-a1b2-1234567890ab',
-                new_id='ac-12345678-abcd-1a2b-a1b2-1234567890ab',
-                new_rev='130-12345678-abcd-1a2b-a1b2-1234567890ab',
-                new_account_id='12345678-abcd-1a2b-a1b2-1234567890ab',
-                new_created_at=1600079615,
-                new_created_by='IBMid-1000000000',
-                new_default_enable_new_features=True,
-                new_default_enable_new_regions=True,
-                new_enabled=True,
-                new_features=feature_model,
-                new_regions=region_setting_model,
-                new_type='account_settings',
-                new_updated_at=1624359948,
-                new_updated_by='IBMid-1000000000'
+            account_settings = ibm_cloud_shell_service.update_account_settings(
+                account_id=account_id,
+                rev='130-12345678-abcd-1a2b-a1b2-1234567890ab',
+                default_enable_new_features=False,
+                default_enable_new_regions=True,
+                enabled=True,
+                features=feature_model,
+                regions=region_setting_model
             ).get_result()
 
             print(json.dumps(account_settings, indent=2))
 
-            # end-update_account_settings_by_id
+            # end-update_account_settings
 
         except ApiException as e:
             pytest.fail(str(e))

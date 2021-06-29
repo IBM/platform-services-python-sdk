@@ -31,7 +31,7 @@ _service = IbmCloudShellV1(
     authenticator=NoAuthAuthenticator()
     )
 
-_base_url = 'https://api.shell.test.cloud.ibm.com'
+_base_url = 'https://api.shell.cloud.ibm.com'
 _service.set_service_url(_base_url)
 
 ##############################################################################
@@ -39,9 +39,9 @@ _service.set_service_url(_base_url)
 ##############################################################################
 # region
 
-class TestGetAccountSettingsById():
+class TestGetAccountSettings():
     """
-    Test Class for get_account_settings_by_id
+    Test Class for get_account_settings
     """
 
     def preprocess_url(self, request_url: str):
@@ -54,9 +54,9 @@ class TestGetAccountSettingsById():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_get_account_settings_by_id_all_params(self):
+    def test_get_account_settings_all_params(self):
         """
-        get_account_settings_by_id()
+        get_account_settings()
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
@@ -71,7 +71,7 @@ class TestGetAccountSettingsById():
         account_id = '12345678-abcd-1a2b-a1b2-1234567890ab'
 
         # Invoke method
-        response = _service.get_account_settings_by_id(
+        response = _service.get_account_settings(
             account_id,
             headers={}
         )
@@ -82,9 +82,9 @@ class TestGetAccountSettingsById():
 
 
     @responses.activate
-    def test_get_account_settings_by_id_value_error(self):
+    def test_get_account_settings_value_error(self):
         """
-        test_get_account_settings_by_id_value_error()
+        test_get_account_settings_value_error()
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
@@ -105,13 +105,13 @@ class TestGetAccountSettingsById():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.get_account_settings_by_id(**req_copy)
+                _service.get_account_settings(**req_copy)
 
 
 
-class TestUpdateAccountSettingsById():
+class TestUpdateAccountSettings():
     """
-    Test Class for update_account_settings_by_id
+    Test Class for update_account_settings
     """
 
     def preprocess_url(self, request_url: str):
@@ -124,9 +124,9 @@ class TestUpdateAccountSettingsById():
             return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
-    def test_update_account_settings_by_id_all_params(self):
+    def test_update_account_settings_all_params(self):
         """
-        update_account_settings_by_id()
+        update_account_settings()
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
@@ -163,36 +163,22 @@ class TestUpdateAccountSettingsById():
 
         # Set up parameter values
         account_id = '12345678-abcd-1a2b-a1b2-1234567890ab'
-        new_id = 'ac-12345678-abcd-1a2b-a1b2-1234567890ab'
-        new_rev = '130-12345678-abcd-1a2b-a1b2-1234567890ab'
-        new_account_id = '12345678-abcd-1a2b-a1b2-1234567890ab'
-        new_created_at = 1600079615
-        new_created_by = 'IBMid-1000000000'
-        new_default_enable_new_features = True
-        new_default_enable_new_regions = True
-        new_enabled = True
-        new_features = feature_model
-        new_regions = region_setting_model
-        new_type = 'account_settings'
-        new_updated_at = 1624359948
-        new_updated_by = 'IBMid-1000000000'
+        rev = '130-12345678-abcd-1a2b-a1b2-1234567890ab'
+        default_enable_new_features = True
+        default_enable_new_regions = True
+        enabled = True
+        features = feature_model
+        regions = region_setting_model
 
         # Invoke method
-        response = _service.update_account_settings_by_id(
+        response = _service.update_account_settings(
             account_id,
-            new_id=new_id,
-            new_rev=new_rev,
-            new_account_id=new_account_id,
-            new_created_at=new_created_at,
-            new_created_by=new_created_by,
-            new_default_enable_new_features=new_default_enable_new_features,
-            new_default_enable_new_regions=new_default_enable_new_regions,
-            new_enabled=new_enabled,
-            new_features=new_features,
-            new_regions=new_regions,
-            new_type=new_type,
-            new_updated_at=new_updated_at,
-            new_updated_by=new_updated_by,
+            rev=rev,
+            default_enable_new_features=default_enable_new_features,
+            default_enable_new_regions=default_enable_new_regions,
+            enabled=enabled,
+            features=features,
+            regions=regions,
             headers={}
         )
 
@@ -201,25 +187,18 @@ class TestUpdateAccountSettingsById():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['_id'] == 'ac-12345678-abcd-1a2b-a1b2-1234567890ab'
         assert req_body['_rev'] == '130-12345678-abcd-1a2b-a1b2-1234567890ab'
-        assert req_body['account_id'] == '12345678-abcd-1a2b-a1b2-1234567890ab'
-        assert req_body['created_at'] == 1600079615
-        assert req_body['created_by'] == 'IBMid-1000000000'
         assert req_body['default_enable_new_features'] == True
         assert req_body['default_enable_new_regions'] == True
         assert req_body['enabled'] == True
         assert req_body['features'] == feature_model
         assert req_body['regions'] == region_setting_model
-        assert req_body['type'] == 'account_settings'
-        assert req_body['updated_at'] == 1624359948
-        assert req_body['updated_by'] == 'IBMid-1000000000'
 
 
     @responses.activate
-    def test_update_account_settings_by_id_value_error(self):
+    def test_update_account_settings_value_error(self):
         """
-        test_update_account_settings_by_id_value_error()
+        test_update_account_settings_value_error()
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
@@ -256,19 +235,12 @@ class TestUpdateAccountSettingsById():
 
         # Set up parameter values
         account_id = '12345678-abcd-1a2b-a1b2-1234567890ab'
-        new_id = 'ac-12345678-abcd-1a2b-a1b2-1234567890ab'
-        new_rev = '130-12345678-abcd-1a2b-a1b2-1234567890ab'
-        new_account_id = '12345678-abcd-1a2b-a1b2-1234567890ab'
-        new_created_at = 1600079615
-        new_created_by = 'IBMid-1000000000'
-        new_default_enable_new_features = True
-        new_default_enable_new_regions = True
-        new_enabled = True
-        new_features = feature_model
-        new_regions = region_setting_model
-        new_type = 'account_settings'
-        new_updated_at = 1624359948
-        new_updated_by = 'IBMid-1000000000'
+        rev = '130-12345678-abcd-1a2b-a1b2-1234567890ab'
+        default_enable_new_features = True
+        default_enable_new_regions = True
+        enabled = True
+        features = [feature_model]
+        regions = [region_setting_model]
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -277,7 +249,7 @@ class TestUpdateAccountSettingsById():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.update_account_settings_by_id(**req_copy)
+                _service.update_account_settings(**req_copy)
 
 
 

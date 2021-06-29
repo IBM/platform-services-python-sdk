@@ -37,7 +37,7 @@ from .common import get_sdk_headers
 class IbmCloudShellV1(BaseService):
     """The IBM Cloud Shell V1 service."""
 
-    DEFAULT_SERVICE_URL = 'https://api.shell.test.cloud.ibm.com'
+    DEFAULT_SERVICE_URL = 'https://api.shell.cloud.ibm.com'
     DEFAULT_SERVICE_NAME = 'ibm_cloud_shell'
 
     @classmethod
@@ -75,7 +75,7 @@ class IbmCloudShellV1(BaseService):
     #########################
 
 
-    def get_account_settings_by_id(self,
+    def get_account_settings(self,
         account_id: str,
         **kwargs
     ) -> DetailedResponse:
@@ -100,7 +100,7 @@ class IbmCloudShellV1(BaseService):
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='get_account_settings_by_id')
+                                      operation_id='get_account_settings')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -119,22 +119,15 @@ class IbmCloudShellV1(BaseService):
         return response
 
 
-    def update_account_settings_by_id(self,
+    def update_account_settings(self,
         account_id: str,
         *,
-        new_id: str = None,
-        new_rev: str = None,
-        new_account_id: str = None,
-        new_created_at: int = None,
-        new_created_by: str = None,
-        new_default_enable_new_features: bool = None,
-        new_default_enable_new_regions: bool = None,
-        new_enabled: bool = None,
-        new_features: List['Feature'] = None,
-        new_regions: List['RegionSetting'] = None,
-        new_type: str = None,
-        new_updated_at: int = None,
-        new_updated_by: str = None,
+        rev: str = None,
+        default_enable_new_features: bool = None,
+        default_enable_new_regions: bool = None,
+        enabled: bool = None,
+        features: List['Feature'] = None,
+        regions: List['RegionSetting'] = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -148,29 +141,20 @@ class IbmCloudShellV1(BaseService):
 
         :param str account_id: The account ID in which the account settings belong
                to.
-        :param str new_id: (optional) Unique id of the settings object.
-        :param str new_rev: (optional) Unique revision number for the settings
-               object.
-        :param str new_account_id: (optional) The id of the account the settings
-               belong to.
-        :param int new_created_at: (optional) Creation timestamp.
-        :param str new_created_by: (optional) IAM ID of creator.
-        :param bool new_default_enable_new_features: (optional) You can choose
-               which Cloud Shell features are available in the account and whether any new
+        :param str rev: (optional) Unique revision number for the settings object.
+        :param bool default_enable_new_features: (optional) You can choose which
+               Cloud Shell features are available in the account and whether any new
                features are enabled as they become available. The feature settings apply
                only to the enabled Cloud Shell locations.
-        :param bool new_default_enable_new_regions: (optional) Set whether Cloud
-               Shell is enabled in a specific location for the account. The location
-               determines where user and session data are stored. By default, users are
-               routed to the nearest available location.
-        :param bool new_enabled: (optional) When enabled, Cloud Shell is available
-               to all users in the account.
-        :param List[Feature] new_features: (optional) List of Cloud Shell features.
-        :param List[RegionSetting] new_regions: (optional) List of Cloud Shell
-               region settings.
-        :param str new_type: (optional) Type of api response object.
-        :param int new_updated_at: (optional) Timestamp of last update.
-        :param str new_updated_by: (optional) IAM ID of last updater.
+        :param bool default_enable_new_regions: (optional) Set whether Cloud Shell
+               is enabled in a specific location for the account. The location determines
+               where user and session data are stored. By default, users are routed to the
+               nearest available location.
+        :param bool enabled: (optional) When enabled, Cloud Shell is available to
+               all users in the account.
+        :param List[Feature] features: (optional) List of Cloud Shell features.
+        :param List[RegionSetting] regions: (optional) List of Cloud Shell region
+               settings.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `AccountSettings` object
@@ -178,30 +162,23 @@ class IbmCloudShellV1(BaseService):
 
         if account_id is None:
             raise ValueError('account_id must be provided')
-        if new_features is not None:
-            new_features = [convert_model(x) for x in new_features]
-        if new_regions is not None:
-            new_regions = [convert_model(x) for x in new_regions]
+        if features is not None:
+            features = [convert_model(x) for x in features]
+        if regions is not None:
+            regions = [convert_model(x) for x in regions]
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='update_account_settings_by_id')
+                                      operation_id='update_account_settings')
         headers.update(sdk_headers)
 
         data = {
-            '_id': new_id,
-            '_rev': new_rev,
-            'account_id': new_account_id,
-            'created_at': new_created_at,
-            'created_by': new_created_by,
-            'default_enable_new_features': new_default_enable_new_features,
-            'default_enable_new_regions': new_default_enable_new_regions,
-            'enabled': new_enabled,
-            'features': new_features,
-            'regions': new_regions,
-            'type': new_type,
-            'updated_at': new_updated_at,
-            'updated_by': new_updated_by
+            '_rev': rev,
+            'default_enable_new_features': default_enable_new_features,
+            'default_enable_new_regions': default_enable_new_regions,
+            'enabled': enabled,
+            'features': features,
+            'regions': regions
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -236,7 +213,7 @@ class AccountSettings():
     :attr str id: (optional) Unique id of the settings object.
     :attr str rev: (optional) Unique revision number for the settings object.
     :attr str account_id: (optional) The id of the account the settings belong to.
-    :attr int created_at: (optional) Creation timestamp.
+    :attr int created_at: (optional) Creation timestamp in Unix epoch time.
     :attr str created_by: (optional) IAM ID of creator.
     :attr bool default_enable_new_features: (optional) You can choose which Cloud
           Shell features are available in the account and whether any new features are
@@ -252,7 +229,7 @@ class AccountSettings():
     :attr List[RegionSetting] regions: (optional) List of Cloud Shell region
           settings.
     :attr str type: (optional) Type of api response object.
-    :attr int updated_at: (optional) Timestamp of last update.
+    :attr int updated_at: (optional) Timestamp of last update in Unix epoch time.
     :attr str updated_by: (optional) IAM ID of last updater.
     """
 
@@ -274,12 +251,7 @@ class AccountSettings():
         """
         Initialize a AccountSettings object.
 
-        :param str id: (optional) Unique id of the settings object.
         :param str rev: (optional) Unique revision number for the settings object.
-        :param str account_id: (optional) The id of the account the settings belong
-               to.
-        :param int created_at: (optional) Creation timestamp.
-        :param str created_by: (optional) IAM ID of creator.
         :param bool default_enable_new_features: (optional) You can choose which
                Cloud Shell features are available in the account and whether any new
                features are enabled as they become available. The feature settings apply
@@ -293,9 +265,6 @@ class AccountSettings():
         :param List[Feature] features: (optional) List of Cloud Shell features.
         :param List[RegionSetting] regions: (optional) List of Cloud Shell region
                settings.
-        :param str type: (optional) Type of api response object.
-        :param int updated_at: (optional) Timestamp of last update.
-        :param str updated_by: (optional) IAM ID of last updater.
         """
         self.id = id
         self.rev = rev
@@ -351,16 +320,16 @@ class AccountSettings():
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['_id'] = self.id
+        if hasattr(self, 'id') and getattr(self, 'id') is not None:
+            _dict['_id'] = getattr(self, 'id')
         if hasattr(self, 'rev') and self.rev is not None:
             _dict['_rev'] = self.rev
-        if hasattr(self, 'account_id') and self.account_id is not None:
-            _dict['account_id'] = self.account_id
-        if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = self.created_at
-        if hasattr(self, 'created_by') and self.created_by is not None:
-            _dict['created_by'] = self.created_by
+        if hasattr(self, 'account_id') and getattr(self, 'account_id') is not None:
+            _dict['account_id'] = getattr(self, 'account_id')
+        if hasattr(self, 'created_at') and getattr(self, 'created_at') is not None:
+            _dict['created_at'] = getattr(self, 'created_at')
+        if hasattr(self, 'created_by') and getattr(self, 'created_by') is not None:
+            _dict['created_by'] = getattr(self, 'created_by')
         if hasattr(self, 'default_enable_new_features') and self.default_enable_new_features is not None:
             _dict['default_enable_new_features'] = self.default_enable_new_features
         if hasattr(self, 'default_enable_new_regions') and self.default_enable_new_regions is not None:
@@ -371,12 +340,12 @@ class AccountSettings():
             _dict['features'] = [x.to_dict() for x in self.features]
         if hasattr(self, 'regions') and self.regions is not None:
             _dict['regions'] = [x.to_dict() for x in self.regions]
-        if hasattr(self, 'type') and self.type is not None:
-            _dict['type'] = self.type
-        if hasattr(self, 'updated_at') and self.updated_at is not None:
-            _dict['updated_at'] = self.updated_at
-        if hasattr(self, 'updated_by') and self.updated_by is not None:
-            _dict['updated_by'] = self.updated_by
+        if hasattr(self, 'type') and getattr(self, 'type') is not None:
+            _dict['type'] = getattr(self, 'type')
+        if hasattr(self, 'updated_at') and getattr(self, 'updated_at') is not None:
+            _dict['updated_at'] = getattr(self, 'updated_at')
+        if hasattr(self, 'updated_by') and getattr(self, 'updated_by') is not None:
+            _dict['updated_by'] = getattr(self, 'updated_by')
         return _dict
 
     def _to_dict(self):

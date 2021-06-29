@@ -26,7 +26,7 @@ from ibm_platform_services.ibm_cloud_shell_v1 import *
 # Config file name
 config_file = 'ibm_cloud_shell_v1.env'
 
-class TestIbmCloudShellV1Integration(unittest.TestCase):
+class IbmCloudShellV1IntegrationTests(unittest.TestCase):
     """
     Integration Test Class for IbmCloudShellV1
     """
@@ -44,6 +44,8 @@ class TestIbmCloudShellV1Integration(unittest.TestCase):
                 IbmCloudShellV1.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
 
+            cls.ACCOUNT_ID = cls.config['ACCOUNT_ID']
+
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
@@ -51,22 +53,30 @@ class TestIbmCloudShellV1Integration(unittest.TestCase):
     )
 
     @needscredentials
-    def test_get_account_settings_by_id(self):
+    def test_get_account_settings(self):
 
-        get_account_settings_by_id_response = self.ibm_cloud_shell_service.get_account_settings_by_id(
-            account_id='12345678-abcd-1a2b-a1b2-1234567890ab'
+        get_account_settings_response = self.ibm_cloud_shell_service.get_account_settings(
+            account_id=self.ACCOUNT_ID
         )
 
-        assert get_account_settings_by_id_response.get_status_code() == 200
-        account_settings = get_account_settings_by_id_response.get_result()
+        assert get_account_settings_response.get_status_code() == 200
+        account_settings = get_account_settings_response.get_result()
         assert account_settings is not None
 
     @needscredentials
-    def test_update_account_settings_by_id(self):
+    def test_update_account_settings(self):
+
+        get_account_settings_response = self.ibm_cloud_shell_service.get_account_settings(
+            account_id=self.ACCOUNT_ID
+        )
+
+        assert get_account_settings_response.get_status_code() == 200
+        existing_account_settings = get_account_settings_response.get_result()
+        assert existing_account_settings is not None
 
         # Construct a dict representation of a Feature model
         feature_model = [{
-            'enabled': True,
+            'enabled': False,
             'key': 'server.file_manager',
         },
         {
@@ -80,32 +90,31 @@ class TestIbmCloudShellV1Integration(unittest.TestCase):
             'key': 'eu-de',
         },
         {
-            'enabled': True,
+            'enabled': False,
             'key': 'jp-tok',
         },
         {
-            'enabled': True,
+            'enabled': False,
             'key': 'us-south',
         }]
 
-        update_account_settings_by_id_response = self.ibm_cloud_shell_service.update_account_settings_by_id(
-            account_id='12345678-abcd-1a2b-a1b2-1234567890ab',
-            new_id='ac-12345678-abcd-1a2b-a1b2-1234567890ab',
-            new_rev='130-12345678-abcd-1a2b-a1b2-1234567890ab',
-            new_account_id='12345678-abcd-1a2b-a1b2-1234567890ab',
-            new_created_at=1600079615,
-            new_created_by='IBMid-1000000000',
-            new_default_enable_new_features=True,
-            new_default_enable_new_regions=True,
-            new_enabled=True,
-            new_features=feature_model,
-            new_regions=region_setting_model,
-            new_type='account_settings',
-            new_updated_at=1624359948,
-            new_updated_by='IBMid-1000000000'
+        update_account_settings_response = self.ibm_cloud_shell_service.update_account_settings(
+            account_id=self.ACCOUNT_ID,
+            rev=existing_account_settings.get('_rev'),
+            default_enable_new_features=False,
+            default_enable_new_regions=True,
+            enabled=True,
+            features=feature_model,
+            regions=region_setting_model
         )
 
-        assert update_account_settings_by_id_response.get_status_code() == 200
-        account_settings = update_account_settings_by_id_response.get_result()
+        assert update_account_settings_response.get_status_code() == 200
+        account_settings = update_account_settings_response.get_result()
         assert account_settings is not None
+        assert account_settings.get('default_enable_new_features') == False
+        assert account_settings.get('default_enable_new_regions') == True
+        assert account_settings.get('enabled') == True
+        assert account_settings.get('features') == feature_model
+        assert account_settings.get('regions') == region_setting_model
+
 
