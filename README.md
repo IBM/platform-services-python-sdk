@@ -59,6 +59,7 @@ Service Name | Module Name | Service Class Name
 [IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | iam_access_groups_v2 | IamAccessGroupsV2
 [IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api) | iam_identity_v1 | IamIdentityV1
 [IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | iam_policy_management_v1 | IamPolicyManagementV1
+[IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell) | ibm_cloud_shell_v1 | IbmCloudShellV1
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | open_service_broker_v1 | OpenServiceBrokerV1
 [Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture) | posture_management_v1 | PostureManagementV1
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | resource_controller_v2 | ResourceControllerV2
