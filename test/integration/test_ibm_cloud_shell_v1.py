@@ -45,6 +45,7 @@ class IbmCloudShellV1IntegrationTests(unittest.TestCase):
             assert cls.config is not None
 
             cls.ACCOUNT_ID = cls.config['ACCOUNT_ID']
+            assert cls.ACCOUNT_ID is not None
 
         print('Setup complete.')
 

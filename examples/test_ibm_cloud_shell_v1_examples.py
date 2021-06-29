@@ -73,6 +73,7 @@ class TestIbmCloudShellV1Examples():
 
             global account_id
             account_id = config['ACCOUNT_ID']
+            assert account_id is not None
 
         print('Setup complete.')
 
