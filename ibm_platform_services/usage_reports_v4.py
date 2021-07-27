@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2021.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+# IBM OpenAPI SDK Code Generator Version: 3.36.0-6f5b0381-20210716-180747
  
 """
 Usage reports for IBM Cloud accounts
@@ -72,7 +72,7 @@ class UsageReportsV4(BaseService):
 
 
     #########################
-    # Usage Reports
+    # Account operations
     #########################
 
 
@@ -117,7 +117,7 @@ class UsageReportsV4(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -176,8 +176,12 @@ class UsageReportsV4(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
+
+    #########################
+    # Resource operations
+    #########################
 
 
     def get_resource_group_usage(self,
@@ -241,71 +245,7 @@ class UsageReportsV4(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
-        return response
-
-
-    def get_org_usage(self,
-        account_id: str,
-        organization_id: str,
-        billingmonth: str,
-        *,
-        names: bool = None,
-        accept_language: str = None,
-        **kwargs
-    ) -> DetailedResponse:
-        """
-        Get organization usage.
-
-        Usage for all the resources and plans in an organization in a given month. Account
-        billing managers or organization billing managers are authorized to access this
-        report.
-
-        :param str account_id: Account ID for which the usage report is requested.
-        :param str organization_id: ID of the organization.
-        :param str billingmonth: The billing month for which the usage report is
-               requested.  Format is yyyy-mm.
-        :param bool names: (optional) Include the name of every resource, plan,
-               resource instance, organization, and resource group.
-        :param str accept_language: (optional) Prioritize the names returned in the
-               order of the specified languages. Language will default to English.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `OrgUsage` object
-        """
-
-        if account_id is None:
-            raise ValueError('account_id must be provided')
-        if organization_id is None:
-            raise ValueError('organization_id must be provided')
-        if billingmonth is None:
-            raise ValueError('billingmonth must be provided')
-        headers = {
-            'Accept-Language': accept_language
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V4',
-                                      operation_id='get_org_usage')
-        headers.update(sdk_headers)
-
-        params = {
-            '_names': names
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['account_id', 'organization_id', 'billingmonth']
-        path_param_values = self.encode_path_vars(account_id, organization_id, billingmonth)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v4/accounts/{account_id}/organizations/{organization_id}/usage/{billingmonth}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
-
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -391,7 +331,7 @@ class UsageReportsV4(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -477,7 +417,7 @@ class UsageReportsV4(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -562,7 +502,75 @@ class UsageReportsV4(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # Organization operations
+    #########################
+
+
+    def get_org_usage(self,
+        account_id: str,
+        organization_id: str,
+        billingmonth: str,
+        *,
+        names: bool = None,
+        accept_language: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get organization usage.
+
+        Usage for all the resources and plans in an organization in a given month. Account
+        billing managers or organization billing managers are authorized to access this
+        report.
+
+        :param str account_id: Account ID for which the usage report is requested.
+        :param str organization_id: ID of the organization.
+        :param str billingmonth: The billing month for which the usage report is
+               requested.  Format is yyyy-mm.
+        :param bool names: (optional) Include the name of every resource, plan,
+               resource instance, organization, and resource group.
+        :param str accept_language: (optional) Prioritize the names returned in the
+               order of the specified languages. Language will default to English.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `OrgUsage` object
+        """
+
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        if organization_id is None:
+            raise ValueError('organization_id must be provided')
+        if billingmonth is None:
+            raise ValueError('billingmonth must be provided')
+        headers = {
+            'Accept-Language': accept_language
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V4',
+                                      operation_id='get_org_usage')
+        headers.update(sdk_headers)
+
+        params = {
+            '_names': names
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id', 'organization_id', 'billingmonth']
+        path_param_values = self.encode_path_vars(account_id, organization_id, billingmonth)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v4/accounts/{account_id}/organizations/{organization_id}/usage/{billingmonth}'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
+
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -807,23 +815,24 @@ class Discount():
     Information about a discount that is associated with a metric.
 
     :attr str ref: The reference ID of the discount.
-    :attr str name: The name of the discount indicating category.
-    :attr str display_name: The name of the discount.
+    :attr str name: (optional) The name of the discount indicating category.
+    :attr str display_name: (optional) The name of the discount.
     :attr float discount: The discount percentage.
     """
 
     def __init__(self,
                  ref: str,
-                 name: str,
-                 display_name: str,
-                 discount: float) -> None:
+                 discount: float,
+                 *,
+                 name: str = None,
+                 display_name: str = None) -> None:
         """
         Initialize a Discount object.
 
         :param str ref: The reference ID of the discount.
-        :param str name: The name of the discount indicating category.
-        :param str display_name: The name of the discount.
         :param float discount: The discount percentage.
+        :param str name: (optional) The name of the discount indicating category.
+        :param str display_name: (optional) The name of the discount.
         """
         self.ref = ref
         self.name = name
@@ -840,12 +849,8 @@ class Discount():
             raise ValueError('Required property \'ref\' not present in Discount JSON')
         if 'name' in _dict:
             args['name'] = _dict.get('name')
-        else:
-            raise ValueError('Required property \'name\' not present in Discount JSON')
         if 'display_name' in _dict:
             args['display_name'] = _dict.get('display_name')
-        else:
-            raise ValueError('Required property \'display_name\' not present in Discount JSON')
         if 'discount' in _dict:
             args['discount'] = _dict.get('discount')
         else:
@@ -894,10 +899,15 @@ class InstanceUsage():
 
     :attr str account_id: The ID of the account.
     :attr str resource_instance_id: The ID of the resource instance.
+    :attr str resource_instance_name: (optional) The name of the resource instance.
     :attr str resource_id: The ID of the resource.
+    :attr str resource_name: (optional) The name of the resource.
     :attr str resource_group_id: (optional) The ID of the resource group.
+    :attr str resource_group_name: (optional) The name of the resource group.
     :attr str organization_id: (optional) The ID of the organization.
-    :attr str space: (optional) The ID of the space.
+    :attr str organization_name: (optional) The name of the organization.
+    :attr str space_id: (optional) The ID of the space.
+    :attr str space_name: (optional) The name of the space.
     :attr str consumer_id: (optional) The ID of the consumer.
     :attr str region: (optional) The region where instance was provisioned.
     :attr str pricing_region: (optional) The pricing region where the usage that was
@@ -908,6 +918,8 @@ class InstanceUsage():
     :attr bool billable: Is the cost charged to the account.
     :attr str plan_id: The ID of the plan where the instance was provisioned and
           rated.
+    :attr str plan_name: (optional) The name of the plan where the instance was
+          provisioned and rated.
     :attr str month: The month.
     :attr List[Metric] usage: All the resource used in the account.
     """
@@ -923,12 +935,18 @@ class InstanceUsage():
                  month: str,
                  usage: List['Metric'],
                  *,
+                 resource_instance_name: str = None,
+                 resource_name: str = None,
                  resource_group_id: str = None,
+                 resource_group_name: str = None,
                  organization_id: str = None,
-                 space: str = None,
+                 organization_name: str = None,
+                 space_id: str = None,
+                 space_name: str = None,
                  consumer_id: str = None,
                  region: str = None,
-                 pricing_region: str = None) -> None:
+                 pricing_region: str = None,
+                 plan_name: str = None) -> None:
         """
         Initialize a InstanceUsage object.
 
@@ -943,20 +961,33 @@ class InstanceUsage():
                and rated.
         :param str month: The month.
         :param List[Metric] usage: All the resource used in the account.
+        :param str resource_instance_name: (optional) The name of the resource
+               instance.
+        :param str resource_name: (optional) The name of the resource.
         :param str resource_group_id: (optional) The ID of the resource group.
+        :param str resource_group_name: (optional) The name of the resource group.
         :param str organization_id: (optional) The ID of the organization.
-        :param str space: (optional) The ID of the space.
+        :param str organization_name: (optional) The name of the organization.
+        :param str space_id: (optional) The ID of the space.
+        :param str space_name: (optional) The name of the space.
         :param str consumer_id: (optional) The ID of the consumer.
         :param str region: (optional) The region where instance was provisioned.
         :param str pricing_region: (optional) The pricing region where the usage
                that was submitted was rated.
+        :param str plan_name: (optional) The name of the plan where the instance
+               was provisioned and rated.
         """
         self.account_id = account_id
         self.resource_instance_id = resource_instance_id
+        self.resource_instance_name = resource_instance_name
         self.resource_id = resource_id
+        self.resource_name = resource_name
         self.resource_group_id = resource_group_id
+        self.resource_group_name = resource_group_name
         self.organization_id = organization_id
-        self.space = space
+        self.organization_name = organization_name
+        self.space_id = space_id
+        self.space_name = space_name
         self.consumer_id = consumer_id
         self.region = region
         self.pricing_region = pricing_region
@@ -964,6 +995,7 @@ class InstanceUsage():
         self.currency_code = currency_code
         self.billable = billable
         self.plan_id = plan_id
+        self.plan_name = plan_name
         self.month = month
         self.usage = usage
 
@@ -979,16 +1011,26 @@ class InstanceUsage():
             args['resource_instance_id'] = _dict.get('resource_instance_id')
         else:
             raise ValueError('Required property \'resource_instance_id\' not present in InstanceUsage JSON')
+        if 'resource_instance_name' in _dict:
+            args['resource_instance_name'] = _dict.get('resource_instance_name')
         if 'resource_id' in _dict:
             args['resource_id'] = _dict.get('resource_id')
         else:
             raise ValueError('Required property \'resource_id\' not present in InstanceUsage JSON')
+        if 'resource_name' in _dict:
+            args['resource_name'] = _dict.get('resource_name')
         if 'resource_group_id' in _dict:
             args['resource_group_id'] = _dict.get('resource_group_id')
+        if 'resource_group_name' in _dict:
+            args['resource_group_name'] = _dict.get('resource_group_name')
         if 'organization_id' in _dict:
             args['organization_id'] = _dict.get('organization_id')
-        if 'space' in _dict:
-            args['space'] = _dict.get('space')
+        if 'organization_name' in _dict:
+            args['organization_name'] = _dict.get('organization_name')
+        if 'space_id' in _dict:
+            args['space_id'] = _dict.get('space_id')
+        if 'space_name' in _dict:
+            args['space_name'] = _dict.get('space_name')
         if 'consumer_id' in _dict:
             args['consumer_id'] = _dict.get('consumer_id')
         if 'region' in _dict:
@@ -1011,6 +1053,8 @@ class InstanceUsage():
             args['plan_id'] = _dict.get('plan_id')
         else:
             raise ValueError('Required property \'plan_id\' not present in InstanceUsage JSON')
+        if 'plan_name' in _dict:
+            args['plan_name'] = _dict.get('plan_name')
         if 'month' in _dict:
             args['month'] = _dict.get('month')
         else:
@@ -1033,14 +1077,24 @@ class InstanceUsage():
             _dict['account_id'] = self.account_id
         if hasattr(self, 'resource_instance_id') and self.resource_instance_id is not None:
             _dict['resource_instance_id'] = self.resource_instance_id
+        if hasattr(self, 'resource_instance_name') and self.resource_instance_name is not None:
+            _dict['resource_instance_name'] = self.resource_instance_name
         if hasattr(self, 'resource_id') and self.resource_id is not None:
             _dict['resource_id'] = self.resource_id
+        if hasattr(self, 'resource_name') and self.resource_name is not None:
+            _dict['resource_name'] = self.resource_name
         if hasattr(self, 'resource_group_id') and self.resource_group_id is not None:
             _dict['resource_group_id'] = self.resource_group_id
+        if hasattr(self, 'resource_group_name') and self.resource_group_name is not None:
+            _dict['resource_group_name'] = self.resource_group_name
         if hasattr(self, 'organization_id') and self.organization_id is not None:
             _dict['organization_id'] = self.organization_id
-        if hasattr(self, 'space') and self.space is not None:
-            _dict['space'] = self.space
+        if hasattr(self, 'organization_name') and self.organization_name is not None:
+            _dict['organization_name'] = self.organization_name
+        if hasattr(self, 'space_id') and self.space_id is not None:
+            _dict['space_id'] = self.space_id
+        if hasattr(self, 'space_name') and self.space_name is not None:
+            _dict['space_name'] = self.space_name
         if hasattr(self, 'consumer_id') and self.consumer_id is not None:
             _dict['consumer_id'] = self.consumer_id
         if hasattr(self, 'region') and self.region is not None:
@@ -1055,6 +1109,8 @@ class InstanceUsage():
             _dict['billable'] = self.billable
         if hasattr(self, 'plan_id') and self.plan_id is not None:
             _dict['plan_id'] = self.plan_id
+        if hasattr(self, 'plan_name') and self.plan_name is not None:
+            _dict['plan_name'] = self.plan_name
         if hasattr(self, 'month') and self.month is not None:
             _dict['month'] = self.month
         if hasattr(self, 'usage') and self.usage is not None:
@@ -1296,7 +1352,8 @@ class Metric():
     """
     Information about a metric.
 
-    :attr str metric: The name of the metric.
+    :attr str metric: The ID of the metric.
+    :attr str metric_name: (optional) The name of the metric.
     :attr float quantity: The aggregated value for the metric.
     :attr float rateable_quantity: (optional) The quantity that is used for
           calculating charges.
@@ -1305,6 +1362,7 @@ class Metric():
     :attr List[object] price: (optional) The price with which the cost was
           calculated.
     :attr str unit: (optional) The unit that qualifies the quantity.
+    :attr str unit_name: (optional) The name of the unit.
     :attr bool non_chargeable: (optional) When set to `true`, the cost is for
           informational purpose and is not included while calculating the plan charges.
     :attr List[Discount] discounts: All the discounts applicable to the metric.
@@ -1317,35 +1375,41 @@ class Metric():
                  rated_cost: float,
                  discounts: List['Discount'],
                  *,
+                 metric_name: str = None,
                  rateable_quantity: float = None,
                  price: List[object] = None,
                  unit: str = None,
+                 unit_name: str = None,
                  non_chargeable: bool = None) -> None:
         """
         Initialize a Metric object.
 
-        :param str metric: The name of the metric.
+        :param str metric: The ID of the metric.
         :param float quantity: The aggregated value for the metric.
         :param float cost: The cost incurred by the metric.
         :param float rated_cost: Pre-discounted cost incurred by the metric.
         :param List[Discount] discounts: All the discounts applicable to the
                metric.
+        :param str metric_name: (optional) The name of the metric.
         :param float rateable_quantity: (optional) The quantity that is used for
                calculating charges.
         :param List[object] price: (optional) The price with which the cost was
                calculated.
         :param str unit: (optional) The unit that qualifies the quantity.
+        :param str unit_name: (optional) The name of the unit.
         :param bool non_chargeable: (optional) When set to `true`, the cost is for
                informational purpose and is not included while calculating the plan
                charges.
         """
         self.metric = metric
+        self.metric_name = metric_name
         self.quantity = quantity
         self.rateable_quantity = rateable_quantity
         self.cost = cost
         self.rated_cost = rated_cost
         self.price = price
         self.unit = unit
+        self.unit_name = unit_name
         self.non_chargeable = non_chargeable
         self.discounts = discounts
 
@@ -1357,6 +1421,8 @@ class Metric():
             args['metric'] = _dict.get('metric')
         else:
             raise ValueError('Required property \'metric\' not present in Metric JSON')
+        if 'metric_name' in _dict:
+            args['metric_name'] = _dict.get('metric_name')
         if 'quantity' in _dict:
             args['quantity'] = _dict.get('quantity')
         else:
@@ -1375,6 +1441,8 @@ class Metric():
             args['price'] = _dict.get('price')
         if 'unit' in _dict:
             args['unit'] = _dict.get('unit')
+        if 'unit_name' in _dict:
+            args['unit_name'] = _dict.get('unit_name')
         if 'non_chargeable' in _dict:
             args['non_chargeable'] = _dict.get('non_chargeable')
         if 'discounts' in _dict:
@@ -1393,6 +1461,8 @@ class Metric():
         _dict = {}
         if hasattr(self, 'metric') and self.metric is not None:
             _dict['metric'] = self.metric
+        if hasattr(self, 'metric_name') and self.metric_name is not None:
+            _dict['metric_name'] = self.metric_name
         if hasattr(self, 'quantity') and self.quantity is not None:
             _dict['quantity'] = self.quantity
         if hasattr(self, 'rateable_quantity') and self.rateable_quantity is not None:
@@ -1405,6 +1475,8 @@ class Metric():
             _dict['price'] = self.price
         if hasattr(self, 'unit') and self.unit is not None:
             _dict['unit'] = self.unit
+        if hasattr(self, 'unit_name') and self.unit_name is not None:
+            _dict['unit_name'] = self.unit_name
         if hasattr(self, 'non_chargeable') and self.non_chargeable is not None:
             _dict['non_chargeable'] = self.non_chargeable
         if hasattr(self, 'discounts') and self.discounts is not None:
@@ -1619,6 +1691,7 @@ class OrgUsage():
 
     :attr str account_id: The ID of the account.
     :attr str organization_id: The ID of the organization.
+    :attr str organization_name: (optional) The name of the organization.
     :attr str pricing_country: The target country pricing that should be used.
     :attr str currency_code: The currency for the cost fields in the resources,
           plans and metrics.
@@ -1632,7 +1705,9 @@ class OrgUsage():
                  pricing_country: str,
                  currency_code: str,
                  month: str,
-                 resources: List['Resource']) -> None:
+                 resources: List['Resource'],
+                 *,
+                 organization_name: str = None) -> None:
         """
         Initialize a OrgUsage object.
 
@@ -1643,9 +1718,11 @@ class OrgUsage():
                resources, plans and metrics.
         :param str month: The month.
         :param List[Resource] resources: All the resource used in the account.
+        :param str organization_name: (optional) The name of the organization.
         """
         self.account_id = account_id
         self.organization_id = organization_id
+        self.organization_name = organization_name
         self.pricing_country = pricing_country
         self.currency_code = currency_code
         self.month = month
@@ -1663,6 +1740,8 @@ class OrgUsage():
             args['organization_id'] = _dict.get('organization_id')
         else:
             raise ValueError('Required property \'organization_id\' not present in OrgUsage JSON')
+        if 'organization_name' in _dict:
+            args['organization_name'] = _dict.get('organization_name')
         if 'pricing_country' in _dict:
             args['pricing_country'] = _dict.get('pricing_country')
         else:
@@ -1693,6 +1772,8 @@ class OrgUsage():
             _dict['account_id'] = self.account_id
         if hasattr(self, 'organization_id') and self.organization_id is not None:
             _dict['organization_id'] = self.organization_id
+        if hasattr(self, 'organization_name') and self.organization_name is not None:
+            _dict['organization_name'] = self.organization_name
         if hasattr(self, 'pricing_country') and self.pricing_country is not None:
             _dict['pricing_country'] = self.pricing_country
         if hasattr(self, 'currency_code') and self.currency_code is not None:
@@ -1726,6 +1807,7 @@ class Plan():
     The aggregated values for the plan.
 
     :attr str plan_id: The ID of the plan.
+    :attr str plan_name: (optional) The name of the plan.
     :attr str pricing_region: (optional) The pricing region for the plan.
     :attr bool billable: Indicates if the plan charges are billed to the customer.
     :attr float cost: The total cost incurred by the plan.
@@ -1742,6 +1824,7 @@ class Plan():
                  usage: List['Metric'],
                  discounts: List['Discount'],
                  *,
+                 plan_name: str = None,
                  pricing_region: str = None) -> None:
         """
         Initialize a Plan object.
@@ -1753,9 +1836,11 @@ class Plan():
         :param float rated_cost: Total pre-discounted cost incurred by the plan.
         :param List[Metric] usage: All the metrics in the plan.
         :param List[Discount] discounts: All the discounts applicable to the plan.
+        :param str plan_name: (optional) The name of the plan.
         :param str pricing_region: (optional) The pricing region for the plan.
         """
         self.plan_id = plan_id
+        self.plan_name = plan_name
         self.pricing_region = pricing_region
         self.billable = billable
         self.cost = cost
@@ -1771,6 +1856,8 @@ class Plan():
             args['plan_id'] = _dict.get('plan_id')
         else:
             raise ValueError('Required property \'plan_id\' not present in Plan JSON')
+        if 'plan_name' in _dict:
+            args['plan_name'] = _dict.get('plan_name')
         if 'pricing_region' in _dict:
             args['pricing_region'] = _dict.get('pricing_region')
         if 'billable' in _dict:
@@ -1805,6 +1892,8 @@ class Plan():
         _dict = {}
         if hasattr(self, 'plan_id') and self.plan_id is not None:
             _dict['plan_id'] = self.plan_id
+        if hasattr(self, 'plan_name') and self.plan_name is not None:
+            _dict['plan_name'] = self.plan_name
         if hasattr(self, 'pricing_region') and self.pricing_region is not None:
             _dict['pricing_region'] = self.pricing_region
         if hasattr(self, 'billable') and self.billable is not None:
@@ -1842,6 +1931,7 @@ class Resource():
     The container for all the plans in the resource.
 
     :attr str resource_id: The ID of the resource.
+    :attr str resource_name: (optional) The name of the resource.
     :attr float billable_cost: The billable charges for the account.
     :attr float billable_rated_cost: The pre-discounted billable charges for the
           account.
@@ -1859,7 +1949,9 @@ class Resource():
                  non_billable_cost: float,
                  non_billable_rated_cost: float,
                  plans: List['Plan'],
-                 discounts: List['Discount']) -> None:
+                 discounts: List['Discount'],
+                 *,
+                 resource_name: str = None) -> None:
         """
         Initialize a Resource object.
 
@@ -1873,8 +1965,10 @@ class Resource():
         :param List[Plan] plans: All the plans in the resource.
         :param List[Discount] discounts: All the discounts applicable to the
                resource.
+        :param str resource_name: (optional) The name of the resource.
         """
         self.resource_id = resource_id
+        self.resource_name = resource_name
         self.billable_cost = billable_cost
         self.billable_rated_cost = billable_rated_cost
         self.non_billable_cost = non_billable_cost
@@ -1890,6 +1984,8 @@ class Resource():
             args['resource_id'] = _dict.get('resource_id')
         else:
             raise ValueError('Required property \'resource_id\' not present in Resource JSON')
+        if 'resource_name' in _dict:
+            args['resource_name'] = _dict.get('resource_name')
         if 'billable_cost' in _dict:
             args['billable_cost'] = _dict.get('billable_cost')
         else:
@@ -1926,6 +2022,8 @@ class Resource():
         _dict = {}
         if hasattr(self, 'resource_id') and self.resource_id is not None:
             _dict['resource_id'] = self.resource_id
+        if hasattr(self, 'resource_name') and self.resource_name is not None:
+            _dict['resource_name'] = self.resource_name
         if hasattr(self, 'billable_cost') and self.billable_cost is not None:
             _dict['billable_cost'] = self.billable_cost
         if hasattr(self, 'billable_rated_cost') and self.billable_rated_cost is not None:
@@ -1964,6 +2062,7 @@ class ResourceGroupUsage():
 
     :attr str account_id: The ID of the account.
     :attr str resource_group_id: The ID of the resource group.
+    :attr str resource_group_name: (optional) The name of the resource group.
     :attr str pricing_country: The target country pricing that should be used.
     :attr str currency_code: The currency for the cost fields in the resources,
           plans and metrics.
@@ -1977,7 +2076,9 @@ class ResourceGroupUsage():
                  pricing_country: str,
                  currency_code: str,
                  month: str,
-                 resources: List['Resource']) -> None:
+                 resources: List['Resource'],
+                 *,
+                 resource_group_name: str = None) -> None:
         """
         Initialize a ResourceGroupUsage object.
 
@@ -1988,9 +2089,11 @@ class ResourceGroupUsage():
                resources, plans and metrics.
         :param str month: The month.
         :param List[Resource] resources: All the resource used in the account.
+        :param str resource_group_name: (optional) The name of the resource group.
         """
         self.account_id = account_id
         self.resource_group_id = resource_group_id
+        self.resource_group_name = resource_group_name
         self.pricing_country = pricing_country
         self.currency_code = currency_code
         self.month = month
@@ -2008,6 +2111,8 @@ class ResourceGroupUsage():
             args['resource_group_id'] = _dict.get('resource_group_id')
         else:
             raise ValueError('Required property \'resource_group_id\' not present in ResourceGroupUsage JSON')
+        if 'resource_group_name' in _dict:
+            args['resource_group_name'] = _dict.get('resource_group_name')
         if 'pricing_country' in _dict:
             args['pricing_country'] = _dict.get('pricing_country')
         else:
@@ -2038,6 +2143,8 @@ class ResourceGroupUsage():
             _dict['account_id'] = self.account_id
         if hasattr(self, 'resource_group_id') and self.resource_group_id is not None:
             _dict['resource_group_id'] = self.resource_group_id
+        if hasattr(self, 'resource_group_name') and self.resource_group_name is not None:
+            _dict['resource_group_name'] = self.resource_group_name
         if hasattr(self, 'pricing_country') and self.pricing_country is not None:
             _dict['pricing_country'] = self.pricing_country
         if hasattr(self, 'currency_code') and self.currency_code is not None:
