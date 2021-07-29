@@ -1,3 +1,10 @@
+## [0.19.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.19.0...v0.19.1) (2021-07-29)
+
+
+### Bug Fixes
+
+* **usage reports:** add optional name parameters to struct ([#123](https://github.com/IBM/platform-services-python-sdk/issues/123)) ([de606d9](https://github.com/IBM/platform-services-python-sdk/commit/de606d97d131d2f746348c8e4e761d227d099b6c))
+
 # [0.19.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.18.15...v0.19.0) (2021-06-29)
 
 
