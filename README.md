@@ -47,26 +47,26 @@ IBM Cloud services:
 
 Service Name | Module Name | Service Class Name
 --- | --- | ---
-[Case Management](https://cloud.ibm.com/apidocs/case-management) | case_management_v1 | CaseManagementV1
-[Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog) | catalog_management_v1 | CatalogManagementV1
-[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | configuration_governance_v1 | ConfigurationGovernanceV1
-[Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit) | enterprise_billing_units_v1 | EnterpriseBillingUnitsV1
-[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | enterprise_management_v1 | EnterpriseManagementV1
-[Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports) | enterprise_usage_reports_v1 | EnterpriseUsageReportsV1
-[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | global_catalog_v1 | GlobalCatalogV1
-[Global Search](https://cloud.ibm.com/apidocs/search) | global_search_v2 | GlobalSearchV2
-[Global Tagging](https://cloud.ibm.com/apidocs/tagging) | global_tagging_v1 | GlobalTaggingV1
-[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | iam_access_groups_v2 | IamAccessGroupsV2
-[IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api) | iam_identity_v1 | IamIdentityV1
-[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | iam_policy_management_v1 | IamPolicyManagementV1
-[IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell) | ibm_cloud_shell_v1 | IbmCloudShellV1
-[Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | open_service_broker_v1 | OpenServiceBrokerV1
-[Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture) | posture_management_v1 | PostureManagementV1
-[Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | resource_controller_v2 | ResourceControllerV2
-[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | resource_manager_v2 | ResourceManagerV2
-[Usage Metering](https://cloud.ibm.com/apidocs/usage-metering) | usage_metering_v4 | UsageMeteringV4
-[Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting) | usage_reports_v4 | UsageReportsV4
-[User Management](https://cloud.ibm.com/apidocs/user-management) | user_management_v1 | UserManagementV1
+[Case Management](https://cloud.ibm.com/apidocs/case-management?code=python) | case_management_v1 | CaseManagementV1
+[Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog?code=python) | catalog_management_v1 | CatalogManagementV1
+[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config?code=python) | configuration_governance_v1 | ConfigurationGovernanceV1
+[Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit?code=python) | enterprise_billing_units_v1 | EnterpriseBillingUnitsV1
+[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise?code=python) | enterprise_management_v1 | EnterpriseManagementV1
+[Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports?code=python) | enterprise_usage_reports_v1 | EnterpriseUsageReportsV1
+[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog?code=python) | global_catalog_v1 | GlobalCatalogV1
+[Global Search](https://cloud.ibm.com/apidocs/search?code=python) | global_search_v2 | GlobalSearchV2
+[Global Tagging](https://cloud.ibm.com/apidocs/tagging?code=python) | global_tagging_v1 | GlobalTaggingV1
+[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups?code=python) | iam_access_groups_v2 | IamAccessGroupsV2
+[IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api?code=python) | iam_identity_v1 | IamIdentityV1
+[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management?code=python) | iam_policy_management_v1 | IamPolicyManagementV1
+[IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell?code=python) | ibm_cloud_shell_v1 | IbmCloudShellV1
+[Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api?code=python) | open_service_broker_v1 | OpenServiceBrokerV1
+[Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture?code=python) | posture_management_v1 | PostureManagementV1
+[Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller?code=python) | resource_controller_v2 | ResourceControllerV2
+[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager?code=python) | resource_manager_v2 | ResourceManagerV2
+[Usage Metering](https://cloud.ibm.com/apidocs/usage-metering?code=python) | usage_metering_v4 | UsageMeteringV4
+[Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting?code=python) | usage_reports_v4 | UsageReportsV4
+[User Management](https://cloud.ibm.com/apidocs/user-management?code=python) | user_management_v1 | UserManagementV1
 
 ## Prerequisites
 
