@@ -56,6 +56,15 @@ apikey_id = None
 apikey_etag = None
 svc_id = None
 svc_id_etag = None
+
+profile_id = None
+profile_etag = None
+
+claimRule_id = None
+claimRule_etag = None
+
+link_id = None
+
 account_settings_etag = None
 
 
@@ -425,6 +434,348 @@ class TestIamIdentityV1Examples():
 
             # end-delete_service_id
             print('\ndelete_service_id() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    
+    @needscredentials
+    def test_create_profile_example(self):
+        """
+        create_profile request example
+        """
+        try:
+            global profile_id
+            print('\ncreate_profile() result:')
+            # begin-create_profile
+
+            profile = iam_identity_service.create_profile(
+                name="example profile",
+                description="example profile",
+                account_id=account_id
+            ).get_result()
+
+            profile_id = profile['id']
+
+            print(json.dumps(profile, indent=2))
+
+            # end-create_profile
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    
+    @needscredentials
+    def test_get_profile_example(self):
+        """
+        get_profile request example
+        """
+        try:
+            global profile_id, profile_etag
+
+            print('\nget_profile() result:')
+            # begin-get_profile
+
+            response = iam_identity_service.get_profile(
+                profile_id= profile_id
+            )
+
+            profile_etag = response.get_headers()['Etag']
+            profile = response.get_result()
+
+            print(json.dumps(profile, indent=2))
+
+            # end-get_profile
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    
+    @needscredentials
+    def test_list_profiles_example(self):
+        """
+        list_profiles request example
+        """
+        try:
+            global account_id
+
+            print('\nlist_profiles() result:')
+            # begin-list_profiles
+
+            profile_list = iam_identity_service.list_profile(
+                account_id=account_id,
+                include_history=True
+            ).get_result()
+
+            print(json.dumps(profile_list, indent=2))
+
+            # end-list_profiles
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    
+    @needscredentials
+    def test_update_profile_example(self):
+        """
+        update_profile request example
+        """
+        try:
+            global profile_id, profile_etag
+
+            print('\nupdate_profile() result:')
+            # begin-update_profile
+
+            profile = iam_identity_service.update_profile(
+                profile_id=profile_id,
+                if_match=profile_etag,
+                description='This is an updated description'
+            ).get_result()
+
+            print(json.dumps(profile, indent=2))
+
+            # end-update_profile
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    
+    @needscredentials
+    def test_create_claimRule_example(self):
+        """
+        create_claimRule request example
+        """
+        try:
+            global claimRule_id, profile_id
+            print('\ncreate_claimRule() result:')
+            # begin-create_claimRule
+
+            profile_claim_rule_conditions_model = {}
+            profile_claim_rule_conditions_model['claim'] = 'blueGroups'
+            profile_claim_rule_conditions_model['operator'] = 'EQUALS'
+            profile_claim_rule_conditions_model['value'] = '\"cloud-docs-dev\"'
+
+            claimRule = iam_identity_service.create_claim_rule(
+                profile_id = profile_id,
+                type = 'Profile-SAML',
+                realm_name = 'https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20',
+                expiration = 43200,
+                conditions = [profile_claim_rule_conditions_model]
+           ).get_result()
+
+            claimRule_id = claimRule['id']
+
+            print(json.dumps(claimRule, indent=2))
+
+            # end-create_claimRule
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    
+    @needscredentials
+    def test_get_claimRule_example(self):
+        """
+        get_claimRule request example
+        """
+        try:
+            global profile_id, claimRule_id, claimRule_etag
+
+            print('\nget_claimRule() result:')
+            # begin-get_claimRule
+
+            response = iam_identity_service.get_claim_rule(
+                profile_id= profile_id,
+                rule_id= claimRule_id
+            )
+
+            claimRule_etag = response.get_headers()['Etag']
+            claimRule = response.get_result()
+
+            print(json.dumps(claimRule, indent=2))
+
+            # end-get_claimRule
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    
+    @needscredentials
+    def test_list_claimRules_example(self):
+        """
+        list_claimRules request example
+        """
+        try:
+            global profile_id
+
+            print('\nlist_claimRules() result:')
+            # begin-list_claimRules
+
+            claimRule_list = iam_identity_service.list_claim_rules(
+                profile_id=profile_id,
+            ).get_result()
+
+            print(json.dumps(claimRule_list, indent=2))
+
+            # end-list_claimRules
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_claimRule_example(self):
+        """
+        update_claimRule request example
+        """
+        try:
+            global claimRule_id, claimRule_etag, profile_id
+
+            print('\nupdate_claimRule() result:')
+            # begin-update_claimRule
+
+            profile_claim_rule_conditions_model = {}
+            profile_claim_rule_conditions_model['claim'] = 'blueGroups'
+            profile_claim_rule_conditions_model['operator'] = 'EQUALS'
+            profile_claim_rule_conditions_model['value'] = '\"Europe_Group\"'
+
+            claimRule = iam_identity_service.update_claim_rule(
+                profile_id = profile_id,
+                rule_id = claimRule_id,
+                if_match = claimRule_etag,
+                expiration = 33200,
+                conditions = [profile_claim_rule_conditions_model],
+                type = 'Profile-SAML',
+                realm_name = 'https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20',
+            ).get_result()
+
+            print(json.dumps(claimRule, indent=2))
+
+            # end-update_claimRule
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_claimRule_example(self):
+        """
+        delete_claimRule request example
+        """
+        try:
+            global profile_id, claimRule_id
+
+            # begin-delete_claimRule
+
+            response = iam_identity_service.delete_claim_rule(profile_id=profile_id, rule_id=claimRule_id)
+
+            # end-delete_claimRule
+            print('\ndelete_claimRule() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    
+    @needscredentials
+    def test_create_link_example(self):
+        """
+        create_link request example
+        """
+        try:
+            global profile_id, link_id
+            print('\ncreate_link() result:')
+            # begin-create_link
+
+            CreateProfileLinkRequestLink = {}
+            CreateProfileLinkRequestLink['crn'] = 'crn:v1:staging:public:iam-identity::a/18e3020749ce4744b0b472466d61fdb4::computeresource:Fake-Compute-Resource'
+            CreateProfileLinkRequestLink['namespace'] = 'default'
+            CreateProfileLinkRequestLink['name'] = 'nice name'
+
+            link = iam_identity_service.create_link(
+                profile_id = profile_id,
+                name = 'nice link',
+                cr_type = 'ROKS_SA',
+                link = CreateProfileLinkRequestLink
+            ).get_result()
+
+            link_id = link['id']
+
+            print(json.dumps(link, indent=2))
+
+            # end-create_link
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    
+    @needscredentials
+    def test_get_link_example(self):
+        """
+        get_link request example
+        """
+        try:
+            global profile_id, link_id
+
+            print('\nget_link() result:')
+            # begin-get_link
+
+            response = iam_identity_service.get_link(
+                profile_id= profile_id,
+                link_id= link_id
+            )
+
+            link = response.get_result()
+
+            print(json.dumps(link, indent=2))
+
+            # end-get_link
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    
+    @needscredentials
+    def test_list_links_example(self):
+        """
+        list_links request example
+        """
+        try:
+            global profile_id
+
+            print('\nlist_links() result:')
+            # begin-list_links
+
+            link_list = iam_identity_service.list_link(
+                profile_id=profile_id,
+            ).get_result()
+
+            print(json.dumps(link_list, indent=2))
+
+            # end-list_links
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    
+    @needscredentials
+    def test_delete_link_example(self):
+        """
+        delete_link request example
+        """
+        try:
+            global profile_id, link_id
+
+            # begin-delete_link
+
+            response = iam_identity_service.delete_link(profile_id=profile_id, link_id=link_id)
+
+            # end-delete_link
+            print('\ndelete_link() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    
+    @needscredentials
+    def test_delete_profile_example(self):
+        """
+        delete_profile request example
+        """
+        try:
+            global profile_id
+
+            # begin-delete_profile
+
+            response = iam_identity_service.delete_profile(profile_id=profile_id)
+
+            # end-delete_profile
+            print('\ndelete_profile() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
