@@ -1,3 +1,10 @@
+# [0.20.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.19.3...v0.20.0) (2021-09-02)
+
+
+### Features
+
+* **iam-identity:** adding trusted profiles ([#127](https://github.com/IBM/platform-services-python-sdk/issues/127)) ([f5dc60e](https://github.com/IBM/platform-services-python-sdk/commit/f5dc60e35db2d67afda22944daa6752918629670))
+
 ## [0.19.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.19.2...v0.19.3) (2021-08-25)
 
 
