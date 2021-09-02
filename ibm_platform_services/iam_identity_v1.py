@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
+# IBM OpenAPI SDK Code Generator Version: 3.37.0-a85661cd-20210802-190136
  
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -74,7 +74,7 @@ class IamIdentityV1(BaseService):
 
 
     #########################
-    # Identity Operations
+    # API key Operations
     #########################
 
 
@@ -534,6 +534,10 @@ class IamIdentityV1(BaseService):
         response = self.send(request)
         return response
 
+    #########################
+    # Service ID Operations
+    #########################
+
 
     def list_service_ids(self,
         *,
@@ -551,7 +555,8 @@ class IamIdentityV1(BaseService):
 
         Returns a list of service IDs. Users can manage user API keys for themself, or
         service ID API keys for service IDs that are bound to an entity they have access
-        to.
+        to. Note: apikey details are only included in the response when  creating a
+        Service ID with an api key.
 
         :param str account_id: (optional) Account ID of the service ID(s) to query.
                This parameter is required (unless using a pagetoken).
@@ -688,7 +693,8 @@ class IamIdentityV1(BaseService):
 
         Returns the details of a service ID. Users can manage user API keys for themself,
         or service ID API keys for service IDs that are bound to an entity they have
-        access to.
+        access to. Note: apikey details are only included in the response when  creating a
+        Service ID with an api key.
 
         :param str id: Unique ID of the service ID.
         :param bool include_history: (optional) Defines if the entity history is
@@ -744,7 +750,8 @@ class IamIdentityV1(BaseService):
         update a service ID, pass the property to be modified. To delete one property's
         value, pass the property with an empty value "".Users can manage user API keys for
         themself, or service ID API keys for service IDs that are bound to an entity they
-        have access to.
+        have access to.   Note: apikey details are only included in the response when
+        creating a  Service ID with an apikey.
 
         :param str id: Unique ID of the service ID to be updated.
         :param str if_match: Version of the service ID to be updated. Specify the
@@ -932,7 +939,771 @@ class IamIdentityV1(BaseService):
         return response
 
     #########################
-    # accountSettings
+    # Trusted Profiles Operations
+    #########################
+
+
+    def create_profile(self,
+        name: str,
+        account_id: str,
+        *,
+        description: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Create a trusted profile.
+
+        Creates a trusted profile for a given account ID.
+
+        :param str name: Name of the trusted profile. The name is checked for
+               uniqueness. Therefore trusted profiles with the same names can not exist in
+               the same account.
+        :param str account_id: The account ID of the trusted profile.
+        :param str description: (optional) The optional description of the trusted
+               profile. The 'description' property is only available if a description was
+               provided during creation of trusted profile.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TrustedProfile` object
+        """
+
+        if name is None:
+            raise ValueError('name must be provided')
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='create_profile')
+        headers.update(sdk_headers)
+
+        data = {
+            'name': name,
+            'account_id': account_id,
+            'description': description
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/profiles'
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def list_profile(self,
+        account_id: str,
+        *,
+        name: str = None,
+        pagesize: int = None,
+        sort: str = None,
+        order: str = None,
+        include_history: bool = None,
+        pagetoken: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get list of trusted profiles for a given account ID.
+
+        Returns the list of trusted profiles for a given account ID.
+
+        :param str account_id: Account ID to query for trusted profiles.
+        :param str name: (optional) Name of the trusted profile to query.
+        :param int pagesize: (optional) Optional size of a single page. Default is
+               20 items per page. Valid range is 1 to 100.
+        :param str sort: (optional) Optional sort property, valid values are name,
+               description, created_at and modified_at. If specified, the items are sorted
+               by the value of this property.
+        :param str order: (optional) Optional sort order, valid values are asc and
+               desc. Default: asc.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param str pagetoken: (optional) Optional Prev or Next page token returned
+               from a previous query execution. Default is start with first page.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TrustedProfilesList` object
+        """
+
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_profile')
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'name': name,
+            'pagesize': pagesize,
+            'sort': sort,
+            'order': order,
+            'include_history': include_history,
+            'pagetoken': pagetoken
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/profiles'
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def get_profile(self,
+        profile_id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get a trusted profile.
+
+        Get a trusted profile.
+
+        :param str profile_id: ID of the trusted profile to get.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TrustedProfile` object
+        """
+
+        if profile_id is None:
+            raise ValueError('profile_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_profile')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['profile-id']
+        path_param_values = self.encode_path_vars(profile_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profiles/{profile-id}'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def update_profile(self,
+        profile_id: str,
+        if_match: str,
+        *,
+        name: str = None,
+        description: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Update a trusted profile.
+
+        Updates a trusted profile.
+
+        :param str profile_id: ID of the trusted profile to be updated.
+        :param str if_match: Version of the trusted profile to be updated.  Specify
+               the version that you retrived when reading list of trusted profiles. This
+               value helps to identify any parallel usage of trusted profile. Pass * to
+               indicate to update any version available. This might result in stale
+               updates.
+        :param str name: (optional) The name of the trusted profile to update. If
+               specified in the request the parameter must not be empty. The name is
+               checked for uniqueness. Failure to this will result in an Error condition.
+        :param str description: (optional) The description of the trusted profile
+               to update. If specified an empty description will clear the description of
+               the trusted profile. If a non empty value is provided the trusted profile
+               will be updated.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TrustedProfile` object
+        """
+
+        if profile_id is None:
+            raise ValueError('profile_id must be provided')
+        if if_match is None:
+            raise ValueError('if_match must be provided')
+        headers = {
+            'If-Match': if_match
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='update_profile')
+        headers.update(sdk_headers)
+
+        data = {
+            'name': name,
+            'description': description
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['profile-id']
+        path_param_values = self.encode_path_vars(profile_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profiles/{profile-id}'.format(**path_param_dict)
+        request = self.prepare_request(method='PUT',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def delete_profile(self,
+        profile_id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Delete a trusted profile.
+
+        Deletes a trusted profile.
+
+        :param str profile_id: ID of the trusted profile.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if profile_id is None:
+            raise ValueError('profile_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='delete_profile')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        path_param_keys = ['profile-id']
+        path_param_values = self.encode_path_vars(profile_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profiles/{profile-id}'.format(**path_param_dict)
+        request = self.prepare_request(method='DELETE',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def create_claim_rule(self,
+        profile_id: str,
+        type: str,
+        conditions: List['ProfileClaimRuleConditions'],
+        *,
+        context: 'ResponseContext' = None,
+        name: str = None,
+        realm_name: str = None,
+        cr_type: str = None,
+        expiration: int = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Create claim rule for a trusted profile.
+
+        Claim rule can be created for a given trusted profile, There is a limit of 20
+        rules allowed per trusted profile.
+
+        :param str profile_id: ID of the trusted profile to create a claim rule.
+        :param str type: Type of the calim rule, either 'Profile-SAML' or
+               'Profile-CR'.
+        :param List[ProfileClaimRuleConditions] conditions: Conditions of this
+               claim rule.
+        :param ResponseContext context: (optional) Context with key properties for
+               problem determination.
+        :param str name: (optional) Name of the claim rule to be created or
+               updated.
+        :param str realm_name: (optional) The realm name of the Idp this claim rule
+               applies to. This field is required only if the type is specified as
+               'Profile-SAML'.
+        :param str cr_type: (optional) The compute resource type the rule applies
+               to, required only if type is specified as 'Profile-CR'. Valid values are
+               VSI, IKS_SA, ROKS_SA.
+        :param int expiration: (optional) Session expiration in seconds, only
+               required if type is 'Profile-SAML'.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ProfileClaimRule` object
+        """
+
+        if profile_id is None:
+            raise ValueError('profile_id must be provided')
+        if type is None:
+            raise ValueError('type must be provided')
+        if conditions is None:
+            raise ValueError('conditions must be provided')
+        conditions = [convert_model(x) for x in conditions]
+        if context is not None:
+            context = convert_model(context)
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='create_claim_rule')
+        headers.update(sdk_headers)
+
+        data = {
+            'type': type,
+            'conditions': conditions,
+            'context': context,
+            'name': name,
+            'realm_name': realm_name,
+            'cr_type': cr_type,
+            'expiration': expiration
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['profile-id']
+        path_param_values = self.encode_path_vars(profile_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profiles/{profile-id}/rules'.format(**path_param_dict)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def list_claim_rules(self,
+        profile_id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get all claim rules for a given trusted profile.
+
+        Returns list of claim rules for a trusted profile.
+
+        :param str profile_id: ID of the trusted profile.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ProfileClaimRuleList` object
+        """
+
+        if profile_id is None:
+            raise ValueError('profile_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_claim_rules')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['profile-id']
+        path_param_values = self.encode_path_vars(profile_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profiles/{profile-id}/rules'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def get_claim_rule(self,
+        profile_id: str,
+        rule_id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get claim rule for a trusted profile.
+
+        Claim rule can be fetched for a given trusted profile ID and rule ID.
+
+        :param str profile_id: ID of the trusted profile.
+        :param str rule_id: ID of the claim rule to get.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ProfileClaimRule` object
+        """
+
+        if profile_id is None:
+            raise ValueError('profile_id must be provided')
+        if rule_id is None:
+            raise ValueError('rule_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_claim_rule')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['profile-id', 'rule-id']
+        path_param_values = self.encode_path_vars(profile_id, rule_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profiles/{profile-id}/rules/{rule-id}'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def update_claim_rule(self,
+        profile_id: str,
+        rule_id: str,
+        if_match: str,
+        type: str,
+        conditions: List['ProfileClaimRuleConditions'],
+        *,
+        context: 'ResponseContext' = None,
+        name: str = None,
+        realm_name: str = None,
+        cr_type: str = None,
+        expiration: int = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Update claim rule for a trusted profile.
+
+        Claim rule can be updated for a given trusted profile ID and rule ID.
+
+        :param str profile_id: ID of the trusted profile.
+        :param str rule_id: ID of the claim rule to update.
+        :param str if_match: Version of the claim rule to be updated.  Specify the
+               version that you retrived when reading list of claim rules. This value
+               helps to identify any parallel usage of claim rule. Pass * to indicate to
+               update any version available. This might result in stale updates.
+        :param str type: Type of the calim rule, either 'Profile-SAML' or
+               'Profile-CR'.
+        :param List[ProfileClaimRuleConditions] conditions: Conditions of this
+               claim rule.
+        :param ResponseContext context: (optional) Context with key properties for
+               problem determination.
+        :param str name: (optional) Name of the claim rule to be created or
+               updated.
+        :param str realm_name: (optional) The realm name of the Idp this claim rule
+               applies to. This field is required only if the type is specified as
+               'Profile-SAML'.
+        :param str cr_type: (optional) The compute resource type the rule applies
+               to, required only if type is specified as 'Profile-CR'. Valid values are
+               VSI, IKS_SA, ROKS_SA.
+        :param int expiration: (optional) Session expiration in seconds, only
+               required if type is 'Profile-SAML'.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ProfileClaimRule` object
+        """
+
+        if profile_id is None:
+            raise ValueError('profile_id must be provided')
+        if rule_id is None:
+            raise ValueError('rule_id must be provided')
+        if if_match is None:
+            raise ValueError('if_match must be provided')
+        if type is None:
+            raise ValueError('type must be provided')
+        if conditions is None:
+            raise ValueError('conditions must be provided')
+        conditions = [convert_model(x) for x in conditions]
+        if context is not None:
+            context = convert_model(context)
+        headers = {
+            'If-Match': if_match
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='update_claim_rule')
+        headers.update(sdk_headers)
+
+        data = {
+            'type': type,
+            'conditions': conditions,
+            'context': context,
+            'name': name,
+            'realm_name': realm_name,
+            'cr_type': cr_type,
+            'expiration': expiration
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['profile-id', 'rule-id']
+        path_param_values = self.encode_path_vars(profile_id, rule_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profiles/{profile-id}/rules/{rule-id}'.format(**path_param_dict)
+        request = self.prepare_request(method='PUT',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def delete_claim_rule(self,
+        profile_id: str,
+        rule_id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Delete a claim rule.
+
+        Deletes a claim rule.
+
+        :param str profile_id: ID of the trusted profile.
+        :param str rule_id: ID of the claim rule to delete.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if profile_id is None:
+            raise ValueError('profile_id must be provided')
+        if rule_id is None:
+            raise ValueError('rule_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='delete_claim_rule')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        path_param_keys = ['profile-id', 'rule-id']
+        path_param_values = self.encode_path_vars(profile_id, rule_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profiles/{profile-id}/rules/{rule-id}'.format(**path_param_dict)
+        request = self.prepare_request(method='DELETE',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def create_link(self,
+        profile_id: str,
+        cr_type: str,
+        link: 'CreateProfileLinkRequestLink',
+        *,
+        name: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Create link to a trusted profile.
+
+        Link compute resource to a trusted profile.
+
+        :param str profile_id: ID of the trusted profile.
+        :param str cr_type: The compute resource type. Valid values are VSI,
+               IKS_SA, ROKS_SA.
+        :param CreateProfileLinkRequestLink link: Link details.
+        :param str name: (optional) Optional name of the Link.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ProfileLink` object
+        """
+
+        if profile_id is None:
+            raise ValueError('profile_id must be provided')
+        if cr_type is None:
+            raise ValueError('cr_type must be provided')
+        if link is None:
+            raise ValueError('link must be provided')
+        link = convert_model(link)
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='create_link')
+        headers.update(sdk_headers)
+
+        data = {
+            'cr_type': cr_type,
+            'link': link,
+            'name': name
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['profile-id']
+        path_param_values = self.encode_path_vars(profile_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profiles/{profile-id}/links'.format(**path_param_dict)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def list_link(self,
+        profile_id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get list of links to a trusted profile.
+
+        Gets list of link to a trusted profile.
+
+        :param str profile_id: ID of the trusted profile.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ProfileLinkList` object
+        """
+
+        if profile_id is None:
+            raise ValueError('profile_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_link')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['profile-id']
+        path_param_values = self.encode_path_vars(profile_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profiles/{profile-id}/links'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def get_link(self,
+        profile_id: str,
+        link_id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get link to a trusted profile.
+
+        Gets link to a trusted profile.
+
+        :param str profile_id: ID of the trusted profile.
+        :param str link_id: ID of the link.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ProfileLink` object
+        """
+
+        if profile_id is None:
+            raise ValueError('profile_id must be provided')
+        if link_id is None:
+            raise ValueError('link_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_link')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['profile-id', 'link-id']
+        path_param_values = self.encode_path_vars(profile_id, link_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profiles/{profile-id}/links/{link-id}'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def delete_link(self,
+        profile_id: str,
+        link_id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Delete link to a trusted profile.
+
+        Deletes link to a trusted profile.
+
+        :param str profile_id: ID of the trusted profile.
+        :param str link_id: ID of the link.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if profile_id is None:
+            raise ValueError('profile_id must be provided')
+        if link_id is None:
+            raise ValueError('link_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='delete_link')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        path_param_keys = ['profile-id', 'link-id']
+        path_param_values = self.encode_path_vars(profile_id, link_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profiles/{profile-id}/links/{link-id}'.format(**path_param_dict)
+        request = self.prepare_request(method='DELETE',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # Account Settings
     #########################
 
 
@@ -1120,6 +1891,19 @@ class ListApiKeysEnums:
 class ListServiceIdsEnums:
     """
     Enums for list_service_ids parameters.
+    """
+
+    class Order(str, Enum):
+        """
+        Optional sort order, valid values are asc and desc. Default: asc.
+        """
+        ASC = 'asc'
+        DESC = 'desc'
+
+
+class ListProfileEnums:
+    """
+    Enums for list_profile parameters.
     """
 
     class Order(str, Enum):
@@ -1813,6 +2597,85 @@ class ApiKeyList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class CreateProfileLinkRequestLink():
+    """
+    Link details.
+
+    :attr str crn: The CRN of the compute resource.
+    :attr str namespace: The compute resource namespace, only required if cr_type is
+          IKS_SA or ROKS_SA.
+    :attr str name: (optional) Name of the compute resource, only required if
+          cr_type is IKS_SA or ROKS_SA.
+    """
+
+    def __init__(self,
+                 crn: str,
+                 namespace: str,
+                 *,
+                 name: str = None) -> None:
+        """
+        Initialize a CreateProfileLinkRequestLink object.
+
+        :param str crn: The CRN of the compute resource.
+        :param str namespace: The compute resource namespace, only required if
+               cr_type is IKS_SA or ROKS_SA.
+        :param str name: (optional) Name of the compute resource, only required if
+               cr_type is IKS_SA or ROKS_SA.
+        """
+        self.crn = crn
+        self.namespace = namespace
+        self.name = name
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateProfileLinkRequestLink':
+        """Initialize a CreateProfileLinkRequestLink object from a json dictionary."""
+        args = {}
+        if 'crn' in _dict:
+            args['crn'] = _dict.get('crn')
+        else:
+            raise ValueError('Required property \'crn\' not present in CreateProfileLinkRequestLink JSON')
+        if 'namespace' in _dict:
+            args['namespace'] = _dict.get('namespace')
+        else:
+            raise ValueError('Required property \'namespace\' not present in CreateProfileLinkRequestLink JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateProfileLinkRequestLink object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'namespace') and self.namespace is not None:
+            _dict['namespace'] = self.namespace
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateProfileLinkRequestLink object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateProfileLinkRequestLink') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateProfileLinkRequestLink') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class EnityHistoryRecord():
     """
     Response body format for an entity history record.
@@ -1917,6 +2780,556 @@ class EnityHistoryRecord():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'EnityHistoryRecord') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ProfileClaimRule():
+    """
+    ProfileClaimRule.
+
+    :attr str id: the unique identifier of the claim rule.
+    :attr str entity_tag: version of the claim rule.
+    :attr datetime created_at: If set contains a date time string of the creation
+          date in ISO format.
+    :attr datetime modified_at: (optional) If set contains a date time string of the
+          last modification date in ISO format.
+    :attr str name: (optional) The optional claim rule name.
+    :attr str type: Type of the Calim rule, either 'Profile-SAML' or 'Profile-CR'.
+    :attr str realm_name: (optional) The realm name of the Idp this claim rule
+          applies to.
+    :attr int expiration: Session expiration in seconds.
+    :attr str cr_type: (optional) The compute resource type. Not required if type is
+          Profile-SAML. Valid values are VSI, IKS_SA, ROKS_SA.
+    :attr List[ProfileClaimRuleConditions] conditions: Conditions of this claim
+          rule.
+    """
+
+    def __init__(self,
+                 id: str,
+                 entity_tag: str,
+                 created_at: datetime,
+                 type: str,
+                 expiration: int,
+                 conditions: List['ProfileClaimRuleConditions'],
+                 *,
+                 modified_at: datetime = None,
+                 name: str = None,
+                 realm_name: str = None,
+                 cr_type: str = None) -> None:
+        """
+        Initialize a ProfileClaimRule object.
+
+        :param str id: the unique identifier of the claim rule.
+        :param str entity_tag: version of the claim rule.
+        :param datetime created_at: If set contains a date time string of the
+               creation date in ISO format.
+        :param str type: Type of the Calim rule, either 'Profile-SAML' or
+               'Profile-CR'.
+        :param int expiration: Session expiration in seconds.
+        :param List[ProfileClaimRuleConditions] conditions: Conditions of this
+               claim rule.
+        :param datetime modified_at: (optional) If set contains a date time string
+               of the last modification date in ISO format.
+        :param str name: (optional) The optional claim rule name.
+        :param str realm_name: (optional) The realm name of the Idp this claim rule
+               applies to.
+        :param str cr_type: (optional) The compute resource type. Not required if
+               type is Profile-SAML. Valid values are VSI, IKS_SA, ROKS_SA.
+        """
+        self.id = id
+        self.entity_tag = entity_tag
+        self.created_at = created_at
+        self.modified_at = modified_at
+        self.name = name
+        self.type = type
+        self.realm_name = realm_name
+        self.expiration = expiration
+        self.cr_type = cr_type
+        self.conditions = conditions
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ProfileClaimRule':
+        """Initialize a ProfileClaimRule object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in ProfileClaimRule JSON')
+        if 'entity_tag' in _dict:
+            args['entity_tag'] = _dict.get('entity_tag')
+        else:
+            raise ValueError('Required property \'entity_tag\' not present in ProfileClaimRule JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in ProfileClaimRule JSON')
+        if 'modified_at' in _dict:
+            args['modified_at'] = string_to_datetime(_dict.get('modified_at'))
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in ProfileClaimRule JSON')
+        if 'realm_name' in _dict:
+            args['realm_name'] = _dict.get('realm_name')
+        if 'expiration' in _dict:
+            args['expiration'] = _dict.get('expiration')
+        else:
+            raise ValueError('Required property \'expiration\' not present in ProfileClaimRule JSON')
+        if 'cr_type' in _dict:
+            args['cr_type'] = _dict.get('cr_type')
+        if 'conditions' in _dict:
+            args['conditions'] = [ProfileClaimRuleConditions.from_dict(x) for x in _dict.get('conditions')]
+        else:
+            raise ValueError('Required property \'conditions\' not present in ProfileClaimRule JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ProfileClaimRule object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'entity_tag') and self.entity_tag is not None:
+            _dict['entity_tag'] = self.entity_tag
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'modified_at') and self.modified_at is not None:
+            _dict['modified_at'] = datetime_to_string(self.modified_at)
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'realm_name') and self.realm_name is not None:
+            _dict['realm_name'] = self.realm_name
+        if hasattr(self, 'expiration') and self.expiration is not None:
+            _dict['expiration'] = self.expiration
+        if hasattr(self, 'cr_type') and self.cr_type is not None:
+            _dict['cr_type'] = self.cr_type
+        if hasattr(self, 'conditions') and self.conditions is not None:
+            _dict['conditions'] = [x.to_dict() for x in self.conditions]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ProfileClaimRule object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ProfileClaimRule') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ProfileClaimRule') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ProfileClaimRuleConditions():
+    """
+    ProfileClaimRuleConditions.
+
+    :attr str claim: The claim to valuate againt.
+    :attr str operator: The operation to perform on the claim. valid values are
+          EQUALS, NOT_EQUALS, EQUALS_IGNORE_CASE, NOT_EQUALS_IGNORE_CASE, CONTAINS, IN.
+    :attr str value: The stringified JSON value that the claim is compared to using
+          the operator.
+    """
+
+    def __init__(self,
+                 claim: str,
+                 operator: str,
+                 value: str) -> None:
+        """
+        Initialize a ProfileClaimRuleConditions object.
+
+        :param str claim: The claim to valuate againt.
+        :param str operator: The operation to perform on the claim. valid values
+               are EQUALS, NOT_EQUALS, EQUALS_IGNORE_CASE, NOT_EQUALS_IGNORE_CASE,
+               CONTAINS, IN.
+        :param str value: The stringified JSON value that the claim is compared to
+               using the operator.
+        """
+        self.claim = claim
+        self.operator = operator
+        self.value = value
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ProfileClaimRuleConditions':
+        """Initialize a ProfileClaimRuleConditions object from a json dictionary."""
+        args = {}
+        if 'claim' in _dict:
+            args['claim'] = _dict.get('claim')
+        else:
+            raise ValueError('Required property \'claim\' not present in ProfileClaimRuleConditions JSON')
+        if 'operator' in _dict:
+            args['operator'] = _dict.get('operator')
+        else:
+            raise ValueError('Required property \'operator\' not present in ProfileClaimRuleConditions JSON')
+        if 'value' in _dict:
+            args['value'] = _dict.get('value')
+        else:
+            raise ValueError('Required property \'value\' not present in ProfileClaimRuleConditions JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ProfileClaimRuleConditions object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'claim') and self.claim is not None:
+            _dict['claim'] = self.claim
+        if hasattr(self, 'operator') and self.operator is not None:
+            _dict['operator'] = self.operator
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ProfileClaimRuleConditions object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ProfileClaimRuleConditions') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ProfileClaimRuleConditions') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ProfileClaimRuleList():
+    """
+    ProfileClaimRuleList.
+
+    :attr ResponseContext context: (optional) Context with key properties for
+          problem determination.
+    :attr List[ProfileClaimRule] rules: List of claim rules.
+    """
+
+    def __init__(self,
+                 rules: List['ProfileClaimRule'],
+                 *,
+                 context: 'ResponseContext' = None) -> None:
+        """
+        Initialize a ProfileClaimRuleList object.
+
+        :param List[ProfileClaimRule] rules: List of claim rules.
+        :param ResponseContext context: (optional) Context with key properties for
+               problem determination.
+        """
+        self.context = context
+        self.rules = rules
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ProfileClaimRuleList':
+        """Initialize a ProfileClaimRuleList object from a json dictionary."""
+        args = {}
+        if 'context' in _dict:
+            args['context'] = ResponseContext.from_dict(_dict.get('context'))
+        if 'rules' in _dict:
+            args['rules'] = [ProfileClaimRule.from_dict(x) for x in _dict.get('rules')]
+        else:
+            raise ValueError('Required property \'rules\' not present in ProfileClaimRuleList JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ProfileClaimRuleList object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'context') and self.context is not None:
+            _dict['context'] = self.context.to_dict()
+        if hasattr(self, 'rules') and self.rules is not None:
+            _dict['rules'] = [x.to_dict() for x in self.rules]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ProfileClaimRuleList object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ProfileClaimRuleList') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ProfileClaimRuleList') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ProfileLink():
+    """
+    Link details.
+
+    :attr str id: the unique identifier of the claim rule.
+    :attr str entity_tag: version of the claim rule.
+    :attr datetime created_at: If set contains a date time string of the creation
+          date in ISO format.
+    :attr datetime modified_at: If set contains a date time string of the last
+          modification date in ISO format.
+    :attr str name: (optional) Optional name of the Link.
+    :attr str cr_type: The compute resource type. Valid values are VSI, IKS_SA,
+          ROKS_SA.
+    :attr ProfileLinkLink link:
+    """
+
+    def __init__(self,
+                 id: str,
+                 entity_tag: str,
+                 created_at: datetime,
+                 modified_at: datetime,
+                 cr_type: str,
+                 link: 'ProfileLinkLink',
+                 *,
+                 name: str = None) -> None:
+        """
+        Initialize a ProfileLink object.
+
+        :param str id: the unique identifier of the claim rule.
+        :param str entity_tag: version of the claim rule.
+        :param datetime created_at: If set contains a date time string of the
+               creation date in ISO format.
+        :param datetime modified_at: If set contains a date time string of the last
+               modification date in ISO format.
+        :param str cr_type: The compute resource type. Valid values are VSI,
+               IKS_SA, ROKS_SA.
+        :param ProfileLinkLink link:
+        :param str name: (optional) Optional name of the Link.
+        """
+        self.id = id
+        self.entity_tag = entity_tag
+        self.created_at = created_at
+        self.modified_at = modified_at
+        self.name = name
+        self.cr_type = cr_type
+        self.link = link
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ProfileLink':
+        """Initialize a ProfileLink object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in ProfileLink JSON')
+        if 'entity_tag' in _dict:
+            args['entity_tag'] = _dict.get('entity_tag')
+        else:
+            raise ValueError('Required property \'entity_tag\' not present in ProfileLink JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in ProfileLink JSON')
+        if 'modified_at' in _dict:
+            args['modified_at'] = string_to_datetime(_dict.get('modified_at'))
+        else:
+            raise ValueError('Required property \'modified_at\' not present in ProfileLink JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        if 'cr_type' in _dict:
+            args['cr_type'] = _dict.get('cr_type')
+        else:
+            raise ValueError('Required property \'cr_type\' not present in ProfileLink JSON')
+        if 'link' in _dict:
+            args['link'] = ProfileLinkLink.from_dict(_dict.get('link'))
+        else:
+            raise ValueError('Required property \'link\' not present in ProfileLink JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ProfileLink object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'entity_tag') and self.entity_tag is not None:
+            _dict['entity_tag'] = self.entity_tag
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'modified_at') and self.modified_at is not None:
+            _dict['modified_at'] = datetime_to_string(self.modified_at)
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'cr_type') and self.cr_type is not None:
+            _dict['cr_type'] = self.cr_type
+        if hasattr(self, 'link') and self.link is not None:
+            _dict['link'] = self.link.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ProfileLink object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ProfileLink') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ProfileLink') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ProfileLinkLink():
+    """
+    ProfileLinkLink.
+
+    :attr str crn: (optional) The CRN of the compute resource.
+    :attr str namespace: (optional) The compute resource namespace, only required if
+          cr_type is IKS_SA or ROKS_SA.
+    :attr str name: (optional) Name of the compute resource, only required if
+          cr_type is IKS_SA or ROKS_SA.
+    """
+
+    def __init__(self,
+                 *,
+                 crn: str = None,
+                 namespace: str = None,
+                 name: str = None) -> None:
+        """
+        Initialize a ProfileLinkLink object.
+
+        :param str crn: (optional) The CRN of the compute resource.
+        :param str namespace: (optional) The compute resource namespace, only
+               required if cr_type is IKS_SA or ROKS_SA.
+        :param str name: (optional) Name of the compute resource, only required if
+               cr_type is IKS_SA or ROKS_SA.
+        """
+        self.crn = crn
+        self.namespace = namespace
+        self.name = name
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ProfileLinkLink':
+        """Initialize a ProfileLinkLink object from a json dictionary."""
+        args = {}
+        if 'crn' in _dict:
+            args['crn'] = _dict.get('crn')
+        if 'namespace' in _dict:
+            args['namespace'] = _dict.get('namespace')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ProfileLinkLink object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'namespace') and self.namespace is not None:
+            _dict['namespace'] = self.namespace
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ProfileLinkLink object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ProfileLinkLink') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ProfileLinkLink') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ProfileLinkList():
+    """
+    ProfileLinkList.
+
+    :attr List[ProfileLink] links: List of links to a trusted profile.
+    """
+
+    def __init__(self,
+                 links: List['ProfileLink']) -> None:
+        """
+        Initialize a ProfileLinkList object.
+
+        :param List[ProfileLink] links: List of links to a trusted profile.
+        """
+        self.links = links
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ProfileLinkList':
+        """Initialize a ProfileLinkList object from a json dictionary."""
+        args = {}
+        if 'links' in _dict:
+            args['links'] = [ProfileLink.from_dict(x) for x in _dict.get('links')]
+        else:
+            raise ValueError('Required property \'links\' not present in ProfileLinkList JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ProfileLinkList object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'links') and self.links is not None:
+            _dict['links'] = [x.to_dict() for x in self.links]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ProfileLinkList object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ProfileLinkList') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ProfileLinkList') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -2072,15 +3485,15 @@ class ServiceId():
           problem determination.
     :attr str id: Unique identifier of this Service Id.
     :attr str iam_id: Cloud wide identifier for identities of this service ID.
-    :attr str entity_tag: (optional) Version of the service ID details object. You
-          need to specify this value when updating the service ID to avoid stale updates.
+    :attr str entity_tag: Version of the service ID details object. You need to
+          specify this value when updating the service ID to avoid stale updates.
     :attr str crn: Cloud Resource Name of the item. Example Cloud Resource Name:
           'crn:v1:bluemix:public:iam-identity:us-south:a/myaccount::serviceid:1234-5678-9012'.
     :attr bool locked: The service ID cannot be changed if set to true.
-    :attr datetime created_at: (optional) If set contains a date time string of the
-          creation date in ISO format.
-    :attr datetime modified_at: (optional) If set contains a date time string of the
-          last modification date in ISO format.
+    :attr datetime created_at: If set contains a date time string of the creation
+          date in ISO format.
+    :attr datetime modified_at: If set contains a date time string of the last
+          modification date in ISO format.
     :attr str account_id: ID of the account the service ID belongs to.
     :attr str name: Name of the Service Id. The name is not checked for uniqueness.
           Therefore multiple names with the same value can exist. Access is done via the
@@ -2099,15 +3512,15 @@ class ServiceId():
     def __init__(self,
                  id: str,
                  iam_id: str,
+                 entity_tag: str,
                  crn: str,
                  locked: bool,
+                 created_at: datetime,
+                 modified_at: datetime,
                  account_id: str,
                  name: str,
                  *,
                  context: 'ResponseContext' = None,
-                 entity_tag: str = None,
-                 created_at: datetime = None,
-                 modified_at: datetime = None,
                  description: str = None,
                  unique_instance_crns: List[str] = None,
                  history: List['EnityHistoryRecord'] = None,
@@ -2117,23 +3530,22 @@ class ServiceId():
 
         :param str id: Unique identifier of this Service Id.
         :param str iam_id: Cloud wide identifier for identities of this service ID.
+        :param str entity_tag: Version of the service ID details object. You need
+               to specify this value when updating the service ID to avoid stale updates.
         :param str crn: Cloud Resource Name of the item. Example Cloud Resource
                Name:
                'crn:v1:bluemix:public:iam-identity:us-south:a/myaccount::serviceid:1234-5678-9012'.
         :param bool locked: The service ID cannot be changed if set to true.
+        :param datetime created_at: If set contains a date time string of the
+               creation date in ISO format.
+        :param datetime modified_at: If set contains a date time string of the last
+               modification date in ISO format.
         :param str account_id: ID of the account the service ID belongs to.
         :param str name: Name of the Service Id. The name is not checked for
                uniqueness. Therefore multiple names with the same value can exist. Access
                is done via the UUID of the Service Id.
         :param ResponseContext context: (optional) Context with key properties for
                problem determination.
-        :param str entity_tag: (optional) Version of the service ID details object.
-               You need to specify this value when updating the service ID to avoid stale
-               updates.
-        :param datetime created_at: (optional) If set contains a date time string
-               of the creation date in ISO format.
-        :param datetime modified_at: (optional) If set contains a date time string
-               of the last modification date in ISO format.
         :param str description: (optional) The optional description of the Service
                Id. The 'description' property is only available if a description was
                provided during a create of a Service Id.
@@ -2378,5 +3790,307 @@ class ServiceIdList():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'ServiceIdList') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class TrustedProfile():
+    """
+    Response body format for trusted profile V1 REST requests.
+
+    :attr ResponseContext context: (optional) Context with key properties for
+          problem determination.
+    :attr str id: the unique identifier of the trusted profile.
+          Example:'Profile-94497d0d-2ac3-41bf-a993-a49d1b14627c'.
+    :attr str entity_tag: Version of the trusted profile details object. You need to
+          specify this value when updating the trusted profile to avoid stale updates.
+    :attr str crn: Cloud Resource Name of the item. Example Cloud Resource Name:
+          'crn:v1:bluemix:public:iam-identity:us-south:a/myaccount::profile:Profile-94497d0d-2ac3-41bf-a993-a49d1b14627c'.
+    :attr str name: Name of the trusted profile. The name is checked for uniqueness.
+          Therefore trusted profiles with the same names can not exist in the same
+          account.
+    :attr str description: (optional) The optional description of the trusted
+          profile. The 'description' property is only available if a description was
+          provided during a create of a trusted profile.
+    :attr datetime created_at: (optional) If set contains a date time string of the
+          creation date in ISO format.
+    :attr datetime modified_at: (optional) If set contains a date time string of the
+          last modification date in ISO format.
+    :attr str iam_id: The iam_id of this trusted profile.
+    :attr str account_id: ID of the account that this trusted profile belong to.
+    :attr int ims_account_id: (optional) IMS acount ID of the trusted profile.
+    :attr int ims_user_id: (optional) IMS user ID of the trusted profile.
+    :attr List[EnityHistoryRecord] history: (optional) History of the trusted
+          profile.
+    """
+
+    def __init__(self,
+                 id: str,
+                 entity_tag: str,
+                 crn: str,
+                 name: str,
+                 iam_id: str,
+                 account_id: str,
+                 *,
+                 context: 'ResponseContext' = None,
+                 description: str = None,
+                 created_at: datetime = None,
+                 modified_at: datetime = None,
+                 ims_account_id: int = None,
+                 ims_user_id: int = None,
+                 history: List['EnityHistoryRecord'] = None) -> None:
+        """
+        Initialize a TrustedProfile object.
+
+        :param str id: the unique identifier of the trusted profile.
+               Example:'Profile-94497d0d-2ac3-41bf-a993-a49d1b14627c'.
+        :param str entity_tag: Version of the trusted profile details object. You
+               need to specify this value when updating the trusted profile to avoid stale
+               updates.
+        :param str crn: Cloud Resource Name of the item. Example Cloud Resource
+               Name:
+               'crn:v1:bluemix:public:iam-identity:us-south:a/myaccount::profile:Profile-94497d0d-2ac3-41bf-a993-a49d1b14627c'.
+        :param str name: Name of the trusted profile. The name is checked for
+               uniqueness. Therefore trusted profiles with the same names can not exist in
+               the same account.
+        :param str iam_id: The iam_id of this trusted profile.
+        :param str account_id: ID of the account that this trusted profile belong
+               to.
+        :param ResponseContext context: (optional) Context with key properties for
+               problem determination.
+        :param str description: (optional) The optional description of the trusted
+               profile. The 'description' property is only available if a description was
+               provided during a create of a trusted profile.
+        :param datetime created_at: (optional) If set contains a date time string
+               of the creation date in ISO format.
+        :param datetime modified_at: (optional) If set contains a date time string
+               of the last modification date in ISO format.
+        :param int ims_account_id: (optional) IMS acount ID of the trusted profile.
+        :param int ims_user_id: (optional) IMS user ID of the trusted profile.
+        :param List[EnityHistoryRecord] history: (optional) History of the trusted
+               profile.
+        """
+        self.context = context
+        self.id = id
+        self.entity_tag = entity_tag
+        self.crn = crn
+        self.name = name
+        self.description = description
+        self.created_at = created_at
+        self.modified_at = modified_at
+        self.iam_id = iam_id
+        self.account_id = account_id
+        self.ims_account_id = ims_account_id
+        self.ims_user_id = ims_user_id
+        self.history = history
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TrustedProfile':
+        """Initialize a TrustedProfile object from a json dictionary."""
+        args = {}
+        if 'context' in _dict:
+            args['context'] = ResponseContext.from_dict(_dict.get('context'))
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in TrustedProfile JSON')
+        if 'entity_tag' in _dict:
+            args['entity_tag'] = _dict.get('entity_tag')
+        else:
+            raise ValueError('Required property \'entity_tag\' not present in TrustedProfile JSON')
+        if 'crn' in _dict:
+            args['crn'] = _dict.get('crn')
+        else:
+            raise ValueError('Required property \'crn\' not present in TrustedProfile JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in TrustedProfile JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if 'modified_at' in _dict:
+            args['modified_at'] = string_to_datetime(_dict.get('modified_at'))
+        if 'iam_id' in _dict:
+            args['iam_id'] = _dict.get('iam_id')
+        else:
+            raise ValueError('Required property \'iam_id\' not present in TrustedProfile JSON')
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in TrustedProfile JSON')
+        if 'ims_account_id' in _dict:
+            args['ims_account_id'] = _dict.get('ims_account_id')
+        if 'ims_user_id' in _dict:
+            args['ims_user_id'] = _dict.get('ims_user_id')
+        if 'history' in _dict:
+            args['history'] = [EnityHistoryRecord.from_dict(x) for x in _dict.get('history')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TrustedProfile object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'context') and self.context is not None:
+            _dict['context'] = self.context.to_dict()
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'entity_tag') and self.entity_tag is not None:
+            _dict['entity_tag'] = self.entity_tag
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'modified_at') and self.modified_at is not None:
+            _dict['modified_at'] = datetime_to_string(self.modified_at)
+        if hasattr(self, 'iam_id') and self.iam_id is not None:
+            _dict['iam_id'] = self.iam_id
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'ims_account_id') and self.ims_account_id is not None:
+            _dict['ims_account_id'] = self.ims_account_id
+        if hasattr(self, 'ims_user_id') and self.ims_user_id is not None:
+            _dict['ims_user_id'] = self.ims_user_id
+        if hasattr(self, 'history') and self.history is not None:
+            _dict['history'] = [x.to_dict() for x in self.history]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TrustedProfile object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TrustedProfile') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TrustedProfile') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class TrustedProfilesList():
+    """
+    Response body format for the List trusted profiles V1 REST request.
+
+    :attr ResponseContext context: (optional) Context with key properties for
+          problem determination.
+    :attr int offset: (optional) The offset of the current page.
+    :attr int limit: (optional) Optional size of a single page. Default is 20 items
+          per page. Valid range is 1 to 100.
+    :attr str first: (optional) Link to the first page.
+    :attr str previous: (optional) Link to the previous available page. If
+          'previous' property is not part of the response no previous page is available.
+    :attr str next: (optional) Link to the next available page. If 'next' property
+          is not part of the response no next page is available.
+    :attr List[TrustedProfile] profiles: List of trusted profiles.
+    """
+
+    def __init__(self,
+                 profiles: List['TrustedProfile'],
+                 *,
+                 context: 'ResponseContext' = None,
+                 offset: int = None,
+                 limit: int = None,
+                 first: str = None,
+                 previous: str = None,
+                 next: str = None) -> None:
+        """
+        Initialize a TrustedProfilesList object.
+
+        :param List[TrustedProfile] profiles: List of trusted profiles.
+        :param ResponseContext context: (optional) Context with key properties for
+               problem determination.
+        :param int offset: (optional) The offset of the current page.
+        :param int limit: (optional) Optional size of a single page. Default is 20
+               items per page. Valid range is 1 to 100.
+        :param str first: (optional) Link to the first page.
+        :param str previous: (optional) Link to the previous available page. If
+               'previous' property is not part of the response no previous page is
+               available.
+        :param str next: (optional) Link to the next available page. If 'next'
+               property is not part of the response no next page is available.
+        """
+        self.context = context
+        self.offset = offset
+        self.limit = limit
+        self.first = first
+        self.previous = previous
+        self.next = next
+        self.profiles = profiles
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TrustedProfilesList':
+        """Initialize a TrustedProfilesList object from a json dictionary."""
+        args = {}
+        if 'context' in _dict:
+            args['context'] = ResponseContext.from_dict(_dict.get('context'))
+        if 'offset' in _dict:
+            args['offset'] = _dict.get('offset')
+        if 'limit' in _dict:
+            args['limit'] = _dict.get('limit')
+        if 'first' in _dict:
+            args['first'] = _dict.get('first')
+        if 'previous' in _dict:
+            args['previous'] = _dict.get('previous')
+        if 'next' in _dict:
+            args['next'] = _dict.get('next')
+        if 'profiles' in _dict:
+            args['profiles'] = [TrustedProfile.from_dict(x) for x in _dict.get('profiles')]
+        else:
+            raise ValueError('Required property \'profiles\' not present in TrustedProfilesList JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TrustedProfilesList object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'context') and self.context is not None:
+            _dict['context'] = self.context.to_dict()
+        if hasattr(self, 'offset') and self.offset is not None:
+            _dict['offset'] = self.offset
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            _dict['first'] = self.first
+        if hasattr(self, 'previous') and self.previous is not None:
+            _dict['previous'] = self.previous
+        if hasattr(self, 'next') and self.next is not None:
+            _dict['next'] = self.next
+        if hasattr(self, 'profiles') and self.profiles is not None:
+            _dict['profiles'] = [x.to_dict() for x in self.profiles]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TrustedProfilesList object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TrustedProfilesList') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TrustedProfilesList') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
