@@ -40,7 +40,7 @@ from .common import get_sdk_headers
 class IamIdentityV1(BaseService):
     """The iam_identity V1 service."""
 
-    DEFAULT_SERVICE_URL = 'https://iam.test.cloud.ibm.com'
+    DEFAULT_SERVICE_URL = 'https://iam.cloud.ibm.com'
     DEFAULT_SERVICE_NAME = 'iam_identity'
 
     @classmethod

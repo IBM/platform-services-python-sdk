@@ -1453,7 +1453,7 @@ class TestCreateProfile():
         create_profile()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles')
+        url = self.preprocess_url(base_url + '/v1/profiles')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}]}'
         responses.add(responses.POST,
                       url,
@@ -1467,7 +1467,7 @@ class TestCreateProfile():
         description = 'testString'
 
         # Invoke method
-        response = _service.create_profile(
+        response = service.create_profile(
             name,
             account_id,
             description=description,
@@ -1490,7 +1490,7 @@ class TestCreateProfile():
         test_create_profile_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles')
+        url = self.preprocess_url(base_url + '/v1/profiles')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}]}'
         responses.add(responses.POST,
                       url,
@@ -1511,7 +1511,7 @@ class TestCreateProfile():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.create_profile(**req_copy)
+                service.create_profile(**req_copy)
 
 
 
@@ -1587,7 +1587,7 @@ class TestListProfile():
         test_list_profile_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles')
+        url = self.preprocess_url(base_url + '/v1/profiles')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}]}]}'
         responses.add(responses.GET,
                       url,
@@ -1599,7 +1599,7 @@ class TestListProfile():
         account_id = 'testString'
 
         # Invoke method
-        response = _service.list_profile(
+        response = service.list_profile(
             account_id,
             headers={}
         )
@@ -1619,7 +1619,7 @@ class TestListProfile():
         test_list_profile_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles')
+        url = self.preprocess_url(base_url + '/v1/profiles')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}]}]}'
         responses.add(responses.GET,
                       url,
@@ -1637,7 +1637,7 @@ class TestListProfile():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.list_profile(**req_copy)
+                service.list_profile(**req_copy)
 
 
 
@@ -1663,7 +1663,7 @@ class TestGetProfile():
         get_profile()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}]}'
         responses.add(responses.GET,
                       url,
@@ -1675,7 +1675,7 @@ class TestGetProfile():
         profile_id = 'testString'
 
         # Invoke method
-        response = _service.get_profile(
+        response = service.get_profile(
             profile_id,
             headers={}
         )
@@ -1691,7 +1691,7 @@ class TestGetProfile():
         test_get_profile_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}]}'
         responses.add(responses.GET,
                       url,
@@ -1709,7 +1709,7 @@ class TestGetProfile():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.get_profile(**req_copy)
+                service.get_profile(**req_copy)
 
 
 
@@ -1735,7 +1735,7 @@ class TestUpdateProfile():
         update_profile()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}]}'
         responses.add(responses.PUT,
                       url,
@@ -1750,7 +1750,7 @@ class TestUpdateProfile():
         description = 'testString'
 
         # Invoke method
-        response = _service.update_profile(
+        response = service.update_profile(
             profile_id,
             if_match,
             name=name,
@@ -1773,7 +1773,7 @@ class TestUpdateProfile():
         test_update_profile_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}]}'
         responses.add(responses.PUT,
                       url,
@@ -1795,7 +1795,7 @@ class TestUpdateProfile():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.update_profile(**req_copy)
+                service.update_profile(**req_copy)
 
 
 
@@ -1821,7 +1821,7 @@ class TestDeleteProfile():
         delete_profile()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1830,7 +1830,7 @@ class TestDeleteProfile():
         profile_id = 'testString'
 
         # Invoke method
-        response = _service.delete_profile(
+        response = service.delete_profile(
             profile_id,
             headers={}
         )
@@ -1846,7 +1846,7 @@ class TestDeleteProfile():
         test_delete_profile_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1861,7 +1861,7 @@ class TestDeleteProfile():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.delete_profile(**req_copy)
+                service.delete_profile(**req_copy)
 
 
 
@@ -1887,7 +1887,7 @@ class TestCreateClaimRule():
         create_claim_rule()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/rules')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/rules')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}'
         responses.add(responses.POST,
                       url,
@@ -1926,7 +1926,7 @@ class TestCreateClaimRule():
         expiration = 38
 
         # Invoke method
-        response = _service.create_claim_rule(
+        response = service.create_claim_rule(
             profile_id,
             type,
             conditions,
@@ -1958,7 +1958,7 @@ class TestCreateClaimRule():
         test_create_claim_rule_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/rules')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/rules')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}'
         responses.add(responses.POST,
                       url,
@@ -2005,7 +2005,7 @@ class TestCreateClaimRule():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.create_claim_rule(**req_copy)
+                service.create_claim_rule(**req_copy)
 
 
 
@@ -2031,7 +2031,7 @@ class TestListClaimRules():
         list_claim_rules()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/rules')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/rules')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "rules": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}]}'
         responses.add(responses.GET,
                       url,
@@ -2043,7 +2043,7 @@ class TestListClaimRules():
         profile_id = 'testString'
 
         # Invoke method
-        response = _service.list_claim_rules(
+        response = service.list_claim_rules(
             profile_id,
             headers={}
         )
@@ -2059,7 +2059,7 @@ class TestListClaimRules():
         test_list_claim_rules_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/rules')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/rules')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "rules": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}]}'
         responses.add(responses.GET,
                       url,
@@ -2077,7 +2077,7 @@ class TestListClaimRules():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.list_claim_rules(**req_copy)
+                service.list_claim_rules(**req_copy)
 
 
 
@@ -2103,7 +2103,7 @@ class TestGetClaimRule():
         get_claim_rule()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/rules/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/rules/testString')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}'
         responses.add(responses.GET,
                       url,
@@ -2116,7 +2116,7 @@ class TestGetClaimRule():
         rule_id = 'testString'
 
         # Invoke method
-        response = _service.get_claim_rule(
+        response = service.get_claim_rule(
             profile_id,
             rule_id,
             headers={}
@@ -2133,7 +2133,7 @@ class TestGetClaimRule():
         test_get_claim_rule_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/rules/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/rules/testString')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}'
         responses.add(responses.GET,
                       url,
@@ -2153,7 +2153,7 @@ class TestGetClaimRule():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.get_claim_rule(**req_copy)
+                service.get_claim_rule(**req_copy)
 
 
 
@@ -2179,7 +2179,7 @@ class TestUpdateClaimRule():
         update_claim_rule()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/rules/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/rules/testString')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}'
         responses.add(responses.PUT,
                       url,
@@ -2220,7 +2220,7 @@ class TestUpdateClaimRule():
         expiration = 38
 
         # Invoke method
-        response = _service.update_claim_rule(
+        response = service.update_claim_rule(
             profile_id,
             rule_id,
             if_match,
@@ -2254,7 +2254,7 @@ class TestUpdateClaimRule():
         test_update_claim_rule_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/rules/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/rules/testString')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}'
         responses.add(responses.PUT,
                       url,
@@ -2305,7 +2305,7 @@ class TestUpdateClaimRule():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.update_claim_rule(**req_copy)
+                service.update_claim_rule(**req_copy)
 
 
 
@@ -2331,7 +2331,7 @@ class TestDeleteClaimRule():
         delete_claim_rule()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/rules/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/rules/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2341,7 +2341,7 @@ class TestDeleteClaimRule():
         rule_id = 'testString'
 
         # Invoke method
-        response = _service.delete_claim_rule(
+        response = service.delete_claim_rule(
             profile_id,
             rule_id,
             headers={}
@@ -2358,7 +2358,7 @@ class TestDeleteClaimRule():
         test_delete_claim_rule_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/rules/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/rules/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2375,7 +2375,7 @@ class TestDeleteClaimRule():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.delete_claim_rule(**req_copy)
+                service.delete_claim_rule(**req_copy)
 
 
 
@@ -2401,7 +2401,7 @@ class TestCreateLink():
         create_link()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/links')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/links')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}'
         responses.add(responses.POST,
                       url,
@@ -2422,7 +2422,7 @@ class TestCreateLink():
         name = 'testString'
 
         # Invoke method
-        response = _service.create_link(
+        response = service.create_link(
             profile_id,
             cr_type,
             link,
@@ -2446,7 +2446,7 @@ class TestCreateLink():
         test_create_link_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/links')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/links')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}'
         responses.add(responses.POST,
                       url,
@@ -2475,7 +2475,7 @@ class TestCreateLink():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.create_link(**req_copy)
+                service.create_link(**req_copy)
 
 
 
@@ -2501,7 +2501,7 @@ class TestListLink():
         list_link()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/links')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/links')
         mock_response = '{"links": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}]}'
         responses.add(responses.GET,
                       url,
@@ -2513,7 +2513,7 @@ class TestListLink():
         profile_id = 'testString'
 
         # Invoke method
-        response = _service.list_link(
+        response = service.list_link(
             profile_id,
             headers={}
         )
@@ -2529,7 +2529,7 @@ class TestListLink():
         test_list_link_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/links')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/links')
         mock_response = '{"links": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}]}'
         responses.add(responses.GET,
                       url,
@@ -2547,7 +2547,7 @@ class TestListLink():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.list_link(**req_copy)
+                service.list_link(**req_copy)
 
 
 
@@ -2573,7 +2573,7 @@ class TestGetLink():
         get_link()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/links/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/links/testString')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}'
         responses.add(responses.GET,
                       url,
@@ -2586,7 +2586,7 @@ class TestGetLink():
         link_id = 'testString'
 
         # Invoke method
-        response = _service.get_link(
+        response = service.get_link(
             profile_id,
             link_id,
             headers={}
@@ -2603,7 +2603,7 @@ class TestGetLink():
         test_get_link_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/links/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/links/testString')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}'
         responses.add(responses.GET,
                       url,
@@ -2623,7 +2623,7 @@ class TestGetLink():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.get_link(**req_copy)
+                service.get_link(**req_copy)
 
 
 
@@ -2649,7 +2649,7 @@ class TestDeleteLink():
         delete_link()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/links/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/links/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2659,7 +2659,7 @@ class TestDeleteLink():
         link_id = 'testString'
 
         # Invoke method
-        response = _service.delete_link(
+        response = service.delete_link(
             profile_id,
             link_id,
             headers={}
@@ -2676,7 +2676,7 @@ class TestDeleteLink():
         test_delete_link_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/profiles/testString/links/testString')
+        url = self.preprocess_url(base_url + '/v1/profiles/testString/links/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2693,7 +2693,7 @@ class TestDeleteLink():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.delete_link(**req_copy)
+                service.delete_link(**req_copy)
 
 
 
