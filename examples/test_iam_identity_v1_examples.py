@@ -475,7 +475,7 @@ class TestIamIdentityV1Examples():
             # begin-get_profile
 
             response = iam_identity_service.get_profile(
-                profile_id= profile_id
+                profile_id=profile_id
             )
 
             profile_etag = response.get_headers()['Etag']
@@ -489,7 +489,7 @@ class TestIamIdentityV1Examples():
             pytest.fail(str(e))
     
     @needscredentials
-    def test_list_profiles_example(self):
+    def test_list_profile_example(self):
         """
         list_profiles request example
         """
@@ -536,14 +536,14 @@ class TestIamIdentityV1Examples():
             pytest.fail(str(e))
     
     @needscredentials
-    def test_create_claimRule_example(self):
+    def test_create_claim_rule_example(self):
         """
-        create_claimRule request example
+        create_claim_rule request example
         """
         try:
             global claimRule_id, profile_id
-            print('\ncreate_claimRule() result:')
-            # begin-create_claimRule
+            print('\ncreate_claim_rule() result:')
+            # begin-create_claim_rule
 
             profile_claim_rule_conditions_model = {}
             profile_claim_rule_conditions_model['claim'] = 'blueGroups'
@@ -562,21 +562,21 @@ class TestIamIdentityV1Examples():
 
             print(json.dumps(claimRule, indent=2))
 
-            # end-create_claimRule
+            # end-create_claim_rule
 
         except ApiException as e:
             pytest.fail(str(e))
     
     @needscredentials
-    def test_get_claimRule_example(self):
+    def test_get_claim_rule_example(self):
         """
-        get_claimRule request example
+        get_claim_rule request example
         """
         try:
             global profile_id, claimRule_id, claimRule_etag
 
-            print('\nget_claimRule() result:')
-            # begin-get_claimRule
+            print('\nget_claim_rule() result:')
+            # begin-get_claim_rule
 
             response = iam_identity_service.get_claim_rule(
                 profile_id= profile_id,
@@ -588,21 +588,21 @@ class TestIamIdentityV1Examples():
 
             print(json.dumps(claimRule, indent=2))
 
-            # end-get_claimRule
+            # end-get_claim_rule
 
         except ApiException as e:
             pytest.fail(str(e))
     
     @needscredentials
-    def test_list_claimRules_example(self):
+    def test_list_claim_rules_example(self):
         """
-        list_claimRules request example
+        list_claim_rules request example
         """
         try:
             global profile_id
 
-            print('\nlist_claimRules() result:')
-            # begin-list_claimRules
+            print('\nlist_claim_rules() result:')
+            # begin-list_claim_rules
 
             claimRule_list = iam_identity_service.list_claim_rules(
                 profile_id=profile_id,
@@ -610,21 +610,21 @@ class TestIamIdentityV1Examples():
 
             print(json.dumps(claimRule_list, indent=2))
 
-            # end-list_claimRules
+            # end-list_claim_rules
 
         except ApiException as e:
             pytest.fail(str(e))
 
     @needscredentials
-    def test_update_claimRule_example(self):
+    def test_update_claim_rule_example(self):
         """
-        update_claimRule request example
+        update_claim_rule request example
         """
         try:
             global claimRule_id, claimRule_etag, profile_id
 
-            print('\nupdate_claimRule() result:')
-            # begin-update_claimRule
+            print('\nupdate_claim_rule() result:')
+            # begin-update_claim_rule
 
             profile_claim_rule_conditions_model = {}
             profile_claim_rule_conditions_model['claim'] = 'blueGroups'
@@ -643,24 +643,24 @@ class TestIamIdentityV1Examples():
 
             print(json.dumps(claimRule, indent=2))
 
-            # end-update_claimRule
+            # end-update_claim_rule
 
         except ApiException as e:
             pytest.fail(str(e))
 
     @needscredentials
-    def test_delete_claimRule_example(self):
+    def test_delete_claim_rule_example(self):
         """
-        delete_claimRule request example
+        delete_claim_rule request example
         """
         try:
             global profile_id, claimRule_id
 
-            # begin-delete_claimRule
+            # begin-delete_claim_rule
 
             response = iam_identity_service.delete_claim_rule(profile_id=profile_id, rule_id=claimRule_id)
 
-            # end-delete_claimRule
+            # end-delete_claim_rule
             print('\ndelete_claimRule() response status code: ', response.get_status_code())
 
         except ApiException as e:
@@ -723,7 +723,7 @@ class TestIamIdentityV1Examples():
             pytest.fail(str(e))
     
     @needscredentials
-    def test_list_links_example(self):
+    def test_list_link_example(self):
         """
         list_links request example
         """
