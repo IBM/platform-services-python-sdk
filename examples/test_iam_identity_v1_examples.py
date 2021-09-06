@@ -475,7 +475,7 @@ class TestIamIdentityV1Examples():
             # begin-get_profile
 
             response = iam_identity_service.get_profile(
-                profile_id= profile_id
+                profile_id=profile_id
             )
 
             profile_etag = response.get_headers()['Etag']
@@ -491,13 +491,13 @@ class TestIamIdentityV1Examples():
     @needscredentials
     def test_list_profile_example(self):
         """
-        list_profile request example
+        list_profiles request example
         """
         try:
             global account_id
 
-            print('\nlist_profile() result:')
-            # begin-list_profile
+            print('\nlist_profiles() result:')
+            # begin-list_profiles
 
             profile_list = iam_identity_service.list_profile(
                 account_id=account_id,
@@ -506,7 +506,7 @@ class TestIamIdentityV1Examples():
 
             print(json.dumps(profile_list, indent=2))
 
-            # end-list_profile
+            # end-list_profiles
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -725,13 +725,13 @@ class TestIamIdentityV1Examples():
     @needscredentials
     def test_list_link_example(self):
         """
-        list_link request example
+        list_links request example
         """
         try:
             global profile_id
 
             print('\nlist_links() result:')
-            # begin-list_link
+            # begin-list_links
 
             link_list = iam_identity_service.list_link(
                 profile_id=profile_id,
@@ -739,7 +739,7 @@ class TestIamIdentityV1Examples():
 
             print(json.dumps(link_list, indent=2))
 
-            # end-list_link
+            # end-list_links
 
         except ApiException as e:
             pytest.fail(str(e))
