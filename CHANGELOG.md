@@ -1,3 +1,10 @@
+## [0.20.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.20.0...v0.20.1) (2021-09-07)
+
+
+### Bug Fixes
+
+* **IAM Identity:** fix list_profiles and list_links operation id's  ([#130](https://github.com/IBM/platform-services-python-sdk/issues/130)) ([2307a29](https://github.com/IBM/platform-services-python-sdk/commit/2307a29ea5baa8824770779415694583e9c108d6))
+
 # [0.20.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.19.3...v0.20.0) (2021-09-02)
 
 
