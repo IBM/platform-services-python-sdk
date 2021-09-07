@@ -133,7 +133,7 @@ class TestIamIdentityV1():
                     assert delete_response.get_status_code() == 204
         
         # list profiles
-        response = cls.iam_identity_service.list_profile(
+        response = cls.iam_identity_service.list_profiles(
             account_id=cls.account_id
         )
         assert response.get_status_code() == 200
@@ -588,7 +588,7 @@ class TestIamIdentityV1():
         pagetoken = None
         pagetoken_present = True
         while pagetoken_present:
-            list_profiles_response = self.iam_identity_service.list_profile(
+            list_profiles_response = self.iam_identity_service.list_profiles(
                 account_id=self.account_id,
                 pagesize=1,
                 pagetoken=pagetoken,
@@ -842,7 +842,7 @@ class TestIamIdentityV1():
     def test_list_links(self):
         links = []
 
-        list_links_response = self.iam_identity_service.list_link(
+        list_links_response = self.iam_identity_service.list_links(
             profile_id=profile_id2
         )
         assert list_links_response.get_status_code() == 200
