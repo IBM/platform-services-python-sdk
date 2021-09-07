@@ -489,7 +489,7 @@ class TestIamIdentityV1Examples():
             pytest.fail(str(e))
     
     @needscredentials
-    def test_list_profile_example(self):
+    def test_list_profiles_example(self):
         """
         list_profiles request example
         """
@@ -499,7 +499,7 @@ class TestIamIdentityV1Examples():
             print('\nlist_profiles() result:')
             # begin-list_profiles
 
-            profile_list = iam_identity_service.list_profile(
+            profile_list = iam_identity_service.list_profiles(
                 account_id=account_id,
                 include_history=True
             ).get_result()
@@ -723,7 +723,7 @@ class TestIamIdentityV1Examples():
             pytest.fail(str(e))
     
     @needscredentials
-    def test_list_link_example(self):
+    def test_list_links_example(self):
         """
         list_links request example
         """
@@ -733,7 +733,7 @@ class TestIamIdentityV1Examples():
             print('\nlist_links() result:')
             # begin-list_links
 
-            link_list = iam_identity_service.list_link(
+            link_list = iam_identity_service.list_links(
                 profile_id=profile_id,
             ).get_result()
 

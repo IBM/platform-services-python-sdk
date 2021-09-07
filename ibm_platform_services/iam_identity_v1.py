@@ -156,7 +156,7 @@ class IamIdentityV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -237,7 +237,7 @@ class IamIdentityV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -284,7 +284,7 @@ class IamIdentityV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -336,7 +336,7 @@ class IamIdentityV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -407,7 +407,7 @@ class IamIdentityV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -447,7 +447,7 @@ class IamIdentityV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -489,7 +489,7 @@ class IamIdentityV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -531,7 +531,7 @@ class IamIdentityV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -556,7 +556,7 @@ class IamIdentityV1(BaseService):
         Returns a list of service IDs. Users can manage user API keys for themself, or
         service ID API keys for service IDs that are bound to an entity they have access
         to. Note: apikey details are only included in the response when  creating a
-        Service ID with an api key.
+        Service ID with an apikey.
 
         :param str account_id: (optional) Account ID of the service ID(s) to query.
                This parameter is required (unless using a pagetoken).
@@ -604,7 +604,7 @@ class IamIdentityV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -678,7 +678,7 @@ class IamIdentityV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -694,7 +694,7 @@ class IamIdentityV1(BaseService):
         Returns the details of a service ID. Users can manage user API keys for themself,
         or service ID API keys for service IDs that are bound to an entity they have
         access to. Note: apikey details are only included in the response when  creating a
-        Service ID with an api key.
+        Service ID with an apikey.
 
         :param str id: Unique ID of the service ID.
         :param bool include_history: (optional) Defines if the entity history is
@@ -729,7 +729,7 @@ class IamIdentityV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -808,7 +808,7 @@ class IamIdentityV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -851,7 +851,7 @@ class IamIdentityV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -893,7 +893,7 @@ class IamIdentityV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -935,7 +935,7 @@ class IamIdentityV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -953,7 +953,7 @@ class IamIdentityV1(BaseService):
         """
         Create a trusted profile.
 
-        Creates a trusted profile for a given account ID.
+        Create a trusted profile for a given account ID.
 
         :param str name: Name of the trusted profile. The name is checked for
                uniqueness. Therefore trusted profiles with the same names can not exist in
@@ -1000,7 +1000,7 @@ class IamIdentityV1(BaseService):
         return response
 
 
-    def list_profile(self,
+    def list_profiles(self,
         account_id: str,
         *,
         name: str = None,
@@ -1012,9 +1012,10 @@ class IamIdentityV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Get list of trusted profiles for a given account ID.
+        List trusted profiles.
 
-        Returns the list of trusted profiles for a given account ID.
+        List the trusted profiles in an account. The `account_id` query parameter
+        determines the account from which to retrieve the list of trusted profiles.
 
         :param str account_id: Account ID to query for trusted profiles.
         :param str name: (optional) Name of the trusted profile to query.
@@ -1039,7 +1040,7 @@ class IamIdentityV1(BaseService):
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='list_profile')
+                                      operation_id='list_profiles')
         headers.update(sdk_headers)
 
         params = {
@@ -1073,7 +1074,9 @@ class IamIdentityV1(BaseService):
         """
         Get a trusted profile.
 
-        Get a trusted profile.
+        Retrieve a trusted profile by its `profile-id`. Only the trusted profile's data is
+        returned (`name`, `description`, `iam_id`, etc.), not the federated users or
+        compute resources that qualify to apply the trusted profile.
 
         :param str profile_id: ID of the trusted profile to get.
         :param dict headers: A `dict` containing the request headers
@@ -1116,7 +1119,7 @@ class IamIdentityV1(BaseService):
         """
         Update a trusted profile.
 
-        Updates a trusted profile.
+        Update the name or description of an existing trusted profile.
 
         :param str profile_id: ID of the trusted profile to be updated.
         :param str if_match: Version of the trusted profile to be updated.  Specify
@@ -1180,7 +1183,9 @@ class IamIdentityV1(BaseService):
         """
         Delete a trusted profile.
 
-        Deletes a trusted profile.
+        Delete a trusted profile. When you delete trusted profile, compute resources and
+        federated users are unlinked from the profile and can no longer apply the trusted
+        profile identity.
 
         :param str profile_id: ID of the trusted profile.
         :param dict headers: A `dict` containing the request headers
@@ -1226,8 +1231,8 @@ class IamIdentityV1(BaseService):
         """
         Create claim rule for a trusted profile.
 
-        Claim rule can be created for a given trusted profile, There is a limit of 20
-        rules allowed per trusted profile.
+        Create a claim rule for a trusted profile. There is a limit of 20 rules per
+        trusted profile.
 
         :param str profile_id: ID of the trusted profile to create a claim rule.
         :param str type: Type of the calim rule, either 'Profile-SAML' or
@@ -1301,9 +1306,10 @@ class IamIdentityV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Get all claim rules for a given trusted profile.
+        List claim rules for a trusted profile.
 
-        Returns list of claim rules for a trusted profile.
+        Get a list of all claim rules for a trusted profile. The `profile-id` query
+        parameter determines the profile from which to retrieve the list of claim rules.
 
         :param str profile_id: ID of the trusted profile.
         :param dict headers: A `dict` containing the request headers
@@ -1341,9 +1347,9 @@ class IamIdentityV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Get claim rule for a trusted profile.
+        Get a claim rule for a trusted profile.
 
-        Claim rule can be fetched for a given trusted profile ID and rule ID.
+        A specific claim rule can be fetched for a given trusted profile ID and rule ID.
 
         :param str profile_id: ID of the trusted profile.
         :param str rule_id: ID of the claim rule to get.
@@ -1395,7 +1401,7 @@ class IamIdentityV1(BaseService):
         """
         Update claim rule for a trusted profile.
 
-        Claim rule can be updated for a given trusted profile ID and rule ID.
+        Update a specific claim rule for a given trusted profile ID and rule ID.
 
         :param str profile_id: ID of the trusted profile.
         :param str rule_id: ID of the claim rule to update.
@@ -1483,7 +1489,9 @@ class IamIdentityV1(BaseService):
         """
         Delete a claim rule.
 
-        Deletes a claim rule.
+        Delete a claim rule. When you delete a claim rule, federated user or compute
+        resources are no longer required to meet the conditions of the claim rule in order
+        to apply the trusted profile.
 
         :param str profile_id: ID of the trusted profile.
         :param str rule_id: ID of the claim rule to delete.
@@ -1528,7 +1536,9 @@ class IamIdentityV1(BaseService):
         """
         Create link to a trusted profile.
 
-        Link compute resource to a trusted profile.
+        Create a direct link between a specific compute resource and a trusted profile,
+        rather than creating conditions that a compute resource must fulfill to apply a
+        trusted profile.
 
         :param str profile_id: ID of the trusted profile.
         :param str cr_type: The compute resource type. Valid values are VSI,
@@ -1579,14 +1589,14 @@ class IamIdentityV1(BaseService):
         return response
 
 
-    def list_link(self,
+    def list_links(self,
         profile_id: str,
         **kwargs
     ) -> DetailedResponse:
         """
-        Get list of links to a trusted profile.
+        List links to a trusted profile.
 
-        Gets list of link to a trusted profile.
+        Get a list of links to a trusted profile.
 
         :param str profile_id: ID of the trusted profile.
         :param dict headers: A `dict` containing the request headers
@@ -1599,7 +1609,7 @@ class IamIdentityV1(BaseService):
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
-                                      operation_id='list_link')
+                                      operation_id='list_links')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1626,7 +1636,7 @@ class IamIdentityV1(BaseService):
         """
         Get link to a trusted profile.
 
-        Gets link to a trusted profile.
+        Get a specific link to a trusted profile by `link_id`.
 
         :param str profile_id: ID of the trusted profile.
         :param str link_id: ID of the link.
@@ -1669,7 +1679,7 @@ class IamIdentityV1(BaseService):
         """
         Delete link to a trusted profile.
 
-        Deletes link to a trusted profile.
+        Delete a link between a compute resource and a trusted profile.
 
         :param str profile_id: ID of the trusted profile.
         :param str link_id: ID of the link.
@@ -1751,7 +1761,7 @@ class IamIdentityV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1857,7 +1867,7 @@ class IamIdentityV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1901,9 +1911,9 @@ class ListServiceIdsEnums:
         DESC = 'desc'
 
 
-class ListProfileEnums:
+class ListProfilesEnums:
     """
-    Enums for list_profile parameters.
+    Enums for list_profiles parameters.
     """
 
     class Order(str, Enum):
@@ -2937,7 +2947,7 @@ class ProfileClaimRuleConditions():
     """
     ProfileClaimRuleConditions.
 
-    :attr str claim: The claim to valuate againt.
+    :attr str claim: The claim to evaluate against.
     :attr str operator: The operation to perform on the claim. valid values are
           EQUALS, NOT_EQUALS, EQUALS_IGNORE_CASE, NOT_EQUALS_IGNORE_CASE, CONTAINS, IN.
     :attr str value: The stringified JSON value that the claim is compared to using
@@ -2951,7 +2961,7 @@ class ProfileClaimRuleConditions():
         """
         Initialize a ProfileClaimRuleConditions object.
 
-        :param str claim: The claim to valuate againt.
+        :param str claim: The claim to evaluate against.
         :param str operator: The operation to perform on the claim. valid values
                are EQUALS, NOT_EQUALS, EQUALS_IGNORE_CASE, NOT_EQUALS_IGNORE_CASE,
                CONTAINS, IN.
@@ -3504,9 +3514,8 @@ class ServiceId():
     :attr List[str] unique_instance_crns: (optional) Optional list of CRNs (string
           array) which point to the services connected to the service ID.
     :attr List[EnityHistoryRecord] history: (optional) History of the Service ID.
-    :attr ApiKey apikey: (optional) Api key details for the Service ID. The
-          apikey is only included in the response when creating a Service ID with an
-          apikey.
+    :attr ApiKey apikey: (optional) Response body format for API key V1 REST
+          requests.
     """
 
     def __init__(self,
@@ -3553,9 +3562,8 @@ class ServiceId():
                (string array) which point to the services connected to the service ID.
         :param List[EnityHistoryRecord] history: (optional) History of the Service
                ID.
-        :param ApiKey apikey: (optional) Api key details for the Service
-               ID. The apikey is only included in the response when creating a Service ID
-               with an apikey.
+        :param ApiKey apikey: (optional) Response body format for API key V1 REST
+               requests.
         """
         self.context = context
         self.id = id
@@ -3588,6 +3596,8 @@ class ServiceId():
             raise ValueError('Required property \'iam_id\' not present in ServiceId JSON')
         if 'entity_tag' in _dict:
             args['entity_tag'] = _dict.get('entity_tag')
+        else:
+            raise ValueError('Required property \'entity_tag\' not present in ServiceId JSON')
         if 'crn' in _dict:
             args['crn'] = _dict.get('crn')
         else:
@@ -3598,8 +3608,12 @@ class ServiceId():
             raise ValueError('Required property \'locked\' not present in ServiceId JSON')
         if 'created_at' in _dict:
             args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in ServiceId JSON')
         if 'modified_at' in _dict:
             args['modified_at'] = string_to_datetime(_dict.get('modified_at'))
+        else:
+            raise ValueError('Required property \'modified_at\' not present in ServiceId JSON')
         if 'account_id' in _dict:
             args['account_id'] = _dict.get('account_id')
         else:
