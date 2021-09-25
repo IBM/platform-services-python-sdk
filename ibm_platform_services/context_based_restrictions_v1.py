@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 3.38.1-1037b405-20210908-184149
- 
+
 """
 With the Context Based Restrictions API, you can:
 * Create, list, get, update, and delete network zones
@@ -38,6 +38,7 @@ from ibm_cloud_sdk_core.utils import convert_model, datetime_to_string, string_t
 
 from .common import get_sdk_headers
 
+
 ##############################################################################
 # Service
 ##############################################################################
@@ -51,7 +52,7 @@ class ContextBasedRestrictionsV1(BaseService):
     @classmethod
     def new_instance(cls,
                      service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'ContextBasedRestrictionsV1':
+                     ) -> 'ContextBasedRestrictionsV1':
         """
         Return a new client for the Context Based Restrictions service using the
                specified parameters and external configuration.
@@ -59,13 +60,13 @@ class ContextBasedRestrictionsV1(BaseService):
         authenticator = get_authenticator_from_environment(service_name)
         service = cls(
             authenticator
-            )
+        )
         service.configure_service(service_name)
         return service
 
     def __init__(self,
                  authenticator: Authenticator = None,
-                ) -> None:
+                 ) -> None:
         """
         Construct a new client for the Context Based Restrictions service.
 
@@ -77,22 +78,20 @@ class ContextBasedRestrictionsV1(BaseService):
                              service_url=self.DEFAULT_SERVICE_URL,
                              authenticator=authenticator)
 
-
     #########################
     # Zones
     #########################
 
-
     def create_zone(self,
-        *,
-        name: str = None,
-        account_id: str = None,
-        addresses: List['Address'] = None,
-        description: str = None,
-        excluded: List['Address'] = None,
-        transaction_id: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+                    *,
+                    name: str = None,
+                    account_id: str = None,
+                    addresses: List['Address'] = None,
+                    description: str = None,
+                    excluded: List['Address'] = None,
+                    transaction_id: str = None,
+                    **kwargs
+                    ) -> DetailedResponse:
         """
         Create a zone.
 
@@ -112,7 +111,7 @@ class ContextBasedRestrictionsV1(BaseService):
                and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `OutZone` object
+        :rtype: DetailedResponse with `dict` result representing a `Zone` object
         """
 
         if addresses is not None:
@@ -151,15 +150,14 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-
     def list_zones(self,
-        account_id: str,
-        *,
-        transaction_id: str = None,
-        name: str = None,
-        sort: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+                   account_id: str,
+                   *,
+                   transaction_id: str = None,
+                   name: str = None,
+                   sort: str = None,
+                   **kwargs
+                   ) -> DetailedResponse:
         """
         List network zones.
 
@@ -177,7 +175,7 @@ class ContextBasedRestrictionsV1(BaseService):
                [Sorting](https://cloud.ibm.com/docs/api-handbook?topic=api-handbook-sorting).
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `OutZonePage` object
+        :rtype: DetailedResponse with `dict` result representing a `ZoneList` object
         """
 
         if account_id is None:
@@ -209,13 +207,12 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-
     def get_zone(self,
-        zone_id: str,
-        *,
-        transaction_id: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+                 zone_id: str,
+                 *,
+                 transaction_id: str = None,
+                 **kwargs
+                 ) -> DetailedResponse:
         """
         Get the specified network zone.
 
@@ -229,7 +226,7 @@ class ContextBasedRestrictionsV1(BaseService):
                and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `OutZone` object
+        :rtype: DetailedResponse with `dict` result representing a `Zone` object
         """
 
         if zone_id is None:
@@ -257,19 +254,18 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-
     def replace_zone(self,
-        zone_id: str,
-        if_match: str,
-        *,
-        name: str = None,
-        account_id: str = None,
-        addresses: List['Address'] = None,
-        description: str = None,
-        excluded: List['Address'] = None,
-        transaction_id: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+                     zone_id: str,
+                     if_match: str,
+                     *,
+                     name: str = None,
+                     account_id: str = None,
+                     addresses: List['Address'] = None,
+                     description: str = None,
+                     excluded: List['Address'] = None,
+                     transaction_id: str = None,
+                     **kwargs
+                     ) -> DetailedResponse:
         """
         Update the specified network zone.
 
@@ -292,7 +288,7 @@ class ContextBasedRestrictionsV1(BaseService):
                and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `OutZone` object
+        :rtype: DetailedResponse with `dict` result representing a `Zone` object
         """
 
         if zone_id is None:
@@ -339,13 +335,12 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-
     def delete_zone(self,
-        zone_id: str,
-        *,
-        transaction_id: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+                    zone_id: str,
+                    *,
+                    transaction_id: str = None,
+                    **kwargs
+                    ) -> DetailedResponse:
         """
         Delete the specified network zone.
 
@@ -386,12 +381,11 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-
     def list_available_serviceref_targets(self,
-        *,
-        type: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+                                          *,
+                                          type: str = None,
+                                          **kwargs
+                                          ) -> DetailedResponse:
         """
         List available service reference targets.
 
@@ -400,7 +394,7 @@ class ContextBasedRestrictionsV1(BaseService):
         :param str type: (optional) Specifies the types of services to retrieve.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ServiceRefTargetPage` object
+        :rtype: DetailedResponse with `dict` result representing a `ServiceRefTargetList` object
         """
 
         headers = {}
@@ -430,15 +424,14 @@ class ContextBasedRestrictionsV1(BaseService):
     # Rules
     #########################
 
-
     def create_rule(self,
-        *,
-        contexts: List['RuleContext'] = None,
-        resources: List['Resource'] = None,
-        description: str = None,
-        transaction_id: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+                    *,
+                    contexts: List['RuleContext'] = None,
+                    resources: List['Resource'] = None,
+                    description: str = None,
+                    transaction_id: str = None,
+                    **kwargs
+                    ) -> DetailedResponse:
         """
         Create a rule.
 
@@ -456,7 +449,7 @@ class ContextBasedRestrictionsV1(BaseService):
                and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `OutRule` object
+        :rtype: DetailedResponse with `dict` result representing a `Rule` object
         """
 
         if contexts is not None:
@@ -493,21 +486,20 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-
     def list_rules(self,
-        account_id: str,
-        *,
-        transaction_id: str = None,
-        region: str = None,
-        resource: str = None,
-        resource_type: str = None,
-        service_instance: str = None,
-        service_name: str = None,
-        service_type: str = None,
-        zone_id: str = None,
-        sort: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+                   account_id: str,
+                   *,
+                   transaction_id: str = None,
+                   region: str = None,
+                   resource: str = None,
+                   resource_type: str = None,
+                   service_instance: str = None,
+                   service_name: str = None,
+                   service_type: str = None,
+                   zone_id: str = None,
+                   sort: str = None,
+                   **kwargs
+                   ) -> DetailedResponse:
         """
         List rules.
 
@@ -533,7 +525,7 @@ class ContextBasedRestrictionsV1(BaseService):
                [Sorting](https://cloud.ibm.com/docs/api-handbook?topic=api-handbook-sorting).
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `OutRulePage` object
+        :rtype: DetailedResponse with `dict` result representing a `RuleList` object
         """
 
         if account_id is None:
@@ -571,13 +563,12 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-
     def get_rule(self,
-        rule_id: str,
-        *,
-        transaction_id: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+                 rule_id: str,
+                 *,
+                 transaction_id: str = None,
+                 **kwargs
+                 ) -> DetailedResponse:
         """
         Get the specified rule.
 
@@ -591,7 +582,7 @@ class ContextBasedRestrictionsV1(BaseService):
                and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `OutRule` object
+        :rtype: DetailedResponse with `dict` result representing a `Rule` object
         """
 
         if rule_id is None:
@@ -619,17 +610,16 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-
     def replace_rule(self,
-        rule_id: str,
-        if_match: str,
-        *,
-        contexts: List['RuleContext'] = None,
-        resources: List['Resource'] = None,
-        description: str = None,
-        transaction_id: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+                     rule_id: str,
+                     if_match: str,
+                     *,
+                     contexts: List['RuleContext'] = None,
+                     resources: List['Resource'] = None,
+                     description: str = None,
+                     transaction_id: str = None,
+                     **kwargs
+                     ) -> DetailedResponse:
         """
         Update the specified rule.
 
@@ -650,7 +640,7 @@ class ContextBasedRestrictionsV1(BaseService):
                and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `OutRule` object
+        :rtype: DetailedResponse with `dict` result representing a `Rule` object
         """
 
         if rule_id is None:
@@ -695,13 +685,12 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-
     def delete_rule(self,
-        rule_id: str,
-        *,
-        transaction_id: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+                    rule_id: str,
+                    *,
+                    transaction_id: str = None,
+                    **kwargs
+                    ) -> DetailedResponse:
         """
         Delete the specified rule.
 
@@ -746,13 +735,12 @@ class ContextBasedRestrictionsV1(BaseService):
     # Account settings
     #########################
 
-
     def get_account_settings(self,
-        account_id: str,
-        *,
-        transaction_id: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+                             account_id: str,
+                             *,
+                             transaction_id: str = None,
+                             **kwargs
+                             ) -> DetailedResponse:
         """
         Get the specified account settings.
 
@@ -766,7 +754,7 @@ class ContextBasedRestrictionsV1(BaseService):
                and supply a `Transaction-Id` with each request.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `OutAccountSettings` object
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettings` object
         """
 
         if account_id is None:
@@ -813,6 +801,171 @@ class ListAvailableServicerefTargetsEnums:
 ##############################################################################
 
 
+class AccountSettings():
+    """
+    An output account settings.
+
+    :attr str id: The globally unique ID of the account settings.
+    :attr str crn: The account settings CRN.
+    :attr int rule_count_limit: the max number of rules allowed for the account.
+    :attr int zone_count_limit: the max number of zones allowed for the account.
+    :attr int current_rule_count: the current number of rules used by the account.
+    :attr int current_zone_count: the current number of zones used by the account.
+    :attr str href: The href link to the resource.
+    :attr datetime created_at: The time the resource was created.
+    :attr str created_by_id: IAM ID of the user or service which created the
+          resource.
+    :attr datetime last_modified_at: The last time the resource was modified.
+    :attr str last_modified_by_id: IAM ID of the user or service which modified the
+          resource.
+    """
+
+    def __init__(self,
+                 id: str,
+                 crn: str,
+                 rule_count_limit: int,
+                 zone_count_limit: int,
+                 current_rule_count: int,
+                 current_zone_count: int,
+                 href: str,
+                 created_at: datetime,
+                 created_by_id: str,
+                 last_modified_at: datetime,
+                 last_modified_by_id: str) -> None:
+        """
+        Initialize a AccountSettings object.
+
+        :param str id: The globally unique ID of the account settings.
+        :param str crn: The account settings CRN.
+        :param int rule_count_limit: the max number of rules allowed for the
+               account.
+        :param int zone_count_limit: the max number of zones allowed for the
+               account.
+        :param int current_rule_count: the current number of rules used by the
+               account.
+        :param int current_zone_count: the current number of zones used by the
+               account.
+        :param str href: The href link to the resource.
+        :param datetime created_at: The time the resource was created.
+        :param str created_by_id: IAM ID of the user or service which created the
+               resource.
+        :param datetime last_modified_at: The last time the resource was modified.
+        :param str last_modified_by_id: IAM ID of the user or service which
+               modified the resource.
+        """
+        self.id = id
+        self.crn = crn
+        self.rule_count_limit = rule_count_limit
+        self.zone_count_limit = zone_count_limit
+        self.current_rule_count = current_rule_count
+        self.current_zone_count = current_zone_count
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccountSettings':
+        """Initialize a AccountSettings object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in AccountSettings JSON')
+        if 'crn' in _dict:
+            args['crn'] = _dict.get('crn')
+        else:
+            raise ValueError('Required property \'crn\' not present in AccountSettings JSON')
+        if 'rule_count_limit' in _dict:
+            args['rule_count_limit'] = _dict.get('rule_count_limit')
+        else:
+            raise ValueError('Required property \'rule_count_limit\' not present in AccountSettings JSON')
+        if 'zone_count_limit' in _dict:
+            args['zone_count_limit'] = _dict.get('zone_count_limit')
+        else:
+            raise ValueError('Required property \'zone_count_limit\' not present in AccountSettings JSON')
+        if 'current_rule_count' in _dict:
+            args['current_rule_count'] = _dict.get('current_rule_count')
+        else:
+            raise ValueError('Required property \'current_rule_count\' not present in AccountSettings JSON')
+        if 'current_zone_count' in _dict:
+            args['current_zone_count'] = _dict.get('current_zone_count')
+        else:
+            raise ValueError('Required property \'current_zone_count\' not present in AccountSettings JSON')
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        else:
+            raise ValueError('Required property \'href\' not present in AccountSettings JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in AccountSettings JSON')
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        else:
+            raise ValueError('Required property \'created_by_id\' not present in AccountSettings JSON')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        else:
+            raise ValueError('Required property \'last_modified_at\' not present in AccountSettings JSON')
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        else:
+            raise ValueError('Required property \'last_modified_by_id\' not present in AccountSettings JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccountSettings object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'rule_count_limit') and self.rule_count_limit is not None:
+            _dict['rule_count_limit'] = self.rule_count_limit
+        if hasattr(self, 'zone_count_limit') and self.zone_count_limit is not None:
+            _dict['zone_count_limit'] = self.zone_count_limit
+        if hasattr(self, 'current_rule_count') and self.current_rule_count is not None:
+            _dict['current_rule_count'] = self.current_rule_count
+        if hasattr(self, 'current_zone_count') and self.current_zone_count is not None:
+            _dict['current_zone_count'] = self.current_zone_count
+        if hasattr(self, 'href') and self.href is not None:
+            _dict['href'] = self.href
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
+            _dict['created_by_id'] = self.created_by_id
+        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
+            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
+        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
+            _dict['last_modified_by_id'] = self.last_modified_by_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccountSettings object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccountSettings') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccountSettings') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class Address():
     """
     A zone address.
@@ -829,7 +982,8 @@ class Address():
         :param str type: (optional) The type of address.
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef']))
+            ", ".join(
+                ['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef']))
         raise Exception(msg)
 
     @classmethod
@@ -839,8 +993,9 @@ class Address():
         if disc_class != cls:
             return disc_class.from_dict(_dict)
         msg = ("Cannot convert dictionary into an instance of base class 'Address'. " +
-                "The discriminator value should map to a valid subclass: {1}").format(
-                  ", ".join(['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef']))
+               "The discriminator value should map to a valid subclass: {1}").format(
+            ", ".join(
+                ['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef']))
         raise Exception(msg)
 
     @classmethod
@@ -878,791 +1033,6 @@ class Address():
         VPC = 'vpc'
         SERVICEREF = 'serviceRef'
 
-
-class OutAccountSettings():
-    """
-    An output account settings.
-
-    :attr str id: The globally unique ID of the account settings.
-    :attr str crn: The account settings CRN.
-    :attr int rule_count_limit: the max number of rules allowed for the account.
-    :attr int zone_count_limit: the max number of zones allowed for the account.
-    :attr int current_rule_count: the current number of rules used by the account.
-    :attr int current_zone_count: the current number of zones used by the account.
-    :attr str href: The href link to the resource.
-    :attr datetime created_at: The time the resource was created.
-    :attr str created_by_id: IAM ID of the user or service which created the
-          resource.
-    :attr datetime last_modified_at: The last time the resource was modified.
-    :attr str last_modified_by_id: IAM ID of the user or service which modified the
-          resource.
-    """
-
-    def __init__(self,
-                 id: str,
-                 crn: str,
-                 rule_count_limit: int,
-                 zone_count_limit: int,
-                 current_rule_count: int,
-                 current_zone_count: int,
-                 href: str,
-                 created_at: datetime,
-                 created_by_id: str,
-                 last_modified_at: datetime,
-                 last_modified_by_id: str) -> None:
-        """
-        Initialize a OutAccountSettings object.
-
-        :param str id: The globally unique ID of the account settings.
-        :param str crn: The account settings CRN.
-        :param int rule_count_limit: the max number of rules allowed for the
-               account.
-        :param int zone_count_limit: the max number of zones allowed for the
-               account.
-        :param int current_rule_count: the current number of rules used by the
-               account.
-        :param int current_zone_count: the current number of zones used by the
-               account.
-        :param str href: The href link to the resource.
-        :param datetime created_at: The time the resource was created.
-        :param str created_by_id: IAM ID of the user or service which created the
-               resource.
-        :param datetime last_modified_at: The last time the resource was modified.
-        :param str last_modified_by_id: IAM ID of the user or service which
-               modified the resource.
-        """
-        self.id = id
-        self.crn = crn
-        self.rule_count_limit = rule_count_limit
-        self.zone_count_limit = zone_count_limit
-        self.current_rule_count = current_rule_count
-        self.current_zone_count = current_zone_count
-        self.href = href
-        self.created_at = created_at
-        self.created_by_id = created_by_id
-        self.last_modified_at = last_modified_at
-        self.last_modified_by_id = last_modified_by_id
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'OutAccountSettings':
-        """Initialize a OutAccountSettings object from a json dictionary."""
-        args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        else:
-            raise ValueError('Required property \'id\' not present in OutAccountSettings JSON')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        else:
-            raise ValueError('Required property \'crn\' not present in OutAccountSettings JSON')
-        if 'rule_count_limit' in _dict:
-            args['rule_count_limit'] = _dict.get('rule_count_limit')
-        else:
-            raise ValueError('Required property \'rule_count_limit\' not present in OutAccountSettings JSON')
-        if 'zone_count_limit' in _dict:
-            args['zone_count_limit'] = _dict.get('zone_count_limit')
-        else:
-            raise ValueError('Required property \'zone_count_limit\' not present in OutAccountSettings JSON')
-        if 'current_rule_count' in _dict:
-            args['current_rule_count'] = _dict.get('current_rule_count')
-        else:
-            raise ValueError('Required property \'current_rule_count\' not present in OutAccountSettings JSON')
-        if 'current_zone_count' in _dict:
-            args['current_zone_count'] = _dict.get('current_zone_count')
-        else:
-            raise ValueError('Required property \'current_zone_count\' not present in OutAccountSettings JSON')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        else:
-            raise ValueError('Required property \'href\' not present in OutAccountSettings JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        else:
-            raise ValueError('Required property \'created_at\' not present in OutAccountSettings JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        else:
-            raise ValueError('Required property \'created_by_id\' not present in OutAccountSettings JSON')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        else:
-            raise ValueError('Required property \'last_modified_at\' not present in OutAccountSettings JSON')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
-        else:
-            raise ValueError('Required property \'last_modified_by_id\' not present in OutAccountSettings JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a OutAccountSettings object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
-        if hasattr(self, 'crn') and self.crn is not None:
-            _dict['crn'] = self.crn
-        if hasattr(self, 'rule_count_limit') and self.rule_count_limit is not None:
-            _dict['rule_count_limit'] = self.rule_count_limit
-        if hasattr(self, 'zone_count_limit') and self.zone_count_limit is not None:
-            _dict['zone_count_limit'] = self.zone_count_limit
-        if hasattr(self, 'current_rule_count') and self.current_rule_count is not None:
-            _dict['current_rule_count'] = self.current_rule_count
-        if hasattr(self, 'current_zone_count') and self.current_zone_count is not None:
-            _dict['current_zone_count'] = self.current_zone_count
-        if hasattr(self, 'href') and self.href is not None:
-            _dict['href'] = self.href
-        if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = datetime_to_string(self.created_at)
-        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
-            _dict['created_by_id'] = self.created_by_id
-        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
-            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
-        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
-            _dict['last_modified_by_id'] = self.last_modified_by_id
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this OutAccountSettings object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'OutAccountSettings') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'OutAccountSettings') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class OutRule():
-    """
-    An output rule.
-
-    :attr str id: The globally unique ID of the rule.
-    :attr str crn: The rule CRN.
-    :attr str description: (optional) The description of the rule.
-    :attr List[RuleContext] contexts: The contexts this rule applies to.
-    :attr List[Resource] resources: The resources this rule apply to.
-    :attr str href: The href link to the resource.
-    :attr datetime created_at: The time the resource was created.
-    :attr str created_by_id: IAM ID of the user or service which created the
-          resource.
-    :attr datetime last_modified_at: The last time the resource was modified.
-    :attr str last_modified_by_id: IAM ID of the user or service which modified the
-          resource.
-    """
-
-    def __init__(self,
-                 id: str,
-                 crn: str,
-                 contexts: List['RuleContext'],
-                 resources: List['Resource'],
-                 href: str,
-                 created_at: datetime,
-                 created_by_id: str,
-                 last_modified_at: datetime,
-                 last_modified_by_id: str,
-                 *,
-                 description: str = None) -> None:
-        """
-        Initialize a OutRule object.
-
-        :param str id: The globally unique ID of the rule.
-        :param str crn: The rule CRN.
-        :param List[RuleContext] contexts: The contexts this rule applies to.
-        :param List[Resource] resources: The resources this rule apply to.
-        :param str href: The href link to the resource.
-        :param datetime created_at: The time the resource was created.
-        :param str created_by_id: IAM ID of the user or service which created the
-               resource.
-        :param datetime last_modified_at: The last time the resource was modified.
-        :param str last_modified_by_id: IAM ID of the user or service which
-               modified the resource.
-        :param str description: (optional) The description of the rule.
-        """
-        self.id = id
-        self.crn = crn
-        self.description = description
-        self.contexts = contexts
-        self.resources = resources
-        self.href = href
-        self.created_at = created_at
-        self.created_by_id = created_by_id
-        self.last_modified_at = last_modified_at
-        self.last_modified_by_id = last_modified_by_id
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'OutRule':
-        """Initialize a OutRule object from a json dictionary."""
-        args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        else:
-            raise ValueError('Required property \'id\' not present in OutRule JSON')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        else:
-            raise ValueError('Required property \'crn\' not present in OutRule JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'contexts' in _dict:
-            args['contexts'] = [RuleContext.from_dict(x) for x in _dict.get('contexts')]
-        else:
-            raise ValueError('Required property \'contexts\' not present in OutRule JSON')
-        if 'resources' in _dict:
-            args['resources'] = [Resource.from_dict(x) for x in _dict.get('resources')]
-        else:
-            raise ValueError('Required property \'resources\' not present in OutRule JSON')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        else:
-            raise ValueError('Required property \'href\' not present in OutRule JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        else:
-            raise ValueError('Required property \'created_at\' not present in OutRule JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        else:
-            raise ValueError('Required property \'created_by_id\' not present in OutRule JSON')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        else:
-            raise ValueError('Required property \'last_modified_at\' not present in OutRule JSON')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
-        else:
-            raise ValueError('Required property \'last_modified_by_id\' not present in OutRule JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a OutRule object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
-        if hasattr(self, 'crn') and self.crn is not None:
-            _dict['crn'] = self.crn
-        if hasattr(self, 'description') and self.description is not None:
-            _dict['description'] = self.description
-        if hasattr(self, 'contexts') and self.contexts is not None:
-            _dict['contexts'] = [x.to_dict() for x in self.contexts]
-        if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
-        if hasattr(self, 'href') and self.href is not None:
-            _dict['href'] = self.href
-        if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = datetime_to_string(self.created_at)
-        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
-            _dict['created_by_id'] = self.created_by_id
-        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
-            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
-        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
-            _dict['last_modified_by_id'] = self.last_modified_by_id
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this OutRule object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'OutRule') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'OutRule') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class OutRulePage():
-    """
-    The response object of the ListRules operation.
-
-    :attr int count: The number of returned results.
-    :attr List[OutRule] rules: The returned rules.
-    """
-
-    def __init__(self,
-                 count: int,
-                 rules: List['OutRule']) -> None:
-        """
-        Initialize a OutRulePage object.
-
-        :param int count: The number of returned results.
-        :param List[OutRule] rules: The returned rules.
-        """
-        self.count = count
-        self.rules = rules
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'OutRulePage':
-        """Initialize a OutRulePage object from a json dictionary."""
-        args = {}
-        if 'count' in _dict:
-            args['count'] = _dict.get('count')
-        else:
-            raise ValueError('Required property \'count\' not present in OutRulePage JSON')
-        if 'rules' in _dict:
-            args['rules'] = [OutRule.from_dict(x) for x in _dict.get('rules')]
-        else:
-            raise ValueError('Required property \'rules\' not present in OutRulePage JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a OutRulePage object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'count') and self.count is not None:
-            _dict['count'] = self.count
-        if hasattr(self, 'rules') and self.rules is not None:
-            _dict['rules'] = [x.to_dict() for x in self.rules]
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this OutRulePage object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'OutRulePage') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'OutRulePage') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class OutZone():
-    """
-    An output zone.
-
-    :attr str id: The globally unique ID of the zone.
-    :attr str crn: The zone CRN.
-    :attr str name: The name of the zone.
-    :attr str account_id: The id of the account owning this zone.
-    :attr str description: (optional) The description of the zone.
-    :attr List[Address] addresses: The list of addresses in the zone.
-    :attr List[Address] excluded: (optional) The list of excluded addresses in the
-          zone.
-    :attr str href: The href link to the resource.
-    :attr datetime created_at: The time the resource was created.
-    :attr str created_by_id: IAM ID of the user or service which created the
-          resource.
-    :attr datetime last_modified_at: The last time the resource was modified.
-    :attr str last_modified_by_id: IAM ID of the user or service which modified the
-          resource.
-    """
-
-    def __init__(self,
-                 id: str,
-                 crn: str,
-                 name: str,
-                 account_id: str,
-                 addresses: List['Address'],
-                 href: str,
-                 created_at: datetime,
-                 created_by_id: str,
-                 last_modified_at: datetime,
-                 last_modified_by_id: str,
-                 *,
-                 description: str = None,
-                 excluded: List['Address'] = None) -> None:
-        """
-        Initialize a OutZone object.
-
-        :param str id: The globally unique ID of the zone.
-        :param str crn: The zone CRN.
-        :param str name: The name of the zone.
-        :param str account_id: The id of the account owning this zone.
-        :param List[Address] addresses: The list of addresses in the zone.
-        :param str href: The href link to the resource.
-        :param datetime created_at: The time the resource was created.
-        :param str created_by_id: IAM ID of the user or service which created the
-               resource.
-        :param datetime last_modified_at: The last time the resource was modified.
-        :param str last_modified_by_id: IAM ID of the user or service which
-               modified the resource.
-        :param str description: (optional) The description of the zone.
-        :param List[Address] excluded: (optional) The list of excluded addresses in
-               the zone.
-        """
-        self.id = id
-        self.crn = crn
-        self.name = name
-        self.account_id = account_id
-        self.description = description
-        self.addresses = addresses
-        self.excluded = excluded
-        self.href = href
-        self.created_at = created_at
-        self.created_by_id = created_by_id
-        self.last_modified_at = last_modified_at
-        self.last_modified_by_id = last_modified_by_id
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'OutZone':
-        """Initialize a OutZone object from a json dictionary."""
-        args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        else:
-            raise ValueError('Required property \'id\' not present in OutZone JSON')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        else:
-            raise ValueError('Required property \'crn\' not present in OutZone JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        else:
-            raise ValueError('Required property \'name\' not present in OutZone JSON')
-        if 'account_id' in _dict:
-            args['account_id'] = _dict.get('account_id')
-        else:
-            raise ValueError('Required property \'account_id\' not present in OutZone JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'addresses' in _dict:
-            args['addresses'] = [Address.from_dict(x) for x in _dict.get('addresses')]
-        else:
-            raise ValueError('Required property \'addresses\' not present in OutZone JSON')
-        if 'excluded' in _dict:
-            args['excluded'] = [Address.from_dict(x) for x in _dict.get('excluded')]
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        else:
-            raise ValueError('Required property \'href\' not present in OutZone JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        else:
-            raise ValueError('Required property \'created_at\' not present in OutZone JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        else:
-            raise ValueError('Required property \'created_by_id\' not present in OutZone JSON')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        else:
-            raise ValueError('Required property \'last_modified_at\' not present in OutZone JSON')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
-        else:
-            raise ValueError('Required property \'last_modified_by_id\' not present in OutZone JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a OutZone object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
-        if hasattr(self, 'crn') and self.crn is not None:
-            _dict['crn'] = self.crn
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
-        if hasattr(self, 'account_id') and self.account_id is not None:
-            _dict['account_id'] = self.account_id
-        if hasattr(self, 'description') and self.description is not None:
-            _dict['description'] = self.description
-        if hasattr(self, 'addresses') and self.addresses is not None:
-            _dict['addresses'] = [x.to_dict() for x in self.addresses]
-        if hasattr(self, 'excluded') and self.excluded is not None:
-            _dict['excluded'] = [x.to_dict() for x in self.excluded]
-        if hasattr(self, 'href') and self.href is not None:
-            _dict['href'] = self.href
-        if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = datetime_to_string(self.created_at)
-        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
-            _dict['created_by_id'] = self.created_by_id
-        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
-            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
-        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
-            _dict['last_modified_by_id'] = self.last_modified_by_id
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this OutZone object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'OutZone') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'OutZone') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class OutZonePage():
-    """
-    The response object of the ListZones operation.
-
-    :attr int count: The number of returned results.
-    :attr List[OutZoneSummary] zones: The returned zones.
-    """
-
-    def __init__(self,
-                 count: int,
-                 zones: List['OutZoneSummary']) -> None:
-        """
-        Initialize a OutZonePage object.
-
-        :param int count: The number of returned results.
-        :param List[OutZoneSummary] zones: The returned zones.
-        """
-        self.count = count
-        self.zones = zones
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'OutZonePage':
-        """Initialize a OutZonePage object from a json dictionary."""
-        args = {}
-        if 'count' in _dict:
-            args['count'] = _dict.get('count')
-        else:
-            raise ValueError('Required property \'count\' not present in OutZonePage JSON')
-        if 'zones' in _dict:
-            args['zones'] = [OutZoneSummary.from_dict(x) for x in _dict.get('zones')]
-        else:
-            raise ValueError('Required property \'zones\' not present in OutZonePage JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a OutZonePage object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'count') and self.count is not None:
-            _dict['count'] = self.count
-        if hasattr(self, 'zones') and self.zones is not None:
-            _dict['zones'] = [x.to_dict() for x in self.zones]
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this OutZonePage object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'OutZonePage') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'OutZonePage') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class OutZoneSummary():
-    """
-    An output zone summary.
-
-    :attr str id: The globally unique ID of the zone.
-    :attr str crn: The zone CRN.
-    :attr str name: The name of the zone.
-    :attr str description: (optional) The description of the zone.
-    :attr List[Address] addresses_preview: A preview of addresses in the zone (3
-          addresses maximum).
-    :attr int address_count: The number of addresses in the zone.
-    :attr int excluded_count: The number of excluded addresses in the zone.
-    :attr str href: The href link to the resource.
-    :attr datetime created_at: The time the resource was created.
-    :attr str created_by_id: IAM ID of the user or service which created the
-          resource.
-    :attr datetime last_modified_at: The last time the resource was modified.
-    :attr str last_modified_by_id: IAM ID of the user or service which modified the
-          resource.
-    """
-
-    def __init__(self,
-                 id: str,
-                 crn: str,
-                 name: str,
-                 addresses_preview: List['Address'],
-                 address_count: int,
-                 excluded_count: int,
-                 href: str,
-                 created_at: datetime,
-                 created_by_id: str,
-                 last_modified_at: datetime,
-                 last_modified_by_id: str,
-                 *,
-                 description: str = None) -> None:
-        """
-        Initialize a OutZoneSummary object.
-
-        :param str id: The globally unique ID of the zone.
-        :param str crn: The zone CRN.
-        :param str name: The name of the zone.
-        :param List[Address] addresses_preview: A preview of addresses in the zone
-               (3 addresses maximum).
-        :param int address_count: The number of addresses in the zone.
-        :param int excluded_count: The number of excluded addresses in the zone.
-        :param str href: The href link to the resource.
-        :param datetime created_at: The time the resource was created.
-        :param str created_by_id: IAM ID of the user or service which created the
-               resource.
-        :param datetime last_modified_at: The last time the resource was modified.
-        :param str last_modified_by_id: IAM ID of the user or service which
-               modified the resource.
-        :param str description: (optional) The description of the zone.
-        """
-        self.id = id
-        self.crn = crn
-        self.name = name
-        self.description = description
-        self.addresses_preview = addresses_preview
-        self.address_count = address_count
-        self.excluded_count = excluded_count
-        self.href = href
-        self.created_at = created_at
-        self.created_by_id = created_by_id
-        self.last_modified_at = last_modified_at
-        self.last_modified_by_id = last_modified_by_id
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'OutZoneSummary':
-        """Initialize a OutZoneSummary object from a json dictionary."""
-        args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        else:
-            raise ValueError('Required property \'id\' not present in OutZoneSummary JSON')
-        if 'crn' in _dict:
-            args['crn'] = _dict.get('crn')
-        else:
-            raise ValueError('Required property \'crn\' not present in OutZoneSummary JSON')
-        if 'name' in _dict:
-            args['name'] = _dict.get('name')
-        else:
-            raise ValueError('Required property \'name\' not present in OutZoneSummary JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'addresses_preview' in _dict:
-            args['addresses_preview'] = [Address.from_dict(x) for x in _dict.get('addresses_preview')]
-        else:
-            raise ValueError('Required property \'addresses_preview\' not present in OutZoneSummary JSON')
-        if 'address_count' in _dict:
-            args['address_count'] = _dict.get('address_count')
-        else:
-            raise ValueError('Required property \'address_count\' not present in OutZoneSummary JSON')
-        if 'excluded_count' in _dict:
-            args['excluded_count'] = _dict.get('excluded_count')
-        else:
-            raise ValueError('Required property \'excluded_count\' not present in OutZoneSummary JSON')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        else:
-            raise ValueError('Required property \'href\' not present in OutZoneSummary JSON')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        else:
-            raise ValueError('Required property \'created_at\' not present in OutZoneSummary JSON')
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        else:
-            raise ValueError('Required property \'created_by_id\' not present in OutZoneSummary JSON')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        else:
-            raise ValueError('Required property \'last_modified_at\' not present in OutZoneSummary JSON')
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
-        else:
-            raise ValueError('Required property \'last_modified_by_id\' not present in OutZoneSummary JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a OutZoneSummary object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
-        if hasattr(self, 'crn') and self.crn is not None:
-            _dict['crn'] = self.crn
-        if hasattr(self, 'name') and self.name is not None:
-            _dict['name'] = self.name
-        if hasattr(self, 'description') and self.description is not None:
-            _dict['description'] = self.description
-        if hasattr(self, 'addresses_preview') and self.addresses_preview is not None:
-            _dict['addresses_preview'] = [x.to_dict() for x in self.addresses_preview]
-        if hasattr(self, 'address_count') and self.address_count is not None:
-            _dict['address_count'] = self.address_count
-        if hasattr(self, 'excluded_count') and self.excluded_count is not None:
-            _dict['excluded_count'] = self.excluded_count
-        if hasattr(self, 'href') and self.href is not None:
-            _dict['href'] = self.href
-        if hasattr(self, 'created_at') and self.created_at is not None:
-            _dict['created_at'] = datetime_to_string(self.created_at)
-        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
-            _dict['created_by_id'] = self.created_by_id
-        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
-            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
-        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
-            _dict['last_modified_by_id'] = self.last_modified_by_id
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this OutZoneSummary object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'OutZoneSummary') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'OutZoneSummary') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
 
 class Resource():
     """
@@ -1729,6 +1099,7 @@ class Resource():
     def __ne__(self, other: 'Resource') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
 
 class ResourceAttribute():
     """
@@ -1805,6 +1176,7 @@ class ResourceAttribute():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+
 class ResourceTagAttribute():
     """
     A rule resource tag attribute.
@@ -1880,6 +1252,158 @@ class ResourceTagAttribute():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+
+class Rule():
+    """
+    An output rule.
+
+    :attr str id: The globally unique ID of the rule.
+    :attr str crn: The rule CRN.
+    :attr str description: The description of the rule.
+    :attr List[RuleContext] contexts: The contexts this rule applies to.
+    :attr List[Resource] resources: The resources this rule apply to.
+    :attr str href: The href link to the resource.
+    :attr datetime created_at: The time the resource was created.
+    :attr str created_by_id: IAM ID of the user or service which created the
+          resource.
+    :attr datetime last_modified_at: The last time the resource was modified.
+    :attr str last_modified_by_id: IAM ID of the user or service which modified the
+          resource.
+    """
+
+    def __init__(self,
+                 id: str,
+                 crn: str,
+                 description: str,
+                 contexts: List['RuleContext'],
+                 resources: List['Resource'],
+                 href: str,
+                 created_at: datetime,
+                 created_by_id: str,
+                 last_modified_at: datetime,
+                 last_modified_by_id: str) -> None:
+        """
+        Initialize a Rule object.
+
+        :param str id: The globally unique ID of the rule.
+        :param str crn: The rule CRN.
+        :param str description: The description of the rule.
+        :param List[RuleContext] contexts: The contexts this rule applies to.
+        :param List[Resource] resources: The resources this rule apply to.
+        :param str href: The href link to the resource.
+        :param datetime created_at: The time the resource was created.
+        :param str created_by_id: IAM ID of the user or service which created the
+               resource.
+        :param datetime last_modified_at: The last time the resource was modified.
+        :param str last_modified_by_id: IAM ID of the user or service which
+               modified the resource.
+        """
+        self.id = id
+        self.crn = crn
+        self.description = description
+        self.contexts = contexts
+        self.resources = resources
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Rule':
+        """Initialize a Rule object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in Rule JSON')
+        if 'crn' in _dict:
+            args['crn'] = _dict.get('crn')
+        else:
+            raise ValueError('Required property \'crn\' not present in Rule JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        else:
+            raise ValueError('Required property \'description\' not present in Rule JSON')
+        if 'contexts' in _dict:
+            args['contexts'] = [RuleContext.from_dict(x) for x in _dict.get('contexts')]
+        else:
+            raise ValueError('Required property \'contexts\' not present in Rule JSON')
+        if 'resources' in _dict:
+            args['resources'] = [Resource.from_dict(x) for x in _dict.get('resources')]
+        else:
+            raise ValueError('Required property \'resources\' not present in Rule JSON')
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        else:
+            raise ValueError('Required property \'href\' not present in Rule JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in Rule JSON')
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        else:
+            raise ValueError('Required property \'created_by_id\' not present in Rule JSON')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        else:
+            raise ValueError('Required property \'last_modified_at\' not present in Rule JSON')
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        else:
+            raise ValueError('Required property \'last_modified_by_id\' not present in Rule JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Rule object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'contexts') and self.contexts is not None:
+            _dict['contexts'] = [x.to_dict() for x in self.contexts]
+        if hasattr(self, 'resources') and self.resources is not None:
+            _dict['resources'] = [x.to_dict() for x in self.resources]
+        if hasattr(self, 'href') and self.href is not None:
+            _dict['href'] = self.href
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
+            _dict['created_by_id'] = self.created_by_id
+        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
+            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
+        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
+            _dict['last_modified_by_id'] = self.last_modified_by_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Rule object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Rule') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Rule') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class RuleContext():
     """
     A rule context.
@@ -1935,6 +1459,7 @@ class RuleContext():
     def __ne__(self, other: 'RuleContext') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
 
 class RuleContextAttribute():
     """
@@ -2002,22 +1527,90 @@ class RuleContextAttribute():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+
+class RuleList():
+    """
+    The response object of the ListRules operation.
+
+    :attr int count: The number of returned results.
+    :attr List[Rule] rules: The returned rules.
+    """
+
+    def __init__(self,
+                 count: int,
+                 rules: List['Rule']) -> None:
+        """
+        Initialize a RuleList object.
+
+        :param int count: The number of returned results.
+        :param List[Rule] rules: The returned rules.
+        """
+        self.count = count
+        self.rules = rules
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RuleList':
+        """Initialize a RuleList object from a json dictionary."""
+        args = {}
+        if 'count' in _dict:
+            args['count'] = _dict.get('count')
+        else:
+            raise ValueError('Required property \'count\' not present in RuleList JSON')
+        if 'rules' in _dict:
+            args['rules'] = [Rule.from_dict(x) for x in _dict.get('rules')]
+        else:
+            raise ValueError('Required property \'rules\' not present in RuleList JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RuleList object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'count') and self.count is not None:
+            _dict['count'] = self.count
+        if hasattr(self, 'rules') and self.rules is not None:
+            _dict['rules'] = [x.to_dict() for x in self.rules]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RuleList object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RuleList') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RuleList') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class ServiceRefTarget():
     """
     Summary information about a service reference target.
 
-    :attr str service_name: (optional) The name of the service.
+    :attr str service_name: The name of the service.
     :attr str service_type: (optional) The type of the service.
     """
 
     def __init__(self,
+                 service_name: str,
                  *,
-                 service_name: str = None,
                  service_type: str = None) -> None:
         """
         Initialize a ServiceRefTarget object.
 
-        :param str service_name: (optional) The name of the service.
+        :param str service_name: The name of the service.
         :param str service_type: (optional) The type of the service.
         """
         self.service_name = service_name
@@ -2029,6 +1622,8 @@ class ServiceRefTarget():
         args = {}
         if 'service_name' in _dict:
             args['service_name'] = _dict.get('service_name')
+        else:
+            raise ValueError('Required property \'service_name\' not present in ServiceRefTarget JSON')
         if 'service_type' in _dict:
             args['service_type'] = _dict.get('service_type')
         return cls(**args)
@@ -2065,41 +1660,52 @@ class ServiceRefTarget():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ServiceRefTargetPage():
-    """
-    A page of service reference targets.
 
-    :attr List[ServiceRefTarget] targets: (optional) The list of service reference
-          targets.
+class ServiceRefTargetList():
+    """
+    A list of service reference targets.
+
+    :attr int count: The number of returned results.
+    :attr List[ServiceRefTarget] targets: The list of service reference targets.
     """
 
     def __init__(self,
-                 *,
-                 targets: List['ServiceRefTarget'] = None) -> None:
+                 count: int,
+                 targets: List['ServiceRefTarget']) -> None:
         """
-        Initialize a ServiceRefTargetPage object.
+        Initialize a ServiceRefTargetList object.
 
-        :param List[ServiceRefTarget] targets: (optional) The list of service
-               reference targets.
+        :param int count: The number of returned results.
+        :param List[ServiceRefTarget] targets: The list of service reference
+               targets.
         """
+        self.count = count
         self.targets = targets
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ServiceRefTargetPage':
-        """Initialize a ServiceRefTargetPage object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'ServiceRefTargetList':
+        """Initialize a ServiceRefTargetList object from a json dictionary."""
         args = {}
+        if 'count' in _dict:
+            args['count'] = _dict.get('count')
+        else:
+            raise ValueError('Required property \'count\' not present in ServiceRefTargetList JSON')
         if 'targets' in _dict:
             args['targets'] = [ServiceRefTarget.from_dict(x) for x in _dict.get('targets')]
+        else:
+            raise ValueError('Required property \'targets\' not present in ServiceRefTargetList JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a ServiceRefTargetPage object from a json dictionary."""
+        """Initialize a ServiceRefTargetList object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
+        if hasattr(self, 'count') and self.count is not None:
+            _dict['count'] = self.count
         if hasattr(self, 'targets') and self.targets is not None:
             _dict['targets'] = [x.to_dict() for x in self.targets]
         return _dict
@@ -2109,39 +1715,40 @@ class ServiceRefTargetPage():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this ServiceRefTargetPage object."""
+        """Return a `str` version of this ServiceRefTargetList object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'ServiceRefTargetPage') -> bool:
+    def __eq__(self, other: 'ServiceRefTargetList') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'ServiceRefTargetPage') -> bool:
+    def __ne__(self, other: 'ServiceRefTargetList') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
 
 class ServiceRefValue():
     """
     A service reference value.
 
-    :attr str account_id: (optional) The id of the account owning the service.
+    :attr str account_id: The id of the account owning the service.
     :attr str service_type: (optional) The service type.
     :attr str service_name: (optional) The service name.
     :attr str service_instance: (optional) The service instance.
     """
 
     def __init__(self,
+                 account_id: str,
                  *,
-                 account_id: str = None,
                  service_type: str = None,
                  service_name: str = None,
                  service_instance: str = None) -> None:
         """
         Initialize a ServiceRefValue object.
 
-        :param str account_id: (optional) The id of the account owning the service.
+        :param str account_id: The id of the account owning the service.
         :param str service_type: (optional) The service type.
         :param str service_name: (optional) The service name.
         :param str service_instance: (optional) The service instance.
@@ -2157,6 +1764,8 @@ class ServiceRefValue():
         args = {}
         if 'account_id' in _dict:
             args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in ServiceRefValue JSON')
         if 'service_type' in _dict:
             args['service_type'] = _dict.get('service_type')
         if 'service_name' in _dict:
@@ -2200,6 +1809,417 @@ class ServiceRefValue():
     def __ne__(self, other: 'ServiceRefValue') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+
+class Zone():
+    """
+    An output zone.
+
+    :attr str id: The globally unique ID of the zone.
+    :attr str crn: The zone CRN.
+    :attr str name: The name of the zone.
+    :attr str account_id: The id of the account owning this zone.
+    :attr str description: The description of the zone.
+    :attr List[Address] addresses: The list of addresses in the zone.
+    :attr List[Address] excluded: The list of excluded addresses in the zone.
+    :attr str href: The href link to the resource.
+    :attr datetime created_at: The time the resource was created.
+    :attr str created_by_id: IAM ID of the user or service which created the
+          resource.
+    :attr datetime last_modified_at: The last time the resource was modified.
+    :attr str last_modified_by_id: IAM ID of the user or service which modified the
+          resource.
+    """
+
+    def __init__(self,
+                 id: str,
+                 crn: str,
+                 name: str,
+                 account_id: str,
+                 description: str,
+                 addresses: List['Address'],
+                 excluded: List['Address'],
+                 href: str,
+                 created_at: datetime,
+                 created_by_id: str,
+                 last_modified_at: datetime,
+                 last_modified_by_id: str) -> None:
+        """
+        Initialize a Zone object.
+
+        :param str id: The globally unique ID of the zone.
+        :param str crn: The zone CRN.
+        :param str name: The name of the zone.
+        :param str account_id: The id of the account owning this zone.
+        :param str description: The description of the zone.
+        :param List[Address] addresses: The list of addresses in the zone.
+        :param List[Address] excluded: The list of excluded addresses in the zone.
+        :param str href: The href link to the resource.
+        :param datetime created_at: The time the resource was created.
+        :param str created_by_id: IAM ID of the user or service which created the
+               resource.
+        :param datetime last_modified_at: The last time the resource was modified.
+        :param str last_modified_by_id: IAM ID of the user or service which
+               modified the resource.
+        """
+        self.id = id
+        self.crn = crn
+        self.name = name
+        self.account_id = account_id
+        self.description = description
+        self.addresses = addresses
+        self.excluded = excluded
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Zone':
+        """Initialize a Zone object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in Zone JSON')
+        if 'crn' in _dict:
+            args['crn'] = _dict.get('crn')
+        else:
+            raise ValueError('Required property \'crn\' not present in Zone JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in Zone JSON')
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in Zone JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        else:
+            raise ValueError('Required property \'description\' not present in Zone JSON')
+        if 'addresses' in _dict:
+            args['addresses'] = [Address.from_dict(x) for x in _dict.get('addresses')]
+        else:
+            raise ValueError('Required property \'addresses\' not present in Zone JSON')
+        if 'excluded' in _dict:
+            args['excluded'] = [Address.from_dict(x) for x in _dict.get('excluded')]
+        else:
+            raise ValueError('Required property \'excluded\' not present in Zone JSON')
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        else:
+            raise ValueError('Required property \'href\' not present in Zone JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in Zone JSON')
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        else:
+            raise ValueError('Required property \'created_by_id\' not present in Zone JSON')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        else:
+            raise ValueError('Required property \'last_modified_at\' not present in Zone JSON')
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        else:
+            raise ValueError('Required property \'last_modified_by_id\' not present in Zone JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Zone object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'addresses') and self.addresses is not None:
+            _dict['addresses'] = [x.to_dict() for x in self.addresses]
+        if hasattr(self, 'excluded') and self.excluded is not None:
+            _dict['excluded'] = [x.to_dict() for x in self.excluded]
+        if hasattr(self, 'href') and self.href is not None:
+            _dict['href'] = self.href
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
+            _dict['created_by_id'] = self.created_by_id
+        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
+            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
+        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
+            _dict['last_modified_by_id'] = self.last_modified_by_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Zone object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Zone') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Zone') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ZoneList():
+    """
+    The response object of the ListZones operation.
+
+    :attr int count: The number of returned results.
+    :attr List[ZoneSummary] zones: The returned zones.
+    """
+
+    def __init__(self,
+                 count: int,
+                 zones: List['ZoneSummary']) -> None:
+        """
+        Initialize a ZoneList object.
+
+        :param int count: The number of returned results.
+        :param List[ZoneSummary] zones: The returned zones.
+        """
+        self.count = count
+        self.zones = zones
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ZoneList':
+        """Initialize a ZoneList object from a json dictionary."""
+        args = {}
+        if 'count' in _dict:
+            args['count'] = _dict.get('count')
+        else:
+            raise ValueError('Required property \'count\' not present in ZoneList JSON')
+        if 'zones' in _dict:
+            args['zones'] = [ZoneSummary.from_dict(x) for x in _dict.get('zones')]
+        else:
+            raise ValueError('Required property \'zones\' not present in ZoneList JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ZoneList object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'count') and self.count is not None:
+            _dict['count'] = self.count
+        if hasattr(self, 'zones') and self.zones is not None:
+            _dict['zones'] = [x.to_dict() for x in self.zones]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ZoneList object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ZoneList') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ZoneList') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ZoneSummary():
+    """
+    An output zone summary.
+
+    :attr str id: The globally unique ID of the zone.
+    :attr str crn: The zone CRN.
+    :attr str name: The name of the zone.
+    :attr str description: (optional) The description of the zone.
+    :attr List[Address] addresses_preview: A preview of addresses in the zone (3
+          addresses maximum).
+    :attr int address_count: The number of addresses in the zone.
+    :attr int excluded_count: The number of excluded addresses in the zone.
+    :attr str href: The href link to the resource.
+    :attr datetime created_at: The time the resource was created.
+    :attr str created_by_id: IAM ID of the user or service which created the
+          resource.
+    :attr datetime last_modified_at: The last time the resource was modified.
+    :attr str last_modified_by_id: IAM ID of the user or service which modified the
+          resource.
+    """
+
+    def __init__(self,
+                 id: str,
+                 crn: str,
+                 name: str,
+                 addresses_preview: List['Address'],
+                 address_count: int,
+                 excluded_count: int,
+                 href: str,
+                 created_at: datetime,
+                 created_by_id: str,
+                 last_modified_at: datetime,
+                 last_modified_by_id: str,
+                 *,
+                 description: str = None) -> None:
+        """
+        Initialize a ZoneSummary object.
+
+        :param str id: The globally unique ID of the zone.
+        :param str crn: The zone CRN.
+        :param str name: The name of the zone.
+        :param List[Address] addresses_preview: A preview of addresses in the zone
+               (3 addresses maximum).
+        :param int address_count: The number of addresses in the zone.
+        :param int excluded_count: The number of excluded addresses in the zone.
+        :param str href: The href link to the resource.
+        :param datetime created_at: The time the resource was created.
+        :param str created_by_id: IAM ID of the user or service which created the
+               resource.
+        :param datetime last_modified_at: The last time the resource was modified.
+        :param str last_modified_by_id: IAM ID of the user or service which
+               modified the resource.
+        :param str description: (optional) The description of the zone.
+        """
+        self.id = id
+        self.crn = crn
+        self.name = name
+        self.description = description
+        self.addresses_preview = addresses_preview
+        self.address_count = address_count
+        self.excluded_count = excluded_count
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ZoneSummary':
+        """Initialize a ZoneSummary object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in ZoneSummary JSON')
+        if 'crn' in _dict:
+            args['crn'] = _dict.get('crn')
+        else:
+            raise ValueError('Required property \'crn\' not present in ZoneSummary JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in ZoneSummary JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'addresses_preview' in _dict:
+            args['addresses_preview'] = [Address.from_dict(x) for x in _dict.get('addresses_preview')]
+        else:
+            raise ValueError('Required property \'addresses_preview\' not present in ZoneSummary JSON')
+        if 'address_count' in _dict:
+            args['address_count'] = _dict.get('address_count')
+        else:
+            raise ValueError('Required property \'address_count\' not present in ZoneSummary JSON')
+        if 'excluded_count' in _dict:
+            args['excluded_count'] = _dict.get('excluded_count')
+        else:
+            raise ValueError('Required property \'excluded_count\' not present in ZoneSummary JSON')
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        else:
+            raise ValueError('Required property \'href\' not present in ZoneSummary JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in ZoneSummary JSON')
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        else:
+            raise ValueError('Required property \'created_by_id\' not present in ZoneSummary JSON')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        else:
+            raise ValueError('Required property \'last_modified_at\' not present in ZoneSummary JSON')
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        else:
+            raise ValueError('Required property \'last_modified_by_id\' not present in ZoneSummary JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ZoneSummary object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'addresses_preview') and self.addresses_preview is not None:
+            _dict['addresses_preview'] = [x.to_dict() for x in self.addresses_preview]
+        if hasattr(self, 'address_count') and self.address_count is not None:
+            _dict['address_count'] = self.address_count
+        if hasattr(self, 'excluded_count') and self.excluded_count is not None:
+            _dict['excluded_count'] = self.excluded_count
+        if hasattr(self, 'href') and self.href is not None:
+            _dict['href'] = self.href
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
+            _dict['created_by_id'] = self.created_by_id
+        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
+            _dict['last_modified_at'] = datetime_to_string(self.last_modified_at)
+        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
+            _dict['last_modified_by_id'] = self.last_modified_by_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ZoneSummary object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ZoneSummary') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ZoneSummary') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 
 class AddressIPAddress(Address):
     """
@@ -2569,4 +2589,3 @@ class AddressVPC(Address):
         The type of address.
         """
         VPC = 'vpc'
-
