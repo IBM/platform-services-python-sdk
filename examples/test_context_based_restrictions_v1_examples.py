@@ -30,6 +30,8 @@ from ibm_platform_services.context_based_restrictions_v1 import *
 # CONTEXT_BASED_RESTRICTIONS_AUTH_TYPE=iam
 # CONTEXT_BASED_RESTRICTIONS_APIKEY=<IAM apikey>
 # CONTEXT_BASED_RESTRICTIONS_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
+# CONTEXT_BASED_RESTRICTIONS_TEST_ACCOUNT_ID=<the id of the account under which test CBR zones and rules are created>
+# CONTEXT_BASED_RESTRICTIONS_TEST_SERVICE_NAME=<the name of the service to be associated with the test CBR rules>
 #
 # These configuration properties can be exported as environment variables, or stored
 # in a configuration file and then:
