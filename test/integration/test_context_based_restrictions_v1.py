@@ -339,7 +339,7 @@ class TestContextBasedRestrictionsV1():
 
     @needscredentials
     def list_rules_with_invalid_account_id_parameter_error(self):
-        with pytest.raises(ApiException, match="404"):
+        with pytest.raises(ApiException, match="400"):
              self.context_based_restrictions_service.list_rules(
                 account_id=self.InvalidID,
                 transaction_id=self.getTransactionID(),
