@@ -1,3 +1,10 @@
+## [0.20.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.20.1...v0.20.2) (2021-10-01)
+
+
+### Bug Fixes
+
+* **build:** use node 14 for new semantic-release version ([#135](https://github.com/IBM/platform-services-python-sdk/issues/135)) ([2cb8a31](https://github.com/IBM/platform-services-python-sdk/commit/2cb8a31a180ec1e3d1bf8c39eb71820dbebc58c0))
+
 ## [0.20.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.20.0...v0.20.1) (2021-09-07)
 
 
