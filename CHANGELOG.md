@@ -1,3 +1,10 @@
+# [0.21.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.20.2...v0.21.0) (2021-10-01)
+
+
+### Features
+
+* **Context-Based Restrictions:** add service and tests to project ([#134](https://github.com/IBM/platform-services-python-sdk/issues/134)) ([3e7957e](https://github.com/IBM/platform-services-python-sdk/commit/3e7957eabe6a8c80907098549bf237dd52964dc2))
+
 ## [0.20.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.20.1...v0.20.2) (2021-10-01)
 
 
