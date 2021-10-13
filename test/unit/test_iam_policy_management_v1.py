@@ -19,8 +19,10 @@ Unit Tests for IamPolicyManagementV1
 
 from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import inspect
 import json
+import os
 import pytest
 import re
 import requests
@@ -29,17 +31,43 @@ import urllib
 from ibm_platform_services.iam_policy_management_v1 import *
 
 
-service = IamPolicyManagementV1(
+_service = IamPolicyManagementV1(
     authenticator=NoAuthAuthenticator()
-    )
+)
 
-base_url = 'https://iam.cloud.ibm.com'
-service.set_service_url(base_url)
+_base_url = 'https://iam.cloud.ibm.com'
+_service.set_service_url(_base_url)
 
 ##############################################################################
 # Start of Service: Policies
 ##############################################################################
 # region
+
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamPolicyManagementV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamPolicyManagementV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamPolicyManagementV1.new_instance(
+            )
 
 class TestListPolicies():
     """
@@ -50,6 +78,8 @@ class TestListPolicies():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -61,8 +91,8 @@ class TestListPolicies():
         list_policies()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/policies')
-        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "state"}]}'
+        url = self.preprocess_url(_base_url + '/v1/policies')
+        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -71,19 +101,19 @@ class TestListPolicies():
 
         # Set up parameter values
         account_id = 'testString'
-        accept_language = 'testString'
+        accept_language = 'default'
         iam_id = 'testString'
         access_group_id = 'testString'
-        type = 'testString'
-        service_type = 'testString'
+        type = 'access'
+        service_type = 'service'
         tag_name = 'testString'
         tag_value = 'testString'
-        sort = 'testString'
-        format = 'testString'
-        state = 'testString'
+        sort = 'id'
+        format = 'include_last_permit'
+        state = 'active'
 
         # Invoke method
-        response = service.list_policies(
+        response = _service.list_policies(
             account_id,
             accept_language=accept_language,
             iam_id=iam_id,
@@ -115,6 +145,14 @@ class TestListPolicies():
         assert 'format={}'.format(format) in query_string
         assert 'state={}'.format(state) in query_string
 
+    def test_list_policies_all_params_with_retries(self):
+    	# Enable retries and run test_list_policies_all_params.
+    	_service.enable_retries()
+    	self.test_list_policies_all_params()
+
+    	# Disable retries and run test_list_policies_all_params.
+    	_service.disable_retries()
+    	self.test_list_policies_all_params()
 
     @responses.activate
     def test_list_policies_required_params(self):
@@ -122,8 +160,8 @@ class TestListPolicies():
         test_list_policies_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/policies')
-        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "state"}]}'
+        url = self.preprocess_url(_base_url + '/v1/policies')
+        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -134,7 +172,7 @@ class TestListPolicies():
         account_id = 'testString'
 
         # Invoke method
-        response = service.list_policies(
+        response = _service.list_policies(
             account_id,
             headers={}
         )
@@ -147,6 +185,14 @@ class TestListPolicies():
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
+    def test_list_policies_required_params_with_retries(self):
+    	# Enable retries and run test_list_policies_required_params.
+    	_service.enable_retries()
+    	self.test_list_policies_required_params()
+
+    	# Disable retries and run test_list_policies_required_params.
+    	_service.disable_retries()
+    	self.test_list_policies_required_params()
 
     @responses.activate
     def test_list_policies_value_error(self):
@@ -154,8 +200,8 @@ class TestListPolicies():
         test_list_policies_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/policies')
-        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "state"}]}'
+        url = self.preprocess_url(_base_url + '/v1/policies')
+        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -172,9 +218,17 @@ class TestListPolicies():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.list_policies(**req_copy)
+                _service.list_policies(**req_copy)
 
 
+    def test_list_policies_value_error_with_retries(self):
+    	# Enable retries and run test_list_policies_value_error.
+    	_service.enable_retries()
+    	self.test_list_policies_value_error()
+
+    	# Disable retries and run test_list_policies_value_error.
+    	_service.disable_retries()
+    	self.test_list_policies_value_error()
 
 class TestCreatePolicy():
     """
@@ -185,6 +239,8 @@ class TestCreatePolicy():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -196,8 +252,8 @@ class TestCreatePolicy():
         create_policy()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/policies')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "state"}'
+        url = self.preprocess_url(_base_url + '/v1/policies')
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -240,10 +296,10 @@ class TestCreatePolicy():
         roles = [policy_role_model]
         resources = [policy_resource_model]
         description = 'testString'
-        accept_language = 'testString'
+        accept_language = 'default'
 
         # Invoke method
-        response = service.create_policy(
+        response = _service.create_policy(
             type,
             subjects,
             roles,
@@ -264,6 +320,14 @@ class TestCreatePolicy():
         assert req_body['resources'] == [policy_resource_model]
         assert req_body['description'] == 'testString'
 
+    def test_create_policy_all_params_with_retries(self):
+    	# Enable retries and run test_create_policy_all_params.
+    	_service.enable_retries()
+    	self.test_create_policy_all_params()
+
+    	# Disable retries and run test_create_policy_all_params.
+    	_service.disable_retries()
+    	self.test_create_policy_all_params()
 
     @responses.activate
     def test_create_policy_required_params(self):
@@ -271,8 +335,8 @@ class TestCreatePolicy():
         test_create_policy_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/policies')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "state"}'
+        url = self.preprocess_url(_base_url + '/v1/policies')
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -317,7 +381,7 @@ class TestCreatePolicy():
         description = 'testString'
 
         # Invoke method
-        response = service.create_policy(
+        response = _service.create_policy(
             type,
             subjects,
             roles,
@@ -337,6 +401,14 @@ class TestCreatePolicy():
         assert req_body['resources'] == [policy_resource_model]
         assert req_body['description'] == 'testString'
 
+    def test_create_policy_required_params_with_retries(self):
+    	# Enable retries and run test_create_policy_required_params.
+    	_service.enable_retries()
+    	self.test_create_policy_required_params()
+
+    	# Disable retries and run test_create_policy_required_params.
+    	_service.disable_retries()
+    	self.test_create_policy_required_params()
 
     @responses.activate
     def test_create_policy_value_error(self):
@@ -344,8 +416,8 @@ class TestCreatePolicy():
         test_create_policy_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/policies')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "state"}'
+        url = self.preprocess_url(_base_url + '/v1/policies')
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -399,9 +471,17 @@ class TestCreatePolicy():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_policy(**req_copy)
+                _service.create_policy(**req_copy)
 
 
+    def test_create_policy_value_error_with_retries(self):
+    	# Enable retries and run test_create_policy_value_error.
+    	_service.enable_retries()
+    	self.test_create_policy_value_error()
+
+    	# Disable retries and run test_create_policy_value_error.
+    	_service.disable_retries()
+    	self.test_create_policy_value_error()
 
 class TestUpdatePolicy():
     """
@@ -412,6 +492,8 @@ class TestUpdatePolicy():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -423,8 +505,8 @@ class TestUpdatePolicy():
         update_policy()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/policies/testString')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "state"}'
+        url = self.preprocess_url(_base_url + '/v1/policies/testString')
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -471,7 +553,7 @@ class TestUpdatePolicy():
         description = 'testString'
 
         # Invoke method
-        response = service.update_policy(
+        response = _service.update_policy(
             policy_id,
             if_match,
             type,
@@ -493,6 +575,14 @@ class TestUpdatePolicy():
         assert req_body['resources'] == [policy_resource_model]
         assert req_body['description'] == 'testString'
 
+    def test_update_policy_all_params_with_retries(self):
+    	# Enable retries and run test_update_policy_all_params.
+    	_service.enable_retries()
+    	self.test_update_policy_all_params()
+
+    	# Disable retries and run test_update_policy_all_params.
+    	_service.disable_retries()
+    	self.test_update_policy_all_params()
 
     @responses.activate
     def test_update_policy_value_error(self):
@@ -500,8 +590,8 @@ class TestUpdatePolicy():
         test_update_policy_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/policies/testString')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "state"}'
+        url = self.preprocess_url(_base_url + '/v1/policies/testString')
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -559,9 +649,17 @@ class TestUpdatePolicy():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_policy(**req_copy)
+                _service.update_policy(**req_copy)
 
 
+    def test_update_policy_value_error_with_retries(self):
+    	# Enable retries and run test_update_policy_value_error.
+    	_service.enable_retries()
+    	self.test_update_policy_value_error()
+
+    	# Disable retries and run test_update_policy_value_error.
+    	_service.disable_retries()
+    	self.test_update_policy_value_error()
 
 class TestGetPolicy():
     """
@@ -572,6 +670,8 @@ class TestGetPolicy():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -583,8 +683,8 @@ class TestGetPolicy():
         get_policy()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/policies/testString')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "state"}'
+        url = self.preprocess_url(_base_url + '/v1/policies/testString')
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -595,7 +695,7 @@ class TestGetPolicy():
         policy_id = 'testString'
 
         # Invoke method
-        response = service.get_policy(
+        response = _service.get_policy(
             policy_id,
             headers={}
         )
@@ -604,6 +704,14 @@ class TestGetPolicy():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_policy_all_params_with_retries(self):
+    	# Enable retries and run test_get_policy_all_params.
+    	_service.enable_retries()
+    	self.test_get_policy_all_params()
+
+    	# Disable retries and run test_get_policy_all_params.
+    	_service.disable_retries()
+    	self.test_get_policy_all_params()
 
     @responses.activate
     def test_get_policy_value_error(self):
@@ -611,8 +719,8 @@ class TestGetPolicy():
         test_get_policy_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/policies/testString')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "state"}'
+        url = self.preprocess_url(_base_url + '/v1/policies/testString')
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -629,9 +737,17 @@ class TestGetPolicy():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_policy(**req_copy)
+                _service.get_policy(**req_copy)
 
 
+    def test_get_policy_value_error_with_retries(self):
+    	# Enable retries and run test_get_policy_value_error.
+    	_service.enable_retries()
+    	self.test_get_policy_value_error()
+
+    	# Disable retries and run test_get_policy_value_error.
+    	_service.disable_retries()
+    	self.test_get_policy_value_error()
 
 class TestDeletePolicy():
     """
@@ -642,6 +758,8 @@ class TestDeletePolicy():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -653,7 +771,7 @@ class TestDeletePolicy():
         delete_policy()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/policies/testString')
+        url = self.preprocess_url(_base_url + '/v1/policies/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -662,7 +780,7 @@ class TestDeletePolicy():
         policy_id = 'testString'
 
         # Invoke method
-        response = service.delete_policy(
+        response = _service.delete_policy(
             policy_id,
             headers={}
         )
@@ -671,6 +789,14 @@ class TestDeletePolicy():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_delete_policy_all_params_with_retries(self):
+    	# Enable retries and run test_delete_policy_all_params.
+    	_service.enable_retries()
+    	self.test_delete_policy_all_params()
+
+    	# Disable retries and run test_delete_policy_all_params.
+    	_service.disable_retries()
+    	self.test_delete_policy_all_params()
 
     @responses.activate
     def test_delete_policy_value_error(self):
@@ -678,7 +804,7 @@ class TestDeletePolicy():
         test_delete_policy_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/policies/testString')
+        url = self.preprocess_url(_base_url + '/v1/policies/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -693,9 +819,17 @@ class TestDeletePolicy():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.delete_policy(**req_copy)
+                _service.delete_policy(**req_copy)
 
 
+    def test_delete_policy_value_error_with_retries(self):
+    	# Enable retries and run test_delete_policy_value_error.
+    	_service.enable_retries()
+    	self.test_delete_policy_value_error()
+
+    	# Disable retries and run test_delete_policy_value_error.
+    	_service.disable_retries()
+    	self.test_delete_policy_value_error()
 
 class TestPatchPolicy():
     """
@@ -706,6 +840,8 @@ class TestPatchPolicy():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -717,8 +853,8 @@ class TestPatchPolicy():
         patch_policy()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/policies/testString')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "state"}'
+        url = self.preprocess_url(_base_url + '/v1/policies/testString')
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -728,10 +864,10 @@ class TestPatchPolicy():
         # Set up parameter values
         policy_id = 'testString'
         if_match = 'testString'
-        state = 'testString'
+        state = 'active'
 
         # Invoke method
-        response = service.patch_policy(
+        response = _service.patch_policy(
             policy_id,
             if_match,
             state=state,
@@ -743,8 +879,16 @@ class TestPatchPolicy():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['state'] == 'testString'
+        assert req_body['state'] == 'active'
 
+    def test_patch_policy_all_params_with_retries(self):
+    	# Enable retries and run test_patch_policy_all_params.
+    	_service.enable_retries()
+    	self.test_patch_policy_all_params()
+
+    	# Disable retries and run test_patch_policy_all_params.
+    	_service.disable_retries()
+    	self.test_patch_policy_all_params()
 
     @responses.activate
     def test_patch_policy_value_error(self):
@@ -752,8 +896,8 @@ class TestPatchPolicy():
         test_patch_policy_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/policies/testString')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "state"}'
+        url = self.preprocess_url(_base_url + '/v1/policies/testString')
+        mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -763,7 +907,7 @@ class TestPatchPolicy():
         # Set up parameter values
         policy_id = 'testString'
         if_match = 'testString'
-        state = 'testString'
+        state = 'active'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -773,9 +917,17 @@ class TestPatchPolicy():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.patch_policy(**req_copy)
+                _service.patch_policy(**req_copy)
 
 
+    def test_patch_policy_value_error_with_retries(self):
+    	# Enable retries and run test_patch_policy_value_error.
+    	_service.enable_retries()
+    	self.test_patch_policy_value_error()
+
+    	# Disable retries and run test_patch_policy_value_error.
+    	_service.disable_retries()
+    	self.test_patch_policy_value_error()
 
 # endregion
 ##############################################################################
@@ -787,6 +939,32 @@ class TestPatchPolicy():
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamPolicyManagementV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamPolicyManagementV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamPolicyManagementV1.new_instance(
+            )
+
 class TestListRoles():
     """
     Test Class for list_roles
@@ -796,6 +974,8 @@ class TestListRoles():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -807,8 +987,8 @@ class TestListRoles():
         list_roles()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/roles')
-        mock_response = '{"custom_roles": [{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}], "service_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}], "system_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}]}'
+        url = self.preprocess_url(_base_url + '/v2/roles')
+        mock_response = '{"custom_roles": [{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}], "service_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}], "system_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -816,15 +996,19 @@ class TestListRoles():
                       status=200)
 
         # Set up parameter values
-        accept_language = 'testString'
+        accept_language = 'default'
         account_id = 'testString'
-        service_name = 'testString'
+        service_name = 'iam-groups'
+        source_service_name = 'iam-groups'
+        policy_type = 'authorization'
 
         # Invoke method
-        response = service.list_roles(
+        response = _service.list_roles(
             accept_language=accept_language,
             account_id=account_id,
             service_name=service_name,
+            source_service_name=source_service_name,
+            policy_type=policy_type,
             headers={}
         )
 
@@ -836,7 +1020,17 @@ class TestListRoles():
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'service_name={}'.format(service_name) in query_string
+        assert 'source_service_name={}'.format(source_service_name) in query_string
+        assert 'policy_type={}'.format(policy_type) in query_string
 
+    def test_list_roles_all_params_with_retries(self):
+    	# Enable retries and run test_list_roles_all_params.
+    	_service.enable_retries()
+    	self.test_list_roles_all_params()
+
+    	# Disable retries and run test_list_roles_all_params.
+    	_service.disable_retries()
+    	self.test_list_roles_all_params()
 
     @responses.activate
     def test_list_roles_required_params(self):
@@ -844,8 +1038,8 @@ class TestListRoles():
         test_list_roles_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/roles')
-        mock_response = '{"custom_roles": [{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}], "service_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}], "system_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}]}'
+        url = self.preprocess_url(_base_url + '/v2/roles')
+        mock_response = '{"custom_roles": [{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}], "service_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}], "system_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -853,13 +1047,21 @@ class TestListRoles():
                       status=200)
 
         # Invoke method
-        response = service.list_roles()
+        response = _service.list_roles()
 
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_roles_required_params_with_retries(self):
+    	# Enable retries and run test_list_roles_required_params.
+    	_service.enable_retries()
+    	self.test_list_roles_required_params()
+
+    	# Disable retries and run test_list_roles_required_params.
+    	_service.disable_retries()
+    	self.test_list_roles_required_params()
 
 class TestCreateRole():
     """
@@ -870,6 +1072,8 @@ class TestCreateRole():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -881,8 +1085,8 @@ class TestCreateRole():
         create_role()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/roles')
-        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
+        url = self.preprocess_url(_base_url + '/v2/roles')
+        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -892,14 +1096,14 @@ class TestCreateRole():
         # Set up parameter values
         display_name = 'testString'
         actions = ['testString']
-        name = 'testString'
+        name = 'Developer'
         account_id = 'testString'
-        service_name = 'testString'
+        service_name = 'iam-groups'
         description = 'testString'
-        accept_language = 'testString'
+        accept_language = 'default'
 
         # Invoke method
-        response = service.create_role(
+        response = _service.create_role(
             display_name,
             actions,
             name,
@@ -917,11 +1121,19 @@ class TestCreateRole():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['display_name'] == 'testString'
         assert req_body['actions'] == ['testString']
-        assert req_body['name'] == 'testString'
+        assert req_body['name'] == 'Developer'
         assert req_body['account_id'] == 'testString'
-        assert req_body['service_name'] == 'testString'
+        assert req_body['service_name'] == 'iam-groups'
         assert req_body['description'] == 'testString'
 
+    def test_create_role_all_params_with_retries(self):
+    	# Enable retries and run test_create_role_all_params.
+    	_service.enable_retries()
+    	self.test_create_role_all_params()
+
+    	# Disable retries and run test_create_role_all_params.
+    	_service.disable_retries()
+    	self.test_create_role_all_params()
 
     @responses.activate
     def test_create_role_required_params(self):
@@ -929,8 +1141,8 @@ class TestCreateRole():
         test_create_role_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/roles')
-        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
+        url = self.preprocess_url(_base_url + '/v2/roles')
+        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -940,13 +1152,13 @@ class TestCreateRole():
         # Set up parameter values
         display_name = 'testString'
         actions = ['testString']
-        name = 'testString'
+        name = 'Developer'
         account_id = 'testString'
-        service_name = 'testString'
+        service_name = 'iam-groups'
         description = 'testString'
 
         # Invoke method
-        response = service.create_role(
+        response = _service.create_role(
             display_name,
             actions,
             name,
@@ -963,11 +1175,19 @@ class TestCreateRole():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['display_name'] == 'testString'
         assert req_body['actions'] == ['testString']
-        assert req_body['name'] == 'testString'
+        assert req_body['name'] == 'Developer'
         assert req_body['account_id'] == 'testString'
-        assert req_body['service_name'] == 'testString'
+        assert req_body['service_name'] == 'iam-groups'
         assert req_body['description'] == 'testString'
 
+    def test_create_role_required_params_with_retries(self):
+    	# Enable retries and run test_create_role_required_params.
+    	_service.enable_retries()
+    	self.test_create_role_required_params()
+
+    	# Disable retries and run test_create_role_required_params.
+    	_service.disable_retries()
+    	self.test_create_role_required_params()
 
     @responses.activate
     def test_create_role_value_error(self):
@@ -975,8 +1195,8 @@ class TestCreateRole():
         test_create_role_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/roles')
-        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
+        url = self.preprocess_url(_base_url + '/v2/roles')
+        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -986,9 +1206,9 @@ class TestCreateRole():
         # Set up parameter values
         display_name = 'testString'
         actions = ['testString']
-        name = 'testString'
+        name = 'Developer'
         account_id = 'testString'
-        service_name = 'testString'
+        service_name = 'iam-groups'
         description = 'testString'
 
         # Pass in all but one required param and check for a ValueError
@@ -1002,9 +1222,17 @@ class TestCreateRole():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_role(**req_copy)
+                _service.create_role(**req_copy)
 
 
+    def test_create_role_value_error_with_retries(self):
+    	# Enable retries and run test_create_role_value_error.
+    	_service.enable_retries()
+    	self.test_create_role_value_error()
+
+    	# Disable retries and run test_create_role_value_error.
+    	_service.disable_retries()
+    	self.test_create_role_value_error()
 
 class TestUpdateRole():
     """
@@ -1015,6 +1243,8 @@ class TestUpdateRole():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -1026,8 +1256,8 @@ class TestUpdateRole():
         update_role()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/roles/testString')
-        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
+        url = self.preprocess_url(_base_url + '/v2/roles/testString')
+        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -1042,7 +1272,7 @@ class TestUpdateRole():
         actions = ['testString']
 
         # Invoke method
-        response = service.update_role(
+        response = _service.update_role(
             role_id,
             if_match,
             display_name=display_name,
@@ -1060,6 +1290,14 @@ class TestUpdateRole():
         assert req_body['description'] == 'testString'
         assert req_body['actions'] == ['testString']
 
+    def test_update_role_all_params_with_retries(self):
+    	# Enable retries and run test_update_role_all_params.
+    	_service.enable_retries()
+    	self.test_update_role_all_params()
+
+    	# Disable retries and run test_update_role_all_params.
+    	_service.disable_retries()
+    	self.test_update_role_all_params()
 
     @responses.activate
     def test_update_role_value_error(self):
@@ -1067,8 +1305,8 @@ class TestUpdateRole():
         test_update_role_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/roles/testString')
-        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
+        url = self.preprocess_url(_base_url + '/v2/roles/testString')
+        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -1090,9 +1328,17 @@ class TestUpdateRole():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_role(**req_copy)
+                _service.update_role(**req_copy)
 
 
+    def test_update_role_value_error_with_retries(self):
+    	# Enable retries and run test_update_role_value_error.
+    	_service.enable_retries()
+    	self.test_update_role_value_error()
+
+    	# Disable retries and run test_update_role_value_error.
+    	_service.disable_retries()
+    	self.test_update_role_value_error()
 
 class TestGetRole():
     """
@@ -1103,6 +1349,8 @@ class TestGetRole():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -1114,8 +1362,8 @@ class TestGetRole():
         get_role()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/roles/testString')
-        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
+        url = self.preprocess_url(_base_url + '/v2/roles/testString')
+        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1126,7 +1374,7 @@ class TestGetRole():
         role_id = 'testString'
 
         # Invoke method
-        response = service.get_role(
+        response = _service.get_role(
             role_id,
             headers={}
         )
@@ -1135,6 +1383,14 @@ class TestGetRole():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_role_all_params_with_retries(self):
+    	# Enable retries and run test_get_role_all_params.
+    	_service.enable_retries()
+    	self.test_get_role_all_params()
+
+    	# Disable retries and run test_get_role_all_params.
+    	_service.disable_retries()
+    	self.test_get_role_all_params()
 
     @responses.activate
     def test_get_role_value_error(self):
@@ -1142,8 +1398,8 @@ class TestGetRole():
         test_get_role_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/roles/testString')
-        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "name", "account_id": "account_id", "service_name": "service_name", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
+        url = self.preprocess_url(_base_url + '/v2/roles/testString')
+        mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1160,9 +1416,17 @@ class TestGetRole():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_role(**req_copy)
+                _service.get_role(**req_copy)
 
 
+    def test_get_role_value_error_with_retries(self):
+    	# Enable retries and run test_get_role_value_error.
+    	_service.enable_retries()
+    	self.test_get_role_value_error()
+
+    	# Disable retries and run test_get_role_value_error.
+    	_service.disable_retries()
+    	self.test_get_role_value_error()
 
 class TestDeleteRole():
     """
@@ -1173,6 +1437,8 @@ class TestDeleteRole():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -1184,7 +1450,7 @@ class TestDeleteRole():
         delete_role()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/roles/testString')
+        url = self.preprocess_url(_base_url + '/v2/roles/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1193,7 +1459,7 @@ class TestDeleteRole():
         role_id = 'testString'
 
         # Invoke method
-        response = service.delete_role(
+        response = _service.delete_role(
             role_id,
             headers={}
         )
@@ -1202,6 +1468,14 @@ class TestDeleteRole():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_delete_role_all_params_with_retries(self):
+    	# Enable retries and run test_delete_role_all_params.
+    	_service.enable_retries()
+    	self.test_delete_role_all_params()
+
+    	# Disable retries and run test_delete_role_all_params.
+    	_service.disable_retries()
+    	self.test_delete_role_all_params()
 
     @responses.activate
     def test_delete_role_value_error(self):
@@ -1209,7 +1483,7 @@ class TestDeleteRole():
         test_delete_role_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/roles/testString')
+        url = self.preprocess_url(_base_url + '/v2/roles/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1224,9 +1498,17 @@ class TestDeleteRole():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.delete_role(**req_copy)
+                _service.delete_role(**req_copy)
 
 
+    def test_delete_role_value_error_with_retries(self):
+    	# Enable retries and run test_delete_role_value_error.
+    	_service.enable_retries()
+    	self.test_delete_role_value_error()
+
+    	# Disable retries and run test_delete_role_value_error.
+    	_service.disable_retries()
+    	self.test_delete_role_value_error()
 
 # endregion
 ##############################################################################
@@ -1238,7 +1520,7 @@ class TestDeleteRole():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestCustomRole():
+class TestModel_CustomRole():
     """
     Test Class for CustomRole
     """
@@ -1255,12 +1537,12 @@ class TestCustomRole():
         custom_role_model_json['description'] = 'testString'
         custom_role_model_json['actions'] = ['testString']
         custom_role_model_json['crn'] = 'testString'
-        custom_role_model_json['name'] = 'testString'
+        custom_role_model_json['name'] = 'Developer'
         custom_role_model_json['account_id'] = 'testString'
-        custom_role_model_json['service_name'] = 'testString'
-        custom_role_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
+        custom_role_model_json['service_name'] = 'iam-groups'
+        custom_role_model_json['created_at'] = "2019-01-01T12:00:00Z"
         custom_role_model_json['created_by_id'] = 'testString'
-        custom_role_model_json['last_modified_at'] = '2020-01-28T18:40:40.123456Z'
+        custom_role_model_json['last_modified_at'] = "2019-01-01T12:00:00Z"
         custom_role_model_json['last_modified_by_id'] = 'testString'
         custom_role_model_json['href'] = 'testString'
 
@@ -1279,7 +1561,7 @@ class TestCustomRole():
         custom_role_model_json2 = custom_role_model.to_dict()
         assert custom_role_model_json2 == custom_role_model_json
 
-class TestPolicy():
+class TestModel_Policy():
     """
     Test Class for Policy
     """
@@ -1326,11 +1608,11 @@ class TestPolicy():
         policy_model_json['roles'] = [policy_role_model]
         policy_model_json['resources'] = [policy_resource_model]
         policy_model_json['href'] = 'testString'
-        policy_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
+        policy_model_json['created_at'] = "2019-01-01T12:00:00Z"
         policy_model_json['created_by_id'] = 'testString'
-        policy_model_json['last_modified_at'] = '2020-01-28T18:40:40.123456Z'
+        policy_model_json['last_modified_at'] = "2019-01-01T12:00:00Z"
         policy_model_json['last_modified_by_id'] = 'testString'
-        policy_model_json['state'] = 'testString'
+        policy_model_json['state'] = 'active'
 
         # Construct a model instance of Policy by calling from_dict on the json representation
         policy_model = Policy.from_dict(policy_model_json)
@@ -1347,7 +1629,7 @@ class TestPolicy():
         policy_model_json2 = policy_model.to_dict()
         assert policy_model_json2 == policy_model_json
 
-class TestPolicyList():
+class TestModel_PolicyList():
     """
     Test Class for PolicyList
     """
@@ -1393,11 +1675,11 @@ class TestPolicyList():
         policy_model['roles'] = [policy_role_model]
         policy_model['resources'] = [policy_resource_model]
         policy_model['href'] = 'testString'
-        policy_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        policy_model['created_at'] = "2019-01-01T12:00:00Z"
         policy_model['created_by_id'] = 'testString'
-        policy_model['last_modified_at'] = '2020-01-28T18:40:40.123456Z'
+        policy_model['last_modified_at'] = "2019-01-01T12:00:00Z"
         policy_model['last_modified_by_id'] = 'testString'
-        policy_model['state'] = 'testString'
+        policy_model['state'] = 'active'
 
         # Construct a json representation of a PolicyList model
         policy_list_model_json = {}
@@ -1418,7 +1700,7 @@ class TestPolicyList():
         policy_list_model_json2 = policy_list_model.to_dict()
         assert policy_list_model_json2 == policy_list_model_json
 
-class TestPolicyResource():
+class TestModel_PolicyResource():
     """
     Test Class for PolicyResource
     """
@@ -1460,7 +1742,7 @@ class TestPolicyResource():
         policy_resource_model_json2 = policy_resource_model.to_dict()
         assert policy_resource_model_json2 == policy_resource_model_json
 
-class TestPolicyRole():
+class TestModel_PolicyRole():
     """
     Test Class for PolicyRole
     """
@@ -1491,7 +1773,7 @@ class TestPolicyRole():
         policy_role_model_json2 = policy_role_model.to_dict()
         assert policy_role_model_json2 == policy_role_model_json
 
-class TestPolicySubject():
+class TestModel_PolicySubject():
     """
     Test Class for PolicySubject
     """
@@ -1526,7 +1808,7 @@ class TestPolicySubject():
         policy_subject_model_json2 = policy_subject_model.to_dict()
         assert policy_subject_model_json2 == policy_subject_model_json
 
-class TestResourceAttribute():
+class TestModel_ResourceAttribute():
     """
     Test Class for ResourceAttribute
     """
@@ -1557,7 +1839,7 @@ class TestResourceAttribute():
         resource_attribute_model_json2 = resource_attribute_model.to_dict()
         assert resource_attribute_model_json2 == resource_attribute_model_json
 
-class TestResourceTag():
+class TestModel_ResourceTag():
     """
     Test Class for ResourceTag
     """
@@ -1588,7 +1870,7 @@ class TestResourceTag():
         resource_tag_model_json2 = resource_tag_model.to_dict()
         assert resource_tag_model_json2 == resource_tag_model_json
 
-class TestRole():
+class TestModel_Role():
     """
     Test Class for Role
     """
@@ -1620,7 +1902,7 @@ class TestRole():
         role_model_json2 = role_model.to_dict()
         assert role_model_json2 == role_model_json
 
-class TestRoleList():
+class TestModel_RoleList():
     """
     Test Class for RoleList
     """
@@ -1638,12 +1920,12 @@ class TestRoleList():
         custom_role_model['description'] = 'testString'
         custom_role_model['actions'] = ['testString']
         custom_role_model['crn'] = 'testString'
-        custom_role_model['name'] = 'testString'
+        custom_role_model['name'] = 'Developer'
         custom_role_model['account_id'] = 'testString'
-        custom_role_model['service_name'] = 'testString'
-        custom_role_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        custom_role_model['service_name'] = 'iam-groups'
+        custom_role_model['created_at'] = "2019-01-01T12:00:00Z"
         custom_role_model['created_by_id'] = 'testString'
-        custom_role_model['last_modified_at'] = '2020-01-28T18:40:40.123456Z'
+        custom_role_model['last_modified_at'] = "2019-01-01T12:00:00Z"
         custom_role_model['last_modified_by_id'] = 'testString'
         custom_role_model['href'] = 'testString'
 
@@ -1674,7 +1956,7 @@ class TestRoleList():
         role_list_model_json2 = role_list_model.to_dict()
         assert role_list_model_json2 == role_list_model_json
 
-class TestSubjectAttribute():
+class TestModel_SubjectAttribute():
     """
     Test Class for SubjectAttribute
     """

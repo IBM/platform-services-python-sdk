@@ -14,13 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
+# IBM OpenAPI SDK Code Generator Version: 3.39.0-748eb4ca-20210917-165907
  
 """
 IAM Policy Management API
+
+API Version: 1.0.1
 """
 
 from datetime import datetime
+from enum import Enum
 from typing import Dict, List
 import json
 
@@ -63,7 +66,7 @@ class IamPolicyManagementV1(BaseService):
         Construct a new client for the iam_policy_management service.
 
         :param Authenticator authenticator: The authenticator specifies the authentication mechanism.
-               Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
+               Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
         BaseService.__init__(self,
@@ -103,21 +106,37 @@ class IamPolicyManagementV1(BaseService):
         not have read access to any policies an empty array is returned.
 
         :param str account_id: The account GUID in which the policies belong to.
-        :param str accept_language: (optional) Translation language code.
-        :param str iam_id: (optional) The IAM ID used to identify the subject.
-        :param str access_group_id: (optional) The access group id.
-        :param str type: (optional) The type of policy (access or authorization).
-        :param str service_type: (optional) The type of service.
-        :param str tag_name: (optional) The name of the access management tag in
-               the policy.
-        :param str tag_value: (optional) The value of the access management tag in
-               the policy.
-        :param str sort: (optional) Sort the results by any of the top level policy
-               fields (id, created_at, created_by_id, last_modified_at, etc).
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param str iam_id: (optional) Optional IAM ID used to identify the subject.
+        :param str access_group_id: (optional) Optional access group id.
+        :param str type: (optional) Optional type of policy.
+        :param str service_type: (optional) Optional type of service.
+        :param str tag_name: (optional) Optional name of the access management tag
+               in the policy.
+        :param str tag_value: (optional) Optional value of the access management
+               tag in the policy.
+        :param str sort: (optional) Optional top level policy field to sort
+               results. Ascending sort is default. Descending sort available by prepending
+               '-' to field. Example '-last_modified_at'.
         :param str format: (optional) Include additional data per policy returned
-               [include_last_permit, display].
-        :param str state: (optional) The state of the policy, 'active' or
-               'deleted'.
+               * `include_last_permit` - returns details of when the policy last granted a
+               permit decision and the number of times it has done so
+               * `display` - returns the list of all actions included in each of the
+               policy roles.
+        :param str state: (optional) The state of the policy.
+               * `active` - returns active policies
+               * `deleted` - returns non-active policies.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `PolicyList` object
@@ -156,7 +175,7 @@ class IamPolicyManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -203,6 +222,16 @@ class IamPolicyManagementV1(BaseService):
         subset of a service's or the platform's supported attributes. Both the policy
         subject and the policy resource must include the **`serviceName`** and
         **`accountId`** attributes.
+        ### Attribute Operators
+        Currently, only the `stringEquals` and the `stringMatch` operators are available.
+        Resource attributes may support one or both operators.  For more information, see
+        [how to assign access by using wildcards
+        policies](https://cloud.ibm.com/docs/account?topic=account-wildcard).
+        ### Attribute Validations
+        Policy attribute values must be between 1 and 1,000 characters in length. If
+        location related attributes like geography, country, metro, region, satellite, and
+        locationvalues are supported by the service, they are validated against Global
+        Catalog locations.
 
         :param str type: The policy type; either 'access' or 'authorization'.
         :param List[PolicySubject] subjects: The subjects associated with a policy.
@@ -211,7 +240,18 @@ class IamPolicyManagementV1(BaseService):
         :param List[PolicyResource] resources: The resources associated with a
                policy.
         :param str description: (optional) Customer-defined description.
-        :param str accept_language: (optional) Translation language code.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Policy` object
@@ -257,7 +297,7 @@ class IamPolicyManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -301,6 +341,16 @@ class IamPolicyManagementV1(BaseService):
         subset of a service's or the platform's supported attributes. Both the policy
         subject and the policy resource must include the **`serviceName`** and
         **`accountId`** attributes.
+        ### Attribute Operators
+        Currently, only the `stringEquals` and the `stringMatch` operators are available.
+        Resource attributes might support one or both operators.  For more information,
+        see [how to assign access by using wildcards
+        policies](https://cloud.ibm.com/docs/account?topic=account-wildcard).
+        ### Attribute Validations
+        Policy attribute values must be between 1 and 1,000 characters in length. If
+        location related attributes like geography, country, metro, region, satellite, and
+        locationvalues are supported by the service, they are validated against Global
+        Catalog locations.
 
         :param str policy_id: The policy ID.
         :param str if_match: The revision number for updating a policy and must
@@ -366,7 +416,7 @@ class IamPolicyManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -405,7 +455,7 @@ class IamPolicyManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -445,7 +495,7 @@ class IamPolicyManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -468,8 +518,7 @@ class IamPolicyManagementV1(BaseService):
                match the ETag value of the existing policy. The Etag can be retrieved
                using the GET /v1/policies/{policy_id} API and looking at the ETag response
                header.
-        :param str state: (optional) The policy state; either 'active' or
-               'deleted'.
+        :param str state: (optional) The policy state.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Policy` object
@@ -507,7 +556,7 @@ class IamPolicyManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -520,6 +569,8 @@ class IamPolicyManagementV1(BaseService):
         accept_language: str = None,
         account_id: str = None,
         service_name: str = None,
+        source_service_name: str = None,
+        policy_type: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -527,14 +578,29 @@ class IamPolicyManagementV1(BaseService):
 
         Get roles based on the filters. While managing roles, you may want to retrieve
         roles and filter by usages. This can be done through query parameters. Currently,
-        we only support the following attributes: account_id, and service_name. Only roles
-        that match the filter and that the caller has read access to are returned. If the
-        caller does not have read access to any roles an empty array is returned.
+        we only support the following attributes: account_id, service_name,
+        source_service_name and policy_type. Only roles that match the filter and that the
+        caller has read access to are returned. If the caller does not have read access to
+        any roles an empty array is returned.
 
-        :param str accept_language: (optional) Translation language code.
-        :param str account_id: (optional) The account GUID in which the roles
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
+        :param str account_id: (optional) Optional account GUID in which the roles
                belong to.
-        :param str service_name: (optional) The name of service.
+        :param str service_name: (optional) Optional name of IAM enabled service.
+        :param str source_service_name: (optional) Optional name of source IAM
+               enabled service.
+        :param str policy_type: (optional) Optional Policy Type.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `RoleList` object
@@ -550,7 +616,9 @@ class IamPolicyManagementV1(BaseService):
 
         params = {
             'account_id': account_id,
-            'service_name': service_name
+            'service_name': service_name,
+            'source_service_name': source_service_name,
+            'policy_type': policy_type
         }
 
         if 'headers' in kwargs:
@@ -563,7 +631,7 @@ class IamPolicyManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -589,13 +657,26 @@ class IamPolicyManagementV1(BaseService):
 
         :param str display_name: The display name of the role that is shown in the
                console.
-        :param List[str] actions: The actions of the role.
+        :param List[str] actions: The actions of the role. Please refer to [IAM
+               roles and
+               actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
         :param str name: The name of the role that is used in the CRN. Can only be
                alphanumeric and has to be capitalized.
         :param str account_id: The account GUID.
         :param str service_name: The service name.
         :param str description: (optional) The description of the role.
-        :param str accept_language: (optional) Translation language code.
+        :param str accept_language: (optional) Language code for translations
+               * `default` - English
+               * `de` -  German (Standard)
+               * `en` - English
+               * `es` - Spanish (Spain)
+               * `fr` - French (Standard)
+               * `it` - Italian (Standard)
+               * `ja` - Japanese
+               * `ko` - Korean
+               * `pt-br` - Portuguese (Brazil)
+               * `zh-cn` - Chinese (Simplified, PRC)
+               * `zh-tw` - (Chinese, Taiwan).
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `CustomRole` object
@@ -641,7 +722,7 @@ class IamPolicyManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -668,7 +749,9 @@ class IamPolicyManagementV1(BaseService):
         :param str display_name: (optional) The display name of the role that is
                shown in the console.
         :param str description: (optional) The description of the role.
-        :param List[str] actions: (optional) The actions of the role.
+        :param List[str] actions: (optional) The actions of the role. Please refer
+               to [IAM roles and
+               actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `CustomRole` object
@@ -708,7 +791,7 @@ class IamPolicyManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -747,7 +830,7 @@ class IamPolicyManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -785,8 +868,58 @@ class IamPolicyManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
+
+
+class ListPoliciesEnums:
+    """
+    Enums for list_policies parameters.
+    """
+
+    class Type(str, Enum):
+        """
+        Optional type of policy.
+        """
+        ACCESS = 'access'
+        AUTHORIZATION = 'authorization'
+    class ServiceType(str, Enum):
+        """
+        Optional type of service.
+        """
+        SERVICE = 'service'
+        PLATFORM_SERVICE = 'platform_service'
+    class Sort(str, Enum):
+        """
+        Optional top level policy field to sort results. Ascending sort is default.
+        Descending sort available by prepending '-' to field. Example '-last_modified_at'.
+        """
+        ID = 'id'
+        TYPE = 'type'
+        HREF = 'href'
+        CREATED_AT = 'created_at'
+        CREATED_BY_ID = 'created_by_id'
+        LAST_MODIFIED_AT = 'last_modified_at'
+        LAST_MODIFIED_BY_ID = 'last_modified_by_id'
+        STATE = 'state'
+    class Format(str, Enum):
+        """
+        Include additional data per policy returned
+        * `include_last_permit` - returns details of when the policy last granted a permit
+        decision and the number of times it has done so
+        * `display` - returns the list of all actions included in each of the policy
+        roles.
+        """
+        INCLUDE_LAST_PERMIT = 'include_last_permit'
+        DISPLAY = 'display'
+    class State(str, Enum):
+        """
+        The state of the policy.
+        * `active` - returns active policies
+        * `deleted` - returns non-active policies.
+        """
+        ACTIVE = 'active'
+        DELETED = 'deleted'
 
 
 ##############################################################################
@@ -798,12 +931,15 @@ class CustomRole():
     """
     An additional set of properties associated with a role.
 
-    :attr str id: (optional) The role ID.
+    :attr str id: (optional) The role ID. Composed of hexadecimal characters.
     :attr str display_name: (optional) The display name of the role that is shown in
           the console.
     :attr str description: (optional) The description of the role.
-    :attr List[str] actions: (optional) The actions of the role.
-    :attr str crn: (optional) The role CRN.
+    :attr List[str] actions: (optional) The actions of the role. Please refer to
+          [IAM roles and
+          actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
+    :attr str crn: (optional) The role Cloud Resource Name (CRN). Example CRN:
+          'crn:v1:ibmcloud:public:iam-access-management::a/exampleAccountId::customRole:ExampleRoleName'.
     :attr str name: (optional) The name of the role that is used in the CRN. Can
           only be alphanumeric and has to be capitalized.
     :attr str account_id: (optional) The account GUID.
@@ -840,7 +976,9 @@ class CustomRole():
         :param str display_name: (optional) The display name of the role that is
                shown in the console.
         :param str description: (optional) The description of the role.
-        :param List[str] actions: (optional) The actions of the role.
+        :param List[str] actions: (optional) The actions of the role. Please refer
+               to [IAM roles and
+               actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
         :param str name: (optional) The name of the role that is used in the CRN.
                Can only be alphanumeric and has to be capitalized.
         :param str account_id: (optional) The account GUID.
@@ -968,7 +1106,7 @@ class Policy():
           was last modified.
     :attr str last_modified_by_id: (optional) The iam ID of the entity that last
           modified the policy.
-    :attr str state: (optional) The policy state; either 'active' or 'deleted'.
+    :attr str state: (optional) The policy state.
     """
 
     def __init__(self,
@@ -997,8 +1135,7 @@ class Policy():
                names (CRNs) granted by the policy.
         :param List[PolicyResource] resources: (optional) The resources associated
                with a policy.
-        :param str state: (optional) The policy state; either 'active' or
-               'deleted'.
+        :param str state: (optional) The policy state.
         """
         self.id = id
         self.type = type
@@ -1094,6 +1231,14 @@ class Policy():
     def __ne__(self, other: 'Policy') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+    class StateEnum(str, Enum):
+        """
+        The policy state.
+        """
+        ACTIVE = 'active'
+        DELETED = 'deleted'
+
 
 class PolicyList():
     """
@@ -1219,7 +1364,8 @@ class PolicyRole():
     """
     A role associated with a policy.
 
-    :attr str role_id: The role cloud resource name granted by the policy.
+    :attr str role_id: The role Cloud Resource Name (CRN) granted by the policy.
+          Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
     :attr str display_name: (optional) The display name of the role.
     :attr str description: (optional) The description of the role.
     """
@@ -1232,7 +1378,8 @@ class PolicyRole():
         """
         Initialize a PolicyRole object.
 
-        :param str role_id: The role cloud resource name granted by the policy.
+        :param str role_id: The role Cloud Resource Name (CRN) granted by the
+               policy. Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
         """
         self.role_id = role_id
         self.display_name = display_name
@@ -1500,8 +1647,11 @@ class Role():
     :attr str display_name: (optional) The display name of the role that is shown in
           the console.
     :attr str description: (optional) The description of the role.
-    :attr List[str] actions: (optional) The actions of the role.
-    :attr str crn: (optional) The role CRN.
+    :attr List[str] actions: (optional) The actions of the role. Please refer to
+          [IAM roles and
+          actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
+    :attr str crn: (optional) The role Cloud Resource Name (CRN). Example CRN:
+          'crn:v1:ibmcloud:public:iam-access-management::a/exampleAccountId::customRole:ExampleRoleName'.
     """
 
     def __init__(self,
@@ -1516,7 +1666,9 @@ class Role():
         :param str display_name: (optional) The display name of the role that is
                shown in the console.
         :param str description: (optional) The description of the role.
-        :param List[str] actions: (optional) The actions of the role.
+        :param List[str] actions: (optional) The actions of the role. Please refer
+               to [IAM roles and
+               actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
         """
         self.display_name = display_name
         self.description = description
