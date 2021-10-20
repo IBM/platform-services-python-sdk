@@ -1,3 +1,10 @@
+# [0.22.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.21.0...v0.22.0) (2021-10-20)
+
+
+### Features
+
+* **IAM Policy Management:** support of new query params for v2/roles ([#138](https://github.com/IBM/platform-services-python-sdk/issues/138)) ([0f655b8](https://github.com/IBM/platform-services-python-sdk/commit/0f655b8d44b953254421400993370dcf3b915f9c))
+
 # [0.21.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.20.2...v0.21.0) (2021-10-01)
 
 
