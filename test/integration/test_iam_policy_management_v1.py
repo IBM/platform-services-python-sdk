@@ -296,7 +296,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
 
         response = self.service.list_roles(
             account_id=self.testCustomRole.account_id,
-            iam_id=self.testCustomRole.service_name)
+            service_name=self.testCustomRole.service_name)
         assert response is not None
         assert response.get_status_code() == 200
 
