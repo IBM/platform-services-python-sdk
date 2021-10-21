@@ -14,10 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-4883cbcd-20210301-143711
+# IBM OpenAPI SDK Code Generator Version: 3.41.0-f1ef0102-20211018-193503
  
 """
 Manage lifecycle of your Cloud resource groups using Resource Manager APIs.
+
+API Version: 2.0
 """
 
 from datetime import datetime
@@ -38,7 +40,7 @@ from .common import get_sdk_headers
 class ResourceManagerV2(BaseService):
     """The Resource Manager V2 service."""
 
-    DEFAULT_SERVICE_URL = 'https://resource-controller.cloud.ibm.com/v2'
+    DEFAULT_SERVICE_URL = 'https://resource-controller.cloud.ibm.com'
     DEFAULT_SERVICE_NAME = 'resource_manager'
 
     @classmethod
@@ -63,7 +65,7 @@ class ResourceManagerV2(BaseService):
         Construct a new client for the Resource Manager service.
 
         :param Authenticator authenticator: The authenticator specifies the authentication mechanism.
-               Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
+               Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
         BaseService.__init__(self,
@@ -88,7 +90,13 @@ class ResourceManagerV2(BaseService):
         """
         Get a list of all resource groups.
 
-        Get a list of all resource groups in an account.
+        Call this method to retrieve information about all resource groups and associated
+        quotas in an account. The `id` returned in the response can be used to [create a
+        resource instance
+        later](https://cloud.ibm.com/apidocs/resource-controller/resource-controller?code=java#create-resource-instance).
+        The response can be filtered based on queryParams such as `account_id`, `name`,
+        `default`, and more to narrow your search.Users need to be assigned IAM policies
+        with the Viewer role or higher on the targeted resource groups.
 
         :param str account_id: (optional) The ID of the account that contains the
                resource groups that you want to get.
@@ -123,13 +131,13 @@ class ResourceManagerV2(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/resource_groups'
+        url = '/v2/resource_groups'
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -140,9 +148,19 @@ class ResourceManagerV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Create a new resource group.
+        Create a resource group.
 
-        Create a new resource group in an account.
+        Create a resource group in an account to organize your account resources in
+        customizable groupings so that you can quickly assign users access to more than
+        one resource at a time. To learn what makes a good resource group strategy, see
+        [Best practices for organizing
+        resources](https://cloud.ibm.com/docs/account?topic=account-account_setup). A
+        default resource group is created when an account is created. If you have a Lite
+        account or 30-day trial, you cannot create extra resource groups, but you can
+        rename your default resource group. If you have a Pay-As-You-Go or Subscription
+        account, you can create multiple resource groups. You must be assigned an IAM
+        policy with the Administrator role on All Account Management services to create
+        extra resource groups.
 
         :param str name: (optional) The new name of the resource group.
         :param str account_id: (optional) The account id of the resource group.
@@ -169,13 +187,13 @@ class ResourceManagerV2(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/resource_groups'
+        url = '/v2/resource_groups'
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -186,7 +204,13 @@ class ResourceManagerV2(BaseService):
         """
         Get a resource group.
 
-        Retrieve a resource group by ID.
+        Retrieve a resource group by alias ID. Call this method to get details about a
+        particular resource group, like the name of the resource group, associated quotas,
+        whether the state is active, the resource group ID and the CRN. The `id` returned
+        in the response can be used to [create a resource instance
+        later](https://cloud.ibm.com/apidocs/resource-controller/resource-controller?code=java#create-resource-instance).
+        Users need to be assigned an IAM policy with the Viewer role or higher on the
+        targeted resource group.
 
         :param str id: The short or long ID of the alias.
         :param dict headers: A `dict` containing the request headers
@@ -209,12 +233,12 @@ class ResourceManagerV2(BaseService):
         path_param_keys = ['id']
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/resource_groups/{id}'.format(**path_param_dict)
+        url = '/v2/resource_groups/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -228,7 +252,10 @@ class ResourceManagerV2(BaseService):
         """
         Update a resource group.
 
-        Update a resource group by ID.
+        Update a resource group by the alias ID. Call this method to update information
+        about an existing resource group. You can rename a resource group and activate or
+        suspend a particular resource group. To update a resource group, users need to be
+        assigned with IAM policies with the Editor role or higher.
 
         :param str id: The short or long ID of the alias.
         :param str name: (optional) The new name of the resource group.
@@ -261,13 +288,13 @@ class ResourceManagerV2(BaseService):
         path_param_keys = ['id']
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/resource_groups/{id}'.format(**path_param_dict)
+        url = '/v2/resource_groups/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -278,7 +305,15 @@ class ResourceManagerV2(BaseService):
         """
         Delete a resource group.
 
-        Delete a resource group by ID.
+        Delete a resource group by the alias ID. You can delete a resource group only if
+        the targeted resource group does not contain any resources or if it is not a
+        default resource group. When a user creates an account, a default resource group
+        is created in the account. If you want to delete a resource group that contains
+        resources, first [delete the resource
+        instances](https://cloud.ibm.com/apidocs/resource-controller/resource-controller?code=java#delete-resource-instance).
+        Then, delete the resource group when all resource instances in the group are
+        deleted. Users need to be assigned an IAM policy with the Editor role or higher on
+        the targeted resource group.
 
         :param str id: The short or long ID of the alias.
         :param dict headers: A `dict` containing the request headers
@@ -300,12 +335,12 @@ class ResourceManagerV2(BaseService):
         path_param_keys = ['id']
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/resource_groups/{id}'.format(**path_param_dict)
+        url = '/v2/resource_groups/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -319,7 +354,13 @@ class ResourceManagerV2(BaseService):
         """
         List quota definitions.
 
-        Get a list of all quota definitions.
+        Get a list of all quota definitions. Quotas for a resource group limit the number
+        of apps, instances, and memory allowed for that specific resource group. Each
+        resource group that you have on your account has a specific set of quotas.
+        Standard quotas are for resource groups that are created by users with a Lite
+        account, and Pay-As-You-Go quotas are for resource groups that are created with a
+        Pay-As-You-Go account. This method provides list of all available quota
+        definitions. No specific IAM policy needed.
 
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -336,12 +377,12 @@ class ResourceManagerV2(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/quota_definitions'
+        url = '/v2/quota_definitions'
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -352,7 +393,15 @@ class ResourceManagerV2(BaseService):
         """
         Get a quota definition.
 
-        Get a a quota definition.
+        Call this method to retrieve information about a particular quota by passing the
+        quota ID. The response can be used to identify the quota type, Standard or Paid.
+        Information about available resources, such as number of apps, number of service
+        instances, and memory, are returned in the response. Quotas for a resource group
+        limit the number of apps, instances, and memory allowed for that specific resource
+        group. Each resource group that you have on your account has a specific set of
+        quotas. Standard quotas are for resource groups that are created by users with a
+        Lite account, and Pay-As-You-Go quotas are for resource groups that are created
+        with a Pay-As-You-Go account. No specific IAM policy needed.
 
         :param str id: The id of the quota.
         :param dict headers: A `dict` containing the request headers
@@ -375,12 +424,12 @@ class ResourceManagerV2(BaseService):
         path_param_keys = ['id']
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/quota_definitions/{id}'.format(**path_param_dict)
+        url = '/v2/quota_definitions/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
