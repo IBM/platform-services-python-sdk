@@ -1,3 +1,10 @@
+## [0.22.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.0...v0.22.1) (2021-10-27)
+
+
+### Bug Fixes
+
+* **Resource Manager:** update resource manager endpoint URL ([#139](https://github.com/IBM/platform-services-python-sdk/issues/139)) ([a42ba53](https://github.com/IBM/platform-services-python-sdk/commit/a42ba53bbfaaf4ccac897513151abd20e38756bc))
+
 # [0.22.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.21.0...v0.22.0) (2021-10-20)
 
 
