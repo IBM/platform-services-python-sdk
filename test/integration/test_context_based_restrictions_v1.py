@@ -529,7 +529,8 @@ class TestContextBasedRestrictionsV1():
     def test_delete_rule(self):
         delete_rule_response = self.context_based_restrictions_service.delete_rule(
             rule_id=TestContextBasedRestrictionsV1.rule_id,
-            transaction_id=self.getTransactionID()
+            # Using the standard X-Correlation-Id header in this case
+            x_correlation_id=self.getTransactionID()
         )
 
         assert delete_rule_response.get_status_code() == 204

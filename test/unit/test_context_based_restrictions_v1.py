@@ -30,13 +30,13 @@ import responses
 import urllib
 from ibm_platform_services.context_based_restrictions_v1 import *
 
+
 _service = ContextBasedRestrictionsV1(
     authenticator=NoAuthAuthenticator()
 )
 
 _base_url = 'https://cbr.cloud.ibm.com'
 _service.set_service_url(_base_url)
-
 
 ##############################################################################
 # Start of Service: Zones
@@ -69,7 +69,6 @@ class TestNewInstance():
             service = ContextBasedRestrictionsV1.new_instance(
             )
 
-
 class TestCreateZone():
     """
     Test Class for create_zone
@@ -79,7 +78,7 @@ class TestCreateZone():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -93,7 +92,7 @@ class TestCreateZone():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/zones')
-        mock_response = '{"id": "id", "crn": "crn", "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -111,6 +110,7 @@ class TestCreateZone():
         addresses = [address_model]
         description = 'this is an example of zone'
         excluded = [address_model]
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
 
         # Invoke method
@@ -120,6 +120,7 @@ class TestCreateZone():
             addresses=addresses,
             description=description,
             excluded=excluded,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             headers={}
         )
@@ -136,13 +137,13 @@ class TestCreateZone():
         assert req_body['excluded'] == [address_model]
 
     def test_create_zone_all_params_with_retries(self):
-        # Enable retries and run test_create_zone_all_params.
-        _service.enable_retries()
-        self.test_create_zone_all_params()
+    	# Enable retries and run test_create_zone_all_params.
+    	_service.enable_retries()
+    	self.test_create_zone_all_params()
 
-        # Disable retries and run test_create_zone_all_params.
-        _service.disable_retries()
-        self.test_create_zone_all_params()
+    	# Disable retries and run test_create_zone_all_params.
+    	_service.disable_retries()
+    	self.test_create_zone_all_params()
 
     @responses.activate
     def test_create_zone_required_params(self):
@@ -151,7 +152,7 @@ class TestCreateZone():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/zones')
-        mock_response = '{"id": "id", "crn": "crn", "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -161,19 +162,19 @@ class TestCreateZone():
         # Invoke method
         response = _service.create_zone()
 
+
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 201
 
     def test_create_zone_required_params_with_retries(self):
-        # Enable retries and run test_create_zone_required_params.
-        _service.enable_retries()
-        self.test_create_zone_required_params()
+    	# Enable retries and run test_create_zone_required_params.
+    	_service.enable_retries()
+    	self.test_create_zone_required_params()
 
-        # Disable retries and run test_create_zone_required_params.
-        _service.disable_retries()
-        self.test_create_zone_required_params()
-
+    	# Disable retries and run test_create_zone_required_params.
+    	_service.disable_retries()
+    	self.test_create_zone_required_params()
 
 class TestListZones():
     """
@@ -184,7 +185,7 @@ class TestListZones():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -207,6 +208,7 @@ class TestListZones():
 
         # Set up parameter values
         account_id = 'testString'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
         name = 'testString'
         sort = 'testString'
@@ -214,6 +216,7 @@ class TestListZones():
         # Invoke method
         response = _service.list_zones(
             account_id,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             name=name,
             sort=sort,
@@ -224,20 +227,20 @@ class TestListZones():
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'name={}'.format(name) in query_string
         assert 'sort={}'.format(sort) in query_string
 
     def test_list_zones_all_params_with_retries(self):
-        # Enable retries and run test_list_zones_all_params.
-        _service.enable_retries()
-        self.test_list_zones_all_params()
+    	# Enable retries and run test_list_zones_all_params.
+    	_service.enable_retries()
+    	self.test_list_zones_all_params()
 
-        # Disable retries and run test_list_zones_all_params.
-        _service.disable_retries()
-        self.test_list_zones_all_params()
+    	# Disable retries and run test_list_zones_all_params.
+    	_service.disable_retries()
+    	self.test_list_zones_all_params()
 
     @responses.activate
     def test_list_zones_required_params(self):
@@ -266,18 +269,18 @@ class TestListZones():
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
     def test_list_zones_required_params_with_retries(self):
-        # Enable retries and run test_list_zones_required_params.
-        _service.enable_retries()
-        self.test_list_zones_required_params()
+    	# Enable retries and run test_list_zones_required_params.
+    	_service.enable_retries()
+    	self.test_list_zones_required_params()
 
-        # Disable retries and run test_list_zones_required_params.
-        _service.disable_retries()
-        self.test_list_zones_required_params()
+    	# Disable retries and run test_list_zones_required_params.
+    	_service.disable_retries()
+    	self.test_list_zones_required_params()
 
     @responses.activate
     def test_list_zones_value_error(self):
@@ -301,19 +304,19 @@ class TestListZones():
             "account_id": account_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_zones(**req_copy)
 
+
     def test_list_zones_value_error_with_retries(self):
-        # Enable retries and run test_list_zones_value_error.
-        _service.enable_retries()
-        self.test_list_zones_value_error()
+    	# Enable retries and run test_list_zones_value_error.
+    	_service.enable_retries()
+    	self.test_list_zones_value_error()
 
-        # Disable retries and run test_list_zones_value_error.
-        _service.disable_retries()
-        self.test_list_zones_value_error()
-
+    	# Disable retries and run test_list_zones_value_error.
+    	_service.disable_retries()
+    	self.test_list_zones_value_error()
 
 class TestGetZone():
     """
@@ -324,7 +327,7 @@ class TestGetZone():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -338,7 +341,7 @@ class TestGetZone():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/zones/testString')
-        mock_response = '{"id": "id", "crn": "crn", "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -347,11 +350,13 @@ class TestGetZone():
 
         # Set up parameter values
         zone_id = 'testString'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
 
         # Invoke method
         response = _service.get_zone(
             zone_id,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             headers={}
         )
@@ -361,13 +366,13 @@ class TestGetZone():
         assert response.status_code == 200
 
     def test_get_zone_all_params_with_retries(self):
-        # Enable retries and run test_get_zone_all_params.
-        _service.enable_retries()
-        self.test_get_zone_all_params()
+    	# Enable retries and run test_get_zone_all_params.
+    	_service.enable_retries()
+    	self.test_get_zone_all_params()
 
-        # Disable retries and run test_get_zone_all_params.
-        _service.disable_retries()
-        self.test_get_zone_all_params()
+    	# Disable retries and run test_get_zone_all_params.
+    	_service.disable_retries()
+    	self.test_get_zone_all_params()
 
     @responses.activate
     def test_get_zone_required_params(self):
@@ -376,7 +381,7 @@ class TestGetZone():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/zones/testString')
-        mock_response = '{"id": "id", "crn": "crn", "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -397,13 +402,13 @@ class TestGetZone():
         assert response.status_code == 200
 
     def test_get_zone_required_params_with_retries(self):
-        # Enable retries and run test_get_zone_required_params.
-        _service.enable_retries()
-        self.test_get_zone_required_params()
+    	# Enable retries and run test_get_zone_required_params.
+    	_service.enable_retries()
+    	self.test_get_zone_required_params()
 
-        # Disable retries and run test_get_zone_required_params.
-        _service.disable_retries()
-        self.test_get_zone_required_params()
+    	# Disable retries and run test_get_zone_required_params.
+    	_service.disable_retries()
+    	self.test_get_zone_required_params()
 
     @responses.activate
     def test_get_zone_value_error(self):
@@ -412,7 +417,7 @@ class TestGetZone():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/zones/testString')
-        mock_response = '{"id": "id", "crn": "crn", "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -427,19 +432,19 @@ class TestGetZone():
             "zone_id": zone_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_zone(**req_copy)
 
+
     def test_get_zone_value_error_with_retries(self):
-        # Enable retries and run test_get_zone_value_error.
-        _service.enable_retries()
-        self.test_get_zone_value_error()
+    	# Enable retries and run test_get_zone_value_error.
+    	_service.enable_retries()
+    	self.test_get_zone_value_error()
 
-        # Disable retries and run test_get_zone_value_error.
-        _service.disable_retries()
-        self.test_get_zone_value_error()
-
+    	# Disable retries and run test_get_zone_value_error.
+    	_service.disable_retries()
+    	self.test_get_zone_value_error()
 
 class TestReplaceZone():
     """
@@ -450,7 +455,7 @@ class TestReplaceZone():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -464,7 +469,7 @@ class TestReplaceZone():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/zones/testString')
-        mock_response = '{"id": "id", "crn": "crn", "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -484,6 +489,7 @@ class TestReplaceZone():
         addresses = [address_model]
         description = 'this is an example of zone'
         excluded = [address_model]
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
 
         # Invoke method
@@ -495,6 +501,7 @@ class TestReplaceZone():
             addresses=addresses,
             description=description,
             excluded=excluded,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             headers={}
         )
@@ -511,13 +518,13 @@ class TestReplaceZone():
         assert req_body['excluded'] == [address_model]
 
     def test_replace_zone_all_params_with_retries(self):
-        # Enable retries and run test_replace_zone_all_params.
-        _service.enable_retries()
-        self.test_replace_zone_all_params()
+    	# Enable retries and run test_replace_zone_all_params.
+    	_service.enable_retries()
+    	self.test_replace_zone_all_params()
 
-        # Disable retries and run test_replace_zone_all_params.
-        _service.disable_retries()
-        self.test_replace_zone_all_params()
+    	# Disable retries and run test_replace_zone_all_params.
+    	_service.disable_retries()
+    	self.test_replace_zone_all_params()
 
     @responses.activate
     def test_replace_zone_required_params(self):
@@ -526,7 +533,7 @@ class TestReplaceZone():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/zones/testString')
-        mock_response = '{"id": "id", "crn": "crn", "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -549,13 +556,13 @@ class TestReplaceZone():
         assert response.status_code == 200
 
     def test_replace_zone_required_params_with_retries(self):
-        # Enable retries and run test_replace_zone_required_params.
-        _service.enable_retries()
-        self.test_replace_zone_required_params()
+    	# Enable retries and run test_replace_zone_required_params.
+    	_service.enable_retries()
+    	self.test_replace_zone_required_params()
 
-        # Disable retries and run test_replace_zone_required_params.
-        _service.disable_retries()
-        self.test_replace_zone_required_params()
+    	# Disable retries and run test_replace_zone_required_params.
+    	_service.disable_retries()
+    	self.test_replace_zone_required_params()
 
     @responses.activate
     def test_replace_zone_value_error(self):
@@ -564,7 +571,7 @@ class TestReplaceZone():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/zones/testString')
-        mock_response = '{"id": "id", "crn": "crn", "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -581,19 +588,19 @@ class TestReplaceZone():
             "if_match": if_match,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.replace_zone(**req_copy)
 
+
     def test_replace_zone_value_error_with_retries(self):
-        # Enable retries and run test_replace_zone_value_error.
-        _service.enable_retries()
-        self.test_replace_zone_value_error()
+    	# Enable retries and run test_replace_zone_value_error.
+    	_service.enable_retries()
+    	self.test_replace_zone_value_error()
 
-        # Disable retries and run test_replace_zone_value_error.
-        _service.disable_retries()
-        self.test_replace_zone_value_error()
-
+    	# Disable retries and run test_replace_zone_value_error.
+    	_service.disable_retries()
+    	self.test_replace_zone_value_error()
 
 class TestDeleteZone():
     """
@@ -604,7 +611,7 @@ class TestDeleteZone():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -624,11 +631,13 @@ class TestDeleteZone():
 
         # Set up parameter values
         zone_id = 'testString'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
 
         # Invoke method
         response = _service.delete_zone(
             zone_id,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             headers={}
         )
@@ -638,13 +647,13 @@ class TestDeleteZone():
         assert response.status_code == 204
 
     def test_delete_zone_all_params_with_retries(self):
-        # Enable retries and run test_delete_zone_all_params.
-        _service.enable_retries()
-        self.test_delete_zone_all_params()
+    	# Enable retries and run test_delete_zone_all_params.
+    	_service.enable_retries()
+    	self.test_delete_zone_all_params()
 
-        # Disable retries and run test_delete_zone_all_params.
-        _service.disable_retries()
-        self.test_delete_zone_all_params()
+    	# Disable retries and run test_delete_zone_all_params.
+    	_service.disable_retries()
+    	self.test_delete_zone_all_params()
 
     @responses.activate
     def test_delete_zone_required_params(self):
@@ -671,13 +680,13 @@ class TestDeleteZone():
         assert response.status_code == 204
 
     def test_delete_zone_required_params_with_retries(self):
-        # Enable retries and run test_delete_zone_required_params.
-        _service.enable_retries()
-        self.test_delete_zone_required_params()
+    	# Enable retries and run test_delete_zone_required_params.
+    	_service.enable_retries()
+    	self.test_delete_zone_required_params()
 
-        # Disable retries and run test_delete_zone_required_params.
-        _service.disable_retries()
-        self.test_delete_zone_required_params()
+    	# Disable retries and run test_delete_zone_required_params.
+    	_service.disable_retries()
+    	self.test_delete_zone_required_params()
 
     @responses.activate
     def test_delete_zone_value_error(self):
@@ -698,19 +707,19 @@ class TestDeleteZone():
             "zone_id": zone_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_zone(**req_copy)
 
+
     def test_delete_zone_value_error_with_retries(self):
-        # Enable retries and run test_delete_zone_value_error.
-        _service.enable_retries()
-        self.test_delete_zone_value_error()
+    	# Enable retries and run test_delete_zone_value_error.
+    	_service.enable_retries()
+    	self.test_delete_zone_value_error()
 
-        # Disable retries and run test_delete_zone_value_error.
-        _service.disable_retries()
-        self.test_delete_zone_value_error()
-
+    	# Disable retries and run test_delete_zone_value_error.
+    	_service.disable_retries()
+    	self.test_delete_zone_value_error()
 
 class TestListAvailableServicerefTargets():
     """
@@ -721,7 +730,7 @@ class TestListAvailableServicerefTargets():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -743,10 +752,14 @@ class TestListAvailableServicerefTargets():
                       status=200)
 
         # Set up parameter values
+        x_correlation_id = 'testString'
+        transaction_id = 'testString'
         type = 'all'
 
         # Invoke method
         response = _service.list_available_serviceref_targets(
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
             type=type,
             headers={}
         )
@@ -755,18 +768,18 @@ class TestListAvailableServicerefTargets():
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'type={}'.format(type) in query_string
 
     def test_list_available_serviceref_targets_all_params_with_retries(self):
-        # Enable retries and run test_list_available_serviceref_targets_all_params.
-        _service.enable_retries()
-        self.test_list_available_serviceref_targets_all_params()
+    	# Enable retries and run test_list_available_serviceref_targets_all_params.
+    	_service.enable_retries()
+    	self.test_list_available_serviceref_targets_all_params()
 
-        # Disable retries and run test_list_available_serviceref_targets_all_params.
-        _service.disable_retries()
-        self.test_list_available_serviceref_targets_all_params()
+    	# Disable retries and run test_list_available_serviceref_targets_all_params.
+    	_service.disable_retries()
+    	self.test_list_available_serviceref_targets_all_params()
 
     @responses.activate
     def test_list_available_serviceref_targets_required_params(self):
@@ -785,19 +798,19 @@ class TestListAvailableServicerefTargets():
         # Invoke method
         response = _service.list_available_serviceref_targets()
 
+
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
     def test_list_available_serviceref_targets_required_params_with_retries(self):
-        # Enable retries and run test_list_available_serviceref_targets_required_params.
-        _service.enable_retries()
-        self.test_list_available_serviceref_targets_required_params()
+    	# Enable retries and run test_list_available_serviceref_targets_required_params.
+    	_service.enable_retries()
+    	self.test_list_available_serviceref_targets_required_params()
 
-        # Disable retries and run test_list_available_serviceref_targets_required_params.
-        _service.disable_retries()
-        self.test_list_available_serviceref_targets_required_params()
-
+    	# Disable retries and run test_list_available_serviceref_targets_required_params.
+    	_service.disable_retries()
+    	self.test_list_available_serviceref_targets_required_params()
 
 # endregion
 ##############################################################################
@@ -835,7 +848,6 @@ class TestNewInstance():
             service = ContextBasedRestrictionsV1.new_instance(
             )
 
-
 class TestCreateRule():
     """
     Test Class for create_rule
@@ -845,7 +857,7 @@ class TestCreateRule():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -896,6 +908,7 @@ class TestCreateRule():
         contexts = [rule_context_model]
         resources = [resource_model]
         description = 'this is an example of rule'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
 
         # Invoke method
@@ -903,6 +916,7 @@ class TestCreateRule():
             contexts=contexts,
             resources=resources,
             description=description,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             headers={}
         )
@@ -917,13 +931,13 @@ class TestCreateRule():
         assert req_body['description'] == 'this is an example of rule'
 
     def test_create_rule_all_params_with_retries(self):
-        # Enable retries and run test_create_rule_all_params.
-        _service.enable_retries()
-        self.test_create_rule_all_params()
+    	# Enable retries and run test_create_rule_all_params.
+    	_service.enable_retries()
+    	self.test_create_rule_all_params()
 
-        # Disable retries and run test_create_rule_all_params.
-        _service.disable_retries()
-        self.test_create_rule_all_params()
+    	# Disable retries and run test_create_rule_all_params.
+    	_service.disable_retries()
+    	self.test_create_rule_all_params()
 
     @responses.activate
     def test_create_rule_required_params(self):
@@ -942,19 +956,19 @@ class TestCreateRule():
         # Invoke method
         response = _service.create_rule()
 
+
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 201
 
     def test_create_rule_required_params_with_retries(self):
-        # Enable retries and run test_create_rule_required_params.
-        _service.enable_retries()
-        self.test_create_rule_required_params()
+    	# Enable retries and run test_create_rule_required_params.
+    	_service.enable_retries()
+    	self.test_create_rule_required_params()
 
-        # Disable retries and run test_create_rule_required_params.
-        _service.disable_retries()
-        self.test_create_rule_required_params()
-
+    	# Disable retries and run test_create_rule_required_params.
+    	_service.disable_retries()
+    	self.test_create_rule_required_params()
 
 class TestListRules():
     """
@@ -965,7 +979,7 @@ class TestListRules():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -988,6 +1002,7 @@ class TestListRules():
 
         # Set up parameter values
         account_id = 'testString'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
         region = 'testString'
         resource = 'testString'
@@ -1001,6 +1016,7 @@ class TestListRules():
         # Invoke method
         response = _service.list_rules(
             account_id,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             region=region,
             resource=resource,
@@ -1017,7 +1033,7 @@ class TestListRules():
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'region={}'.format(region) in query_string
@@ -1030,13 +1046,13 @@ class TestListRules():
         assert 'sort={}'.format(sort) in query_string
 
     def test_list_rules_all_params_with_retries(self):
-        # Enable retries and run test_list_rules_all_params.
-        _service.enable_retries()
-        self.test_list_rules_all_params()
+    	# Enable retries and run test_list_rules_all_params.
+    	_service.enable_retries()
+    	self.test_list_rules_all_params()
 
-        # Disable retries and run test_list_rules_all_params.
-        _service.disable_retries()
-        self.test_list_rules_all_params()
+    	# Disable retries and run test_list_rules_all_params.
+    	_service.disable_retries()
+    	self.test_list_rules_all_params()
 
     @responses.activate
     def test_list_rules_required_params(self):
@@ -1065,18 +1081,18 @@ class TestListRules():
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
     def test_list_rules_required_params_with_retries(self):
-        # Enable retries and run test_list_rules_required_params.
-        _service.enable_retries()
-        self.test_list_rules_required_params()
+    	# Enable retries and run test_list_rules_required_params.
+    	_service.enable_retries()
+    	self.test_list_rules_required_params()
 
-        # Disable retries and run test_list_rules_required_params.
-        _service.disable_retries()
-        self.test_list_rules_required_params()
+    	# Disable retries and run test_list_rules_required_params.
+    	_service.disable_retries()
+    	self.test_list_rules_required_params()
 
     @responses.activate
     def test_list_rules_value_error(self):
@@ -1100,19 +1116,19 @@ class TestListRules():
             "account_id": account_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_rules(**req_copy)
 
+
     def test_list_rules_value_error_with_retries(self):
-        # Enable retries and run test_list_rules_value_error.
-        _service.enable_retries()
-        self.test_list_rules_value_error()
+    	# Enable retries and run test_list_rules_value_error.
+    	_service.enable_retries()
+    	self.test_list_rules_value_error()
 
-        # Disable retries and run test_list_rules_value_error.
-        _service.disable_retries()
-        self.test_list_rules_value_error()
-
+    	# Disable retries and run test_list_rules_value_error.
+    	_service.disable_retries()
+    	self.test_list_rules_value_error()
 
 class TestGetRule():
     """
@@ -1123,7 +1139,7 @@ class TestGetRule():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -1146,11 +1162,13 @@ class TestGetRule():
 
         # Set up parameter values
         rule_id = 'testString'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
 
         # Invoke method
         response = _service.get_rule(
             rule_id,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             headers={}
         )
@@ -1160,13 +1178,13 @@ class TestGetRule():
         assert response.status_code == 200
 
     def test_get_rule_all_params_with_retries(self):
-        # Enable retries and run test_get_rule_all_params.
-        _service.enable_retries()
-        self.test_get_rule_all_params()
+    	# Enable retries and run test_get_rule_all_params.
+    	_service.enable_retries()
+    	self.test_get_rule_all_params()
 
-        # Disable retries and run test_get_rule_all_params.
-        _service.disable_retries()
-        self.test_get_rule_all_params()
+    	# Disable retries and run test_get_rule_all_params.
+    	_service.disable_retries()
+    	self.test_get_rule_all_params()
 
     @responses.activate
     def test_get_rule_required_params(self):
@@ -1196,13 +1214,13 @@ class TestGetRule():
         assert response.status_code == 200
 
     def test_get_rule_required_params_with_retries(self):
-        # Enable retries and run test_get_rule_required_params.
-        _service.enable_retries()
-        self.test_get_rule_required_params()
+    	# Enable retries and run test_get_rule_required_params.
+    	_service.enable_retries()
+    	self.test_get_rule_required_params()
 
-        # Disable retries and run test_get_rule_required_params.
-        _service.disable_retries()
-        self.test_get_rule_required_params()
+    	# Disable retries and run test_get_rule_required_params.
+    	_service.disable_retries()
+    	self.test_get_rule_required_params()
 
     @responses.activate
     def test_get_rule_value_error(self):
@@ -1226,19 +1244,19 @@ class TestGetRule():
             "rule_id": rule_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_rule(**req_copy)
 
+
     def test_get_rule_value_error_with_retries(self):
-        # Enable retries and run test_get_rule_value_error.
-        _service.enable_retries()
-        self.test_get_rule_value_error()
+    	# Enable retries and run test_get_rule_value_error.
+    	_service.enable_retries()
+    	self.test_get_rule_value_error()
 
-        # Disable retries and run test_get_rule_value_error.
-        _service.disable_retries()
-        self.test_get_rule_value_error()
-
+    	# Disable retries and run test_get_rule_value_error.
+    	_service.disable_retries()
+    	self.test_get_rule_value_error()
 
 class TestReplaceRule():
     """
@@ -1249,7 +1267,7 @@ class TestReplaceRule():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -1302,6 +1320,7 @@ class TestReplaceRule():
         contexts = [rule_context_model]
         resources = [resource_model]
         description = 'this is an example of rule'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
 
         # Invoke method
@@ -1311,6 +1330,7 @@ class TestReplaceRule():
             contexts=contexts,
             resources=resources,
             description=description,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             headers={}
         )
@@ -1325,13 +1345,13 @@ class TestReplaceRule():
         assert req_body['description'] == 'this is an example of rule'
 
     def test_replace_rule_all_params_with_retries(self):
-        # Enable retries and run test_replace_rule_all_params.
-        _service.enable_retries()
-        self.test_replace_rule_all_params()
+    	# Enable retries and run test_replace_rule_all_params.
+    	_service.enable_retries()
+    	self.test_replace_rule_all_params()
 
-        # Disable retries and run test_replace_rule_all_params.
-        _service.disable_retries()
-        self.test_replace_rule_all_params()
+    	# Disable retries and run test_replace_rule_all_params.
+    	_service.disable_retries()
+    	self.test_replace_rule_all_params()
 
     @responses.activate
     def test_replace_rule_required_params(self):
@@ -1363,13 +1383,13 @@ class TestReplaceRule():
         assert response.status_code == 200
 
     def test_replace_rule_required_params_with_retries(self):
-        # Enable retries and run test_replace_rule_required_params.
-        _service.enable_retries()
-        self.test_replace_rule_required_params()
+    	# Enable retries and run test_replace_rule_required_params.
+    	_service.enable_retries()
+    	self.test_replace_rule_required_params()
 
-        # Disable retries and run test_replace_rule_required_params.
-        _service.disable_retries()
-        self.test_replace_rule_required_params()
+    	# Disable retries and run test_replace_rule_required_params.
+    	_service.disable_retries()
+    	self.test_replace_rule_required_params()
 
     @responses.activate
     def test_replace_rule_value_error(self):
@@ -1395,19 +1415,19 @@ class TestReplaceRule():
             "if_match": if_match,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.replace_rule(**req_copy)
 
+
     def test_replace_rule_value_error_with_retries(self):
-        # Enable retries and run test_replace_rule_value_error.
-        _service.enable_retries()
-        self.test_replace_rule_value_error()
+    	# Enable retries and run test_replace_rule_value_error.
+    	_service.enable_retries()
+    	self.test_replace_rule_value_error()
 
-        # Disable retries and run test_replace_rule_value_error.
-        _service.disable_retries()
-        self.test_replace_rule_value_error()
-
+    	# Disable retries and run test_replace_rule_value_error.
+    	_service.disable_retries()
+    	self.test_replace_rule_value_error()
 
 class TestDeleteRule():
     """
@@ -1418,7 +1438,7 @@ class TestDeleteRule():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -1438,11 +1458,13 @@ class TestDeleteRule():
 
         # Set up parameter values
         rule_id = 'testString'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
 
         # Invoke method
         response = _service.delete_rule(
             rule_id,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             headers={}
         )
@@ -1452,13 +1474,13 @@ class TestDeleteRule():
         assert response.status_code == 204
 
     def test_delete_rule_all_params_with_retries(self):
-        # Enable retries and run test_delete_rule_all_params.
-        _service.enable_retries()
-        self.test_delete_rule_all_params()
+    	# Enable retries and run test_delete_rule_all_params.
+    	_service.enable_retries()
+    	self.test_delete_rule_all_params()
 
-        # Disable retries and run test_delete_rule_all_params.
-        _service.disable_retries()
-        self.test_delete_rule_all_params()
+    	# Disable retries and run test_delete_rule_all_params.
+    	_service.disable_retries()
+    	self.test_delete_rule_all_params()
 
     @responses.activate
     def test_delete_rule_required_params(self):
@@ -1485,13 +1507,13 @@ class TestDeleteRule():
         assert response.status_code == 204
 
     def test_delete_rule_required_params_with_retries(self):
-        # Enable retries and run test_delete_rule_required_params.
-        _service.enable_retries()
-        self.test_delete_rule_required_params()
+    	# Enable retries and run test_delete_rule_required_params.
+    	_service.enable_retries()
+    	self.test_delete_rule_required_params()
 
-        # Disable retries and run test_delete_rule_required_params.
-        _service.disable_retries()
-        self.test_delete_rule_required_params()
+    	# Disable retries and run test_delete_rule_required_params.
+    	_service.disable_retries()
+    	self.test_delete_rule_required_params()
 
     @responses.activate
     def test_delete_rule_value_error(self):
@@ -1512,19 +1534,19 @@ class TestDeleteRule():
             "rule_id": rule_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_rule(**req_copy)
 
+
     def test_delete_rule_value_error_with_retries(self):
-        # Enable retries and run test_delete_rule_value_error.
-        _service.enable_retries()
-        self.test_delete_rule_value_error()
+    	# Enable retries and run test_delete_rule_value_error.
+    	_service.enable_retries()
+    	self.test_delete_rule_value_error()
 
-        # Disable retries and run test_delete_rule_value_error.
-        _service.disable_retries()
-        self.test_delete_rule_value_error()
-
+    	# Disable retries and run test_delete_rule_value_error.
+    	_service.disable_retries()
+    	self.test_delete_rule_value_error()
 
 # endregion
 ##############################################################################
@@ -1562,7 +1584,6 @@ class TestNewInstance():
             service = ContextBasedRestrictionsV1.new_instance(
             )
 
-
 class TestGetAccountSettings():
     """
     Test Class for get_account_settings
@@ -1572,7 +1593,7 @@ class TestGetAccountSettings():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -1595,11 +1616,13 @@ class TestGetAccountSettings():
 
         # Set up parameter values
         account_id = 'testString'
+        x_correlation_id = 'testString'
         transaction_id = 'testString'
 
         # Invoke method
         response = _service.get_account_settings(
             account_id,
+            x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
             headers={}
         )
@@ -1609,13 +1632,13 @@ class TestGetAccountSettings():
         assert response.status_code == 200
 
     def test_get_account_settings_all_params_with_retries(self):
-        # Enable retries and run test_get_account_settings_all_params.
-        _service.enable_retries()
-        self.test_get_account_settings_all_params()
+    	# Enable retries and run test_get_account_settings_all_params.
+    	_service.enable_retries()
+    	self.test_get_account_settings_all_params()
 
-        # Disable retries and run test_get_account_settings_all_params.
-        _service.disable_retries()
-        self.test_get_account_settings_all_params()
+    	# Disable retries and run test_get_account_settings_all_params.
+    	_service.disable_retries()
+    	self.test_get_account_settings_all_params()
 
     @responses.activate
     def test_get_account_settings_required_params(self):
@@ -1645,13 +1668,13 @@ class TestGetAccountSettings():
         assert response.status_code == 200
 
     def test_get_account_settings_required_params_with_retries(self):
-        # Enable retries and run test_get_account_settings_required_params.
-        _service.enable_retries()
-        self.test_get_account_settings_required_params()
+    	# Enable retries and run test_get_account_settings_required_params.
+    	_service.enable_retries()
+    	self.test_get_account_settings_required_params()
 
-        # Disable retries and run test_get_account_settings_required_params.
-        _service.disable_retries()
-        self.test_get_account_settings_required_params()
+    	# Disable retries and run test_get_account_settings_required_params.
+    	_service.disable_retries()
+    	self.test_get_account_settings_required_params()
 
     @responses.activate
     def test_get_account_settings_value_error(self):
@@ -1675,19 +1698,19 @@ class TestGetAccountSettings():
             "account_id": account_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_account_settings(**req_copy)
 
+
     def test_get_account_settings_value_error_with_retries(self):
-        # Enable retries and run test_get_account_settings_value_error.
-        _service.enable_retries()
-        self.test_get_account_settings_value_error()
+    	# Enable retries and run test_get_account_settings_value_error.
+    	_service.enable_retries()
+    	self.test_get_account_settings_value_error()
 
-        # Disable retries and run test_get_account_settings_value_error.
-        _service.disable_retries()
-        self.test_get_account_settings_value_error()
-
+    	# Disable retries and run test_get_account_settings_value_error.
+    	_service.disable_retries()
+    	self.test_get_account_settings_value_error()
 
 # endregion
 ##############################################################################
@@ -1738,7 +1761,6 @@ class TestModel_AccountSettings():
         account_settings_model_json2 = account_settings_model.to_dict()
         assert account_settings_model_json2 == account_settings_model_json
 
-
 class TestModel_Resource():
     """
     Test Class for Resource
@@ -1751,12 +1773,12 @@ class TestModel_Resource():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        resource_attribute_model = {}  # ResourceAttribute
+        resource_attribute_model = {} # ResourceAttribute
         resource_attribute_model['name'] = 'testString'
         resource_attribute_model['value'] = 'testString'
         resource_attribute_model['operator'] = 'testString'
 
-        resource_tag_attribute_model = {}  # ResourceTagAttribute
+        resource_tag_attribute_model = {} # ResourceTagAttribute
         resource_tag_attribute_model['name'] = 'testString'
         resource_tag_attribute_model['value'] = 'testString'
         resource_tag_attribute_model['operator'] = 'testString'
@@ -1780,7 +1802,6 @@ class TestModel_Resource():
         # Convert model instance back to dict and verify no loss of data
         resource_model_json2 = resource_model.to_dict()
         assert resource_model_json2 == resource_model_json
-
 
 class TestModel_ResourceAttribute():
     """
@@ -1813,7 +1834,6 @@ class TestModel_ResourceAttribute():
         resource_attribute_model_json2 = resource_attribute_model.to_dict()
         assert resource_attribute_model_json2 == resource_attribute_model_json
 
-
 class TestModel_ResourceTagAttribute():
     """
     Test Class for ResourceTagAttribute
@@ -1845,7 +1865,6 @@ class TestModel_ResourceTagAttribute():
         resource_tag_attribute_model_json2 = resource_tag_attribute_model.to_dict()
         assert resource_tag_attribute_model_json2 == resource_tag_attribute_model_json
 
-
 class TestModel_Rule():
     """
     Test Class for Rule
@@ -1858,24 +1877,24 @@ class TestModel_Rule():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        rule_context_attribute_model = {}  # RuleContextAttribute
+        rule_context_attribute_model = {} # RuleContextAttribute
         rule_context_attribute_model['name'] = 'testString'
         rule_context_attribute_model['value'] = 'testString'
 
-        rule_context_model = {}  # RuleContext
+        rule_context_model = {} # RuleContext
         rule_context_model['attributes'] = [rule_context_attribute_model]
 
-        resource_attribute_model = {}  # ResourceAttribute
+        resource_attribute_model = {} # ResourceAttribute
         resource_attribute_model['name'] = 'testString'
         resource_attribute_model['value'] = 'testString'
         resource_attribute_model['operator'] = 'testString'
 
-        resource_tag_attribute_model = {}  # ResourceTagAttribute
+        resource_tag_attribute_model = {} # ResourceTagAttribute
         resource_tag_attribute_model['name'] = 'testString'
         resource_tag_attribute_model['value'] = 'testString'
         resource_tag_attribute_model['operator'] = 'testString'
 
-        resource_model = {}  # Resource
+        resource_model = {} # Resource
         resource_model['attributes'] = [resource_attribute_model]
         resource_model['tags'] = [resource_tag_attribute_model]
 
@@ -1907,7 +1926,6 @@ class TestModel_Rule():
         rule_model_json2 = rule_model.to_dict()
         assert rule_model_json2 == rule_model_json
 
-
 class TestModel_RuleContext():
     """
     Test Class for RuleContext
@@ -1920,7 +1938,7 @@ class TestModel_RuleContext():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        rule_context_attribute_model = {}  # RuleContextAttribute
+        rule_context_attribute_model = {} # RuleContextAttribute
         rule_context_attribute_model['name'] = 'testString'
         rule_context_attribute_model['value'] = 'testString'
 
@@ -1942,7 +1960,6 @@ class TestModel_RuleContext():
         # Convert model instance back to dict and verify no loss of data
         rule_context_model_json2 = rule_context_model.to_dict()
         assert rule_context_model_json2 == rule_context_model_json
-
 
 class TestModel_RuleContextAttribute():
     """
@@ -1974,7 +1991,6 @@ class TestModel_RuleContextAttribute():
         rule_context_attribute_model_json2 = rule_context_attribute_model.to_dict()
         assert rule_context_attribute_model_json2 == rule_context_attribute_model_json
 
-
 class TestModel_RuleList():
     """
     Test Class for RuleList
@@ -1987,28 +2003,28 @@ class TestModel_RuleList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        rule_context_attribute_model = {}  # RuleContextAttribute
+        rule_context_attribute_model = {} # RuleContextAttribute
         rule_context_attribute_model['name'] = 'testString'
         rule_context_attribute_model['value'] = 'testString'
 
-        rule_context_model = {}  # RuleContext
+        rule_context_model = {} # RuleContext
         rule_context_model['attributes'] = [rule_context_attribute_model]
 
-        resource_attribute_model = {}  # ResourceAttribute
+        resource_attribute_model = {} # ResourceAttribute
         resource_attribute_model['name'] = 'testString'
         resource_attribute_model['value'] = 'testString'
         resource_attribute_model['operator'] = 'testString'
 
-        resource_tag_attribute_model = {}  # ResourceTagAttribute
+        resource_tag_attribute_model = {} # ResourceTagAttribute
         resource_tag_attribute_model['name'] = 'testString'
         resource_tag_attribute_model['value'] = 'testString'
         resource_tag_attribute_model['operator'] = 'testString'
 
-        resource_model = {}  # Resource
+        resource_model = {} # Resource
         resource_model['attributes'] = [resource_attribute_model]
         resource_model['tags'] = [resource_tag_attribute_model]
 
-        rule_model = {}  # Rule
+        rule_model = {} # Rule
         rule_model['id'] = 'testString'
         rule_model['crn'] = 'testString'
         rule_model['description'] = 'testString'
@@ -2040,7 +2056,6 @@ class TestModel_RuleList():
         rule_list_model_json2 = rule_list_model.to_dict()
         assert rule_list_model_json2 == rule_list_model_json
 
-
 class TestModel_ServiceRefTarget():
     """
     Test Class for ServiceRefTarget
@@ -2071,7 +2086,6 @@ class TestModel_ServiceRefTarget():
         service_ref_target_model_json2 = service_ref_target_model.to_dict()
         assert service_ref_target_model_json2 == service_ref_target_model_json
 
-
 class TestModel_ServiceRefTargetList():
     """
     Test Class for ServiceRefTargetList
@@ -2084,7 +2098,7 @@ class TestModel_ServiceRefTargetList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        service_ref_target_model = {}  # ServiceRefTarget
+        service_ref_target_model = {} # ServiceRefTarget
         service_ref_target_model['service_name'] = 'testString'
         service_ref_target_model['service_type'] = 'testString'
 
@@ -2107,7 +2121,6 @@ class TestModel_ServiceRefTargetList():
         # Convert model instance back to dict and verify no loss of data
         service_ref_target_list_model_json2 = service_ref_target_list_model.to_dict()
         assert service_ref_target_list_model_json2 == service_ref_target_list_model_json
-
 
 class TestModel_ServiceRefValue():
     """
@@ -2141,7 +2154,6 @@ class TestModel_ServiceRefValue():
         service_ref_value_model_json2 = service_ref_value_model.to_dict()
         assert service_ref_value_model_json2 == service_ref_value_model_json
 
-
 class TestModel_Zone():
     """
     Test Class for Zone
@@ -2154,7 +2166,7 @@ class TestModel_Zone():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        address_model = {}  # AddressIPAddress
+        address_model = {} # AddressIPAddress
         address_model['type'] = 'ipAddress'
         address_model['value'] = 'testString'
 
@@ -2162,6 +2174,8 @@ class TestModel_Zone():
         zone_model_json = {}
         zone_model_json['id'] = 'testString'
         zone_model_json['crn'] = 'testString'
+        zone_model_json['address_count'] = 38
+        zone_model_json['excluded_count'] = 38
         zone_model_json['name'] = 'testString'
         zone_model_json['account_id'] = 'testString'
         zone_model_json['description'] = 'testString'
@@ -2188,7 +2202,6 @@ class TestModel_Zone():
         zone_model_json2 = zone_model.to_dict()
         assert zone_model_json2 == zone_model_json
 
-
 class TestModel_ZoneList():
     """
     Test Class for ZoneList
@@ -2201,11 +2214,11 @@ class TestModel_ZoneList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        address_model = {}  # AddressIPAddress
+        address_model = {} # AddressIPAddress
         address_model['type'] = 'ipAddress'
         address_model['value'] = 'testString'
 
-        zone_summary_model = {}  # ZoneSummary
+        zone_summary_model = {} # ZoneSummary
         zone_summary_model['id'] = 'testString'
         zone_summary_model['crn'] = 'testString'
         zone_summary_model['name'] = 'testString'
@@ -2239,7 +2252,6 @@ class TestModel_ZoneList():
         zone_list_model_json2 = zone_list_model.to_dict()
         assert zone_list_model_json2 == zone_list_model_json
 
-
 class TestModel_ZoneSummary():
     """
     Test Class for ZoneSummary
@@ -2252,7 +2264,7 @@ class TestModel_ZoneSummary():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        address_model = {}  # AddressIPAddress
+        address_model = {} # AddressIPAddress
         address_model['type'] = 'ipAddress'
         address_model['value'] = 'testString'
 
@@ -2286,7 +2298,6 @@ class TestModel_ZoneSummary():
         zone_summary_model_json2 = zone_summary_model.to_dict()
         assert zone_summary_model_json2 == zone_summary_model_json
 
-
 class TestModel_AddressIPAddress():
     """
     Test Class for AddressIPAddress
@@ -2317,7 +2328,6 @@ class TestModel_AddressIPAddress():
         address_ip_address_model_json2 = address_ip_address_model.to_dict()
         assert address_ip_address_model_json2 == address_ip_address_model_json
 
-
 class TestModel_AddressIPAddressRange():
     """
     Test Class for AddressIPAddressRange
@@ -2338,8 +2348,7 @@ class TestModel_AddressIPAddressRange():
         assert address_ip_address_range_model != False
 
         # Construct a model instance of AddressIPAddressRange by calling from_dict on the json representation
-        address_ip_address_range_model_dict = AddressIPAddressRange.from_dict(
-            address_ip_address_range_model_json).__dict__
+        address_ip_address_range_model_dict = AddressIPAddressRange.from_dict(address_ip_address_range_model_json).__dict__
         address_ip_address_range_model2 = AddressIPAddressRange(**address_ip_address_range_model_dict)
 
         # Verify the model instances are equivalent
@@ -2348,7 +2357,6 @@ class TestModel_AddressIPAddressRange():
         # Convert model instance back to dict and verify no loss of data
         address_ip_address_range_model_json2 = address_ip_address_range_model.to_dict()
         assert address_ip_address_range_model_json2 == address_ip_address_range_model_json
-
 
 class TestModel_AddressServiceRef():
     """
@@ -2362,7 +2370,7 @@ class TestModel_AddressServiceRef():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        service_ref_value_model = {}  # ServiceRefValue
+        service_ref_value_model = {} # ServiceRefValue
         service_ref_value_model['account_id'] = 'testString'
         service_ref_value_model['service_type'] = 'testString'
         service_ref_value_model['service_name'] = 'testString'
@@ -2387,7 +2395,6 @@ class TestModel_AddressServiceRef():
         # Convert model instance back to dict and verify no loss of data
         address_service_ref_model_json2 = address_service_ref_model.to_dict()
         assert address_service_ref_model_json2 == address_service_ref_model_json
-
 
 class TestModel_AddressSubnet():
     """
@@ -2419,7 +2426,6 @@ class TestModel_AddressSubnet():
         address_subnet_model_json2 = address_subnet_model.to_dict()
         assert address_subnet_model_json2 == address_subnet_model_json
 
-
 class TestModel_AddressVPC():
     """
     Test Class for AddressVPC
@@ -2449,6 +2455,7 @@ class TestModel_AddressVPC():
         # Convert model instance back to dict and verify no loss of data
         address_vpc_model_json2 = address_vpc_model.to_dict()
         assert address_vpc_model_json2 == address_vpc_model_json
+
 
 # endregion
 ##############################################################################
