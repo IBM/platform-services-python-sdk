@@ -15,14 +15,14 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 3.38.1-1037b405-20210908-184149
-
+ 
 """
 With the Context Based Restrictions API, you can:
-* Create, list, get, update, and delete network zones
-* Create, list, get, update, and delete context-based restriction rules
+* Create, list, get, replace, and delete network zones
+* Create, list, get, replace, and delete context-based restriction rules
 * Get account settings
 
-API Version: 1.0.0
+API Version: 1.0.1
 """
 
 from datetime import datetime
@@ -38,7 +38,6 @@ from ibm_cloud_sdk_core.utils import convert_model, datetime_to_string, string_t
 
 from .common import get_sdk_headers
 
-
 ##############################################################################
 # Service
 ##############################################################################
@@ -52,7 +51,7 @@ class ContextBasedRestrictionsV1(BaseService):
     @classmethod
     def new_instance(cls,
                      service_name: str = DEFAULT_SERVICE_NAME,
-                     ) -> 'ContextBasedRestrictionsV1':
+                    ) -> 'ContextBasedRestrictionsV1':
         """
         Return a new client for the Context Based Restrictions service using the
                specified parameters and external configuration.
@@ -60,13 +59,13 @@ class ContextBasedRestrictionsV1(BaseService):
         authenticator = get_authenticator_from_environment(service_name)
         service = cls(
             authenticator
-        )
+            )
         service.configure_service(service_name)
         return service
 
     def __init__(self,
                  authenticator: Authenticator = None,
-                 ) -> None:
+                ) -> None:
         """
         Construct a new client for the Context Based Restrictions service.
 
@@ -78,22 +77,25 @@ class ContextBasedRestrictionsV1(BaseService):
                              service_url=self.DEFAULT_SERVICE_URL,
                              authenticator=authenticator)
 
+
     #########################
     # Zones
     #########################
 
+
     def create_zone(self,
-                    *,
-                    name: str = None,
-                    account_id: str = None,
-                    addresses: List['Address'] = None,
-                    description: str = None,
-                    excluded: List['Address'] = None,
-                    transaction_id: str = None,
-                    **kwargs
-                    ) -> DetailedResponse:
+        *,
+        name: str = None,
+        account_id: str = None,
+        addresses: List['Address'] = None,
+        description: str = None,
+        excluded: List['Address'] = None,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
         """
-        Create a zone.
+        Create a network zone.
 
         This operation creates a network zone for the specified account.
 
@@ -103,12 +105,19 @@ class ContextBasedRestrictionsV1(BaseService):
                zone.
         :param str description: (optional) The description of the zone.
         :param List[Address] excluded: (optional) The list of excluded addresses in
-               the zone.
-        :param str transaction_id: (optional) The UUID that is used to correlate
-               and track transactions. If you omit this field, the service generates and
-               sends a transaction ID in the response.
-               **Note:** To help with debugging, we strongly recommend that you generate
-               and supply a `Transaction-Id` with each request.
+               the zone. Only addresses of type `ipAddress`, `ipRange`, and `subnet` can
+               be excluded.
+        :param str x_correlation_id: (optional) The supplied or generated value of
+               this header is logged for a request and repeated in a response header for
+               the corresponding response. The same value is used for downstream requests
+               and retries of those requests. If a value of this headers is not supplied
+               in a request, the service generates a random (version 4) UUID.
+        :param str transaction_id: (optional) The `Transaction-Id` header behaves
+               as the `X-Correlation-Id` header. It is supported for backward
+               compatibility with other IBM platform services that support the
+               `Transaction-Id` header only. If both `X-Correlation-Id` and
+               `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
+               `Transaction-Id`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Zone` object
@@ -119,6 +128,7 @@ class ContextBasedRestrictionsV1(BaseService):
         if excluded is not None:
             excluded = [convert_model(x) for x in excluded]
         headers = {
+            'X-Correlation-Id': x_correlation_id,
             'Transaction-Id': transaction_id
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -150,25 +160,33 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+
     def list_zones(self,
-                   account_id: str,
-                   *,
-                   transaction_id: str = None,
-                   name: str = None,
-                   sort: str = None,
-                   **kwargs
-                   ) -> DetailedResponse:
+        account_id: str,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        name: str = None,
+        sort: str = None,
+        **kwargs
+    ) -> DetailedResponse:
         """
         List network zones.
 
         This operation lists network zones in the specified account.
 
         :param str account_id: The ID of the managing account.
-        :param str transaction_id: (optional) The UUID that is used to correlate
-               and track transactions. If you omit this field, the service generates and
-               sends a transaction ID in the response.
-               **Note:** To help with debugging, we strongly recommend that you generate
-               and supply a `Transaction-Id` with each request.
+        :param str x_correlation_id: (optional) The supplied or generated value of
+               this header is logged for a request and repeated in a response header for
+               the corresponding response. The same value is used for downstream requests
+               and retries of those requests. If a value of this headers is not supplied
+               in a request, the service generates a random (version 4) UUID.
+        :param str transaction_id: (optional) The `Transaction-Id` header behaves
+               as the `X-Correlation-Id` header. It is supported for backward
+               compatibility with other IBM platform services that support the
+               `Transaction-Id` header only. If both `X-Correlation-Id` and
+               `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
+               `Transaction-Id`.
         :param str name: (optional) The name of the zone.
         :param str sort: (optional) Sorts results by using a valid sort field. To
                learn more, see
@@ -181,6 +199,7 @@ class ContextBasedRestrictionsV1(BaseService):
         if account_id is None:
             raise ValueError('account_id must be provided')
         headers = {
+            'X-Correlation-Id': x_correlation_id,
             'Transaction-Id': transaction_id
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -207,23 +226,31 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def get_zone(self,
-                 zone_id: str,
-                 *,
-                 transaction_id: str = None,
-                 **kwargs
-                 ) -> DetailedResponse:
-        """
-        Get the specified network zone.
 
-        This operation returns the network zone for the specified ID.
+    def get_zone(self,
+        zone_id: str,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get a network zone.
+
+        This operation retrieves the network zone identified by the specified zone ID.
 
         :param str zone_id: The ID of a zone.
-        :param str transaction_id: (optional) The UUID that is used to correlate
-               and track transactions. If you omit this field, the service generates and
-               sends a transaction ID in the response.
-               **Note:** To help with debugging, we strongly recommend that you generate
-               and supply a `Transaction-Id` with each request.
+        :param str x_correlation_id: (optional) The supplied or generated value of
+               this header is logged for a request and repeated in a response header for
+               the corresponding response. The same value is used for downstream requests
+               and retries of those requests. If a value of this headers is not supplied
+               in a request, the service generates a random (version 4) UUID.
+        :param str transaction_id: (optional) The `Transaction-Id` header behaves
+               as the `X-Correlation-Id` header. It is supported for backward
+               compatibility with other IBM platform services that support the
+               `Transaction-Id` header only. If both `X-Correlation-Id` and
+               `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
+               `Transaction-Id`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Zone` object
@@ -232,6 +259,7 @@ class ContextBasedRestrictionsV1(BaseService):
         if zone_id is None:
             raise ValueError('zone_id must be provided')
         headers = {
+            'X-Correlation-Id': x_correlation_id,
             'Transaction-Id': transaction_id
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -254,22 +282,26 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def replace_zone(self,
-                     zone_id: str,
-                     if_match: str,
-                     *,
-                     name: str = None,
-                     account_id: str = None,
-                     addresses: List['Address'] = None,
-                     description: str = None,
-                     excluded: List['Address'] = None,
-                     transaction_id: str = None,
-                     **kwargs
-                     ) -> DetailedResponse:
-        """
-        Update the specified network zone.
 
-        This operation updates the network zone with the specified ID.
+    def replace_zone(self,
+        zone_id: str,
+        if_match: str,
+        *,
+        name: str = None,
+        account_id: str = None,
+        addresses: List['Address'] = None,
+        description: str = None,
+        excluded: List['Address'] = None,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Replace a network zone.
+
+        This operation replaces the network zone identified by the specified zone ID.
+        Partial updates are not supported. The entire network zone object must be
+        replaced.
 
         :param str zone_id: The ID of a zone.
         :param str if_match: The current revision of the resource being updated.
@@ -280,12 +312,19 @@ class ContextBasedRestrictionsV1(BaseService):
                zone.
         :param str description: (optional) The description of the zone.
         :param List[Address] excluded: (optional) The list of excluded addresses in
-               the zone.
-        :param str transaction_id: (optional) The UUID that is used to correlate
-               and track transactions. If you omit this field, the service generates and
-               sends a transaction ID in the response.
-               **Note:** To help with debugging, we strongly recommend that you generate
-               and supply a `Transaction-Id` with each request.
+               the zone. Only addresses of type `ipAddress`, `ipRange`, and `subnet` can
+               be excluded.
+        :param str x_correlation_id: (optional) The supplied or generated value of
+               this header is logged for a request and repeated in a response header for
+               the corresponding response. The same value is used for downstream requests
+               and retries of those requests. If a value of this headers is not supplied
+               in a request, the service generates a random (version 4) UUID.
+        :param str transaction_id: (optional) The `Transaction-Id` header behaves
+               as the `X-Correlation-Id` header. It is supported for backward
+               compatibility with other IBM platform services that support the
+               `Transaction-Id` header only. If both `X-Correlation-Id` and
+               `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
+               `Transaction-Id`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Zone` object
@@ -301,6 +340,7 @@ class ContextBasedRestrictionsV1(BaseService):
             excluded = [convert_model(x) for x in excluded]
         headers = {
             'If-Match': if_match,
+            'X-Correlation-Id': x_correlation_id,
             'Transaction-Id': transaction_id
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -335,23 +375,31 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def delete_zone(self,
-                    zone_id: str,
-                    *,
-                    transaction_id: str = None,
-                    **kwargs
-                    ) -> DetailedResponse:
-        """
-        Delete the specified network zone.
 
-        This operation deletes the network zone with the specified home ID.
+    def delete_zone(self,
+        zone_id: str,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Delete a network zone.
+
+        This operation deletes the network zone identified by the specified zone ID.
 
         :param str zone_id: The ID of a zone.
-        :param str transaction_id: (optional) The UUID that is used to correlate
-               and track transactions. If you omit this field, the service generates and
-               sends a transaction ID in the response.
-               **Note:** To help with debugging, we strongly recommend that you generate
-               and supply a `Transaction-Id` with each request.
+        :param str x_correlation_id: (optional) The supplied or generated value of
+               this header is logged for a request and repeated in a response header for
+               the corresponding response. The same value is used for downstream requests
+               and retries of those requests. If a value of this headers is not supplied
+               in a request, the service generates a random (version 4) UUID.
+        :param str transaction_id: (optional) The `Transaction-Id` header behaves
+               as the `X-Correlation-Id` header. It is supported for backward
+               compatibility with other IBM platform services that support the
+               `Transaction-Id` header only. If both `X-Correlation-Id` and
+               `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
+               `Transaction-Id`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
@@ -360,6 +408,7 @@ class ContextBasedRestrictionsV1(BaseService):
         if zone_id is None:
             raise ValueError('zone_id must be provided')
         headers = {
+            'X-Correlation-Id': x_correlation_id,
             'Transaction-Id': transaction_id
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -381,23 +430,40 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+
     def list_available_serviceref_targets(self,
-                                          *,
-                                          type: str = None,
-                                          **kwargs
-                                          ) -> DetailedResponse:
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        type: str = None,
+        **kwargs
+    ) -> DetailedResponse:
         """
         List available service reference targets.
 
         This operation lists all available service reference targets.
 
+        :param str x_correlation_id: (optional) The supplied or generated value of
+               this header is logged for a request and repeated in a response header for
+               the corresponding response. The same value is used for downstream requests
+               and retries of those requests. If a value of this headers is not supplied
+               in a request, the service generates a random (version 4) UUID.
+        :param str transaction_id: (optional) The `Transaction-Id` header behaves
+               as the `X-Correlation-Id` header. It is supported for backward
+               compatibility with other IBM platform services that support the
+               `Transaction-Id` header only. If both `X-Correlation-Id` and
+               `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
+               `Transaction-Id`.
         :param str type: (optional) Specifies the types of services to retrieve.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ServiceRefTargetList` object
         """
 
-        headers = {}
+        headers = {
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id
+        }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
                                       operation_id='list_available_serviceref_targets')
@@ -424,14 +490,16 @@ class ContextBasedRestrictionsV1(BaseService):
     # Rules
     #########################
 
+
     def create_rule(self,
-                    *,
-                    contexts: List['RuleContext'] = None,
-                    resources: List['Resource'] = None,
-                    description: str = None,
-                    transaction_id: str = None,
-                    **kwargs
-                    ) -> DetailedResponse:
+        *,
+        contexts: List['RuleContext'] = None,
+        resources: List['Resource'] = None,
+        description: str = None,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Create a rule.
 
@@ -442,11 +510,17 @@ class ContextBasedRestrictionsV1(BaseService):
         :param List[Resource] resources: (optional) The resources this rule apply
                to.
         :param str description: (optional) The description of the rule.
-        :param str transaction_id: (optional) The UUID that is used to correlate
-               and track transactions. If you omit this field, the service generates and
-               sends a transaction ID in the response.
-               **Note:** To help with debugging, we strongly recommend that you generate
-               and supply a `Transaction-Id` with each request.
+        :param str x_correlation_id: (optional) The supplied or generated value of
+               this header is logged for a request and repeated in a response header for
+               the corresponding response. The same value is used for downstream requests
+               and retries of those requests. If a value of this headers is not supplied
+               in a request, the service generates a random (version 4) UUID.
+        :param str transaction_id: (optional) The `Transaction-Id` header behaves
+               as the `X-Correlation-Id` header. It is supported for backward
+               compatibility with other IBM platform services that support the
+               `Transaction-Id` header only. If both `X-Correlation-Id` and
+               `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
+               `Transaction-Id`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Rule` object
@@ -457,6 +531,7 @@ class ContextBasedRestrictionsV1(BaseService):
         if resources is not None:
             resources = [convert_model(x) for x in resources]
         headers = {
+            'X-Correlation-Id': x_correlation_id,
             'Transaction-Id': transaction_id
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -486,31 +561,39 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+
     def list_rules(self,
-                   account_id: str,
-                   *,
-                   transaction_id: str = None,
-                   region: str = None,
-                   resource: str = None,
-                   resource_type: str = None,
-                   service_instance: str = None,
-                   service_name: str = None,
-                   service_type: str = None,
-                   zone_id: str = None,
-                   sort: str = None,
-                   **kwargs
-                   ) -> DetailedResponse:
+        account_id: str,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        region: str = None,
+        resource: str = None,
+        resource_type: str = None,
+        service_instance: str = None,
+        service_name: str = None,
+        service_type: str = None,
+        zone_id: str = None,
+        sort: str = None,
+        **kwargs
+    ) -> DetailedResponse:
         """
         List rules.
 
-        This operation lists rules for the specified account.
+        This operation lists rules in the specified account.
 
         :param str account_id: The ID of the managing account.
-        :param str transaction_id: (optional) The UUID that is used to correlate
-               and track transactions. If you omit this field, the service generates and
-               sends a transaction ID in the response.
-               **Note:** To help with debugging, we strongly recommend that you generate
-               and supply a `Transaction-Id` with each request.
+        :param str x_correlation_id: (optional) The supplied or generated value of
+               this header is logged for a request and repeated in a response header for
+               the corresponding response. The same value is used for downstream requests
+               and retries of those requests. If a value of this headers is not supplied
+               in a request, the service generates a random (version 4) UUID.
+        :param str transaction_id: (optional) The `Transaction-Id` header behaves
+               as the `X-Correlation-Id` header. It is supported for backward
+               compatibility with other IBM platform services that support the
+               `Transaction-Id` header only. If both `X-Correlation-Id` and
+               `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
+               `Transaction-Id`.
         :param str region: (optional) The `region` resource attribute.
         :param str resource: (optional) The `resource` resource attribute.
         :param str resource_type: (optional) The `resourceType` resource attribute.
@@ -531,6 +614,7 @@ class ContextBasedRestrictionsV1(BaseService):
         if account_id is None:
             raise ValueError('account_id must be provided')
         headers = {
+            'X-Correlation-Id': x_correlation_id,
             'Transaction-Id': transaction_id
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -563,23 +647,31 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def get_rule(self,
-                 rule_id: str,
-                 *,
-                 transaction_id: str = None,
-                 **kwargs
-                 ) -> DetailedResponse:
-        """
-        Get the specified rule.
 
-        This operation gets the rule for the specified ID.
+    def get_rule(self,
+        rule_id: str,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get a rule.
+
+        This operation retrieves the rule identified by the specified rule ID.
 
         :param str rule_id: The ID of a rule.
-        :param str transaction_id: (optional) The UUID that is used to correlate
-               and track transactions. If you omit this field, the service generates and
-               sends a transaction ID in the response.
-               **Note:** To help with debugging, we strongly recommend that you generate
-               and supply a `Transaction-Id` with each request.
+        :param str x_correlation_id: (optional) The supplied or generated value of
+               this header is logged for a request and repeated in a response header for
+               the corresponding response. The same value is used for downstream requests
+               and retries of those requests. If a value of this headers is not supplied
+               in a request, the service generates a random (version 4) UUID.
+        :param str transaction_id: (optional) The `Transaction-Id` header behaves
+               as the `X-Correlation-Id` header. It is supported for backward
+               compatibility with other IBM platform services that support the
+               `Transaction-Id` header only. If both `X-Correlation-Id` and
+               `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
+               `Transaction-Id`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Rule` object
@@ -588,6 +680,7 @@ class ContextBasedRestrictionsV1(BaseService):
         if rule_id is None:
             raise ValueError('rule_id must be provided')
         headers = {
+            'X-Correlation-Id': x_correlation_id,
             'Transaction-Id': transaction_id
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -610,20 +703,23 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def replace_rule(self,
-                     rule_id: str,
-                     if_match: str,
-                     *,
-                     contexts: List['RuleContext'] = None,
-                     resources: List['Resource'] = None,
-                     description: str = None,
-                     transaction_id: str = None,
-                     **kwargs
-                     ) -> DetailedResponse:
-        """
-        Update the specified rule.
 
-        This operation updates the rule for the specified ID.
+    def replace_rule(self,
+        rule_id: str,
+        if_match: str,
+        *,
+        contexts: List['RuleContext'] = None,
+        resources: List['Resource'] = None,
+        description: str = None,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Replace a rule.
+
+        This operation replaces the rule identified by the specified rule ID. Partial
+        updates are not supported. The entire rule object must be replaced.
 
         :param str rule_id: The ID of a rule.
         :param str if_match: The current revision of the resource being updated.
@@ -633,11 +729,17 @@ class ContextBasedRestrictionsV1(BaseService):
         :param List[Resource] resources: (optional) The resources this rule apply
                to.
         :param str description: (optional) The description of the rule.
-        :param str transaction_id: (optional) The UUID that is used to correlate
-               and track transactions. If you omit this field, the service generates and
-               sends a transaction ID in the response.
-               **Note:** To help with debugging, we strongly recommend that you generate
-               and supply a `Transaction-Id` with each request.
+        :param str x_correlation_id: (optional) The supplied or generated value of
+               this header is logged for a request and repeated in a response header for
+               the corresponding response. The same value is used for downstream requests
+               and retries of those requests. If a value of this headers is not supplied
+               in a request, the service generates a random (version 4) UUID.
+        :param str transaction_id: (optional) The `Transaction-Id` header behaves
+               as the `X-Correlation-Id` header. It is supported for backward
+               compatibility with other IBM platform services that support the
+               `Transaction-Id` header only. If both `X-Correlation-Id` and
+               `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
+               `Transaction-Id`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Rule` object
@@ -653,6 +755,7 @@ class ContextBasedRestrictionsV1(BaseService):
             resources = [convert_model(x) for x in resources]
         headers = {
             'If-Match': if_match,
+            'X-Correlation-Id': x_correlation_id,
             'Transaction-Id': transaction_id
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -685,23 +788,31 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def delete_rule(self,
-                    rule_id: str,
-                    *,
-                    transaction_id: str = None,
-                    **kwargs
-                    ) -> DetailedResponse:
-        """
-        Delete the specified rule.
 
-        This operation deletes the rule for the specified home ID.
+    def delete_rule(self,
+        rule_id: str,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Delete a rule.
+
+        This operation deletes the rule identified by the specified rule ID.
 
         :param str rule_id: The ID of a rule.
-        :param str transaction_id: (optional) The UUID that is used to correlate
-               and track transactions. If you omit this field, the service generates and
-               sends a transaction ID in the response.
-               **Note:** To help with debugging, we strongly recommend that you generate
-               and supply a `Transaction-Id` with each request.
+        :param str x_correlation_id: (optional) The supplied or generated value of
+               this header is logged for a request and repeated in a response header for
+               the corresponding response. The same value is used for downstream requests
+               and retries of those requests. If a value of this headers is not supplied
+               in a request, the service generates a random (version 4) UUID.
+        :param str transaction_id: (optional) The `Transaction-Id` header behaves
+               as the `X-Correlation-Id` header. It is supported for backward
+               compatibility with other IBM platform services that support the
+               `Transaction-Id` header only. If both `X-Correlation-Id` and
+               `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
+               `Transaction-Id`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
@@ -710,6 +821,7 @@ class ContextBasedRestrictionsV1(BaseService):
         if rule_id is None:
             raise ValueError('rule_id must be provided')
         headers = {
+            'X-Correlation-Id': x_correlation_id,
             'Transaction-Id': transaction_id
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -735,23 +847,31 @@ class ContextBasedRestrictionsV1(BaseService):
     # Account settings
     #########################
 
-    def get_account_settings(self,
-                             account_id: str,
-                             *,
-                             transaction_id: str = None,
-                             **kwargs
-                             ) -> DetailedResponse:
-        """
-        Get the specified account settings.
 
-        This operation gets the settings for the specified account ID.
+    def get_account_settings(self,
+        account_id: str,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get account settings.
+
+        This operation retrieves the settings for the specified account ID.
 
         :param str account_id: The ID of the account the settings are for.
-        :param str transaction_id: (optional) The UUID that is used to correlate
-               and track transactions. If you omit this field, the service generates and
-               sends a transaction ID in the response.
-               **Note:** To help with debugging, we strongly recommend that you generate
-               and supply a `Transaction-Id` with each request.
+        :param str x_correlation_id: (optional) The supplied or generated value of
+               this header is logged for a request and repeated in a response header for
+               the corresponding response. The same value is used for downstream requests
+               and retries of those requests. If a value of this headers is not supplied
+               in a request, the service generates a random (version 4) UUID.
+        :param str transaction_id: (optional) The `Transaction-Id` header behaves
+               as the `X-Correlation-Id` header. It is supported for backward
+               compatibility with other IBM platform services that support the
+               `Transaction-Id` header only. If both `X-Correlation-Id` and
+               `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
+               `Transaction-Id`.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `AccountSettings` object
@@ -760,6 +880,7 @@ class ContextBasedRestrictionsV1(BaseService):
         if account_id is None:
             raise ValueError('account_id must be provided')
         headers = {
+            'X-Correlation-Id': x_correlation_id,
             'Transaction-Id': transaction_id
         }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -965,7 +1086,6 @@ class AccountSettings():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
 class Address():
     """
     A zone address.
@@ -982,8 +1102,7 @@ class Address():
         :param str type: (optional) The type of address.
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-            ", ".join(
-                ['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef']))
+                  ", ".join(['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef']))
         raise Exception(msg)
 
     @classmethod
@@ -993,9 +1112,8 @@ class Address():
         if disc_class != cls:
             return disc_class.from_dict(_dict)
         msg = ("Cannot convert dictionary into an instance of base class 'Address'. " +
-               "The discriminator value should map to a valid subclass: {1}").format(
-            ", ".join(
-                ['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef']))
+                "The discriminator value should map to a valid subclass: {1}").format(
+                  ", ".join(['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef']))
         raise Exception(msg)
 
     @classmethod
@@ -1100,7 +1218,6 @@ class Resource():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
 class ResourceAttribute():
     """
     A rule resource attribute.
@@ -1176,7 +1293,6 @@ class ResourceAttribute():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
 class ResourceTagAttribute():
     """
     A rule resource tag attribute.
@@ -1251,7 +1367,6 @@ class ResourceTagAttribute():
     def __ne__(self, other: 'ResourceTagAttribute') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
-
 
 class Rule():
     """
@@ -1403,7 +1518,6 @@ class Rule():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
 class RuleContext():
     """
     A rule context.
@@ -1459,7 +1573,6 @@ class RuleContext():
     def __ne__(self, other: 'RuleContext') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
-
 
 class RuleContextAttribute():
     """
@@ -1527,7 +1640,6 @@ class RuleContextAttribute():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
 class RuleList():
     """
     The response object of the ListRules operation.
@@ -1594,7 +1706,6 @@ class RuleList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
 class ServiceRefTarget():
     """
     Summary information about a service reference target.
@@ -1659,7 +1770,6 @@ class ServiceRefTarget():
     def __ne__(self, other: 'ServiceRefTarget') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
-
 
 class ServiceRefTargetList():
     """
@@ -1727,7 +1837,6 @@ class ServiceRefTargetList():
     def __ne__(self, other: 'ServiceRefTargetList') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
-
 
 class ServiceRefValue():
     """
@@ -1810,18 +1919,20 @@ class ServiceRefValue():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
 class Zone():
     """
     An output zone.
 
     :attr str id: The globally unique ID of the zone.
     :attr str crn: The zone CRN.
+    :attr int address_count: The number of addresses in the zone.
+    :attr int excluded_count: The number of excluded addresses in the zone.
     :attr str name: The name of the zone.
     :attr str account_id: The id of the account owning this zone.
     :attr str description: The description of the zone.
     :attr List[Address] addresses: The list of addresses in the zone.
-    :attr List[Address] excluded: The list of excluded addresses in the zone.
+    :attr List[Address] excluded: The list of excluded addresses in the zone. Only
+          addresses of type `ipAddress`, `ipRange`, and `subnet` can be excluded.
     :attr str href: The href link to the resource.
     :attr datetime created_at: The time the resource was created.
     :attr str created_by_id: IAM ID of the user or service which created the
@@ -1834,6 +1945,8 @@ class Zone():
     def __init__(self,
                  id: str,
                  crn: str,
+                 address_count: int,
+                 excluded_count: int,
                  name: str,
                  account_id: str,
                  description: str,
@@ -1849,11 +1962,15 @@ class Zone():
 
         :param str id: The globally unique ID of the zone.
         :param str crn: The zone CRN.
+        :param int address_count: The number of addresses in the zone.
+        :param int excluded_count: The number of excluded addresses in the zone.
         :param str name: The name of the zone.
         :param str account_id: The id of the account owning this zone.
         :param str description: The description of the zone.
         :param List[Address] addresses: The list of addresses in the zone.
         :param List[Address] excluded: The list of excluded addresses in the zone.
+               Only addresses of type `ipAddress`, `ipRange`, and `subnet` can be
+               excluded.
         :param str href: The href link to the resource.
         :param datetime created_at: The time the resource was created.
         :param str created_by_id: IAM ID of the user or service which created the
@@ -1864,6 +1981,8 @@ class Zone():
         """
         self.id = id
         self.crn = crn
+        self.address_count = address_count
+        self.excluded_count = excluded_count
         self.name = name
         self.account_id = account_id
         self.description = description
@@ -1887,6 +2006,14 @@ class Zone():
             args['crn'] = _dict.get('crn')
         else:
             raise ValueError('Required property \'crn\' not present in Zone JSON')
+        if 'address_count' in _dict:
+            args['address_count'] = _dict.get('address_count')
+        else:
+            raise ValueError('Required property \'address_count\' not present in Zone JSON')
+        if 'excluded_count' in _dict:
+            args['excluded_count'] = _dict.get('excluded_count')
+        else:
+            raise ValueError('Required property \'excluded_count\' not present in Zone JSON')
         if 'name' in _dict:
             args['name'] = _dict.get('name')
         else:
@@ -1941,6 +2068,10 @@ class Zone():
             _dict['id'] = self.id
         if hasattr(self, 'crn') and self.crn is not None:
             _dict['crn'] = self.crn
+        if hasattr(self, 'address_count') and self.address_count is not None:
+            _dict['address_count'] = self.address_count
+        if hasattr(self, 'excluded_count') and self.excluded_count is not None:
+            _dict['excluded_count'] = self.excluded_count
         if hasattr(self, 'name') and self.name is not None:
             _dict['name'] = self.name
         if hasattr(self, 'account_id') and self.account_id is not None:
@@ -1980,7 +2111,6 @@ class Zone():
     def __ne__(self, other: 'Zone') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
-
 
 class ZoneList():
     """
@@ -2047,7 +2177,6 @@ class ZoneList():
     def __ne__(self, other: 'ZoneList') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
-
 
 class ZoneSummary():
     """
@@ -2219,7 +2348,6 @@ class ZoneSummary():
     def __ne__(self, other: 'ZoneSummary') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
-
 
 class AddressIPAddress(Address):
     """
@@ -2589,3 +2717,4 @@ class AddressVPC(Address):
         The type of address.
         """
         VPC = 'vpc'
+
