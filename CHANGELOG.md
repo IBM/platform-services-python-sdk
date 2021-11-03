@@ -1,3 +1,10 @@
+## [0.22.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.1...v0.22.2) (2021-11-03)
+
+
+### Bug Fixes
+
+* **Context-Based Restrictions:** add support for the X-Correlation-Id header ([#141](https://github.com/IBM/platform-services-python-sdk/issues/141)) ([f12275f](https://github.com/IBM/platform-services-python-sdk/commit/f12275f05057571c6794653f33c124894294d541))
+
 ## [0.22.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.0...v0.22.1) (2021-10-27)
 
 
