@@ -1,3 +1,10 @@
+## [0.22.4](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.3...v0.22.4) (2021-11-15)
+
+
+### Bug Fixes
+
+* bump python core to 3.13.2 ([#144](https://github.com/IBM/platform-services-python-sdk/issues/144)) ([f82465e](https://github.com/IBM/platform-services-python-sdk/commit/f82465eb0e97d8ee19a08bae67e0b2b8be6905e3))
+
 ## [0.22.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.2...v0.22.3) (2021-11-11)
 
 
