@@ -1,5 +1,4 @@
 # test dependencies
-codecov>=2.1.0,<3.0.0
 couchdb>=1.2,<2.0.0
 coverage>=4.5.4
 pylint>=2.6.0,<3.0.0
