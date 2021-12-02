@@ -506,7 +506,7 @@ class TestIamAccessGroupsV2Examples():
             )
 
             # end-delete_access_group
-            print('\ndelete_access_group() response status code:' + response.get_status_code())
+            print('\ndelete_access_group() response status code:' + str(response.get_status_code()))
 
         except ApiException as e:
             pytest.fail(str(e))

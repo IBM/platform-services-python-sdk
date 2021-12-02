@@ -22,6 +22,7 @@ from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthen
 from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import inspect
 import json
+import os
 import pytest
 import re
 import requests
@@ -32,15 +33,41 @@ from ibm_platform_services.iam_access_groups_v2 import *
 
 _service = IamAccessGroupsV2(
     authenticator=NoAuthAuthenticator()
-    )
+)
 
-_base_url = 'https://iam.cloud.ibm.com/v2'
+_base_url = 'https://iam.cloud.ibm.com'
 _service.set_service_url(_base_url)
 
 ##############################################################################
 # Start of Service: AccessGroupOperations
 ##############################################################################
 # region
+
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamAccessGroupsV2.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamAccessGroupsV2)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamAccessGroupsV2.new_instance(
+            )
 
 class TestCreateAccessGroup():
     """
@@ -51,6 +78,8 @@ class TestCreateAccessGroup():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -62,7 +91,7 @@ class TestCreateAccessGroup():
         create_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups')
+        url = self.preprocess_url(_base_url + '/v2/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
@@ -97,6 +126,14 @@ class TestCreateAccessGroup():
         assert req_body['name'] == 'Managers'
         assert req_body['description'] == 'Group for managers'
 
+    def test_create_access_group_all_params_with_retries(self):
+        # Enable retries and run test_create_access_group_all_params.
+        _service.enable_retries()
+        self.test_create_access_group_all_params()
+
+        # Disable retries and run test_create_access_group_all_params.
+        _service.disable_retries()
+        self.test_create_access_group_all_params()
 
     @responses.activate
     def test_create_access_group_required_params(self):
@@ -104,7 +141,7 @@ class TestCreateAccessGroup():
         test_create_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups')
+        url = self.preprocess_url(_base_url + '/v2/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
@@ -137,6 +174,14 @@ class TestCreateAccessGroup():
         assert req_body['name'] == 'Managers'
         assert req_body['description'] == 'Group for managers'
 
+    def test_create_access_group_required_params_with_retries(self):
+        # Enable retries and run test_create_access_group_required_params.
+        _service.enable_retries()
+        self.test_create_access_group_required_params()
+
+        # Disable retries and run test_create_access_group_required_params.
+        _service.disable_retries()
+        self.test_create_access_group_required_params()
 
     @responses.activate
     def test_create_access_group_value_error(self):
@@ -144,7 +189,7 @@ class TestCreateAccessGroup():
         test_create_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups')
+        url = self.preprocess_url(_base_url + '/v2/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
@@ -168,6 +213,14 @@ class TestCreateAccessGroup():
                 _service.create_access_group(**req_copy)
 
 
+    def test_create_access_group_value_error_with_retries(self):
+        # Enable retries and run test_create_access_group_value_error.
+        _service.enable_retries()
+        self.test_create_access_group_value_error()
+
+        # Disable retries and run test_create_access_group_value_error.
+        _service.disable_retries()
+        self.test_create_access_group_value_error()
 
 class TestListAccessGroups():
     """
@@ -178,6 +231,8 @@ class TestListAccessGroups():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -189,7 +244,7 @@ class TestListAccessGroups():
         list_access_groups()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups')
+        url = self.preprocess_url(_base_url + '/v2/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
@@ -203,9 +258,9 @@ class TestListAccessGroups():
         iam_id = 'testString'
         limit = 38
         offset = 38
-        sort = 'testString'
-        show_federated = True
-        hide_public_access = True
+        sort = 'name'
+        show_federated = False
+        hide_public_access = False
 
         # Invoke method
         response = _service.list_access_groups(
@@ -234,6 +289,14 @@ class TestListAccessGroups():
         assert 'show_federated={}'.format('true' if show_federated else 'false') in query_string
         assert 'hide_public_access={}'.format('true' if hide_public_access else 'false') in query_string
 
+    def test_list_access_groups_all_params_with_retries(self):
+        # Enable retries and run test_list_access_groups_all_params.
+        _service.enable_retries()
+        self.test_list_access_groups_all_params()
+
+        # Disable retries and run test_list_access_groups_all_params.
+        _service.disable_retries()
+        self.test_list_access_groups_all_params()
 
     @responses.activate
     def test_list_access_groups_required_params(self):
@@ -241,7 +304,7 @@ class TestListAccessGroups():
         test_list_access_groups_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups')
+        url = self.preprocess_url(_base_url + '/v2/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
@@ -266,6 +329,14 @@ class TestListAccessGroups():
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
+    def test_list_access_groups_required_params_with_retries(self):
+        # Enable retries and run test_list_access_groups_required_params.
+        _service.enable_retries()
+        self.test_list_access_groups_required_params()
+
+        # Disable retries and run test_list_access_groups_required_params.
+        _service.disable_retries()
+        self.test_list_access_groups_required_params()
 
     @responses.activate
     def test_list_access_groups_value_error(self):
@@ -273,7 +344,7 @@ class TestListAccessGroups():
         test_list_access_groups_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups')
+        url = self.preprocess_url(_base_url + '/v2/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
@@ -294,6 +365,14 @@ class TestListAccessGroups():
                 _service.list_access_groups(**req_copy)
 
 
+    def test_list_access_groups_value_error_with_retries(self):
+        # Enable retries and run test_list_access_groups_value_error.
+        _service.enable_retries()
+        self.test_list_access_groups_value_error()
+
+        # Disable retries and run test_list_access_groups_value_error.
+        _service.disable_retries()
+        self.test_list_access_groups_value_error()
 
 class TestGetAccessGroup():
     """
@@ -304,6 +383,8 @@ class TestGetAccessGroup():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -315,7 +396,7 @@ class TestGetAccessGroup():
         get_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
@@ -326,7 +407,7 @@ class TestGetAccessGroup():
         # Set up parameter values
         access_group_id = 'testString'
         transaction_id = 'testString'
-        show_federated = True
+        show_federated = False
 
         # Invoke method
         response = _service.get_access_group(
@@ -344,6 +425,14 @@ class TestGetAccessGroup():
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'show_federated={}'.format('true' if show_federated else 'false') in query_string
 
+    def test_get_access_group_all_params_with_retries(self):
+        # Enable retries and run test_get_access_group_all_params.
+        _service.enable_retries()
+        self.test_get_access_group_all_params()
+
+        # Disable retries and run test_get_access_group_all_params.
+        _service.disable_retries()
+        self.test_get_access_group_all_params()
 
     @responses.activate
     def test_get_access_group_required_params(self):
@@ -351,7 +440,7 @@ class TestGetAccessGroup():
         test_get_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
@@ -372,6 +461,14 @@ class TestGetAccessGroup():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_access_group_required_params_with_retries(self):
+        # Enable retries and run test_get_access_group_required_params.
+        _service.enable_retries()
+        self.test_get_access_group_required_params()
+
+        # Disable retries and run test_get_access_group_required_params.
+        _service.disable_retries()
+        self.test_get_access_group_required_params()
 
     @responses.activate
     def test_get_access_group_value_error(self):
@@ -379,7 +476,7 @@ class TestGetAccessGroup():
         test_get_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
@@ -400,6 +497,14 @@ class TestGetAccessGroup():
                 _service.get_access_group(**req_copy)
 
 
+    def test_get_access_group_value_error_with_retries(self):
+        # Enable retries and run test_get_access_group_value_error.
+        _service.enable_retries()
+        self.test_get_access_group_value_error()
+
+        # Disable retries and run test_get_access_group_value_error.
+        _service.disable_retries()
+        self.test_get_access_group_value_error()
 
 class TestUpdateAccessGroup():
     """
@@ -410,6 +515,8 @@ class TestUpdateAccessGroup():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -421,7 +528,7 @@ class TestUpdateAccessGroup():
         update_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
@@ -454,6 +561,14 @@ class TestUpdateAccessGroup():
         assert req_body['name'] == 'Awesome Managers'
         assert req_body['description'] == 'Group for awesome managers.'
 
+    def test_update_access_group_all_params_with_retries(self):
+        # Enable retries and run test_update_access_group_all_params.
+        _service.enable_retries()
+        self.test_update_access_group_all_params()
+
+        # Disable retries and run test_update_access_group_all_params.
+        _service.disable_retries()
+        self.test_update_access_group_all_params()
 
     @responses.activate
     def test_update_access_group_required_params(self):
@@ -461,7 +576,7 @@ class TestUpdateAccessGroup():
         test_update_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
@@ -492,6 +607,14 @@ class TestUpdateAccessGroup():
         assert req_body['name'] == 'Awesome Managers'
         assert req_body['description'] == 'Group for awesome managers.'
 
+    def test_update_access_group_required_params_with_retries(self):
+        # Enable retries and run test_update_access_group_required_params.
+        _service.enable_retries()
+        self.test_update_access_group_required_params()
+
+        # Disable retries and run test_update_access_group_required_params.
+        _service.disable_retries()
+        self.test_update_access_group_required_params()
 
     @responses.activate
     def test_update_access_group_value_error(self):
@@ -499,7 +622,7 @@ class TestUpdateAccessGroup():
         test_update_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
@@ -524,6 +647,14 @@ class TestUpdateAccessGroup():
                 _service.update_access_group(**req_copy)
 
 
+    def test_update_access_group_value_error_with_retries(self):
+        # Enable retries and run test_update_access_group_value_error.
+        _service.enable_retries()
+        self.test_update_access_group_value_error()
+
+        # Disable retries and run test_update_access_group_value_error.
+        _service.disable_retries()
+        self.test_update_access_group_value_error()
 
 class TestDeleteAccessGroup():
     """
@@ -534,6 +665,8 @@ class TestDeleteAccessGroup():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -545,7 +678,7 @@ class TestDeleteAccessGroup():
         delete_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -553,7 +686,7 @@ class TestDeleteAccessGroup():
         # Set up parameter values
         access_group_id = 'testString'
         transaction_id = 'testString'
-        force = True
+        force = False
 
         # Invoke method
         response = _service.delete_access_group(
@@ -571,6 +704,14 @@ class TestDeleteAccessGroup():
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'force={}'.format('true' if force else 'false') in query_string
 
+    def test_delete_access_group_all_params_with_retries(self):
+        # Enable retries and run test_delete_access_group_all_params.
+        _service.enable_retries()
+        self.test_delete_access_group_all_params()
+
+        # Disable retries and run test_delete_access_group_all_params.
+        _service.disable_retries()
+        self.test_delete_access_group_all_params()
 
     @responses.activate
     def test_delete_access_group_required_params(self):
@@ -578,7 +719,7 @@ class TestDeleteAccessGroup():
         test_delete_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -596,6 +737,14 @@ class TestDeleteAccessGroup():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_delete_access_group_required_params_with_retries(self):
+        # Enable retries and run test_delete_access_group_required_params.
+        _service.enable_retries()
+        self.test_delete_access_group_required_params()
+
+        # Disable retries and run test_delete_access_group_required_params.
+        _service.disable_retries()
+        self.test_delete_access_group_required_params()
 
     @responses.activate
     def test_delete_access_group_value_error(self):
@@ -603,7 +752,7 @@ class TestDeleteAccessGroup():
         test_delete_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -621,6 +770,14 @@ class TestDeleteAccessGroup():
                 _service.delete_access_group(**req_copy)
 
 
+    def test_delete_access_group_value_error_with_retries(self):
+        # Enable retries and run test_delete_access_group_value_error.
+        _service.enable_retries()
+        self.test_delete_access_group_value_error()
+
+        # Disable retries and run test_delete_access_group_value_error.
+        _service.disable_retries()
+        self.test_delete_access_group_value_error()
 
 # endregion
 ##############################################################################
@@ -632,6 +789,32 @@ class TestDeleteAccessGroup():
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamAccessGroupsV2.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamAccessGroupsV2)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamAccessGroupsV2.new_instance(
+            )
+
 class TestIsMemberOfAccessGroup():
     """
     Test Class for is_member_of_access_group
@@ -641,6 +824,8 @@ class TestIsMemberOfAccessGroup():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -652,7 +837,7 @@ class TestIsMemberOfAccessGroup():
         is_member_of_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members/testString')
         responses.add(responses.HEAD,
                       url,
                       status=204)
@@ -674,6 +859,14 @@ class TestIsMemberOfAccessGroup():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_is_member_of_access_group_all_params_with_retries(self):
+        # Enable retries and run test_is_member_of_access_group_all_params.
+        _service.enable_retries()
+        self.test_is_member_of_access_group_all_params()
+
+        # Disable retries and run test_is_member_of_access_group_all_params.
+        _service.disable_retries()
+        self.test_is_member_of_access_group_all_params()
 
     @responses.activate
     def test_is_member_of_access_group_required_params(self):
@@ -681,7 +874,7 @@ class TestIsMemberOfAccessGroup():
         test_is_member_of_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members/testString')
         responses.add(responses.HEAD,
                       url,
                       status=204)
@@ -701,6 +894,14 @@ class TestIsMemberOfAccessGroup():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_is_member_of_access_group_required_params_with_retries(self):
+        # Enable retries and run test_is_member_of_access_group_required_params.
+        _service.enable_retries()
+        self.test_is_member_of_access_group_required_params()
+
+        # Disable retries and run test_is_member_of_access_group_required_params.
+        _service.disable_retries()
+        self.test_is_member_of_access_group_required_params()
 
     @responses.activate
     def test_is_member_of_access_group_value_error(self):
@@ -708,7 +909,7 @@ class TestIsMemberOfAccessGroup():
         test_is_member_of_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members/testString')
         responses.add(responses.HEAD,
                       url,
                       status=204)
@@ -728,6 +929,14 @@ class TestIsMemberOfAccessGroup():
                 _service.is_member_of_access_group(**req_copy)
 
 
+    def test_is_member_of_access_group_value_error_with_retries(self):
+        # Enable retries and run test_is_member_of_access_group_value_error.
+        _service.enable_retries()
+        self.test_is_member_of_access_group_value_error()
+
+        # Disable retries and run test_is_member_of_access_group_value_error.
+        _service.disable_retries()
+        self.test_is_member_of_access_group_value_error()
 
 class TestAddMembersToAccessGroup():
     """
@@ -738,6 +947,8 @@ class TestAddMembersToAccessGroup():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -749,7 +960,7 @@ class TestAddMembersToAccessGroup():
         add_members_to_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -782,6 +993,14 @@ class TestAddMembersToAccessGroup():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['members'] == [add_group_members_request_members_item_model]
 
+    def test_add_members_to_access_group_all_params_with_retries(self):
+        # Enable retries and run test_add_members_to_access_group_all_params.
+        _service.enable_retries()
+        self.test_add_members_to_access_group_all_params()
+
+        # Disable retries and run test_add_members_to_access_group_all_params.
+        _service.disable_retries()
+        self.test_add_members_to_access_group_all_params()
 
     @responses.activate
     def test_add_members_to_access_group_required_params(self):
@@ -789,7 +1008,7 @@ class TestAddMembersToAccessGroup():
         test_add_members_to_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -820,6 +1039,14 @@ class TestAddMembersToAccessGroup():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['members'] == [add_group_members_request_members_item_model]
 
+    def test_add_members_to_access_group_required_params_with_retries(self):
+        # Enable retries and run test_add_members_to_access_group_required_params.
+        _service.enable_retries()
+        self.test_add_members_to_access_group_required_params()
+
+        # Disable retries and run test_add_members_to_access_group_required_params.
+        _service.disable_retries()
+        self.test_add_members_to_access_group_required_params()
 
     @responses.activate
     def test_add_members_to_access_group_value_error(self):
@@ -827,7 +1054,7 @@ class TestAddMembersToAccessGroup():
         test_add_members_to_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -854,6 +1081,14 @@ class TestAddMembersToAccessGroup():
                 _service.add_members_to_access_group(**req_copy)
 
 
+    def test_add_members_to_access_group_value_error_with_retries(self):
+        # Enable retries and run test_add_members_to_access_group_value_error.
+        _service.enable_retries()
+        self.test_add_members_to_access_group_value_error()
+
+        # Disable retries and run test_add_members_to_access_group_value_error.
+        _service.disable_retries()
+        self.test_add_members_to_access_group_value_error()
 
 class TestListAccessGroupMembers():
     """
@@ -864,6 +1099,8 @@ class TestListAccessGroupMembers():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -875,7 +1112,7 @@ class TestListAccessGroupMembers():
         list_access_group_members()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -889,7 +1126,7 @@ class TestListAccessGroupMembers():
         limit = 38
         offset = 38
         type = 'testString'
-        verbose = True
+        verbose = False
         sort = 'testString'
 
         # Invoke method
@@ -916,6 +1153,14 @@ class TestListAccessGroupMembers():
         assert 'verbose={}'.format('true' if verbose else 'false') in query_string
         assert 'sort={}'.format(sort) in query_string
 
+    def test_list_access_group_members_all_params_with_retries(self):
+        # Enable retries and run test_list_access_group_members_all_params.
+        _service.enable_retries()
+        self.test_list_access_group_members_all_params()
+
+        # Disable retries and run test_list_access_group_members_all_params.
+        _service.disable_retries()
+        self.test_list_access_group_members_all_params()
 
     @responses.activate
     def test_list_access_group_members_required_params(self):
@@ -923,7 +1168,7 @@ class TestListAccessGroupMembers():
         test_list_access_group_members_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -944,6 +1189,14 @@ class TestListAccessGroupMembers():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_access_group_members_required_params_with_retries(self):
+        # Enable retries and run test_list_access_group_members_required_params.
+        _service.enable_retries()
+        self.test_list_access_group_members_required_params()
+
+        # Disable retries and run test_list_access_group_members_required_params.
+        _service.disable_retries()
+        self.test_list_access_group_members_required_params()
 
     @responses.activate
     def test_list_access_group_members_value_error(self):
@@ -951,7 +1204,7 @@ class TestListAccessGroupMembers():
         test_list_access_group_members_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -972,6 +1225,14 @@ class TestListAccessGroupMembers():
                 _service.list_access_group_members(**req_copy)
 
 
+    def test_list_access_group_members_value_error_with_retries(self):
+        # Enable retries and run test_list_access_group_members_value_error.
+        _service.enable_retries()
+        self.test_list_access_group_members_value_error()
+
+        # Disable retries and run test_list_access_group_members_value_error.
+        _service.disable_retries()
+        self.test_list_access_group_members_value_error()
 
 class TestRemoveMemberFromAccessGroup():
     """
@@ -982,6 +1243,8 @@ class TestRemoveMemberFromAccessGroup():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -993,7 +1256,7 @@ class TestRemoveMemberFromAccessGroup():
         remove_member_from_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1015,6 +1278,14 @@ class TestRemoveMemberFromAccessGroup():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_remove_member_from_access_group_all_params_with_retries(self):
+        # Enable retries and run test_remove_member_from_access_group_all_params.
+        _service.enable_retries()
+        self.test_remove_member_from_access_group_all_params()
+
+        # Disable retries and run test_remove_member_from_access_group_all_params.
+        _service.disable_retries()
+        self.test_remove_member_from_access_group_all_params()
 
     @responses.activate
     def test_remove_member_from_access_group_required_params(self):
@@ -1022,7 +1293,7 @@ class TestRemoveMemberFromAccessGroup():
         test_remove_member_from_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1042,6 +1313,14 @@ class TestRemoveMemberFromAccessGroup():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_remove_member_from_access_group_required_params_with_retries(self):
+        # Enable retries and run test_remove_member_from_access_group_required_params.
+        _service.enable_retries()
+        self.test_remove_member_from_access_group_required_params()
+
+        # Disable retries and run test_remove_member_from_access_group_required_params.
+        _service.disable_retries()
+        self.test_remove_member_from_access_group_required_params()
 
     @responses.activate
     def test_remove_member_from_access_group_value_error(self):
@@ -1049,7 +1328,7 @@ class TestRemoveMemberFromAccessGroup():
         test_remove_member_from_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1069,6 +1348,14 @@ class TestRemoveMemberFromAccessGroup():
                 _service.remove_member_from_access_group(**req_copy)
 
 
+    def test_remove_member_from_access_group_value_error_with_retries(self):
+        # Enable retries and run test_remove_member_from_access_group_value_error.
+        _service.enable_retries()
+        self.test_remove_member_from_access_group_value_error()
+
+        # Disable retries and run test_remove_member_from_access_group_value_error.
+        _service.disable_retries()
+        self.test_remove_member_from_access_group_value_error()
 
 class TestRemoveMembersFromAccessGroup():
     """
@@ -1079,6 +1366,8 @@ class TestRemoveMembersFromAccessGroup():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -1090,7 +1379,7 @@ class TestRemoveMembersFromAccessGroup():
         remove_members_from_access_group()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members/delete')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.POST,
                       url,
@@ -1118,6 +1407,14 @@ class TestRemoveMembersFromAccessGroup():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['members'] == ['IBMId-user1', 'iam-ServiceId-123']
 
+    def test_remove_members_from_access_group_all_params_with_retries(self):
+        # Enable retries and run test_remove_members_from_access_group_all_params.
+        _service.enable_retries()
+        self.test_remove_members_from_access_group_all_params()
+
+        # Disable retries and run test_remove_members_from_access_group_all_params.
+        _service.disable_retries()
+        self.test_remove_members_from_access_group_all_params()
 
     @responses.activate
     def test_remove_members_from_access_group_required_params(self):
@@ -1125,7 +1422,7 @@ class TestRemoveMembersFromAccessGroup():
         test_remove_members_from_access_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members/delete')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.POST,
                       url,
@@ -1151,6 +1448,14 @@ class TestRemoveMembersFromAccessGroup():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['members'] == ['IBMId-user1', 'iam-ServiceId-123']
 
+    def test_remove_members_from_access_group_required_params_with_retries(self):
+        # Enable retries and run test_remove_members_from_access_group_required_params.
+        _service.enable_retries()
+        self.test_remove_members_from_access_group_required_params()
+
+        # Disable retries and run test_remove_members_from_access_group_required_params.
+        _service.disable_retries()
+        self.test_remove_members_from_access_group_required_params()
 
     @responses.activate
     def test_remove_members_from_access_group_value_error(self):
@@ -1158,7 +1463,7 @@ class TestRemoveMembersFromAccessGroup():
         test_remove_members_from_access_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/members/delete')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.POST,
                       url,
@@ -1180,6 +1485,14 @@ class TestRemoveMembersFromAccessGroup():
                 _service.remove_members_from_access_group(**req_copy)
 
 
+    def test_remove_members_from_access_group_value_error_with_retries(self):
+        # Enable retries and run test_remove_members_from_access_group_value_error.
+        _service.enable_retries()
+        self.test_remove_members_from_access_group_value_error()
+
+        # Disable retries and run test_remove_members_from_access_group_value_error.
+        _service.disable_retries()
+        self.test_remove_members_from_access_group_value_error()
 
 class TestRemoveMemberFromAllAccessGroups():
     """
@@ -1190,6 +1503,8 @@ class TestRemoveMemberFromAllAccessGroups():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -1201,7 +1516,7 @@ class TestRemoveMemberFromAllAccessGroups():
         remove_member_from_all_access_groups()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/_allgroups/members/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.DELETE,
                       url,
@@ -1230,6 +1545,14 @@ class TestRemoveMemberFromAllAccessGroups():
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
+    def test_remove_member_from_all_access_groups_all_params_with_retries(self):
+        # Enable retries and run test_remove_member_from_all_access_groups_all_params.
+        _service.enable_retries()
+        self.test_remove_member_from_all_access_groups_all_params()
+
+        # Disable retries and run test_remove_member_from_all_access_groups_all_params.
+        _service.disable_retries()
+        self.test_remove_member_from_all_access_groups_all_params()
 
     @responses.activate
     def test_remove_member_from_all_access_groups_required_params(self):
@@ -1237,7 +1560,7 @@ class TestRemoveMemberFromAllAccessGroups():
         test_remove_member_from_all_access_groups_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/_allgroups/members/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.DELETE,
                       url,
@@ -1264,6 +1587,14 @@ class TestRemoveMemberFromAllAccessGroups():
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
+    def test_remove_member_from_all_access_groups_required_params_with_retries(self):
+        # Enable retries and run test_remove_member_from_all_access_groups_required_params.
+        _service.enable_retries()
+        self.test_remove_member_from_all_access_groups_required_params()
+
+        # Disable retries and run test_remove_member_from_all_access_groups_required_params.
+        _service.disable_retries()
+        self.test_remove_member_from_all_access_groups_required_params()
 
     @responses.activate
     def test_remove_member_from_all_access_groups_value_error(self):
@@ -1271,7 +1602,7 @@ class TestRemoveMemberFromAllAccessGroups():
         test_remove_member_from_all_access_groups_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/_allgroups/members/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.DELETE,
                       url,
@@ -1294,6 +1625,14 @@ class TestRemoveMemberFromAllAccessGroups():
                 _service.remove_member_from_all_access_groups(**req_copy)
 
 
+    def test_remove_member_from_all_access_groups_value_error_with_retries(self):
+        # Enable retries and run test_remove_member_from_all_access_groups_value_error.
+        _service.enable_retries()
+        self.test_remove_member_from_all_access_groups_value_error()
+
+        # Disable retries and run test_remove_member_from_all_access_groups_value_error.
+        _service.disable_retries()
+        self.test_remove_member_from_all_access_groups_value_error()
 
 class TestAddMemberToMultipleAccessGroups():
     """
@@ -1304,6 +1643,8 @@ class TestAddMemberToMultipleAccessGroups():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -1315,7 +1656,7 @@ class TestAddMemberToMultipleAccessGroups():
         add_member_to_multiple_access_groups()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/_allgroups/members/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -1352,6 +1693,14 @@ class TestAddMemberToMultipleAccessGroups():
         assert req_body['type'] == 'user'
         assert req_body['groups'] == ['access-group-id-1']
 
+    def test_add_member_to_multiple_access_groups_all_params_with_retries(self):
+        # Enable retries and run test_add_member_to_multiple_access_groups_all_params.
+        _service.enable_retries()
+        self.test_add_member_to_multiple_access_groups_all_params()
+
+        # Disable retries and run test_add_member_to_multiple_access_groups_all_params.
+        _service.disable_retries()
+        self.test_add_member_to_multiple_access_groups_all_params()
 
     @responses.activate
     def test_add_member_to_multiple_access_groups_required_params(self):
@@ -1359,7 +1708,7 @@ class TestAddMemberToMultipleAccessGroups():
         test_add_member_to_multiple_access_groups_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/_allgroups/members/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -1394,6 +1743,14 @@ class TestAddMemberToMultipleAccessGroups():
         assert req_body['type'] == 'user'
         assert req_body['groups'] == ['access-group-id-1']
 
+    def test_add_member_to_multiple_access_groups_required_params_with_retries(self):
+        # Enable retries and run test_add_member_to_multiple_access_groups_required_params.
+        _service.enable_retries()
+        self.test_add_member_to_multiple_access_groups_required_params()
+
+        # Disable retries and run test_add_member_to_multiple_access_groups_required_params.
+        _service.disable_retries()
+        self.test_add_member_to_multiple_access_groups_required_params()
 
     @responses.activate
     def test_add_member_to_multiple_access_groups_value_error(self):
@@ -1401,7 +1758,7 @@ class TestAddMemberToMultipleAccessGroups():
         test_add_member_to_multiple_access_groups_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/_allgroups/members/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
         responses.add(responses.PUT,
                       url,
@@ -1426,6 +1783,14 @@ class TestAddMemberToMultipleAccessGroups():
                 _service.add_member_to_multiple_access_groups(**req_copy)
 
 
+    def test_add_member_to_multiple_access_groups_value_error_with_retries(self):
+        # Enable retries and run test_add_member_to_multiple_access_groups_value_error.
+        _service.enable_retries()
+        self.test_add_member_to_multiple_access_groups_value_error()
+
+        # Disable retries and run test_add_member_to_multiple_access_groups_value_error.
+        _service.disable_retries()
+        self.test_add_member_to_multiple_access_groups_value_error()
 
 # endregion
 ##############################################################################
@@ -1437,6 +1802,32 @@ class TestAddMemberToMultipleAccessGroups():
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamAccessGroupsV2.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamAccessGroupsV2)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamAccessGroupsV2.new_instance(
+            )
+
 class TestAddAccessGroupRule():
     """
     Test Class for add_access_group_rule
@@ -1446,6 +1837,8 @@ class TestAddAccessGroupRule():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -1457,7 +1850,7 @@ class TestAddAccessGroupRule():
         add_access_group_rule()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
@@ -1500,6 +1893,14 @@ class TestAddAccessGroupRule():
         assert req_body['conditions'] == [rule_conditions_model]
         assert req_body['name'] == 'Manager group rule'
 
+    def test_add_access_group_rule_all_params_with_retries(self):
+        # Enable retries and run test_add_access_group_rule_all_params.
+        _service.enable_retries()
+        self.test_add_access_group_rule_all_params()
+
+        # Disable retries and run test_add_access_group_rule_all_params.
+        _service.disable_retries()
+        self.test_add_access_group_rule_all_params()
 
     @responses.activate
     def test_add_access_group_rule_required_params(self):
@@ -1507,7 +1908,7 @@ class TestAddAccessGroupRule():
         test_add_access_group_rule_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
@@ -1548,6 +1949,14 @@ class TestAddAccessGroupRule():
         assert req_body['conditions'] == [rule_conditions_model]
         assert req_body['name'] == 'Manager group rule'
 
+    def test_add_access_group_rule_required_params_with_retries(self):
+        # Enable retries and run test_add_access_group_rule_required_params.
+        _service.enable_retries()
+        self.test_add_access_group_rule_required_params()
+
+        # Disable retries and run test_add_access_group_rule_required_params.
+        _service.disable_retries()
+        self.test_add_access_group_rule_required_params()
 
     @responses.activate
     def test_add_access_group_rule_value_error(self):
@@ -1555,7 +1964,7 @@ class TestAddAccessGroupRule():
         test_add_access_group_rule_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
@@ -1589,6 +1998,14 @@ class TestAddAccessGroupRule():
                 _service.add_access_group_rule(**req_copy)
 
 
+    def test_add_access_group_rule_value_error_with_retries(self):
+        # Enable retries and run test_add_access_group_rule_value_error.
+        _service.enable_retries()
+        self.test_add_access_group_rule_value_error()
+
+        # Disable retries and run test_add_access_group_rule_value_error.
+        _service.disable_retries()
+        self.test_add_access_group_rule_value_error()
 
 class TestListAccessGroupRules():
     """
@@ -1599,6 +2016,8 @@ class TestListAccessGroupRules():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -1610,7 +2029,7 @@ class TestListAccessGroupRules():
         list_access_group_rules()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -1633,6 +2052,14 @@ class TestListAccessGroupRules():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_access_group_rules_all_params_with_retries(self):
+        # Enable retries and run test_list_access_group_rules_all_params.
+        _service.enable_retries()
+        self.test_list_access_group_rules_all_params()
+
+        # Disable retries and run test_list_access_group_rules_all_params.
+        _service.disable_retries()
+        self.test_list_access_group_rules_all_params()
 
     @responses.activate
     def test_list_access_group_rules_required_params(self):
@@ -1640,7 +2067,7 @@ class TestListAccessGroupRules():
         test_list_access_group_rules_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -1661,6 +2088,14 @@ class TestListAccessGroupRules():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_access_group_rules_required_params_with_retries(self):
+        # Enable retries and run test_list_access_group_rules_required_params.
+        _service.enable_retries()
+        self.test_list_access_group_rules_required_params()
+
+        # Disable retries and run test_list_access_group_rules_required_params.
+        _service.disable_retries()
+        self.test_list_access_group_rules_required_params()
 
     @responses.activate
     def test_list_access_group_rules_value_error(self):
@@ -1668,7 +2103,7 @@ class TestListAccessGroupRules():
         test_list_access_group_rules_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
@@ -1689,6 +2124,14 @@ class TestListAccessGroupRules():
                 _service.list_access_group_rules(**req_copy)
 
 
+    def test_list_access_group_rules_value_error_with_retries(self):
+        # Enable retries and run test_list_access_group_rules_value_error.
+        _service.enable_retries()
+        self.test_list_access_group_rules_value_error()
+
+        # Disable retries and run test_list_access_group_rules_value_error.
+        _service.disable_retries()
+        self.test_list_access_group_rules_value_error()
 
 class TestGetAccessGroupRule():
     """
@@ -1699,6 +2142,8 @@ class TestGetAccessGroupRule():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -1710,7 +2155,7 @@ class TestGetAccessGroupRule():
         get_access_group_rule()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
@@ -1735,6 +2180,14 @@ class TestGetAccessGroupRule():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_access_group_rule_all_params_with_retries(self):
+        # Enable retries and run test_get_access_group_rule_all_params.
+        _service.enable_retries()
+        self.test_get_access_group_rule_all_params()
+
+        # Disable retries and run test_get_access_group_rule_all_params.
+        _service.disable_retries()
+        self.test_get_access_group_rule_all_params()
 
     @responses.activate
     def test_get_access_group_rule_required_params(self):
@@ -1742,7 +2195,7 @@ class TestGetAccessGroupRule():
         test_get_access_group_rule_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
@@ -1765,6 +2218,14 @@ class TestGetAccessGroupRule():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_access_group_rule_required_params_with_retries(self):
+        # Enable retries and run test_get_access_group_rule_required_params.
+        _service.enable_retries()
+        self.test_get_access_group_rule_required_params()
+
+        # Disable retries and run test_get_access_group_rule_required_params.
+        _service.disable_retries()
+        self.test_get_access_group_rule_required_params()
 
     @responses.activate
     def test_get_access_group_rule_value_error(self):
@@ -1772,7 +2233,7 @@ class TestGetAccessGroupRule():
         test_get_access_group_rule_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
@@ -1795,6 +2256,14 @@ class TestGetAccessGroupRule():
                 _service.get_access_group_rule(**req_copy)
 
 
+    def test_get_access_group_rule_value_error_with_retries(self):
+        # Enable retries and run test_get_access_group_rule_value_error.
+        _service.enable_retries()
+        self.test_get_access_group_rule_value_error()
+
+        # Disable retries and run test_get_access_group_rule_value_error.
+        _service.disable_retries()
+        self.test_get_access_group_rule_value_error()
 
 class TestReplaceAccessGroupRule():
     """
@@ -1805,6 +2274,8 @@ class TestReplaceAccessGroupRule():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -1816,7 +2287,7 @@ class TestReplaceAccessGroupRule():
         replace_access_group_rule()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
@@ -1863,6 +2334,14 @@ class TestReplaceAccessGroupRule():
         assert req_body['conditions'] == [rule_conditions_model]
         assert req_body['name'] == 'Manager group rule'
 
+    def test_replace_access_group_rule_all_params_with_retries(self):
+        # Enable retries and run test_replace_access_group_rule_all_params.
+        _service.enable_retries()
+        self.test_replace_access_group_rule_all_params()
+
+        # Disable retries and run test_replace_access_group_rule_all_params.
+        _service.disable_retries()
+        self.test_replace_access_group_rule_all_params()
 
     @responses.activate
     def test_replace_access_group_rule_required_params(self):
@@ -1870,7 +2349,7 @@ class TestReplaceAccessGroupRule():
         test_replace_access_group_rule_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
@@ -1915,6 +2394,14 @@ class TestReplaceAccessGroupRule():
         assert req_body['conditions'] == [rule_conditions_model]
         assert req_body['name'] == 'Manager group rule'
 
+    def test_replace_access_group_rule_required_params_with_retries(self):
+        # Enable retries and run test_replace_access_group_rule_required_params.
+        _service.enable_retries()
+        self.test_replace_access_group_rule_required_params()
+
+        # Disable retries and run test_replace_access_group_rule_required_params.
+        _service.disable_retries()
+        self.test_replace_access_group_rule_required_params()
 
     @responses.activate
     def test_replace_access_group_rule_value_error(self):
@@ -1922,7 +2409,7 @@ class TestReplaceAccessGroupRule():
         test_replace_access_group_rule_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
@@ -1960,6 +2447,14 @@ class TestReplaceAccessGroupRule():
                 _service.replace_access_group_rule(**req_copy)
 
 
+    def test_replace_access_group_rule_value_error_with_retries(self):
+        # Enable retries and run test_replace_access_group_rule_value_error.
+        _service.enable_retries()
+        self.test_replace_access_group_rule_value_error()
+
+        # Disable retries and run test_replace_access_group_rule_value_error.
+        _service.disable_retries()
+        self.test_replace_access_group_rule_value_error()
 
 class TestRemoveAccessGroupRule():
     """
@@ -1970,6 +2465,8 @@ class TestRemoveAccessGroupRule():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -1981,7 +2478,7 @@ class TestRemoveAccessGroupRule():
         remove_access_group_rule()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2003,6 +2500,14 @@ class TestRemoveAccessGroupRule():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_remove_access_group_rule_all_params_with_retries(self):
+        # Enable retries and run test_remove_access_group_rule_all_params.
+        _service.enable_retries()
+        self.test_remove_access_group_rule_all_params()
+
+        # Disable retries and run test_remove_access_group_rule_all_params.
+        _service.disable_retries()
+        self.test_remove_access_group_rule_all_params()
 
     @responses.activate
     def test_remove_access_group_rule_required_params(self):
@@ -2010,7 +2515,7 @@ class TestRemoveAccessGroupRule():
         test_remove_access_group_rule_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2030,6 +2535,14 @@ class TestRemoveAccessGroupRule():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_remove_access_group_rule_required_params_with_retries(self):
+        # Enable retries and run test_remove_access_group_rule_required_params.
+        _service.enable_retries()
+        self.test_remove_access_group_rule_required_params()
+
+        # Disable retries and run test_remove_access_group_rule_required_params.
+        _service.disable_retries()
+        self.test_remove_access_group_rule_required_params()
 
     @responses.activate
     def test_remove_access_group_rule_value_error(self):
@@ -2037,7 +2550,7 @@ class TestRemoveAccessGroupRule():
         test_remove_access_group_rule_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/testString/rules/testString')
+        url = self.preprocess_url(_base_url + '/v2/groups/testString/rules/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2057,6 +2570,14 @@ class TestRemoveAccessGroupRule():
                 _service.remove_access_group_rule(**req_copy)
 
 
+    def test_remove_access_group_rule_value_error_with_retries(self):
+        # Enable retries and run test_remove_access_group_rule_value_error.
+        _service.enable_retries()
+        self.test_remove_access_group_rule_value_error()
+
+        # Disable retries and run test_remove_access_group_rule_value_error.
+        _service.disable_retries()
+        self.test_remove_access_group_rule_value_error()
 
 # endregion
 ##############################################################################
@@ -2068,6 +2589,32 @@ class TestRemoveAccessGroupRule():
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamAccessGroupsV2.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamAccessGroupsV2)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamAccessGroupsV2.new_instance(
+            )
+
 class TestGetAccountSettings():
     """
     Test Class for get_account_settings
@@ -2077,6 +2624,8 @@ class TestGetAccountSettings():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -2088,7 +2637,7 @@ class TestGetAccountSettings():
         get_account_settings()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/settings')
+        url = self.preprocess_url(_base_url + '/v2/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.GET,
                       url,
@@ -2115,6 +2664,14 @@ class TestGetAccountSettings():
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
+    def test_get_account_settings_all_params_with_retries(self):
+        # Enable retries and run test_get_account_settings_all_params.
+        _service.enable_retries()
+        self.test_get_account_settings_all_params()
+
+        # Disable retries and run test_get_account_settings_all_params.
+        _service.disable_retries()
+        self.test_get_account_settings_all_params()
 
     @responses.activate
     def test_get_account_settings_required_params(self):
@@ -2122,7 +2679,7 @@ class TestGetAccountSettings():
         test_get_account_settings_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/settings')
+        url = self.preprocess_url(_base_url + '/v2/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.GET,
                       url,
@@ -2147,6 +2704,14 @@ class TestGetAccountSettings():
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
+    def test_get_account_settings_required_params_with_retries(self):
+        # Enable retries and run test_get_account_settings_required_params.
+        _service.enable_retries()
+        self.test_get_account_settings_required_params()
+
+        # Disable retries and run test_get_account_settings_required_params.
+        _service.disable_retries()
+        self.test_get_account_settings_required_params()
 
     @responses.activate
     def test_get_account_settings_value_error(self):
@@ -2154,7 +2719,7 @@ class TestGetAccountSettings():
         test_get_account_settings_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/settings')
+        url = self.preprocess_url(_base_url + '/v2/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.GET,
                       url,
@@ -2175,6 +2740,14 @@ class TestGetAccountSettings():
                 _service.get_account_settings(**req_copy)
 
 
+    def test_get_account_settings_value_error_with_retries(self):
+        # Enable retries and run test_get_account_settings_value_error.
+        _service.enable_retries()
+        self.test_get_account_settings_value_error()
+
+        # Disable retries and run test_get_account_settings_value_error.
+        _service.disable_retries()
+        self.test_get_account_settings_value_error()
 
 class TestUpdateAccountSettings():
     """
@@ -2185,6 +2758,8 @@ class TestUpdateAccountSettings():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
         else:
@@ -2196,7 +2771,7 @@ class TestUpdateAccountSettings():
         update_account_settings()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/settings')
+        url = self.preprocess_url(_base_url + '/v2/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.PATCH,
                       url,
@@ -2228,6 +2803,14 @@ class TestUpdateAccountSettings():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['public_access_enabled'] == True
 
+    def test_update_account_settings_all_params_with_retries(self):
+        # Enable retries and run test_update_account_settings_all_params.
+        _service.enable_retries()
+        self.test_update_account_settings_all_params()
+
+        # Disable retries and run test_update_account_settings_all_params.
+        _service.disable_retries()
+        self.test_update_account_settings_all_params()
 
     @responses.activate
     def test_update_account_settings_required_params(self):
@@ -2235,7 +2818,7 @@ class TestUpdateAccountSettings():
         test_update_account_settings_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/settings')
+        url = self.preprocess_url(_base_url + '/v2/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.PATCH,
                       url,
@@ -2265,6 +2848,14 @@ class TestUpdateAccountSettings():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['public_access_enabled'] == True
 
+    def test_update_account_settings_required_params_with_retries(self):
+        # Enable retries and run test_update_account_settings_required_params.
+        _service.enable_retries()
+        self.test_update_account_settings_required_params()
+
+        # Disable retries and run test_update_account_settings_required_params.
+        _service.disable_retries()
+        self.test_update_account_settings_required_params()
 
     @responses.activate
     def test_update_account_settings_value_error(self):
@@ -2272,7 +2863,7 @@ class TestUpdateAccountSettings():
         test_update_account_settings_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/groups/settings')
+        url = self.preprocess_url(_base_url + '/v2/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
         responses.add(responses.PATCH,
                       url,
@@ -2294,6 +2885,14 @@ class TestUpdateAccountSettings():
                 _service.update_account_settings(**req_copy)
 
 
+    def test_update_account_settings_value_error_with_retries(self):
+        # Enable retries and run test_update_account_settings_value_error.
+        _service.enable_retries()
+        self.test_update_account_settings_value_error()
+
+        # Disable retries and run test_update_account_settings_value_error.
+        _service.disable_retries()
+        self.test_update_account_settings_value_error()
 
 # endregion
 ##############################################################################
