@@ -1,3 +1,10 @@
+## [0.22.5](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.4...v0.22.5) (2021-12-03)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** update service after service url adjustment ([#146](https://github.com/IBM/platform-services-python-sdk/issues/146)) ([280c468](https://github.com/IBM/platform-services-python-sdk/commit/280c4684c59a1394feab23104ccf28671543cc4b))
+
 ## [0.22.4](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.3...v0.22.4) (2021-11-15)
 
 
