@@ -14,12 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.34.1-ad041667-20210617-195430
+# IBM OpenAPI SDK Code Generator Version: 3.43.0-49eab5c7-20211117-152138
  
 """
 The IAM Access Groups API allows for the management of access groups (Create, Read,
 Update, Delete) as well as the management of memberships and rules within the group
 container.
+
+API Version: 2.0
 """
 
 from datetime import datetime
@@ -41,7 +43,7 @@ from .common import get_sdk_headers
 class IamAccessGroupsV2(BaseService):
     """The iam-access-groups V2 service."""
 
-    DEFAULT_SERVICE_URL = 'https://iam.cloud.ibm.com/v2'
+    DEFAULT_SERVICE_URL = 'https://iam.cloud.ibm.com'
     DEFAULT_SERVICE_NAME = 'iam_access_groups'
 
     @classmethod
@@ -66,7 +68,7 @@ class IamAccessGroupsV2(BaseService):
         Construct a new client for the iam-access-groups service.
 
         :param Authenticator authenticator: The authenticator specifies the authentication mechanism.
-               Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
+               Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
         BaseService.__init__(self,
@@ -143,14 +145,14 @@ class IamAccessGroupsV2(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/groups'
+        url = '/v2/groups'
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
                                        params=params,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -227,13 +229,13 @@ class IamAccessGroupsV2(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/groups'
+        url = '/v2/groups'
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -287,13 +289,13 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['access_group_id']
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/{access_group_id}'.format(**path_param_dict)
+        url = '/v2/groups/{access_group_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -360,13 +362,13 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['access_group_id']
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/{access_group_id}'.format(**path_param_dict)
+        url = '/v2/groups/{access_group_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -418,13 +420,13 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['access_group_id']
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/{access_group_id}'.format(**path_param_dict)
+        url = '/v2/groups/{access_group_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -477,12 +479,12 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['access_group_id', 'iam_id']
         path_param_values = self.encode_path_vars(access_group_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/{access_group_id}/members/{iam_id}'.format(**path_param_dict)
+        url = '/v2/groups/{access_group_id}/members/{iam_id}'.format(**path_param_dict)
         request = self.prepare_request(method='HEAD',
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -542,13 +544,13 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['access_group_id']
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/{access_group_id}/members'.format(**path_param_dict)
+        url = '/v2/groups/{access_group_id}/members'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -617,13 +619,13 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['access_group_id']
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/{access_group_id}/members'.format(**path_param_dict)
+        url = '/v2/groups/{access_group_id}/members'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -671,12 +673,12 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['access_group_id', 'iam_id']
         path_param_values = self.encode_path_vars(access_group_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/{access_group_id}/members/{iam_id}'.format(**path_param_dict)
+        url = '/v2/groups/{access_group_id}/members/{iam_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -732,13 +734,13 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['access_group_id']
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/{access_group_id}/members/delete'.format(**path_param_dict)
+        url = '/v2/groups/{access_group_id}/members/delete'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -795,13 +797,13 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['iam_id']
         path_param_values = self.encode_path_vars(iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/_allgroups/members/{iam_id}'.format(**path_param_dict)
+        url = '/v2/groups/_allgroups/members/{iam_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -871,14 +873,14 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['iam_id']
         path_param_values = self.encode_path_vars(iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/_allgroups/members/{iam_id}'.format(**path_param_dict)
+        url = '/v2/groups/_allgroups/members/{iam_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
                                        params=params,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -957,13 +959,13 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['access_group_id']
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/{access_group_id}/rules'.format(**path_param_dict)
+        url = '/v2/groups/{access_group_id}/rules'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1007,12 +1009,12 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['access_group_id']
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/{access_group_id}/rules'.format(**path_param_dict)
+        url = '/v2/groups/{access_group_id}/rules'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1060,12 +1062,12 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['access_group_id', 'rule_id']
         path_param_values = self.encode_path_vars(access_group_id, rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/{access_group_id}/rules/{rule_id}'.format(**path_param_dict)
+        url = '/v2/groups/{access_group_id}/rules/{rule_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1146,13 +1148,13 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['access_group_id', 'rule_id']
         path_param_values = self.encode_path_vars(access_group_id, rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/{access_group_id}/rules/{rule_id}'.format(**path_param_dict)
+        url = '/v2/groups/{access_group_id}/rules/{rule_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT',
                                        url=url,
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1200,12 +1202,12 @@ class IamAccessGroupsV2(BaseService):
         path_param_keys = ['access_group_id', 'rule_id']
         path_param_values = self.encode_path_vars(access_group_id, rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/groups/{access_group_id}/rules/{rule_id}'.format(**path_param_dict)
+        url = '/v2/groups/{access_group_id}/rules/{rule_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -1256,13 +1258,13 @@ class IamAccessGroupsV2(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/groups/settings'
+        url = '/v2/groups/settings'
         request = self.prepare_request(method='GET',
                                        url=url,
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1325,14 +1327,14 @@ class IamAccessGroupsV2(BaseService):
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
-        url = '/groups/settings'
+        url = '/v2/groups/settings'
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
                                        params=params,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
