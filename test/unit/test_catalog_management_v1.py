@@ -2819,8 +2819,8 @@ class TestUpdateOffering():
         json_patch_operation_model = {}
         json_patch_operation_model['op'] = 'add'
         json_patch_operation_model['path'] = 'testString'
-        json_patch_operation_model['value'] = { 'foo': 'bar' }
         json_patch_operation_model['from'] = 'testString'
+        json_patch_operation_model['value'] = 'testString'
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -10278,8 +10278,8 @@ class TestModel_JsonPatchOperation():
         json_patch_operation_model_json = {}
         json_patch_operation_model_json['op'] = 'add'
         json_patch_operation_model_json['path'] = 'testString'
-        json_patch_operation_model_json['value'] = { 'foo': 'bar' }
         json_patch_operation_model_json['from'] = 'testString'
+        json_patch_operation_model_json['value'] = 'testString'
 
         # Construct a model instance of JsonPatchOperation by calling from_dict on the json representation
         json_patch_operation_model = JsonPatchOperation.from_dict(json_patch_operation_model_json)

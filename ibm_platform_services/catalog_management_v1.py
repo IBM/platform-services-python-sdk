@@ -6868,32 +6868,37 @@ class InstallStatusRelease():
 
 class JsonPatchOperation():
     """
-    A JSONPatch document as defined by RFC 6902.
+    This model represents an individual patch operation to be performed on a JSON
+    document, as defined by RFC 6902.
 
     :attr str op: The operation to be performed.
-    :attr str path: A JSON-Pointer.
-    :attr object value: (optional) The value to be used within the operations.
-    :attr str from_: (optional) A string containing a JSON Pointer value.
+    :attr str path: The JSON Pointer that identifies the field that is the target of
+          the operation.
+    :attr str from_: (optional) The JSON Pointer that identifies the field that is
+          the source of the operation.
+    :attr object value: (optional) The value to be used within the operation.
     """
 
     def __init__(self,
                  op: str,
                  path: str,
                  *,
-                 value: object = None,
-                 from_: str = None) -> None:
+                 from_: str = None,
+                 value: object = None) -> None:
         """
         Initialize a JsonPatchOperation object.
 
         :param str op: The operation to be performed.
-        :param str path: A JSON-Pointer.
-        :param object value: (optional) The value to be used within the operations.
-        :param str from_: (optional) A string containing a JSON Pointer value.
+        :param str path: The JSON Pointer that identifies the field that is the
+               target of the operation.
+        :param str from_: (optional) The JSON Pointer that identifies the field
+               that is the source of the operation.
+        :param object value: (optional) The value to be used within the operation.
         """
         self.op = op
         self.path = path
-        self.value = value
         self.from_ = from_
+        self.value = value
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'JsonPatchOperation':
@@ -6907,10 +6912,10 @@ class JsonPatchOperation():
             args['path'] = _dict.get('path')
         else:
             raise ValueError('Required property \'path\' not present in JsonPatchOperation JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
         if 'from' in _dict:
             args['from_'] = _dict.get('from')
+        if 'value' in _dict:
+            args['value'] = _dict.get('value')
         return cls(**args)
 
     @classmethod
@@ -6925,10 +6930,10 @@ class JsonPatchOperation():
             _dict['op'] = self.op
         if hasattr(self, 'path') and self.path is not None:
             _dict['path'] = self.path
-        if hasattr(self, 'value') and self.value is not None:
-            _dict['value'] = self.value
         if hasattr(self, 'from_') and self.from_ is not None:
             _dict['from'] = self.from_
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
         return _dict
 
     def _to_dict(self):

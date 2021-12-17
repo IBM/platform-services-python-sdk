@@ -124,7 +124,7 @@ class TestCatalogManagementV1():
         try:
             self.catalog_management_service_authorized.create_catalog(
                 label=label_python_sdk,
-                revision=bogus_revision,
+                rev=bogus_revision,
                 tags=['sdk', 'python'],
                 owning_account=self.account_id,
                 kind=kind_vpe,
@@ -1345,6 +1345,7 @@ class TestCatalogManagementV1():
                 version='0.0.2',
                 cluster_id=self.cluster_id,
                 region=region_us_south,
+                x_auth_refresh_token=self.refresh_token_authorized,
             )
         except ApiException as e:
             assert e.code == 400
@@ -1385,6 +1386,7 @@ class TestCatalogManagementV1():
                 cluster_id=self.cluster_id,
                 region=region_us_south,
                 namespace=namespace_python_sdk,
+                x_auth_refresh_token=self.refresh_token_not_authorized,
             )
         except ApiException as e:
             assert e.code == 403
