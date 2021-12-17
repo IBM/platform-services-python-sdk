@@ -1735,7 +1735,7 @@ class CatalogManagementV1(BaseService):
         path_param_keys = ['catalog_identifier', 'offering_id', 'setting']
         path_param_values = self.encode_path_vars(catalog_identifier, offering_id, setting)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/deprecate/{approved}'.format(**path_param_dict)
+        url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/deprecate/{setting}'.format(**path_param_dict)
         request = self.prepare_request(method='POST',
                                        url=url,
                                        headers=headers,

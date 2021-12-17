@@ -3329,7 +3329,7 @@ class TestDeprecateOffering():
         deprecate_offering()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/deprecate/%7Bapproved%7D')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/deprecate/true')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -3374,7 +3374,7 @@ class TestDeprecateOffering():
         test_deprecate_offering_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/deprecate/%7Bapproved%7D')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/deprecate/true')
         responses.add(responses.POST,
                       url,
                       status=202)
@@ -3411,7 +3411,7 @@ class TestDeprecateOffering():
         test_deprecate_offering_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/deprecate/%7Bapproved%7D')
+        url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/deprecate/true')
         responses.add(responses.POST,
                       url,
                       status=202)
