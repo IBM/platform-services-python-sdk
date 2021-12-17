@@ -14,12 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
+# IBM OpenAPI SDK Code Generator Version: 3.43.0-49eab5c7-20211117-152138
  
 """
 This is the API to use for managing private catalogs for IBM Cloud. Private catalogs
 provide a way to centrally manage access to products in the IBM Cloud catalog and your own
 catalogs.
+
+API Version: 1.0
 """
 
 from datetime import datetime
@@ -31,7 +33,7 @@ import json
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
-from ibm_cloud_sdk_core.utils import convert_model, datetime_to_string, string_to_datetime
+from ibm_cloud_sdk_core.utils import convert_list, convert_model, datetime_to_string, string_to_datetime
 
 from .common import get_sdk_headers
 
@@ -67,7 +69,7 @@ class CatalogManagementV1(BaseService):
         Construct a new client for the Catalog Management service.
 
         :param Authenticator authenticator: The authenticator specifies the authentication mechanism.
-               Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
+               Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
         BaseService.__init__(self,
@@ -108,7 +110,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -160,7 +162,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -192,7 +194,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -233,7 +235,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -270,7 +272,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -363,7 +365,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -403,7 +405,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -503,7 +505,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -541,7 +543,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -580,7 +582,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -651,7 +653,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -719,7 +721,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -757,7 +759,10 @@ class CatalogManagementV1(BaseService):
         disclaimer: str = None,
         hidden: bool = None,
         provider: str = None,
+        provider_info: 'ProviderInfo' = None,
         repo_info: 'RepoInfo' = None,
+        support: 'Support' = None,
+        media: List['MediaItem'] = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -776,8 +781,9 @@ class CatalogManagementV1(BaseService):
                this offering.
         :param str offering_docs_url: (optional) URL for an additional docs with
                this offering.
-        :param str offering_support_url: (optional) URL to be displayed in the
-               Consumption UI for getting support on this offering.
+        :param str offering_support_url: (optional) [deprecated] - Use
+               offering.support instead.  URL to be displayed in the Consumption UI for
+               getting support on this offering.
         :param List[str] tags: (optional) List of tags associated with this
                catalog.
         :param List[str] keywords: (optional) List of keywords associated with
@@ -814,8 +820,13 @@ class CatalogManagementV1(BaseService):
         :param str disclaimer: (optional) A disclaimer for this offering.
         :param bool hidden: (optional) Determine if this offering should be
                displayed in the Consumption UI.
-        :param str provider: (optional) Provider of this offering.
+        :param str provider: (optional) Deprecated - Provider of this offering.
+        :param ProviderInfo provider_info: (optional) Information on the provider
+               for this offering, or omitted if no provider information is given.
         :param RepoInfo repo_info: (optional) Repository info for offerings.
+        :param Support support: (optional) Offering Support information.
+        :param List[MediaItem] media: (optional) A list of media items related to
+               this offering.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Offering` object
@@ -833,8 +844,14 @@ class CatalogManagementV1(BaseService):
             features = [convert_model(x) for x in features]
         if kinds is not None:
             kinds = [convert_model(x) for x in kinds]
+        if provider_info is not None:
+            provider_info = convert_model(provider_info)
         if repo_info is not None:
             repo_info = convert_model(repo_info)
+        if support is not None:
+            support = convert_model(support)
+        if media is not None:
+            media = [convert_model(x) for x in media]
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
@@ -873,7 +890,10 @@ class CatalogManagementV1(BaseService):
             'disclaimer': disclaimer,
             'hidden': hidden,
             'provider': provider,
-            'repo_info': repo_info
+            'provider_info': provider_info,
+            'repo_info': repo_info,
+            'support': support,
+            'media': media
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -892,7 +912,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -980,7 +1000,7 @@ class CatalogManagementV1(BaseService):
                                        params=params,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1073,7 +1093,7 @@ class CatalogManagementV1(BaseService):
                                        params=params,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1154,13 +1174,16 @@ class CatalogManagementV1(BaseService):
                                        params=params,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
     def get_offering(self,
         catalog_identifier: str,
         offering_id: str,
+        *,
+        type: str = None,
+        digest: bool = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -1171,6 +1194,10 @@ class CatalogManagementV1(BaseService):
 
         :param str catalog_identifier: Catalog identifier.
         :param str offering_id: Offering identification.
+        :param str type: (optional) Offering Parameter Type.  Valid values are
+               'name' or 'id'.  Default is 'id'.
+        :param bool digest: (optional) Return the digest format of the specified
+               offering.  Default is false.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Offering` object
@@ -1186,6 +1213,11 @@ class CatalogManagementV1(BaseService):
                                       operation_id='get_offering')
         headers.update(sdk_headers)
 
+        params = {
+            'type': type,
+            'digest': digest
+        }
+
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
@@ -1196,9 +1228,10 @@ class CatalogManagementV1(BaseService):
         url = '/catalogs/{catalog_identifier}/offerings/{offering_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
-                                       headers=headers)
+                                       headers=headers,
+                                       params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1237,7 +1270,10 @@ class CatalogManagementV1(BaseService):
         disclaimer: str = None,
         hidden: bool = None,
         provider: str = None,
+        provider_info: 'ProviderInfo' = None,
         repo_info: 'RepoInfo' = None,
+        support: 'Support' = None,
+        media: List['MediaItem'] = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -1257,8 +1293,9 @@ class CatalogManagementV1(BaseService):
                this offering.
         :param str offering_docs_url: (optional) URL for an additional docs with
                this offering.
-        :param str offering_support_url: (optional) URL to be displayed in the
-               Consumption UI for getting support on this offering.
+        :param str offering_support_url: (optional) [deprecated] - Use
+               offering.support instead.  URL to be displayed in the Consumption UI for
+               getting support on this offering.
         :param List[str] tags: (optional) List of tags associated with this
                catalog.
         :param List[str] keywords: (optional) List of keywords associated with
@@ -1295,8 +1332,13 @@ class CatalogManagementV1(BaseService):
         :param str disclaimer: (optional) A disclaimer for this offering.
         :param bool hidden: (optional) Determine if this offering should be
                displayed in the Consumption UI.
-        :param str provider: (optional) Provider of this offering.
+        :param str provider: (optional) Deprecated - Provider of this offering.
+        :param ProviderInfo provider_info: (optional) Information on the provider
+               for this offering, or omitted if no provider information is given.
         :param RepoInfo repo_info: (optional) Repository info for offerings.
+        :param Support support: (optional) Offering Support information.
+        :param List[MediaItem] media: (optional) A list of media items related to
+               this offering.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Offering` object
@@ -1316,8 +1358,14 @@ class CatalogManagementV1(BaseService):
             features = [convert_model(x) for x in features]
         if kinds is not None:
             kinds = [convert_model(x) for x in kinds]
+        if provider_info is not None:
+            provider_info = convert_model(provider_info)
         if repo_info is not None:
             repo_info = convert_model(repo_info)
+        if support is not None:
+            support = convert_model(support)
+        if media is not None:
+            media = [convert_model(x) for x in media]
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
@@ -1356,7 +1404,10 @@ class CatalogManagementV1(BaseService):
             'disclaimer': disclaimer,
             'hidden': hidden,
             'provider': provider,
-            'repo_info': repo_info
+            'provider_info': provider_info,
+            'repo_info': repo_info,
+            'support': support,
+            'media': media
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -1375,7 +1426,65 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def update_offering(self,
+        catalog_identifier: str,
+        offering_id: str,
+        if_match: str,
+        *,
+        updates: List['JsonPatchOperation'] = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Update offering.
+
+        Update an offering.
+
+        :param str catalog_identifier: Catalog identifier.
+        :param str offering_id: Offering identification.
+        :param str if_match: Offering etag contained in quotes.
+        :param List[JsonPatchOperation] updates: (optional)
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Offering` object
+        """
+
+        if catalog_identifier is None:
+            raise ValueError('catalog_identifier must be provided')
+        if offering_id is None:
+            raise ValueError('offering_id must be provided')
+        if if_match is None:
+            raise ValueError('if_match must be provided')
+        if updates is not None:
+            updates = [convert_model(x) for x in updates]
+        headers = {
+            'If-Match': if_match
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='update_offering')
+        headers.update(sdk_headers)
+
+        data = json.dumps(updates)
+        headers['content-type'] = 'application/json-patch+json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['catalog_identifier', 'offering_id']
+        path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/offerings/{offering_id}'.format(**path_param_dict)
+        request = self.prepare_request(method='PATCH',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1417,7 +1526,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1460,7 +1569,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1508,7 +1617,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1533,7 +1642,7 @@ class CatalogManagementV1(BaseService):
         process steps always go first through `allow` to `ibm` and then to `public`. `ibm`
         cannot be skipped. Only users with Approval IAM authority can use this. Approvers
         should use the catalog and offering id from the public catalog since they wouldn't
-        have access to the private offering.'.
+        have access to the private offering.
 
         :param str catalog_identifier: Catalog identifier.
         :param str offering_id: Offering identification.
@@ -1570,7 +1679,69 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def deprecate_offering(self,
+        catalog_identifier: str,
+        offering_id: str,
+        setting: str,
+        *,
+        description: str = None,
+        days_until_deprecate: int = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Allows offering to be deprecated.
+
+        Approve or disapprove the offering to be deprecated.
+
+        :param str catalog_identifier: Catalog identifier.
+        :param str offering_id: Offering identification.
+        :param str setting: Set deprecation (true) or cancel deprecation (false).
+        :param str description: (optional) Additional information that users can
+               provide to be displayed in deprecation notification.
+        :param int days_until_deprecate: (optional) Specifies the amount of days
+               until product is not available in catalog.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if catalog_identifier is None:
+            raise ValueError('catalog_identifier must be provided')
+        if offering_id is None:
+            raise ValueError('offering_id must be provided')
+        if setting is None:
+            raise ValueError('setting must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='deprecate_offering')
+        headers.update(sdk_headers)
+
+        data = {
+            'description': description,
+            'days_until_deprecate': days_until_deprecate
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        path_param_keys = ['catalog_identifier', 'offering_id', 'setting']
+        path_param_values = self.encode_path_vars(catalog_identifier, offering_id, setting)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/deprecate/{setting}'.format(**path_param_dict)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1578,12 +1749,18 @@ class CatalogManagementV1(BaseService):
         catalog_identifier: str,
         offering_id: str,
         kind: str,
+        x_auth_refresh_token: str,
         *,
+        target: str = None,
         version: str = None,
         cluster_id: str = None,
         region: str = None,
         resource_group_id: str = None,
         namespace: str = None,
+        sha: str = None,
+        channel: str = None,
+        namespaces: List[str] = None,
+        all_namespaces: bool = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -1594,6 +1771,9 @@ class CatalogManagementV1(BaseService):
         :param str catalog_identifier: Catalog identifier.
         :param str offering_id: Offering identification.
         :param str kind: The kind of offering (e.g, helm, ova, terraform ...).
+        :param str x_auth_refresh_token: IAM Refresh token.
+        :param str target: (optional) The target kind of the currently installed
+               version (e.g. iks, roks, etc).
         :param str version: (optional) optionaly provide an existing version to
                check updates for if one is not given, all version will be returned.
         :param str cluster_id: (optional) The id of the cluster where this version
@@ -1604,6 +1784,14 @@ class CatalogManagementV1(BaseService):
                cluster where this version was installed.
         :param str namespace: (optional) The namespace of the cluster where this
                version was installed.
+        :param str sha: (optional) The sha value of the currently installed
+               version.
+        :param str channel: (optional) Optionally provide the channel value of the
+               currently installed version.
+        :param List[str] namespaces: (optional) Optionally provide a list of
+               namespaces used for the currently installed version.
+        :param bool all_namespaces: (optional) Optionally indicate that the current
+               version was installed in all namespaces.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `List[VersionUpdateDescriptor]` result
@@ -1615,7 +1803,11 @@ class CatalogManagementV1(BaseService):
             raise ValueError('offering_id must be provided')
         if kind is None:
             raise ValueError('kind must be provided')
-        headers = {}
+        if x_auth_refresh_token is None:
+            raise ValueError('x_auth_refresh_token must be provided')
+        headers = {
+            'X-Auth-Refresh-Token': x_auth_refresh_token
+        }
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
                                       operation_id='get_offering_updates')
@@ -1623,11 +1815,16 @@ class CatalogManagementV1(BaseService):
 
         params = {
             'kind': kind,
+            'target': target,
             'version': version,
             'cluster_id': cluster_id,
             'region': region,
             'resource_group_id': resource_group_id,
-            'namespace': namespace
+            'namespace': namespace,
+            'sha': sha,
+            'channel': channel,
+            'namespaces': convert_list(namespaces),
+            'all_namespaces': all_namespaces
         }
 
         if 'headers' in kwargs:
@@ -1643,7 +1840,73 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def get_offering_source(self,
+        version: str,
+        *,
+        accept: str = None,
+        catalog_id: str = None,
+        name: str = None,
+        id: str = None,
+        kind: str = None,
+        channel: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get offering source.
+
+        Get an offering's source.  This request requires authorization, even for public
+        offerings.
+
+        :param str version: The version being requested.
+        :param str accept: (optional) The type of the response: application/yaml,
+               application/json, or application/x-gzip.
+        :param str catalog_id: (optional) Catlaog ID.  If not specified, this value
+               will default to the public catalog.
+        :param str name: (optional) Offering name.  An offering name or ID must be
+               specified.
+        :param str id: (optional) Offering id.  An offering name or ID must be
+               specified.
+        :param str kind: (optional) The kind of offering (e.g. helm, ova,
+               terraform...).
+        :param str channel: (optional) The channel value of the specified version.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `BinaryIO` result
+        """
+
+        if version is None:
+            raise ValueError('version must be provided')
+        headers = {
+            'Accept': accept
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_offering_source')
+        headers.update(sdk_headers)
+
+        params = {
+            'version': version,
+            'catalogID': catalog_id,
+            'name': name,
+            'id': id,
+            'kind': kind,
+            'channel': channel
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        url = '/offering/source'
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
+
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -1686,7 +1949,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1730,7 +1993,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1771,7 +2034,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1780,7 +2043,7 @@ class CatalogManagementV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Deprecate version.
+        Deprecate version immediately.
 
         Deprecate the specified version.
 
@@ -1809,7 +2072,65 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def set_deprecate_version(self,
+        version_loc_id: str,
+        setting: str,
+        *,
+        description: str = None,
+        days_until_deprecate: int = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Sets version to be deprecated in a certain time period.
+
+        Set or cancel the version to be deprecated.
+
+        :param str version_loc_id: A dotted value of `catalogID`.`versionID`.
+        :param str setting: Set deprecation (true) or cancel deprecation (false).
+        :param str description: (optional) Additional information that users can
+               provide to be displayed in deprecation notification.
+        :param int days_until_deprecate: (optional) Specifies the amount of days
+               until product is not available in catalog.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if version_loc_id is None:
+            raise ValueError('version_loc_id must be provided')
+        if setting is None:
+            raise ValueError('setting must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='set_deprecate_version')
+        headers.update(sdk_headers)
+
+        data = {
+            'description': description,
+            'days_until_deprecate': days_until_deprecate
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+
+        path_param_keys = ['version_loc_id', 'setting']
+        path_param_values = self.encode_path_vars(version_loc_id, setting)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/versions/{version_loc_id}/deprecate/{setting}'.format(**path_param_dict)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1847,7 +2168,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1886,7 +2207,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1924,7 +2245,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1962,7 +2283,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2021,7 +2342,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2060,7 +2381,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2099,7 +2420,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2138,7 +2459,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -2196,7 +2517,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2258,7 +2579,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2322,7 +2643,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2379,7 +2700,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2443,7 +2764,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2499,7 +2820,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2601,7 +2922,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2703,7 +3024,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2763,7 +3084,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2865,7 +3186,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2910,7 +3231,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -2950,7 +3271,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -3013,7 +3334,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3075,7 +3396,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3194,7 +3515,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3237,7 +3558,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3360,7 +3681,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3402,7 +3723,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3445,7 +3766,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3487,7 +3808,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3529,7 +3850,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3572,7 +3893,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3614,7 +3935,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3660,7 +3981,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3707,7 +4028,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3753,7 +4074,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3808,7 +4129,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3860,7 +4181,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -3911,7 +4232,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -4033,7 +4354,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -4072,7 +4393,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -4197,7 +4518,7 @@ class CatalogManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -4241,7 +4562,7 @@ class CatalogManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -4270,12 +4591,54 @@ class UpdateOfferingIbmEnums:
         """
         Type of approval, ibm or public.
         """
+        PC_MANAGED = 'pc_managed'
         ALLOW_REQUEST = 'allow_request'
         IBM = 'ibm'
         PUBLIC = 'public'
     class Approved(str, Enum):
         """
         Approve (true) or disapprove (false).
+        """
+        TRUE = 'true'
+        FALSE = 'false'
+
+
+class DeprecateOfferingEnums:
+    """
+    Enums for deprecate_offering parameters.
+    """
+
+    class Setting(str, Enum):
+        """
+        Set deprecation (true) or cancel deprecation (false).
+        """
+        TRUE = 'true'
+        FALSE = 'false'
+
+
+class GetOfferingSourceEnums:
+    """
+    Enums for get_offering_source parameters.
+    """
+
+    class Accept(str, Enum):
+        """
+        The type of the response: application/yaml, application/json, or
+        application/x-gzip.
+        """
+        APPLICATION_YAML = 'application/yaml'
+        APPLICATION_JSON = 'application/json'
+        APPLICATION_X_GZIP = 'application/x-gzip'
+
+
+class SetDeprecateVersionEnums:
+    """
+    Enums for set_deprecate_version parameters.
+    """
+
+    class Setting(str, Enum):
+        """
+        Set deprecation (true) or cancel deprecation (false).
         """
         TRUE = 'true'
         FALSE = 'false'
@@ -6503,6 +6866,106 @@ class InstallStatusRelease():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class JsonPatchOperation():
+    """
+    This model represents an individual patch operation to be performed on a JSON
+    document, as defined by RFC 6902.
+
+    :attr str op: The operation to be performed.
+    :attr str path: The JSON Pointer that identifies the field that is the target of
+          the operation.
+    :attr str from_: (optional) The JSON Pointer that identifies the field that is
+          the source of the operation.
+    :attr object value: (optional) The value to be used within the operation.
+    """
+
+    def __init__(self,
+                 op: str,
+                 path: str,
+                 *,
+                 from_: str = None,
+                 value: object = None) -> None:
+        """
+        Initialize a JsonPatchOperation object.
+
+        :param str op: The operation to be performed.
+        :param str path: The JSON Pointer that identifies the field that is the
+               target of the operation.
+        :param str from_: (optional) The JSON Pointer that identifies the field
+               that is the source of the operation.
+        :param object value: (optional) The value to be used within the operation.
+        """
+        self.op = op
+        self.path = path
+        self.from_ = from_
+        self.value = value
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'JsonPatchOperation':
+        """Initialize a JsonPatchOperation object from a json dictionary."""
+        args = {}
+        if 'op' in _dict:
+            args['op'] = _dict.get('op')
+        else:
+            raise ValueError('Required property \'op\' not present in JsonPatchOperation JSON')
+        if 'path' in _dict:
+            args['path'] = _dict.get('path')
+        else:
+            raise ValueError('Required property \'path\' not present in JsonPatchOperation JSON')
+        if 'from' in _dict:
+            args['from_'] = _dict.get('from')
+        if 'value' in _dict:
+            args['value'] = _dict.get('value')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a JsonPatchOperation object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'op') and self.op is not None:
+            _dict['op'] = self.op
+        if hasattr(self, 'path') and self.path is not None:
+            _dict['path'] = self.path
+        if hasattr(self, 'from_') and self.from_ is not None:
+            _dict['from'] = self.from_
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this JsonPatchOperation object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'JsonPatchOperation') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'JsonPatchOperation') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class OpEnum(str, Enum):
+        """
+        The operation to be performed.
+        """
+        ADD = 'add'
+        REMOVE = 'remove'
+        REPLACE = 'replace'
+        MOVE = 'move'
+        COPY = 'copy'
+        TEST = 'test'
+
+
 class Kind():
     """
     Offering kind.
@@ -6730,6 +7193,85 @@ class License():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'License') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class MediaItem():
+    """
+    Offering Media information.
+
+    :attr str url: (optional) URL of the specified media item.
+    :attr str caption: (optional) Caption for this media item.
+    :attr str type: (optional) Type of this media item.
+    :attr str thumbnail_url: (optional) Thumbnail URL for this media item.
+    """
+
+    def __init__(self,
+                 *,
+                 url: str = None,
+                 caption: str = None,
+                 type: str = None,
+                 thumbnail_url: str = None) -> None:
+        """
+        Initialize a MediaItem object.
+
+        :param str url: (optional) URL of the specified media item.
+        :param str caption: (optional) Caption for this media item.
+        :param str type: (optional) Type of this media item.
+        :param str thumbnail_url: (optional) Thumbnail URL for this media item.
+        """
+        self.url = url
+        self.caption = caption
+        self.type = type
+        self.thumbnail_url = thumbnail_url
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'MediaItem':
+        """Initialize a MediaItem object from a json dictionary."""
+        args = {}
+        if 'url' in _dict:
+            args['url'] = _dict.get('url')
+        if 'caption' in _dict:
+            args['caption'] = _dict.get('caption')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        if 'thumbnail_url' in _dict:
+            args['thumbnail_url'] = _dict.get('thumbnail_url')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a MediaItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'url') and self.url is not None:
+            _dict['url'] = self.url
+        if hasattr(self, 'caption') and self.caption is not None:
+            _dict['caption'] = self.caption
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'thumbnail_url') and self.thumbnail_url is not None:
+            _dict['thumbnail_url'] = self.thumbnail_url
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this MediaItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'MediaItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'MediaItem') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -7382,8 +7924,9 @@ class Offering():
           offering.
     :attr str offering_docs_url: (optional) URL for an additional docs with this
           offering.
-    :attr str offering_support_url: (optional) URL to be displayed in the
-          Consumption UI for getting support on this offering.
+    :attr str offering_support_url: (optional) [deprecated] - Use offering.support
+          instead.  URL to be displayed in the Consumption UI for getting support on this
+          offering.
     :attr List[str] tags: (optional) List of tags associated with this catalog.
     :attr List[str] keywords: (optional) List of keywords associated with offering,
           typically used to search for it.
@@ -7416,8 +7959,13 @@ class Offering():
     :attr str disclaimer: (optional) A disclaimer for this offering.
     :attr bool hidden: (optional) Determine if this offering should be displayed in
           the Consumption UI.
-    :attr str provider: (optional) Provider of this offering.
+    :attr str provider: (optional) Deprecated - Provider of this offering.
+    :attr ProviderInfo provider_info: (optional) Information on the provider for
+          this offering, or omitted if no provider information is given.
     :attr RepoInfo repo_info: (optional) Repository info for offerings.
+    :attr Support support: (optional) Offering Support information.
+    :attr List[MediaItem] media: (optional) A list of media items related to this
+          offering.
     """
 
     def __init__(self,
@@ -7453,7 +8001,10 @@ class Offering():
                  disclaimer: str = None,
                  hidden: bool = None,
                  provider: str = None,
-                 repo_info: 'RepoInfo' = None) -> None:
+                 provider_info: 'ProviderInfo' = None,
+                 repo_info: 'RepoInfo' = None,
+                 support: 'Support' = None,
+                 media: List['MediaItem'] = None) -> None:
         """
         Initialize a Offering object.
 
@@ -7467,8 +8018,9 @@ class Offering():
                this offering.
         :param str offering_docs_url: (optional) URL for an additional docs with
                this offering.
-        :param str offering_support_url: (optional) URL to be displayed in the
-               Consumption UI for getting support on this offering.
+        :param str offering_support_url: (optional) [deprecated] - Use
+               offering.support instead.  URL to be displayed in the Consumption UI for
+               getting support on this offering.
         :param List[str] tags: (optional) List of tags associated with this
                catalog.
         :param List[str] keywords: (optional) List of keywords associated with
@@ -7505,8 +8057,13 @@ class Offering():
         :param str disclaimer: (optional) A disclaimer for this offering.
         :param bool hidden: (optional) Determine if this offering should be
                displayed in the Consumption UI.
-        :param str provider: (optional) Provider of this offering.
+        :param str provider: (optional) Deprecated - Provider of this offering.
+        :param ProviderInfo provider_info: (optional) Information on the provider
+               for this offering, or omitted if no provider information is given.
         :param RepoInfo repo_info: (optional) Repository info for offerings.
+        :param Support support: (optional) Offering Support information.
+        :param List[MediaItem] media: (optional) A list of media items related to
+               this offering.
         """
         self.id = id
         self.rev = rev
@@ -7539,7 +8096,10 @@ class Offering():
         self.disclaimer = disclaimer
         self.hidden = hidden
         self.provider = provider
+        self.provider_info = provider_info
         self.repo_info = repo_info
+        self.support = support
+        self.media = media
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'Offering':
@@ -7607,8 +8167,14 @@ class Offering():
             args['hidden'] = _dict.get('hidden')
         if 'provider' in _dict:
             args['provider'] = _dict.get('provider')
+        if 'provider_info' in _dict:
+            args['provider_info'] = ProviderInfo.from_dict(_dict.get('provider_info'))
         if 'repo_info' in _dict:
             args['repo_info'] = RepoInfo.from_dict(_dict.get('repo_info'))
+        if 'support' in _dict:
+            args['support'] = Support.from_dict(_dict.get('support'))
+        if 'media' in _dict:
+            args['media'] = [MediaItem.from_dict(x) for x in _dict.get('media')]
         return cls(**args)
 
     @classmethod
@@ -7681,8 +8247,14 @@ class Offering():
             _dict['hidden'] = self.hidden
         if hasattr(self, 'provider') and self.provider is not None:
             _dict['provider'] = self.provider
+        if hasattr(self, 'provider_info') and self.provider_info is not None:
+            _dict['provider_info'] = self.provider_info.to_dict()
         if hasattr(self, 'repo_info') and self.repo_info is not None:
             _dict['repo_info'] = self.repo_info.to_dict()
+        if hasattr(self, 'support') and self.support is not None:
+            _dict['support'] = self.support.to_dict()
+        if hasattr(self, 'media') and self.media is not None:
+            _dict['media'] = [x.to_dict() for x in self.media]
         return _dict
 
     def _to_dict(self):
@@ -8406,6 +8978,70 @@ class Plan():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class ProviderInfo():
+    """
+    Information on the provider for this offering, or omitted if no provider information
+    is given.
+
+    :attr str id: (optional) The id of this provider.
+    :attr str name: (optional) The name of this provider.
+    """
+
+    def __init__(self,
+                 *,
+                 id: str = None,
+                 name: str = None) -> None:
+        """
+        Initialize a ProviderInfo object.
+
+        :param str id: (optional) The id of this provider.
+        :param str name: (optional) The name of this provider.
+        """
+        self.id = id
+        self.name = name
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ProviderInfo':
+        """Initialize a ProviderInfo object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ProviderInfo object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ProviderInfo object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ProviderInfo') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ProviderInfo') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class PublishObject():
     """
     Publish information.
@@ -8908,6 +9544,81 @@ class State():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'State') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class Support():
+    """
+    Offering Support information.
+
+    :attr str url: (optional) URL to be displayed in the Consumption UI for getting
+          support on this offering.
+    :attr str process: (optional) Support process as provided by an ISV.
+    :attr List[str] locations: (optional) A list of country codes indicating where
+          support is provided.
+    """
+
+    def __init__(self,
+                 *,
+                 url: str = None,
+                 process: str = None,
+                 locations: List[str] = None) -> None:
+        """
+        Initialize a Support object.
+
+        :param str url: (optional) URL to be displayed in the Consumption UI for
+               getting support on this offering.
+        :param str process: (optional) Support process as provided by an ISV.
+        :param List[str] locations: (optional) A list of country codes indicating
+               where support is provided.
+        """
+        self.url = url
+        self.process = process
+        self.locations = locations
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Support':
+        """Initialize a Support object from a json dictionary."""
+        args = {}
+        if 'url' in _dict:
+            args['url'] = _dict.get('url')
+        if 'process' in _dict:
+            args['process'] = _dict.get('process')
+        if 'locations' in _dict:
+            args['locations'] = _dict.get('locations')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Support object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'url') and self.url is not None:
+            _dict['url'] = self.url
+        if hasattr(self, 'process') and self.process is not None:
+            _dict['process'] = self.process
+        if hasattr(self, 'locations') and self.locations is not None:
+            _dict['locations'] = self.locations
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Support object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Support') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Support') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -9746,6 +10457,7 @@ class VersionUpdateDescriptor():
     :attr List[Resource] required_resources: (optional) Resource requirments for
           installation.
     :attr str package_version: (optional) Version of package.
+    :attr str sha: (optional) The SHA value of this version.
     :attr bool can_update: (optional) true if the current version can be upgraded to
           this version, false otherwise.
     :attr dict messages: (optional) If can_update is false, this map will contain
@@ -9760,6 +10472,7 @@ class VersionUpdateDescriptor():
                  state: 'State' = None,
                  required_resources: List['Resource'] = None,
                  package_version: str = None,
+                 sha: str = None,
                  can_update: bool = None,
                  messages: dict = None) -> None:
         """
@@ -9772,6 +10485,7 @@ class VersionUpdateDescriptor():
         :param List[Resource] required_resources: (optional) Resource requirments
                for installation.
         :param str package_version: (optional) Version of package.
+        :param str sha: (optional) The SHA value of this version.
         :param bool can_update: (optional) true if the current version can be
                upgraded to this version, false otherwise.
         :param dict messages: (optional) If can_update is false, this map will
@@ -9784,6 +10498,7 @@ class VersionUpdateDescriptor():
         self.state = state
         self.required_resources = required_resources
         self.package_version = package_version
+        self.sha = sha
         self.can_update = can_update
         self.messages = messages
 
@@ -9801,6 +10516,8 @@ class VersionUpdateDescriptor():
             args['required_resources'] = [Resource.from_dict(x) for x in _dict.get('required_resources')]
         if 'package_version' in _dict:
             args['package_version'] = _dict.get('package_version')
+        if 'sha' in _dict:
+            args['sha'] = _dict.get('sha')
         if 'can_update' in _dict:
             args['can_update'] = _dict.get('can_update')
         if 'messages' in _dict:
@@ -9825,6 +10542,8 @@ class VersionUpdateDescriptor():
             _dict['required_resources'] = [x.to_dict() for x in self.required_resources]
         if hasattr(self, 'package_version') and self.package_version is not None:
             _dict['package_version'] = self.package_version
+        if hasattr(self, 'sha') and self.sha is not None:
+            _dict['sha'] = self.sha
         if hasattr(self, 'can_update') and self.can_update is not None:
             _dict['can_update'] = self.can_update
         if hasattr(self, 'messages') and self.messages is not None:

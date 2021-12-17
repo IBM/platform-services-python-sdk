@@ -124,7 +124,7 @@ class TestCatalogManagementV1():
         try:
             self.catalog_management_service_authorized.create_catalog(
                 label=label_python_sdk,
-                revision=bogus_revision,
+                rev=bogus_revision,
                 tags=['sdk', 'python'],
                 owning_account=self.account_id,
                 kind=kind_vpe,
@@ -468,6 +468,64 @@ class TestCatalogManagementV1():
         assert offering['id'] == offering_id
         assert offering['catalog_id'] == catalog_id
         assert offering['name'] == updated_offering_name
+    
+    ####
+    # Update Offering
+    ####
+
+    @needscredentials
+    def test_update_offering(self):
+        assert offering_id is not None
+        assert catalog_id is not None
+
+        # Get offering to use the rev
+        get_offering_response = self.catalog_management_service_authorized.get_offering(
+            catalog_identifier=catalog_id,
+            offering_id=offering_id,
+        )
+
+        assert get_offering_response.get_status_code() == 200
+        offering = get_offering_response.get_result()
+        assert offering is not None
+        assert offering['id'] == offering_id
+        assert offering['catalog_id'] == catalog_id
+
+        update_offering_response = self.catalog_management_service_authorized.update_offering(
+            catalog_identifier=catalog_id,
+            offering_id=offering_id,
+            if_match='"'+offering['_rev']+'"',
+            updates=[JsonPatchOperation(
+                op="replace",
+                path="/name",
+                value="updated-offering-name-by-python-sdk-patch"
+            )]
+        )
+
+        assert update_offering_response.get_status_code() == 200
+        updatedOffering = update_offering_response.get_result()
+        assert updatedOffering is not None
+        assert updatedOffering['id'] == offering_id
+        assert updatedOffering['catalog_id'] == catalog_id
+        assert updatedOffering['name'] == "updated-offering-name-by-python-sdk-patch"
+
+    @needscredentials
+    def test_update_offering_returns_412_on_bad_request(self):
+        assert offering_id is not None
+        assert catalog_id is not None
+
+        try:
+            self.catalog_management_service_authorized.update_offering(
+                catalog_identifier=catalog_id,
+                offering_id=offering_id,
+                if_match='"bogus_rev"',
+                updates=[JsonPatchOperation(
+                    op="replace",
+                    path="/name",
+                    value="updated-offering-name-by-python-sdk-patch"
+                )]
+            )
+        except ApiException as e:
+            assert e.code == 412
 
     ####
     # List Offerings
@@ -1287,6 +1345,7 @@ class TestCatalogManagementV1():
                 version='0.0.2',
                 cluster_id=self.cluster_id,
                 region=region_us_south,
+                x_auth_refresh_token=self.refresh_token_authorized,
             )
         except ApiException as e:
             assert e.code == 400
@@ -1327,6 +1386,7 @@ class TestCatalogManagementV1():
                 cluster_id=self.cluster_id,
                 region=region_us_south,
                 namespace=namespace_python_sdk,
+                x_auth_refresh_token=self.refresh_token_not_authorized,
             )
         except ApiException as e:
             assert e.code == 403
