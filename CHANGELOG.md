@@ -1,3 +1,10 @@
+## [0.22.6](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.5...v0.22.6) (2021-12-17)
+
+
+### Bug Fixes
+
+* **Catalog Management:** update service to add patch operation ([#147](https://github.com/IBM/platform-services-python-sdk/issues/147)) ([0629917](https://github.com/IBM/platform-services-python-sdk/commit/06299172147ad60a9b303f9967743ceabd4fa726))
+
 ## [0.22.5](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.4...v0.22.5) (2021-12-03)
 
 
