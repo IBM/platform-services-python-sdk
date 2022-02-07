@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -67,6 +67,7 @@ class TestNewInstance():
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
             service = IamAccessGroupsV2.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
             )
 
 class TestCreateAccessGroup():
@@ -813,6 +814,7 @@ class TestNewInstance():
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
             service = IamAccessGroupsV2.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
             )
 
 class TestIsMemberOfAccessGroup():
@@ -1389,7 +1391,7 @@ class TestRemoveMembersFromAccessGroup():
 
         # Set up parameter values
         access_group_id = 'testString'
-        members = ['IBMId-user1', 'iam-ServiceId-123']
+        members = ['IBMId-user1', 'iam-ServiceId-123', 'iam-Profile-123']
         transaction_id = 'testString'
 
         # Invoke method
@@ -1405,7 +1407,7 @@ class TestRemoveMembersFromAccessGroup():
         assert response.status_code == 207
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['members'] == ['IBMId-user1', 'iam-ServiceId-123']
+        assert req_body['members'] == ['IBMId-user1', 'iam-ServiceId-123', 'iam-Profile-123']
 
     def test_remove_members_from_access_group_all_params_with_retries(self):
         # Enable retries and run test_remove_members_from_access_group_all_params.
@@ -1432,7 +1434,7 @@ class TestRemoveMembersFromAccessGroup():
 
         # Set up parameter values
         access_group_id = 'testString'
-        members = ['IBMId-user1', 'iam-ServiceId-123']
+        members = ['IBMId-user1', 'iam-ServiceId-123', 'iam-Profile-123']
 
         # Invoke method
         response = _service.remove_members_from_access_group(
@@ -1446,7 +1448,7 @@ class TestRemoveMembersFromAccessGroup():
         assert response.status_code == 207
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['members'] == ['IBMId-user1', 'iam-ServiceId-123']
+        assert req_body['members'] == ['IBMId-user1', 'iam-ServiceId-123', 'iam-Profile-123']
 
     def test_remove_members_from_access_group_required_params_with_retries(self):
         # Enable retries and run test_remove_members_from_access_group_required_params.
@@ -1473,7 +1475,7 @@ class TestRemoveMembersFromAccessGroup():
 
         # Set up parameter values
         access_group_id = 'testString'
-        members = ['IBMId-user1', 'iam-ServiceId-123']
+        members = ['IBMId-user1', 'iam-ServiceId-123', 'iam-Profile-123']
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1826,6 +1828,7 @@ class TestNewInstance():
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
             service = IamAccessGroupsV2.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
             )
 
 class TestAddAccessGroupRule():
@@ -2613,6 +2616,7 @@ class TestNewInstance():
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
             service = IamAccessGroupsV2.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
             )
 
 class TestGetAccountSettings():

@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.43.0-49eab5c7-20211117-152138
+# IBM OpenAPI SDK Code Generator Version: 3.43.4-432d779b-20220119-173927
  
 """
 The IAM Access Groups API allows for the management of access groups (Create, Read,
@@ -187,8 +187,8 @@ class IamAccessGroupsV2(BaseService):
                multiple services by using one identifier. The header key must be set to
                Transaction-Id and the value is anything that you choose. If no transaction
                ID is passed in, then a random ID is generated.
-        :param str iam_id: (optional) Return groups for member id (IBMid or Service
-               Id).
+        :param str iam_id: (optional) Return groups for member id (IBMid, Service
+               Id or Profile Id).
         :param int limit: (optional) Return up to this limit of results where limit
                is between 0 and 100.
         :param int offset: (optional) The offset of the first result item to be
@@ -498,12 +498,12 @@ class IamAccessGroupsV2(BaseService):
         """
         Add members to an access group.
 
-        Use this API to add users (`IBMid-...`) or service IDs (`iam-ServiceId-...`) to an
-        access group. Any member added gains access to resources defined in the group's
-        policies. To revoke a given user's access, simply remove them from the group.
-        There is no limit to the number of members one group can have, but each `iam_id`
-        can only be added to 50 groups. Additionally, this API request payload can add up
-        to 50 members per call.
+        Use this API to add users (`IBMid-...`), service IDs (`iam-ServiceId-...`) or
+        trusted profiles (`iam-Profile-...`) to an access group. Any member added gains
+        access to resources defined in the group's policies. To revoke a given members's
+        access, simply remove them from the group. There is no limit to the number of
+        members one group can have, but each `iam_id` can only be added to 50 groups.
+        Additionally, this API request payload can add up to 50 members per call.
 
         :param str access_group_id: The access group identifier.
         :param List[AddGroupMembersRequestMembersItem] members: (optional) An array
@@ -570,9 +570,9 @@ class IamAccessGroupsV2(BaseService):
 
         List all members of a given group using this API. Parameters for pagination and
         sorting can be used to filter the results. The most useful query parameter may be
-        the `verbose` flag. If `verbose=true`, user and service ID names will be retrieved
-        for each `iam_id`. If performance is a concern, leave the `verbose` parameter off
-        so that name information does not get retrieved.
+        the `verbose` flag. If `verbose=true`, user, service ID and trusted profile names
+        will be retrieved for each `iam_id`. If performance is a concern, leave the
+        `verbose` parameter off so that name information does not get retrieved.
 
         :param str access_group_id: The access group identifier.
         :param str transaction_id: (optional) An optional transaction ID can be
@@ -586,7 +586,7 @@ class IamAccessGroupsV2(BaseService):
                returned.
         :param str type: (optional) Filter the results by member type.
         :param bool verbose: (optional) Return user's email and name for each user
-               id or the name for each service id.
+               id or the name for each service id or trusted profile.
         :param str sort: (optional) If verbose is true, sort the results by id,
                name, or email.
         :param dict headers: A `dict` containing the request headers
@@ -828,8 +828,8 @@ class IamAccessGroupsV2(BaseService):
                IAM ID. If a user IAM ID is specified in iam_id then then account_id must
                match the account of the Authorization token.
         :param str iam_id: The IAM identifier.
-        :param str type: (optional) The type of the member, must be either "user"
-               or "service".
+        :param str type: (optional) The type of the member, must be either "user",
+               "service" or "trusted profile".
         :param List[str] groups: (optional) The ids of the access groups a given
                member is to be added to.
         :param str transaction_id: (optional) An optional transaction ID can be
@@ -1437,8 +1437,9 @@ class AddGroupMembersRequestMembersItem():
     """
     AddGroupMembersRequestMembersItem.
 
-    :attr str iam_id: The IBMid or Service Id of the member.
-    :attr str type: The type of the member, must be either "user" or "service".
+    :attr str iam_id: The IBMid, Service Id or Profile Id of the member.
+    :attr str type: The type of the member, must be either "user", "service" or
+          "trusted profile".
     """
 
     def __init__(self,
@@ -1447,9 +1448,9 @@ class AddGroupMembersRequestMembersItem():
         """
         Initialize a AddGroupMembersRequestMembersItem object.
 
-        :param str iam_id: The IBMid or Service Id of the member.
-        :param str type: The type of the member, must be either "user" or
-               "service".
+        :param str iam_id: The IBMid, Service Id or Profile Id of the member.
+        :param str type: The type of the member, must be either "user", "service"
+               or "trusted profile".
         """
         self.iam_id = iam_id
         self.type = type
