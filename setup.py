@@ -19,7 +19,7 @@ import os
 import sys
 import pkg_resources
 
-__version__ = '0.22.6'
+__version__ = '0.22.7'
 PACKAGE_NAME = 'ibm_platform_services'
 PACKAGE_DESC = 'Python client library for IBM Cloud Platform Services'
 
