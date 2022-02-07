@@ -1,3 +1,10 @@
+## [0.22.7](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.6...v0.22.7) (2022-02-07)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** add trusted profile as member ([#148](https://github.com/IBM/platform-services-python-sdk/issues/148)) ([f8dd3dc](https://github.com/IBM/platform-services-python-sdk/commit/f8dd3dc8be220d53d56ac80c7888eadcabcc303a))
+
 ## [0.22.6](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.5...v0.22.6) (2021-12-17)
 
 
