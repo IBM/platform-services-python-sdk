@@ -37,6 +37,7 @@ deploy:
     branch: main
 
 - provider: pypi
+  setuptools_version: "60.8.2"
   user: __token__
   password: $PYPI_TOKEN
   repository: https://upload.pypi.org/legacy
