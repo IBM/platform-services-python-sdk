@@ -8,7 +8,7 @@
 [![CLA assistant](https://cla-assistant.io/readme/badge/IBM/platform-services-python-sdk)](https://cla-assistant.io/IBM/platform-services-python-sdk)
 
 
-# IBM Cloud Platform Services Python SDK Version 0.22.7
+# IBM Cloud Platform Services Python SDK Version 0.22.8
 
 Python client library to interact with various 
 [IBM Cloud Platform Service APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services).
@@ -73,7 +73,7 @@ Service Name | Module Name | Service Class Name
 
 * An [IBM Cloud][ibm-cloud-onboarding] account.
 * An IAM API key to allow the SDK to access your account. Create one [here](https://cloud.ibm.com/iam/apikeys).
-* Python 3.6 or above.
+* Python 3.7 or above.
 
 ## Installation
 
