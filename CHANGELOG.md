@@ -1,3 +1,10 @@
+## [0.22.8](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.7...v0.22.8) (2022-02-25)
+
+
+### Bug Fixes
+
+* update Python versions ([#151](https://github.com/IBM/platform-services-python-sdk/issues/151)) ([25344ca](https://github.com/IBM/platform-services-python-sdk/commit/25344caf5850ff040cb4fe5d2cea1cb1cd2e3807))
+
 ## [0.22.7](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.6...v0.22.7) (2022-02-07)
 
 
