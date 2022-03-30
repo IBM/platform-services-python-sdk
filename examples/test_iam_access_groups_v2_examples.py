@@ -37,13 +37,14 @@ from ibm_platform_services.iam_access_groups_v2 import *
 # in a configuration file and then:
 # export IBM_CREDENTIALS_FILE=<name of configuration file>
 #
-config_file = 'iam_access_groups.env'
+config_file = 'iam_access_groups_v2.env'
 
 iam_access_groups_service = None
 
 config = None
 
 test_account_id = None
+test_profile_id = None
 test_group_etag = None
 test_group_id = None
 test_claim_rule_id = None
@@ -74,10 +75,11 @@ class TestIamAccessGroupsV2Examples():
             assert iam_access_groups_service is not None
 
             # Load the configuration
-            global config, test_account_id
+            global config, test_account_id, test_profile_id
             config = read_external_sources(
                 IamAccessGroupsV2.DEFAULT_SERVICE_NAME)
             test_account_id = config['TEST_ACCOUNT_ID']
+            test_profile_id = config['TEST_PROFILE_ID']
 
         print('Setup complete.')
 
@@ -188,7 +190,9 @@ class TestIamAccessGroupsV2Examples():
                 iam_id='IBMid-user1', type='user')
             member2 = AddGroupMembersRequestMembersItem(
                 iam_id='iam-ServiceId-123', type='service')
-            members = [member1, member2]
+            member3 = AddGroupMembersRequestMembersItem(
+                iam_id=test_profile_id, type='profile')
+            members = [member1, member2, member3]
 
             add_group_members_response = iam_access_groups_service.add_members_to_access_group(
                 access_group_id=test_group_id,
@@ -272,6 +276,27 @@ class TestIamAccessGroupsV2Examples():
             delete_group_bulk_members_response = iam_access_groups_service.remove_members_from_access_group(
                 access_group_id=test_group_id,
                 members=['iam-ServiceId-123']
+            ).get_result()
+
+            print(json.dumps(delete_group_bulk_members_response, indent=2))
+
+            # end-remove_members_from_access_group
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_remove_profile_members_from_access_group_example(self):
+        """
+        remove_members_from_access_group request example
+        """
+        try:
+            print('\nremove_members_from_access_group() result:')
+            # begin-remove_members_from_access_group
+
+            delete_group_bulk_members_response = iam_access_groups_service.remove_members_from_access_group(
+                access_group_id=test_group_id,
+                members=[test_profile_id]
             ).get_result()
 
             print(json.dumps(delete_group_bulk_members_response, indent=2))

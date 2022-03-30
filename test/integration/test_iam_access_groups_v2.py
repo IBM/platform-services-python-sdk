@@ -28,7 +28,7 @@ from ibm_cloud_sdk_core import *
 from ibm_platform_services.iam_access_groups_v2 import *
 
 # Read config file
-configFile = 'iam_access_groups.env'
+configFile = 'iam_access_groups_v2.env'
 
 
 class TestIamAccessGroupsV2(unittest.TestCase):

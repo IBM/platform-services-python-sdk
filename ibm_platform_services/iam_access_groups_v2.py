@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.43.4-432d779b-20220119-173927
+# IBM OpenAPI SDK Code Generator Version: 3.46.1-a5569134-20220316-164819
  
 """
 The IAM Access Groups API allows for the management of access groups (Create, Read,
@@ -161,6 +161,7 @@ class IamAccessGroupsV2(BaseService):
         *,
         transaction_id: str = None,
         iam_id: str = None,
+        membership_type: str = None,
         limit: int = None,
         offset: int = None,
         sort: str = None,
@@ -187,8 +188,14 @@ class IamAccessGroupsV2(BaseService):
                multiple services by using one identifier. The header key must be set to
                Transaction-Id and the value is anything that you choose. If no transaction
                ID is passed in, then a random ID is generated.
-        :param str iam_id: (optional) Return groups for member id (IBMid, Service
-               Id or Profile Id).
+        :param str iam_id: (optional) Return groups for member ID (IBMid, service
+               ID or trusted profile ID).
+        :param str membership_type: (optional) Membership type need to be specified
+               along with iam_id and must be either `static`, `dynamic` or `all`. If
+               membership type is `static`, members explicitly added to the group will be
+               shown. If membership type is `dynamic`, members accessing the access group
+               at the moment via dynamic rules will be shown. If membership type is `all`,
+               both static and dynamic members will be shown.
         :param int limit: (optional) Return up to this limit of results where limit
                is between 0 and 100.
         :param int offset: (optional) The offset of the first result item to be
@@ -218,6 +225,7 @@ class IamAccessGroupsV2(BaseService):
         params = {
             'account_id': account_id,
             'iam_id': iam_id,
+            'membership_type': membership_type,
             'limit': limit,
             'offset': offset,
             'sort': sort,
@@ -444,10 +452,11 @@ class IamAccessGroupsV2(BaseService):
         """
         Check membership in an access group.
 
-        This HEAD operation determines if a given `iam_id` is present in a group. No
-        response body is returned with this request. If the membership exists, a `204 - No
-        Content` status code is returned. If the membership or the group does not exist, a
-        `404 - Not Found` status code is returned.
+        This HEAD operation determines if a given `iam_id` is present in a group either
+        explicitly or via dynamic rules. No response body is returned with this request.
+        If the membership exists, a `204 - No Content` status code is returned. If the
+        membership or the group does not exist, a `404 - Not Found` status code is
+        returned.
 
         :param str access_group_id: The access group identifier.
         :param str iam_id: The IAM identifier.
@@ -558,6 +567,7 @@ class IamAccessGroupsV2(BaseService):
         access_group_id: str,
         *,
         transaction_id: str = None,
+        membership_type: str = None,
         limit: int = None,
         offset: int = None,
         type: str = None,
@@ -580,13 +590,18 @@ class IamAccessGroupsV2(BaseService):
                multiple services by using one identifier. The header key must be set to
                Transaction-Id and the value is anything that you choose. If no transaction
                ID is passed in, then a random ID is generated.
+        :param str membership_type: (optional) Filters members by membership type.
+               Membership type can be either `static`, `dynamic` or `all`. `static` lists
+               those members explicitly added to the access group, `dynamic` lists those
+               members part of access group via dynamic rules at the moment. `all` lists
+               both static and dynamic members.
         :param int limit: (optional) Return up to this limit of results where limit
                is between 0 and 100.
         :param int offset: (optional) The offset of the first result item to be
                returned.
         :param str type: (optional) Filter the results by member type.
         :param bool verbose: (optional) Return user's email and name for each user
-               id or the name for each service id or trusted profile.
+               ID or the name for each service ID or trusted profile.
         :param str sort: (optional) If verbose is true, sort the results by id,
                name, or email.
         :param dict headers: A `dict` containing the request headers
@@ -605,6 +620,7 @@ class IamAccessGroupsV2(BaseService):
         headers.update(sdk_headers)
 
         params = {
+            'membership_type': membership_type,
             'limit': limit,
             'offset': offset,
             'type': type,
@@ -641,7 +657,9 @@ class IamAccessGroupsV2(BaseService):
 
         Remove one member from a group using this API. If the operation is successful,
         only a `204 - No Content` response with no body is returned. However, if any error
-        occurs, the standard error format will be returned.
+        occurs, the standard error format will be returned. Dynamic member cannot be
+        deleted using this API. Dynamic rules needs to be adjusted to delete dynamic
+        members.
 
         :param str access_group_id: The access group identifier.
         :param str iam_id: The IAM identifier.
@@ -695,7 +713,8 @@ class IamAccessGroupsV2(BaseService):
         Remove multiple members from a group using this API. On a successful call, this
         API will always return 207. It is the caller's responsibility to iterate across
         the body to determine successful deletion of each member. This API request payload
-        can delete up to 50 members per call.
+        can delete up to 50 members per call. This API doesnt delete dynamic members
+        accessing the access group via dynamic rules.
 
         :param str access_group_id: The access group identifier.
         :param List[str] members: (optional) The `iam_id`s to remove from the
@@ -1437,7 +1456,7 @@ class AddGroupMembersRequestMembersItem():
     """
     AddGroupMembersRequestMembersItem.
 
-    :attr str iam_id: The IBMid, Service Id or Profile Id of the member.
+    :attr str iam_id: The IBMid, service ID or trusted profile ID of the member.
     :attr str type: The type of the member, must be either "user", "service" or
           "trusted profile".
     """
@@ -1448,7 +1467,8 @@ class AddGroupMembersRequestMembersItem():
         """
         Initialize a AddGroupMembersRequestMembersItem object.
 
-        :param str iam_id: The IBMid, Service Id or Profile Id of the member.
+        :param str iam_id: The IBMid, service ID or trusted profile ID of the
+               member.
         :param str type: The type of the member, must be either "user", "service"
                or "trusted profile".
         """
@@ -2212,6 +2232,8 @@ class Group():
     :attr str href: (optional) A url to the given group resource.
     :attr bool is_federated: (optional) This is set to true if rules exist for the
           group.
+    :attr str membership_type: (optional) Type of the membership. `static` or
+          `dynamic`.
     """
 
     def __init__(self,
@@ -2225,7 +2247,8 @@ class Group():
                  last_modified_at: datetime = None,
                  last_modified_by_id: str = None,
                  href: str = None,
-                 is_federated: bool = None) -> None:
+                 is_federated: bool = None,
+                 membership_type: str = None) -> None:
         """
         Initialize a Group object.
 
@@ -2237,6 +2260,8 @@ class Group():
         :param str href: (optional) A url to the given group resource.
         :param bool is_federated: (optional) This is set to true if rules exist for
                the group.
+        :param str membership_type: (optional) Type of the membership. `static` or
+               `dynamic`.
         """
         self.id = id
         self.name = name
@@ -2248,6 +2273,7 @@ class Group():
         self.last_modified_by_id = last_modified_by_id
         self.href = href
         self.is_federated = is_federated
+        self.membership_type = membership_type
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'Group':
@@ -2273,6 +2299,8 @@ class Group():
             args['href'] = _dict.get('href')
         if 'is_federated' in _dict:
             args['is_federated'] = _dict.get('is_federated')
+        if 'membership_type' in _dict:
+            args['membership_type'] = _dict.get('membership_type')
         return cls(**args)
 
     @classmethod
@@ -2303,6 +2331,8 @@ class Group():
             _dict['href'] = self.href
         if hasattr(self, 'is_federated') and self.is_federated is not None:
             _dict['is_federated'] = self.is_federated
+        if hasattr(self, 'membership_type') and self.membership_type is not None:
+            _dict['membership_type'] = self.membership_type
         return _dict
 
     def _to_dict(self):
@@ -2615,7 +2645,10 @@ class ListGroupMembersResponseMember():
     A single member of an access group in a list.
 
     :attr str iam_id: (optional) The IBMid or Service Id of the member.
-    :attr str type: (optional) The member type - either `user` or `service`.
+    :attr str type: (optional) The member type - either `user`, `service` or
+          `profile`.
+    :attr str membership_type: (optional) The membership type - either `static` or
+          `dynamic`.
     :attr str name: (optional) The user's or service id's name.
     :attr str email: (optional) If the member type is user, this is the user's
           email.
@@ -2632,6 +2665,7 @@ class ListGroupMembersResponseMember():
                  *,
                  iam_id: str = None,
                  type: str = None,
+                 membership_type: str = None,
                  name: str = None,
                  email: str = None,
                  description: str = None,
@@ -2642,7 +2676,10 @@ class ListGroupMembersResponseMember():
         Initialize a ListGroupMembersResponseMember object.
 
         :param str iam_id: (optional) The IBMid or Service Id of the member.
-        :param str type: (optional) The member type - either `user` or `service`.
+        :param str type: (optional) The member type - either `user`, `service` or
+               `profile`.
+        :param str membership_type: (optional) The membership type - either
+               `static` or `dynamic`.
         :param str name: (optional) The user's or service id's name.
         :param str email: (optional) If the member type is user, this is the user's
                email.
@@ -2656,6 +2693,7 @@ class ListGroupMembersResponseMember():
         """
         self.iam_id = iam_id
         self.type = type
+        self.membership_type = membership_type
         self.name = name
         self.email = email
         self.description = description
@@ -2671,6 +2709,8 @@ class ListGroupMembersResponseMember():
             args['iam_id'] = _dict.get('iam_id')
         if 'type' in _dict:
             args['type'] = _dict.get('type')
+        if 'membership_type' in _dict:
+            args['membership_type'] = _dict.get('membership_type')
         if 'name' in _dict:
             args['name'] = _dict.get('name')
         if 'email' in _dict:
@@ -2697,6 +2737,8 @@ class ListGroupMembersResponseMember():
             _dict['iam_id'] = self.iam_id
         if hasattr(self, 'type') and self.type is not None:
             _dict['type'] = self.type
+        if hasattr(self, 'membership_type') and self.membership_type is not None:
+            _dict['membership_type'] = self.membership_type
         if hasattr(self, 'name') and self.name is not None:
             _dict['name'] = self.name
         if hasattr(self, 'email') and self.email is not None:
