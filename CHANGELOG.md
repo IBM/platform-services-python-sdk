@@ -1,3 +1,10 @@
+# [0.23.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.9...v0.23.0) (2022-04-04)
+
+
+### Features
+
+* **IAM Access Groups:** add support for dynamic membership ([#154](https://github.com/IBM/platform-services-python-sdk/issues/154)) ([256792d](https://github.com/IBM/platform-services-python-sdk/commit/256792d1dc6cb1368821ae3ac1a5a81f24f9f1b8))
+
 ## [0.22.9](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.8...v0.22.9) (2022-03-21)
 
 
