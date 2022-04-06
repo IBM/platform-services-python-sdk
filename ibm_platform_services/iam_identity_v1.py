@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,11 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.37.0-a85661cd-20210802-190136
+# IBM OpenAPI SDK Code Generator Version: 3.47.0-60650593-20220330-200002
  
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
 (Service IDs, ApiKeys).
+
+API Version: 1.0.0
 """
 
 from datetime import datetime
@@ -65,7 +67,7 @@ class IamIdentityV1(BaseService):
         Construct a new client for the iam_identity service.
 
         :param Authenticator authenticator: The authenticator specifies the authentication mechanism.
-               Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
+               Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
         BaseService.__init__(self,
@@ -101,21 +103,21 @@ class IamIdentityV1(BaseService):
         manager or IBM Cloud space developer in order to manage  service IDs of the
         entity.
 
-        :param str account_id: (optional) Account ID of the API keys(s) to query.
-               If a service IAM ID is specified in iam_id then account_id must match the
+        :param str account_id: (optional) Account ID of the API keys to query. If a
+               service IAM ID is specified in iam_id then account_id must match the
                account of the IAM ID. If a user IAM ID is specified in iam_id then then
                account_id must match the account of the Authorization token.
-        :param str iam_id: (optional) IAM ID of the API key(s) to be queried. The
-               IAM ID may be that of a user or a service. For a user IAM ID iam_id must
-               match the Authorization token.
+        :param str iam_id: (optional) IAM ID of the API keys to be queried. The IAM
+               ID may be that of a user or a service. For a user IAM ID iam_id must match
+               the Authorization token.
         :param int pagesize: (optional) Optional size of a single page. Default is
                20 items per page. Valid range is 1 to 100.
         :param str pagetoken: (optional) Optional Prev or Next page token returned
                from a previous query execution. Default is start with first page.
         :param str scope: (optional) Optional parameter to define the scope of the
-               queried API Keys. Can be 'entity' (default) or 'account'.
+               queried API keys. Can be 'entity' (default) or 'account'.
         :param str type: (optional) Optional parameter to filter the type of the
-               queried API Keys. Can be 'user' or 'serviceid'.
+               queried API keys. Can be 'user' or 'serviceid'.
         :param str sort: (optional) Optional sort property, valid values are name,
                description, created_at and created_by. If specified, the items are sorted
                by the value of this property.
@@ -292,6 +294,7 @@ class IamIdentityV1(BaseService):
         id: str,
         *,
         include_history: bool = None,
+        include_activity: bool = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -306,6 +309,9 @@ class IamIdentityV1(BaseService):
         :param str id: Unique ID of the API key.
         :param bool include_history: (optional) Defines if the entity history is
                included in the response.
+        :param bool include_activity: (optional) Defines if the entity's activity
+               is included in the response. Retrieving activity data is an expensive
+               operation, so please only request this when needed.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ApiKey` object
@@ -320,7 +326,8 @@ class IamIdentityV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
-            'include_history': include_history
+            'include_history': include_history,
+            'include_activity': include_activity
         }
 
         if 'headers' in kwargs:
@@ -686,6 +693,7 @@ class IamIdentityV1(BaseService):
         id: str,
         *,
         include_history: bool = None,
+        include_activity: bool = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -699,6 +707,9 @@ class IamIdentityV1(BaseService):
         :param str id: Unique ID of the service ID.
         :param bool include_history: (optional) Defines if the entity history is
                included in the response.
+        :param bool include_activity: (optional) Defines if the entity's activity
+               is included in the response. Retrieving activity data is an expensive
+               operation, so please only request this when needed.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ServiceId` object
@@ -713,7 +724,8 @@ class IamIdentityV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
-            'include_history': include_history
+            'include_history': include_history,
+            'include_activity': include_activity
         }
 
         if 'headers' in kwargs:
@@ -1069,6 +1081,8 @@ class IamIdentityV1(BaseService):
 
     def get_profile(self,
         profile_id: str,
+        *,
+        include_activity: bool = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -1079,6 +1093,9 @@ class IamIdentityV1(BaseService):
         compute resources that qualify to apply the trusted profile.
 
         :param str profile_id: ID of the trusted profile to get.
+        :param bool include_activity: (optional) Defines if the entity's activity
+               is included in the response. Retrieving activity data is an expensive
+               operation, so please only request this when needed.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TrustedProfile` object
@@ -1092,6 +1109,10 @@ class IamIdentityV1(BaseService):
                                       operation_id='get_profile')
         headers.update(sdk_headers)
 
+        params = {
+            'include_activity': include_activity
+        }
+
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
@@ -1102,7 +1123,8 @@ class IamIdentityV1(BaseService):
         url = '/v1/profiles/{profile-id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
-                                       headers=headers)
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request, **kwargs)
         return response
@@ -1870,6 +1892,107 @@ class IamIdentityV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    #########################
+    # activityOperations
+    #########################
+
+
+    def create_report(self,
+        account_id: str,
+        *,
+        type: str = None,
+        duration: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Trigger activity report across on account scope.
+
+        Trigger activity report across on account scope for a given accountid.
+
+        :param str account_id: ID of the account.
+        :param str type: (optional) Optional report type, supported value is
+               'inactive' - List all identities that have not authenticated within the
+               time indicated by duration.
+        :param str duration: (optional) Optional duration of the report, supported
+               unit of duration is hours.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ReportReference` object
+        """
+
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='create_report')
+        headers.update(sdk_headers)
+
+        params = {
+            'type': type,
+            'duration': duration
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/activity/accounts/{account_id}/report'.format(**path_param_dict)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def get_report(self,
+        account_id: str,
+        reference: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get activity report across on account scope.
+
+        Get activity report across on account scope for a given accountid.
+
+        :param str account_id: ID of the account.
+        :param str reference: Reference for the report to be generated, You can use
+               'latest' to get the latest report for the given account.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Report` object
+        """
+
+        if account_id is None:
+            raise ValueError('account_id must be provided')
+        if reference is None:
+            raise ValueError('reference must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_report')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id', 'reference']
+        path_param_values = self.encode_path_vars(account_id, reference)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/activity/accounts/{account_id}/report/{reference}'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request, **kwargs)
+        return response
+
 
 class ListApiKeysEnums:
     """
@@ -1878,14 +2001,14 @@ class ListApiKeysEnums:
 
     class Scope(str, Enum):
         """
-        Optional parameter to define the scope of the queried API Keys. Can be 'entity'
+        Optional parameter to define the scope of the queried API keys. Can be 'entity'
         (default) or 'account'.
         """
         ENTITY = 'entity'
         ACCOUNT = 'account'
     class Type(str, Enum):
         """
-        Optional parameter to filter the type of the queried API Keys. Can be 'user' or
+        Optional parameter to filter the type of the queried API keys. Can be 'user' or
         'serviceid'.
         """
         USER = 'user'
@@ -2178,6 +2301,74 @@ class AccountSettingsResponse():
         LEVEL3 = 'LEVEL3'
 
 
+class Activity():
+    """
+    Activity.
+
+    :attr str last_authn: (optional) Time when the entity was last authenticated.
+    :attr int authn_count: Authentication count, number of times the entity was
+          authenticated.
+    """
+
+    def __init__(self,
+                 authn_count: int,
+                 *,
+                 last_authn: str = None) -> None:
+        """
+        Initialize a Activity object.
+
+        :param int authn_count: Authentication count, number of times the entity
+               was authenticated.
+        :param str last_authn: (optional) Time when the entity was last
+               authenticated.
+        """
+        self.last_authn = last_authn
+        self.authn_count = authn_count
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Activity':
+        """Initialize a Activity object from a json dictionary."""
+        args = {}
+        if 'last_authn' in _dict:
+            args['last_authn'] = _dict.get('last_authn')
+        if 'authn_count' in _dict:
+            args['authn_count'] = _dict.get('authn_count')
+        else:
+            raise ValueError('Required property \'authn_count\' not present in Activity JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Activity object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'last_authn') and self.last_authn is not None:
+            _dict['last_authn'] = self.last_authn
+        if hasattr(self, 'authn_count') and self.authn_count is not None:
+            _dict['authn_count'] = self.authn_count
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Activity object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Activity') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Activity') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class ApiKey():
     """
     Response body format for API key V1 REST requests.
@@ -2210,6 +2401,7 @@ class ApiKey():
           API key value, for example all user API key related operations, except for
           create, don't contain the API key value.
     :attr List[EnityHistoryRecord] history: (optional) History of the API key.
+    :attr Activity activity: (optional)
     """
 
     def __init__(self,
@@ -2227,7 +2419,8 @@ class ApiKey():
                  created_at: datetime = None,
                  modified_at: datetime = None,
                  description: str = None,
-                 history: List['EnityHistoryRecord'] = None) -> None:
+                 history: List['EnityHistoryRecord'] = None,
+                 activity: 'Activity' = None) -> None:
         """
         Initialize a ApiKey object.
 
@@ -2263,6 +2456,7 @@ class ApiKey():
                The 'description' property is only available if a description was provided
                during a create of an API key.
         :param List[EnityHistoryRecord] history: (optional) History of the API key.
+        :param Activity activity: (optional)
         """
         self.context = context
         self.id = id
@@ -2278,6 +2472,7 @@ class ApiKey():
         self.account_id = account_id
         self.apikey = apikey
         self.history = history
+        self.activity = activity
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ApiKey':
@@ -2327,6 +2522,8 @@ class ApiKey():
             raise ValueError('Required property \'apikey\' not present in ApiKey JSON')
         if 'history' in _dict:
             args['history'] = [EnityHistoryRecord.from_dict(x) for x in _dict.get('history')]
+        if 'activity' in _dict:
+            args['activity'] = Activity.from_dict(_dict.get('activity'))
         return cls(**args)
 
     @classmethod
@@ -2365,6 +2562,8 @@ class ApiKey():
             _dict['apikey'] = self.apikey
         if hasattr(self, 'history') and self.history is not None:
             _dict['history'] = [x.to_dict() for x in self.history]
+        if hasattr(self, 'activity') and self.activity is not None:
+            _dict['activity'] = self.activity.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -2790,6 +2989,80 @@ class EnityHistoryRecord():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'EnityHistoryRecord') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class EntityActivity():
+    """
+    EntityActivity.
+
+    :attr str id: Unique id of the entity.
+    :attr str name: (optional) Name provided during creation of the entity.
+    :attr str last_authn: (optional) Time when the entity was last authenticated.
+    """
+
+    def __init__(self,
+                 id: str,
+                 *,
+                 name: str = None,
+                 last_authn: str = None) -> None:
+        """
+        Initialize a EntityActivity object.
+
+        :param str id: Unique id of the entity.
+        :param str name: (optional) Name provided during creation of the entity.
+        :param str last_authn: (optional) Time when the entity was last
+               authenticated.
+        """
+        self.id = id
+        self.name = name
+        self.last_authn = last_authn
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'EntityActivity':
+        """Initialize a EntityActivity object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in EntityActivity JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        if 'last_authn' in _dict:
+            args['last_authn'] = _dict.get('last_authn')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a EntityActivity object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'last_authn') and self.last_authn is not None:
+            _dict['last_authn'] = self.last_authn
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this EntityActivity object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'EntityActivity') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'EntityActivity') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -3343,6 +3616,192 @@ class ProfileLinkList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class Report():
+    """
+    Report.
+
+    :attr str created_by: IAMid of the user who triggered the report.
+    :attr str reference: Unique reference used to generate the report.
+    :attr str report_duration: Duration in hours for which the report is generated.
+    :attr str report_start_time: Start time of the report.
+    :attr str report_end_time: End time of the report.
+    :attr List[UserActivity] users: (optional) List of users.
+    :attr List[EntityActivity] apikeys: (optional) List of apikeys.
+    :attr List[EntityActivity] serviceids: (optional) List of serviceids.
+    :attr List[EntityActivity] profiles: (optional) List of profiles.
+    """
+
+    def __init__(self,
+                 created_by: str,
+                 reference: str,
+                 report_duration: str,
+                 report_start_time: str,
+                 report_end_time: str,
+                 *,
+                 users: List['UserActivity'] = None,
+                 apikeys: List['EntityActivity'] = None,
+                 serviceids: List['EntityActivity'] = None,
+                 profiles: List['EntityActivity'] = None) -> None:
+        """
+        Initialize a Report object.
+
+        :param str created_by: IAMid of the user who triggered the report.
+        :param str reference: Unique reference used to generate the report.
+        :param str report_duration: Duration in hours for which the report is
+               generated.
+        :param str report_start_time: Start time of the report.
+        :param str report_end_time: End time of the report.
+        :param List[UserActivity] users: (optional) List of users.
+        :param List[EntityActivity] apikeys: (optional) List of apikeys.
+        :param List[EntityActivity] serviceids: (optional) List of serviceids.
+        :param List[EntityActivity] profiles: (optional) List of profiles.
+        """
+        self.created_by = created_by
+        self.reference = reference
+        self.report_duration = report_duration
+        self.report_start_time = report_start_time
+        self.report_end_time = report_end_time
+        self.users = users
+        self.apikeys = apikeys
+        self.serviceids = serviceids
+        self.profiles = profiles
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Report':
+        """Initialize a Report object from a json dictionary."""
+        args = {}
+        if 'created_by' in _dict:
+            args['created_by'] = _dict.get('created_by')
+        else:
+            raise ValueError('Required property \'created_by\' not present in Report JSON')
+        if 'reference' in _dict:
+            args['reference'] = _dict.get('reference')
+        else:
+            raise ValueError('Required property \'reference\' not present in Report JSON')
+        if 'report_duration' in _dict:
+            args['report_duration'] = _dict.get('report_duration')
+        else:
+            raise ValueError('Required property \'report_duration\' not present in Report JSON')
+        if 'report_start_time' in _dict:
+            args['report_start_time'] = _dict.get('report_start_time')
+        else:
+            raise ValueError('Required property \'report_start_time\' not present in Report JSON')
+        if 'report_end_time' in _dict:
+            args['report_end_time'] = _dict.get('report_end_time')
+        else:
+            raise ValueError('Required property \'report_end_time\' not present in Report JSON')
+        if 'users' in _dict:
+            args['users'] = [UserActivity.from_dict(x) for x in _dict.get('users')]
+        if 'apikeys' in _dict:
+            args['apikeys'] = [EntityActivity.from_dict(x) for x in _dict.get('apikeys')]
+        if 'serviceids' in _dict:
+            args['serviceids'] = [EntityActivity.from_dict(x) for x in _dict.get('serviceids')]
+        if 'profiles' in _dict:
+            args['profiles'] = [EntityActivity.from_dict(x) for x in _dict.get('profiles')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Report object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'created_by') and self.created_by is not None:
+            _dict['created_by'] = self.created_by
+        if hasattr(self, 'reference') and self.reference is not None:
+            _dict['reference'] = self.reference
+        if hasattr(self, 'report_duration') and self.report_duration is not None:
+            _dict['report_duration'] = self.report_duration
+        if hasattr(self, 'report_start_time') and self.report_start_time is not None:
+            _dict['report_start_time'] = self.report_start_time
+        if hasattr(self, 'report_end_time') and self.report_end_time is not None:
+            _dict['report_end_time'] = self.report_end_time
+        if hasattr(self, 'users') and self.users is not None:
+            _dict['users'] = [x.to_dict() for x in self.users]
+        if hasattr(self, 'apikeys') and self.apikeys is not None:
+            _dict['apikeys'] = [x.to_dict() for x in self.apikeys]
+        if hasattr(self, 'serviceids') and self.serviceids is not None:
+            _dict['serviceids'] = [x.to_dict() for x in self.serviceids]
+        if hasattr(self, 'profiles') and self.profiles is not None:
+            _dict['profiles'] = [x.to_dict() for x in self.profiles]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Report object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Report') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Report') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ReportReference():
+    """
+    ReportReference.
+
+    :attr str reference: Reference for the report to be generated.
+    """
+
+    def __init__(self,
+                 reference: str) -> None:
+        """
+        Initialize a ReportReference object.
+
+        :param str reference: Reference for the report to be generated.
+        """
+        self.reference = reference
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ReportReference':
+        """Initialize a ReportReference object from a json dictionary."""
+        args = {}
+        if 'reference' in _dict:
+            args['reference'] = _dict.get('reference')
+        else:
+            raise ValueError('Required property \'reference\' not present in ReportReference JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ReportReference object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'reference') and self.reference is not None:
+            _dict['reference'] = self.reference
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ReportReference object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ReportReference') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ReportReference') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class ResponseContext():
     """
     Context with key properties for problem determination.
@@ -3516,6 +3975,7 @@ class ServiceId():
     :attr List[EnityHistoryRecord] history: (optional) History of the Service ID.
     :attr ApiKey apikey: (optional) Response body format for API key V1 REST
           requests.
+    :attr Activity activity: (optional)
     """
 
     def __init__(self,
@@ -3533,7 +3993,8 @@ class ServiceId():
                  description: str = None,
                  unique_instance_crns: List[str] = None,
                  history: List['EnityHistoryRecord'] = None,
-                 apikey: 'ApiKey' = None) -> None:
+                 apikey: 'ApiKey' = None,
+                 activity: 'Activity' = None) -> None:
         """
         Initialize a ServiceId object.
 
@@ -3564,6 +4025,7 @@ class ServiceId():
                ID.
         :param ApiKey apikey: (optional) Response body format for API key V1 REST
                requests.
+        :param Activity activity: (optional)
         """
         self.context = context
         self.id = id
@@ -3579,6 +4041,7 @@ class ServiceId():
         self.unique_instance_crns = unique_instance_crns
         self.history = history
         self.apikey = apikey
+        self.activity = activity
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ServiceId':
@@ -3630,6 +4093,8 @@ class ServiceId():
             args['history'] = [EnityHistoryRecord.from_dict(x) for x in _dict.get('history')]
         if 'apikey' in _dict:
             args['apikey'] = ApiKey.from_dict(_dict.get('apikey'))
+        if 'activity' in _dict:
+            args['activity'] = Activity.from_dict(_dict.get('activity'))
         return cls(**args)
 
     @classmethod
@@ -3668,6 +4133,8 @@ class ServiceId():
             _dict['history'] = [x.to_dict() for x in self.history]
         if hasattr(self, 'apikey') and self.apikey is not None:
             _dict['apikey'] = self.apikey.to_dict()
+        if hasattr(self, 'activity') and self.activity is not None:
+            _dict['activity'] = self.activity.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -3835,6 +4302,7 @@ class TrustedProfile():
     :attr int ims_user_id: (optional) IMS user ID of the trusted profile.
     :attr List[EnityHistoryRecord] history: (optional) History of the trusted
           profile.
+    :attr Activity activity: (optional)
     """
 
     def __init__(self,
@@ -3851,7 +4319,8 @@ class TrustedProfile():
                  modified_at: datetime = None,
                  ims_account_id: int = None,
                  ims_user_id: int = None,
-                 history: List['EnityHistoryRecord'] = None) -> None:
+                 history: List['EnityHistoryRecord'] = None,
+                 activity: 'Activity' = None) -> None:
         """
         Initialize a TrustedProfile object.
 
@@ -3882,6 +4351,7 @@ class TrustedProfile():
         :param int ims_user_id: (optional) IMS user ID of the trusted profile.
         :param List[EnityHistoryRecord] history: (optional) History of the trusted
                profile.
+        :param Activity activity: (optional)
         """
         self.context = context
         self.id = id
@@ -3896,6 +4366,7 @@ class TrustedProfile():
         self.ims_account_id = ims_account_id
         self.ims_user_id = ims_user_id
         self.history = history
+        self.activity = activity
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'TrustedProfile':
@@ -3939,6 +4410,8 @@ class TrustedProfile():
             args['ims_user_id'] = _dict.get('ims_user_id')
         if 'history' in _dict:
             args['history'] = [EnityHistoryRecord.from_dict(x) for x in _dict.get('history')]
+        if 'activity' in _dict:
+            args['activity'] = Activity.from_dict(_dict.get('activity'))
         return cls(**args)
 
     @classmethod
@@ -3975,6 +4448,8 @@ class TrustedProfile():
             _dict['ims_user_id'] = self.ims_user_id
         if hasattr(self, 'history') and self.history is not None:
             _dict['history'] = [x.to_dict() for x in self.history]
+        if hasattr(self, 'activity') and self.activity is not None:
+            _dict['activity'] = self.activity.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -4106,5 +4581,81 @@ class TrustedProfilesList():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'TrustedProfilesList') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class UserActivity():
+    """
+    UserActivity.
+
+    :attr str iam_id: IAMid of the user.
+    :attr str username: Username of the user.
+    :attr str last_authn: (optional) Time when the user was last authenticated.
+    """
+
+    def __init__(self,
+                 iam_id: str,
+                 username: str,
+                 *,
+                 last_authn: str = None) -> None:
+        """
+        Initialize a UserActivity object.
+
+        :param str iam_id: IAMid of the user.
+        :param str username: Username of the user.
+        :param str last_authn: (optional) Time when the user was last
+               authenticated.
+        """
+        self.iam_id = iam_id
+        self.username = username
+        self.last_authn = last_authn
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UserActivity':
+        """Initialize a UserActivity object from a json dictionary."""
+        args = {}
+        if 'iam_id' in _dict:
+            args['iam_id'] = _dict.get('iam_id')
+        else:
+            raise ValueError('Required property \'iam_id\' not present in UserActivity JSON')
+        if 'username' in _dict:
+            args['username'] = _dict.get('username')
+        else:
+            raise ValueError('Required property \'username\' not present in UserActivity JSON')
+        if 'last_authn' in _dict:
+            args['last_authn'] = _dict.get('last_authn')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UserActivity object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'iam_id') and self.iam_id is not None:
+            _dict['iam_id'] = self.iam_id
+        if hasattr(self, 'username') and self.username is not None:
+            _dict['username'] = self.username
+        if hasattr(self, 'last_authn') and self.last_authn is not None:
+            _dict['last_authn'] = self.last_authn
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UserActivity object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UserActivity') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UserActivity') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other

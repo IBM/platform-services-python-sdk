@@ -21,6 +21,7 @@ import os
 import json
 import pytest
 import urllib.parse as urlparse
+import time
 from urllib.parse import parse_qs
 from ibm_cloud_sdk_core import *
 from ibm_platform_services.iam_identity_v1 import *
@@ -48,6 +49,8 @@ claimRule_etag = None
 link_id = None
 
 account_setting_etag = None
+
+report_reference = None
 
 class TestIamIdentityV1():
     """
@@ -239,7 +242,8 @@ class TestIamIdentityV1():
 
         get_api_key_response = self.iam_identity_service.get_api_key(
             id=apikey_id1,
-            include_history=True
+            include_history=True,
+            include_activity=True,
         )
 
         assert get_api_key_response.get_status_code() == 200
@@ -276,7 +280,7 @@ class TestIamIdentityV1():
         assert api_key['account_id'] == self.account_id
         assert api_key['created_by'] == self.iam_id
         assert api_key['created_at'] is not None
-        assert api_key['locked'] == False
+        assert api_key['locked'] == True
 
     @needscredentials
     def test_list_api_keys(self):
@@ -417,7 +421,8 @@ class TestIamIdentityV1():
 
         get_service_id_response = self.iam_identity_service.get_service_id(
             id=serviceid_id1,
-            include_history=True
+            include_history=True,
+            include_activity=True,
         )
 
         assert get_service_id_response.get_status_code() == 200
@@ -563,7 +568,8 @@ class TestIamIdentityV1():
         assert profile_id1 is not None
 
         get_profile_response = self.iam_identity_service.get_profile(
-            profile_id=profile_id1
+            profile_id=profile_id1,
+            include_activity=True,
         )
 
         assert get_profile_response.get_status_code() == 200
@@ -798,7 +804,7 @@ class TestIamIdentityV1():
     @needscredentials
     def test_create_link(self):
         CreateProfileLinkRequestLink = {}
-        CreateProfileLinkRequestLink['crn'] = 'crn:v1:staging:public:iam-identity::a/18e3020749ce4744b0b472466d61fdb4::computeresource:Fake-Compute-Resource'
+        CreateProfileLinkRequestLink['crn'] = 'crn:v1:staging:public:iam-identity::a/'+ self.account_id +'::computeresource:Fake-Compute-Resource'
         CreateProfileLinkRequestLink['namespace'] = 'default'
         CreateProfileLinkRequestLink['name'] = 'nice name'
 
@@ -969,7 +975,7 @@ class TestIamIdentityV1():
     
     def test_create_link_bad_request(self):
         CreateProfileLinkRequestLink = {}
-        CreateProfileLinkRequestLink['crn'] = 'crn:v1:staging:public:iam-identity::a/18e3020749ce4744b0b472466d61fdb4::computeresource:Fake-Compute-Resource'
+        CreateProfileLinkRequestLink['crn'] = 'crn:v1:staging:public:iam-identity::a/' + self.account_id + '::computeresource:Fake-Compute-Resource'
         CreateProfileLinkRequestLink['namespace'] = 'default'
         CreateProfileLinkRequestLink['name'] = 'nice name'
         with pytest.raises(ApiException) as e:
@@ -1054,3 +1060,66 @@ class TestIamIdentityV1():
         assert settings["history"] is not None
         assert settings["session_expiration_in_seconds"] == "86400"
         assert settings["session_invalidation_in_seconds"] == "7200"
+    
+    @needscredentials
+    def test_create_report(self):
+        global report_reference
+        assert report_reference is None
+
+        create_report_response = self.iam_identity_service.create_report(
+            account_id=self.account_id,
+            type="inactive",
+            duration="120",
+        )
+
+        assert create_report_response.get_status_code() == 202
+        reportReference = create_report_response.get_result()
+        assert reportReference is not None
+        print('\ncreate_report() response: ', json.dumps(reportReference, indent=2))
+
+
+        report_reference = reportReference['reference']
+        assert report_reference is not None
+    
+    @needscredentials
+    def test_get_inactivity_report_incomplete(self):
+        get_report_response = self.iam_identity_service.get_report(
+            account_id=self.account_id,
+            reference=report_reference,
+        )
+
+        assert get_report_response.get_status_code() == 204
+        report = get_report_response.get_result()
+
+    @needscredentials
+    def test_get_inactivity_report_complete(self):
+        get_report_response = self.iam_identity_service.get_report(
+            account_id=self.account_id,
+            reference=report_reference,
+        )
+
+        for x in range(30):
+            get_report_response = self.iam_identity_service.get_report(
+              account_id=self.account_id,
+              reference=report_reference,
+            )
+            
+            if(get_report_response.get_status_code()!=204):
+              report = get_report_response.get_result()
+              assert report is not None
+              assert report['created_by'] is not None
+              assert report['reference'] is not None
+              assert report['report_duration'] is not None
+              assert report['report_start_time'] is not None
+              assert report['report_end_time'] is not None
+              break
+            time.sleep(1)
+    @needscredentials
+    def test_get_inactivity_report_notfound(self):
+        with pytest.raises(ApiException) as e:
+            self.iam_identity_service.get_report(
+                account_id=self.account_id,
+                reference='test123',
+            )
+        assert e.value.code == 404
+   

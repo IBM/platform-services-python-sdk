@@ -192,7 +192,8 @@ class TestIamIdentityV1Examples():
             # begin-get_api_key
 
             response = iam_identity_service.get_api_key(
-                id=apikey_id
+                id=apikey_id,
+                include_activity=True,
             )
 
             apikey_etag = response.get_headers()['Etag']
@@ -322,7 +323,8 @@ class TestIamIdentityV1Examples():
             # begin-get_service_id
 
             response = iam_identity_service.get_service_id(
-                id=svc_id
+                id=svc_id,
+                include_history=True,
             )
 
             svc_id_etag = response.get_headers()['Etag']
@@ -475,7 +477,8 @@ class TestIamIdentityV1Examples():
             # begin-get_profile
 
             response = iam_identity_service.get_profile(
-                profile_id=profile_id
+                profile_id=profile_id,
+                include_history=True,
             )
 
             profile_etag = response.get_headers()['Etag']
@@ -828,6 +831,47 @@ class TestIamIdentityV1Examples():
             print(json.dumps(account_settings_response, indent=2))
 
             # end-updateAccountSettings
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    @needscredentials
+    def test_create_report(self):
+        """
+        create_report request example
+        """
+        try:
+            print('\ncreate_report() result:')
+            # begin-createReport
+
+            create_report_response = iam_identity_service.create_report(
+                account_id=account_id,
+                type="inactive",
+                duration="120",
+            ).get_result()
+
+            print(json.dumps(create_report_response, indent=2))
+
+            # end-createReport
+
+        except ApiException as e:
+            pytest.fail(str(e))
+    @needscredentials
+    def test_get_report(self):
+        """
+        get_report request example
+        """
+        try:
+            print('\nget_report() result:')
+            # begin-getReport
+
+            get_report_response = iam_identity_service.get_report(
+                account_id=account_id,
+                type="latest",
+            ).get_result()
+
+            print(json.dumps(get_report_response, indent=2))
+
+            # end-getReport
 
         except ApiException as e:
             pytest.fail(str(e))
