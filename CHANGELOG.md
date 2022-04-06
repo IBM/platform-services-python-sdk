@@ -1,3 +1,10 @@
+# [0.24.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.23.0...v0.24.0) (2022-04-06)
+
+
+### Features
+
+* **IAM Identity:** add support for inactivity reports ([#155](https://github.com/IBM/platform-services-python-sdk/issues/155)) ([d748f00](https://github.com/IBM/platform-services-python-sdk/commit/d748f008d29ce3a7abd4a0553ca58f3fafa44ea0))
+
 # [0.23.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.22.9...v0.23.0) (2022-04-04)
 
 
