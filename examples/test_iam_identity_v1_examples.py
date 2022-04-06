@@ -325,6 +325,7 @@ class TestIamIdentityV1Examples():
             response = iam_identity_service.get_service_id(
                 id=svc_id,
                 include_history=True,
+                include_activity=True,
             )
 
             svc_id_etag = response.get_headers()['Etag']
@@ -841,7 +842,7 @@ class TestIamIdentityV1Examples():
         """
         try:
             print('\ncreate_report() result:')
-            # begin-createReport
+            # begin-create_report
 
             create_report_response = iam_identity_service.create_report(
                 account_id=account_id,
@@ -851,7 +852,7 @@ class TestIamIdentityV1Examples():
 
             print(json.dumps(create_report_response, indent=2))
 
-            # end-createReport
+            # end-create_report
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -862,7 +863,7 @@ class TestIamIdentityV1Examples():
         """
         try:
             print('\nget_report() result:')
-            # begin-getReport
+            # begin-get_report
 
             get_report_response = iam_identity_service.get_report(
                 account_id=account_id,
@@ -871,7 +872,7 @@ class TestIamIdentityV1Examples():
 
             print(json.dumps(get_report_response, indent=2))
 
-            # end-getReport
+            # end-get_report
 
         except ApiException as e:
             pytest.fail(str(e))
