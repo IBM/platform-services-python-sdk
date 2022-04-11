@@ -2806,6 +2806,253 @@ class ApiKeyList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class ApikeyActivity():
+    """
+    Apikeys activity details.
+
+    :attr str id: Unique id of the apikey.
+    :attr str name: (optional) Name provided during creation of the apikey.
+    :attr str type: Type of the apikey. Supported values are `serviceid` and `user`.
+    :attr ApikeyActivityServiceid serviceid: (optional) serviceid details will be
+          present if type is `serviceid`.
+    :attr ApikeyActivityUser user: (optional) user details will be present if type
+          is `user`.
+    :attr str last_authn: (optional) Time when the apikey was last authenticated.
+    """
+
+    def __init__(self,
+                 id: str,
+                 type: str,
+                 *,
+                 name: str = None,
+                 serviceid: 'ApikeyActivityServiceid' = None,
+                 user: 'ApikeyActivityUser' = None,
+                 last_authn: str = None) -> None:
+        """
+        Initialize a ApikeyActivity object.
+
+        :param str id: Unique id of the apikey.
+        :param str type: Type of the apikey. Supported values are `serviceid` and
+               `user`.
+        :param str name: (optional) Name provided during creation of the apikey.
+        :param ApikeyActivityServiceid serviceid: (optional) serviceid details will
+               be present if type is `serviceid`.
+        :param ApikeyActivityUser user: (optional) user details will be present if
+               type is `user`.
+        :param str last_authn: (optional) Time when the apikey was last
+               authenticated.
+        """
+        self.id = id
+        self.name = name
+        self.type = type
+        self.serviceid = serviceid
+        self.user = user
+        self.last_authn = last_authn
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ApikeyActivity':
+        """Initialize a ApikeyActivity object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in ApikeyActivity JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in ApikeyActivity JSON')
+        if 'serviceid' in _dict:
+            args['serviceid'] = ApikeyActivityServiceid.from_dict(_dict.get('serviceid'))
+        if 'user' in _dict:
+            args['user'] = ApikeyActivityUser.from_dict(_dict.get('user'))
+        if 'last_authn' in _dict:
+            args['last_authn'] = _dict.get('last_authn')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ApikeyActivity object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'serviceid') and self.serviceid is not None:
+            _dict['serviceid'] = self.serviceid.to_dict()
+        if hasattr(self, 'user') and self.user is not None:
+            _dict['user'] = self.user.to_dict()
+        if hasattr(self, 'last_authn') and self.last_authn is not None:
+            _dict['last_authn'] = self.last_authn
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ApikeyActivity object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ApikeyActivity') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ApikeyActivity') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ApikeyActivityServiceid():
+    """
+    serviceid details will be present if type is `serviceid`.
+
+    :attr str id: (optional) Unique identifier of this Service Id.
+    :attr str name: (optional) Name provided during creation of the serviceid.
+    """
+
+    def __init__(self,
+                 *,
+                 id: str = None,
+                 name: str = None) -> None:
+        """
+        Initialize a ApikeyActivityServiceid object.
+
+        :param str id: (optional) Unique identifier of this Service Id.
+        :param str name: (optional) Name provided during creation of the serviceid.
+        """
+        self.id = id
+        self.name = name
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ApikeyActivityServiceid':
+        """Initialize a ApikeyActivityServiceid object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ApikeyActivityServiceid object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ApikeyActivityServiceid object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ApikeyActivityServiceid') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ApikeyActivityServiceid') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ApikeyActivityUser():
+    """
+    user details will be present if type is `user`.
+
+    :attr str iam_id: (optional) IAMid of the user.
+    :attr str name: (optional) Name of the user.
+    :attr str username: (optional) Username of the user.
+    :attr str email: (optional) Email of the user.
+    """
+
+    def __init__(self,
+                 *,
+                 iam_id: str = None,
+                 name: str = None,
+                 username: str = None,
+                 email: str = None) -> None:
+        """
+        Initialize a ApikeyActivityUser object.
+
+        :param str iam_id: (optional) IAMid of the user.
+        :param str name: (optional) Name of the user.
+        :param str username: (optional) Username of the user.
+        :param str email: (optional) Email of the user.
+        """
+        self.iam_id = iam_id
+        self.name = name
+        self.username = username
+        self.email = email
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ApikeyActivityUser':
+        """Initialize a ApikeyActivityUser object from a json dictionary."""
+        args = {}
+        if 'iam_id' in _dict:
+            args['iam_id'] = _dict.get('iam_id')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        if 'username' in _dict:
+            args['username'] = _dict.get('username')
+        if 'email' in _dict:
+            args['email'] = _dict.get('email')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ApikeyActivityUser object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'iam_id') and self.iam_id is not None:
+            _dict['iam_id'] = self.iam_id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'username') and self.username is not None:
+            _dict['username'] = self.username
+        if hasattr(self, 'email') and self.email is not None:
+            _dict['email'] = self.email
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ApikeyActivityUser object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ApikeyActivityUser') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ApikeyActivityUser') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class CreateProfileLinkRequestLink():
     """
     Link details.
@@ -3626,7 +3873,7 @@ class Report():
     :attr str report_start_time: Start time of the report.
     :attr str report_end_time: End time of the report.
     :attr List[UserActivity] users: (optional) List of users.
-    :attr List[EntityActivity] apikeys: (optional) List of apikeys.
+    :attr List[ApikeyActivity] apikeys: (optional) List of apikeys.
     :attr List[EntityActivity] serviceids: (optional) List of serviceids.
     :attr List[EntityActivity] profiles: (optional) List of profiles.
     """
@@ -3639,7 +3886,7 @@ class Report():
                  report_end_time: str,
                  *,
                  users: List['UserActivity'] = None,
-                 apikeys: List['EntityActivity'] = None,
+                 apikeys: List['ApikeyActivity'] = None,
                  serviceids: List['EntityActivity'] = None,
                  profiles: List['EntityActivity'] = None) -> None:
         """
@@ -3652,7 +3899,7 @@ class Report():
         :param str report_start_time: Start time of the report.
         :param str report_end_time: End time of the report.
         :param List[UserActivity] users: (optional) List of users.
-        :param List[EntityActivity] apikeys: (optional) List of apikeys.
+        :param List[ApikeyActivity] apikeys: (optional) List of apikeys.
         :param List[EntityActivity] serviceids: (optional) List of serviceids.
         :param List[EntityActivity] profiles: (optional) List of profiles.
         """
@@ -3693,7 +3940,7 @@ class Report():
         if 'users' in _dict:
             args['users'] = [UserActivity.from_dict(x) for x in _dict.get('users')]
         if 'apikeys' in _dict:
-            args['apikeys'] = [EntityActivity.from_dict(x) for x in _dict.get('apikeys')]
+            args['apikeys'] = [ApikeyActivity.from_dict(x) for x in _dict.get('apikeys')]
         if 'serviceids' in _dict:
             args['serviceids'] = [EntityActivity.from_dict(x) for x in _dict.get('serviceids')]
         if 'profiles' in _dict:
@@ -4589,7 +4836,9 @@ class UserActivity():
     UserActivity.
 
     :attr str iam_id: IAMid of the user.
+    :attr str name: (optional) Name of the user.
     :attr str username: Username of the user.
+    :attr str email: (optional) Email of the user.
     :attr str last_authn: (optional) Time when the user was last authenticated.
     """
 
@@ -4597,17 +4846,23 @@ class UserActivity():
                  iam_id: str,
                  username: str,
                  *,
+                 name: str = None,
+                 email: str = None,
                  last_authn: str = None) -> None:
         """
         Initialize a UserActivity object.
 
         :param str iam_id: IAMid of the user.
         :param str username: Username of the user.
+        :param str name: (optional) Name of the user.
+        :param str email: (optional) Email of the user.
         :param str last_authn: (optional) Time when the user was last
                authenticated.
         """
         self.iam_id = iam_id
+        self.name = name
         self.username = username
+        self.email = email
         self.last_authn = last_authn
 
     @classmethod
@@ -4618,10 +4873,14 @@ class UserActivity():
             args['iam_id'] = _dict.get('iam_id')
         else:
             raise ValueError('Required property \'iam_id\' not present in UserActivity JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
         if 'username' in _dict:
             args['username'] = _dict.get('username')
         else:
             raise ValueError('Required property \'username\' not present in UserActivity JSON')
+        if 'email' in _dict:
+            args['email'] = _dict.get('email')
         if 'last_authn' in _dict:
             args['last_authn'] = _dict.get('last_authn')
         return cls(**args)
@@ -4636,8 +4895,12 @@ class UserActivity():
         _dict = {}
         if hasattr(self, 'iam_id') and self.iam_id is not None:
             _dict['iam_id'] = self.iam_id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
         if hasattr(self, 'username') and self.username is not None:
             _dict['username'] = self.username
+        if hasattr(self, 'email') and self.email is not None:
+            _dict['email'] = self.email
         if hasattr(self, 'last_authn') and self.last_authn is not None:
             _dict['last_authn'] = self.last_authn
         return _dict

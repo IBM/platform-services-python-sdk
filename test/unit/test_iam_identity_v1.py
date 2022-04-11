@@ -3451,7 +3451,7 @@ class TestGetReport():
         """
         # Set up mock
         url = preprocess_url('/v1/activity/accounts/testString/report/testString')
-        mock_response = '{"created_by": "created_by", "reference": "reference", "report_duration": "report_duration", "report_start_time": "report_start_time", "report_end_time": "report_end_time", "users": [{"iam_id": "iam_id", "username": "username", "last_authn": "last_authn"}], "apikeys": [{"id": "id", "name": "name", "last_authn": "last_authn"}], "serviceids": [{"id": "id", "name": "name", "last_authn": "last_authn"}], "profiles": [{"id": "id", "name": "name", "last_authn": "last_authn"}]}'
+        mock_response = '{"created_by": "created_by", "reference": "reference", "report_duration": "report_duration", "report_start_time": "report_start_time", "report_end_time": "report_end_time", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "last_authn": "last_authn"}], "apikeys": [{"id": "id", "name": "name", "type": "type", "serviceid": {"id": "id", "name": "name"}, "user": {"iam_id": "iam_id", "name": "name", "username": "username", "email": "email"}, "last_authn": "last_authn"}], "serviceids": [{"id": "id", "name": "name", "last_authn": "last_authn"}], "profiles": [{"id": "id", "name": "name", "last_authn": "last_authn"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -3489,7 +3489,7 @@ class TestGetReport():
         """
         # Set up mock
         url = preprocess_url('/v1/activity/accounts/testString/report/testString')
-        mock_response = '{"created_by": "created_by", "reference": "reference", "report_duration": "report_duration", "report_start_time": "report_start_time", "report_end_time": "report_end_time", "users": [{"iam_id": "iam_id", "username": "username", "last_authn": "last_authn"}], "apikeys": [{"id": "id", "name": "name", "last_authn": "last_authn"}], "serviceids": [{"id": "id", "name": "name", "last_authn": "last_authn"}], "profiles": [{"id": "id", "name": "name", "last_authn": "last_authn"}]}'
+        mock_response = '{"created_by": "created_by", "reference": "reference", "report_duration": "report_duration", "report_start_time": "report_start_time", "report_end_time": "report_end_time", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "last_authn": "last_authn"}], "apikeys": [{"id": "id", "name": "name", "type": "type", "serviceid": {"id": "id", "name": "name"}, "user": {"iam_id": "iam_id", "name": "name", "username": "username", "email": "email"}, "last_authn": "last_authn"}], "serviceids": [{"id": "id", "name": "name", "last_authn": "last_authn"}], "profiles": [{"id": "id", "name": "name", "last_authn": "last_authn"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -3802,6 +3802,114 @@ class TestModel_ApiKeyList():
         # Convert model instance back to dict and verify no loss of data
         api_key_list_model_json2 = api_key_list_model.to_dict()
         assert api_key_list_model_json2 == api_key_list_model_json
+
+class TestModel_ApikeyActivity():
+    """
+    Test Class for ApikeyActivity
+    """
+
+    def test_apikey_activity_serialization(self):
+        """
+        Test serialization/deserialization for ApikeyActivity
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        apikey_activity_serviceid_model = {} # ApikeyActivityServiceid
+        apikey_activity_serviceid_model['id'] = 'testString'
+        apikey_activity_serviceid_model['name'] = 'testString'
+
+        apikey_activity_user_model = {} # ApikeyActivityUser
+        apikey_activity_user_model['iam_id'] = 'testString'
+        apikey_activity_user_model['name'] = 'testString'
+        apikey_activity_user_model['username'] = 'testString'
+        apikey_activity_user_model['email'] = 'testString'
+
+        # Construct a json representation of a ApikeyActivity model
+        apikey_activity_model_json = {}
+        apikey_activity_model_json['id'] = 'testString'
+        apikey_activity_model_json['name'] = 'testString'
+        apikey_activity_model_json['type'] = 'testString'
+        apikey_activity_model_json['serviceid'] = apikey_activity_serviceid_model
+        apikey_activity_model_json['user'] = apikey_activity_user_model
+        apikey_activity_model_json['last_authn'] = 'testString'
+
+        # Construct a model instance of ApikeyActivity by calling from_dict on the json representation
+        apikey_activity_model = ApikeyActivity.from_dict(apikey_activity_model_json)
+        assert apikey_activity_model != False
+
+        # Construct a model instance of ApikeyActivity by calling from_dict on the json representation
+        apikey_activity_model_dict = ApikeyActivity.from_dict(apikey_activity_model_json).__dict__
+        apikey_activity_model2 = ApikeyActivity(**apikey_activity_model_dict)
+
+        # Verify the model instances are equivalent
+        assert apikey_activity_model == apikey_activity_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        apikey_activity_model_json2 = apikey_activity_model.to_dict()
+        assert apikey_activity_model_json2 == apikey_activity_model_json
+
+class TestModel_ApikeyActivityServiceid():
+    """
+    Test Class for ApikeyActivityServiceid
+    """
+
+    def test_apikey_activity_serviceid_serialization(self):
+        """
+        Test serialization/deserialization for ApikeyActivityServiceid
+        """
+
+        # Construct a json representation of a ApikeyActivityServiceid model
+        apikey_activity_serviceid_model_json = {}
+        apikey_activity_serviceid_model_json['id'] = 'testString'
+        apikey_activity_serviceid_model_json['name'] = 'testString'
+
+        # Construct a model instance of ApikeyActivityServiceid by calling from_dict on the json representation
+        apikey_activity_serviceid_model = ApikeyActivityServiceid.from_dict(apikey_activity_serviceid_model_json)
+        assert apikey_activity_serviceid_model != False
+
+        # Construct a model instance of ApikeyActivityServiceid by calling from_dict on the json representation
+        apikey_activity_serviceid_model_dict = ApikeyActivityServiceid.from_dict(apikey_activity_serviceid_model_json).__dict__
+        apikey_activity_serviceid_model2 = ApikeyActivityServiceid(**apikey_activity_serviceid_model_dict)
+
+        # Verify the model instances are equivalent
+        assert apikey_activity_serviceid_model == apikey_activity_serviceid_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        apikey_activity_serviceid_model_json2 = apikey_activity_serviceid_model.to_dict()
+        assert apikey_activity_serviceid_model_json2 == apikey_activity_serviceid_model_json
+
+class TestModel_ApikeyActivityUser():
+    """
+    Test Class for ApikeyActivityUser
+    """
+
+    def test_apikey_activity_user_serialization(self):
+        """
+        Test serialization/deserialization for ApikeyActivityUser
+        """
+
+        # Construct a json representation of a ApikeyActivityUser model
+        apikey_activity_user_model_json = {}
+        apikey_activity_user_model_json['iam_id'] = 'testString'
+        apikey_activity_user_model_json['name'] = 'testString'
+        apikey_activity_user_model_json['username'] = 'testString'
+        apikey_activity_user_model_json['email'] = 'testString'
+
+        # Construct a model instance of ApikeyActivityUser by calling from_dict on the json representation
+        apikey_activity_user_model = ApikeyActivityUser.from_dict(apikey_activity_user_model_json)
+        assert apikey_activity_user_model != False
+
+        # Construct a model instance of ApikeyActivityUser by calling from_dict on the json representation
+        apikey_activity_user_model_dict = ApikeyActivityUser.from_dict(apikey_activity_user_model_json).__dict__
+        apikey_activity_user_model2 = ApikeyActivityUser(**apikey_activity_user_model_dict)
+
+        # Verify the model instances are equivalent
+        assert apikey_activity_user_model == apikey_activity_user_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        apikey_activity_user_model_json2 = apikey_activity_user_model.to_dict()
+        assert apikey_activity_user_model_json2 == apikey_activity_user_model_json
 
 class TestModel_CreateProfileLinkRequestLink():
     """
@@ -4169,8 +4277,28 @@ class TestModel_Report():
 
         user_activity_model = {} # UserActivity
         user_activity_model['iam_id'] = 'testString'
+        user_activity_model['name'] = 'testString'
         user_activity_model['username'] = 'testString'
+        user_activity_model['email'] = 'testString'
         user_activity_model['last_authn'] = 'testString'
+
+        apikey_activity_serviceid_model = {} # ApikeyActivityServiceid
+        apikey_activity_serviceid_model['id'] = 'testString'
+        apikey_activity_serviceid_model['name'] = 'testString'
+
+        apikey_activity_user_model = {} # ApikeyActivityUser
+        apikey_activity_user_model['iam_id'] = 'testString'
+        apikey_activity_user_model['name'] = 'testString'
+        apikey_activity_user_model['username'] = 'testString'
+        apikey_activity_user_model['email'] = 'testString'
+
+        apikey_activity_model = {} # ApikeyActivity
+        apikey_activity_model['id'] = 'testString'
+        apikey_activity_model['name'] = 'testString'
+        apikey_activity_model['type'] = 'testString'
+        apikey_activity_model['serviceid'] = apikey_activity_serviceid_model
+        apikey_activity_model['user'] = apikey_activity_user_model
+        apikey_activity_model['last_authn'] = 'testString'
 
         entity_activity_model = {} # EntityActivity
         entity_activity_model['id'] = 'testString'
@@ -4185,7 +4313,7 @@ class TestModel_Report():
         report_model_json['report_start_time'] = 'testString'
         report_model_json['report_end_time'] = 'testString'
         report_model_json['users'] = [user_activity_model]
-        report_model_json['apikeys'] = [entity_activity_model]
+        report_model_json['apikeys'] = [apikey_activity_model]
         report_model_json['serviceids'] = [entity_activity_model]
         report_model_json['profiles'] = [entity_activity_model]
 
@@ -4615,7 +4743,9 @@ class TestModel_UserActivity():
         # Construct a json representation of a UserActivity model
         user_activity_model_json = {}
         user_activity_model_json['iam_id'] = 'testString'
+        user_activity_model_json['name'] = 'testString'
         user_activity_model_json['username'] = 'testString'
+        user_activity_model_json['email'] = 'testString'
         user_activity_model_json['last_authn'] = 'testString'
 
         # Construct a model instance of UserActivity by calling from_dict on the json representation

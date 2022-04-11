@@ -280,7 +280,7 @@ class TestIamIdentityV1():
         assert api_key['account_id'] == self.account_id
         assert api_key['created_by'] == self.iam_id
         assert api_key['created_at'] is not None
-        assert api_key['locked'] == True
+        assert api_key['locked'] == False
 
     @needscredentials
     def test_list_api_keys(self):
