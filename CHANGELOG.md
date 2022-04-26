@@ -1,3 +1,10 @@
+## [0.24.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.24.0...v0.24.1) (2022-04-26)
+
+
+### Bug Fixes
+
+* **IAM Identity:** update report schema and fix ITs ([#157](https://github.com/IBM/platform-services-python-sdk/issues/157)) ([351676b](https://github.com/IBM/platform-services-python-sdk/commit/351676b8a4666b9b0c3e6dfc6df5197828794c75))
+
 # [0.24.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.23.0...v0.24.0) (2022-04-06)
 
 
