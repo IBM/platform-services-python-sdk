@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.38.1-1037b405-20210908-184149
- 
+# IBM OpenAPI SDK Code Generator Version: 3.51.0-5b8b699d-20220613-200818
+
 """
 With the Context Based Restrictions API, you can:
 * Create, list, get, replace, and delete network zones
@@ -149,6 +149,7 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v1/zones'
@@ -215,6 +216,7 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v1/zones'
@@ -269,6 +271,7 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['zone_id']
@@ -361,6 +364,7 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['zone_id']
@@ -418,6 +422,7 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['zone_id']
         path_param_values = self.encode_path_vars(zone_id)
@@ -475,6 +480,7 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v1/zones/serviceref_targets'
@@ -496,6 +502,7 @@ class ContextBasedRestrictionsV1(BaseService):
         contexts: List['RuleContext'] = None,
         resources: List['Resource'] = None,
         description: str = None,
+        enforcement_mode: str = None,
         x_correlation_id: str = None,
         transaction_id: str = None,
         **kwargs
@@ -510,6 +517,13 @@ class ContextBasedRestrictionsV1(BaseService):
         :param List[Resource] resources: (optional) The resources this rule apply
                to.
         :param str description: (optional) The description of the rule.
+        :param str enforcement_mode: (optional) The rule enforcement mode:
+                * `enabled` - The restrictions are enforced and reported. This is the
+               default.
+                * `disabled` - The restrictions are disabled. Nothing is enforced or
+               reported.
+                * `report` - The restrictions are evaluated and reported, but not
+               enforced.
         :param str x_correlation_id: (optional) The supplied or generated value of
                this header is logged for a request and repeated in a response header for
                the corresponding response. The same value is used for downstream requests
@@ -542,7 +556,8 @@ class ContextBasedRestrictionsV1(BaseService):
         data = {
             'contexts': contexts,
             'resources': resources,
-            'description': description
+            'description': description,
+            'enforcement_mode': enforcement_mode
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -550,6 +565,7 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v1/rules'
@@ -636,6 +652,7 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v1/rules'
@@ -690,6 +707,7 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['rule_id']
@@ -711,6 +729,7 @@ class ContextBasedRestrictionsV1(BaseService):
         contexts: List['RuleContext'] = None,
         resources: List['Resource'] = None,
         description: str = None,
+        enforcement_mode: str = None,
         x_correlation_id: str = None,
         transaction_id: str = None,
         **kwargs
@@ -729,6 +748,13 @@ class ContextBasedRestrictionsV1(BaseService):
         :param List[Resource] resources: (optional) The resources this rule apply
                to.
         :param str description: (optional) The description of the rule.
+        :param str enforcement_mode: (optional) The rule enforcement mode:
+                * `enabled` - The restrictions are enforced and reported. This is the
+               default.
+                * `disabled` - The restrictions are disabled. Nothing is enforced or
+               reported.
+                * `report` - The restrictions are evaluated and reported, but not
+               enforced.
         :param str x_correlation_id: (optional) The supplied or generated value of
                this header is logged for a request and repeated in a response header for
                the corresponding response. The same value is used for downstream requests
@@ -766,7 +792,8 @@ class ContextBasedRestrictionsV1(BaseService):
         data = {
             'contexts': contexts,
             'resources': resources,
-            'description': description
+            'description': description,
+            'enforcement_mode': enforcement_mode
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -774,6 +801,7 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['rule_id']
@@ -831,6 +859,7 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['rule_id']
         path_param_values = self.encode_path_vars(rule_id)
@@ -890,6 +919,7 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id']
@@ -1377,6 +1407,10 @@ class Rule():
     :attr str description: The description of the rule.
     :attr List[RuleContext] contexts: The contexts this rule applies to.
     :attr List[Resource] resources: The resources this rule apply to.
+    :attr str enforcement_mode: (optional) The rule enforcement mode:
+           * `enabled` - The restrictions are enforced and reported. This is the default.
+           * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
+           * `report` - The restrictions are evaluated and reported, but not enforced.
     :attr str href: The href link to the resource.
     :attr datetime created_at: The time the resource was created.
     :attr str created_by_id: IAM ID of the user or service which created the
@@ -1396,7 +1430,9 @@ class Rule():
                  created_at: datetime,
                  created_by_id: str,
                  last_modified_at: datetime,
-                 last_modified_by_id: str) -> None:
+                 last_modified_by_id: str,
+                 *,
+                 enforcement_mode: str = None) -> None:
         """
         Initialize a Rule object.
 
@@ -1412,12 +1448,20 @@ class Rule():
         :param datetime last_modified_at: The last time the resource was modified.
         :param str last_modified_by_id: IAM ID of the user or service which
                modified the resource.
+        :param str enforcement_mode: (optional) The rule enforcement mode:
+                * `enabled` - The restrictions are enforced and reported. This is the
+               default.
+                * `disabled` - The restrictions are disabled. Nothing is enforced or
+               reported.
+                * `report` - The restrictions are evaluated and reported, but not
+               enforced.
         """
         self.id = id
         self.crn = crn
         self.description = description
         self.contexts = contexts
         self.resources = resources
+        self.enforcement_mode = enforcement_mode
         self.href = href
         self.created_at = created_at
         self.created_by_id = created_by_id
@@ -1448,6 +1492,8 @@ class Rule():
             args['resources'] = [Resource.from_dict(x) for x in _dict.get('resources')]
         else:
             raise ValueError('Required property \'resources\' not present in Rule JSON')
+        if 'enforcement_mode' in _dict:
+            args['enforcement_mode'] = _dict.get('enforcement_mode')
         if 'href' in _dict:
             args['href'] = _dict.get('href')
         else:
@@ -1488,6 +1534,8 @@ class Rule():
             _dict['contexts'] = [x.to_dict() for x in self.contexts]
         if hasattr(self, 'resources') and self.resources is not None:
             _dict['resources'] = [x.to_dict() for x in self.resources]
+        if hasattr(self, 'enforcement_mode') and self.enforcement_mode is not None:
+            _dict['enforcement_mode'] = self.enforcement_mode
         if hasattr(self, 'href') and self.href is not None:
             _dict['href'] = self.href
         if hasattr(self, 'created_at') and self.created_at is not None:
@@ -1517,6 +1565,18 @@ class Rule():
     def __ne__(self, other: 'Rule') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+    class EnforcementModeEnum(str, Enum):
+        """
+        The rule enforcement mode:
+         * `enabled` - The restrictions are enforced and reported. This is the default.
+         * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
+         * `report` - The restrictions are evaluated and reported, but not enforced.
+        """
+        ENABLED = 'enabled'
+        DISABLED = 'disabled'
+        REPORT = 'report'
+
 
 class RuleContext():
     """

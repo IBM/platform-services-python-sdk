@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -273,6 +273,7 @@ class TestContextBasedRestrictionsV1():
             contexts=[rule_context_model],
             resources=[resource_model],
             description='SDK TEST - this is an example of rule',
+            enforcement_mode='enabled',
             transaction_id=self.getTransactionID()
         )
 
@@ -315,6 +316,7 @@ class TestContextBasedRestrictionsV1():
                 contexts=[rule_context_model],
                 resources=[resource_model],
                 description='SDK TEST - this is an example of rule',
+                enforcement_mode='enabled',
                 transaction_id=self.getTransactionID()
             )
 
@@ -407,6 +409,7 @@ class TestContextBasedRestrictionsV1():
             contexts=[rule_context_model],
             resources=[resource_model],
             description='SDK TEST - this is an example of updated rule',
+            enforcement_mode='disabled',
             transaction_id=self.getTransactionID()
         )
 
@@ -457,6 +460,7 @@ class TestContextBasedRestrictionsV1():
                 contexts=[rule_context_model],
                 resources=[resource_model],
                 description='SDK TEST - this is an example of updated rule',
+                enforcement_mode='disabled',
                 transaction_id=self.getTransactionID()
             )
 
@@ -503,6 +507,7 @@ class TestContextBasedRestrictionsV1():
                 contexts=[rule_context_model],
                 resources=[resource_model],
                 description='SDK TEST - this is an example of updated rule',
+                enforcement_mode='disabled',
                 transaction_id=self.getTransactionID()
             )
 
