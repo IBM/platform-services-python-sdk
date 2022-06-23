@@ -296,7 +296,7 @@ class TestIamAccessGroupsV2(unittest.TestCase):
         except ApiException as e:
             assert e.http_response.status_code == 404
             assert e.code == 404
-            assert e.message.__contains__(self.testUserId)
+            assert self.testUserId in e.message
 
     def test_11_delete_bulk_members_from_access_group(self):
         assert self.testGroupId
@@ -309,7 +309,7 @@ class TestIamAccessGroupsV2(unittest.TestCase):
         except ApiException as e:
             assert e.http_response.status_code == 404
             assert e.code == 404
-            assert e.message.__contains__(self.testGroupId)
+            assert self.testGroupId in e.message
 
     def test_12_create_access_group_rule(self):
         assert self.testGroupId
