@@ -1,3 +1,10 @@
+# [0.25.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.24.2...v0.25.0) (2022-06-28)
+
+
+### Features
+
+* add support for Enforcement Mode ([#160](https://github.com/IBM/platform-services-python-sdk/issues/160)) ([92f9de3](https://github.com/IBM/platform-services-python-sdk/commit/92f9de3de386e08cae0b6778c2bf72e02045566c))
+
 ## [0.24.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.24.1...v0.24.2) (2022-05-31)
 
 
