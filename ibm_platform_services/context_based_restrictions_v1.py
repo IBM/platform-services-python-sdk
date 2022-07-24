@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.51.0-5b8b699d-20220613-200818
-
+# IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
+ 
 """
 With the Context Based Restrictions API, you can:
 * Create, list, get, replace, and delete network zones
@@ -591,6 +591,7 @@ class ContextBasedRestrictionsV1(BaseService):
         service_type: str = None,
         zone_id: str = None,
         sort: str = None,
+        enforcement_mode: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -622,6 +623,8 @@ class ContextBasedRestrictionsV1(BaseService):
         :param str sort: (optional) Sorts results by using a valid sort field. To
                learn more, see
                [Sorting](https://cloud.ibm.com/docs/api-handbook?topic=api-handbook-sorting).
+        :param str enforcement_mode: (optional) The rule's `enforcement_mode`
+               attribute.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `RuleList` object
@@ -647,7 +650,8 @@ class ContextBasedRestrictionsV1(BaseService):
             'service_name': service_name,
             'service_type': service_type,
             'zone_id': zone_id,
-            'sort': sort
+            'sort': sort,
+            'enforcement_mode': enforcement_mode
         }
 
         if 'headers' in kwargs:
@@ -945,6 +949,20 @@ class ListAvailableServicerefTargetsEnums:
         """
         ALL = 'all'
         PLATFORM_SERVICE = 'platform_service'
+
+
+class ListRulesEnums:
+    """
+    Enums for list_rules parameters.
+    """
+
+    class EnforcementMode(str, Enum):
+        """
+        The rule's `enforcement_mode` attribute.
+        """
+        ENABLED = 'enabled'
+        DISABLED = 'disabled'
+        REPORT = 'report'
 
 
 ##############################################################################

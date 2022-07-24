@@ -105,10 +105,10 @@ class TestContextBasedRestrictionsV1Examples():
             }
 
             zone = context_based_restrictions_service.create_zone(
-                name='SDK TEST - an example of zone',
+                name='an example of zone',
                 account_id=account_id,
                 addresses=[address_model],
-                description='SDK TEST - this is an example of zone',
+                description='this is an example of zone',
             ).get_result()
 
             print(json.dumps(zone, indent=2))
@@ -180,10 +180,10 @@ class TestContextBasedRestrictionsV1Examples():
             zone = context_based_restrictions_service.replace_zone(
                 zone_id=zone_id,
                 if_match=zone_rev,
-                name='SDK TEST - an example of updated zone',
+                name='an example of updated zone',
                 account_id=account_id,
                 addresses=[address_model],
-                description='SDK TEST - this is an example of updated zone',
+                description='this is an example of updated zone',
             ).get_result()
 
             print(json.dumps(zone, indent=2))
@@ -246,7 +246,7 @@ class TestContextBasedRestrictionsV1Examples():
             rule = context_based_restrictions_service.create_rule(
                 contexts=[rule_context_model],
                 resources=[resource_model],
-                description='SDK TEST - this is an example of rule',
+                description='this is an example of rule',
                 enforcement_mode='enabled'
             ).get_result()
 
@@ -345,7 +345,7 @@ class TestContextBasedRestrictionsV1Examples():
                 if_match=rule_rev,
                 contexts=[rule_context_model],
                 resources=[resource_model],
-                description='SDK TEST - this is an example of updated rule',
+                description='this is an example of updated rule',
                 enforcement_mode='disabled'
             ).get_result()
 

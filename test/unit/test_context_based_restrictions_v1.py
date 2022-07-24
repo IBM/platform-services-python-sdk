@@ -952,6 +952,7 @@ class TestListRules():
         service_type = 'testString'
         zone_id = 'testString'
         sort = 'testString'
+        enforcement_mode = 'enabled'
 
         # Invoke method
         response = _service.list_rules(
@@ -966,6 +967,7 @@ class TestListRules():
             service_type=service_type,
             zone_id=zone_id,
             sort=sort,
+            enforcement_mode=enforcement_mode,
             headers={}
         )
 
@@ -984,6 +986,7 @@ class TestListRules():
         assert 'service_type={}'.format(service_type) in query_string
         assert 'zone_id={}'.format(zone_id) in query_string
         assert 'sort={}'.format(sort) in query_string
+        assert 'enforcement_mode={}'.format(enforcement_mode) in query_string
 
     def test_list_rules_all_params_with_retries(self):
         # Enable retries and run test_list_rules_all_params.
