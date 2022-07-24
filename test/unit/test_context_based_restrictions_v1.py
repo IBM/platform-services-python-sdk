@@ -2038,6 +2038,7 @@ class TestModel_ServiceRefValue():
         service_ref_value_model_json['service_type'] = 'testString'
         service_ref_value_model_json['service_name'] = 'testString'
         service_ref_value_model_json['service_instance'] = 'testString'
+        service_ref_value_model_json['location'] = 'testString'
 
         # Construct a model instance of ServiceRefValue by calling from_dict on the json representation
         service_ref_value_model = ServiceRefValue.from_dict(service_ref_value_model_json)
@@ -2275,6 +2276,7 @@ class TestModel_AddressServiceRef():
         service_ref_value_model['service_type'] = 'testString'
         service_ref_value_model['service_name'] = 'testString'
         service_ref_value_model['service_instance'] = 'testString'
+        service_ref_value_model['location'] = 'testString'
 
         # Construct a json representation of a AddressServiceRef model
         address_service_ref_model_json = {}

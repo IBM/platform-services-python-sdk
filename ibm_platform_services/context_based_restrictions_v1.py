@@ -1924,6 +1924,7 @@ class ServiceRefValue():
     :attr str service_type: (optional) The service type.
     :attr str service_name: (optional) The service name.
     :attr str service_instance: (optional) The service instance.
+    :attr str location: (optional) The location.
     """
 
     def __init__(self,
@@ -1931,7 +1932,8 @@ class ServiceRefValue():
                  *,
                  service_type: str = None,
                  service_name: str = None,
-                 service_instance: str = None) -> None:
+                 service_instance: str = None,
+                 location: str = None) -> None:
         """
         Initialize a ServiceRefValue object.
 
@@ -1939,11 +1941,13 @@ class ServiceRefValue():
         :param str service_type: (optional) The service type.
         :param str service_name: (optional) The service name.
         :param str service_instance: (optional) The service instance.
+        :param str location: (optional) The location.
         """
         self.account_id = account_id
         self.service_type = service_type
         self.service_name = service_name
         self.service_instance = service_instance
+        self.location = location
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ServiceRefValue':
@@ -1959,6 +1963,8 @@ class ServiceRefValue():
             args['service_name'] = _dict.get('service_name')
         if 'service_instance' in _dict:
             args['service_instance'] = _dict.get('service_instance')
+        if 'location' in _dict:
+            args['location'] = _dict.get('location')
         return cls(**args)
 
     @classmethod
@@ -1977,6 +1983,8 @@ class ServiceRefValue():
             _dict['service_name'] = self.service_name
         if hasattr(self, 'service_instance') and self.service_instance is not None:
             _dict['service_instance'] = self.service_instance
+        if hasattr(self, 'location') and self.location is not None:
+            _dict['location'] = self.location
         return _dict
 
     def _to_dict(self):
