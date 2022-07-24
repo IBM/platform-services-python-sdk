@@ -377,6 +377,26 @@ class TestContextBasedRestrictionsV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
+    def test_list_available_service_operations_example(self):
+        """
+        list_available_service_operations request example
+        """
+        try:
+            print('\nlist_available_service_operations() result:')
+            # begin-list_available_service_operations
+
+            operations_list = context_based_restrictions_service.list_available_service_operations(
+                service_name='containers-kubernetes'
+            ).get_result()
+
+            print(json.dumps(operations_list, indent=2))
+
+            # end-list_available_service_operations
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
     def test_delete_rule_example(self):
         """
         delete_rule request example

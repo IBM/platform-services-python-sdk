@@ -819,7 +819,7 @@ class TestCreateRule():
         """
         # Set up mock
         url = preprocess_url('/v1/rules')
-        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -852,10 +852,19 @@ class TestCreateRule():
         resource_model['attributes'] = [resource_attribute_model]
         resource_model['tags'] = [resource_tag_attribute_model]
 
+        # Construct a dict representation of a NewRuleOperationsApiTypesItem model
+        new_rule_operations_api_types_item_model = {}
+        new_rule_operations_api_types_item_model['api_type_id'] = 'testString'
+
+        # Construct a dict representation of a NewRuleOperations model
+        new_rule_operations_model = {}
+        new_rule_operations_model['api_types'] = [new_rule_operations_api_types_item_model]
+
         # Set up parameter values
         contexts = [rule_context_model]
         resources = [resource_model]
         description = 'this is an example of rule'
+        operations = new_rule_operations_model
         enforcement_mode = 'enabled'
         x_correlation_id = 'testString'
         transaction_id = 'testString'
@@ -865,6 +874,7 @@ class TestCreateRule():
             contexts=contexts,
             resources=resources,
             description=description,
+            operations=operations,
             enforcement_mode=enforcement_mode,
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
@@ -879,6 +889,7 @@ class TestCreateRule():
         assert req_body['contexts'] == [rule_context_model]
         assert req_body['resources'] == [resource_model]
         assert req_body['description'] == 'this is an example of rule'
+        assert req_body['operations'] == new_rule_operations_model
         assert req_body['enforcement_mode'] == 'enabled'
 
     def test_create_rule_all_params_with_retries(self):
@@ -897,7 +908,7 @@ class TestCreateRule():
         """
         # Set up mock
         url = preprocess_url('/v1/rules')
-        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -933,7 +944,7 @@ class TestListRules():
         """
         # Set up mock
         url = preprocess_url('/v1/rules')
-        mock_response = '{"count": 5, "rules": [{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"count": 5, "rules": [{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1004,7 +1015,7 @@ class TestListRules():
         """
         # Set up mock
         url = preprocess_url('/v1/rules')
-        mock_response = '{"count": 5, "rules": [{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"count": 5, "rules": [{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1044,7 +1055,7 @@ class TestListRules():
         """
         # Set up mock
         url = preprocess_url('/v1/rules')
-        mock_response = '{"count": 5, "rules": [{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"count": 5, "rules": [{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1084,7 +1095,7 @@ class TestGetRule():
         """
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
-        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1124,7 +1135,7 @@ class TestGetRule():
         """
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
-        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1160,7 +1171,7 @@ class TestGetRule():
         """
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
-        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1200,7 +1211,7 @@ class TestReplaceRule():
         """
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
-        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -1233,12 +1244,21 @@ class TestReplaceRule():
         resource_model['attributes'] = [resource_attribute_model]
         resource_model['tags'] = [resource_tag_attribute_model]
 
+        # Construct a dict representation of a NewRuleOperationsApiTypesItem model
+        new_rule_operations_api_types_item_model = {}
+        new_rule_operations_api_types_item_model['api_type_id'] = 'testString'
+
+        # Construct a dict representation of a NewRuleOperations model
+        new_rule_operations_model = {}
+        new_rule_operations_model['api_types'] = [new_rule_operations_api_types_item_model]
+
         # Set up parameter values
         rule_id = 'testString'
         if_match = 'testString'
         contexts = [rule_context_model]
         resources = [resource_model]
         description = 'this is an example of rule'
+        operations = new_rule_operations_model
         enforcement_mode = 'disabled'
         x_correlation_id = 'testString'
         transaction_id = 'testString'
@@ -1250,6 +1270,7 @@ class TestReplaceRule():
             contexts=contexts,
             resources=resources,
             description=description,
+            operations=operations,
             enforcement_mode=enforcement_mode,
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
@@ -1264,6 +1285,7 @@ class TestReplaceRule():
         assert req_body['contexts'] == [rule_context_model]
         assert req_body['resources'] == [resource_model]
         assert req_body['description'] == 'this is an example of rule'
+        assert req_body['operations'] == new_rule_operations_model
         assert req_body['enforcement_mode'] == 'disabled'
 
     def test_replace_rule_all_params_with_retries(self):
@@ -1282,7 +1304,7 @@ class TestReplaceRule():
         """
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
-        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -1320,7 +1342,7 @@ class TestReplaceRule():
         """
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
-        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(responses.PUT,
                       url,
                       body=mock_response,
@@ -1615,11 +1637,210 @@ class TestGetAccountSettings():
 # End of Service: AccountSettings
 ##############################################################################
 
+##############################################################################
+# Start of Service: Operations
+##############################################################################
+# region
+
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = ContextBasedRestrictionsV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, ContextBasedRestrictionsV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = ContextBasedRestrictionsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+class TestListAvailableServiceOperations():
+    """
+    Test Class for list_available_service_operations
+    """
+
+    @responses.activate
+    def test_list_available_service_operations_all_params(self):
+        """
+        list_available_service_operations()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/operations')
+        mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        service_name = 'testString'
+        x_correlation_id = 'testString'
+        transaction_id = 'testString'
+
+        # Invoke method
+        response = _service.list_available_service_operations(
+            service_name,
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'service_name={}'.format(service_name) in query_string
+
+    def test_list_available_service_operations_all_params_with_retries(self):
+        # Enable retries and run test_list_available_service_operations_all_params.
+        _service.enable_retries()
+        self.test_list_available_service_operations_all_params()
+
+        # Disable retries and run test_list_available_service_operations_all_params.
+        _service.disable_retries()
+        self.test_list_available_service_operations_all_params()
+
+    @responses.activate
+    def test_list_available_service_operations_required_params(self):
+        """
+        test_list_available_service_operations_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/operations')
+        mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        service_name = 'testString'
+
+        # Invoke method
+        response = _service.list_available_service_operations(
+            service_name,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'service_name={}'.format(service_name) in query_string
+
+    def test_list_available_service_operations_required_params_with_retries(self):
+        # Enable retries and run test_list_available_service_operations_required_params.
+        _service.enable_retries()
+        self.test_list_available_service_operations_required_params()
+
+        # Disable retries and run test_list_available_service_operations_required_params.
+        _service.disable_retries()
+        self.test_list_available_service_operations_required_params()
+
+    @responses.activate
+    def test_list_available_service_operations_value_error(self):
+        """
+        test_list_available_service_operations_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/operations')
+        mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        service_name = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "service_name": service_name,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_available_service_operations(**req_copy)
+
+    def test_list_available_service_operations_value_error_with_retries(self):
+        # Enable retries and run test_list_available_service_operations_value_error.
+        _service.enable_retries()
+        self.test_list_available_service_operations_value_error()
+
+        # Disable retries and run test_list_available_service_operations_value_error.
+        _service.disable_retries()
+        self.test_list_available_service_operations_value_error()
+
+# endregion
+##############################################################################
+# End of Service: Operations
+##############################################################################
+
 
 ##############################################################################
 # Start of Model Tests
 ##############################################################################
 # region
+class TestModel_APIType():
+    """
+    Test Class for APIType
+    """
+
+    def test_api_type_serialization(self):
+        """
+        Test serialization/deserialization for APIType
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        action_model = {} # Action
+        action_model['action_id'] = 'testString'
+        action_model['description'] = 'testString'
+
+        # Construct a json representation of a APIType model
+        api_type_model_json = {}
+        api_type_model_json['api_type_id'] = 'testString'
+        api_type_model_json['display_name'] = 'testString'
+        api_type_model_json['description'] = 'testString'
+        api_type_model_json['actions'] = [action_model]
+
+        # Construct a model instance of APIType by calling from_dict on the json representation
+        api_type_model = APIType.from_dict(api_type_model_json)
+        assert api_type_model != False
+
+        # Construct a model instance of APIType by calling from_dict on the json representation
+        api_type_model_dict = APIType.from_dict(api_type_model_json).__dict__
+        api_type_model2 = APIType(**api_type_model_dict)
+
+        # Verify the model instances are equivalent
+        assert api_type_model == api_type_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        api_type_model_json2 = api_type_model.to_dict()
+        assert api_type_model_json2 == api_type_model_json
+
 class TestModel_AccountSettings():
     """
     Test Class for AccountSettings
@@ -1658,6 +1879,140 @@ class TestModel_AccountSettings():
         # Convert model instance back to dict and verify no loss of data
         account_settings_model_json2 = account_settings_model.to_dict()
         assert account_settings_model_json2 == account_settings_model_json
+
+class TestModel_Action():
+    """
+    Test Class for Action
+    """
+
+    def test_action_serialization(self):
+        """
+        Test serialization/deserialization for Action
+        """
+
+        # Construct a json representation of a Action model
+        action_model_json = {}
+        action_model_json['action_id'] = 'testString'
+        action_model_json['description'] = 'testString'
+
+        # Construct a model instance of Action by calling from_dict on the json representation
+        action_model = Action.from_dict(action_model_json)
+        assert action_model != False
+
+        # Construct a model instance of Action by calling from_dict on the json representation
+        action_model_dict = Action.from_dict(action_model_json).__dict__
+        action_model2 = Action(**action_model_dict)
+
+        # Verify the model instances are equivalent
+        assert action_model == action_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        action_model_json2 = action_model.to_dict()
+        assert action_model_json2 == action_model_json
+
+class TestModel_NewRuleOperations():
+    """
+    Test Class for NewRuleOperations
+    """
+
+    def test_new_rule_operations_serialization(self):
+        """
+        Test serialization/deserialization for NewRuleOperations
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        new_rule_operations_api_types_item_model = {} # NewRuleOperationsApiTypesItem
+        new_rule_operations_api_types_item_model['api_type_id'] = 'testString'
+
+        # Construct a json representation of a NewRuleOperations model
+        new_rule_operations_model_json = {}
+        new_rule_operations_model_json['api_types'] = [new_rule_operations_api_types_item_model]
+
+        # Construct a model instance of NewRuleOperations by calling from_dict on the json representation
+        new_rule_operations_model = NewRuleOperations.from_dict(new_rule_operations_model_json)
+        assert new_rule_operations_model != False
+
+        # Construct a model instance of NewRuleOperations by calling from_dict on the json representation
+        new_rule_operations_model_dict = NewRuleOperations.from_dict(new_rule_operations_model_json).__dict__
+        new_rule_operations_model2 = NewRuleOperations(**new_rule_operations_model_dict)
+
+        # Verify the model instances are equivalent
+        assert new_rule_operations_model == new_rule_operations_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        new_rule_operations_model_json2 = new_rule_operations_model.to_dict()
+        assert new_rule_operations_model_json2 == new_rule_operations_model_json
+
+class TestModel_NewRuleOperationsApiTypesItem():
+    """
+    Test Class for NewRuleOperationsApiTypesItem
+    """
+
+    def test_new_rule_operations_api_types_item_serialization(self):
+        """
+        Test serialization/deserialization for NewRuleOperationsApiTypesItem
+        """
+
+        # Construct a json representation of a NewRuleOperationsApiTypesItem model
+        new_rule_operations_api_types_item_model_json = {}
+        new_rule_operations_api_types_item_model_json['api_type_id'] = 'testString'
+
+        # Construct a model instance of NewRuleOperationsApiTypesItem by calling from_dict on the json representation
+        new_rule_operations_api_types_item_model = NewRuleOperationsApiTypesItem.from_dict(new_rule_operations_api_types_item_model_json)
+        assert new_rule_operations_api_types_item_model != False
+
+        # Construct a model instance of NewRuleOperationsApiTypesItem by calling from_dict on the json representation
+        new_rule_operations_api_types_item_model_dict = NewRuleOperationsApiTypesItem.from_dict(new_rule_operations_api_types_item_model_json).__dict__
+        new_rule_operations_api_types_item_model2 = NewRuleOperationsApiTypesItem(**new_rule_operations_api_types_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert new_rule_operations_api_types_item_model == new_rule_operations_api_types_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        new_rule_operations_api_types_item_model_json2 = new_rule_operations_api_types_item_model.to_dict()
+        assert new_rule_operations_api_types_item_model_json2 == new_rule_operations_api_types_item_model_json
+
+class TestModel_OperationsList():
+    """
+    Test Class for OperationsList
+    """
+
+    def test_operations_list_serialization(self):
+        """
+        Test serialization/deserialization for OperationsList
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        action_model = {} # Action
+        action_model['action_id'] = 'testString'
+        action_model['description'] = 'testString'
+
+        api_type_model = {} # APIType
+        api_type_model['api_type_id'] = 'testString'
+        api_type_model['display_name'] = 'testString'
+        api_type_model['description'] = 'testString'
+        api_type_model['actions'] = [action_model]
+
+        # Construct a json representation of a OperationsList model
+        operations_list_model_json = {}
+        operations_list_model_json['api_types'] = [api_type_model]
+
+        # Construct a model instance of OperationsList by calling from_dict on the json representation
+        operations_list_model = OperationsList.from_dict(operations_list_model_json)
+        assert operations_list_model != False
+
+        # Construct a model instance of OperationsList by calling from_dict on the json representation
+        operations_list_model_dict = OperationsList.from_dict(operations_list_model_json).__dict__
+        operations_list_model2 = OperationsList(**operations_list_model_dict)
+
+        # Verify the model instances are equivalent
+        assert operations_list_model == operations_list_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        operations_list_model_json2 = operations_list_model.to_dict()
+        assert operations_list_model_json2 == operations_list_model_json
 
 class TestModel_Resource():
     """
@@ -1796,6 +2151,12 @@ class TestModel_Rule():
         resource_model['attributes'] = [resource_attribute_model]
         resource_model['tags'] = [resource_tag_attribute_model]
 
+        new_rule_operations_api_types_item_model = {} # NewRuleOperationsApiTypesItem
+        new_rule_operations_api_types_item_model['api_type_id'] = 'testString'
+
+        new_rule_operations_model = {} # NewRuleOperations
+        new_rule_operations_model['api_types'] = [new_rule_operations_api_types_item_model]
+
         # Construct a json representation of a Rule model
         rule_model_json = {}
         rule_model_json['id'] = 'testString'
@@ -1803,6 +2164,7 @@ class TestModel_Rule():
         rule_model_json['description'] = 'testString'
         rule_model_json['contexts'] = [rule_context_model]
         rule_model_json['resources'] = [resource_model]
+        rule_model_json['operations'] = new_rule_operations_model
         rule_model_json['enforcement_mode'] = 'enabled'
         rule_model_json['href'] = 'testString'
         rule_model_json['created_at'] = '2019-01-01T12:00:00Z'
@@ -1923,12 +2285,19 @@ class TestModel_RuleList():
         resource_model['attributes'] = [resource_attribute_model]
         resource_model['tags'] = [resource_tag_attribute_model]
 
+        new_rule_operations_api_types_item_model = {} # NewRuleOperationsApiTypesItem
+        new_rule_operations_api_types_item_model['api_type_id'] = 'testString'
+
+        new_rule_operations_model = {} # NewRuleOperations
+        new_rule_operations_model['api_types'] = [new_rule_operations_api_types_item_model]
+
         rule_model = {} # Rule
         rule_model['id'] = 'testString'
         rule_model['crn'] = 'testString'
         rule_model['description'] = 'testString'
         rule_model['contexts'] = [rule_context_model]
         rule_model['resources'] = [resource_model]
+        rule_model['operations'] = new_rule_operations_model
         rule_model['enforcement_mode'] = 'enabled'
         rule_model['href'] = 'testString'
         rule_model['created_at'] = '2019-01-01T12:00:00Z'
