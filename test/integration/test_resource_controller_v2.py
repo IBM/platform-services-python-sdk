@@ -1292,6 +1292,20 @@ class TestResourceControllerV2(unittest.TestCase):
         assert result.get('state') == 'RECLAIMING'
 
         time.sleep(20)
+    
+    def test_53_cancel_last_operation(self):
+        
+        customHeaders = {}
+        customHeaders["Transaction-Id"] = "rc-sdk-python-test53-" + \
+            self.transactionId
+        try:
+            response = self.service.cancel_lastop_resource_instance(
+                id=self.testInstanceGuid,
+                headers=customHeaders)
+            assert response is not None
+        except ApiException as e:
+            assert e.message == "The instance is not cancelable."
+
 
     # Commented because redis timeouts cause intermittent failure
 
