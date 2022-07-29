@@ -1,3 +1,10 @@
+# [0.26.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.25.0...v0.26.0) (2022-07-29)
+
+
+### Features
+
+* **Resource Controller:** regen to add `cancel_lastop_resource_instance` method ([#165](https://github.com/IBM/platform-services-python-sdk/issues/165)) ([13f3a59](https://github.com/IBM/platform-services-python-sdk/commit/13f3a59e12637c4a49e49697960017a5244abdb8))
+
 # [0.25.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.24.2...v0.25.0) (2022-06-28)
 
 
