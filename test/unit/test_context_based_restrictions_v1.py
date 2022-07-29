@@ -702,7 +702,7 @@ class TestListAvailableServicerefTargets():
         """
         # Set up mock
         url = preprocess_url('/v1/zones/serviceref_targets')
-        mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type"}]}'
+        mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type", "locations": [{"name": "name"}]}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -746,7 +746,7 @@ class TestListAvailableServicerefTargets():
         """
         # Set up mock
         url = preprocess_url('/v1/zones/serviceref_targets')
-        mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type"}]}'
+        mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type", "locations": [{"name": "name"}]}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2335,10 +2335,16 @@ class TestModel_ServiceRefTarget():
         Test serialization/deserialization for ServiceRefTarget
         """
 
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        service_ref_target_locations_item_model = {} # ServiceRefTargetLocationsItem
+        service_ref_target_locations_item_model['name'] = 'testString'
+
         # Construct a json representation of a ServiceRefTarget model
         service_ref_target_model_json = {}
         service_ref_target_model_json['service_name'] = 'testString'
         service_ref_target_model_json['service_type'] = 'testString'
+        service_ref_target_model_json['locations'] = [service_ref_target_locations_item_model]
 
         # Construct a model instance of ServiceRefTarget by calling from_dict on the json representation
         service_ref_target_model = ServiceRefTarget.from_dict(service_ref_target_model_json)
@@ -2367,9 +2373,13 @@ class TestModel_ServiceRefTargetList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
+        service_ref_target_locations_item_model = {} # ServiceRefTargetLocationsItem
+        service_ref_target_locations_item_model['name'] = 'testString'
+
         service_ref_target_model = {} # ServiceRefTarget
         service_ref_target_model['service_name'] = 'testString'
         service_ref_target_model['service_type'] = 'testString'
+        service_ref_target_model['locations'] = [service_ref_target_locations_item_model]
 
         # Construct a json representation of a ServiceRefTargetList model
         service_ref_target_list_model_json = {}
@@ -2390,6 +2400,35 @@ class TestModel_ServiceRefTargetList():
         # Convert model instance back to dict and verify no loss of data
         service_ref_target_list_model_json2 = service_ref_target_list_model.to_dict()
         assert service_ref_target_list_model_json2 == service_ref_target_list_model_json
+
+class TestModel_ServiceRefTargetLocationsItem():
+    """
+    Test Class for ServiceRefTargetLocationsItem
+    """
+
+    def test_service_ref_target_locations_item_serialization(self):
+        """
+        Test serialization/deserialization for ServiceRefTargetLocationsItem
+        """
+
+        # Construct a json representation of a ServiceRefTargetLocationsItem model
+        service_ref_target_locations_item_model_json = {}
+        service_ref_target_locations_item_model_json['name'] = 'testString'
+
+        # Construct a model instance of ServiceRefTargetLocationsItem by calling from_dict on the json representation
+        service_ref_target_locations_item_model = ServiceRefTargetLocationsItem.from_dict(service_ref_target_locations_item_model_json)
+        assert service_ref_target_locations_item_model != False
+
+        # Construct a model instance of ServiceRefTargetLocationsItem by calling from_dict on the json representation
+        service_ref_target_locations_item_model_dict = ServiceRefTargetLocationsItem.from_dict(service_ref_target_locations_item_model_json).__dict__
+        service_ref_target_locations_item_model2 = ServiceRefTargetLocationsItem(**service_ref_target_locations_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert service_ref_target_locations_item_model == service_ref_target_locations_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        service_ref_target_locations_item_model_json2 = service_ref_target_locations_item_model.to_dict()
+        assert service_ref_target_locations_item_model_json2 == service_ref_target_locations_item_model_json
 
 class TestModel_ServiceRefValue():
     """

@@ -2197,20 +2197,26 @@ class ServiceRefTarget():
 
     :attr str service_name: The name of the service.
     :attr str service_type: (optional) The type of the service.
+    :attr List[ServiceRefTargetLocationsItem] locations: (optional) The locations
+          the service is available.
     """
 
     def __init__(self,
                  service_name: str,
                  *,
-                 service_type: str = None) -> None:
+                 service_type: str = None,
+                 locations: List['ServiceRefTargetLocationsItem'] = None) -> None:
         """
         Initialize a ServiceRefTarget object.
 
         :param str service_name: The name of the service.
         :param str service_type: (optional) The type of the service.
+        :param List[ServiceRefTargetLocationsItem] locations: (optional) The
+               locations the service is available.
         """
         self.service_name = service_name
         self.service_type = service_type
+        self.locations = locations
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ServiceRefTarget':
@@ -2222,6 +2228,8 @@ class ServiceRefTarget():
             raise ValueError('Required property \'service_name\' not present in ServiceRefTarget JSON')
         if 'service_type' in _dict:
             args['service_type'] = _dict.get('service_type')
+        if 'locations' in _dict:
+            args['locations'] = [ServiceRefTargetLocationsItem.from_dict(x) for x in _dict.get('locations')]
         return cls(**args)
 
     @classmethod
@@ -2236,6 +2244,8 @@ class ServiceRefTarget():
             _dict['service_name'] = self.service_name
         if hasattr(self, 'service_type') and self.service_type is not None:
             _dict['service_type'] = self.service_type
+        if hasattr(self, 'locations') and self.locations is not None:
+            _dict['locations'] = [x.to_dict() for x in self.locations]
         return _dict
 
     def _to_dict(self):
@@ -2320,6 +2330,62 @@ class ServiceRefTargetList():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'ServiceRefTargetList') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class ServiceRefTargetLocationsItem():
+    """
+    ServiceRefTargetLocationsItem.
+
+    :attr str name: The location name.
+    """
+
+    def __init__(self,
+                 name: str) -> None:
+        """
+        Initialize a ServiceRefTargetLocationsItem object.
+
+        :param str name: The location name.
+        """
+        self.name = name
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ServiceRefTargetLocationsItem':
+        """Initialize a ServiceRefTargetLocationsItem object from a json dictionary."""
+        args = {}
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in ServiceRefTargetLocationsItem JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ServiceRefTargetLocationsItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ServiceRefTargetLocationsItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ServiceRefTargetLocationsItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ServiceRefTargetLocationsItem') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
