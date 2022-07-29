@@ -598,6 +598,44 @@ class ResourceControllerV2(BaseService):
         response = self.send(request)
         return response
 
+    def cancel_lastop_resource_instance(self,
+        id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Cancel the in progress last operation of the resource instance.
+
+        Cancel the in progress last operation of the resource instance. After successful
+        cancellation, the resource instance is removed.
+
+        :param str id: The resource instance URL-encoded CRN or GUID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ResourceInstance` object
+        """
+
+        if id is None:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V2',
+                                      operation_id='cancel_lastop_resource_instance')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v2/resource_instances/{id}/last_operation'.format(**path_param_dict)
+        request = self.prepare_request(method='DELETE',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request)
+        return response
     #########################
     # Resource Keys
     #########################
@@ -1592,6 +1630,11 @@ class Credentials():
     """
     The credentials for a resource.
 
+    :attr str redacted: (optional) If present, the user doesn't have the correct
+          access to view the credentials and the details are redacted.  The string value
+          identifies the level of access that's required to view the credential. For
+          additional information, see [viewing a
+          credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&interface=ui#viewing-credentials-ui).
     :attr str apikey: (optional) The API key for the credentials.
     :attr str iam_apikey_description: (optional) The optional description of the API
           key.
@@ -1603,10 +1646,11 @@ class Credentials():
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(['apikey', 'iam_apikey_description', 'iam_apikey_name', 'iam_role_crn', 'iam_serviceid_crn'])
+    _properties = frozenset(['REDACTED', 'apikey', 'iam_apikey_description', 'iam_apikey_name', 'iam_role_crn', 'iam_serviceid_crn'])
 
     def __init__(self,
                  *,
+                 redacted: str = None,
                  apikey: str = None,
                  iam_apikey_description: str = None,
                  iam_apikey_name: str = None,
@@ -1616,6 +1660,11 @@ class Credentials():
         """
         Initialize a Credentials object.
 
+        :param str redacted: (optional) If present, the user doesn't have the
+               correct access to view the credentials and the details are redacted.  The
+               string value identifies the level of access that's required to view the
+               credential. For additional information, see [viewing a
+               credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&interface=ui#viewing-credentials-ui).
         :param str apikey: (optional) The API key for the credentials.
         :param str iam_apikey_description: (optional) The optional description of
                the API key.
@@ -1626,6 +1675,7 @@ class Credentials():
                service ID of the credentials.
         :param **kwargs: (optional) Any additional properties.
         """
+        self.redacted = redacted
         self.apikey = apikey
         self.iam_apikey_description = iam_apikey_description
         self.iam_apikey_name = iam_apikey_name
@@ -1638,6 +1688,8 @@ class Credentials():
     def from_dict(cls, _dict: Dict) -> 'Credentials':
         """Initialize a Credentials object from a json dictionary."""
         args = {}
+        if 'REDACTED' in _dict:
+            args['redacted'] = _dict.get('REDACTED')
         if 'apikey' in _dict:
             args['apikey'] = _dict.get('apikey')
         if 'iam_apikey_description' in _dict:
@@ -1659,6 +1711,8 @@ class Credentials():
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
+        if hasattr(self, 'redacted') and self.redacted is not None:
+            _dict['REDACTED'] = self.redacted
         if hasattr(self, 'apikey') and self.apikey is not None:
             _dict['apikey'] = self.apikey
         if hasattr(self, 'iam_apikey_description') and self.iam_apikey_description is not None:

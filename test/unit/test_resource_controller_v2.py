@@ -900,6 +900,71 @@ class TestUnlockResourceInstance():
             with pytest.raises(ValueError):
                 _service.unlock_resource_instance(**req_copy)
 
+class TestCancelLastopResourceInstance():
+    """
+    Test Class for cancel_lastop_resource_instance
+    """
+
+    def preprocess_url(self, request_url: str):
+        """
+        Preprocess the request URL to ensure the mock response will be found.
+        """
+        if re.fullmatch('.*/+', request_url) is None:
+            return request_url
+        else:
+            return re.compile(request_url.rstrip('/') + '/+')
+    @responses.activate
+    def test_cancel_lastop_resource_instance_all_params(self):
+        """
+        cancel_lastop_resource_instance()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/last_operation')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
+        responses.add(responses.DELETE,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Invoke method
+        response = _service.cancel_lastop_resource_instance(
+            id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    @responses.activate
+    def test_cancel_lastop_resource_instance_value_error(self):
+        """
+        test_cancel_lastop_resource_instance_value_error()
+        """
+        # Set up mock
+        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/last_operation')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
+        responses.add(responses.DELETE,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.cancel_lastop_resource_instance(**req_copy)
 
 
 # endregion

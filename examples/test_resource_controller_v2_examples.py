@@ -364,7 +364,8 @@ class TestResourceControllerV2Examples():
             resource_binding = resource_controller_service.get_resource_binding(
                 id=binding_guid
             ).get_result()
-
+            if resource_binding.get('credentials') and resource_binding.get('credentials').get('REDACTED'):
+                print("Credentials are redacted with code:", resource_binding.get('credentials').get('REDACTED'), ".The User doesn't have the correct access to view the credentials. Refer to the API documentation for additional details.")
             print(json.dumps(resource_binding, indent=2))
 
             # end-get_resource_binding
@@ -477,6 +478,8 @@ class TestResourceControllerV2Examples():
             resource_key = resource_controller_service.get_resource_key(
                 id=instance_key_guid
             ).get_result()
+            if resource_key.get('credentials') and resource_key.get('credentials').get('REDACTED'):
+                print("Credentials are redacted with code:", resource_key.get('credentials').get('REDACTED'), ".The User doesn't have the correct access to view the credentials. Refer to the API documentation for additional details.")
 
             print(json.dumps(resource_key, indent=2))
 
@@ -720,6 +723,28 @@ class TestResourceControllerV2Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
+
+    @needscredentials
+    def test_cancel_lastop_resource_instance_example(self):
+        """
+        cancel_lastop_resource_instance request example
+        """
+        try:
+            print('\ncancel_lastop_resource_instance() result:')
+            # begin-cancel_lastop_resource_instance
+
+            resource_instance = resource_controller_service.cancel_lastop_resource_instance(
+                id=instance_guid
+            ).get_result()
+            print(json.dumps(resource_instance, indent=2))
+
+            # end-cancel_lastop_resource_instance
+
+        except ApiException as e:
+            if e.message == "The instance is not cancelable.":
+                print("The instance is not cancelable")
+            else:
+                pytest.fail(str(e))
 
 # endregion
 ##############################################################################
