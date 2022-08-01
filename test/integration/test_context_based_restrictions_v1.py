@@ -69,15 +69,25 @@ class TestContextBasedRestrictionsV1():
     @needscredentials
     def test_create_zone(self):
         # Construct a dict representation of a AddressIPAddress model
-        address_model = {
+        ip_address_model = {
             'type': 'ipAddress',
             'value': '169.23.56.234',
+        }
+
+        # Construct a dict representation of a AddressServiceRef model
+        service_ref_address_model = {
+            'type': 'serviceRef',
+            'ref': {
+                'account_id': TestContextBasedRestrictionsV1.test_account_id,
+                'service_name': 'containers-kubernetes',
+                'location': 'us-south',
+            },
         }
 
         create_zone_response = self.context_based_restrictions_service.create_zone(
             name='SDK TEST - an example of zone',
             account_id=TestContextBasedRestrictionsV1.test_account_id,
-            addresses=[address_model],
+            addresses=[ip_address_model, service_ref_address_model],
             description='SDK TEST - this is an example of zone',
             transaction_id=self.getTransactionID()
         )
@@ -281,6 +291,67 @@ class TestContextBasedRestrictionsV1():
         rule = create_rule_response.get_result()
         assert rule is not None
         TestContextBasedRestrictionsV1.rule_id = rule['id']
+    
+    @needscredentials
+    def test_create_rule_with_api_types(self):
+        # Construct a dict representation of a RuleContextAttribute model
+        rule_context_attribute_model = {
+            'name': 'networkZoneId',
+            'value': TestContextBasedRestrictionsV1.zone_id,
+        }
+
+        # Construct a dict representation of a RuleContext model
+        rule_context_model = {
+            'attributes': [rule_context_attribute_model],
+        }
+
+        # Construct a dict representation of a ResourceAttribute model
+        account_id_resource_attribute_model = {
+            'name': 'accountId',
+            'value': TestContextBasedRestrictionsV1.test_account_id,
+        }
+
+        service_name_resource_attribute_model = {
+            'name': 'serviceName',
+            'value': 'containers-kubernetes',
+        }
+
+        # Construct a dict representation of a Resource model
+        resource_model = {
+            'attributes': [account_id_resource_attribute_model, service_name_resource_attribute_model],
+        }
+
+        # Construct a dict representation of a NewRuleOperationsApiTypesItem model
+        api_type_model = {
+            'api_type_id': 'crn:v1:bluemix:public:containers-kubernetes::::api-type:management'
+        }
+
+        # Construct a dict representation of a NewRuleOperations model
+        operations_model = {
+            'api_types': [api_type_model]
+        }
+
+        create_rule_response = self.context_based_restrictions_service.create_rule(
+            contexts=[rule_context_model],
+            resources=[resource_model],
+            operations=operations_model,
+            description='SDK TEST - this is an example of rule',
+            enforcement_mode='enabled',
+            transaction_id=self.getTransactionID()
+        )
+
+        assert create_rule_response.get_status_code() == 201
+        rule = create_rule_response.get_result()
+        assert rule is not None
+
+        # cleanup
+        delete_rule_response = self.context_based_restrictions_service.delete_rule(
+            rule_id=rule['id'],
+            # Using the standard X-Correlation-Id header in this case
+            x_correlation_id=self.getTransactionID()
+        )
+
+        assert delete_rule_response.get_status_code() == 204
 
     @needscredentials
     def test_create_rule_with_service_not_cbr_enabled_error(self):
@@ -529,6 +600,18 @@ class TestContextBasedRestrictionsV1():
                 account_id=self.InvalidID,
                 transaction_id=self.getTransactionID()
             )
+    
+    @needscredentials
+    def test_list_available_service_operations(self):
+
+        list_available_service_operations_response = self.context_based_restrictions_service.list_available_service_operations(
+            service_name='containers-kubernetes',
+            transaction_id=self.getTransactionID()
+        )
+
+        assert list_available_service_operations_response.get_status_code() == 200
+        operations_list = list_available_service_operations_response.get_result()
+        assert operations_list is not None
 
     @needscredentials
     def test_delete_rule(self):

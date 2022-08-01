@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.51.0-5b8b699d-20220613-200818
-
+# IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
+ 
 """
 With the Context Based Restrictions API, you can:
 * Create, list, get, replace, and delete network zones
@@ -502,6 +502,7 @@ class ContextBasedRestrictionsV1(BaseService):
         contexts: List['RuleContext'] = None,
         resources: List['Resource'] = None,
         description: str = None,
+        operations: 'NewRuleOperations' = None,
         enforcement_mode: str = None,
         x_correlation_id: str = None,
         transaction_id: str = None,
@@ -517,6 +518,8 @@ class ContextBasedRestrictionsV1(BaseService):
         :param List[Resource] resources: (optional) The resources this rule apply
                to.
         :param str description: (optional) The description of the rule.
+        :param NewRuleOperations operations: (optional) The operations this rule
+               applies to.
         :param str enforcement_mode: (optional) The rule enforcement mode:
                 * `enabled` - The restrictions are enforced and reported. This is the
                default.
@@ -544,6 +547,8 @@ class ContextBasedRestrictionsV1(BaseService):
             contexts = [convert_model(x) for x in contexts]
         if resources is not None:
             resources = [convert_model(x) for x in resources]
+        if operations is not None:
+            operations = convert_model(operations)
         headers = {
             'X-Correlation-Id': x_correlation_id,
             'Transaction-Id': transaction_id
@@ -557,6 +562,7 @@ class ContextBasedRestrictionsV1(BaseService):
             'contexts': contexts,
             'resources': resources,
             'description': description,
+            'operations': operations,
             'enforcement_mode': enforcement_mode
         }
         data = {k: v for (k, v) in data.items() if v is not None}
@@ -591,6 +597,7 @@ class ContextBasedRestrictionsV1(BaseService):
         service_type: str = None,
         zone_id: str = None,
         sort: str = None,
+        enforcement_mode: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -622,6 +629,8 @@ class ContextBasedRestrictionsV1(BaseService):
         :param str sort: (optional) Sorts results by using a valid sort field. To
                learn more, see
                [Sorting](https://cloud.ibm.com/docs/api-handbook?topic=api-handbook-sorting).
+        :param str enforcement_mode: (optional) The rule's `enforcement_mode`
+               attribute.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `RuleList` object
@@ -647,7 +656,8 @@ class ContextBasedRestrictionsV1(BaseService):
             'service_name': service_name,
             'service_type': service_type,
             'zone_id': zone_id,
-            'sort': sort
+            'sort': sort,
+            'enforcement_mode': enforcement_mode
         }
 
         if 'headers' in kwargs:
@@ -729,6 +739,7 @@ class ContextBasedRestrictionsV1(BaseService):
         contexts: List['RuleContext'] = None,
         resources: List['Resource'] = None,
         description: str = None,
+        operations: 'NewRuleOperations' = None,
         enforcement_mode: str = None,
         x_correlation_id: str = None,
         transaction_id: str = None,
@@ -748,6 +759,8 @@ class ContextBasedRestrictionsV1(BaseService):
         :param List[Resource] resources: (optional) The resources this rule apply
                to.
         :param str description: (optional) The description of the rule.
+        :param NewRuleOperations operations: (optional) The operations this rule
+               applies to.
         :param str enforcement_mode: (optional) The rule enforcement mode:
                 * `enabled` - The restrictions are enforced and reported. This is the
                default.
@@ -779,6 +792,8 @@ class ContextBasedRestrictionsV1(BaseService):
             contexts = [convert_model(x) for x in contexts]
         if resources is not None:
             resources = [convert_model(x) for x in resources]
+        if operations is not None:
+            operations = convert_model(operations)
         headers = {
             'If-Match': if_match,
             'X-Correlation-Id': x_correlation_id,
@@ -793,6 +808,7 @@ class ContextBasedRestrictionsV1(BaseService):
             'contexts': contexts,
             'resources': resources,
             'description': description,
+            'operations': operations,
             'enforcement_mode': enforcement_mode
         }
         data = {k: v for (k, v) in data.items() if v is not None}
@@ -933,6 +949,69 @@ class ContextBasedRestrictionsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    #########################
+    # operations
+    #########################
+
+
+    def list_available_service_operations(self,
+        service_name: str,
+        *,
+        x_correlation_id: str = None,
+        transaction_id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        List available service operations.
+
+        This operation lists all available service operations.
+
+        :param str service_name: The name of the service.
+        :param str x_correlation_id: (optional) The supplied or generated value of
+               this header is logged for a request and repeated in a response header for
+               the corresponding response. The same value is used for downstream requests
+               and retries of those requests. If a value of this headers is not supplied
+               in a request, the service generates a random (version 4) UUID.
+        :param str transaction_id: (optional) The `Transaction-Id` header behaves
+               as the `X-Correlation-Id` header. It is supported for backward
+               compatibility with other IBM platform services that support the
+               `Transaction-Id` header only. If both `X-Correlation-Id` and
+               `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over
+               `Transaction-Id`.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `OperationsList` object
+        """
+
+        if service_name is None:
+            raise ValueError('service_name must be provided')
+        headers = {
+            'X-Correlation-Id': x_correlation_id,
+            'Transaction-Id': transaction_id
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_available_service_operations')
+        headers.update(sdk_headers)
+
+        params = {
+            'service_name': service_name
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/operations'
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
+
+        response = self.send(request, **kwargs)
+        return response
+
 
 class ListAvailableServicerefTargetsEnums:
     """
@@ -947,10 +1026,110 @@ class ListAvailableServicerefTargetsEnums:
         PLATFORM_SERVICE = 'platform_service'
 
 
+class ListRulesEnums:
+    """
+    Enums for list_rules parameters.
+    """
+
+    class EnforcementMode(str, Enum):
+        """
+        The rule's `enforcement_mode` attribute.
+        """
+        ENABLED = 'enabled'
+        DISABLED = 'disabled'
+        REPORT = 'report'
+
+
 ##############################################################################
 # Models
 ##############################################################################
 
+
+class APIType():
+    """
+    Service API Type details.
+
+    :attr str api_type_id: The id of the API type.
+    :attr str display_name: The displayed name of the API type.
+    :attr str description: The description of the API type.
+    :attr List[Action] actions: The actions available for the API type.
+    """
+
+    def __init__(self,
+                 api_type_id: str,
+                 display_name: str,
+                 description: str,
+                 actions: List['Action']) -> None:
+        """
+        Initialize a APIType object.
+
+        :param str api_type_id: The id of the API type.
+        :param str display_name: The displayed name of the API type.
+        :param str description: The description of the API type.
+        :param List[Action] actions: The actions available for the API type.
+        """
+        self.api_type_id = api_type_id
+        self.display_name = display_name
+        self.description = description
+        self.actions = actions
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'APIType':
+        """Initialize a APIType object from a json dictionary."""
+        args = {}
+        if 'api_type_id' in _dict:
+            args['api_type_id'] = _dict.get('api_type_id')
+        else:
+            raise ValueError('Required property \'api_type_id\' not present in APIType JSON')
+        if 'display_name' in _dict:
+            args['display_name'] = _dict.get('display_name')
+        else:
+            raise ValueError('Required property \'display_name\' not present in APIType JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        else:
+            raise ValueError('Required property \'description\' not present in APIType JSON')
+        if 'actions' in _dict:
+            args['actions'] = [Action.from_dict(x) for x in _dict.get('actions')]
+        else:
+            raise ValueError('Required property \'actions\' not present in APIType JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a APIType object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'api_type_id') and self.api_type_id is not None:
+            _dict['api_type_id'] = self.api_type_id
+        if hasattr(self, 'display_name') and self.display_name is not None:
+            _dict['display_name'] = self.display_name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'actions') and self.actions is not None:
+            _dict['actions'] = [x.to_dict() for x in self.actions]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this APIType object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'APIType') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'APIType') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 class AccountSettings():
     """
@@ -1116,6 +1295,72 @@ class AccountSettings():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class Action():
+    """
+    Service API Type actions.
+
+    :attr str action_id: The id of the action.
+    :attr str description: The description of the action.
+    """
+
+    def __init__(self,
+                 action_id: str,
+                 description: str) -> None:
+        """
+        Initialize a Action object.
+
+        :param str action_id: The id of the action.
+        :param str description: The description of the action.
+        """
+        self.action_id = action_id
+        self.description = description
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Action':
+        """Initialize a Action object from a json dictionary."""
+        args = {}
+        if 'action_id' in _dict:
+            args['action_id'] = _dict.get('action_id')
+        else:
+            raise ValueError('Required property \'action_id\' not present in Action JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        else:
+            raise ValueError('Required property \'description\' not present in Action JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Action object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'action_id') and self.action_id is not None:
+            _dict['action_id'] = self.action_id
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Action object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Action') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Action') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class Address():
     """
     A zone address.
@@ -1181,6 +1426,176 @@ class Address():
         VPC = 'vpc'
         SERVICEREF = 'serviceRef'
 
+
+class NewRuleOperations():
+    """
+    The operations this rule applies to.
+
+    :attr List[NewRuleOperationsApiTypesItem] api_types: The API types this rule
+          applies to.
+    """
+
+    def __init__(self,
+                 api_types: List['NewRuleOperationsApiTypesItem']) -> None:
+        """
+        Initialize a NewRuleOperations object.
+
+        :param List[NewRuleOperationsApiTypesItem] api_types: The API types this
+               rule applies to.
+        """
+        self.api_types = api_types
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'NewRuleOperations':
+        """Initialize a NewRuleOperations object from a json dictionary."""
+        args = {}
+        if 'api_types' in _dict:
+            args['api_types'] = [NewRuleOperationsApiTypesItem.from_dict(x) for x in _dict.get('api_types')]
+        else:
+            raise ValueError('Required property \'api_types\' not present in NewRuleOperations JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a NewRuleOperations object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'api_types') and self.api_types is not None:
+            _dict['api_types'] = [x.to_dict() for x in self.api_types]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this NewRuleOperations object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'NewRuleOperations') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'NewRuleOperations') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class NewRuleOperationsApiTypesItem():
+    """
+    NewRuleOperationsApiTypesItem.
+
+    :attr str api_type_id:
+    """
+
+    def __init__(self,
+                 api_type_id: str) -> None:
+        """
+        Initialize a NewRuleOperationsApiTypesItem object.
+
+        :param str api_type_id:
+        """
+        self.api_type_id = api_type_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'NewRuleOperationsApiTypesItem':
+        """Initialize a NewRuleOperationsApiTypesItem object from a json dictionary."""
+        args = {}
+        if 'api_type_id' in _dict:
+            args['api_type_id'] = _dict.get('api_type_id')
+        else:
+            raise ValueError('Required property \'api_type_id\' not present in NewRuleOperationsApiTypesItem JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a NewRuleOperationsApiTypesItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'api_type_id') and self.api_type_id is not None:
+            _dict['api_type_id'] = self.api_type_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this NewRuleOperationsApiTypesItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'NewRuleOperationsApiTypesItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'NewRuleOperationsApiTypesItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class OperationsList():
+    """
+    The response object of the `list_available_service_operations` operation.
+
+    :attr List[APIType] api_types: The returned API types.
+    """
+
+    def __init__(self,
+                 api_types: List['APIType']) -> None:
+        """
+        Initialize a OperationsList object.
+
+        :param List[APIType] api_types: The returned API types.
+        """
+        self.api_types = api_types
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'OperationsList':
+        """Initialize a OperationsList object from a json dictionary."""
+        args = {}
+        if 'api_types' in _dict:
+            args['api_types'] = [APIType.from_dict(x) for x in _dict.get('api_types')]
+        else:
+            raise ValueError('Required property \'api_types\' not present in OperationsList JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a OperationsList object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'api_types') and self.api_types is not None:
+            _dict['api_types'] = [x.to_dict() for x in self.api_types]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this OperationsList object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'OperationsList') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'OperationsList') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 class Resource():
     """
@@ -1407,6 +1822,8 @@ class Rule():
     :attr str description: The description of the rule.
     :attr List[RuleContext] contexts: The contexts this rule applies to.
     :attr List[Resource] resources: The resources this rule apply to.
+    :attr NewRuleOperations operations: (optional) The operations this rule applies
+          to.
     :attr str enforcement_mode: (optional) The rule enforcement mode:
            * `enabled` - The restrictions are enforced and reported. This is the default.
            * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
@@ -1432,6 +1849,7 @@ class Rule():
                  last_modified_at: datetime,
                  last_modified_by_id: str,
                  *,
+                 operations: 'NewRuleOperations' = None,
                  enforcement_mode: str = None) -> None:
         """
         Initialize a Rule object.
@@ -1448,6 +1866,8 @@ class Rule():
         :param datetime last_modified_at: The last time the resource was modified.
         :param str last_modified_by_id: IAM ID of the user or service which
                modified the resource.
+        :param NewRuleOperations operations: (optional) The operations this rule
+               applies to.
         :param str enforcement_mode: (optional) The rule enforcement mode:
                 * `enabled` - The restrictions are enforced and reported. This is the
                default.
@@ -1461,6 +1881,7 @@ class Rule():
         self.description = description
         self.contexts = contexts
         self.resources = resources
+        self.operations = operations
         self.enforcement_mode = enforcement_mode
         self.href = href
         self.created_at = created_at
@@ -1492,6 +1913,8 @@ class Rule():
             args['resources'] = [Resource.from_dict(x) for x in _dict.get('resources')]
         else:
             raise ValueError('Required property \'resources\' not present in Rule JSON')
+        if 'operations' in _dict:
+            args['operations'] = NewRuleOperations.from_dict(_dict.get('operations'))
         if 'enforcement_mode' in _dict:
             args['enforcement_mode'] = _dict.get('enforcement_mode')
         if 'href' in _dict:
@@ -1534,6 +1957,8 @@ class Rule():
             _dict['contexts'] = [x.to_dict() for x in self.contexts]
         if hasattr(self, 'resources') and self.resources is not None:
             _dict['resources'] = [x.to_dict() for x in self.resources]
+        if hasattr(self, 'operations') and self.operations is not None:
+            _dict['operations'] = self.operations.to_dict()
         if hasattr(self, 'enforcement_mode') and self.enforcement_mode is not None:
             _dict['enforcement_mode'] = self.enforcement_mode
         if hasattr(self, 'href') and self.href is not None:
@@ -1772,20 +2197,26 @@ class ServiceRefTarget():
 
     :attr str service_name: The name of the service.
     :attr str service_type: (optional) The type of the service.
+    :attr List[ServiceRefTargetLocationsItem] locations: (optional) The locations
+          the service is available.
     """
 
     def __init__(self,
                  service_name: str,
                  *,
-                 service_type: str = None) -> None:
+                 service_type: str = None,
+                 locations: List['ServiceRefTargetLocationsItem'] = None) -> None:
         """
         Initialize a ServiceRefTarget object.
 
         :param str service_name: The name of the service.
         :param str service_type: (optional) The type of the service.
+        :param List[ServiceRefTargetLocationsItem] locations: (optional) The
+               locations the service is available.
         """
         self.service_name = service_name
         self.service_type = service_type
+        self.locations = locations
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ServiceRefTarget':
@@ -1797,6 +2228,8 @@ class ServiceRefTarget():
             raise ValueError('Required property \'service_name\' not present in ServiceRefTarget JSON')
         if 'service_type' in _dict:
             args['service_type'] = _dict.get('service_type')
+        if 'locations' in _dict:
+            args['locations'] = [ServiceRefTargetLocationsItem.from_dict(x) for x in _dict.get('locations')]
         return cls(**args)
 
     @classmethod
@@ -1811,6 +2244,8 @@ class ServiceRefTarget():
             _dict['service_name'] = self.service_name
         if hasattr(self, 'service_type') and self.service_type is not None:
             _dict['service_type'] = self.service_type
+        if hasattr(self, 'locations') and self.locations is not None:
+            _dict['locations'] = [x.to_dict() for x in self.locations]
         return _dict
 
     def _to_dict(self):
@@ -1898,6 +2333,62 @@ class ServiceRefTargetList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class ServiceRefTargetLocationsItem():
+    """
+    ServiceRefTargetLocationsItem.
+
+    :attr str name: The location name.
+    """
+
+    def __init__(self,
+                 name: str) -> None:
+        """
+        Initialize a ServiceRefTargetLocationsItem object.
+
+        :param str name: The location name.
+        """
+        self.name = name
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ServiceRefTargetLocationsItem':
+        """Initialize a ServiceRefTargetLocationsItem object from a json dictionary."""
+        args = {}
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in ServiceRefTargetLocationsItem JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ServiceRefTargetLocationsItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ServiceRefTargetLocationsItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ServiceRefTargetLocationsItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ServiceRefTargetLocationsItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class ServiceRefValue():
     """
     A service reference value.
@@ -1906,6 +2397,7 @@ class ServiceRefValue():
     :attr str service_type: (optional) The service type.
     :attr str service_name: (optional) The service name.
     :attr str service_instance: (optional) The service instance.
+    :attr str location: (optional) The location.
     """
 
     def __init__(self,
@@ -1913,7 +2405,8 @@ class ServiceRefValue():
                  *,
                  service_type: str = None,
                  service_name: str = None,
-                 service_instance: str = None) -> None:
+                 service_instance: str = None,
+                 location: str = None) -> None:
         """
         Initialize a ServiceRefValue object.
 
@@ -1921,11 +2414,13 @@ class ServiceRefValue():
         :param str service_type: (optional) The service type.
         :param str service_name: (optional) The service name.
         :param str service_instance: (optional) The service instance.
+        :param str location: (optional) The location.
         """
         self.account_id = account_id
         self.service_type = service_type
         self.service_name = service_name
         self.service_instance = service_instance
+        self.location = location
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ServiceRefValue':
@@ -1941,6 +2436,8 @@ class ServiceRefValue():
             args['service_name'] = _dict.get('service_name')
         if 'service_instance' in _dict:
             args['service_instance'] = _dict.get('service_instance')
+        if 'location' in _dict:
+            args['location'] = _dict.get('location')
         return cls(**args)
 
     @classmethod
@@ -1959,6 +2456,8 @@ class ServiceRefValue():
             _dict['service_name'] = self.service_name
         if hasattr(self, 'service_instance') and self.service_instance is not None:
             _dict['service_instance'] = self.service_instance
+        if hasattr(self, 'location') and self.location is not None:
+            _dict['location'] = self.location
         return _dict
 
     def _to_dict(self):
