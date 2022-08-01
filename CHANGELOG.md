@@ -1,3 +1,10 @@
+# [0.27.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.26.0...v0.27.0) (2022-08-01)
+
+
+### Features
+
+* **Context-based Restrictions:** update service after recent API changes ([#164](https://github.com/IBM/platform-services-python-sdk/issues/164)) ([5e536d7](https://github.com/IBM/platform-services-python-sdk/commit/5e536d7e3ad40ee776edd32d6c07441d0d7cde0d))
+
 # [0.26.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.25.0...v0.26.0) (2022-07-29)
 
 
