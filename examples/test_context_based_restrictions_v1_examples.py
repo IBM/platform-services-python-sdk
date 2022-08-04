@@ -32,6 +32,7 @@ from ibm_platform_services.context_based_restrictions_v1 import *
 # CONTEXT_BASED_RESTRICTIONS_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
 # CONTEXT_BASED_RESTRICTIONS_TEST_ACCOUNT_ID=<the id of the account under which test CBR zones and rules are created>
 # CONTEXT_BASED_RESTRICTIONS_TEST_SERVICE_NAME=<the name of the service to be associated with the test CBR rules>
+# CONTEXT_BASED_RESTRICTIONS_TEST_VPC_CRN=<the CRN of the vpc instance to be associated with the test CBR rules>
 #
 # These configuration properties can be exported as environment variables, or stored
 # in a configuration file and then:
@@ -45,6 +46,7 @@ config = None
 
 account_id = None
 service_name = None
+vpc_crn = None
 zone_id = None
 zone_rev = None
 rule_id = None
@@ -84,6 +86,9 @@ class TestContextBasedRestrictionsV1Examples():
             global service_name
             service_name = config['TEST_SERVICE_NAME']
 
+            global vpc_crn
+            vpc_crn = config['TEST_VPC_CRN']
+
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
@@ -99,15 +104,39 @@ class TestContextBasedRestrictionsV1Examples():
             print('\ncreate_zone() result:')
             # begin-create_zone
 
-            address_model = {
+            ip_address_model = {
                 'type': 'ipAddress',
                 'value': '169.23.56.234',
+            }
+            ip_range_address_model = {
+                'type': 'ipRange',
+                'value': '169.23.22.0-169.23.22.255',
+            }
+            subnet_address_model = {
+                'type': 'subnet',
+                'value': '192.0.2.0/24',
+            }
+            vpc_address_model = {
+                'type': 'vpc',
+                'value': vpc_crn,
+            }
+            service_ref_address_model = {
+                'type': 'serviceRef',
+                'ref': {
+                    'account_id': account_id,
+                    'service_name': 'cloud-object-storage',
+                }
+            }
+            excluded_ip_address_model = {
+                'type': 'ipAddress',
+                'value': '169.23.22.127',
             }
 
             zone = context_based_restrictions_service.create_zone(
                 name='an example of zone',
                 account_id=account_id,
-                addresses=[address_model],
+                addresses=[ip_address_model, ip_range_address_model, subnet_address_model, vpc_address_model, service_ref_address_model],
+                excluded=[excluded_ip_address_model],
                 description='this is an example of zone',
             ).get_result()
 
