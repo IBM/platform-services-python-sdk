@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
+# IBM OpenAPI SDK Code Generator Version: 3.57.1-4c556507-20220928-143422
 
 """
 With the Context Based Restrictions API, you can:
@@ -595,6 +595,7 @@ class ContextBasedRestrictionsV1(BaseService):
         service_instance: str = None,
         service_name: str = None,
         service_type: str = None,
+        service_group_id: str = None,
         zone_id: str = None,
         sort: str = None,
         enforcement_mode: str = None,
@@ -625,6 +626,8 @@ class ContextBasedRestrictionsV1(BaseService):
         :param str service_name: (optional) The `serviceName` resource attribute.
         :param str service_type: (optional) The rule's `serviceType` resource
                attribute.
+        :param str service_group_id: (optional) The rule's `service_group_id`
+               resource attribute.
         :param str zone_id: (optional) The globally unique ID of the zone.
         :param str sort: (optional) Sorts results by using a valid sort field. To
                learn more, see
@@ -655,6 +658,7 @@ class ContextBasedRestrictionsV1(BaseService):
             'service_instance': service_instance,
             'service_name': service_name,
             'service_type': service_type,
+            'service_group_id': service_group_id,
             'zone_id': zone_id,
             'sort': sort,
             'enforcement_mode': enforcement_mode
