@@ -423,7 +423,7 @@ class TestContextBasedRestrictionsV1():
         # Construct a dict representation of a RuleContextAttribute model
         rule_context_attribute_model = {
             'name': 'networkZoneId',
-            'value': '6f8986a21f332c657b09f7fcfda1cb80',
+            'value': TestContextBasedRestrictionsV1.zone_id,
         }
 
         # Construct a dict representation of a RuleContext model
