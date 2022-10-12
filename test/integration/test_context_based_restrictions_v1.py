@@ -468,6 +468,8 @@ class TestContextBasedRestrictionsV1():
         assert list_rules_response.get_status_code() == 200
         rule_list = list_rules_response.get_result()
         assert rule_list is not None
+        assert rule_list['total_count'] == 1
+        assert rule['id'] == rule_list['first'].id
 
         delete_rule_response = self.context_based_restrictions_service.delete_rule(
             rule_id=TestContextBasedRestrictionsV1.rule_id,
