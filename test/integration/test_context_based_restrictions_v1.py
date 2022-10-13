@@ -458,9 +458,9 @@ class TestContextBasedRestrictionsV1():
         assert create_rule_response.get_status_code() == 201
         rule = create_rule_response.get_result()
         assert rule is not None
-        TestContextBasedRestrictionsV1.rule_id = rule['id']
 
         list_rules_response = self.context_based_restrictions_service.list_rules(
+            account_id=TestContextBasedRestrictionsV1.test_account_id,
             service_group_id='IAM',
             transaction_id=self.getTransactionID(),
         )
@@ -468,11 +468,11 @@ class TestContextBasedRestrictionsV1():
         assert list_rules_response.get_status_code() == 200
         rule_list = list_rules_response.get_result()
         assert rule_list is not None
-        assert rule_list['total_count'] == 1
-        assert rule['id'] == rule_list['first'].id
+        assert rule_list['count'] == 1
+        assert rule_list['rules'][0].get('id') == rule['id']
 
         delete_rule_response = self.context_based_restrictions_service.delete_rule(
-            rule_id=TestContextBasedRestrictionsV1.rule_id,
+            rule_id=rule['id'],
             # Using the standard X-Correlation-Id header in this case
             x_correlation_id=self.getTransactionID()
         )
