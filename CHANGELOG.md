@@ -1,3 +1,10 @@
+## [0.27.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.27.0...v0.27.1) (2022-10-14)
+
+
+### Bug Fixes
+
+* **Context Based Restrictions:** add list rule with service_group_id test ([#168](https://github.com/IBM/platform-services-python-sdk/issues/168)) ([ed1bb00](https://github.com/IBM/platform-services-python-sdk/commit/ed1bb0086dcbad654c4e59169ad3ea36febed35a))
+
 # [0.27.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.26.0...v0.27.0) (2022-08-01)
 
 
