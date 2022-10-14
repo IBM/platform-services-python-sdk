@@ -419,6 +419,67 @@ class TestContextBasedRestrictionsV1():
             )
 
     @needscredentials
+    def test_list_rule_with_service_group_id(self):
+        # Construct a dict representation of a RuleContextAttribute model
+        rule_context_attribute_model = {
+            'name': 'networkZoneId',
+            'value': TestContextBasedRestrictionsV1.zone_id,
+        }
+
+        # Construct a dict representation of a RuleContext model
+        rule_context_model = {
+            'attributes': [rule_context_attribute_model],
+        }
+
+        # Construct a dict representation of a ResourceAttribute model
+        account_id_resource_attribute_model = {
+            'name': 'accountId',
+            'value': TestContextBasedRestrictionsV1.test_account_id,
+        }
+
+        service_group_id_resource_attribute_model = {
+            'name': 'service_group_id',
+            'value': 'IAM',
+        }
+
+        # Construct a dict representation of a Resource model
+        resource_model = {
+            'attributes': [account_id_resource_attribute_model, service_group_id_resource_attribute_model],
+        }
+
+        create_rule_response = self.context_based_restrictions_service.create_rule(
+            contexts=[rule_context_model],
+            resources=[resource_model],
+            description='SDK TEST - this is an example of rule with a service group id',
+            enforcement_mode='enabled',
+            transaction_id=self.getTransactionID()
+        )
+
+        assert create_rule_response.get_status_code() == 201
+        rule = create_rule_response.get_result()
+        assert rule is not None
+
+        list_rules_response = self.context_based_restrictions_service.list_rules(
+            account_id=TestContextBasedRestrictionsV1.test_account_id,
+            service_group_id='IAM',
+            transaction_id=self.getTransactionID(),
+        )
+
+        assert list_rules_response.get_status_code() == 200
+        rule_list = list_rules_response.get_result()
+        assert rule_list is not None
+        assert rule_list['count'] == 1
+        assert rule_list['rules'][0].get('id') == rule['id']
+
+        delete_rule_response = self.context_based_restrictions_service.delete_rule(
+            rule_id=rule['id'],
+            # Using the standard X-Correlation-Id header in this case
+            x_correlation_id=self.getTransactionID()
+        )
+
+        assert delete_rule_response.get_status_code() == 204
+
+    @needscredentials
     def test_get_rule(self):
         get_rule_response = self.context_based_restrictions_service.get_rule(
             rule_id=TestContextBasedRestrictionsV1.rule_id,

@@ -461,7 +461,6 @@ class TestContextBasedRestrictionsV1Examples():
         except ApiException as e:
             pytest.fail(str(e))
 
-
 # endregion
 ##############################################################################
 # End of Examples for Service: ContextBasedRestrictionsV1

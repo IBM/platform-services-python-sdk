@@ -961,6 +961,7 @@ class TestListRules():
         service_instance = 'testString'
         service_name = 'testString'
         service_type = 'testString'
+        service_group_id = 'testString'
         zone_id = 'testString'
         sort = 'testString'
         enforcement_mode = 'enabled'
@@ -976,6 +977,7 @@ class TestListRules():
             service_instance=service_instance,
             service_name=service_name,
             service_type=service_type,
+            service_group_id=service_group_id,
             zone_id=zone_id,
             sort=sort,
             enforcement_mode=enforcement_mode,
@@ -995,6 +997,7 @@ class TestListRules():
         assert 'service_instance={}'.format(service_instance) in query_string
         assert 'service_name={}'.format(service_name) in query_string
         assert 'service_type={}'.format(service_type) in query_string
+        assert 'service_group_id={}'.format(service_group_id) in query_string
         assert 'zone_id={}'.format(zone_id) in query_string
         assert 'sort={}'.format(sort) in query_string
         assert 'enforcement_mode={}'.format(enforcement_mode) in query_string
