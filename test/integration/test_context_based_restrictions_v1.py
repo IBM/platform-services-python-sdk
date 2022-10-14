@@ -291,7 +291,7 @@ class TestContextBasedRestrictionsV1():
         rule = create_rule_response.get_result()
         assert rule is not None
         TestContextBasedRestrictionsV1.rule_id = rule['id']
-    
+
     @needscredentials
     def test_create_rule_with_api_types(self):
         # Construct a dict representation of a RuleContextAttribute model
@@ -600,7 +600,7 @@ class TestContextBasedRestrictionsV1():
                 account_id=self.InvalidID,
                 transaction_id=self.getTransactionID()
             )
-    
+
     @needscredentials
     def test_list_available_service_operations(self):
 

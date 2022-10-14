@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 3.30.0-bd714324-20210406-200538
- 
+
 """
 The Enterprise Management API enables you to create and manage an enterprise, account
 groups, and accounts within the enterprise.

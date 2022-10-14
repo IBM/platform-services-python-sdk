@@ -152,7 +152,7 @@ class TestOpenServiceBrokerV1Examples():
 
             print('\nreplace_service_instance_state() result:')
             # begin-replace_service_instance_state
-        
+
             response = open_service_broker_service.replace_service_instance_state(
                 instance_id=instanceId,
                 enabled=False,
@@ -279,7 +279,7 @@ class TestOpenServiceBrokerV1Examples():
             # end-get_last_operation
 
         except ApiException as e:
-            pytest.fail(str(e)) 
+            pytest.fail(str(e))
 
     @needscredentials
     def test_replace_service_binding_example(self):

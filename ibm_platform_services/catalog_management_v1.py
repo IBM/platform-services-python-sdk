@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 3.43.0-49eab5c7-20211117-152138
- 
+
 """
 This is the API to use for managing private catalogs for IBM Cloud. Private catalogs
 provide a way to centrally manage access to products in the IBM Cloud catalog and your own

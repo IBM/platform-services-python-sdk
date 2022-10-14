@@ -468,7 +468,7 @@ class TestCatalogManagementV1():
         assert offering['id'] == offering_id
         assert offering['catalog_id'] == catalog_id
         assert offering['name'] == updated_offering_name
-    
+
     ####
     # Update Offering
     ####

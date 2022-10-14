@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 3.36.0-6f5b0381-20210716-180747
- 
+
 """
 Usage reports for IBM Cloud accounts
 """

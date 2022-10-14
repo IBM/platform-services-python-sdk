@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 3.32.0-4c6a3129-20210514-210323
- 
+
 """
 Manage lifecycle of your Cloud resources using Resource Controller APIs. Resources are
 provisioned globally in an account scope. Supports asynchronous provisioning of resources.

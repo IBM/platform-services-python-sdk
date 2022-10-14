@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
- 
+
 """
 Manage the lifecycle of your users using User Management APIs.
 """

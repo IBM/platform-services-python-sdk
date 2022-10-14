@@ -686,7 +686,7 @@ class TestResourceControllerV2(unittest.TestCase):
             self.transactionId
 
         start = None
-        result_count = 0 
+        result_count = 0
         while True:
             response = self.service.list_resource_keys(
                 limit=results_per_page,
@@ -698,7 +698,7 @@ class TestResourceControllerV2(unittest.TestCase):
 
             result = response.get_result()
             assert result is not None
-            result_count+= result.get('rows_count') 
+            result_count+= result.get('rows_count')
 
             start = get_query_param(result.get('next_url'), 'start')
             if start is None:
@@ -1292,9 +1292,9 @@ class TestResourceControllerV2(unittest.TestCase):
         assert result.get('state') == 'RECLAIMING'
 
         time.sleep(20)
-    
+
     def test_53_cancel_last_operation(self):
-        
+
         customHeaders = {}
         customHeaders["Transaction-Id"] = "rc-sdk-python-test53-" + \
             self.transactionId

@@ -134,7 +134,7 @@ class TestIamIdentityV1():
                         id=serviceid['id']
                     )
                     assert delete_response.get_status_code() == 204
-        
+
         # list profiles
         response = cls.iam_identity_service.list_profiles(
             account_id=cls.account_id
@@ -165,21 +165,21 @@ class TestIamIdentityV1():
             return response.get_result()
         except Exception:
             return None
-    
+
     def get_profile(self, service, resource_id):
         try:
             response = service.get_profile(id=resource_id)
             return response.get_result()
         except Exception:
             return None
-    
+
     def get_claimRule(self, service, profileId, claimRuleId):
         try:
             response = service.get_claim_rule(profile_id=profileId,rule_id=claimRuleId)
             return response.get_result()
         except Exception:
             return None
-    
+
     def get_link(self, service, profileId, linkId):
         try:
             response = service.get_link(profile_id=profileId,link_id=linkId)
@@ -544,7 +544,7 @@ class TestIamIdentityV1():
         profile_iamId = profile['iam_id']
         assert profile_id1 is not None
         assert profile_iamId is not None
-    
+
     @needscredentials
     def test_create_profile2(self):
         create_profile_response = self.iam_identity_service.create_profile(
@@ -561,7 +561,7 @@ class TestIamIdentityV1():
         global profile_id2
         profile_id2 = profile['id']
         assert profile_id2 is not None
-    
+
     @needscredentials
     def test_get_profile(self):
         global profile_id1
@@ -615,7 +615,7 @@ class TestIamIdentityV1():
             pagetoken_present = (pagetoken is not None)
 
         assert len(profiles) == 2
-    
+
     @needscredentials
     def test_update_profile(self):
         global profile_id1
@@ -636,7 +636,7 @@ class TestIamIdentityV1():
         print('\nupdate_profile() response: ', json.dumps(profile, indent=2))
         assert profile is not None
         assert profile['description'] == new_description
-    
+
     @needscredentials
     def test_delete_profile1(self):
         global profile_id1
@@ -674,7 +674,7 @@ class TestIamIdentityV1():
         global claimRule_id1
         claimRule_id1 = claimRule['id']
         assert claimRule_id1 is not None
-    
+
     @needscredentials
     def test_create_claimRule2(self):
         profile_claim_rule_conditions_model = {}
@@ -698,7 +698,7 @@ class TestIamIdentityV1():
         global claimRule_id2
         claimRule_id2 = claimRule['id']
         assert claimRule_id2 is not None
-    
+
     @needscredentials
     def test_get_claimRule(self):
         global claimRule_id1
@@ -740,9 +740,9 @@ class TestIamIdentityV1():
             for claimRule in claimRule_list['rules']:
                 if claimRule['id'] == claimRule_id1 or claimRule['id'] == claimRule_id2:
                     claimRules.append(claimRule)
-        
+
         assert len(claimRules) == 2
-    
+
     @needscredentials
     def test_update_claimRule(self):
         global claimRule_id1
@@ -770,7 +770,7 @@ class TestIamIdentityV1():
         claimRule = update_claimRule_response.get_result()
         print('\nupdate_claimRule() response: ', json.dumps(claimRule, indent=2))
         assert claimRule is not None
-    
+
     @needscredentials
     def test_delete_claimRule1(self):
         global claimRule_id1
@@ -778,14 +778,14 @@ class TestIamIdentityV1():
 
         delete_claimRule_response = self.iam_identity_service.delete_claim_rule(
             profile_id=profile_id2,
-            rule_id=claimRule_id1 
+            rule_id=claimRule_id1
         )
 
         assert delete_claimRule_response.get_status_code() == 204
 
         claimRule = self.get_claimRule(self.iam_identity_service, profile_id2, claimRule_id1)
         assert claimRule is None
-    
+
     @needscredentials
     def test_delete_claimRule2(self):
         global claimRule_id2
@@ -793,14 +793,14 @@ class TestIamIdentityV1():
 
         delete_claimRule_response = self.iam_identity_service.delete_claim_rule(
             profile_id=profile_id2,
-            rule_id=claimRule_id2 
+            rule_id=claimRule_id2
         )
 
         assert delete_claimRule_response.get_status_code() == 204
 
         claimRule = self.get_claimRule(self.iam_identity_service, profile_id2, claimRule_id2)
         assert claimRule is None
-    
+
     @needscredentials
     def test_create_link(self):
         CreateProfileLinkRequestLink = {}
@@ -823,7 +823,7 @@ class TestIamIdentityV1():
         global link_id
         link_id = link['id']
         assert link_id is not None
-    
+
     @needscredentials
     def test_get_link(self):
         global link_id
@@ -861,7 +861,7 @@ class TestIamIdentityV1():
             for link in links_list['links']:
                 if link['id'] == link_id:
                     links.append(link)
-        
+
         assert len(links) == 1
 
     @needscredentials
@@ -878,7 +878,7 @@ class TestIamIdentityV1():
 
         link = self.get_link(self.iam_identity_service, profile_id2, link_id)
         assert link is None
-    
+
     @needscredentials
     def test_delete_profile2(self):
         global profile_id2
@@ -892,7 +892,7 @@ class TestIamIdentityV1():
 
         profile = self.get_profile(self.iam_identity_service, profile_id2)
         assert profile is None
-    
+
     def test_create_profile_bad_request(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.create_profile(
@@ -901,14 +901,14 @@ class TestIamIdentityV1():
                 account_id='invalid'
             )
         assert e.value.code == 400
-    
+
     def test_get_profile_not_found(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.get_profile(
                 profile_id='invalid'
             )
         assert e.value.code == 404
-    
+
     def test_update_profile_not_found(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.update_profile(
@@ -917,14 +917,14 @@ class TestIamIdentityV1():
                 description='invalid'
             )
         assert e.value.code == 404
-    
+
     def test_delete_profile_not_found(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.delete_profile(
                 profile_id='invalid'
             )
         assert e.value.code == 404
-    
+
     def test_create_claimRule_bad_request(self):
         profile_claim_rule_conditions_model = {}
         profile_claim_rule_conditions_model['claim'] = 'blueGroups'
@@ -939,7 +939,7 @@ class TestIamIdentityV1():
                 conditions = [profile_claim_rule_conditions_model]
             )
         assert e.value.code == 404
-    
+
     def test_get_claimRule_not_found(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.get_claim_rule(
@@ -947,7 +947,7 @@ class TestIamIdentityV1():
                 rule_id='invalid'
             )
         assert e.value.code == 404
-    
+
     def test_update_claimRule_not_found(self):
         profile_claim_rule_conditions_model = {}
         profile_claim_rule_conditions_model['claim'] = 'blueGroups'
@@ -964,7 +964,7 @@ class TestIamIdentityV1():
                 realm_name = self.realm_name
             )
         assert e.value.code == 404
-    
+
     def test_delete_claimRule_not_found(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.delete_claim_rule(
@@ -972,7 +972,7 @@ class TestIamIdentityV1():
                 rule_id='invalid'
             )
         assert e.value.code == 404
-    
+
     def test_create_link_bad_request(self):
         CreateProfileLinkRequestLink = {}
         CreateProfileLinkRequestLink['crn'] = 'crn:v1:staging:public:iam-identity::a/' + self.account_id + '::computeresource:Fake-Compute-Resource'
@@ -986,7 +986,7 @@ class TestIamIdentityV1():
                 link = CreateProfileLinkRequestLink
             )
         assert e.value.code == 404
-    
+
     def test_get_link_not_found(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.get_link(
@@ -994,7 +994,7 @@ class TestIamIdentityV1():
                 link_id='invalid'
             )
         assert e.value.code == 404
-    
+
     def test_delete_link_not_found(self):
         with pytest.raises(ApiException) as e:
             self.iam_identity_service.delete_link(
@@ -1060,7 +1060,7 @@ class TestIamIdentityV1():
         assert settings["history"] is not None
         assert settings["session_expiration_in_seconds"] == "86400"
         assert settings["session_invalidation_in_seconds"] == "7200"
-    
+
     @needscredentials
     def test_create_report(self):
         global report_reference
@@ -1080,7 +1080,7 @@ class TestIamIdentityV1():
 
         report_reference = reportReference['reference']
         assert report_reference is not None
-    
+
     @needscredentials
     def test_get_inactivity_report_incomplete(self):
         get_report_response = self.iam_identity_service.get_report(
@@ -1103,7 +1103,7 @@ class TestIamIdentityV1():
               account_id=self.account_id,
               reference=report_reference,
             )
-            
+
             if(get_report_response.get_status_code()!=204):
               report = get_report_response.get_result()
               assert report is not None
@@ -1122,4 +1122,4 @@ class TestIamIdentityV1():
                 reference='test123',
             )
         assert e.value.code == 404
-   
+

@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 3.41.0-f1ef0102-20211018-193503
- 
+
 """
 Manage lifecycle of your Cloud resource groups using Resource Manager APIs.
 

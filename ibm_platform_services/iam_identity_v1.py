@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 3.47.0-60650593-20220330-200002
- 
+
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
 (Service IDs, ApiKeys).
