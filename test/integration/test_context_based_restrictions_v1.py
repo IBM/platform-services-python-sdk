@@ -417,7 +417,7 @@ class TestContextBasedRestrictionsV1():
                 account_id=self.InvalidID,
                 transaction_id=self.getTransactionID(),
             )
-            
+
     @needscredentials
     def test_list_rule_with_service_group_id(self):
         # Construct a dict representation of a RuleContextAttribute model
