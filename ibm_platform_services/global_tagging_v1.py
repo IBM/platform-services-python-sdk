@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
- 
+
 """
 Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete a tag
 or list all tags in your billing account with the Tagging API. The tag name must be unique

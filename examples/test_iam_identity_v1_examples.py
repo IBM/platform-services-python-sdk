@@ -440,7 +440,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_create_profile_example(self):
         """
@@ -465,7 +465,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_get_profile_example(self):
         """
@@ -491,7 +491,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_list_profiles_example(self):
         """
@@ -514,7 +514,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_update_profile_example(self):
         """
@@ -538,7 +538,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_create_claim_rule_example(self):
         """
@@ -570,7 +570,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_get_claim_rule_example(self):
         """
@@ -596,7 +596,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_list_claim_rules_example(self):
         """
@@ -669,7 +669,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_create_link_example(self):
         """
@@ -700,7 +700,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_get_link_example(self):
         """
@@ -725,7 +725,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_list_links_example(self):
         """
@@ -747,7 +747,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_delete_link_example(self):
         """
@@ -765,7 +765,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
-    
+
     @needscredentials
     def test_delete_profile_example(self):
         """

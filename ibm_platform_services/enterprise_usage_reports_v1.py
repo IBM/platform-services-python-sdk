@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
- 
+
 """
 Usage reports for IBM Cloud enterprise entities
 """

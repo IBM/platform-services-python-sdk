@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 3.46.1-a5569134-20220316-164819
- 
+
 """
 The IAM Access Groups API allows for the management of access groups (Create, Read,
 Update, Delete) as well as the management of memberships and rules within the group

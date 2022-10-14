@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-7b3ab37f-20210215-130941
- 
+
 """
 Case management API for creating cases, getting case statuses, adding comments to a case,
 adding and removing users from a case watchlist, downloading and adding attachments, and

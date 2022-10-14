@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-4c92c221-20210211-060810
- 
+
 """
 The catalog service manages offerings across geographies as the system of record. The
 catalog supports a RESTful API where users can retrieve information about existing

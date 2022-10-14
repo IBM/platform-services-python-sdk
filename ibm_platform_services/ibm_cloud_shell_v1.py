@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
- 
+
 """
 API docs for IBM Cloud Shell repository
 """

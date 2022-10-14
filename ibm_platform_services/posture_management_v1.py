@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-b414353e-20210324-135924
- 
+
 """
 With IBM Cloud® Security and Compliance Center, you can embed checks into your every day
 workflows to help manage your current security and compliance posture. By monitoring for

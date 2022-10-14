@@ -135,7 +135,7 @@ class TestIbmCloudShellV1Examples():
                 'enabled': True,
                 'key': 'us-south',
             }]
-            
+
             account_settings = ibm_cloud_shell_service.update_account_settings(
                 account_id=account_id,
                 rev='130-12345678-abcd-1a2b-a1b2-1234567890ab',
