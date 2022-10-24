@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# Copyright 2020 IBM All Rights Reserved.
+# Copyright 2020, 2022 IBM All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -142,26 +142,13 @@ class TestCaseManagementV1(unittest.TestCase):
         offset = 0
         page_size = 1
         sort = 'number'
-        fields = [
-            'number',
-            'status',
-            'short_description',
-            'description',
-            'created_at',
-            'created_by',
-            'updated_at',
-            'updated_by',
-            'comments',
-        ]
 
         more_results = True
         while more_results:
             response = self.service.get_cases(
                 offset=offset,
                 limit=page_size,
-                sort=sort,
                 search=TestCaseManagementV1.case_label,
-                fields=fields,
             )
             assert response.status_code == 200
             assert response.get_result() is not None
@@ -178,6 +165,32 @@ class TestCaseManagementV1(unittest.TestCase):
         assert len(cases) > 0
         print('get_cases returned a total of {} cases'.format(len(cases)))
         print('returned cases\n{}'.format(json.dumps(cases, indent=2)))
+
+    def test_04_get_cases_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = GetCasesPager(
+            client=self.service,
+            limit=1,
+            search=TestCaseManagementV1.case_label,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = GetCasesPager(
+            client=self.service,
+            limit=1,
+            search=TestCaseManagementV1.case_label,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nget_cases() returned a total of {len(all_results)} items(s) using GetCasesPager.')
 
     def test_05_get_case(self):
 
