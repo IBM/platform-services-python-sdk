@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthen
 import inspect
 import io
 import json
+import os
 import pytest
 import re
 import requests
@@ -30,31 +31,76 @@ import urllib
 from ibm_platform_services.case_management_v1 import *
 
 
-service = CaseManagementV1(
+_service = CaseManagementV1(
     authenticator=NoAuthAuthenticator()
-    )
+)
 
-base_url = 'https://support-center.cloud.ibm.com/case-management/v1'
-service.set_service_url(base_url)
+_base_url = 'https://support-center.cloud.ibm.com/case-management/v1'
+_service.set_service_url(_base_url)
+
+
+def preprocess_url(operation_path: str):
+    """
+    Returns the request url associated with the specified operation path.
+    This will be base_url concatenated with a quoted version of operation_path.
+    The returned request URL is used to register the mock response so it needs
+    to match the request URL that is formed by the requests library.
+    """
+    # First, unquote the path since it might have some quoted/escaped characters in it
+    # due to how the generator inserts the operation paths into the unit test code.
+    operation_path = urllib.parse.unquote(operation_path)
+
+    # Next, quote the path using urllib so that we approximate what will
+    # happen during request processing.
+    operation_path = urllib.parse.quote(operation_path, safe='/')
+
+    # Finally, form the request URL from the base URL and operation path.
+    request_url = _base_url + operation_path
+
+    # If the request url does NOT end with a /, then just return it as-is.
+    # Otherwise, return a regular expression that matches one or more trailing /.
+    if re.fullmatch('.*/+', request_url) is None:
+        return request_url
+    else:
+        return re.compile(request_url.rstrip('/') + '/+')
+
 
 ##############################################################################
 # Start of Service: Default
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = CaseManagementV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, CaseManagementV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = CaseManagementV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
 class TestGetCases():
     """
     Test Class for get_cases
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_cases_all_params(self):
@@ -62,7 +108,7 @@ class TestGetCases():
         get_cases()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases')
+        url = preprocess_url('/cases')
         mock_response = '{"total_count": 11, "first": {"href": "href"}, "next": {"href": "href"}, "previous": {"href": "href"}, "last": {"href": "href"}, "cases": [{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}]}'
         responses.add(responses.GET,
                       url,
@@ -79,7 +125,7 @@ class TestGetCases():
         fields = ['number']
 
         # Invoke method
-        response = service.get_cases(
+        response = _service.get_cases(
             offset=offset,
             limit=limit,
             search=search,
@@ -102,6 +148,14 @@ class TestGetCases():
         assert 'status={}'.format(','.join(status)) in query_string
         assert 'fields={}'.format(','.join(fields)) in query_string
 
+    def test_get_cases_all_params_with_retries(self):
+        # Enable retries and run test_get_cases_all_params.
+        _service.enable_retries()
+        self.test_get_cases_all_params()
+
+        # Disable retries and run test_get_cases_all_params.
+        _service.disable_retries()
+        self.test_get_cases_all_params()
 
     @responses.activate
     def test_get_cases_required_params(self):
@@ -109,7 +163,7 @@ class TestGetCases():
         test_get_cases_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases')
+        url = preprocess_url('/cases')
         mock_response = '{"total_count": 11, "first": {"href": "href"}, "next": {"href": "href"}, "previous": {"href": "href"}, "last": {"href": "href"}, "cases": [{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}]}'
         responses.add(responses.GET,
                       url,
@@ -118,27 +172,95 @@ class TestGetCases():
                       status=200)
 
         # Invoke method
-        response = service.get_cases()
+        response = _service.get_cases()
 
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_cases_required_params_with_retries(self):
+        # Enable retries and run test_get_cases_required_params.
+        _service.enable_retries()
+        self.test_get_cases_required_params()
+
+        # Disable retries and run test_get_cases_required_params.
+        _service.disable_retries()
+        self.test_get_cases_required_params()
+
+    @responses.activate
+    def test_get_cases_with_pager_get_next(self):
+        """
+        test_get_cases_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/cases')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"cases":[{"number":"number","short_description":"short_description","description":"description","created_at":"created_at","created_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"updated_at":"updated_at","updated_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"contact_type":"Cloud Support Center","contact":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"status":"status","severity":8,"support_tier":"Free","resolution":"resolution","close_notes":"close_notes","eu":{"support":false,"data_center":"data_center"},"watchlist":[{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}],"attachments":[{"id":"id","filename":"filename","size_in_bytes":13,"created_at":"created_at","url":"url"}],"offering":{"name":"name","type":{"group":"crn_service_name","key":"key","kind":"kind","id":"id"}},"resources":[{"crn":"crn","name":"name","type":"type","url":"url","note":"note"}],"comments":[{"value":"value","added_at":"added_at","added_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}}]}],"total_count":2,"limit":1}'
+        mock_response2 = '{"cases":[{"number":"number","short_description":"short_description","description":"description","created_at":"created_at","created_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"updated_at":"updated_at","updated_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"contact_type":"Cloud Support Center","contact":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"status":"status","severity":8,"support_tier":"Free","resolution":"resolution","close_notes":"close_notes","eu":{"support":false,"data_center":"data_center"},"watchlist":[{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}],"attachments":[{"id":"id","filename":"filename","size_in_bytes":13,"created_at":"created_at","url":"url"}],"offering":{"name":"name","type":{"group":"crn_service_name","key":"key","kind":"kind","id":"id"}},"resources":[{"crn":"crn","name":"name","type":"type","url":"url","note":"note"}],"comments":[{"value":"value","added_at":"added_at","added_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}}]}],"total_count":2,"limit":1}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = GetCasesPager(
+            client=_service,
+            limit=10,
+            search='testString',
+            sort='number',
+            status=['new'],
+            fields=['number'],
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_get_cases_with_pager_get_all(self):
+        """
+        test_get_cases_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/cases')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"cases":[{"number":"number","short_description":"short_description","description":"description","created_at":"created_at","created_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"updated_at":"updated_at","updated_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"contact_type":"Cloud Support Center","contact":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"status":"status","severity":8,"support_tier":"Free","resolution":"resolution","close_notes":"close_notes","eu":{"support":false,"data_center":"data_center"},"watchlist":[{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}],"attachments":[{"id":"id","filename":"filename","size_in_bytes":13,"created_at":"created_at","url":"url"}],"offering":{"name":"name","type":{"group":"crn_service_name","key":"key","kind":"kind","id":"id"}},"resources":[{"crn":"crn","name":"name","type":"type","url":"url","note":"note"}],"comments":[{"value":"value","added_at":"added_at","added_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}}]}],"total_count":2,"limit":1}'
+        mock_response2 = '{"cases":[{"number":"number","short_description":"short_description","description":"description","created_at":"created_at","created_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"updated_at":"updated_at","updated_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"contact_type":"Cloud Support Center","contact":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"status":"status","severity":8,"support_tier":"Free","resolution":"resolution","close_notes":"close_notes","eu":{"support":false,"data_center":"data_center"},"watchlist":[{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}],"attachments":[{"id":"id","filename":"filename","size_in_bytes":13,"created_at":"created_at","url":"url"}],"offering":{"name":"name","type":{"group":"crn_service_name","key":"key","kind":"kind","id":"id"}},"resources":[{"crn":"crn","name":"name","type":"type","url":"url","note":"note"}],"comments":[{"value":"value","added_at":"added_at","added_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}}]}],"total_count":2,"limit":1}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = GetCasesPager(
+            client=_service,
+            limit=10,
+            search='testString',
+            sort='number',
+            status=['new'],
+            fields=['number'],
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestCreateCase():
     """
     Test Class for create_case
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_create_case_all_params(self):
@@ -146,7 +268,7 @@ class TestCreateCase():
         create_case()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases')
+        url = preprocess_url('/cases')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
         responses.add(responses.POST,
                       url,
@@ -193,10 +315,10 @@ class TestCreateCase():
         resources = [resource_payload_model]
         watchlist = [user_model]
         invoice_number = 'testString'
-        sla_credit_request = True
+        sla_credit_request = False
 
         # Invoke method
-        response = service.create_case(
+        response = _service.create_case(
             type,
             subject,
             description,
@@ -224,8 +346,16 @@ class TestCreateCase():
         assert req_body['resources'] == [resource_payload_model]
         assert req_body['watchlist'] == [user_model]
         assert req_body['invoice_number'] == 'testString'
-        assert req_body['sla_credit_request'] == True
+        assert req_body['sla_credit_request'] == False
 
+    def test_create_case_all_params_with_retries(self):
+        # Enable retries and run test_create_case_all_params.
+        _service.enable_retries()
+        self.test_create_case_all_params()
+
+        # Disable retries and run test_create_case_all_params.
+        _service.disable_retries()
+        self.test_create_case_all_params()
 
     @responses.activate
     def test_create_case_value_error(self):
@@ -233,7 +363,7 @@ class TestCreateCase():
         test_create_case_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases')
+        url = preprocess_url('/cases')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
         responses.add(responses.POST,
                       url,
@@ -280,7 +410,7 @@ class TestCreateCase():
         resources = [resource_payload_model]
         watchlist = [user_model]
         invoice_number = 'testString'
-        sla_credit_request = True
+        sla_credit_request = False
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -291,23 +421,21 @@ class TestCreateCase():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_case(**req_copy)
+                _service.create_case(**req_copy)
 
+    def test_create_case_value_error_with_retries(self):
+        # Enable retries and run test_create_case_value_error.
+        _service.enable_retries()
+        self.test_create_case_value_error()
 
+        # Disable retries and run test_create_case_value_error.
+        _service.disable_retries()
+        self.test_create_case_value_error()
 
 class TestGetCase():
     """
     Test Class for get_case
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_case_all_params(self):
@@ -315,7 +443,7 @@ class TestGetCase():
         get_case()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString')
+        url = preprocess_url('/cases/testString')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
         responses.add(responses.GET,
                       url,
@@ -328,7 +456,7 @@ class TestGetCase():
         fields = ['number']
 
         # Invoke method
-        response = service.get_case(
+        response = _service.get_case(
             case_number,
             fields=fields,
             headers={}
@@ -342,6 +470,14 @@ class TestGetCase():
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'fields={}'.format(','.join(fields)) in query_string
 
+    def test_get_case_all_params_with_retries(self):
+        # Enable retries and run test_get_case_all_params.
+        _service.enable_retries()
+        self.test_get_case_all_params()
+
+        # Disable retries and run test_get_case_all_params.
+        _service.disable_retries()
+        self.test_get_case_all_params()
 
     @responses.activate
     def test_get_case_required_params(self):
@@ -349,7 +485,7 @@ class TestGetCase():
         test_get_case_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString')
+        url = preprocess_url('/cases/testString')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
         responses.add(responses.GET,
                       url,
@@ -361,7 +497,7 @@ class TestGetCase():
         case_number = 'testString'
 
         # Invoke method
-        response = service.get_case(
+        response = _service.get_case(
             case_number,
             headers={}
         )
@@ -370,6 +506,14 @@ class TestGetCase():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_case_required_params_with_retries(self):
+        # Enable retries and run test_get_case_required_params.
+        _service.enable_retries()
+        self.test_get_case_required_params()
+
+        # Disable retries and run test_get_case_required_params.
+        _service.disable_retries()
+        self.test_get_case_required_params()
 
     @responses.activate
     def test_get_case_value_error(self):
@@ -377,7 +521,7 @@ class TestGetCase():
         test_get_case_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString')
+        url = preprocess_url('/cases/testString')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
         responses.add(responses.GET,
                       url,
@@ -395,23 +539,21 @@ class TestGetCase():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_case(**req_copy)
+                _service.get_case(**req_copy)
 
+    def test_get_case_value_error_with_retries(self):
+        # Enable retries and run test_get_case_value_error.
+        _service.enable_retries()
+        self.test_get_case_value_error()
 
+        # Disable retries and run test_get_case_value_error.
+        _service.disable_retries()
+        self.test_get_case_value_error()
 
 class TestUpdateCaseStatus():
     """
     Test Class for update_case_status
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_case_status_all_params(self):
@@ -419,7 +561,7 @@ class TestUpdateCaseStatus():
         update_case_status()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/status')
+        url = preprocess_url('/cases/testString/status')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
         responses.add(responses.PUT,
                       url,
@@ -438,7 +580,7 @@ class TestUpdateCaseStatus():
         status_payload = status_payload_model
 
         # Invoke method
-        response = service.update_case_status(
+        response = _service.update_case_status(
             case_number,
             status_payload,
             headers={}
@@ -451,6 +593,14 @@ class TestUpdateCaseStatus():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body == status_payload
 
+    def test_update_case_status_all_params_with_retries(self):
+        # Enable retries and run test_update_case_status_all_params.
+        _service.enable_retries()
+        self.test_update_case_status_all_params()
+
+        # Disable retries and run test_update_case_status_all_params.
+        _service.disable_retries()
+        self.test_update_case_status_all_params()
 
     @responses.activate
     def test_update_case_status_value_error(self):
@@ -458,7 +608,7 @@ class TestUpdateCaseStatus():
         test_update_case_status_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/status')
+        url = preprocess_url('/cases/testString/status')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
         responses.add(responses.PUT,
                       url,
@@ -484,23 +634,21 @@ class TestUpdateCaseStatus():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_case_status(**req_copy)
+                _service.update_case_status(**req_copy)
 
+    def test_update_case_status_value_error_with_retries(self):
+        # Enable retries and run test_update_case_status_value_error.
+        _service.enable_retries()
+        self.test_update_case_status_value_error()
 
+        # Disable retries and run test_update_case_status_value_error.
+        _service.disable_retries()
+        self.test_update_case_status_value_error()
 
 class TestAddComment():
     """
     Test Class for add_comment
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_add_comment_all_params(self):
@@ -508,7 +656,7 @@ class TestAddComment():
         add_comment()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/comments')
+        url = preprocess_url('/cases/testString/comments')
         mock_response = '{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}'
         responses.add(responses.PUT,
                       url,
@@ -521,7 +669,7 @@ class TestAddComment():
         comment = 'This is a test comment'
 
         # Invoke method
-        response = service.add_comment(
+        response = _service.add_comment(
             case_number,
             comment,
             headers={}
@@ -534,6 +682,14 @@ class TestAddComment():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['comment'] == 'This is a test comment'
 
+    def test_add_comment_all_params_with_retries(self):
+        # Enable retries and run test_add_comment_all_params.
+        _service.enable_retries()
+        self.test_add_comment_all_params()
+
+        # Disable retries and run test_add_comment_all_params.
+        _service.disable_retries()
+        self.test_add_comment_all_params()
 
     @responses.activate
     def test_add_comment_value_error(self):
@@ -541,7 +697,7 @@ class TestAddComment():
         test_add_comment_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/comments')
+        url = preprocess_url('/cases/testString/comments')
         mock_response = '{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}'
         responses.add(responses.PUT,
                       url,
@@ -561,23 +717,21 @@ class TestAddComment():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.add_comment(**req_copy)
+                _service.add_comment(**req_copy)
 
+    def test_add_comment_value_error_with_retries(self):
+        # Enable retries and run test_add_comment_value_error.
+        _service.enable_retries()
+        self.test_add_comment_value_error()
 
+        # Disable retries and run test_add_comment_value_error.
+        _service.disable_retries()
+        self.test_add_comment_value_error()
 
 class TestAddWatchlist():
     """
     Test Class for add_watchlist
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_add_watchlist_all_params(self):
@@ -585,7 +739,7 @@ class TestAddWatchlist():
         add_watchlist()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/watchlist')
+        url = preprocess_url('/cases/testString/watchlist')
         mock_response = '{"added": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "failed": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]}'
         responses.add(responses.PUT,
                       url,
@@ -603,7 +757,7 @@ class TestAddWatchlist():
         watchlist = [user_model]
 
         # Invoke method
-        response = service.add_watchlist(
+        response = _service.add_watchlist(
             case_number,
             watchlist=watchlist,
             headers={}
@@ -616,6 +770,14 @@ class TestAddWatchlist():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['watchlist'] == [user_model]
 
+    def test_add_watchlist_all_params_with_retries(self):
+        # Enable retries and run test_add_watchlist_all_params.
+        _service.enable_retries()
+        self.test_add_watchlist_all_params()
+
+        # Disable retries and run test_add_watchlist_all_params.
+        _service.disable_retries()
+        self.test_add_watchlist_all_params()
 
     @responses.activate
     def test_add_watchlist_value_error(self):
@@ -623,7 +785,7 @@ class TestAddWatchlist():
         test_add_watchlist_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/watchlist')
+        url = preprocess_url('/cases/testString/watchlist')
         mock_response = '{"added": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "failed": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]}'
         responses.add(responses.PUT,
                       url,
@@ -647,23 +809,21 @@ class TestAddWatchlist():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.add_watchlist(**req_copy)
+                _service.add_watchlist(**req_copy)
 
+    def test_add_watchlist_value_error_with_retries(self):
+        # Enable retries and run test_add_watchlist_value_error.
+        _service.enable_retries()
+        self.test_add_watchlist_value_error()
 
+        # Disable retries and run test_add_watchlist_value_error.
+        _service.disable_retries()
+        self.test_add_watchlist_value_error()
 
 class TestRemoveWatchlist():
     """
     Test Class for remove_watchlist
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_remove_watchlist_all_params(self):
@@ -671,7 +831,7 @@ class TestRemoveWatchlist():
         remove_watchlist()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/watchlist')
+        url = preprocess_url('/cases/testString/watchlist')
         mock_response = '{"watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]}'
         responses.add(responses.DELETE,
                       url,
@@ -689,7 +849,7 @@ class TestRemoveWatchlist():
         watchlist = [user_model]
 
         # Invoke method
-        response = service.remove_watchlist(
+        response = _service.remove_watchlist(
             case_number,
             watchlist=watchlist,
             headers={}
@@ -702,6 +862,14 @@ class TestRemoveWatchlist():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['watchlist'] == [user_model]
 
+    def test_remove_watchlist_all_params_with_retries(self):
+        # Enable retries and run test_remove_watchlist_all_params.
+        _service.enable_retries()
+        self.test_remove_watchlist_all_params()
+
+        # Disable retries and run test_remove_watchlist_all_params.
+        _service.disable_retries()
+        self.test_remove_watchlist_all_params()
 
     @responses.activate
     def test_remove_watchlist_value_error(self):
@@ -709,7 +877,7 @@ class TestRemoveWatchlist():
         test_remove_watchlist_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/watchlist')
+        url = preprocess_url('/cases/testString/watchlist')
         mock_response = '{"watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]}'
         responses.add(responses.DELETE,
                       url,
@@ -733,23 +901,21 @@ class TestRemoveWatchlist():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.remove_watchlist(**req_copy)
+                _service.remove_watchlist(**req_copy)
 
+    def test_remove_watchlist_value_error_with_retries(self):
+        # Enable retries and run test_remove_watchlist_value_error.
+        _service.enable_retries()
+        self.test_remove_watchlist_value_error()
 
+        # Disable retries and run test_remove_watchlist_value_error.
+        _service.disable_retries()
+        self.test_remove_watchlist_value_error()
 
 class TestAddResource():
     """
     Test Class for add_resource
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_add_resource_all_params(self):
@@ -757,7 +923,7 @@ class TestAddResource():
         add_resource()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/resources')
+        url = preprocess_url('/cases/testString/resources')
         mock_response = '{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}'
         responses.add(responses.PUT,
                       url,
@@ -773,7 +939,7 @@ class TestAddResource():
         note = 'testString'
 
         # Invoke method
-        response = service.add_resource(
+        response = _service.add_resource(
             case_number,
             crn=crn,
             type=type,
@@ -792,6 +958,14 @@ class TestAddResource():
         assert req_body['id'] == 72.5
         assert req_body['note'] == 'testString'
 
+    def test_add_resource_all_params_with_retries(self):
+        # Enable retries and run test_add_resource_all_params.
+        _service.enable_retries()
+        self.test_add_resource_all_params()
+
+        # Disable retries and run test_add_resource_all_params.
+        _service.disable_retries()
+        self.test_add_resource_all_params()
 
     @responses.activate
     def test_add_resource_value_error(self):
@@ -799,7 +973,7 @@ class TestAddResource():
         test_add_resource_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/resources')
+        url = preprocess_url('/cases/testString/resources')
         mock_response = '{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}'
         responses.add(responses.PUT,
                       url,
@@ -821,23 +995,21 @@ class TestAddResource():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.add_resource(**req_copy)
+                _service.add_resource(**req_copy)
 
+    def test_add_resource_value_error_with_retries(self):
+        # Enable retries and run test_add_resource_value_error.
+        _service.enable_retries()
+        self.test_add_resource_value_error()
 
+        # Disable retries and run test_add_resource_value_error.
+        _service.disable_retries()
+        self.test_add_resource_value_error()
 
 class TestUploadFile():
     """
     Test Class for upload_file
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_upload_file_all_params(self):
@@ -845,7 +1017,7 @@ class TestUploadFile():
         upload_file()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/attachments')
+        url = preprocess_url('/cases/testString/attachments')
         mock_response = '{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}'
         responses.add(responses.PUT,
                       url,
@@ -864,7 +1036,7 @@ class TestUploadFile():
         file = [file_with_metadata_model]
 
         # Invoke method
-        response = service.upload_file(
+        response = _service.upload_file(
             case_number,
             file,
             headers={}
@@ -874,6 +1046,14 @@ class TestUploadFile():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_upload_file_all_params_with_retries(self):
+        # Enable retries and run test_upload_file_all_params.
+        _service.enable_retries()
+        self.test_upload_file_all_params()
+
+        # Disable retries and run test_upload_file_all_params.
+        _service.disable_retries()
+        self.test_upload_file_all_params()
 
     @responses.activate
     def test_upload_file_value_error(self):
@@ -881,7 +1061,7 @@ class TestUploadFile():
         test_upload_file_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/attachments')
+        url = preprocess_url('/cases/testString/attachments')
         mock_response = '{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}'
         responses.add(responses.PUT,
                       url,
@@ -907,23 +1087,21 @@ class TestUploadFile():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.upload_file(**req_copy)
+                _service.upload_file(**req_copy)
 
+    def test_upload_file_value_error_with_retries(self):
+        # Enable retries and run test_upload_file_value_error.
+        _service.enable_retries()
+        self.test_upload_file_value_error()
 
+        # Disable retries and run test_upload_file_value_error.
+        _service.disable_retries()
+        self.test_upload_file_value_error()
 
 class TestDownloadFile():
     """
     Test Class for download_file
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_download_file_all_params(self):
@@ -931,7 +1109,7 @@ class TestDownloadFile():
         download_file()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/attachments/testString')
+        url = preprocess_url('/cases/testString/attachments/testString')
         mock_response = 'This is a mock binary response.'
         responses.add(responses.GET,
                       url,
@@ -944,7 +1122,7 @@ class TestDownloadFile():
         file_id = 'testString'
 
         # Invoke method
-        response = service.download_file(
+        response = _service.download_file(
             case_number,
             file_id,
             headers={}
@@ -954,6 +1132,14 @@ class TestDownloadFile():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_download_file_all_params_with_retries(self):
+        # Enable retries and run test_download_file_all_params.
+        _service.enable_retries()
+        self.test_download_file_all_params()
+
+        # Disable retries and run test_download_file_all_params.
+        _service.disable_retries()
+        self.test_download_file_all_params()
 
     @responses.activate
     def test_download_file_value_error(self):
@@ -961,7 +1147,7 @@ class TestDownloadFile():
         test_download_file_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/attachments/testString')
+        url = preprocess_url('/cases/testString/attachments/testString')
         mock_response = 'This is a mock binary response.'
         responses.add(responses.GET,
                       url,
@@ -981,23 +1167,21 @@ class TestDownloadFile():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.download_file(**req_copy)
+                _service.download_file(**req_copy)
 
+    def test_download_file_value_error_with_retries(self):
+        # Enable retries and run test_download_file_value_error.
+        _service.enable_retries()
+        self.test_download_file_value_error()
 
+        # Disable retries and run test_download_file_value_error.
+        _service.disable_retries()
+        self.test_download_file_value_error()
 
 class TestDeleteFile():
     """
     Test Class for delete_file
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_delete_file_all_params(self):
@@ -1005,7 +1189,7 @@ class TestDeleteFile():
         delete_file()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/attachments/testString')
+        url = preprocess_url('/cases/testString/attachments/testString')
         mock_response = '{"attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}]}'
         responses.add(responses.DELETE,
                       url,
@@ -1018,7 +1202,7 @@ class TestDeleteFile():
         file_id = 'testString'
 
         # Invoke method
-        response = service.delete_file(
+        response = _service.delete_file(
             case_number,
             file_id,
             headers={}
@@ -1028,6 +1212,14 @@ class TestDeleteFile():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_delete_file_all_params_with_retries(self):
+        # Enable retries and run test_delete_file_all_params.
+        _service.enable_retries()
+        self.test_delete_file_all_params()
+
+        # Disable retries and run test_delete_file_all_params.
+        _service.disable_retries()
+        self.test_delete_file_all_params()
 
     @responses.activate
     def test_delete_file_value_error(self):
@@ -1035,7 +1227,7 @@ class TestDeleteFile():
         test_delete_file_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/cases/testString/attachments/testString')
+        url = preprocess_url('/cases/testString/attachments/testString')
         mock_response = '{"attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}]}'
         responses.add(responses.DELETE,
                       url,
@@ -1055,9 +1247,16 @@ class TestDeleteFile():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.delete_file(**req_copy)
+                _service.delete_file(**req_copy)
 
+    def test_delete_file_value_error_with_retries(self):
+        # Enable retries and run test_delete_file_value_error.
+        _service.enable_retries()
+        self.test_delete_file_value_error()
 
+        # Disable retries and run test_delete_file_value_error.
+        _service.disable_retries()
+        self.test_delete_file_value_error()
 
 # endregion
 ##############################################################################
@@ -1069,7 +1268,7 @@ class TestDeleteFile():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestAttachment():
+class TestModel_Attachment():
     """
     Test Class for Attachment
     """
@@ -1102,7 +1301,7 @@ class TestAttachment():
         attachment_model_json2 = attachment_model.to_dict()
         assert attachment_model_json2 == attachment_model_json
 
-class TestAttachmentList():
+class TestModel_AttachmentList():
     """
     Test Class for AttachmentList
     """
@@ -1140,7 +1339,7 @@ class TestAttachmentList():
         attachment_list_model_json2 = attachment_list_model.to_dict()
         assert attachment_list_model_json2 == attachment_list_model_json
 
-class TestCase():
+class TestModel_Case():
     """
     Test Class for Case
     """
@@ -1153,7 +1352,6 @@ class TestCase():
         # Construct dict forms of any model objects needed in order to build this model.
 
         user_model = {} # User
-        user_model['name'] = 'testString'
         user_model['realm'] = 'IBMid'
         user_model['user_id'] = 'abc@ibm.com'
 
@@ -1228,7 +1426,7 @@ class TestCase():
         case_model_json2 = case_model.to_dict()
         assert case_model_json2 == case_model_json
 
-class TestCaseEu():
+class TestModel_CaseEu():
     """
     Test Class for CaseEu
     """
@@ -1258,7 +1456,7 @@ class TestCaseEu():
         case_eu_model_json2 = case_eu_model.to_dict()
         assert case_eu_model_json2 == case_eu_model_json
 
-class TestCaseList():
+class TestModel_CaseList():
     """
     Test Class for CaseList
     """
@@ -1274,7 +1472,6 @@ class TestCaseList():
         pagination_link_model['href'] = 'testString'
 
         user_model = {} # User
-        user_model['name'] = 'testString'
         user_model['realm'] = 'IBMid'
         user_model['user_id'] = 'abc@ibm.com'
 
@@ -1357,7 +1554,7 @@ class TestCaseList():
         case_list_model_json2 = case_list_model.to_dict()
         assert case_list_model_json2 == case_list_model_json
 
-class TestCasePayloadEu():
+class TestModel_CasePayloadEu():
     """
     Test Class for CasePayloadEu
     """
@@ -1387,7 +1584,7 @@ class TestCasePayloadEu():
         case_payload_eu_model_json2 = case_payload_eu_model.to_dict()
         assert case_payload_eu_model_json2 == case_payload_eu_model_json
 
-class TestComment():
+class TestModel_Comment():
     """
     Test Class for Comment
     """
@@ -1400,7 +1597,6 @@ class TestComment():
         # Construct dict forms of any model objects needed in order to build this model.
 
         user_model = {} # User
-        user_model['name'] = 'testString'
         user_model['realm'] = 'IBMid'
         user_model['user_id'] = 'abc@ibm.com'
 
@@ -1425,7 +1621,7 @@ class TestComment():
         comment_model_json2 = comment_model.to_dict()
         assert comment_model_json2 == comment_model_json
 
-class TestOffering():
+class TestModel_Offering():
     """
     Test Class for Offering
     """
@@ -1463,7 +1659,7 @@ class TestOffering():
         offering_model_json2 = offering_model.to_dict()
         assert offering_model_json2 == offering_model_json
 
-class TestOfferingType():
+class TestModel_OfferingType():
     """
     Test Class for OfferingType
     """
@@ -1495,7 +1691,7 @@ class TestOfferingType():
         offering_type_model_json2 = offering_type_model.to_dict()
         assert offering_type_model_json2 == offering_type_model_json
 
-class TestPaginationLink():
+class TestModel_PaginationLink():
     """
     Test Class for PaginationLink
     """
@@ -1524,7 +1720,7 @@ class TestPaginationLink():
         pagination_link_model_json2 = pagination_link_model.to_dict()
         assert pagination_link_model_json2 == pagination_link_model_json
 
-class TestResource():
+class TestModel_Resource():
     """
     Test Class for Resource
     """
@@ -1557,7 +1753,7 @@ class TestResource():
         resource_model_json2 = resource_model.to_dict()
         assert resource_model_json2 == resource_model_json
 
-class TestResourcePayload():
+class TestModel_ResourcePayload():
     """
     Test Class for ResourcePayload
     """
@@ -1589,7 +1785,7 @@ class TestResourcePayload():
         resource_payload_model_json2 = resource_payload_model.to_dict()
         assert resource_payload_model_json2 == resource_payload_model_json
 
-class TestUser():
+class TestModel_User():
     """
     Test Class for User
     """
@@ -1601,7 +1797,6 @@ class TestUser():
 
         # Construct a json representation of a User model
         user_model_json = {}
-        user_model_json['name'] = 'testString'
         user_model_json['realm'] = 'IBMid'
         user_model_json['user_id'] = 'abc@ibm.com'
 
@@ -1620,7 +1815,7 @@ class TestUser():
         user_model_json2 = user_model.to_dict()
         assert user_model_json2 == user_model_json
 
-class TestWatchlist():
+class TestModel_Watchlist():
     """
     Test Class for Watchlist
     """
@@ -1633,7 +1828,6 @@ class TestWatchlist():
         # Construct dict forms of any model objects needed in order to build this model.
 
         user_model = {} # User
-        user_model['name'] = 'testString'
         user_model['realm'] = 'IBMid'
         user_model['user_id'] = 'abc@ibm.com'
 
@@ -1656,7 +1850,7 @@ class TestWatchlist():
         watchlist_model_json2 = watchlist_model.to_dict()
         assert watchlist_model_json2 == watchlist_model_json
 
-class TestWatchlistAddResponse():
+class TestModel_WatchlistAddResponse():
     """
     Test Class for WatchlistAddResponse
     """
@@ -1669,7 +1863,6 @@ class TestWatchlistAddResponse():
         # Construct dict forms of any model objects needed in order to build this model.
 
         user_model = {} # User
-        user_model['name'] = 'John Doe'
         user_model['realm'] = 'IBMid'
         user_model['user_id'] = 'johndoe@ibm.com'
 
@@ -1693,7 +1886,7 @@ class TestWatchlistAddResponse():
         watchlist_add_response_model_json2 = watchlist_add_response_model.to_dict()
         assert watchlist_add_response_model_json2 == watchlist_add_response_model_json
 
-class TestAcceptPayload():
+class TestModel_AcceptPayload():
     """
     Test Class for AcceptPayload
     """
@@ -1723,7 +1916,7 @@ class TestAcceptPayload():
         accept_payload_model_json2 = accept_payload_model.to_dict()
         assert accept_payload_model_json2 == accept_payload_model_json
 
-class TestResolvePayload():
+class TestModel_ResolvePayload():
     """
     Test Class for ResolvePayload
     """
@@ -1754,7 +1947,7 @@ class TestResolvePayload():
         resolve_payload_model_json2 = resolve_payload_model.to_dict()
         assert resolve_payload_model_json2 == resolve_payload_model_json
 
-class TestUnresolvePayload():
+class TestModel_UnresolvePayload():
     """
     Test Class for UnresolvePayload
     """
@@ -1784,7 +1977,7 @@ class TestUnresolvePayload():
         unresolve_payload_model_json2 = unresolve_payload_model.to_dict()
         assert unresolve_payload_model_json2 == unresolve_payload_model_json
 
-class TestFileWithMetadata():
+class TestModel_FileWithMetadata():
     """
     Test Class for FileWithMetadata
     """

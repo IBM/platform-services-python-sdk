@@ -162,17 +162,16 @@ class TestCaseManagementV1Examples():
             print('\nget_cases() result:')
             # begin-getCases
 
-            case_list = case_management_service.get_cases(
-                offset=0,
-                limit=100,
-                search='blocker',
-                sort=GetCasesEnums.Fields.UPDATED_AT,
-            ).get_result()
+            all_results = []
+            pager = GetCasesPager(client=case_management_service, limit=10, search='Example')
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(case_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-getCases
-
         except ApiException as e:
             pytest.fail(str(e))
 

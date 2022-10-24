@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2021, 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,12 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-7b3ab37f-20210215-130941
+# IBM OpenAPI SDK Code Generator Version: 3.60.0-13f6e1ba-20221019-164457
 
 """
 Case management API for creating cases, getting case statuses, adding comments to a case,
 adding and removing users from a case watchlist, downloading and adding attachments, and
 more.
+
+API Version: 1.0.0
 """
 
 from enum import Enum
@@ -27,7 +29,7 @@ from typing import BinaryIO, Dict, List
 import json
 import sys
 
-from ibm_cloud_sdk_core import BaseService, DetailedResponse
+from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
 from ibm_cloud_sdk_core.utils import convert_list, convert_model
@@ -66,7 +68,7 @@ class CaseManagementV1(BaseService):
         Construct a new client for the Case Management service.
 
         :param Authenticator authenticator: The authenticator specifies the authentication mechanism.
-               Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
+               Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
         BaseService.__init__(self,
@@ -92,16 +94,16 @@ class CaseManagementV1(BaseService):
         """
         Get cases in account.
 
-        Get cases in the account which is specified by the content of the IAM token.
+        Get cases in the account that are specified by the content of the IAM token.
 
-        :param int offset: (optional) Number of cases should be skipped.
-        :param int limit: (optional) Number of cases should be returned.
+        :param int offset: (optional) Number of cases that are skipped.
+        :param int limit: (optional) Number of cases that are returned.
         :param str search: (optional) String that a case might contain.
         :param str sort: (optional) Sort field and direction. If omitted, default
                to descending of updated date. Prefix "~" signifies sort in descending.
         :param List[str] status: (optional) Case status filter.
-        :param List[str] fields: (optional) Seleted fields of interest instead of
-               the entire case information.
+        :param List[str] fields: (optional) Selected fields of interest instead of
+               all of the case information.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `CaseList` object
@@ -124,6 +126,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/cases'
@@ -132,7 +135,7 @@ class CaseManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -153,10 +156,10 @@ class CaseManagementV1(BaseService):
         """
         Create a case.
 
-        Create a case in the account.
+        Create a support case to resolve issues in your account.
 
         :param str type: Case type.
-        :param str subject: Subject of the case.
+        :param str subject: Short description used to identify the case.
         :param str description: Detailed description of the issue.
         :param int severity: (optional) Severity of the case. Smaller values mean
                higher severity.
@@ -166,10 +169,10 @@ class CaseManagementV1(BaseService):
                your account.
         :param Offering offering: (optional) Offering details.
         :param List[ResourcePayload] resources: (optional) List of resources to
-               attach to case. If attaching Classic IaaS devices use type and id fields if
-               Cloud Resource Name (CRN) is unavialable. Otherwise pass the resource CRN.
-               The resource list must be consistent with the value selected for the
-               resource offering.
+               attach to case. If you attach Classic IaaS devices, use the type and id
+               fields if the Cloud Resource Name (CRN) is unavailable. Otherwise, pass the
+               resource CRN. The resource list must be consistent with the value that is
+               selected for the resource offering.
         :param List[User] watchlist: (optional) Array of user IDs to add to the
                watchlist.
         :param str invoice_number: (optional) Invoice number of "Billing and
@@ -219,6 +222,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/cases'
@@ -227,7 +231,7 @@ class CaseManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -240,17 +244,17 @@ class CaseManagementV1(BaseService):
         """
         Get a case in account.
 
-        Get a case in the account that is specified by the case number.
+        View a case in the account that is specified by the case number.
 
         :param str case_number: Unique identifier of a case.
-        :param List[str] fields: (optional) Seleted fields of interest instead of
-               the entire case information.
+        :param List[str] fields: (optional) Selected fields of interest instead of
+               all of the case information.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Case` object
         """
 
-        if case_number is None:
+        if not case_number:
             raise ValueError('case_number must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -264,6 +268,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['case_number']
@@ -275,7 +280,7 @@ class CaseManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -296,7 +301,7 @@ class CaseManagementV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Case` object
         """
 
-        if case_number is None:
+        if not case_number:
             raise ValueError('case_number must be provided')
         if status_payload is None:
             raise ValueError('status_payload must be provided')
@@ -313,6 +318,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['case_number']
@@ -324,7 +330,7 @@ class CaseManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -336,7 +342,7 @@ class CaseManagementV1(BaseService):
         """
         Add comment to case.
 
-        Add a comment to a case.
+        Add a comment to a case to be viewed by a support engineer.
 
         :param str case_number: Unique identifier of a case.
         :param str comment: Comment to add to the case.
@@ -345,7 +351,7 @@ class CaseManagementV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Comment` object
         """
 
-        if case_number is None:
+        if not case_number:
             raise ValueError('case_number must be provided')
         if comment is None:
             raise ValueError('comment must be provided')
@@ -364,6 +370,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['case_number']
@@ -375,7 +382,7 @@ class CaseManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -400,7 +407,7 @@ class CaseManagementV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `WatchlistAddResponse` object
         """
 
-        if case_number is None:
+        if not case_number:
             raise ValueError('case_number must be provided')
         if watchlist is not None:
             watchlist = [convert_model(x) for x in watchlist]
@@ -419,6 +426,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['case_number']
@@ -430,7 +438,7 @@ class CaseManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -443,7 +451,8 @@ class CaseManagementV1(BaseService):
         """
         Remove users from watchlist of case.
 
-        Remove users from the watchlist of a case.
+        Remove users from the watchlist of a case if you don't want them to view the case,
+        receive updates, or make updates to the case.
 
         :param str case_number: Unique identifier of a case.
         :param List[User] watchlist: (optional) Array of user ID objects.
@@ -452,7 +461,7 @@ class CaseManagementV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Watchlist` object
         """
 
-        if case_number is None:
+        if not case_number:
             raise ValueError('case_number must be provided')
         if watchlist is not None:
             watchlist = [convert_model(x) for x in watchlist]
@@ -471,6 +480,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['case_number']
@@ -482,7 +492,7 @@ class CaseManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -503,18 +513,18 @@ class CaseManagementV1(BaseService):
 
         :param str case_number: Unique identifier of a case.
         :param str crn: (optional) Cloud Resource Name of the resource.
-        :param str type: (optional) Only used to attach Classic IaaS devices which
+        :param str type: (optional) Only used to attach Classic IaaS devices that
                have no CRN.
-        :param float id: (optional) Only used to attach Classic IaaS devices which
-               have no CRN. Id of Classic IaaS device. This is deprecated in favor of the
-               crn field.
+        :param float id: (optional) Deprecated: Only used to attach Classic IaaS
+               devices that have no CRN. Id of Classic IaaS device. This is deprecated in
+               favor of the crn field.
         :param str note: (optional) A note about this resource.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Resource` object
         """
 
-        if case_number is None:
+        if not case_number:
             raise ValueError('case_number must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -534,6 +544,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['case_number']
@@ -545,7 +556,7 @@ class CaseManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -555,7 +566,7 @@ class CaseManagementV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Add attachment(s) to case.
+        Add attachments to a support case.
 
         You can add attachments to a case to provide more information for the support team
         about the issue that you're experiencing.
@@ -568,7 +579,7 @@ class CaseManagementV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Attachment` object
         """
 
-        if case_number is None:
+        if not case_number:
             raise ValueError('case_number must be provided')
         if file is None:
             raise ValueError('file must be provided')
@@ -586,6 +597,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['case_number']
@@ -597,7 +609,7 @@ class CaseManagementV1(BaseService):
                                        headers=headers,
                                        files=form_data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -618,9 +630,9 @@ class CaseManagementV1(BaseService):
         :rtype: DetailedResponse with `BinaryIO` result
         """
 
-        if case_number is None:
+        if not case_number:
             raise ValueError('case_number must be provided')
-        if file_id is None:
+        if not file_id:
             raise ValueError('file_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -630,6 +642,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/octet-stream'
 
         path_param_keys = ['case_number', 'file_id']
@@ -640,7 +653,7 @@ class CaseManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -661,9 +674,9 @@ class CaseManagementV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `AttachmentList` object
         """
 
-        if case_number is None:
+        if not case_number:
             raise ValueError('case_number must be provided')
-        if file_id is None:
+        if not file_id:
             raise ValueError('file_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -673,6 +686,7 @@ class CaseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['case_number', 'file_id']
@@ -683,7 +697,7 @@ class CaseManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -704,7 +718,7 @@ class GetCasesEnums:
         CLOSED = 'closed'
     class Fields(str, Enum):
         """
-        Seleted fields of interest instead of the entire case information.
+        Selected fields of interest instead of all of the case information.
         """
         NUMBER = 'number'
         SHORT_DESCRIPTION = 'short_description'
@@ -737,7 +751,7 @@ class GetCaseEnums:
 
     class Fields(str, Enum):
         """
-        Seleted fields of interest instead of the entire case information.
+        Selected fields of interest instead of all of the case information.
         """
         NUMBER = 'number'
         SHORT_DESCRIPTION = 'short_description'
@@ -914,31 +928,31 @@ class Case():
     """
     The support case.
 
-    :attr str number: (optional) Number/ID of the case.
-    :attr str short_description: (optional) A short description of what the case is
+    :attr str number: (optional) Identifying number of a created case.
+    :attr str short_description: (optional) Short description of what the case is
           about.
-    :attr str description: (optional) A full description of what the case is about.
-    :attr str created_at: (optional) Date time of case creation in UTC.
+    :attr str description: (optional) Full description of what the case is about.
+    :attr str created_at: (optional) Date and time of case creation in UTC.
     :attr User created_by: (optional) User info in a case.
-    :attr str updated_at: (optional) Date time of the last update on the case in
+    :attr str updated_at: (optional) Date and time of the last update on the case in
           UTC.
     :attr User updated_by: (optional) User info in a case.
     :attr str contact_type: (optional) Name of the console to interact with the
           contact.
     :attr User contact: (optional) User info in a case.
-    :attr str status: (optional) Status of the case.
-    :attr float severity: (optional) The severity of the case.
+    :attr str status: (optional) Status type of the case.
+    :attr float severity: (optional) Severity level of the case.
     :attr str support_tier: (optional) Support tier of the account.
     :attr str resolution: (optional) Standard reasons of resolving case.
     :attr str close_notes: (optional) Notes of case closing.
     :attr CaseEu eu: (optional) EU support.
     :attr List[User] watchlist: (optional) List of users in the case watchlist.
-    :attr List[Attachment] attachments: (optional) List of attachments/files of the
-          case.
+    :attr List[Attachment] attachments: (optional) List of files that are attached
+          to the case.
     :attr Offering offering: (optional) Offering details.
     :attr List[Resource] resources: (optional) List of attached resources.
-    :attr List[Comment] comments: (optional) List of comments/updates sorted in
-          chronological order.
+    :attr List[Comment] comments: (optional) List of comments and updates that are
+          sorted in chronological order.
     """
 
     def __init__(self,
@@ -966,33 +980,33 @@ class Case():
         """
         Initialize a Case object.
 
-        :param str number: (optional) Number/ID of the case.
-        :param str short_description: (optional) A short description of what the
-               case is about.
-        :param str description: (optional) A full description of what the case is
+        :param str number: (optional) Identifying number of a created case.
+        :param str short_description: (optional) Short description of what the case
+               is about.
+        :param str description: (optional) Full description of what the case is
                about.
-        :param str created_at: (optional) Date time of case creation in UTC.
+        :param str created_at: (optional) Date and time of case creation in UTC.
         :param User created_by: (optional) User info in a case.
-        :param str updated_at: (optional) Date time of the last update on the case
-               in UTC.
+        :param str updated_at: (optional) Date and time of the last update on the
+               case in UTC.
         :param User updated_by: (optional) User info in a case.
         :param str contact_type: (optional) Name of the console to interact with
                the contact.
         :param User contact: (optional) User info in a case.
-        :param str status: (optional) Status of the case.
-        :param float severity: (optional) The severity of the case.
+        :param str status: (optional) Status type of the case.
+        :param float severity: (optional) Severity level of the case.
         :param str support_tier: (optional) Support tier of the account.
         :param str resolution: (optional) Standard reasons of resolving case.
         :param str close_notes: (optional) Notes of case closing.
         :param CaseEu eu: (optional) EU support.
         :param List[User] watchlist: (optional) List of users in the case
                watchlist.
-        :param List[Attachment] attachments: (optional) List of attachments/files
-               of the case.
+        :param List[Attachment] attachments: (optional) List of files that are
+               attached to the case.
         :param Offering offering: (optional) Offering details.
         :param List[Resource] resources: (optional) List of attached resources.
-        :param List[Comment] comments: (optional) List of comments/updates sorted
-               in chronological order.
+        :param List[Comment] comments: (optional) List of comments and updates that
+               are sorted in chronological order.
         """
         self.number = number
         self.short_description = short_description
@@ -1215,7 +1229,7 @@ class CaseList():
     """
     Response of a GET /cases request.
 
-    :attr int total_count: (optional) Total number of cases satisfying the query.
+    :attr int total_count: (optional) Total number of cases that satisfy the query.
     :attr PaginationLink first: (optional) Container for URL pointer to related
           pages of cases.
     :attr PaginationLink next: (optional) Container for URL pointer to related pages
@@ -1238,7 +1252,7 @@ class CaseList():
         """
         Initialize a CaseList object.
 
-        :param int total_count: (optional) Total number of cases satisfying the
+        :param int total_count: (optional) Total number of cases that satisfy the
                query.
         :param PaginationLink first: (optional) Container for URL pointer to
                related pages of cases.
@@ -1323,7 +1337,7 @@ class CasePayloadEu():
 
     :attr bool supported: (optional) indicating whether the case is EU supported.
     :attr int data_center: (optional) If EU supported utility endpoint specifies
-          datacenter then pass the datacenter id to mark a case as EU supported.
+          data center, then pass the data center id to mark a case as EU supported.
     """
 
     def __init__(self,
@@ -1336,7 +1350,7 @@ class CasePayloadEu():
         :param bool supported: (optional) indicating whether the case is EU
                supported.
         :param int data_center: (optional) If EU supported utility endpoint
-               specifies datacenter then pass the datacenter id to mark a case as EU
+               specifies data center, then pass the data center id to mark a case as EU
                supported.
         """
         self.supported = supported
@@ -1525,8 +1539,8 @@ class OfferingType():
     """
     Offering type.
 
-    :attr str group: Offering type group. "crn_service_name" is strongly prefered
-          over "category" as the latter is legacy and will be deprecated in the future.
+    :attr str group: Offering type group. "crn_service_name" is preferred over
+          "category" as the latter is legacy and will be deprecated in the future.
     :attr str key: CRN service name of the offering.
     :attr str kind: (optional) Optional. Platform kind of the offering.
     :attr str id: (optional) Offering id in the catalog. This alone is enough to
@@ -1542,9 +1556,8 @@ class OfferingType():
         """
         Initialize a OfferingType object.
 
-        :param str group: Offering type group. "crn_service_name" is strongly
-               prefered over "category" as the latter is legacy and will be deprecated in
-               the future.
+        :param str group: Offering type group. "crn_service_name" is preferred over
+               "category" as the latter is legacy and will be deprecated in the future.
         :param str key: CRN service name of the offering.
         :param str kind: (optional) Optional. Platform kind of the offering.
         :param str id: (optional) Offering id in the catalog. This alone is enough
@@ -1611,8 +1624,8 @@ class OfferingType():
 
     class GroupEnum(str, Enum):
         """
-        Offering type group. "crn_service_name" is strongly prefered over "category" as
-        the latter is legacy and will be deprecated in the future.
+        Offering type group. "crn_service_name" is preferred over "category" as the latter
+        is legacy and will be deprecated in the future.
         """
         CRN_SERVICE_NAME = 'crn_service_name'
         CATEGORY = 'category'
@@ -1765,10 +1778,11 @@ class ResourcePayload():
     Payload to add a resource to a case.
 
     :attr str crn: (optional) Cloud Resource Name of the resource.
-    :attr str type: (optional) Only used to attach Classic IaaS devices which have
-          no CRN.
-    :attr float id: (optional) Only used to attach Classic IaaS devices which have
-          no CRN. Id of Classic IaaS device. This is deprecated in favor of the crn field.
+    :attr str type: (optional) Only used to attach Classic IaaS devices that have no
+          CRN.
+    :attr float id: (optional) Deprecated: Only used to attach Classic IaaS devices
+          that have no CRN. Id of Classic IaaS device. This is deprecated in favor of the
+          crn field.
     :attr str note: (optional) A note about this resource.
     """
 
@@ -1782,11 +1796,11 @@ class ResourcePayload():
         Initialize a ResourcePayload object.
 
         :param str crn: (optional) Cloud Resource Name of the resource.
-        :param str type: (optional) Only used to attach Classic IaaS devices which
+        :param str type: (optional) Only used to attach Classic IaaS devices that
                have no CRN.
-        :param float id: (optional) Only used to attach Classic IaaS devices which
-               have no CRN. Id of Classic IaaS device. This is deprecated in favor of the
-               crn field.
+        :param float id: (optional) Deprecated: Only used to attach Classic IaaS
+               devices that have no CRN. Id of Classic IaaS device. This is deprecated in
+               favor of the crn field.
         :param str note: (optional) A note about this resource.
         """
         self.crn = crn
@@ -2045,7 +2059,7 @@ class Watchlist():
 
 class WatchlistAddResponse():
     """
-    Response of a request adding to watchlist.
+    Response of a request when adding to watchlist.
 
     :attr List[User] added: (optional) List of added user.
     :attr List[User] failed: (optional) List of failed to add user.
@@ -2191,7 +2205,7 @@ class ResolvePayload(StatusPayload):
     :attr int resolution_code: * 1: Client error
           * 2: Defect found with Component/Service
           * 3: Documentation Error
-          * 4: Sollution found in forums
+          * 4: Solution found in forums
           * 5: Solution found in public Documentation
           * 6: Solution no longer required
           * 7: Solution provided by IBM outside of support case
@@ -2210,7 +2224,7 @@ class ResolvePayload(StatusPayload):
         :param int resolution_code: * 1: Client error
                * 2: Defect found with Component/Service
                * 3: Documentation Error
-               * 4: Sollution found in forums
+               * 4: Solution found in forums
                * 5: Solution found in public Documentation
                * 6: Solution no longer required
                * 7: Solution provided by IBM outside of support case
@@ -2429,3 +2443,87 @@ class FileWithMetadata():
     def __ne__(self, other: 'FileWithMetadata') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+##############################################################################
+# Pagers
+##############################################################################
+
+class GetCasesPager():
+    """
+    GetCasesPager can be used to simplify the use of the "get_cases" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: CaseManagementV1,
+                 limit: int = None,
+                 search: str = None,
+                 sort: str = None,
+                 status: List[str] = None,
+                 fields: List[str] = None,
+    ) -> None:
+        """
+        Initialize a GetCasesPager object.
+        :param int limit: (optional) Number of cases that are returned.
+        :param str search: (optional) String that a case might contain.
+        :param str sort: (optional) Sort field and direction. If omitted, default
+               to descending of updated date. Prefix "~" signifies sort in descending.
+        :param List[str] status: (optional) Case status filter.
+        :param List[str] fields: (optional) Selected fields of interest instead of
+               all of the case information.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._limit = limit
+        self._search = search
+        self._sort = sort
+        self._status = status
+        self._fields = fields
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of Case.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.get_cases(
+            limit=self._limit,
+            search=self._search,
+            sort=self._sort,
+            status=self._status,
+            fields=self._fields,
+            offset=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), 'offset')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('cases')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of Case.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
