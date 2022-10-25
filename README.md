@@ -84,6 +84,12 @@ To install, use `pip`:
 pip install --upgrade ibm-platform-services
 ```
 
+Then in your code, you can import the appropriate service like this:
+```
+from ibm_platform_services.<service-module-name> import *
+```
+where `<service-module-name>` is the service's module name from the table above
+
 ## Using the SDK
 For general SDK usage information, please see [this link](https://github.com/IBM/ibm-cloud-sdk-common/blob/main/README.md)
 
