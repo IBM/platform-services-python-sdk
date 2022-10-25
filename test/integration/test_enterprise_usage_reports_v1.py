@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2020, 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,8 +19,6 @@ Integration Tests for EnterpriseUsageReportsV1
 
 import os
 import pytest
-import urllib.parse as urlparse
-from urllib.parse import parse_qs
 from ibm_cloud_sdk_core import *
 from ibm_platform_services.enterprise_usage_reports_v1 import *
 
@@ -61,19 +59,6 @@ class TestEnterpriseUsageReportsV1():
         not os.path.exists(config_file), reason="External configuration not available, skipping..."
     )
 
-    def get_offset_from_url(self, url):
-        if url is None:
-            return None
-        try:
-            parsed = urlparse.urlparse(url)
-            query_value = parse_qs(parsed.query).get('offset')
-            if query_value is not None:
-                return query_value[0]
-            return None
-        except Exception as e:
-            print('Error parsing URL', e)
-            return None
-
     @needscredentials
     def test_get_resource_usage_report_enterprise(self):
         results = []
@@ -97,7 +82,7 @@ class TestEnterpriseUsageReportsV1():
             next = reports.get('next')
             offset = None
             if next is not None and 'href' in next:
-                offset = self.get_offset_from_url(next['href'])
+                offset = get_query_param(next['href'], 'offset')
 
             if offset is None:
                 break
@@ -130,7 +115,7 @@ class TestEnterpriseUsageReportsV1():
             next = reports.get('next')
             offset = None
             if next is not None and 'href' in next:
-                offset = self.get_offset_from_url(next['href'])
+                offset = get_query_param(next['href'], 'offset')
 
             if offset is None:
                 break
@@ -163,7 +148,7 @@ class TestEnterpriseUsageReportsV1():
             next = reports.get('next')
             offset = None
             if next is not None and 'href' in next:
-                offset = self.get_offset_from_url(next['href'])
+                offset = get_query_param(next['href'], 'offset')
 
             if offset is None:
                 break
@@ -172,3 +157,30 @@ class TestEnterpriseUsageReportsV1():
         print(
             f'get_resource_usage_report()/account-group response contained {numReports} total reports.')
         assert numReports > 0
+
+    @needscredentials
+    def test_get_resource_usage_report_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = GetResourceUsageReportPager(
+            client=self.enterprise_usage_reports_service,
+            account_group_id=self.ACCOUNT_GROUP_ID,
+            month=self.BILLING_MONTH,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = GetResourceUsageReportPager(
+            client=self.enterprise_usage_reports_service,
+            account_group_id=self.ACCOUNT_GROUP_ID,
+            month=self.BILLING_MONTH,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nget_resource_usage_report() returned a total of {len(all_results)} items(s) using GetResourceUsageReportPager.')
