@@ -109,7 +109,7 @@ class TestCreateAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true, "membership_type": "membership_type"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -159,7 +159,7 @@ class TestCreateAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true, "membership_type": "membership_type"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -207,7 +207,7 @@ class TestCreateAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true, "membership_type": "membership_type"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -228,7 +228,6 @@ class TestCreateAccessGroup():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_access_group(**req_copy)
-
 
     def test_create_access_group_value_error_with_retries(self):
         # Enable retries and run test_create_access_group_value_error.
@@ -251,7 +250,7 @@ class TestListAccessGroups():
         """
         # Set up mock
         url = preprocess_url('/v2/groups')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true, "membership_type": "membership_type"}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -263,7 +262,7 @@ class TestListAccessGroups():
         transaction_id = 'testString'
         iam_id = 'testString'
         membership_type = 'static'
-        limit = 38
+        limit = 100
         offset = 38
         sort = 'name'
         show_federated = False
@@ -314,7 +313,7 @@ class TestListAccessGroups():
         """
         # Set up mock
         url = preprocess_url('/v2/groups')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true, "membership_type": "membership_type"}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -354,7 +353,7 @@ class TestListAccessGroups():
         """
         # Set up mock
         url = preprocess_url('/v2/groups')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true, "membership_type": "membership_type"}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -373,7 +372,6 @@ class TestListAccessGroups():
             with pytest.raises(ValueError):
                 _service.list_access_groups(**req_copy)
 
-
     def test_list_access_groups_value_error_with_retries(self):
         # Enable retries and run test_list_access_groups_value_error.
         _service.enable_retries()
@@ -382,6 +380,81 @@ class TestListAccessGroups():
         # Disable retries and run test_list_access_groups_value_error.
         _service.disable_retries()
         self.test_list_access_groups_value_error()
+
+    @responses.activate
+    def test_list_access_groups_with_pager_get_next(self):
+        """
+        test_list_access_groups_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/groups')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"groups":[{"id":"id","name":"name","description":"description","account_id":"account_id","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","href":"href","is_federated":true}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"groups":[{"id":"id","name":"name","description":"description","account_id":"account_id","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","href":"href","is_federated":true}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = AccessGroupsPager(
+            client=_service,
+            account_id='testString',
+            transaction_id='testString',
+            iam_id='testString',
+            membership_type='static',
+            limit=10,
+            sort='name',
+            show_federated=False,
+            hide_public_access=False,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_access_groups_with_pager_get_all(self):
+        """
+        test_list_access_groups_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/groups')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"groups":[{"id":"id","name":"name","description":"description","account_id":"account_id","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","href":"href","is_federated":true}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"groups":[{"id":"id","name":"name","description":"description","account_id":"account_id","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","href":"href","is_federated":true}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = AccessGroupsPager(
+            client=_service,
+            account_id='testString',
+            transaction_id='testString',
+            iam_id='testString',
+            membership_type='static',
+            limit=10,
+            sort='name',
+            show_federated=False,
+            hide_public_access=False,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestGetAccessGroup():
     """
@@ -395,7 +468,7 @@ class TestGetAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true, "membership_type": "membership_type"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -439,7 +512,7 @@ class TestGetAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true, "membership_type": "membership_type"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -475,7 +548,7 @@ class TestGetAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true, "membership_type": "membership_type"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -493,7 +566,6 @@ class TestGetAccessGroup():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_access_group(**req_copy)
-
 
     def test_get_access_group_value_error_with_retries(self):
         # Enable retries and run test_get_access_group_value_error.
@@ -516,7 +588,7 @@ class TestUpdateAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true, "membership_type": "membership_type"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -564,7 +636,7 @@ class TestUpdateAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true, "membership_type": "membership_type"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -610,7 +682,7 @@ class TestUpdateAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true, "membership_type": "membership_type"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -632,7 +704,6 @@ class TestUpdateAccessGroup():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_access_group(**req_copy)
-
 
     def test_update_access_group_value_error_with_retries(self):
         # Enable retries and run test_update_access_group_value_error.
@@ -744,7 +815,6 @@ class TestDeleteAccessGroup():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_access_group(**req_copy)
-
 
     def test_delete_access_group_value_error_with_retries(self):
         # Enable retries and run test_delete_access_group_value_error.
@@ -894,7 +964,6 @@ class TestIsMemberOfAccessGroup():
             with pytest.raises(ValueError):
                 _service.is_member_of_access_group(**req_copy)
 
-
     def test_is_member_of_access_group_value_error_with_retries(self):
         # Enable retries and run test_is_member_of_access_group_value_error.
         _service.enable_retries()
@@ -1035,7 +1104,6 @@ class TestAddMembersToAccessGroup():
             with pytest.raises(ValueError):
                 _service.add_members_to_access_group(**req_copy)
 
-
     def test_add_members_to_access_group_value_error_with_retries(self):
         # Enable retries and run test_add_members_to_access_group_value_error.
         _service.enable_retries()
@@ -1068,7 +1136,7 @@ class TestListAccessGroupMembers():
         access_group_id = 'testString'
         transaction_id = 'testString'
         membership_type = 'static'
-        limit = 38
+        limit = 100
         offset = 38
         type = 'testString'
         verbose = False
@@ -1171,7 +1239,6 @@ class TestListAccessGroupMembers():
             with pytest.raises(ValueError):
                 _service.list_access_group_members(**req_copy)
 
-
     def test_list_access_group_members_value_error_with_retries(self):
         # Enable retries and run test_list_access_group_members_value_error.
         _service.enable_retries()
@@ -1180,6 +1247,79 @@ class TestListAccessGroupMembers():
         # Disable retries and run test_list_access_group_members_value_error.
         _service.disable_retries()
         self.test_list_access_group_members_value_error()
+
+    @responses.activate
+    def test_list_access_group_members_with_pager_get_next(self):
+        """
+        test_list_access_group_members_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/groups/testString/members')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"members":[{"iam_id":"iam_id","type":"type","membership_type":"membership_type","name":"name","email":"email","description":"description","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id"}],"limit":1}'
+        mock_response2 = '{"total_count":2,"members":[{"iam_id":"iam_id","type":"type","membership_type":"membership_type","name":"name","email":"email","description":"description","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id"}],"limit":1}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = AccessGroupMembersPager(
+            client=_service,
+            access_group_id='testString',
+            transaction_id='testString',
+            membership_type='static',
+            limit=10,
+            type='testString',
+            verbose=False,
+            sort='testString',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_access_group_members_with_pager_get_all(self):
+        """
+        test_list_access_group_members_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/groups/testString/members')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"members":[{"iam_id":"iam_id","type":"type","membership_type":"membership_type","name":"name","email":"email","description":"description","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id"}],"limit":1}'
+        mock_response2 = '{"total_count":2,"members":[{"iam_id":"iam_id","type":"type","membership_type":"membership_type","name":"name","email":"email","description":"description","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id"}],"limit":1}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = AccessGroupMembersPager(
+            client=_service,
+            access_group_id='testString',
+            transaction_id='testString',
+            membership_type='static',
+            limit=10,
+            type='testString',
+            verbose=False,
+            sort='testString',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestRemoveMemberFromAccessGroup():
     """
@@ -1282,7 +1422,6 @@ class TestRemoveMemberFromAccessGroup():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.remove_member_from_access_group(**req_copy)
-
 
     def test_remove_member_from_access_group_value_error_with_retries(self):
         # Enable retries and run test_remove_member_from_access_group_value_error.
@@ -1408,7 +1547,6 @@ class TestRemoveMembersFromAccessGroup():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.remove_members_from_access_group(**req_copy)
-
 
     def test_remove_members_from_access_group_value_error_with_retries(self):
         # Enable retries and run test_remove_members_from_access_group_value_error.
@@ -1537,7 +1675,6 @@ class TestRemoveMemberFromAllAccessGroups():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.remove_member_from_all_access_groups(**req_copy)
-
 
     def test_remove_member_from_all_access_groups_value_error_with_retries(self):
         # Enable retries and run test_remove_member_from_all_access_groups_value_error.
@@ -1684,7 +1821,6 @@ class TestAddMemberToMultipleAccessGroups():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.add_member_to_multiple_access_groups(**req_copy)
-
 
     def test_add_member_to_multiple_access_groups_value_error_with_retries(self):
         # Enable retries and run test_add_member_to_multiple_access_groups_value_error.
@@ -1890,7 +2026,6 @@ class TestAddAccessGroupRule():
             with pytest.raises(ValueError):
                 _service.add_access_group_rule(**req_copy)
 
-
     def test_add_access_group_rule_value_error_with_retries(self):
         # Enable retries and run test_add_access_group_rule_value_error.
         _service.enable_retries()
@@ -2004,7 +2139,6 @@ class TestListAccessGroupRules():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_access_group_rules(**req_copy)
-
 
     def test_list_access_group_rules_value_error_with_retries(self):
         # Enable retries and run test_list_access_group_rules_value_error.
@@ -2125,7 +2259,6 @@ class TestGetAccessGroupRule():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_access_group_rule(**req_copy)
-
 
     def test_get_access_group_rule_value_error_with_retries(self):
         # Enable retries and run test_get_access_group_rule_value_error.
@@ -2306,7 +2439,6 @@ class TestReplaceAccessGroupRule():
             with pytest.raises(ValueError):
                 _service.replace_access_group_rule(**req_copy)
 
-
     def test_replace_access_group_rule_value_error_with_retries(self):
         # Enable retries and run test_replace_access_group_rule_value_error.
         _service.enable_retries()
@@ -2417,7 +2549,6 @@ class TestRemoveAccessGroupRule():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.remove_access_group_rule(**req_copy)
-
 
     def test_remove_access_group_rule_value_error_with_retries(self):
         # Enable retries and run test_remove_access_group_rule_value_error.
@@ -2578,7 +2709,6 @@ class TestGetAccountSettings():
             with pytest.raises(ValueError):
                 _service.get_account_settings(**req_copy)
 
-
     def test_get_account_settings_value_error_with_retries(self):
         # Enable retries and run test_get_account_settings_value_error.
         _service.enable_retries()
@@ -2711,7 +2841,6 @@ class TestUpdateAccountSettings():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_account_settings(**req_copy)
-
 
     def test_update_account_settings_value_error_with_retries(self):
         # Enable retries and run test_update_account_settings_value_error.
@@ -3165,13 +3294,8 @@ class TestModel_Group():
         group_model_json['name'] = 'testString'
         group_model_json['description'] = 'testString'
         group_model_json['account_id'] = 'testString'
-        group_model_json['created_at'] = '2019-01-01T12:00:00Z'
-        group_model_json['created_by_id'] = 'testString'
-        group_model_json['last_modified_at'] = '2019-01-01T12:00:00Z'
-        group_model_json['last_modified_by_id'] = 'testString'
         group_model_json['href'] = 'testString'
         group_model_json['is_federated'] = True
-        group_model_json['membership_type'] = 'testString'
 
         # Construct a model instance of Group by calling from_dict on the json representation
         group_model = Group.from_dict(group_model_json)
@@ -3260,13 +3384,8 @@ class TestModel_GroupsList():
         group_model['name'] = 'testString'
         group_model['description'] = 'testString'
         group_model['account_id'] = 'testString'
-        group_model['created_at'] = '2019-01-01T12:00:00Z'
-        group_model['created_by_id'] = 'testString'
-        group_model['last_modified_at'] = '2019-01-01T12:00:00Z'
-        group_model['last_modified_by_id'] = 'testString'
         group_model['href'] = 'testString'
         group_model['is_federated'] = True
-        group_model['membership_type'] = 'testString'
 
         # Construct a json representation of a GroupsList model
         groups_list_model_json = {}

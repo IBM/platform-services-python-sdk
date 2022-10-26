@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2020, 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -167,14 +167,19 @@ class TestIamAccessGroupsV2Examples():
             print('\nlist_access_groups() result:')
             # begin-list_access_groups
 
-            groups_list = iam_access_groups_service.list_access_groups(
-                account_id=test_account_id
-            ).get_result()
+            all_results = []
+            pager = AccessGroupsPager(
+                client=iam_access_groups_service,
+                account_id=test_account_id,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(groups_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_access_groups
-
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -234,14 +239,19 @@ class TestIamAccessGroupsV2Examples():
             print('\nlist_access_group_members() result:')
             # begin-list_access_group_members
 
-            group_members_list = iam_access_groups_service.list_access_group_members(
-                access_group_id=test_group_id
-            ).get_result()
+            all_results = []
+            pager = AccessGroupMembersPager(
+                client=iam_access_groups_service,
+                access_group_id=test_group_id,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(group_members_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_access_group_members
-
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -427,7 +437,7 @@ class TestIamAccessGroupsV2Examples():
                 if_match=test_claim_rule_etag,
                 name='Manager group rule',
                 expiration=24,
-                realm_name='https://idp.example.org/SAML2',
+                realm_name='https://idp.example.org/SAML2a',
                 conditions=[rule_conditions_model]
             ).get_result()
 
