@@ -1,3 +1,10 @@
+## [0.27.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.27.2...v0.27.3) (2022-10-26)
+
+
+### Bug Fixes
+
+* **Enterprise Usage Reports:** regen service to get Pager ([#172](https://github.com/IBM/platform-services-python-sdk/issues/172)) ([4cc7b49](https://github.com/IBM/platform-services-python-sdk/commit/4cc7b4988181e950c159bd85ec93f7e2b9278975))
+
 ## [0.27.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.27.1...v0.27.2) (2022-10-24)
 
 
