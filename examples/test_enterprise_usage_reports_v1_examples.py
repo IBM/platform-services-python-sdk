@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2020, 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -98,21 +98,23 @@ class TestEnterpriseUsageReportsV1Examples():
         get_resource_usage_report request example
         """
         try:
-            global enterprise_id, billing_month
-
             print('\nget_resource_usage_report() result:')
             # begin-get_resource_usage_report
 
-            reports = enterprise_usage_reports_service.get_resource_usage_report(
+            all_results = []
+            pager = GetResourceUsageReportPager(
+                client=enterprise_usage_reports_service,
                 enterprise_id=enterprise_id,
                 month=billing_month,
-                limit=10
-            ).get_result()
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(reports, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-get_resource_usage_report
-
         except ApiException as e:
             pytest.fail(str(e))
 

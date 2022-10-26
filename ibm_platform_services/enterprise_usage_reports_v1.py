@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,17 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
+# IBM OpenAPI SDK Code Generator Version: 3.60.0-13f6e1ba-20221019-164457
 
 """
 Usage reports for IBM Cloud enterprise entities
+
+API Version: 1.0.0-beta.1
 """
 
 from enum import Enum
 from typing import Dict, List
 import json
 
-from ibm_cloud_sdk_core import BaseService, DetailedResponse
+from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
 
@@ -62,7 +64,7 @@ class EnterpriseUsageReportsV1(BaseService):
         Construct a new client for the Enterprise Usage Reports service.
 
         :param Authenticator authenticator: The authenticator specifies the authentication mechanism.
-               Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
+               Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
         BaseService.__init__(self,
@@ -141,6 +143,7 @@ class EnterpriseUsageReportsV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v1/resource-usage-reports'
@@ -149,7 +152,7 @@ class EnterpriseUsageReportsV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -224,7 +227,7 @@ class MetricUsage():
           charges.
     :attr float cost: The cost that was incurred by the metric.
     :attr float rated_cost: The pre-discounted cost that was incurred by the metric.
-    :attr List[object] price: (optional) The price with which cost was calculated.
+    :attr List[dict] price: (optional) The price with which cost was calculated.
     """
 
     def __init__(self,
@@ -235,7 +238,7 @@ class MetricUsage():
                  cost: float,
                  rated_cost: float,
                  *,
-                 price: List[object] = None) -> None:
+                 price: List[dict] = None) -> None:
         """
         Initialize a MetricUsage object.
 
@@ -247,7 +250,7 @@ class MetricUsage():
         :param float cost: The cost that was incurred by the metric.
         :param float rated_cost: The pre-discounted cost that was incurred by the
                metric.
-        :param List[object] price: (optional) The price with which cost was
+        :param List[dict] price: (optional) The price with which cost was
                calculated.
         """
         self.metric = metric
@@ -860,3 +863,105 @@ class ResourceUsageReport():
         ACCOUNT_GROUP = 'account-group'
         ACCOUNT = 'account'
 
+
+##############################################################################
+# Pagers
+##############################################################################
+
+class GetResourceUsageReportPager():
+    """
+    GetResourceUsageReportPager can be used to simplify the use of the "get_resource_usage_report" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: EnterpriseUsageReportsV1,
+                 enterprise_id: str = None,
+                 account_group_id: str = None,
+                 account_id: str = None,
+                 children: bool = None,
+                 month: str = None,
+                 billing_unit_id: str = None,
+                 limit: int = None,
+    ) -> None:
+        """
+        Initialize a GetResourceUsageReportPager object.
+        :param str enterprise_id: (optional) The ID of the enterprise for which the
+               reports are queried. This parameter cannot be used with the `account_id` or
+               `account_group_id` query parameters.
+        :param str account_group_id: (optional) The ID of the account group for
+               which the reports are queried. This parameter cannot be used with the
+               `account_id` or `enterprise_id` query parameters.
+        :param str account_id: (optional) The ID of the account for which the
+               reports are queried. This parameter cannot be used with the
+               `account_group_id` or `enterprise_id` query parameters.
+        :param bool children: (optional) Returns the reports for the immediate
+               child entities under the current account group or enterprise. This
+               parameter cannot be used with the `account_id` query parameter.
+        :param str month: (optional) The billing month for which the usage report
+               is requested. The format is in yyyy-mm. Defaults to the month in which the
+               report is queried.
+        :param str billing_unit_id: (optional) The ID of the billing unit by which
+               to filter the reports.
+        :param int limit: (optional) The maximum number of search results to be
+               returned.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._enterprise_id = enterprise_id
+        self._account_group_id = account_group_id
+        self._account_id = account_id
+        self._children = children
+        self._month = month
+        self._billing_unit_id = billing_unit_id
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceUsageReport.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.get_resource_usage_report(
+            enterprise_id=self._enterprise_id,
+            account_group_id=self._account_group_id,
+            account_id=self._account_id,
+            children=self._children,
+            month=self._month,
+            billing_unit_id=self._billing_unit_id,
+            limit=self._limit,
+            offset=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), 'offset')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('reports')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceUsageReport.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
