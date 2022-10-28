@@ -1,3 +1,10 @@
+# [0.28.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.27.3...v0.28.0) (2022-10-28)
+
+
+### Features
+
+* remove scc-related services from project ([#175](https://github.com/IBM/platform-services-python-sdk/issues/175)) ([805b439](https://github.com/IBM/platform-services-python-sdk/commit/805b439ce7af0fd9b49adf9c00f6e7cc4dfb6623))
+
 ## [0.27.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.27.2...v0.27.3) (2022-10-26)
 
 
