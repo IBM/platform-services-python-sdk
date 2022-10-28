@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright 2019 IBM All Rights Reserved.
+# Copyright 2019, 2022. IBM All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ from .version import __version__
 
 from .case_management_v1 import CaseManagementV1
 from .catalog_management_v1 import CatalogManagementV1
-from .configuration_governance_v1 import ConfigurationGovernanceV1
 from .enterprise_billing_units_v1 import EnterpriseBillingUnitsV1
 from .enterprise_management_v1 import EnterpriseManagementV1
 from .enterprise_usage_reports_v1 import EnterpriseUsageReportsV1
@@ -35,7 +34,6 @@ from .iam_identity_v1 import IamIdentityV1
 from .iam_policy_management_v1 import IamPolicyManagementV1
 from .ibm_cloud_shell_v1 import IbmCloudShellV1
 from .open_service_broker_v1 import OpenServiceBrokerV1
-from .posture_management_v1 import PostureManagementV1
 from .resource_controller_v2 import ResourceControllerV2
 from .resource_manager_v2 import ResourceManagerV2
 from .usage_metering_v4 import UsageMeteringV4
