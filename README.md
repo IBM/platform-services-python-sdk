@@ -48,7 +48,6 @@ Service Name | Module Name | Service Class Name
 --- | --- | ---
 [Case Management](https://cloud.ibm.com/apidocs/case-management?code=python) | case_management_v1 | CaseManagementV1
 [Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog?code=python) | catalog_management_v1 | CatalogManagementV1
-[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config?code=python) | configuration_governance_v1 | ConfigurationGovernanceV1
 [Context Based Restrictions](https://cloud.ibm.com/apidocs/context-based-restrictions?code=python) | context_based_restrictions_v1 | ContextBasedRestrictionsV1
 [Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit?code=python) | enterprise_billing_units_v1 | EnterpriseBillingUnitsV1
 [Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise?code=python) | enterprise_management_v1 | EnterpriseManagementV1
@@ -61,12 +60,19 @@ Service Name | Module Name | Service Class Name
 [IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management?code=python) | iam_policy_management_v1 | IamPolicyManagementV1
 [IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell?code=python) | ibm_cloud_shell_v1 | IbmCloudShellV1
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api?code=python) | open_service_broker_v1 | OpenServiceBrokerV1
-[Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture?code=python) | posture_management_v1 | PostureManagementV1
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller?code=python) | resource_controller_v2 | ResourceControllerV2
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager?code=python) | resource_manager_v2 | ResourceManagerV2
 [Usage Metering](https://cloud.ibm.com/apidocs/usage-metering?code=python) | usage_metering_v4 | UsageMeteringV4
 [Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting?code=python) | usage_reports_v4 | UsageReportsV4
 [User Management](https://cloud.ibm.com/apidocs/user-management?code=python) | user_management_v1 | UserManagementV1
+
+The following services have been relocated to a different SDK project.
+Please consult the documentation for each service to determine the new location:
+
+Service Name | Module Name | Service Class Name
+--- | --- | ---
+[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config?code=python) | configuration_governance_v1 | ConfigurationGovernanceV1
+[Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture?code=python) | posture_management_v1 | PostureManagementV1
 
 ## Prerequisites
 
