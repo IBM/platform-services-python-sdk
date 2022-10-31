@@ -1,3 +1,10 @@
+## [0.28.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.28.0...v0.28.1) (2022-10-31)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** regen service to get Pagers ([#173](https://github.com/IBM/platform-services-python-sdk/issues/173)) ([07e3694](https://github.com/IBM/platform-services-python-sdk/commit/07e3694f94e9a3e0838c6ea33e3bc39a824115b6))
+
 # [0.28.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.27.3...v0.28.0) (2022-10-28)
 
 
