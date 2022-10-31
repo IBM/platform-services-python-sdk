@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.46.1-a5569134-20220316-164819
+# IBM OpenAPI SDK Code Generator Version: 3.60.0-13f6e1ba-20221019-164457
 
 """
 The IAM Access Groups API allows for the management of access groups (Create, Read,
@@ -29,7 +29,7 @@ from enum import Enum
 from typing import Dict, List
 import json
 
-from ibm_cloud_sdk_core import BaseService, DetailedResponse
+from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
 from ibm_cloud_sdk_core.utils import convert_model, datetime_to_string, string_to_datetime
@@ -117,7 +117,7 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Group` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
         if name is None:
             raise ValueError('name must be provided')
@@ -143,6 +143,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v2/groups'
@@ -212,7 +213,7 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `GroupsList` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
@@ -235,6 +236,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v2/groups'
@@ -276,7 +278,7 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Group` object
         """
 
-        if access_group_id is None:
+        if not access_group_id:
             raise ValueError('access_group_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
@@ -292,6 +294,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['access_group_id']
@@ -342,9 +345,9 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Group` object
         """
 
-        if access_group_id is None:
+        if not access_group_id:
             raise ValueError('access_group_id must be provided')
-        if if_match is None:
+        if not if_match:
             raise ValueError('if_match must be provided')
         headers = {
             'If-Match': if_match,
@@ -365,6 +368,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['access_group_id']
@@ -408,7 +412,7 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse
         """
 
-        if access_group_id is None:
+        if not access_group_id:
             raise ValueError('access_group_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
@@ -424,6 +428,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['access_group_id']
         path_param_values = self.encode_path_vars(access_group_id)
@@ -470,9 +475,9 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse
         """
 
-        if access_group_id is None:
+        if not access_group_id:
             raise ValueError('access_group_id must be provided')
-        if iam_id is None:
+        if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
@@ -484,6 +489,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['access_group_id', 'iam_id']
         path_param_values = self.encode_path_vars(access_group_id, iam_id)
@@ -527,7 +533,7 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `AddGroupMembersResponse` object
         """
 
-        if access_group_id is None:
+        if not access_group_id:
             raise ValueError('access_group_id must be provided')
         if members is not None:
             members = [convert_model(x) for x in members]
@@ -548,6 +554,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['access_group_id']
@@ -609,7 +616,7 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `GroupMembersList` object
         """
 
-        if access_group_id is None:
+        if not access_group_id:
             raise ValueError('access_group_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
@@ -630,6 +637,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['access_group_id']
@@ -673,9 +681,9 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse
         """
 
-        if access_group_id is None:
+        if not access_group_id:
             raise ValueError('access_group_id must be provided')
-        if iam_id is None:
+        if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
@@ -687,6 +695,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['access_group_id', 'iam_id']
         path_param_values = self.encode_path_vars(access_group_id, iam_id)
@@ -729,7 +738,7 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `DeleteGroupBulkMembersResponse` object
         """
 
-        if access_group_id is None:
+        if not access_group_id:
             raise ValueError('access_group_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
@@ -748,6 +757,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['access_group_id']
@@ -793,9 +803,9 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `DeleteFromAllGroupsResponse` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        if iam_id is None:
+        if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
@@ -811,6 +821,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['iam_id']
@@ -848,7 +859,7 @@ class IamAccessGroupsV2(BaseService):
                match the account of the Authorization token.
         :param str iam_id: The IAM identifier.
         :param str type: (optional) The type of the member, must be either "user",
-               "service" or "trusted profile".
+               "service" or "profile".
         :param List[str] groups: (optional) The ids of the access groups a given
                member is to be added to.
         :param str transaction_id: (optional) An optional transaction ID can be
@@ -861,9 +872,9 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `AddMembershipMultipleGroupsResponse` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        if iam_id is None:
+        if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
@@ -887,6 +898,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['iam_id']
@@ -926,7 +938,7 @@ class IamAccessGroupsV2(BaseService):
         by the `expiration` field. After access expires, the user will need to log in
         again to regain access. Note that the condition's value field must be a
         stringified JSON value. [Consult this documentation for further explanation of
-        dynamic rules.](/docs/iam/accessgroup_rules.html#rules).
+        dynamic rules.](/docs/account?topic=account-rules).
 
         :param str access_group_id: The access group identifier.
         :param int expiration: The number of hours that the rule lives for.
@@ -944,7 +956,7 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Rule` object
         """
 
-        if access_group_id is None:
+        if not access_group_id:
             raise ValueError('access_group_id must be provided')
         if expiration is None:
             raise ValueError('expiration must be provided')
@@ -973,6 +985,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['access_group_id']
@@ -1011,7 +1024,7 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `RulesList` object
         """
 
-        if access_group_id is None:
+        if not access_group_id:
             raise ValueError('access_group_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
@@ -1023,6 +1036,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['access_group_id']
@@ -1062,9 +1076,9 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Rule` object
         """
 
-        if access_group_id is None:
+        if not access_group_id:
             raise ValueError('access_group_id must be provided')
-        if rule_id is None:
+        if not rule_id:
             raise ValueError('rule_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
@@ -1076,6 +1090,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['access_group_id', 'rule_id']
@@ -1128,11 +1143,11 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Rule` object
         """
 
-        if access_group_id is None:
+        if not access_group_id:
             raise ValueError('access_group_id must be provided')
-        if rule_id is None:
+        if not rule_id:
             raise ValueError('rule_id must be provided')
-        if if_match is None:
+        if not if_match:
             raise ValueError('if_match must be provided')
         if expiration is None:
             raise ValueError('expiration must be provided')
@@ -1162,6 +1177,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['access_group_id', 'rule_id']
@@ -1203,9 +1219,9 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse
         """
 
-        if access_group_id is None:
+        if not access_group_id:
             raise ValueError('access_group_id must be provided')
-        if rule_id is None:
+        if not rule_id:
             raise ValueError('rule_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
@@ -1217,6 +1233,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['access_group_id', 'rule_id']
         path_param_values = self.encode_path_vars(access_group_id, rule_id)
@@ -1259,7 +1276,7 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `AccountSettings` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
@@ -1275,6 +1292,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v2/groups/settings'
@@ -1321,7 +1339,7 @@ class IamAccessGroupsV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `AccountSettings` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
         headers = {
             'Transaction-Id': transaction_id
@@ -1344,6 +1362,7 @@ class IamAccessGroupsV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v2/groups/settings'
@@ -1458,7 +1477,7 @@ class AddGroupMembersRequestMembersItem():
 
     :attr str iam_id: The IBMid, service ID or trusted profile ID of the member.
     :attr str type: The type of the member, must be either "user", "service" or
-          "trusted profile".
+          "profile".
     """
 
     def __init__(self,
@@ -1470,7 +1489,7 @@ class AddGroupMembersRequestMembersItem():
         :param str iam_id: The IBMid, service ID or trusted profile ID of the
                member.
         :param str type: The type of the member, must be either "user", "service"
-               or "trusted profile".
+               or "profile".
         """
         self.iam_id = iam_id
         self.type = type
@@ -1583,7 +1602,8 @@ class AddGroupMembersResponseMembersItem():
     AddGroupMembersResponseMembersItem.
 
     :attr str iam_id: (optional) The IBMid or Service Id of the member.
-    :attr str type: (optional) The member type - either `user` or `service`.
+    :attr str type: (optional) The member type - either `user`, `service` or
+          `profile`.
     :attr datetime created_at: (optional) The timestamp the membership was created
           at.
     :attr str created_by_id: (optional) The `iam_id` of the entity that created the
@@ -1608,7 +1628,8 @@ class AddGroupMembersResponseMembersItem():
         Initialize a AddGroupMembersResponseMembersItem object.
 
         :param str iam_id: (optional) The IBMid or Service Id of the member.
-        :param str type: (optional) The member type - either `user` or `service`.
+        :param str type: (optional) The member type - either `user`, `service` or
+               `profile`.
         :param datetime created_at: (optional) The timestamp the membership was
                created at.
         :param str created_by_id: (optional) The `iam_id` of the entity that
@@ -2232,8 +2253,6 @@ class Group():
     :attr str href: (optional) A url to the given group resource.
     :attr bool is_federated: (optional) This is set to true if rules exist for the
           group.
-    :attr str membership_type: (optional) Type of the membership. `static` or
-          `dynamic`.
     """
 
     def __init__(self,
@@ -2247,8 +2266,7 @@ class Group():
                  last_modified_at: datetime = None,
                  last_modified_by_id: str = None,
                  href: str = None,
-                 is_federated: bool = None,
-                 membership_type: str = None) -> None:
+                 is_federated: bool = None) -> None:
         """
         Initialize a Group object.
 
@@ -2260,8 +2278,6 @@ class Group():
         :param str href: (optional) A url to the given group resource.
         :param bool is_federated: (optional) This is set to true if rules exist for
                the group.
-        :param str membership_type: (optional) Type of the membership. `static` or
-               `dynamic`.
         """
         self.id = id
         self.name = name
@@ -2273,7 +2289,6 @@ class Group():
         self.last_modified_by_id = last_modified_by_id
         self.href = href
         self.is_federated = is_federated
-        self.membership_type = membership_type
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'Group':
@@ -2299,8 +2314,6 @@ class Group():
             args['href'] = _dict.get('href')
         if 'is_federated' in _dict:
             args['is_federated'] = _dict.get('is_federated')
-        if 'membership_type' in _dict:
-            args['membership_type'] = _dict.get('membership_type')
         return cls(**args)
 
     @classmethod
@@ -2331,8 +2344,6 @@ class Group():
             _dict['href'] = self.href
         if hasattr(self, 'is_federated') and self.is_federated is not None:
             _dict['is_federated'] = self.is_federated
-        if hasattr(self, 'membership_type') and self.membership_type is not None:
-            _dict['membership_type'] = self.membership_type
         return _dict
 
     def _to_dict(self):
@@ -2357,11 +2368,9 @@ class GroupMembersList():
     """
     The members of a group.
 
-    :attr int limit: (optional) Limit on how many items can be returned.
-    :attr int offset: (optional) The offset of the first item returned in the result
-          set.
-    :attr int total_count: (optional) The total number of items that match the
-          query.
+    :attr int limit: Limit on how many items can be returned.
+    :attr int offset: The offset of the first item returned in the result set.
+    :attr int total_count: The total number of items that match the query.
     :attr HrefStruct first: (optional) A link object.
     :attr HrefStruct previous: (optional) A link object.
     :attr HrefStruct next: (optional) A link object.
@@ -2371,10 +2380,10 @@ class GroupMembersList():
     """
 
     def __init__(self,
+                 limit: int,
+                 offset: int,
+                 total_count: int,
                  *,
-                 limit: int = None,
-                 offset: int = None,
-                 total_count: int = None,
                  first: 'HrefStruct' = None,
                  previous: 'HrefStruct' = None,
                  next: 'HrefStruct' = None,
@@ -2383,11 +2392,9 @@ class GroupMembersList():
         """
         Initialize a GroupMembersList object.
 
-        :param int limit: (optional) Limit on how many items can be returned.
-        :param int offset: (optional) The offset of the first item returned in the
-               result set.
-        :param int total_count: (optional) The total number of items that match the
-               query.
+        :param int limit: Limit on how many items can be returned.
+        :param int offset: The offset of the first item returned in the result set.
+        :param int total_count: The total number of items that match the query.
         :param HrefStruct first: (optional) A link object.
         :param HrefStruct previous: (optional) A link object.
         :param HrefStruct next: (optional) A link object.
@@ -2410,10 +2417,16 @@ class GroupMembersList():
         args = {}
         if 'limit' in _dict:
             args['limit'] = _dict.get('limit')
+        else:
+            raise ValueError('Required property \'limit\' not present in GroupMembersList JSON')
         if 'offset' in _dict:
             args['offset'] = _dict.get('offset')
+        else:
+            raise ValueError('Required property \'offset\' not present in GroupMembersList JSON')
         if 'total_count' in _dict:
             args['total_count'] = _dict.get('total_count')
+        else:
+            raise ValueError('Required property \'total_count\' not present in GroupMembersList JSON')
         if 'first' in _dict:
             args['first'] = HrefStruct.from_dict(_dict.get('first'))
         if 'previous' in _dict:
@@ -2474,11 +2487,9 @@ class GroupsList():
     """
     The list of access groups returned as part of a response.
 
-    :attr int limit: (optional) Limit on how many items can be returned.
-    :attr int offset: (optional) The offset of the first item returned in the result
-          set.
-    :attr int total_count: (optional) The total number of items that match the
-          query.
+    :attr int limit: Limit on how many items can be returned.
+    :attr int offset: The offset of the first item returned in the result set.
+    :attr int total_count: The total number of items that match the query.
     :attr HrefStruct first: (optional) A link object.
     :attr HrefStruct previous: (optional) A link object.
     :attr HrefStruct next: (optional) A link object.
@@ -2487,10 +2498,10 @@ class GroupsList():
     """
 
     def __init__(self,
+                 limit: int,
+                 offset: int,
+                 total_count: int,
                  *,
-                 limit: int = None,
-                 offset: int = None,
-                 total_count: int = None,
                  first: 'HrefStruct' = None,
                  previous: 'HrefStruct' = None,
                  next: 'HrefStruct' = None,
@@ -2499,11 +2510,9 @@ class GroupsList():
         """
         Initialize a GroupsList object.
 
-        :param int limit: (optional) Limit on how many items can be returned.
-        :param int offset: (optional) The offset of the first item returned in the
-               result set.
-        :param int total_count: (optional) The total number of items that match the
-               query.
+        :param int limit: Limit on how many items can be returned.
+        :param int offset: The offset of the first item returned in the result set.
+        :param int total_count: The total number of items that match the query.
         :param HrefStruct first: (optional) A link object.
         :param HrefStruct previous: (optional) A link object.
         :param HrefStruct next: (optional) A link object.
@@ -2525,10 +2534,16 @@ class GroupsList():
         args = {}
         if 'limit' in _dict:
             args['limit'] = _dict.get('limit')
+        else:
+            raise ValueError('Required property \'limit\' not present in GroupsList JSON')
         if 'offset' in _dict:
             args['offset'] = _dict.get('offset')
+        else:
+            raise ValueError('Required property \'offset\' not present in GroupsList JSON')
         if 'total_count' in _dict:
             args['total_count'] = _dict.get('total_count')
+        else:
+            raise ValueError('Required property \'total_count\' not present in GroupsList JSON')
         if 'first' in _dict:
             args['first'] = HrefStruct.from_dict(_dict.get('first'))
         if 'previous' in _dict:
@@ -3064,3 +3079,212 @@ class RulesList():
     def __ne__(self, other: 'RulesList') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+##############################################################################
+# Pagers
+##############################################################################
+
+class AccessGroupsPager():
+    """
+    AccessGroupsPager can be used to simplify the use of the "list_access_groups" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: IamAccessGroupsV2,
+                 account_id: str,
+                 transaction_id: str = None,
+                 iam_id: str = None,
+                 membership_type: str = None,
+                 limit: int = None,
+                 sort: str = None,
+                 show_federated: bool = None,
+                 hide_public_access: bool = None,
+    ) -> None:
+        """
+        Initialize a AccessGroupsPager object.
+        :param str account_id: Account ID of the API keys(s) to query. If a service
+               IAM ID is specified in iam_id then account_id must match the account of the
+               IAM ID. If a user IAM ID is specified in iam_id then then account_id must
+               match the account of the Authorization token.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
+        :param str iam_id: (optional) Return groups for member ID (IBMid, service
+               ID or trusted profile ID).
+        :param str membership_type: (optional) Membership type need to be specified
+               along with iam_id and must be either `static`, `dynamic` or `all`. If
+               membership type is `static`, members explicitly added to the group will be
+               shown. If membership type is `dynamic`, members accessing the access group
+               at the moment via dynamic rules will be shown. If membership type is `all`,
+               both static and dynamic members will be shown.
+        :param int limit: (optional) Return up to this limit of results where limit
+               is between 0 and 100.
+        :param str sort: (optional) Sort the results by id, name, description, or
+               is_federated flag.
+        :param bool show_federated: (optional) If show_federated is true, each
+               group listed will return an is_federated value that is set to true if rules
+               exist for the group.
+        :param bool hide_public_access: (optional) If hide_public_access is true,
+               do not include the Public Access Group in the results.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._account_id = account_id
+        self._transaction_id = transaction_id
+        self._iam_id = iam_id
+        self._membership_type = membership_type
+        self._limit = limit
+        self._sort = sort
+        self._show_federated = show_federated
+        self._hide_public_access = hide_public_access
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of Group.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_access_groups(
+            account_id=self._account_id,
+            transaction_id=self._transaction_id,
+            iam_id=self._iam_id,
+            membership_type=self._membership_type,
+            limit=self._limit,
+            sort=self._sort,
+            show_federated=self._show_federated,
+            hide_public_access=self._hide_public_access,
+            offset=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), 'offset')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('groups')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of Group.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class AccessGroupMembersPager():
+    """
+    AccessGroupMembersPager can be used to simplify the use of the "list_access_group_members" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: IamAccessGroupsV2,
+                 access_group_id: str,
+                 transaction_id: str = None,
+                 membership_type: str = None,
+                 limit: int = None,
+                 type: str = None,
+                 verbose: bool = None,
+                 sort: str = None,
+    ) -> None:
+        """
+        Initialize a AccessGroupMembersPager object.
+        :param str access_group_id: The access group identifier.
+        :param str transaction_id: (optional) An optional transaction ID can be
+               passed to your request, which can be useful for tracking calls through
+               multiple services by using one identifier. The header key must be set to
+               Transaction-Id and the value is anything that you choose. If no transaction
+               ID is passed in, then a random ID is generated.
+        :param str membership_type: (optional) Filters members by membership type.
+               Membership type can be either `static`, `dynamic` or `all`. `static` lists
+               those members explicitly added to the access group, `dynamic` lists those
+               members part of access group via dynamic rules at the moment. `all` lists
+               both static and dynamic members.
+        :param int limit: (optional) Return up to this limit of results where limit
+               is between 0 and 100.
+        :param str type: (optional) Filter the results by member type.
+        :param bool verbose: (optional) Return user's email and name for each user
+               ID or the name for each service ID or trusted profile.
+        :param str sort: (optional) If verbose is true, sort the results by id,
+               name, or email.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._access_group_id = access_group_id
+        self._transaction_id = transaction_id
+        self._membership_type = membership_type
+        self._limit = limit
+        self._type = type
+        self._verbose = verbose
+        self._sort = sort
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of ListGroupMembersResponseMember.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_access_group_members(
+            access_group_id=self._access_group_id,
+            transaction_id=self._transaction_id,
+            membership_type=self._membership_type,
+            limit=self._limit,
+            type=self._type,
+            verbose=self._verbose,
+            sort=self._sort,
+            offset=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), 'offset')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('members')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of ListGroupMembersResponseMember.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
