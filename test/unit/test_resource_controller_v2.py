@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthen
 from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import inspect
 import json
+import os
 import pytest
 import re
 import requests
@@ -32,29 +33,74 @@ from ibm_platform_services.resource_controller_v2 import *
 
 _service = ResourceControllerV2(
     authenticator=NoAuthAuthenticator()
-    )
+)
 
 _base_url = 'https://resource-controller.cloud.ibm.com'
 _service.set_service_url(_base_url)
+
+
+def preprocess_url(operation_path: str):
+    """
+    Returns the request url associated with the specified operation path.
+    This will be base_url concatenated with a quoted version of operation_path.
+    The returned request URL is used to register the mock response so it needs
+    to match the request URL that is formed by the requests library.
+    """
+    # First, unquote the path since it might have some quoted/escaped characters in it
+    # due to how the generator inserts the operation paths into the unit test code.
+    operation_path = urllib.parse.unquote(operation_path)
+
+    # Next, quote the path using urllib so that we approximate what will
+    # happen during request processing.
+    operation_path = urllib.parse.quote(operation_path, safe='/')
+
+    # Finally, form the request URL from the base URL and operation path.
+    request_url = _base_url + operation_path
+
+    # If the request url does NOT end with a /, then just return it as-is.
+    # Otherwise, return a regular expression that matches one or more trailing /.
+    if re.fullmatch('.*/+', request_url) is None:
+        return request_url
+    else:
+        return re.compile(request_url.rstrip('/') + '/+')
+
 
 ##############################################################################
 # Start of Service: ResourceInstances
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = ResourceControllerV2.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, ResourceControllerV2)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = ResourceControllerV2.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
 class TestListResourceInstances():
     """
     Test Class for list_resource_instances
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_resource_instances_all_params(self):
@@ -62,8 +108,8 @@ class TestListResourceInstances():
         list_resource_instances()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}]}'
+        url = preprocess_url('/v2/resource_instances')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -81,8 +127,8 @@ class TestListResourceInstances():
         limit = 100
         start = 'testString'
         state = 'active'
-        updated_from = '2019-01-08T00:00:00.000Z'
-        updated_to = '2019-01-08T00:00:00.000Z'
+        updated_from = '2021-01-01'
+        updated_to = '2021-01-01'
 
         # Invoke method
         response = _service.list_resource_instances(
@@ -120,6 +166,14 @@ class TestListResourceInstances():
         assert 'updated_from={}'.format(updated_from) in query_string
         assert 'updated_to={}'.format(updated_to) in query_string
 
+    def test_list_resource_instances_all_params_with_retries(self):
+        # Enable retries and run test_list_resource_instances_all_params.
+        _service.enable_retries()
+        self.test_list_resource_instances_all_params()
+
+        # Disable retries and run test_list_resource_instances_all_params.
+        _service.disable_retries()
+        self.test_list_resource_instances_all_params()
 
     @responses.activate
     def test_list_resource_instances_required_params(self):
@@ -127,8 +181,8 @@ class TestListResourceInstances():
         test_list_resource_instances_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}]}'
+        url = preprocess_url('/v2/resource_instances')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -143,20 +197,100 @@ class TestListResourceInstances():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_resource_instances_required_params_with_retries(self):
+        # Enable retries and run test_list_resource_instances_required_params.
+        _service.enable_retries()
+        self.test_list_resource_instances_required_params()
+
+        # Disable retries and run test_list_resource_instances_required_params.
+        _service.disable_retries()
+        self.test_list_resource_instances_required_params()
+
+    @responses.activate
+    def test_list_resource_instances_with_pager_get_next(self):
+        """
+        test_list_resource_instances_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/resource_instances')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","scheduled_reclaim_at":"2019-01-01T12:00:00.000Z","restored_at":"2019-01-01T12:00:00.000Z","restored_by":"restored_by","scheduled_reclaim_by":"scheduled_reclaim_by","name":"name","region_id":"region_id","account_id":"account_id","reseller_channel_id":"reseller_channel_id","resource_plan_id":"resource_plan_id","resource_group_id":"resource_group_id","resource_group_crn":"resource_group_crn","target_crn":"target_crn","parameters":{"anyKey":"anyValue"},"allow_cleanup":false,"crn":"crn","state":"active","type":"type","sub_type":"sub_type","resource_id":"resource_id","dashboard_url":"dashboard_url","last_operation":{"type":"type","state":"in progress","sub_type":"sub_type","async":true,"description":"description","reason_code":"reason_code","poll_after":10,"cancelable":true,"poll":true},"resource_aliases_url":"resource_aliases_url","resource_bindings_url":"resource_bindings_url","resource_keys_url":"resource_keys_url","plan_history":[{"resource_plan_id":"resource_plan_id","start_date":"2019-01-01T12:00:00.000Z","requestor_id":"requestor_id"}],"migrated":true,"extensions":{"anyKey":"anyValue"},"controlled_by":"controlled_by","locked":true}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","scheduled_reclaim_at":"2019-01-01T12:00:00.000Z","restored_at":"2019-01-01T12:00:00.000Z","restored_by":"restored_by","scheduled_reclaim_by":"scheduled_reclaim_by","name":"name","region_id":"region_id","account_id":"account_id","reseller_channel_id":"reseller_channel_id","resource_plan_id":"resource_plan_id","resource_group_id":"resource_group_id","resource_group_crn":"resource_group_crn","target_crn":"target_crn","parameters":{"anyKey":"anyValue"},"allow_cleanup":false,"crn":"crn","state":"active","type":"type","sub_type":"sub_type","resource_id":"resource_id","dashboard_url":"dashboard_url","last_operation":{"type":"type","state":"in progress","sub_type":"sub_type","async":true,"description":"description","reason_code":"reason_code","poll_after":10,"cancelable":true,"poll":true},"resource_aliases_url":"resource_aliases_url","resource_bindings_url":"resource_bindings_url","resource_keys_url":"resource_keys_url","plan_history":[{"resource_plan_id":"resource_plan_id","start_date":"2019-01-01T12:00:00.000Z","requestor_id":"requestor_id"}],"migrated":true,"extensions":{"anyKey":"anyValue"},"controlled_by":"controlled_by","locked":true}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = ResourceInstancesPager(
+            client=_service,
+            guid='testString',
+            name='testString',
+            resource_group_id='testString',
+            resource_id='testString',
+            resource_plan_id='testString',
+            type='testString',
+            sub_type='testString',
+            limit=10,
+            state='active',
+            updated_from='2021-01-01',
+            updated_to='2021-01-01',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_resource_instances_with_pager_get_all(self):
+        """
+        test_list_resource_instances_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/resource_instances')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","scheduled_reclaim_at":"2019-01-01T12:00:00.000Z","restored_at":"2019-01-01T12:00:00.000Z","restored_by":"restored_by","scheduled_reclaim_by":"scheduled_reclaim_by","name":"name","region_id":"region_id","account_id":"account_id","reseller_channel_id":"reseller_channel_id","resource_plan_id":"resource_plan_id","resource_group_id":"resource_group_id","resource_group_crn":"resource_group_crn","target_crn":"target_crn","parameters":{"anyKey":"anyValue"},"allow_cleanup":false,"crn":"crn","state":"active","type":"type","sub_type":"sub_type","resource_id":"resource_id","dashboard_url":"dashboard_url","last_operation":{"type":"type","state":"in progress","sub_type":"sub_type","async":true,"description":"description","reason_code":"reason_code","poll_after":10,"cancelable":true,"poll":true},"resource_aliases_url":"resource_aliases_url","resource_bindings_url":"resource_bindings_url","resource_keys_url":"resource_keys_url","plan_history":[{"resource_plan_id":"resource_plan_id","start_date":"2019-01-01T12:00:00.000Z","requestor_id":"requestor_id"}],"migrated":true,"extensions":{"anyKey":"anyValue"},"controlled_by":"controlled_by","locked":true}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","scheduled_reclaim_at":"2019-01-01T12:00:00.000Z","restored_at":"2019-01-01T12:00:00.000Z","restored_by":"restored_by","scheduled_reclaim_by":"scheduled_reclaim_by","name":"name","region_id":"region_id","account_id":"account_id","reseller_channel_id":"reseller_channel_id","resource_plan_id":"resource_plan_id","resource_group_id":"resource_group_id","resource_group_crn":"resource_group_crn","target_crn":"target_crn","parameters":{"anyKey":"anyValue"},"allow_cleanup":false,"crn":"crn","state":"active","type":"type","sub_type":"sub_type","resource_id":"resource_id","dashboard_url":"dashboard_url","last_operation":{"type":"type","state":"in progress","sub_type":"sub_type","async":true,"description":"description","reason_code":"reason_code","poll_after":10,"cancelable":true,"poll":true},"resource_aliases_url":"resource_aliases_url","resource_bindings_url":"resource_bindings_url","resource_keys_url":"resource_keys_url","plan_history":[{"resource_plan_id":"resource_plan_id","start_date":"2019-01-01T12:00:00.000Z","requestor_id":"requestor_id"}],"migrated":true,"extensions":{"anyKey":"anyValue"},"controlled_by":"controlled_by","locked":true}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = ResourceInstancesPager(
+            client=_service,
+            guid='testString',
+            name='testString',
+            resource_group_id='testString',
+            resource_id='testString',
+            resource_plan_id='testString',
+            type='testString',
+            sub_type='testString',
+            limit=10,
+            state='active',
+            updated_from='2021-01-01',
+            updated_to='2021-01-01',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestCreateResourceInstance():
     """
     Test Class for create_resource_instance
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_create_resource_instance_all_params(self):
@@ -164,8 +298,8 @@ class TestCreateResourceInstance():
         create_resource_instance()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
+        url = preprocess_url('/v2/resource_instances')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -173,14 +307,14 @@ class TestCreateResourceInstance():
                       status=201)
 
         # Set up parameter values
-        name = 'my-instance'
-        target = 'bluemix-us-south'
-        resource_group = '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
-        resource_plan_id = 'cloudant-standard'
+        name = 'ExampleResourceInstance'
+        target = 'global'
+        resource_group = '13aa3ee48c3b44ddb64c05c79f7ab8ef'
+        resource_plan_id = 'a10e4960-3685-11e9-b210-d663bd873d93'
         tags = ['testString']
-        allow_cleanup = True
-        parameters = {}
-        entity_lock = True
+        allow_cleanup = False
+        parameters = {'foo': 'bar'}
+        entity_lock = False
 
         # Invoke method
         response = _service.create_resource_instance(
@@ -200,14 +334,22 @@ class TestCreateResourceInstance():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-instance'
-        assert req_body['target'] == 'bluemix-us-south'
-        assert req_body['resource_group'] == '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
-        assert req_body['resource_plan_id'] == 'cloudant-standard'
+        assert req_body['name'] == 'ExampleResourceInstance'
+        assert req_body['target'] == 'global'
+        assert req_body['resource_group'] == '13aa3ee48c3b44ddb64c05c79f7ab8ef'
+        assert req_body['resource_plan_id'] == 'a10e4960-3685-11e9-b210-d663bd873d93'
         assert req_body['tags'] == ['testString']
-        assert req_body['allow_cleanup'] == True
-        assert req_body['parameters'] == {}
+        assert req_body['allow_cleanup'] == False
+        assert req_body['parameters'] == {'foo': 'bar'}
 
+    def test_create_resource_instance_all_params_with_retries(self):
+        # Enable retries and run test_create_resource_instance_all_params.
+        _service.enable_retries()
+        self.test_create_resource_instance_all_params()
+
+        # Disable retries and run test_create_resource_instance_all_params.
+        _service.disable_retries()
+        self.test_create_resource_instance_all_params()
 
     @responses.activate
     def test_create_resource_instance_required_params(self):
@@ -215,8 +357,8 @@ class TestCreateResourceInstance():
         test_create_resource_instance_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
+        url = preprocess_url('/v2/resource_instances')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -224,13 +366,13 @@ class TestCreateResourceInstance():
                       status=201)
 
         # Set up parameter values
-        name = 'my-instance'
-        target = 'bluemix-us-south'
-        resource_group = '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
-        resource_plan_id = 'cloudant-standard'
+        name = 'ExampleResourceInstance'
+        target = 'global'
+        resource_group = '13aa3ee48c3b44ddb64c05c79f7ab8ef'
+        resource_plan_id = 'a10e4960-3685-11e9-b210-d663bd873d93'
         tags = ['testString']
-        allow_cleanup = True
-        parameters = {}
+        allow_cleanup = False
+        parameters = {'foo': 'bar'}
 
         # Invoke method
         response = _service.create_resource_instance(
@@ -249,14 +391,22 @@ class TestCreateResourceInstance():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-instance'
-        assert req_body['target'] == 'bluemix-us-south'
-        assert req_body['resource_group'] == '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
-        assert req_body['resource_plan_id'] == 'cloudant-standard'
+        assert req_body['name'] == 'ExampleResourceInstance'
+        assert req_body['target'] == 'global'
+        assert req_body['resource_group'] == '13aa3ee48c3b44ddb64c05c79f7ab8ef'
+        assert req_body['resource_plan_id'] == 'a10e4960-3685-11e9-b210-d663bd873d93'
         assert req_body['tags'] == ['testString']
-        assert req_body['allow_cleanup'] == True
-        assert req_body['parameters'] == {}
+        assert req_body['allow_cleanup'] == False
+        assert req_body['parameters'] == {'foo': 'bar'}
 
+    def test_create_resource_instance_required_params_with_retries(self):
+        # Enable retries and run test_create_resource_instance_required_params.
+        _service.enable_retries()
+        self.test_create_resource_instance_required_params()
+
+        # Disable retries and run test_create_resource_instance_required_params.
+        _service.disable_retries()
+        self.test_create_resource_instance_required_params()
 
     @responses.activate
     def test_create_resource_instance_value_error(self):
@@ -264,8 +414,8 @@ class TestCreateResourceInstance():
         test_create_resource_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
+        url = preprocess_url('/v2/resource_instances')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -273,13 +423,13 @@ class TestCreateResourceInstance():
                       status=201)
 
         # Set up parameter values
-        name = 'my-instance'
-        target = 'bluemix-us-south'
-        resource_group = '5c49eabc-f5e8-5881-a37e-2d100a33b3df'
-        resource_plan_id = 'cloudant-standard'
+        name = 'ExampleResourceInstance'
+        target = 'global'
+        resource_group = '13aa3ee48c3b44ddb64c05c79f7ab8ef'
+        resource_plan_id = 'a10e4960-3685-11e9-b210-d663bd873d93'
         tags = ['testString']
-        allow_cleanup = True
-        parameters = {}
+        allow_cleanup = False
+        parameters = {'foo': 'bar'}
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -293,21 +443,19 @@ class TestCreateResourceInstance():
             with pytest.raises(ValueError):
                 _service.create_resource_instance(**req_copy)
 
+    def test_create_resource_instance_value_error_with_retries(self):
+        # Enable retries and run test_create_resource_instance_value_error.
+        _service.enable_retries()
+        self.test_create_resource_instance_value_error()
 
+        # Disable retries and run test_create_resource_instance_value_error.
+        _service.disable_retries()
+        self.test_create_resource_instance_value_error()
 
 class TestGetResourceInstance():
     """
     Test Class for get_resource_instance
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_resource_instance_all_params(self):
@@ -315,8 +463,8 @@ class TestGetResourceInstance():
         get_resource_instance()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
+        url = preprocess_url('/v2/resource_instances/testString')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -336,6 +484,14 @@ class TestGetResourceInstance():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_resource_instance_all_params_with_retries(self):
+        # Enable retries and run test_get_resource_instance_all_params.
+        _service.enable_retries()
+        self.test_get_resource_instance_all_params()
+
+        # Disable retries and run test_get_resource_instance_all_params.
+        _service.disable_retries()
+        self.test_get_resource_instance_all_params()
 
     @responses.activate
     def test_get_resource_instance_value_error(self):
@@ -343,8 +499,8 @@ class TestGetResourceInstance():
         test_get_resource_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
+        url = preprocess_url('/v2/resource_instances/testString')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -363,21 +519,19 @@ class TestGetResourceInstance():
             with pytest.raises(ValueError):
                 _service.get_resource_instance(**req_copy)
 
+    def test_get_resource_instance_value_error_with_retries(self):
+        # Enable retries and run test_get_resource_instance_value_error.
+        _service.enable_retries()
+        self.test_get_resource_instance_value_error()
 
+        # Disable retries and run test_get_resource_instance_value_error.
+        _service.disable_retries()
+        self.test_get_resource_instance_value_error()
 
 class TestDeleteResourceInstance():
     """
     Test Class for delete_resource_instance
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_delete_resource_instance_all_params(self):
@@ -385,14 +539,14 @@ class TestDeleteResourceInstance():
         delete_resource_instance()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString')
+        url = preprocess_url('/v2/resource_instances/testString')
         responses.add(responses.DELETE,
                       url,
                       status=202)
 
         # Set up parameter values
         id = 'testString'
-        recursive = True
+        recursive = False
 
         # Invoke method
         response = _service.delete_resource_instance(
@@ -409,6 +563,14 @@ class TestDeleteResourceInstance():
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'recursive={}'.format('true' if recursive else 'false') in query_string
 
+    def test_delete_resource_instance_all_params_with_retries(self):
+        # Enable retries and run test_delete_resource_instance_all_params.
+        _service.enable_retries()
+        self.test_delete_resource_instance_all_params()
+
+        # Disable retries and run test_delete_resource_instance_all_params.
+        _service.disable_retries()
+        self.test_delete_resource_instance_all_params()
 
     @responses.activate
     def test_delete_resource_instance_required_params(self):
@@ -416,7 +578,7 @@ class TestDeleteResourceInstance():
         test_delete_resource_instance_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString')
+        url = preprocess_url('/v2/resource_instances/testString')
         responses.add(responses.DELETE,
                       url,
                       status=202)
@@ -434,6 +596,14 @@ class TestDeleteResourceInstance():
         assert len(responses.calls) == 1
         assert response.status_code == 202
 
+    def test_delete_resource_instance_required_params_with_retries(self):
+        # Enable retries and run test_delete_resource_instance_required_params.
+        _service.enable_retries()
+        self.test_delete_resource_instance_required_params()
+
+        # Disable retries and run test_delete_resource_instance_required_params.
+        _service.disable_retries()
+        self.test_delete_resource_instance_required_params()
 
     @responses.activate
     def test_delete_resource_instance_value_error(self):
@@ -441,7 +611,7 @@ class TestDeleteResourceInstance():
         test_delete_resource_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString')
+        url = preprocess_url('/v2/resource_instances/testString')
         responses.add(responses.DELETE,
                       url,
                       status=202)
@@ -458,21 +628,19 @@ class TestDeleteResourceInstance():
             with pytest.raises(ValueError):
                 _service.delete_resource_instance(**req_copy)
 
+    def test_delete_resource_instance_value_error_with_retries(self):
+        # Enable retries and run test_delete_resource_instance_value_error.
+        _service.enable_retries()
+        self.test_delete_resource_instance_value_error()
 
+        # Disable retries and run test_delete_resource_instance_value_error.
+        _service.disable_retries()
+        self.test_delete_resource_instance_value_error()
 
 class TestUpdateResourceInstance():
     """
     Test Class for update_resource_instance
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_resource_instance_all_params(self):
@@ -480,8 +648,8 @@ class TestUpdateResourceInstance():
         update_resource_instance()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
+        url = preprocess_url('/v2/resource_instances/testString')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -490,9 +658,9 @@ class TestUpdateResourceInstance():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-instance-name'
-        parameters = {}
-        resource_plan_id = 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
+        name = 'UpdatedExampleResourceInstance'
+        parameters = {'foo': 'bar'}
+        resource_plan_id = 'testString'
         allow_cleanup = True
 
         # Invoke method
@@ -510,11 +678,19 @@ class TestUpdateResourceInstance():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-new-instance-name'
-        assert req_body['parameters'] == {}
-        assert req_body['resource_plan_id'] == 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
+        assert req_body['name'] == 'UpdatedExampleResourceInstance'
+        assert req_body['parameters'] == {'foo': 'bar'}
+        assert req_body['resource_plan_id'] == 'testString'
         assert req_body['allow_cleanup'] == True
 
+    def test_update_resource_instance_all_params_with_retries(self):
+        # Enable retries and run test_update_resource_instance_all_params.
+        _service.enable_retries()
+        self.test_update_resource_instance_all_params()
+
+        # Disable retries and run test_update_resource_instance_all_params.
+        _service.disable_retries()
+        self.test_update_resource_instance_all_params()
 
     @responses.activate
     def test_update_resource_instance_value_error(self):
@@ -522,8 +698,8 @@ class TestUpdateResourceInstance():
         test_update_resource_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
+        url = preprocess_url('/v2/resource_instances/testString')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -532,9 +708,9 @@ class TestUpdateResourceInstance():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-instance-name'
-        parameters = {}
-        resource_plan_id = 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
+        name = 'UpdatedExampleResourceInstance'
+        parameters = {'foo': 'bar'}
+        resource_plan_id = 'testString'
         allow_cleanup = True
 
         # Pass in all but one required param and check for a ValueError
@@ -546,21 +722,19 @@ class TestUpdateResourceInstance():
             with pytest.raises(ValueError):
                 _service.update_resource_instance(**req_copy)
 
+    def test_update_resource_instance_value_error_with_retries(self):
+        # Enable retries and run test_update_resource_instance_value_error.
+        _service.enable_retries()
+        self.test_update_resource_instance_value_error()
 
+        # Disable retries and run test_update_resource_instance_value_error.
+        _service.disable_retries()
+        self.test_update_resource_instance_value_error()
 
 class TestListResourceAliasesForInstance():
     """
     Test Class for list_resource_aliases_for_instance
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_resource_aliases_for_instance_all_params(self):
@@ -568,7 +742,7 @@ class TestListResourceAliasesForInstance():
         list_resource_aliases_for_instance()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/resource_aliases')
+        url = preprocess_url('/v2/resource_instances/testString/resource_aliases')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -598,6 +772,14 @@ class TestListResourceAliasesForInstance():
         assert 'limit={}'.format(limit) in query_string
         assert 'start={}'.format(start) in query_string
 
+    def test_list_resource_aliases_for_instance_all_params_with_retries(self):
+        # Enable retries and run test_list_resource_aliases_for_instance_all_params.
+        _service.enable_retries()
+        self.test_list_resource_aliases_for_instance_all_params()
+
+        # Disable retries and run test_list_resource_aliases_for_instance_all_params.
+        _service.disable_retries()
+        self.test_list_resource_aliases_for_instance_all_params()
 
     @responses.activate
     def test_list_resource_aliases_for_instance_required_params(self):
@@ -605,7 +787,7 @@ class TestListResourceAliasesForInstance():
         test_list_resource_aliases_for_instance_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/resource_aliases')
+        url = preprocess_url('/v2/resource_instances/testString/resource_aliases')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -626,6 +808,14 @@ class TestListResourceAliasesForInstance():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_resource_aliases_for_instance_required_params_with_retries(self):
+        # Enable retries and run test_list_resource_aliases_for_instance_required_params.
+        _service.enable_retries()
+        self.test_list_resource_aliases_for_instance_required_params()
+
+        # Disable retries and run test_list_resource_aliases_for_instance_required_params.
+        _service.disable_retries()
+        self.test_list_resource_aliases_for_instance_required_params()
 
     @responses.activate
     def test_list_resource_aliases_for_instance_value_error(self):
@@ -633,7 +823,7 @@ class TestListResourceAliasesForInstance():
         test_list_resource_aliases_for_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/resource_aliases')
+        url = preprocess_url('/v2/resource_instances/testString/resource_aliases')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -653,21 +843,82 @@ class TestListResourceAliasesForInstance():
             with pytest.raises(ValueError):
                 _service.list_resource_aliases_for_instance(**req_copy)
 
+    def test_list_resource_aliases_for_instance_value_error_with_retries(self):
+        # Enable retries and run test_list_resource_aliases_for_instance_value_error.
+        _service.enable_retries()
+        self.test_list_resource_aliases_for_instance_value_error()
 
+        # Disable retries and run test_list_resource_aliases_for_instance_value_error.
+        _service.disable_retries()
+        self.test_list_resource_aliases_for_instance_value_error()
+
+    @responses.activate
+    def test_list_resource_aliases_for_instance_with_pager_get_next(self):
+        """
+        test_list_resource_aliases_for_instance_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/resource_instances/testString/resource_aliases')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","name":"name","resource_instance_id":"resource_instance_id","target_crn":"target_crn","account_id":"account_id","resource_id":"resource_id","resource_group_id":"resource_group_id","crn":"crn","region_instance_id":"region_instance_id","region_instance_crn":"region_instance_crn","state":"state","migrated":true,"resource_instance_url":"resource_instance_url","resource_bindings_url":"resource_bindings_url","resource_keys_url":"resource_keys_url"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","name":"name","resource_instance_id":"resource_instance_id","target_crn":"target_crn","account_id":"account_id","resource_id":"resource_id","resource_group_id":"resource_group_id","crn":"crn","region_instance_id":"region_instance_id","region_instance_crn":"region_instance_crn","state":"state","migrated":true,"resource_instance_url":"resource_instance_url","resource_bindings_url":"resource_bindings_url","resource_keys_url":"resource_keys_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = ResourceAliasesForInstancePager(
+            client=_service,
+            id='testString',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_resource_aliases_for_instance_with_pager_get_all(self):
+        """
+        test_list_resource_aliases_for_instance_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/resource_instances/testString/resource_aliases')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","name":"name","resource_instance_id":"resource_instance_id","target_crn":"target_crn","account_id":"account_id","resource_id":"resource_id","resource_group_id":"resource_group_id","crn":"crn","region_instance_id":"region_instance_id","region_instance_crn":"region_instance_crn","state":"state","migrated":true,"resource_instance_url":"resource_instance_url","resource_bindings_url":"resource_bindings_url","resource_keys_url":"resource_keys_url"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","name":"name","resource_instance_id":"resource_instance_id","target_crn":"target_crn","account_id":"account_id","resource_id":"resource_id","resource_group_id":"resource_group_id","crn":"crn","region_instance_id":"region_instance_id","region_instance_crn":"region_instance_crn","state":"state","migrated":true,"resource_instance_url":"resource_instance_url","resource_bindings_url":"resource_bindings_url","resource_keys_url":"resource_keys_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = ResourceAliasesForInstancePager(
+            client=_service,
+            id='testString',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestListResourceKeysForInstance():
     """
     Test Class for list_resource_keys_for_instance
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_resource_keys_for_instance_all_params(self):
@@ -675,8 +926,8 @@ class TestListResourceKeysForInstance():
         list_resource_keys_for_instance()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/resource_keys')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
+        url = preprocess_url('/v2/resource_instances/testString/resource_keys')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -705,6 +956,14 @@ class TestListResourceKeysForInstance():
         assert 'limit={}'.format(limit) in query_string
         assert 'start={}'.format(start) in query_string
 
+    def test_list_resource_keys_for_instance_all_params_with_retries(self):
+        # Enable retries and run test_list_resource_keys_for_instance_all_params.
+        _service.enable_retries()
+        self.test_list_resource_keys_for_instance_all_params()
+
+        # Disable retries and run test_list_resource_keys_for_instance_all_params.
+        _service.disable_retries()
+        self.test_list_resource_keys_for_instance_all_params()
 
     @responses.activate
     def test_list_resource_keys_for_instance_required_params(self):
@@ -712,8 +971,8 @@ class TestListResourceKeysForInstance():
         test_list_resource_keys_for_instance_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/resource_keys')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
+        url = preprocess_url('/v2/resource_instances/testString/resource_keys')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -733,6 +992,14 @@ class TestListResourceKeysForInstance():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_resource_keys_for_instance_required_params_with_retries(self):
+        # Enable retries and run test_list_resource_keys_for_instance_required_params.
+        _service.enable_retries()
+        self.test_list_resource_keys_for_instance_required_params()
+
+        # Disable retries and run test_list_resource_keys_for_instance_required_params.
+        _service.disable_retries()
+        self.test_list_resource_keys_for_instance_required_params()
 
     @responses.activate
     def test_list_resource_keys_for_instance_value_error(self):
@@ -740,8 +1007,8 @@ class TestListResourceKeysForInstance():
         test_list_resource_keys_for_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/resource_keys')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
+        url = preprocess_url('/v2/resource_instances/testString/resource_keys')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -760,21 +1027,82 @@ class TestListResourceKeysForInstance():
             with pytest.raises(ValueError):
                 _service.list_resource_keys_for_instance(**req_copy)
 
+    def test_list_resource_keys_for_instance_value_error_with_retries(self):
+        # Enable retries and run test_list_resource_keys_for_instance_value_error.
+        _service.enable_retries()
+        self.test_list_resource_keys_for_instance_value_error()
 
+        # Disable retries and run test_list_resource_keys_for_instance_value_error.
+        _service.disable_retries()
+        self.test_list_resource_keys_for_instance_value_error()
+
+    @responses.activate
+    def test_list_resource_keys_for_instance_with_pager_get_next(self):
+        """
+        test_list_resource_keys_for_instance_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/resource_instances/testString/resource_keys')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","name":"name","crn":"crn","state":"state","account_id":"account_id","resource_group_id":"resource_group_id","resource_id":"resource_id","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"migrated":true,"resource_instance_url":"resource_instance_url","resource_alias_url":"resource_alias_url"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","name":"name","crn":"crn","state":"state","account_id":"account_id","resource_group_id":"resource_group_id","resource_id":"resource_id","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"migrated":true,"resource_instance_url":"resource_instance_url","resource_alias_url":"resource_alias_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = ResourceKeysForInstancePager(
+            client=_service,
+            id='testString',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_resource_keys_for_instance_with_pager_get_all(self):
+        """
+        test_list_resource_keys_for_instance_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/resource_instances/testString/resource_keys')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","name":"name","crn":"crn","state":"state","account_id":"account_id","resource_group_id":"resource_group_id","resource_id":"resource_id","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"migrated":true,"resource_instance_url":"resource_instance_url","resource_alias_url":"resource_alias_url"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","name":"name","crn":"crn","state":"state","account_id":"account_id","resource_group_id":"resource_group_id","resource_id":"resource_id","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"migrated":true,"resource_instance_url":"resource_instance_url","resource_alias_url":"resource_alias_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = ResourceKeysForInstancePager(
+            client=_service,
+            id='testString',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestLockResourceInstance():
     """
     Test Class for lock_resource_instance
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_lock_resource_instance_all_params(self):
@@ -782,8 +1110,8 @@ class TestLockResourceInstance():
         lock_resource_instance()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/lock')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
+        url = preprocess_url('/v2/resource_instances/testString/lock')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -803,6 +1131,14 @@ class TestLockResourceInstance():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_lock_resource_instance_all_params_with_retries(self):
+        # Enable retries and run test_lock_resource_instance_all_params.
+        _service.enable_retries()
+        self.test_lock_resource_instance_all_params()
+
+        # Disable retries and run test_lock_resource_instance_all_params.
+        _service.disable_retries()
+        self.test_lock_resource_instance_all_params()
 
     @responses.activate
     def test_lock_resource_instance_value_error(self):
@@ -810,8 +1146,8 @@ class TestLockResourceInstance():
         test_lock_resource_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/lock')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
+        url = preprocess_url('/v2/resource_instances/testString/lock')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -830,21 +1166,19 @@ class TestLockResourceInstance():
             with pytest.raises(ValueError):
                 _service.lock_resource_instance(**req_copy)
 
+    def test_lock_resource_instance_value_error_with_retries(self):
+        # Enable retries and run test_lock_resource_instance_value_error.
+        _service.enable_retries()
+        self.test_lock_resource_instance_value_error()
 
+        # Disable retries and run test_lock_resource_instance_value_error.
+        _service.disable_retries()
+        self.test_lock_resource_instance_value_error()
 
 class TestUnlockResourceInstance():
     """
     Test Class for unlock_resource_instance
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_unlock_resource_instance_all_params(self):
@@ -852,8 +1186,8 @@ class TestUnlockResourceInstance():
         unlock_resource_instance()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/lock')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
+        url = preprocess_url('/v2/resource_instances/testString/lock')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.DELETE,
                       url,
                       body=mock_response,
@@ -873,6 +1207,14 @@ class TestUnlockResourceInstance():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_unlock_resource_instance_all_params_with_retries(self):
+        # Enable retries and run test_unlock_resource_instance_all_params.
+        _service.enable_retries()
+        self.test_unlock_resource_instance_all_params()
+
+        # Disable retries and run test_unlock_resource_instance_all_params.
+        _service.disable_retries()
+        self.test_unlock_resource_instance_all_params()
 
     @responses.activate
     def test_unlock_resource_instance_value_error(self):
@@ -880,8 +1222,8 @@ class TestUnlockResourceInstance():
         test_unlock_resource_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/lock')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": {"anyKey": "anyValue"}}, "allow_cleanup": false, "crn": "crn", "state": "state", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"mapKey": {"anyKey": "anyValue"}}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": {"anyKey": "anyValue"}}, "controlled_by": "controlled_by", "locked": true}'
+        url = preprocess_url('/v2/resource_instances/testString/lock')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.DELETE,
                       url,
                       body=mock_response,
@@ -900,27 +1242,28 @@ class TestUnlockResourceInstance():
             with pytest.raises(ValueError):
                 _service.unlock_resource_instance(**req_copy)
 
+    def test_unlock_resource_instance_value_error_with_retries(self):
+        # Enable retries and run test_unlock_resource_instance_value_error.
+        _service.enable_retries()
+        self.test_unlock_resource_instance_value_error()
+
+        # Disable retries and run test_unlock_resource_instance_value_error.
+        _service.disable_retries()
+        self.test_unlock_resource_instance_value_error()
+
 class TestCancelLastopResourceInstance():
     """
     Test Class for cancel_lastop_resource_instance
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
     @responses.activate
     def test_cancel_lastop_resource_instance_all_params(self):
         """
         cancel_lastop_resource_instance()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/last_operation')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
+        url = preprocess_url('/v2/resource_instances/testString/last_operation')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.DELETE,
                       url,
                       body=mock_response,
@@ -940,14 +1283,23 @@ class TestCancelLastopResourceInstance():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_cancel_lastop_resource_instance_all_params_with_retries(self):
+        # Enable retries and run test_cancel_lastop_resource_instance_all_params.
+        _service.enable_retries()
+        self.test_cancel_lastop_resource_instance_all_params()
+
+        # Disable retries and run test_cancel_lastop_resource_instance_all_params.
+        _service.disable_retries()
+        self.test_cancel_lastop_resource_instance_all_params()
+
     @responses.activate
     def test_cancel_lastop_resource_instance_value_error(self):
         """
         test_cancel_lastop_resource_instance_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_instances/testString/last_operation')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"mapKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"mapKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
+        url = preprocess_url('/v2/resource_instances/testString/last_operation')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "scheduled_reclaim_at": "2019-01-01T12:00:00.000Z", "restored_at": "2019-01-01T12:00:00.000Z", "restored_by": "restored_by", "scheduled_reclaim_by": "scheduled_reclaim_by", "name": "name", "region_id": "region_id", "account_id": "account_id", "reseller_channel_id": "reseller_channel_id", "resource_plan_id": "resource_plan_id", "resource_group_id": "resource_group_id", "resource_group_crn": "resource_group_crn", "target_crn": "target_crn", "parameters": {"anyKey": "anyValue"}, "allow_cleanup": false, "crn": "crn", "state": "active", "type": "type", "sub_type": "sub_type", "resource_id": "resource_id", "dashboard_url": "dashboard_url", "last_operation": {"type": "type", "state": "in progress", "sub_type": "sub_type", "async": true, "description": "description", "reason_code": "reason_code", "poll_after": 10, "cancelable": true, "poll": true}, "resource_aliases_url": "resource_aliases_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url", "plan_history": [{"resource_plan_id": "resource_plan_id", "start_date": "2019-01-01T12:00:00.000Z", "requestor_id": "requestor_id"}], "migrated": true, "extensions": {"anyKey": "anyValue"}, "controlled_by": "controlled_by", "locked": true}'
         responses.add(responses.DELETE,
                       url,
                       body=mock_response,
@@ -966,6 +1318,14 @@ class TestCancelLastopResourceInstance():
             with pytest.raises(ValueError):
                 _service.cancel_lastop_resource_instance(**req_copy)
 
+    def test_cancel_lastop_resource_instance_value_error_with_retries(self):
+        # Enable retries and run test_cancel_lastop_resource_instance_value_error.
+        _service.enable_retries()
+        self.test_cancel_lastop_resource_instance_value_error()
+
+        # Disable retries and run test_cancel_lastop_resource_instance_value_error.
+        _service.disable_retries()
+        self.test_cancel_lastop_resource_instance_value_error()
 
 # endregion
 ##############################################################################
@@ -977,19 +1337,37 @@ class TestCancelLastopResourceInstance():
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = ResourceControllerV2.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, ResourceControllerV2)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = ResourceControllerV2.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
 class TestListResourceKeys():
     """
     Test Class for list_resource_keys
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_resource_keys_all_params(self):
@@ -997,8 +1375,8 @@ class TestListResourceKeys():
         list_resource_keys()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_keys')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
+        url = preprocess_url('/v2/resource_keys')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1012,8 +1390,8 @@ class TestListResourceKeys():
         resource_id = 'testString'
         limit = 100
         start = 'testString'
-        updated_from = '2019-01-08T00:00:00.000Z'
-        updated_to = '2019-01-08T00:00:00.000Z'
+        updated_from = '2021-01-01'
+        updated_to = '2021-01-01'
 
         # Invoke method
         response = _service.list_resource_keys(
@@ -1043,6 +1421,14 @@ class TestListResourceKeys():
         assert 'updated_from={}'.format(updated_from) in query_string
         assert 'updated_to={}'.format(updated_to) in query_string
 
+    def test_list_resource_keys_all_params_with_retries(self):
+        # Enable retries and run test_list_resource_keys_all_params.
+        _service.enable_retries()
+        self.test_list_resource_keys_all_params()
+
+        # Disable retries and run test_list_resource_keys_all_params.
+        _service.disable_retries()
+        self.test_list_resource_keys_all_params()
 
     @responses.activate
     def test_list_resource_keys_required_params(self):
@@ -1050,8 +1436,8 @@ class TestListResourceKeys():
         test_list_resource_keys_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_keys')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
+        url = preprocess_url('/v2/resource_keys')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1066,20 +1452,92 @@ class TestListResourceKeys():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_resource_keys_required_params_with_retries(self):
+        # Enable retries and run test_list_resource_keys_required_params.
+        _service.enable_retries()
+        self.test_list_resource_keys_required_params()
+
+        # Disable retries and run test_list_resource_keys_required_params.
+        _service.disable_retries()
+        self.test_list_resource_keys_required_params()
+
+    @responses.activate
+    def test_list_resource_keys_with_pager_get_next(self):
+        """
+        test_list_resource_keys_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/resource_keys')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","name":"name","crn":"crn","state":"state","account_id":"account_id","resource_group_id":"resource_group_id","resource_id":"resource_id","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"migrated":true,"resource_instance_url":"resource_instance_url","resource_alias_url":"resource_alias_url"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","name":"name","crn":"crn","state":"state","account_id":"account_id","resource_group_id":"resource_group_id","resource_id":"resource_id","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"migrated":true,"resource_instance_url":"resource_instance_url","resource_alias_url":"resource_alias_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = ResourceKeysPager(
+            client=_service,
+            guid='testString',
+            name='testString',
+            resource_group_id='testString',
+            resource_id='testString',
+            limit=10,
+            updated_from='2021-01-01',
+            updated_to='2021-01-01',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_resource_keys_with_pager_get_all(self):
+        """
+        test_list_resource_keys_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/resource_keys')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","name":"name","crn":"crn","state":"state","account_id":"account_id","resource_group_id":"resource_group_id","resource_id":"resource_id","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"migrated":true,"resource_instance_url":"resource_instance_url","resource_alias_url":"resource_alias_url"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","name":"name","crn":"crn","state":"state","account_id":"account_id","resource_group_id":"resource_group_id","resource_id":"resource_id","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"migrated":true,"resource_instance_url":"resource_instance_url","resource_alias_url":"resource_alias_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = ResourceKeysPager(
+            client=_service,
+            guid='testString',
+            name='testString',
+            resource_group_id='testString',
+            resource_id='testString',
+            limit=10,
+            updated_from='2021-01-01',
+            updated_to='2021-01-01',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestCreateResourceKey():
     """
     Test Class for create_resource_key
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_create_resource_key_all_params(self):
@@ -1087,8 +1545,8 @@ class TestCreateResourceKey():
         create_resource_key()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_keys')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
+        url = preprocess_url('/v2/resource_keys')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1098,11 +1556,11 @@ class TestCreateResourceKey():
         # Construct a dict representation of a ResourceKeyPostParameters model
         resource_key_post_parameters_model = {}
         resource_key_post_parameters_model['serviceid_crn'] = 'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
-        resource_key_post_parameters_model['foo'] = { 'foo': 'bar' }
+        resource_key_post_parameters_model['exampleParameter'] = 'exampleValue'
 
         # Set up parameter values
-        name = 'my-key'
-        source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
+        name = 'ExampleResourceKey'
+        source = '381fd51a-f251-4f95-aff4-2b03fa8caa63'
         parameters = resource_key_post_parameters_model
         role = 'Writer'
 
@@ -1120,11 +1578,19 @@ class TestCreateResourceKey():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-key'
-        assert req_body['source'] == '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
+        assert req_body['name'] == 'ExampleResourceKey'
+        assert req_body['source'] == '381fd51a-f251-4f95-aff4-2b03fa8caa63'
         assert req_body['parameters'] == resource_key_post_parameters_model
         assert req_body['role'] == 'Writer'
 
+    def test_create_resource_key_all_params_with_retries(self):
+        # Enable retries and run test_create_resource_key_all_params.
+        _service.enable_retries()
+        self.test_create_resource_key_all_params()
+
+        # Disable retries and run test_create_resource_key_all_params.
+        _service.disable_retries()
+        self.test_create_resource_key_all_params()
 
     @responses.activate
     def test_create_resource_key_value_error(self):
@@ -1132,8 +1598,8 @@ class TestCreateResourceKey():
         test_create_resource_key_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_keys')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
+        url = preprocess_url('/v2/resource_keys')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1143,11 +1609,11 @@ class TestCreateResourceKey():
         # Construct a dict representation of a ResourceKeyPostParameters model
         resource_key_post_parameters_model = {}
         resource_key_post_parameters_model['serviceid_crn'] = 'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
-        resource_key_post_parameters_model['foo'] = { 'foo': 'bar' }
+        resource_key_post_parameters_model['exampleParameter'] = 'exampleValue'
 
         # Set up parameter values
-        name = 'my-key'
-        source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
+        name = 'ExampleResourceKey'
+        source = '381fd51a-f251-4f95-aff4-2b03fa8caa63'
         parameters = resource_key_post_parameters_model
         role = 'Writer'
 
@@ -1161,21 +1627,19 @@ class TestCreateResourceKey():
             with pytest.raises(ValueError):
                 _service.create_resource_key(**req_copy)
 
+    def test_create_resource_key_value_error_with_retries(self):
+        # Enable retries and run test_create_resource_key_value_error.
+        _service.enable_retries()
+        self.test_create_resource_key_value_error()
 
+        # Disable retries and run test_create_resource_key_value_error.
+        _service.disable_retries()
+        self.test_create_resource_key_value_error()
 
 class TestGetResourceKey():
     """
     Test Class for get_resource_key
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_resource_key_all_params(self):
@@ -1183,8 +1647,8 @@ class TestGetResourceKey():
         get_resource_key()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_keys/testString')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
+        url = preprocess_url('/v2/resource_keys/testString')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1204,6 +1668,14 @@ class TestGetResourceKey():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_resource_key_all_params_with_retries(self):
+        # Enable retries and run test_get_resource_key_all_params.
+        _service.enable_retries()
+        self.test_get_resource_key_all_params()
+
+        # Disable retries and run test_get_resource_key_all_params.
+        _service.disable_retries()
+        self.test_get_resource_key_all_params()
 
     @responses.activate
     def test_get_resource_key_value_error(self):
@@ -1211,8 +1683,8 @@ class TestGetResourceKey():
         test_get_resource_key_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_keys/testString')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
+        url = preprocess_url('/v2/resource_keys/testString')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1231,21 +1703,19 @@ class TestGetResourceKey():
             with pytest.raises(ValueError):
                 _service.get_resource_key(**req_copy)
 
+    def test_get_resource_key_value_error_with_retries(self):
+        # Enable retries and run test_get_resource_key_value_error.
+        _service.enable_retries()
+        self.test_get_resource_key_value_error()
 
+        # Disable retries and run test_get_resource_key_value_error.
+        _service.disable_retries()
+        self.test_get_resource_key_value_error()
 
 class TestDeleteResourceKey():
     """
     Test Class for delete_resource_key
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_delete_resource_key_all_params(self):
@@ -1253,7 +1723,7 @@ class TestDeleteResourceKey():
         delete_resource_key()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_keys/testString')
+        url = preprocess_url('/v2/resource_keys/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1271,6 +1741,14 @@ class TestDeleteResourceKey():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_delete_resource_key_all_params_with_retries(self):
+        # Enable retries and run test_delete_resource_key_all_params.
+        _service.enable_retries()
+        self.test_delete_resource_key_all_params()
+
+        # Disable retries and run test_delete_resource_key_all_params.
+        _service.disable_retries()
+        self.test_delete_resource_key_all_params()
 
     @responses.activate
     def test_delete_resource_key_value_error(self):
@@ -1278,7 +1756,7 @@ class TestDeleteResourceKey():
         test_delete_resource_key_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_keys/testString')
+        url = preprocess_url('/v2/resource_keys/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1295,21 +1773,19 @@ class TestDeleteResourceKey():
             with pytest.raises(ValueError):
                 _service.delete_resource_key(**req_copy)
 
+    def test_delete_resource_key_value_error_with_retries(self):
+        # Enable retries and run test_delete_resource_key_value_error.
+        _service.enable_retries()
+        self.test_delete_resource_key_value_error()
 
+        # Disable retries and run test_delete_resource_key_value_error.
+        _service.disable_retries()
+        self.test_delete_resource_key_value_error()
 
 class TestUpdateResourceKey():
     """
     Test Class for update_resource_key
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_resource_key_all_params(self):
@@ -1317,8 +1793,8 @@ class TestUpdateResourceKey():
         update_resource_key()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_keys/testString')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
+        url = preprocess_url('/v2/resource_keys/testString')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -1327,7 +1803,7 @@ class TestUpdateResourceKey():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-key-name'
+        name = 'UpdatedExampleResourceKey'
 
         # Invoke method
         response = _service.update_resource_key(
@@ -1341,8 +1817,16 @@ class TestUpdateResourceKey():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-new-key-name'
+        assert req_body['name'] == 'UpdatedExampleResourceKey'
 
+    def test_update_resource_key_all_params_with_retries(self):
+        # Enable retries and run test_update_resource_key_all_params.
+        _service.enable_retries()
+        self.test_update_resource_key_all_params()
+
+        # Disable retries and run test_update_resource_key_all_params.
+        _service.disable_retries()
+        self.test_update_resource_key_all_params()
 
     @responses.activate
     def test_update_resource_key_value_error(self):
@@ -1350,8 +1834,8 @@ class TestUpdateResourceKey():
         test_update_resource_key_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_keys/testString')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
+        url = preprocess_url('/v2/resource_keys/testString')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "name": "name", "crn": "crn", "state": "state", "account_id": "account_id", "resource_group_id": "resource_group_id", "resource_id": "resource_id", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "migrated": true, "resource_instance_url": "resource_instance_url", "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -1360,7 +1844,7 @@ class TestUpdateResourceKey():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-key-name'
+        name = 'UpdatedExampleResourceKey'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1372,7 +1856,14 @@ class TestUpdateResourceKey():
             with pytest.raises(ValueError):
                 _service.update_resource_key(**req_copy)
 
+    def test_update_resource_key_value_error_with_retries(self):
+        # Enable retries and run test_update_resource_key_value_error.
+        _service.enable_retries()
+        self.test_update_resource_key_value_error()
 
+        # Disable retries and run test_update_resource_key_value_error.
+        _service.disable_retries()
+        self.test_update_resource_key_value_error()
 
 # endregion
 ##############################################################################
@@ -1384,19 +1875,37 @@ class TestUpdateResourceKey():
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = ResourceControllerV2.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, ResourceControllerV2)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = ResourceControllerV2.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
 class TestListResourceBindings():
     """
     Test Class for list_resource_bindings
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_resource_bindings_all_params(self):
@@ -1404,8 +1913,8 @@ class TestListResourceBindings():
         list_resource_bindings()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_bindings')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
+        url = preprocess_url('/v2/resource_bindings')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1420,8 +1929,8 @@ class TestListResourceBindings():
         region_binding_id = 'testString'
         limit = 100
         start = 'testString'
-        updated_from = '2019-01-08T00:00:00.000Z'
-        updated_to = '2019-01-08T00:00:00.000Z'
+        updated_from = '2021-01-01'
+        updated_to = '2021-01-01'
 
         # Invoke method
         response = _service.list_resource_bindings(
@@ -1453,6 +1962,14 @@ class TestListResourceBindings():
         assert 'updated_from={}'.format(updated_from) in query_string
         assert 'updated_to={}'.format(updated_to) in query_string
 
+    def test_list_resource_bindings_all_params_with_retries(self):
+        # Enable retries and run test_list_resource_bindings_all_params.
+        _service.enable_retries()
+        self.test_list_resource_bindings_all_params()
+
+        # Disable retries and run test_list_resource_bindings_all_params.
+        _service.disable_retries()
+        self.test_list_resource_bindings_all_params()
 
     @responses.activate
     def test_list_resource_bindings_required_params(self):
@@ -1460,8 +1977,8 @@ class TestListResourceBindings():
         test_list_resource_bindings_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_bindings')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
+        url = preprocess_url('/v2/resource_bindings')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1476,20 +1993,94 @@ class TestListResourceBindings():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_resource_bindings_required_params_with_retries(self):
+        # Enable retries and run test_list_resource_bindings_required_params.
+        _service.enable_retries()
+        self.test_list_resource_bindings_required_params()
+
+        # Disable retries and run test_list_resource_bindings_required_params.
+        _service.disable_retries()
+        self.test_list_resource_bindings_required_params()
+
+    @responses.activate
+    def test_list_resource_bindings_with_pager_get_next(self):
+        """
+        test_list_resource_bindings_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/resource_bindings')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","target_crn":"target_crn","crn":"crn","region_binding_id":"region_binding_id","region_binding_crn":"region_binding_crn","name":"name","account_id":"account_id","resource_group_id":"resource_group_id","state":"state","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"resource_id":"resource_id","migrated":true,"resource_alias_url":"resource_alias_url"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","target_crn":"target_crn","crn":"crn","region_binding_id":"region_binding_id","region_binding_crn":"region_binding_crn","name":"name","account_id":"account_id","resource_group_id":"resource_group_id","state":"state","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"resource_id":"resource_id","migrated":true,"resource_alias_url":"resource_alias_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = ResourceBindingsPager(
+            client=_service,
+            guid='testString',
+            name='testString',
+            resource_group_id='testString',
+            resource_id='testString',
+            region_binding_id='testString',
+            limit=10,
+            updated_from='2021-01-01',
+            updated_to='2021-01-01',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_resource_bindings_with_pager_get_all(self):
+        """
+        test_list_resource_bindings_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/resource_bindings')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","target_crn":"target_crn","crn":"crn","region_binding_id":"region_binding_id","region_binding_crn":"region_binding_crn","name":"name","account_id":"account_id","resource_group_id":"resource_group_id","state":"state","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"resource_id":"resource_id","migrated":true,"resource_alias_url":"resource_alias_url"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","target_crn":"target_crn","crn":"crn","region_binding_id":"region_binding_id","region_binding_crn":"region_binding_crn","name":"name","account_id":"account_id","resource_group_id":"resource_group_id","state":"state","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"resource_id":"resource_id","migrated":true,"resource_alias_url":"resource_alias_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = ResourceBindingsPager(
+            client=_service,
+            guid='testString',
+            name='testString',
+            resource_group_id='testString',
+            resource_id='testString',
+            region_binding_id='testString',
+            limit=10,
+            updated_from='2021-01-01',
+            updated_to='2021-01-01',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestCreateResourceBinding():
     """
     Test Class for create_resource_binding
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_create_resource_binding_all_params(self):
@@ -1497,8 +2088,8 @@ class TestCreateResourceBinding():
         create_resource_binding()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_bindings')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
+        url = preprocess_url('/v2/resource_bindings')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1508,12 +2099,12 @@ class TestCreateResourceBinding():
         # Construct a dict representation of a ResourceBindingPostParameters model
         resource_binding_post_parameters_model = {}
         resource_binding_post_parameters_model['serviceid_crn'] = 'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
-        resource_binding_post_parameters_model['foo'] = { 'foo': 'bar' }
+        resource_binding_post_parameters_model['exampleParameter'] = 'exampleValue'
 
         # Set up parameter values
-        source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
-        target = 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
-        name = 'my-binding'
+        source = 'faaec9d8-ec64-44d8-ab83-868632fac6a2'
+        target = 'crn:v1:staging:public:bluemix:us-south:s/e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7::cf-application:8d9457e0-1303-4f32-b4b3-5525575f6205'
+        name = 'ExampleResourceBinding'
         parameters = resource_binding_post_parameters_model
         role = 'Writer'
 
@@ -1532,12 +2123,20 @@ class TestCreateResourceBinding():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['source'] == '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
-        assert req_body['target'] == 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
-        assert req_body['name'] == 'my-binding'
+        assert req_body['source'] == 'faaec9d8-ec64-44d8-ab83-868632fac6a2'
+        assert req_body['target'] == 'crn:v1:staging:public:bluemix:us-south:s/e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7::cf-application:8d9457e0-1303-4f32-b4b3-5525575f6205'
+        assert req_body['name'] == 'ExampleResourceBinding'
         assert req_body['parameters'] == resource_binding_post_parameters_model
         assert req_body['role'] == 'Writer'
 
+    def test_create_resource_binding_all_params_with_retries(self):
+        # Enable retries and run test_create_resource_binding_all_params.
+        _service.enable_retries()
+        self.test_create_resource_binding_all_params()
+
+        # Disable retries and run test_create_resource_binding_all_params.
+        _service.disable_retries()
+        self.test_create_resource_binding_all_params()
 
     @responses.activate
     def test_create_resource_binding_value_error(self):
@@ -1545,8 +2144,8 @@ class TestCreateResourceBinding():
         test_create_resource_binding_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_bindings')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
+        url = preprocess_url('/v2/resource_bindings')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1556,12 +2155,12 @@ class TestCreateResourceBinding():
         # Construct a dict representation of a ResourceBindingPostParameters model
         resource_binding_post_parameters_model = {}
         resource_binding_post_parameters_model['serviceid_crn'] = 'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
-        resource_binding_post_parameters_model['foo'] = { 'foo': 'bar' }
+        resource_binding_post_parameters_model['exampleParameter'] = 'exampleValue'
 
         # Set up parameter values
-        source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
-        target = 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c'
-        name = 'my-binding'
+        source = 'faaec9d8-ec64-44d8-ab83-868632fac6a2'
+        target = 'crn:v1:staging:public:bluemix:us-south:s/e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7::cf-application:8d9457e0-1303-4f32-b4b3-5525575f6205'
+        name = 'ExampleResourceBinding'
         parameters = resource_binding_post_parameters_model
         role = 'Writer'
 
@@ -1575,21 +2174,19 @@ class TestCreateResourceBinding():
             with pytest.raises(ValueError):
                 _service.create_resource_binding(**req_copy)
 
+    def test_create_resource_binding_value_error_with_retries(self):
+        # Enable retries and run test_create_resource_binding_value_error.
+        _service.enable_retries()
+        self.test_create_resource_binding_value_error()
 
+        # Disable retries and run test_create_resource_binding_value_error.
+        _service.disable_retries()
+        self.test_create_resource_binding_value_error()
 
 class TestGetResourceBinding():
     """
     Test Class for get_resource_binding
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_resource_binding_all_params(self):
@@ -1597,8 +2194,8 @@ class TestGetResourceBinding():
         get_resource_binding()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_bindings/testString')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
+        url = preprocess_url('/v2/resource_bindings/testString')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1618,6 +2215,14 @@ class TestGetResourceBinding():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_resource_binding_all_params_with_retries(self):
+        # Enable retries and run test_get_resource_binding_all_params.
+        _service.enable_retries()
+        self.test_get_resource_binding_all_params()
+
+        # Disable retries and run test_get_resource_binding_all_params.
+        _service.disable_retries()
+        self.test_get_resource_binding_all_params()
 
     @responses.activate
     def test_get_resource_binding_value_error(self):
@@ -1625,8 +2230,8 @@ class TestGetResourceBinding():
         test_get_resource_binding_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_bindings/testString')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
+        url = preprocess_url('/v2/resource_bindings/testString')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1645,21 +2250,19 @@ class TestGetResourceBinding():
             with pytest.raises(ValueError):
                 _service.get_resource_binding(**req_copy)
 
+    def test_get_resource_binding_value_error_with_retries(self):
+        # Enable retries and run test_get_resource_binding_value_error.
+        _service.enable_retries()
+        self.test_get_resource_binding_value_error()
 
+        # Disable retries and run test_get_resource_binding_value_error.
+        _service.disable_retries()
+        self.test_get_resource_binding_value_error()
 
 class TestDeleteResourceBinding():
     """
     Test Class for delete_resource_binding
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_delete_resource_binding_all_params(self):
@@ -1667,7 +2270,7 @@ class TestDeleteResourceBinding():
         delete_resource_binding()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_bindings/testString')
+        url = preprocess_url('/v2/resource_bindings/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1685,6 +2288,14 @@ class TestDeleteResourceBinding():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_delete_resource_binding_all_params_with_retries(self):
+        # Enable retries and run test_delete_resource_binding_all_params.
+        _service.enable_retries()
+        self.test_delete_resource_binding_all_params()
+
+        # Disable retries and run test_delete_resource_binding_all_params.
+        _service.disable_retries()
+        self.test_delete_resource_binding_all_params()
 
     @responses.activate
     def test_delete_resource_binding_value_error(self):
@@ -1692,7 +2303,7 @@ class TestDeleteResourceBinding():
         test_delete_resource_binding_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_bindings/testString')
+        url = preprocess_url('/v2/resource_bindings/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1709,21 +2320,19 @@ class TestDeleteResourceBinding():
             with pytest.raises(ValueError):
                 _service.delete_resource_binding(**req_copy)
 
+    def test_delete_resource_binding_value_error_with_retries(self):
+        # Enable retries and run test_delete_resource_binding_value_error.
+        _service.enable_retries()
+        self.test_delete_resource_binding_value_error()
 
+        # Disable retries and run test_delete_resource_binding_value_error.
+        _service.disable_retries()
+        self.test_delete_resource_binding_value_error()
 
 class TestUpdateResourceBinding():
     """
     Test Class for update_resource_binding
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_resource_binding_all_params(self):
@@ -1731,8 +2340,8 @@ class TestUpdateResourceBinding():
         update_resource_binding()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_bindings/testString')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
+        url = preprocess_url('/v2/resource_bindings/testString')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -1741,7 +2350,7 @@ class TestUpdateResourceBinding():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-binding-name'
+        name = 'UpdatedExampleResourceBinding'
 
         # Invoke method
         response = _service.update_resource_binding(
@@ -1755,8 +2364,16 @@ class TestUpdateResourceBinding():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-new-binding-name'
+        assert req_body['name'] == 'UpdatedExampleResourceBinding'
 
+    def test_update_resource_binding_all_params_with_retries(self):
+        # Enable retries and run test_update_resource_binding_all_params.
+        _service.enable_retries()
+        self.test_update_resource_binding_all_params()
+
+        # Disable retries and run test_update_resource_binding_all_params.
+        _service.disable_retries()
+        self.test_update_resource_binding_all_params()
 
     @responses.activate
     def test_update_resource_binding_value_error(self):
@@ -1764,8 +2381,8 @@ class TestUpdateResourceBinding():
         test_update_resource_binding_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_bindings/testString')
-        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
+        url = preprocess_url('/v2/resource_bindings/testString')
+        mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -1774,7 +2391,7 @@ class TestUpdateResourceBinding():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-binding-name'
+        name = 'UpdatedExampleResourceBinding'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1786,7 +2403,14 @@ class TestUpdateResourceBinding():
             with pytest.raises(ValueError):
                 _service.update_resource_binding(**req_copy)
 
+    def test_update_resource_binding_value_error_with_retries(self):
+        # Enable retries and run test_update_resource_binding_value_error.
+        _service.enable_retries()
+        self.test_update_resource_binding_value_error()
 
+        # Disable retries and run test_update_resource_binding_value_error.
+        _service.disable_retries()
+        self.test_update_resource_binding_value_error()
 
 # endregion
 ##############################################################################
@@ -1798,19 +2422,37 @@ class TestUpdateResourceBinding():
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = ResourceControllerV2.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, ResourceControllerV2)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = ResourceControllerV2.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
 class TestListResourceAliases():
     """
     Test Class for list_resource_aliases
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_resource_aliases_all_params(self):
@@ -1818,7 +2460,7 @@ class TestListResourceAliases():
         list_resource_aliases()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_aliases')
+        url = preprocess_url('/v2/resource_aliases')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -1835,8 +2477,8 @@ class TestListResourceAliases():
         resource_group_id = 'testString'
         limit = 100
         start = 'testString'
-        updated_from = '2019-01-08T00:00:00.000Z'
-        updated_to = '2019-01-08T00:00:00.000Z'
+        updated_from = '2021-01-01'
+        updated_to = '2021-01-01'
 
         # Invoke method
         response = _service.list_resource_aliases(
@@ -1870,6 +2512,14 @@ class TestListResourceAliases():
         assert 'updated_from={}'.format(updated_from) in query_string
         assert 'updated_to={}'.format(updated_to) in query_string
 
+    def test_list_resource_aliases_all_params_with_retries(self):
+        # Enable retries and run test_list_resource_aliases_all_params.
+        _service.enable_retries()
+        self.test_list_resource_aliases_all_params()
+
+        # Disable retries and run test_list_resource_aliases_all_params.
+        _service.disable_retries()
+        self.test_list_resource_aliases_all_params()
 
     @responses.activate
     def test_list_resource_aliases_required_params(self):
@@ -1877,7 +2527,7 @@ class TestListResourceAliases():
         test_list_resource_aliases_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_aliases')
+        url = preprocess_url('/v2/resource_aliases')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}]}'
         responses.add(responses.GET,
                       url,
@@ -1893,20 +2543,96 @@ class TestListResourceAliases():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_resource_aliases_required_params_with_retries(self):
+        # Enable retries and run test_list_resource_aliases_required_params.
+        _service.enable_retries()
+        self.test_list_resource_aliases_required_params()
+
+        # Disable retries and run test_list_resource_aliases_required_params.
+        _service.disable_retries()
+        self.test_list_resource_aliases_required_params()
+
+    @responses.activate
+    def test_list_resource_aliases_with_pager_get_next(self):
+        """
+        test_list_resource_aliases_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/resource_aliases')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","name":"name","resource_instance_id":"resource_instance_id","target_crn":"target_crn","account_id":"account_id","resource_id":"resource_id","resource_group_id":"resource_group_id","crn":"crn","region_instance_id":"region_instance_id","region_instance_crn":"region_instance_crn","state":"state","migrated":true,"resource_instance_url":"resource_instance_url","resource_bindings_url":"resource_bindings_url","resource_keys_url":"resource_keys_url"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","name":"name","resource_instance_id":"resource_instance_id","target_crn":"target_crn","account_id":"account_id","resource_id":"resource_id","resource_group_id":"resource_group_id","crn":"crn","region_instance_id":"region_instance_id","region_instance_crn":"region_instance_crn","state":"state","migrated":true,"resource_instance_url":"resource_instance_url","resource_bindings_url":"resource_bindings_url","resource_keys_url":"resource_keys_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = ResourceAliasesPager(
+            client=_service,
+            guid='testString',
+            name='testString',
+            resource_instance_id='testString',
+            region_instance_id='testString',
+            resource_id='testString',
+            resource_group_id='testString',
+            limit=10,
+            updated_from='2021-01-01',
+            updated_to='2021-01-01',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_resource_aliases_with_pager_get_all(self):
+        """
+        test_list_resource_aliases_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/resource_aliases')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","name":"name","resource_instance_id":"resource_instance_id","target_crn":"target_crn","account_id":"account_id","resource_id":"resource_id","resource_group_id":"resource_group_id","crn":"crn","region_instance_id":"region_instance_id","region_instance_crn":"region_instance_crn","state":"state","migrated":true,"resource_instance_url":"resource_instance_url","resource_bindings_url":"resource_bindings_url","resource_keys_url":"resource_keys_url"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","name":"name","resource_instance_id":"resource_instance_id","target_crn":"target_crn","account_id":"account_id","resource_id":"resource_id","resource_group_id":"resource_group_id","crn":"crn","region_instance_id":"region_instance_id","region_instance_crn":"region_instance_crn","state":"state","migrated":true,"resource_instance_url":"resource_instance_url","resource_bindings_url":"resource_bindings_url","resource_keys_url":"resource_keys_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = ResourceAliasesPager(
+            client=_service,
+            guid='testString',
+            name='testString',
+            resource_instance_id='testString',
+            region_instance_id='testString',
+            resource_id='testString',
+            resource_group_id='testString',
+            limit=10,
+            updated_from='2021-01-01',
+            updated_to='2021-01-01',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestCreateResourceAlias():
     """
     Test Class for create_resource_alias
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_create_resource_alias_all_params(self):
@@ -1914,7 +2640,7 @@ class TestCreateResourceAlias():
         create_resource_alias()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_aliases')
+        url = preprocess_url('/v2/resource_aliases')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}'
         responses.add(responses.POST,
                       url,
@@ -1923,9 +2649,9 @@ class TestCreateResourceAlias():
                       status=201)
 
         # Set up parameter values
-        name = 'my-alias'
-        source = 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
-        target = 'crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
+        name = 'ExampleResourceAlias'
+        source = '381fd51a-f251-4f95-aff4-2b03fa8caa63'
+        target = 'crn:v1:bluemix:public:bluemix:us-south:o/d35d4f0e-5076-4c89-9361-2522894b6548::cf-space:e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7'
 
         # Invoke method
         response = _service.create_resource_alias(
@@ -1940,10 +2666,18 @@ class TestCreateResourceAlias():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-alias'
-        assert req_body['source'] == 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
-        assert req_body['target'] == 'crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
+        assert req_body['name'] == 'ExampleResourceAlias'
+        assert req_body['source'] == '381fd51a-f251-4f95-aff4-2b03fa8caa63'
+        assert req_body['target'] == 'crn:v1:bluemix:public:bluemix:us-south:o/d35d4f0e-5076-4c89-9361-2522894b6548::cf-space:e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7'
 
+    def test_create_resource_alias_all_params_with_retries(self):
+        # Enable retries and run test_create_resource_alias_all_params.
+        _service.enable_retries()
+        self.test_create_resource_alias_all_params()
+
+        # Disable retries and run test_create_resource_alias_all_params.
+        _service.disable_retries()
+        self.test_create_resource_alias_all_params()
 
     @responses.activate
     def test_create_resource_alias_value_error(self):
@@ -1951,7 +2685,7 @@ class TestCreateResourceAlias():
         test_create_resource_alias_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_aliases')
+        url = preprocess_url('/v2/resource_aliases')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}'
         responses.add(responses.POST,
                       url,
@@ -1960,9 +2694,9 @@ class TestCreateResourceAlias():
                       status=201)
 
         # Set up parameter values
-        name = 'my-alias'
-        source = 'a8dff6d3-d287-4668-a81d-c87c55c2656d'
-        target = 'crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5'
+        name = 'ExampleResourceAlias'
+        source = '381fd51a-f251-4f95-aff4-2b03fa8caa63'
+        target = 'crn:v1:bluemix:public:bluemix:us-south:o/d35d4f0e-5076-4c89-9361-2522894b6548::cf-space:e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1975,21 +2709,19 @@ class TestCreateResourceAlias():
             with pytest.raises(ValueError):
                 _service.create_resource_alias(**req_copy)
 
+    def test_create_resource_alias_value_error_with_retries(self):
+        # Enable retries and run test_create_resource_alias_value_error.
+        _service.enable_retries()
+        self.test_create_resource_alias_value_error()
 
+        # Disable retries and run test_create_resource_alias_value_error.
+        _service.disable_retries()
+        self.test_create_resource_alias_value_error()
 
 class TestGetResourceAlias():
     """
     Test Class for get_resource_alias
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_resource_alias_all_params(self):
@@ -1997,7 +2729,7 @@ class TestGetResourceAlias():
         get_resource_alias()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString')
+        url = preprocess_url('/v2/resource_aliases/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}'
         responses.add(responses.GET,
                       url,
@@ -2018,6 +2750,14 @@ class TestGetResourceAlias():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_resource_alias_all_params_with_retries(self):
+        # Enable retries and run test_get_resource_alias_all_params.
+        _service.enable_retries()
+        self.test_get_resource_alias_all_params()
+
+        # Disable retries and run test_get_resource_alias_all_params.
+        _service.disable_retries()
+        self.test_get_resource_alias_all_params()
 
     @responses.activate
     def test_get_resource_alias_value_error(self):
@@ -2025,7 +2765,7 @@ class TestGetResourceAlias():
         test_get_resource_alias_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString')
+        url = preprocess_url('/v2/resource_aliases/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}'
         responses.add(responses.GET,
                       url,
@@ -2045,21 +2785,19 @@ class TestGetResourceAlias():
             with pytest.raises(ValueError):
                 _service.get_resource_alias(**req_copy)
 
+    def test_get_resource_alias_value_error_with_retries(self):
+        # Enable retries and run test_get_resource_alias_value_error.
+        _service.enable_retries()
+        self.test_get_resource_alias_value_error()
 
+        # Disable retries and run test_get_resource_alias_value_error.
+        _service.disable_retries()
+        self.test_get_resource_alias_value_error()
 
 class TestDeleteResourceAlias():
     """
     Test Class for delete_resource_alias
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_delete_resource_alias_all_params(self):
@@ -2067,7 +2805,46 @@ class TestDeleteResourceAlias():
         delete_resource_alias()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString')
+        url = preprocess_url('/v2/resource_aliases/testString')
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
+
+        # Set up parameter values
+        id = 'testString'
+        recursive = False
+
+        # Invoke method
+        response = _service.delete_resource_alias(
+            id,
+            recursive=recursive,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'recursive={}'.format('true' if recursive else 'false') in query_string
+
+    def test_delete_resource_alias_all_params_with_retries(self):
+        # Enable retries and run test_delete_resource_alias_all_params.
+        _service.enable_retries()
+        self.test_delete_resource_alias_all_params()
+
+        # Disable retries and run test_delete_resource_alias_all_params.
+        _service.disable_retries()
+        self.test_delete_resource_alias_all_params()
+
+    @responses.activate
+    def test_delete_resource_alias_required_params(self):
+        """
+        test_delete_resource_alias_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/resource_aliases/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2085,6 +2862,14 @@ class TestDeleteResourceAlias():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_delete_resource_alias_required_params_with_retries(self):
+        # Enable retries and run test_delete_resource_alias_required_params.
+        _service.enable_retries()
+        self.test_delete_resource_alias_required_params()
+
+        # Disable retries and run test_delete_resource_alias_required_params.
+        _service.disable_retries()
+        self.test_delete_resource_alias_required_params()
 
     @responses.activate
     def test_delete_resource_alias_value_error(self):
@@ -2092,7 +2877,7 @@ class TestDeleteResourceAlias():
         test_delete_resource_alias_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString')
+        url = preprocess_url('/v2/resource_aliases/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2109,21 +2894,19 @@ class TestDeleteResourceAlias():
             with pytest.raises(ValueError):
                 _service.delete_resource_alias(**req_copy)
 
+    def test_delete_resource_alias_value_error_with_retries(self):
+        # Enable retries and run test_delete_resource_alias_value_error.
+        _service.enable_retries()
+        self.test_delete_resource_alias_value_error()
 
+        # Disable retries and run test_delete_resource_alias_value_error.
+        _service.disable_retries()
+        self.test_delete_resource_alias_value_error()
 
 class TestUpdateResourceAlias():
     """
     Test Class for update_resource_alias
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_resource_alias_all_params(self):
@@ -2131,7 +2914,7 @@ class TestUpdateResourceAlias():
         update_resource_alias()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString')
+        url = preprocess_url('/v2/resource_aliases/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}'
         responses.add(responses.PATCH,
                       url,
@@ -2141,7 +2924,7 @@ class TestUpdateResourceAlias():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-alias-name'
+        name = 'UpdatedExampleResourceAlias'
 
         # Invoke method
         response = _service.update_resource_alias(
@@ -2155,8 +2938,16 @@ class TestUpdateResourceAlias():
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'my-new-alias-name'
+        assert req_body['name'] == 'UpdatedExampleResourceAlias'
 
+    def test_update_resource_alias_all_params_with_retries(self):
+        # Enable retries and run test_update_resource_alias_all_params.
+        _service.enable_retries()
+        self.test_update_resource_alias_all_params()
+
+        # Disable retries and run test_update_resource_alias_all_params.
+        _service.disable_retries()
+        self.test_update_resource_alias_all_params()
 
     @responses.activate
     def test_update_resource_alias_value_error(self):
@@ -2164,7 +2955,7 @@ class TestUpdateResourceAlias():
         test_update_resource_alias_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString')
+        url = preprocess_url('/v2/resource_aliases/testString')
         mock_response = '{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "name": "name", "resource_instance_id": "resource_instance_id", "target_crn": "target_crn", "account_id": "account_id", "resource_id": "resource_id", "resource_group_id": "resource_group_id", "crn": "crn", "region_instance_id": "region_instance_id", "region_instance_crn": "region_instance_crn", "state": "state", "migrated": true, "resource_instance_url": "resource_instance_url", "resource_bindings_url": "resource_bindings_url", "resource_keys_url": "resource_keys_url"}'
         responses.add(responses.PATCH,
                       url,
@@ -2174,7 +2965,7 @@ class TestUpdateResourceAlias():
 
         # Set up parameter values
         id = 'testString'
-        name = 'my-new-alias-name'
+        name = 'UpdatedExampleResourceAlias'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -2186,21 +2977,19 @@ class TestUpdateResourceAlias():
             with pytest.raises(ValueError):
                 _service.update_resource_alias(**req_copy)
 
+    def test_update_resource_alias_value_error_with_retries(self):
+        # Enable retries and run test_update_resource_alias_value_error.
+        _service.enable_retries()
+        self.test_update_resource_alias_value_error()
 
+        # Disable retries and run test_update_resource_alias_value_error.
+        _service.disable_retries()
+        self.test_update_resource_alias_value_error()
 
 class TestListResourceBindingsForAlias():
     """
     Test Class for list_resource_bindings_for_alias
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_resource_bindings_for_alias_all_params(self):
@@ -2208,8 +2997,8 @@ class TestListResourceBindingsForAlias():
         list_resource_bindings_for_alias()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString/resource_bindings')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
+        url = preprocess_url('/v2/resource_aliases/testString/resource_bindings')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2238,6 +3027,14 @@ class TestListResourceBindingsForAlias():
         assert 'limit={}'.format(limit) in query_string
         assert 'start={}'.format(start) in query_string
 
+    def test_list_resource_bindings_for_alias_all_params_with_retries(self):
+        # Enable retries and run test_list_resource_bindings_for_alias_all_params.
+        _service.enable_retries()
+        self.test_list_resource_bindings_for_alias_all_params()
+
+        # Disable retries and run test_list_resource_bindings_for_alias_all_params.
+        _service.disable_retries()
+        self.test_list_resource_bindings_for_alias_all_params()
 
     @responses.activate
     def test_list_resource_bindings_for_alias_required_params(self):
@@ -2245,8 +3042,8 @@ class TestListResourceBindingsForAlias():
         test_list_resource_bindings_for_alias_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString/resource_bindings')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
+        url = preprocess_url('/v2/resource_aliases/testString/resource_bindings')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2266,6 +3063,14 @@ class TestListResourceBindingsForAlias():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_resource_bindings_for_alias_required_params_with_retries(self):
+        # Enable retries and run test_list_resource_bindings_for_alias_required_params.
+        _service.enable_retries()
+        self.test_list_resource_bindings_for_alias_required_params()
+
+        # Disable retries and run test_list_resource_bindings_for_alias_required_params.
+        _service.disable_retries()
+        self.test_list_resource_bindings_for_alias_required_params()
 
     @responses.activate
     def test_list_resource_bindings_for_alias_value_error(self):
@@ -2273,8 +3078,8 @@ class TestListResourceBindingsForAlias():
         test_list_resource_bindings_for_alias_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resource_aliases/testString/resource_bindings')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
+        url = preprocess_url('/v2/resource_aliases/testString/resource_bindings')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "guid": "guid", "url": "url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z", "deleted_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_by": "updated_by", "deleted_by": "deleted_by", "source_crn": "source_crn", "target_crn": "target_crn", "crn": "crn", "region_binding_id": "region_binding_id", "region_binding_crn": "region_binding_crn", "name": "name", "account_id": "account_id", "resource_group_id": "resource_group_id", "state": "state", "credentials": {"REDACTED": "REDACTED", "apikey": "apikey", "iam_apikey_description": "iam_apikey_description", "iam_apikey_name": "iam_apikey_name", "iam_role_crn": "iam_role_crn", "iam_serviceid_crn": "iam_serviceid_crn"}, "iam_compatible": true, "resource_id": "resource_id", "migrated": true, "resource_alias_url": "resource_alias_url"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2293,7 +3098,77 @@ class TestListResourceBindingsForAlias():
             with pytest.raises(ValueError):
                 _service.list_resource_bindings_for_alias(**req_copy)
 
+    def test_list_resource_bindings_for_alias_value_error_with_retries(self):
+        # Enable retries and run test_list_resource_bindings_for_alias_value_error.
+        _service.enable_retries()
+        self.test_list_resource_bindings_for_alias_value_error()
 
+        # Disable retries and run test_list_resource_bindings_for_alias_value_error.
+        _service.disable_retries()
+        self.test_list_resource_bindings_for_alias_value_error()
+
+    @responses.activate
+    def test_list_resource_bindings_for_alias_with_pager_get_next(self):
+        """
+        test_list_resource_bindings_for_alias_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/resource_aliases/testString/resource_bindings')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","target_crn":"target_crn","crn":"crn","region_binding_id":"region_binding_id","region_binding_crn":"region_binding_crn","name":"name","account_id":"account_id","resource_group_id":"resource_group_id","state":"state","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"resource_id":"resource_id","migrated":true,"resource_alias_url":"resource_alias_url"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","target_crn":"target_crn","crn":"crn","region_binding_id":"region_binding_id","region_binding_crn":"region_binding_crn","name":"name","account_id":"account_id","resource_group_id":"resource_group_id","state":"state","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"resource_id":"resource_id","migrated":true,"resource_alias_url":"resource_alias_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = ResourceBindingsForAliasPager(
+            client=_service,
+            id='testString',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_resource_bindings_for_alias_with_pager_get_all(self):
+        """
+        test_list_resource_bindings_for_alias_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/resource_aliases/testString/resource_bindings')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","target_crn":"target_crn","crn":"crn","region_binding_id":"region_binding_id","region_binding_crn":"region_binding_crn","name":"name","account_id":"account_id","resource_group_id":"resource_group_id","state":"state","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"resource_id":"resource_id","migrated":true,"resource_alias_url":"resource_alias_url"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","guid":"guid","url":"url","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z","deleted_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_by":"updated_by","deleted_by":"deleted_by","source_crn":"source_crn","target_crn":"target_crn","crn":"crn","region_binding_id":"region_binding_id","region_binding_crn":"region_binding_crn","name":"name","account_id":"account_id","resource_group_id":"resource_group_id","state":"state","credentials":{"REDACTED":"REDACTED","apikey":"apikey","iam_apikey_description":"iam_apikey_description","iam_apikey_name":"iam_apikey_name","iam_role_crn":"iam_role_crn","iam_serviceid_crn":"iam_serviceid_crn"},"iam_compatible":true,"resource_id":"resource_id","migrated":true,"resource_alias_url":"resource_alias_url"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = ResourceBindingsForAliasPager(
+            client=_service,
+            id='testString',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 # endregion
 ##############################################################################
@@ -2305,19 +3180,37 @@ class TestListResourceBindingsForAlias():
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = ResourceControllerV2.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, ResourceControllerV2)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = ResourceControllerV2.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
 class TestListReclamations():
     """
     Test Class for list_reclamations
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_reclamations_all_params(self):
@@ -2325,8 +3218,8 @@ class TestListReclamations():
         list_reclamations()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/reclamations')
-        mock_response = '{"resources": [{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
+        url = preprocess_url('/v1/reclamations')
+        mock_response = '{"resources": [{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"anyKey": "anyValue"}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2353,6 +3246,14 @@ class TestListReclamations():
         assert 'account_id={}'.format(account_id) in query_string
         assert 'resource_instance_id={}'.format(resource_instance_id) in query_string
 
+    def test_list_reclamations_all_params_with_retries(self):
+        # Enable retries and run test_list_reclamations_all_params.
+        _service.enable_retries()
+        self.test_list_reclamations_all_params()
+
+        # Disable retries and run test_list_reclamations_all_params.
+        _service.disable_retries()
+        self.test_list_reclamations_all_params()
 
     @responses.activate
     def test_list_reclamations_required_params(self):
@@ -2360,8 +3261,8 @@ class TestListReclamations():
         test_list_reclamations_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/reclamations')
-        mock_response = '{"resources": [{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
+        url = preprocess_url('/v1/reclamations')
+        mock_response = '{"resources": [{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"anyKey": "anyValue"}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2376,20 +3277,19 @@ class TestListReclamations():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_reclamations_required_params_with_retries(self):
+        # Enable retries and run test_list_reclamations_required_params.
+        _service.enable_retries()
+        self.test_list_reclamations_required_params()
+
+        # Disable retries and run test_list_reclamations_required_params.
+        _service.disable_retries()
+        self.test_list_reclamations_required_params()
 
 class TestRunReclamationAction():
     """
     Test Class for run_reclamation_action
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_run_reclamation_action_all_params(self):
@@ -2397,8 +3297,8 @@ class TestRunReclamationAction():
         run_reclamation_action()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/reclamations/testString/actions/testString')
-        mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
+        url = preprocess_url('/v1/reclamations/testString/actions/testString')
+        mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"anyKey": "anyValue"}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -2428,6 +3328,14 @@ class TestRunReclamationAction():
         assert req_body['request_by'] == 'testString'
         assert req_body['comment'] == 'testString'
 
+    def test_run_reclamation_action_all_params_with_retries(self):
+        # Enable retries and run test_run_reclamation_action_all_params.
+        _service.enable_retries()
+        self.test_run_reclamation_action_all_params()
+
+        # Disable retries and run test_run_reclamation_action_all_params.
+        _service.disable_retries()
+        self.test_run_reclamation_action_all_params()
 
     @responses.activate
     def test_run_reclamation_action_required_params(self):
@@ -2435,8 +3343,8 @@ class TestRunReclamationAction():
         test_run_reclamation_action_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/reclamations/testString/actions/testString')
-        mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
+        url = preprocess_url('/v1/reclamations/testString/actions/testString')
+        mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"anyKey": "anyValue"}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -2458,6 +3366,14 @@ class TestRunReclamationAction():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_run_reclamation_action_required_params_with_retries(self):
+        # Enable retries and run test_run_reclamation_action_required_params.
+        _service.enable_retries()
+        self.test_run_reclamation_action_required_params()
+
+        # Disable retries and run test_run_reclamation_action_required_params.
+        _service.disable_retries()
+        self.test_run_reclamation_action_required_params()
 
     @responses.activate
     def test_run_reclamation_action_value_error(self):
@@ -2465,8 +3381,8 @@ class TestRunReclamationAction():
         test_run_reclamation_action_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/reclamations/testString/actions/testString')
-        mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"mapKey": {"anyKey": "anyValue"}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
+        url = preprocess_url('/v1/reclamations/testString/actions/testString')
+        mock_response = '{"id": "id", "entity_id": "entity_id", "entity_type_id": "entity_type_id", "entity_crn": "entity_crn", "resource_instance_id": "resource_instance_id", "resource_group_id": "resource_group_id", "account_id": "account_id", "policy_id": "policy_id", "state": "state", "target_time": "target_time", "custom_properties": {"anyKey": "anyValue"}, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -2487,7 +3403,14 @@ class TestRunReclamationAction():
             with pytest.raises(ValueError):
                 _service.run_reclamation_action(**req_copy)
 
+    def test_run_reclamation_action_value_error_with_retries(self):
+        # Enable retries and run test_run_reclamation_action_value_error.
+        _service.enable_retries()
+        self.test_run_reclamation_action_value_error()
 
+        # Disable retries and run test_run_reclamation_action_value_error.
+        _service.disable_retries()
+        self.test_run_reclamation_action_value_error()
 
 # endregion
 ##############################################################################
@@ -2499,7 +3422,7 @@ class TestRunReclamationAction():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestCredentials():
+class TestModel_Credentials():
     """
     Test Class for Credentials
     """
@@ -2511,12 +3434,13 @@ class TestCredentials():
 
         # Construct a json representation of a Credentials model
         credentials_model_json = {}
+        credentials_model_json['REDACTED'] = 'REDACTED'
         credentials_model_json['apikey'] = 'testString'
         credentials_model_json['iam_apikey_description'] = 'testString'
         credentials_model_json['iam_apikey_name'] = 'testString'
         credentials_model_json['iam_role_crn'] = 'testString'
         credentials_model_json['iam_serviceid_crn'] = 'testString'
-        credentials_model_json['foo'] = { 'foo': 'bar' }
+        credentials_model_json['foo'] = 'testString'
 
         # Construct a model instance of Credentials by calling from_dict on the json representation
         credentials_model = Credentials.from_dict(credentials_model_json)
@@ -2533,7 +3457,17 @@ class TestCredentials():
         credentials_model_json2 = credentials_model.to_dict()
         assert credentials_model_json2 == credentials_model_json
 
-class TestPlanHistoryItem():
+        # Test get_properties and set_properties methods.
+        credentials_model.set_properties({})
+        actual_dict = credentials_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        credentials_model.set_properties(expected_dict)
+        actual_dict = credentials_model.get_properties()
+        assert actual_dict == expected_dict
+
+class TestModel_PlanHistoryItem():
     """
     Test Class for PlanHistoryItem
     """
@@ -2546,7 +3480,7 @@ class TestPlanHistoryItem():
         # Construct a json representation of a PlanHistoryItem model
         plan_history_item_model_json = {}
         plan_history_item_model_json['resource_plan_id'] = 'testString'
-        plan_history_item_model_json['start_date'] = "2019-01-01T12:00:00Z"
+        plan_history_item_model_json['start_date'] = '2019-01-01T12:00:00Z'
         plan_history_item_model_json['requestor_id'] = 'testString'
 
         # Construct a model instance of PlanHistoryItem by calling from_dict on the json representation
@@ -2564,7 +3498,7 @@ class TestPlanHistoryItem():
         plan_history_item_model_json2 = plan_history_item_model.to_dict()
         assert plan_history_item_model_json2 == plan_history_item_model_json
 
-class TestReclamation():
+class TestModel_Reclamation():
     """
     Test Class for Reclamation
     """
@@ -2586,10 +3520,10 @@ class TestReclamation():
         reclamation_model_json['policy_id'] = 'testString'
         reclamation_model_json['state'] = 'testString'
         reclamation_model_json['target_time'] = 'testString'
-        reclamation_model_json['custom_properties'] = {}
-        reclamation_model_json['created_at'] = "2019-01-01T12:00:00Z"
+        reclamation_model_json['custom_properties'] = {'foo': 'bar'}
+        reclamation_model_json['created_at'] = '2019-01-01T12:00:00Z'
         reclamation_model_json['created_by'] = 'testString'
-        reclamation_model_json['updated_at'] = "2019-01-01T12:00:00Z"
+        reclamation_model_json['updated_at'] = '2019-01-01T12:00:00Z'
         reclamation_model_json['updated_by'] = 'testString'
 
         # Construct a model instance of Reclamation by calling from_dict on the json representation
@@ -2607,7 +3541,7 @@ class TestReclamation():
         reclamation_model_json2 = reclamation_model.to_dict()
         assert reclamation_model_json2 == reclamation_model_json
 
-class TestReclamationsList():
+class TestModel_ReclamationsList():
     """
     Test Class for ReclamationsList
     """
@@ -2630,10 +3564,10 @@ class TestReclamationsList():
         reclamation_model['policy_id'] = 'testString'
         reclamation_model['state'] = 'testString'
         reclamation_model['target_time'] = 'testString'
-        reclamation_model['custom_properties'] = {}
-        reclamation_model['created_at'] = "2019-01-01T12:00:00Z"
+        reclamation_model['custom_properties'] = {'foo': 'bar'}
+        reclamation_model['created_at'] = '2019-01-01T12:00:00Z'
         reclamation_model['created_by'] = 'testString'
-        reclamation_model['updated_at'] = "2019-01-01T12:00:00Z"
+        reclamation_model['updated_at'] = '2019-01-01T12:00:00Z'
         reclamation_model['updated_by'] = 'testString'
 
         # Construct a json representation of a ReclamationsList model
@@ -2655,7 +3589,7 @@ class TestReclamationsList():
         reclamations_list_model_json2 = reclamations_list_model.to_dict()
         assert reclamations_list_model_json2 == reclamations_list_model_json
 
-class TestResourceAlias():
+class TestModel_ResourceAlias():
     """
     Test Class for ResourceAlias
     """
@@ -2670,9 +3604,9 @@ class TestResourceAlias():
         resource_alias_model_json['id'] = 'testString'
         resource_alias_model_json['guid'] = 'testString'
         resource_alias_model_json['url'] = 'testString'
-        resource_alias_model_json['created_at'] = "2019-01-01T12:00:00Z"
-        resource_alias_model_json['updated_at'] = "2019-01-01T12:00:00Z"
-        resource_alias_model_json['deleted_at'] = "2019-01-01T12:00:00Z"
+        resource_alias_model_json['created_at'] = '2019-01-01T12:00:00Z'
+        resource_alias_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+        resource_alias_model_json['deleted_at'] = '2019-01-01T12:00:00Z'
         resource_alias_model_json['created_by'] = 'testString'
         resource_alias_model_json['updated_by'] = 'testString'
         resource_alias_model_json['deleted_by'] = 'testString'
@@ -2706,7 +3640,7 @@ class TestResourceAlias():
         resource_alias_model_json2 = resource_alias_model.to_dict()
         assert resource_alias_model_json2 == resource_alias_model_json
 
-class TestResourceAliasesList():
+class TestModel_ResourceAliasesList():
     """
     Test Class for ResourceAliasesList
     """
@@ -2722,9 +3656,9 @@ class TestResourceAliasesList():
         resource_alias_model['id'] = 'testString'
         resource_alias_model['guid'] = 'testString'
         resource_alias_model['url'] = 'testString'
-        resource_alias_model['created_at'] = "2019-01-01T12:00:00Z"
-        resource_alias_model['updated_at'] = "2019-01-01T12:00:00Z"
-        resource_alias_model['deleted_at'] = "2019-01-01T12:00:00Z"
+        resource_alias_model['created_at'] = '2019-01-01T12:00:00Z'
+        resource_alias_model['updated_at'] = '2019-01-01T12:00:00Z'
+        resource_alias_model['deleted_at'] = '2019-01-01T12:00:00Z'
         resource_alias_model['created_by'] = 'testString'
         resource_alias_model['updated_by'] = 'testString'
         resource_alias_model['deleted_by'] = 'testString'
@@ -2764,7 +3698,7 @@ class TestResourceAliasesList():
         resource_aliases_list_model_json2 = resource_aliases_list_model.to_dict()
         assert resource_aliases_list_model_json2 == resource_aliases_list_model_json
 
-class TestResourceBinding():
+class TestModel_ResourceBinding():
     """
     Test Class for ResourceBinding
     """
@@ -2777,21 +3711,22 @@ class TestResourceBinding():
         # Construct dict forms of any model objects needed in order to build this model.
 
         credentials_model = {} # Credentials
+        credentials_model['REDACTED'] = 'REDACTED'
         credentials_model['apikey'] = 'testString'
         credentials_model['iam_apikey_description'] = 'testString'
         credentials_model['iam_apikey_name'] = 'testString'
         credentials_model['iam_role_crn'] = 'testString'
         credentials_model['iam_serviceid_crn'] = 'testString'
-        credentials_model['foo'] = { 'foo': 'bar' }
+        credentials_model['foo'] = 'testString'
 
         # Construct a json representation of a ResourceBinding model
         resource_binding_model_json = {}
         resource_binding_model_json['id'] = 'testString'
         resource_binding_model_json['guid'] = 'testString'
         resource_binding_model_json['url'] = 'testString'
-        resource_binding_model_json['created_at'] = "2019-01-01T12:00:00Z"
-        resource_binding_model_json['updated_at'] = "2019-01-01T12:00:00Z"
-        resource_binding_model_json['deleted_at'] = "2019-01-01T12:00:00Z"
+        resource_binding_model_json['created_at'] = '2019-01-01T12:00:00Z'
+        resource_binding_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+        resource_binding_model_json['deleted_at'] = '2019-01-01T12:00:00Z'
         resource_binding_model_json['created_by'] = 'testString'
         resource_binding_model_json['updated_by'] = 'testString'
         resource_binding_model_json['deleted_by'] = 'testString'
@@ -2825,7 +3760,7 @@ class TestResourceBinding():
         resource_binding_model_json2 = resource_binding_model.to_dict()
         assert resource_binding_model_json2 == resource_binding_model_json
 
-class TestResourceBindingPostParameters():
+class TestModel_ResourceBindingPostParameters():
     """
     Test Class for ResourceBindingPostParameters
     """
@@ -2838,7 +3773,7 @@ class TestResourceBindingPostParameters():
         # Construct a json representation of a ResourceBindingPostParameters model
         resource_binding_post_parameters_model_json = {}
         resource_binding_post_parameters_model_json['serviceid_crn'] = 'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
-        resource_binding_post_parameters_model_json['foo'] = { 'foo': 'bar' }
+        resource_binding_post_parameters_model_json['foo'] = 'testString'
 
         # Construct a model instance of ResourceBindingPostParameters by calling from_dict on the json representation
         resource_binding_post_parameters_model = ResourceBindingPostParameters.from_dict(resource_binding_post_parameters_model_json)
@@ -2855,7 +3790,17 @@ class TestResourceBindingPostParameters():
         resource_binding_post_parameters_model_json2 = resource_binding_post_parameters_model.to_dict()
         assert resource_binding_post_parameters_model_json2 == resource_binding_post_parameters_model_json
 
-class TestResourceBindingsList():
+        # Test get_properties and set_properties methods.
+        resource_binding_post_parameters_model.set_properties({})
+        actual_dict = resource_binding_post_parameters_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        resource_binding_post_parameters_model.set_properties(expected_dict)
+        actual_dict = resource_binding_post_parameters_model.get_properties()
+        assert actual_dict == expected_dict
+
+class TestModel_ResourceBindingsList():
     """
     Test Class for ResourceBindingsList
     """
@@ -2868,20 +3813,21 @@ class TestResourceBindingsList():
         # Construct dict forms of any model objects needed in order to build this model.
 
         credentials_model = {} # Credentials
+        credentials_model['REDACTED'] = 'REDACTED'
         credentials_model['apikey'] = 'testString'
         credentials_model['iam_apikey_description'] = 'testString'
         credentials_model['iam_apikey_name'] = 'testString'
         credentials_model['iam_role_crn'] = 'testString'
         credentials_model['iam_serviceid_crn'] = 'testString'
-        credentials_model['foo'] = { 'foo': 'bar' }
+        credentials_model['foo'] = 'testString'
 
         resource_binding_model = {} # ResourceBinding
         resource_binding_model['id'] = 'testString'
         resource_binding_model['guid'] = 'testString'
         resource_binding_model['url'] = 'testString'
-        resource_binding_model['created_at'] = "2019-01-01T12:00:00Z"
-        resource_binding_model['updated_at'] = "2019-01-01T12:00:00Z"
-        resource_binding_model['deleted_at'] = "2019-01-01T12:00:00Z"
+        resource_binding_model['created_at'] = '2019-01-01T12:00:00Z'
+        resource_binding_model['updated_at'] = '2019-01-01T12:00:00Z'
+        resource_binding_model['deleted_at'] = '2019-01-01T12:00:00Z'
         resource_binding_model['created_by'] = 'testString'
         resource_binding_model['updated_by'] = 'testString'
         resource_binding_model['deleted_by'] = 'testString'
@@ -2921,7 +3867,7 @@ class TestResourceBindingsList():
         resource_bindings_list_model_json2 = resource_bindings_list_model.to_dict()
         assert resource_bindings_list_model_json2 == resource_bindings_list_model_json
 
-class TestResourceInstance():
+class TestModel_ResourceInstance():
     """
     Test Class for ResourceInstance
     """
@@ -2933,9 +3879,21 @@ class TestResourceInstance():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
+        resource_instance_last_operation_model = {} # ResourceInstanceLastOperation
+        resource_instance_last_operation_model['type'] = 'testString'
+        resource_instance_last_operation_model['state'] = 'in progress'
+        resource_instance_last_operation_model['sub_type'] = 'testString'
+        resource_instance_last_operation_model['async'] = True
+        resource_instance_last_operation_model['description'] = 'testString'
+        resource_instance_last_operation_model['reason_code'] = 'testString'
+        resource_instance_last_operation_model['poll_after'] = 72.5
+        resource_instance_last_operation_model['cancelable'] = True
+        resource_instance_last_operation_model['poll'] = True
+        resource_instance_last_operation_model['foo'] = 'testString'
+
         plan_history_item_model = {} # PlanHistoryItem
         plan_history_item_model['resource_plan_id'] = 'testString'
-        plan_history_item_model['start_date'] = "2019-01-01T12:00:00Z"
+        plan_history_item_model['start_date'] = '2019-01-01T12:00:00Z'
         plan_history_item_model['requestor_id'] = 'testString'
 
         # Construct a json representation of a ResourceInstance model
@@ -2943,14 +3901,14 @@ class TestResourceInstance():
         resource_instance_model_json['id'] = 'testString'
         resource_instance_model_json['guid'] = 'testString'
         resource_instance_model_json['url'] = 'testString'
-        resource_instance_model_json['created_at'] = "2019-01-01T12:00:00Z"
-        resource_instance_model_json['updated_at'] = "2019-01-01T12:00:00Z"
-        resource_instance_model_json['deleted_at'] = "2019-01-01T12:00:00Z"
+        resource_instance_model_json['created_at'] = '2019-01-01T12:00:00Z'
+        resource_instance_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+        resource_instance_model_json['deleted_at'] = '2019-01-01T12:00:00Z'
         resource_instance_model_json['created_by'] = 'testString'
         resource_instance_model_json['updated_by'] = 'testString'
         resource_instance_model_json['deleted_by'] = 'testString'
-        resource_instance_model_json['scheduled_reclaim_at'] = "2019-01-01T12:00:00Z"
-        resource_instance_model_json['restored_at'] = "2019-01-01T12:00:00Z"
+        resource_instance_model_json['scheduled_reclaim_at'] = '2019-01-01T12:00:00Z'
+        resource_instance_model_json['restored_at'] = '2019-01-01T12:00:00Z'
         resource_instance_model_json['restored_by'] = 'testString'
         resource_instance_model_json['scheduled_reclaim_by'] = 'testString'
         resource_instance_model_json['name'] = 'testString'
@@ -2961,21 +3919,21 @@ class TestResourceInstance():
         resource_instance_model_json['resource_group_id'] = 'testString'
         resource_instance_model_json['resource_group_crn'] = 'testString'
         resource_instance_model_json['target_crn'] = 'testString'
-        resource_instance_model_json['parameters'] = {}
+        resource_instance_model_json['parameters'] = {'foo': 'bar'}
         resource_instance_model_json['allow_cleanup'] = True
         resource_instance_model_json['crn'] = 'testString'
-        resource_instance_model_json['state'] = 'testString'
+        resource_instance_model_json['state'] = 'active'
         resource_instance_model_json['type'] = 'testString'
         resource_instance_model_json['sub_type'] = 'testString'
         resource_instance_model_json['resource_id'] = 'testString'
         resource_instance_model_json['dashboard_url'] = 'testString'
-        resource_instance_model_json['last_operation'] = {}
+        resource_instance_model_json['last_operation'] = resource_instance_last_operation_model
         resource_instance_model_json['resource_aliases_url'] = 'testString'
         resource_instance_model_json['resource_bindings_url'] = 'testString'
         resource_instance_model_json['resource_keys_url'] = 'testString'
         resource_instance_model_json['plan_history'] = [plan_history_item_model]
         resource_instance_model_json['migrated'] = True
-        resource_instance_model_json['extensions'] = {}
+        resource_instance_model_json['extensions'] = {'foo': 'bar'}
         resource_instance_model_json['controlled_by'] = 'testString'
         resource_instance_model_json['locked'] = True
 
@@ -2994,7 +3952,55 @@ class TestResourceInstance():
         resource_instance_model_json2 = resource_instance_model.to_dict()
         assert resource_instance_model_json2 == resource_instance_model_json
 
-class TestResourceInstancesList():
+class TestModel_ResourceInstanceLastOperation():
+    """
+    Test Class for ResourceInstanceLastOperation
+    """
+
+    def test_resource_instance_last_operation_serialization(self):
+        """
+        Test serialization/deserialization for ResourceInstanceLastOperation
+        """
+
+        # Construct a json representation of a ResourceInstanceLastOperation model
+        resource_instance_last_operation_model_json = {}
+        resource_instance_last_operation_model_json['type'] = 'testString'
+        resource_instance_last_operation_model_json['state'] = 'in progress'
+        resource_instance_last_operation_model_json['sub_type'] = 'testString'
+        resource_instance_last_operation_model_json['async'] = True
+        resource_instance_last_operation_model_json['description'] = 'testString'
+        resource_instance_last_operation_model_json['reason_code'] = 'testString'
+        resource_instance_last_operation_model_json['poll_after'] = 72.5
+        resource_instance_last_operation_model_json['cancelable'] = True
+        resource_instance_last_operation_model_json['poll'] = True
+        resource_instance_last_operation_model_json['foo'] = 'testString'
+
+        # Construct a model instance of ResourceInstanceLastOperation by calling from_dict on the json representation
+        resource_instance_last_operation_model = ResourceInstanceLastOperation.from_dict(resource_instance_last_operation_model_json)
+        assert resource_instance_last_operation_model != False
+
+        # Construct a model instance of ResourceInstanceLastOperation by calling from_dict on the json representation
+        resource_instance_last_operation_model_dict = ResourceInstanceLastOperation.from_dict(resource_instance_last_operation_model_json).__dict__
+        resource_instance_last_operation_model2 = ResourceInstanceLastOperation(**resource_instance_last_operation_model_dict)
+
+        # Verify the model instances are equivalent
+        assert resource_instance_last_operation_model == resource_instance_last_operation_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        resource_instance_last_operation_model_json2 = resource_instance_last_operation_model.to_dict()
+        assert resource_instance_last_operation_model_json2 == resource_instance_last_operation_model_json
+
+        # Test get_properties and set_properties methods.
+        resource_instance_last_operation_model.set_properties({})
+        actual_dict = resource_instance_last_operation_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        resource_instance_last_operation_model.set_properties(expected_dict)
+        actual_dict = resource_instance_last_operation_model.get_properties()
+        assert actual_dict == expected_dict
+
+class TestModel_ResourceInstancesList():
     """
     Test Class for ResourceInstancesList
     """
@@ -3006,23 +4012,35 @@ class TestResourceInstancesList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
+        resource_instance_last_operation_model = {} # ResourceInstanceLastOperation
+        resource_instance_last_operation_model['type'] = 'testString'
+        resource_instance_last_operation_model['state'] = 'in progress'
+        resource_instance_last_operation_model['sub_type'] = 'testString'
+        resource_instance_last_operation_model['async'] = True
+        resource_instance_last_operation_model['description'] = 'testString'
+        resource_instance_last_operation_model['reason_code'] = 'testString'
+        resource_instance_last_operation_model['poll_after'] = 72.5
+        resource_instance_last_operation_model['cancelable'] = True
+        resource_instance_last_operation_model['poll'] = True
+        resource_instance_last_operation_model['foo'] = 'testString'
+
         plan_history_item_model = {} # PlanHistoryItem
         plan_history_item_model['resource_plan_id'] = 'testString'
-        plan_history_item_model['start_date'] = "2019-01-01T12:00:00Z"
+        plan_history_item_model['start_date'] = '2019-01-01T12:00:00Z'
         plan_history_item_model['requestor_id'] = 'testString'
 
         resource_instance_model = {} # ResourceInstance
         resource_instance_model['id'] = 'testString'
         resource_instance_model['guid'] = 'testString'
         resource_instance_model['url'] = 'testString'
-        resource_instance_model['created_at'] = "2019-01-01T12:00:00Z"
-        resource_instance_model['updated_at'] = "2019-01-01T12:00:00Z"
-        resource_instance_model['deleted_at'] = "2019-01-01T12:00:00Z"
+        resource_instance_model['created_at'] = '2019-01-01T12:00:00Z'
+        resource_instance_model['updated_at'] = '2019-01-01T12:00:00Z'
+        resource_instance_model['deleted_at'] = '2019-01-01T12:00:00Z'
         resource_instance_model['created_by'] = 'testString'
         resource_instance_model['updated_by'] = 'testString'
         resource_instance_model['deleted_by'] = 'testString'
-        resource_instance_model['scheduled_reclaim_at'] = "2019-01-01T12:00:00Z"
-        resource_instance_model['restored_at'] = "2019-01-01T12:00:00Z"
+        resource_instance_model['scheduled_reclaim_at'] = '2019-01-01T12:00:00Z'
+        resource_instance_model['restored_at'] = '2019-01-01T12:00:00Z'
         resource_instance_model['restored_by'] = 'testString'
         resource_instance_model['scheduled_reclaim_by'] = 'testString'
         resource_instance_model['name'] = 'testString'
@@ -3033,21 +4051,21 @@ class TestResourceInstancesList():
         resource_instance_model['resource_group_id'] = 'testString'
         resource_instance_model['resource_group_crn'] = 'testString'
         resource_instance_model['target_crn'] = 'testString'
-        resource_instance_model['parameters'] = {}
+        resource_instance_model['parameters'] = {'foo': 'bar'}
         resource_instance_model['allow_cleanup'] = True
         resource_instance_model['crn'] = 'testString'
-        resource_instance_model['state'] = 'testString'
+        resource_instance_model['state'] = 'active'
         resource_instance_model['type'] = 'testString'
         resource_instance_model['sub_type'] = 'testString'
         resource_instance_model['resource_id'] = 'testString'
         resource_instance_model['dashboard_url'] = 'testString'
-        resource_instance_model['last_operation'] = {}
+        resource_instance_model['last_operation'] = resource_instance_last_operation_model
         resource_instance_model['resource_aliases_url'] = 'testString'
         resource_instance_model['resource_bindings_url'] = 'testString'
         resource_instance_model['resource_keys_url'] = 'testString'
         resource_instance_model['plan_history'] = [plan_history_item_model]
         resource_instance_model['migrated'] = True
-        resource_instance_model['extensions'] = {}
+        resource_instance_model['extensions'] = {'foo': 'bar'}
         resource_instance_model['controlled_by'] = 'testString'
         resource_instance_model['locked'] = True
 
@@ -3072,7 +4090,7 @@ class TestResourceInstancesList():
         resource_instances_list_model_json2 = resource_instances_list_model.to_dict()
         assert resource_instances_list_model_json2 == resource_instances_list_model_json
 
-class TestResourceKey():
+class TestModel_ResourceKey():
     """
     Test Class for ResourceKey
     """
@@ -3085,21 +4103,22 @@ class TestResourceKey():
         # Construct dict forms of any model objects needed in order to build this model.
 
         credentials_model = {} # Credentials
+        credentials_model['REDACTED'] = 'REDACTED'
         credentials_model['apikey'] = 'testString'
         credentials_model['iam_apikey_description'] = 'testString'
         credentials_model['iam_apikey_name'] = 'testString'
         credentials_model['iam_role_crn'] = 'testString'
         credentials_model['iam_serviceid_crn'] = 'testString'
-        credentials_model['foo'] = { 'foo': 'bar' }
+        credentials_model['foo'] = 'testString'
 
         # Construct a json representation of a ResourceKey model
         resource_key_model_json = {}
         resource_key_model_json['id'] = 'testString'
         resource_key_model_json['guid'] = 'testString'
         resource_key_model_json['url'] = 'testString'
-        resource_key_model_json['created_at'] = "2019-01-01T12:00:00Z"
-        resource_key_model_json['updated_at'] = "2019-01-01T12:00:00Z"
-        resource_key_model_json['deleted_at'] = "2019-01-01T12:00:00Z"
+        resource_key_model_json['created_at'] = '2019-01-01T12:00:00Z'
+        resource_key_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+        resource_key_model_json['deleted_at'] = '2019-01-01T12:00:00Z'
         resource_key_model_json['created_by'] = 'testString'
         resource_key_model_json['updated_by'] = 'testString'
         resource_key_model_json['deleted_by'] = 'testString'
@@ -3131,7 +4150,7 @@ class TestResourceKey():
         resource_key_model_json2 = resource_key_model.to_dict()
         assert resource_key_model_json2 == resource_key_model_json
 
-class TestResourceKeyPostParameters():
+class TestModel_ResourceKeyPostParameters():
     """
     Test Class for ResourceKeyPostParameters
     """
@@ -3144,7 +4163,7 @@ class TestResourceKeyPostParameters():
         # Construct a json representation of a ResourceKeyPostParameters model
         resource_key_post_parameters_model_json = {}
         resource_key_post_parameters_model_json['serviceid_crn'] = 'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393'
-        resource_key_post_parameters_model_json['foo'] = { 'foo': 'bar' }
+        resource_key_post_parameters_model_json['foo'] = 'testString'
 
         # Construct a model instance of ResourceKeyPostParameters by calling from_dict on the json representation
         resource_key_post_parameters_model = ResourceKeyPostParameters.from_dict(resource_key_post_parameters_model_json)
@@ -3161,7 +4180,17 @@ class TestResourceKeyPostParameters():
         resource_key_post_parameters_model_json2 = resource_key_post_parameters_model.to_dict()
         assert resource_key_post_parameters_model_json2 == resource_key_post_parameters_model_json
 
-class TestResourceKeysList():
+        # Test get_properties and set_properties methods.
+        resource_key_post_parameters_model.set_properties({})
+        actual_dict = resource_key_post_parameters_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        resource_key_post_parameters_model.set_properties(expected_dict)
+        actual_dict = resource_key_post_parameters_model.get_properties()
+        assert actual_dict == expected_dict
+
+class TestModel_ResourceKeysList():
     """
     Test Class for ResourceKeysList
     """
@@ -3174,20 +4203,21 @@ class TestResourceKeysList():
         # Construct dict forms of any model objects needed in order to build this model.
 
         credentials_model = {} # Credentials
+        credentials_model['REDACTED'] = 'REDACTED'
         credentials_model['apikey'] = 'testString'
         credentials_model['iam_apikey_description'] = 'testString'
         credentials_model['iam_apikey_name'] = 'testString'
         credentials_model['iam_role_crn'] = 'testString'
         credentials_model['iam_serviceid_crn'] = 'testString'
-        credentials_model['foo'] = { 'foo': 'bar' }
+        credentials_model['foo'] = 'testString'
 
         resource_key_model = {} # ResourceKey
         resource_key_model['id'] = 'testString'
         resource_key_model['guid'] = 'testString'
         resource_key_model['url'] = 'testString'
-        resource_key_model['created_at'] = "2019-01-01T12:00:00Z"
-        resource_key_model['updated_at'] = "2019-01-01T12:00:00Z"
-        resource_key_model['deleted_at'] = "2019-01-01T12:00:00Z"
+        resource_key_model['created_at'] = '2019-01-01T12:00:00Z'
+        resource_key_model['updated_at'] = '2019-01-01T12:00:00Z'
+        resource_key_model['deleted_at'] = '2019-01-01T12:00:00Z'
         resource_key_model['created_by'] = 'testString'
         resource_key_model['updated_by'] = 'testString'
         resource_key_model['deleted_by'] = 'testString'

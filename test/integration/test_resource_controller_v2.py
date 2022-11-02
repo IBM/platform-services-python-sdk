@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# Copyright 2019, 2020 IBM All Rights Reserved.
+# Copyright 2019, 2022 IBM All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ class TestResourceControllerV2(unittest.TestCase):
     """
 
     @classmethod
-    def setUpClass(cls):
+    def setup_class(cls):
         if os.path.exists(configFile):
             os.environ['IBM_CREDENTIALS_FILE'] = configFile
 
@@ -57,8 +57,8 @@ class TestResourceControllerV2(unittest.TestCase):
             raise unittest.SkipTest(
                 'External configuration not available, skipping...')
 
-        cls.service = ResourceControllerV2.new_instance()
-        assert cls.service is not None
+        cls.resource_controller_service = ResourceControllerV2.new_instance()
+        assert cls.resource_controller_service is not None
 
         cls.testInstanceCrn = ''
         cls.testInstanceGuid = ''
@@ -98,7 +98,7 @@ class TestResourceControllerV2(unittest.TestCase):
         print('\nSetup complete.')
 
     @classmethod
-    def tearDownClass(cls):
+    def teardown_class(cls):
         cls.cleanupResources()
         cls.cleanupReclamationInstance()
         cls.cleanupByName()
@@ -109,7 +109,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test00-" + \
             self.transactionId
 
-        response = self.service.create_resource_instance(
+        response = self.resource_controller_service.create_resource_instance(
             self.instanceNames['name'],
             self.testRegionId1,
             self.testResourceGroupGuid,
@@ -145,7 +145,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test01-" + \
             self.transactionId
 
-        response = self.service.get_resource_instance(
+        response = self.resource_controller_service.get_resource_instance(
             self.testInstanceGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -173,7 +173,7 @@ class TestResourceControllerV2(unittest.TestCase):
         params = {}
         params["hello"] = "bye"
 
-        response = self.service.update_resource_instance(
+        response = self.resource_controller_service.update_resource_instance(
             self.testInstanceGuid,
             name=self.instanceNames['update'],
             parameters=params,
@@ -188,7 +188,6 @@ class TestResourceControllerV2(unittest.TestCase):
         assert result.get('name') == self.instanceNames['update']
         assert result.get('state') == "active"
         assert result.get('last_operation').get('type') == "update"
-        assert result.get('last_operation').get('sub_type') == "config"
         assert not result.get('last_operation').get('async')
         assert result.get('last_operation').get('state') == "succeeded"
 
@@ -200,7 +199,7 @@ class TestResourceControllerV2(unittest.TestCase):
         start = None
 
         while True:
-            response = self.service.list_resource_instances(
+            response = self.resource_controller_service.list_resource_instances(
                 limit=results_per_page,
                 start=start,
                 headers=customHeaders)
@@ -224,7 +223,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test04-" + \
             self.transactionId
 
-        response = self.service.list_resource_instances(
+        response = self.resource_controller_service.list_resource_instances(
             guid=self.testInstanceGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -240,7 +239,6 @@ class TestResourceControllerV2(unittest.TestCase):
         assert instance.get('name') == self.instanceNames['update']
         assert instance.get('state') == "active"
         assert instance.get('last_operation').get('type') == "update"
-        assert instance.get('last_operation').get('sub_type') == "config"
         assert not instance.get('last_operation').get('async')
         assert instance.get('last_operation').get('state') == "succeeded"
 
@@ -249,7 +247,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test05-" + \
             self.transactionId
 
-        response = self.service.list_resource_instances(
+        response = self.resource_controller_service.list_resource_instances(
             name=self.instanceNames['update'],
             headers=customHeaders)
 
@@ -262,6 +260,28 @@ class TestResourceControllerV2(unittest.TestCase):
         assert len(result.get('resources')) == 1
         assert result.get('rows_count') == 1
 
+    def test_05a_list_resource_instances_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = ResourceInstancesPager(
+            client=self.resource_controller_service,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = ResourceInstancesPager(
+            client=self.resource_controller_service,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_resource_instances() returned a total of {len(all_results)} items(s) using ResourceInstancesPager.')
+
     def test_06_create_resource_alias(self):
         customHeaders = {}
         customHeaders["Transaction-Id"] = "rc-sdk-python-test06-" + \
@@ -273,7 +293,7 @@ class TestResourceControllerV2(unittest.TestCase):
             self.testOrgGuid + "::cf-space:" + self.testSpaceGuid
         assert self.aliasTargetCrn != ''
 
-        response = self.service.create_resource_alias(
+        response = self.resource_controller_service.create_resource_alias(
             self.aliasNames['name'],
             self.testInstanceGuid,
             target,
@@ -305,7 +325,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test07-" + \
             self.transactionId
 
-        response = self.service.get_resource_alias(
+        response = self.resource_controller_service.get_resource_alias(
             self.testAliasGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -327,7 +347,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test08-" + \
             self.transactionId
 
-        response = self.service.update_resource_alias(
+        response = self.resource_controller_service.update_resource_alias(
             self.testAliasGuid,
             name=self.aliasNames['update'],
             headers=customHeaders
@@ -349,7 +369,7 @@ class TestResourceControllerV2(unittest.TestCase):
         start = None
 
         while True:
-            response = self.service.list_resource_aliases(
+            response = self.resource_controller_service.list_resource_aliases(
                 limit=results_per_page,
                 start=start,
                 headers=customHeaders)
@@ -373,7 +393,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test10-" + \
             self.transactionId
 
-        response = self.service.list_resource_aliases(
+        response = self.resource_controller_service.list_resource_aliases(
             guid=self.testAliasGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -397,7 +417,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test11-" + \
             self.transactionId
 
-        response = self.service.list_resource_aliases(
+        response = self.resource_controller_service.list_resource_aliases(
             name=self.aliasNames['update'],
             headers=customHeaders)
 
@@ -409,13 +429,35 @@ class TestResourceControllerV2(unittest.TestCase):
         assert len(result.get('resources')) == 1
         assert result.get('rows_count') == 1
 
-    def test_11a_list_resource_aliases_for_instance(self):
+    def test_11a_list_resource_aliases_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = ResourceAliasesPager(
+            client=self.resource_controller_service,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = ResourceAliasesPager(
+            client=self.resource_controller_service,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_resource_aliases() returned a total of {len(all_results)} items(s) using ResourceAliasesPager.')
+
+    def test_11b_list_resource_aliases_for_instance(self):
         assert self.testInstanceGuid is not None
 
         start = None
 
         while True:
-            response = self.service.list_resource_aliases_for_instance(
+            response = self.resource_controller_service.list_resource_aliases_for_instance(
                 id=self.testInstanceGuid,
                 limit=results_per_page,
                 start=start)
@@ -431,6 +473,31 @@ class TestResourceControllerV2(unittest.TestCase):
             start = get_query_param(result.get('next_url'), 'start')
             if start is None:
                 break
+
+    def test_11c_list_resource_aliases_for_instance_with_pager(self):
+        assert self.testInstanceGuid is not None
+        all_results = []
+
+        # Test get_next().
+        pager = ResourceAliasesForInstancePager(
+            client=self.resource_controller_service,
+            id=self.testInstanceGuid,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = ResourceAliasesForInstancePager(
+            client=self.resource_controller_service,
+            id=self.testInstanceGuid,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_resource_aliases_for_instance() returned a total of {len(all_results)} items(s) using ResourceAliasesForInstancePager.')
 
     def test_12_create_resource_binding(self):
         customHeaders = {}
@@ -448,7 +515,7 @@ class TestResourceControllerV2(unittest.TestCase):
             self.testSpaceGuid + "::cf-application:" + self.testAppGuid
         assert self.bindTargetCrn != ''
 
-        response = self.service.create_resource_binding(
+        response = self.resource_controller_service.create_resource_binding(
             source=self.testAliasGuid,
             target=target,
             name=self.bindingNames['name'],
@@ -481,7 +548,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test13-" + \
             self.transactionId
 
-        response = self.service.get_resource_binding(
+        response = self.resource_controller_service.get_resource_binding(
             self.testBindingGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -503,7 +570,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test14-" + \
             self.transactionId
 
-        response = self.service.update_resource_binding(
+        response = self.resource_controller_service.update_resource_binding(
             self.testBindingGuid,
             self.bindingNames['update'],
             headers=customHeaders)
@@ -524,7 +591,7 @@ class TestResourceControllerV2(unittest.TestCase):
         start = None
 
         while True:
-            response = self.service.list_resource_bindings(
+            response = self.resource_controller_service.list_resource_bindings(
                 limit=results_per_page,
                 start=start,
                 headers=customHeaders)
@@ -548,7 +615,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test16-" + \
             self.transactionId
 
-        response = self.service.list_resource_bindings(
+        response = self.resource_controller_service.list_resource_bindings(
             guid=self.testBindingGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -572,7 +639,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test17-" + \
             self.transactionId
 
-        response = self.service.list_resource_bindings(
+        response = self.resource_controller_service.list_resource_bindings(
             name=self.bindingNames['update'],
             headers=customHeaders)
 
@@ -584,13 +651,35 @@ class TestResourceControllerV2(unittest.TestCase):
         assert len(result.get('resources')) == 1
         assert result.get('rows_count') == 1
 
-    def test_17a_list_resource_bindings_for_alias(self):
+    def test_17a_list_resource_bindings_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = ResourceBindingsPager(
+            client=self.resource_controller_service,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = ResourceBindingsPager(
+            client=self.resource_controller_service,
+       )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_resource_bindings() returned a total of {len(all_results)} items(s) using ResourceBindingsPager.')
+
+    def test_17b_list_resource_bindings_for_alias(self):
         assert self.testAliasGuid is not None
 
         start = None
 
         while True:
-            response = self.service.list_resource_bindings_for_alias(
+            response = self.resource_controller_service.list_resource_bindings_for_alias(
                 id=self.testAliasGuid,
                 limit=results_per_page,
                 start=start)
@@ -607,6 +696,31 @@ class TestResourceControllerV2(unittest.TestCase):
             if start is None:
                 break
 
+    def test_17c_list_resource_bindings_for_alias_with_pager(self):
+        assert self.testAliasGuid is not None
+        all_results = []
+
+        # Test get_next().
+        pager = ResourceBindingsForAliasPager(
+            client=self.resource_controller_service,
+            id=self.testAliasGuid,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = ResourceBindingsForAliasPager(
+            client=self.resource_controller_service,
+            id=self.testAliasGuid,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_resource_bindings_for_alias() returned a total of {len(all_results)} items(s) using ResourceBindingsForAliasPager.')
+
     def test_18_create_resource_key_for_instance(self):
         customHeaders = {}
         customHeaders["Transaction-Id"] = "rc-sdk-python-test18-" + \
@@ -617,7 +731,7 @@ class TestResourceControllerV2(unittest.TestCase):
             'parameter2': 'value2'
         }
 
-        response = self.service.create_resource_key(
+        response = self.resource_controller_service.create_resource_key(
             name=self.keyNames['name'],
             source=self.testInstanceGuid,
             parameters=parameters,
@@ -648,7 +762,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test19-" + \
             self.transactionId
 
-        response = self.service.get_resource_key(
+        response = self.resource_controller_service.get_resource_key(
             self.testInstanceKeyGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -669,7 +783,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test20-" + \
             self.transactionId
 
-        response = self.service.update_resource_key(
+        response = self.resource_controller_service.update_resource_key(
             self.testInstanceKeyGuid, self.keyNames['update'], headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -688,7 +802,7 @@ class TestResourceControllerV2(unittest.TestCase):
         start = None
         result_count = 0
         while True:
-            response = self.service.list_resource_keys(
+            response = self.resource_controller_service.list_resource_keys(
                 limit=results_per_page,
                 start=start,
                 headers=customHeaders)
@@ -710,7 +824,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test22-" + \
             self.transactionId
 
-        response = self.service.list_resource_keys(
+        response = self.resource_controller_service.list_resource_keys(
             guid=self.testInstanceKeyGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -733,7 +847,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test23-" + \
             self.transactionId
 
-        response = self.service.list_resource_keys(
+        response = self.resource_controller_service.list_resource_keys(
             name=self.keyNames['update'], headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -743,13 +857,35 @@ class TestResourceControllerV2(unittest.TestCase):
         assert len(result.get('resources')) == 1
         assert result.get('rows_count') == 1
 
-    def test_23a_list_resource_keys_for_instance(self):
+    def test_23a_list_resource_keys_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = ResourceKeysPager(
+            client=self.resource_controller_service,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = ResourceKeysPager(
+            client=self.resource_controller_service,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_resource_keys() returned a total of {len(all_results)} items(s) using ResourceKeysPager.')
+
+    def test_23b_list_resource_keys_for_instance(self):
         assert self.testInstanceGuid is not None
 
         start = None
 
         while True:
-            response = self.service.list_resource_keys_for_instance(
+            response = self.resource_controller_service.list_resource_keys_for_instance(
                 id=self.testInstanceGuid,
                 limit=results_per_page,
                 start=start)
@@ -766,12 +902,37 @@ class TestResourceControllerV2(unittest.TestCase):
             if start is None:
                 break
 
+    def test_23c_list_resource_keys_for_instance_with_pager(self):
+        assert self.testInstanceGuid is not None
+        all_results = []
+
+        # Test get_next().
+        pager = ResourceKeysForInstancePager(
+            client=self.resource_controller_service,
+            id=self.testInstanceGuid,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = ResourceKeysForInstancePager(
+            client=self.resource_controller_service,
+            id=self.testInstanceGuid,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_resource_keys_for_instance() returned a total of {len(all_results)} items(s) using ResourceKeysForInstancePager.')
+
     def test_24_create_resource_key_for_alias(self):
         customHeaders = {}
         customHeaders["Transaction-Id"] = "rc-sdk-python-test24-" + \
             self.transactionId
 
-        response = self.service.create_resource_key(
+        response = self.resource_controller_service.create_resource_key(
             self.keyNames['name2'],
             self.testAliasGuid,
             headers=customHeaders)
@@ -800,7 +961,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test25-" + \
             self.transactionId
 
-        response = self.service.get_resource_key(
+        response = self.resource_controller_service.get_resource_key(
             self.testAliasKeyGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -821,7 +982,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test26-" + \
             self.transactionId
 
-        response = self.service.update_resource_key(
+        response = self.resource_controller_service.update_resource_key(
             self.testAliasKeyGuid, self.keyNames['update2'], headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -837,7 +998,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test27-" + \
             self.transactionId
 
-        response = self.service.list_resource_keys(headers=customHeaders)
+        response = self.resource_controller_service.list_resource_keys(headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -851,7 +1012,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test28-" + \
             self.transactionId
 
-        response = self.service.list_resource_keys(
+        response = self.resource_controller_service.list_resource_keys(
             guid=self.testAliasKeyGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -874,7 +1035,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test29-" + \
             self.transactionId
 
-        response = self.service.list_resource_keys(
+        response = self.resource_controller_service.list_resource_keys(
             name=self.keyNames['update2'], headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -890,7 +1051,7 @@ class TestResourceControllerV2(unittest.TestCase):
             self.transactionId
 
         with pytest.raises(ApiException) as e:
-            response = self.service.delete_resource_alias(
+            response = self.resource_controller_service.delete_resource_alias(
                 self.testAliasGuid,
                 headers=customHeaders)
             assert response is not None
@@ -902,7 +1063,7 @@ class TestResourceControllerV2(unittest.TestCase):
             self.transactionId
 
         with pytest.raises(ApiException) as e:
-            response = self.service.delete_resource_instance(
+            response = self.resource_controller_service.delete_resource_instance(
                 self.testInstanceGuid,
                 headers=customHeaders)
             assert response is not None
@@ -913,7 +1074,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test32-" + \
             self.transactionId
 
-        response = self.service.delete_resource_binding(
+        response = self.resource_controller_service.delete_resource_binding(
             self.testBindingGuid,
             headers=customHeaders)
         assert response is not None
@@ -924,7 +1085,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test33-" + \
             self.transactionId
 
-        response = self.service.get_resource_binding(
+        response = self.resource_controller_service.get_resource_binding(
             self.testBindingGuid,
             headers=customHeaders)
         assert response is not None
@@ -940,7 +1101,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test34-" + \
             self.transactionId
 
-        response = self.service.delete_resource_key(
+        response = self.resource_controller_service.delete_resource_key(
             self.testInstanceKeyGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 204
@@ -949,7 +1110,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders2["Transaction-Id"] = "rc-sdk-python-test34-" + \
             self.transactionId
 
-        response2 = self.service.delete_resource_key(
+        response2 = self.resource_controller_service.delete_resource_key(
             self.testAliasKeyGuid, headers=customHeaders2)
         assert response2 is not None
         assert response2.get_status_code() == 204
@@ -959,7 +1120,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test35-" + \
             self.transactionId
 
-        response = self.service.get_resource_key(
+        response = self.resource_controller_service.get_resource_key(
             self.testInstanceKeyGuid,
             headers=customHeaders)
         assert response is not None
@@ -974,7 +1135,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders2["Transaction-Id"] = "rc-sdk-python-test35-" + \
             self.transactionId
 
-        response2 = self.service.get_resource_key(
+        response2 = self.resource_controller_service.get_resource_key(
             self.testAliasKeyGuid, headers=customHeaders2)
         assert response2 is not None
         assert response2.get_status_code() == 200
@@ -989,7 +1150,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test36-" + \
             self.transactionId
 
-        response = self.service.delete_resource_alias(
+        response = self.resource_controller_service.delete_resource_alias(
             self.testAliasGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 204
@@ -999,7 +1160,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test37-" + \
             self.transactionId
 
-        response = self.service.get_resource_alias(
+        response = self.resource_controller_service.get_resource_alias(
             self.testAliasGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -1014,7 +1175,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test38-" + \
             self.transactionId
 
-        response = self.service.lock_resource_instance(
+        response = self.resource_controller_service.lock_resource_instance(
             self.testInstanceGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -1033,7 +1194,7 @@ class TestResourceControllerV2(unittest.TestCase):
             self.transactionId
 
         with pytest.raises(ApiException) as e:
-            response = self.service.update_resource_instance(
+            response = self.resource_controller_service.update_resource_instance(
                 self.testInstanceGuid,
                 name=self.lockedInstanceNameUpdate,
                 headers=customHeaders
@@ -1047,7 +1208,7 @@ class TestResourceControllerV2(unittest.TestCase):
             self.transactionId
 
         with pytest.raises(ApiException) as e:
-            response = self.service.delete_resource_instance(
+            response = self.resource_controller_service.delete_resource_instance(
                 self.testInstanceGuid, headers=customHeaders)
             assert response is not None
             assert response.get_status_code() == 400
@@ -1057,7 +1218,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test41-" + \
             self.transactionId
 
-        response = self.service.unlock_resource_instance(
+        response = self.resource_controller_service.unlock_resource_instance(
             self.testInstanceGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -1075,7 +1236,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test42-" + \
             self.transactionId
 
-        response = self.service.delete_resource_instance(
+        response = self.resource_controller_service.delete_resource_instance(
             id=self.testInstanceGuid,
             recursive=False,
             headers=customHeaders)
@@ -1087,7 +1248,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test43-" + \
             self.transactionId
 
-        response = self.service.get_resource_instance(
+        response = self.resource_controller_service.get_resource_instance(
             self.testInstanceGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -1103,7 +1264,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test44-" + \
             self.transactionId
 
-        response = self.service.create_resource_instance(
+        response = self.resource_controller_service.create_resource_instance(
             self.reclaimInstanceName,
             self.testRegionId2,
             self.testResourceGroupGuid,
@@ -1139,7 +1300,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test45-" + \
             self.transactionId
 
-        response = self.service.delete_resource_instance(
+        response = self.resource_controller_service.delete_resource_instance(
             self.testReclaimInstanceGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 204
@@ -1152,7 +1313,7 @@ class TestResourceControllerV2(unittest.TestCase):
     #     customHeaders = {}
     #     customHeaders["Transaction-Id"] = "rc-sdk-python-test46-" + self.transactionId
 
-    #     response = self.service.get_resource_instance(self.testReclaimInstanceGuid, headers=customHeaders)
+    #     response = self.resource_controller_service.get_resource_instance(self.testReclaimInstanceGuid, headers=customHeaders)
     #     assert response is not None
     #     assert response.get_status_code() == 200
 
@@ -1161,7 +1322,6 @@ class TestResourceControllerV2(unittest.TestCase):
     #     assert result.get('id') == self.testReclaimInstanceCrn
     #     assert result.get('state') == "pending_reclamation"
     #     assert result.get('last_operation').get('type') == "reclamation"
-    #     assert result.get('last_operation').get('sub_type') == "pending"
     #     assert not result.get('last_operation').get('async')
     #     assert result.get('last_operation').get('state') == "succeeded"
 
@@ -1170,7 +1330,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test47-" + \
             self.transactionId
 
-        response = self.service.list_reclamations(
+        response = self.resource_controller_service.list_reclamations(
             # account_id=self.testAccountId,
             # checking reclamations with instance guid for more test reliability
             resource_instance_id=self.testReclaimInstanceGuid,
@@ -1202,7 +1362,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test48-" + \
             self.transactionId
 
-        response = self.service.run_reclamation_action(
+        response = self.resource_controller_service.run_reclamation_action(
             self.testReclamationId1, 'restore', headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -1223,7 +1383,7 @@ class TestResourceControllerV2(unittest.TestCase):
     #     customHeaders = {}
     #     customHeaders["Transaction-Id"] = "rc-sdk-python-test49-" + self.transactionId
 
-    #     response = self.service.get_resource_instance(self.testReclaimInstanceGuid, headers=customHeaders)
+    #     response = self.resource_controller_service.get_resource_instance(self.testReclaimInstanceGuid, headers=customHeaders)
     #     assert response is not None
     #     assert response.get_status_code() == 200
 
@@ -1232,7 +1392,6 @@ class TestResourceControllerV2(unittest.TestCase):
     #     assert result.get('id') == self.testReclaimInstanceCrn
     #     assert result.get('state') == "active"
     #     assert result.get('last_operation').get('type') == "reclamation"
-    #     assert result.get('last_operation').get('sub_type') == "restore"
     #     assert not result.get('last_operation').get('async')
     #     assert result.get('last_operation').get('state') == "succeeded"
 
@@ -1241,7 +1400,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test50-" + \
             self.transactionId
 
-        response = self.service.delete_resource_instance(
+        response = self.resource_controller_service.delete_resource_instance(
             self.testReclaimInstanceGuid, headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 204
@@ -1253,7 +1412,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test51-" + \
             self.transactionId
 
-        response = self.service.list_reclamations(
+        response = self.resource_controller_service.list_reclamations(
             account_id=self.testAccountId,
             resource_instance_id=self.testReclaimInstanceGuid,
             headers=customHeaders
@@ -1278,7 +1437,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test52-" + \
             self.transactionId
 
-        response = self.service.run_reclamation_action(
+        response = self.resource_controller_service.run_reclamation_action(
             self.testReclamationId2, 'reclaim', headers=customHeaders)
         assert response is not None
         assert response.get_status_code() == 200
@@ -1299,7 +1458,7 @@ class TestResourceControllerV2(unittest.TestCase):
         customHeaders["Transaction-Id"] = "rc-sdk-python-test53-" + \
             self.transactionId
         try:
-            response = self.service.cancel_lastop_resource_instance(
+            response = self.resource_controller_service.cancel_lastop_resource_instance(
                 id=self.testInstanceGuid,
                 headers=customHeaders)
             assert response is not None
@@ -1313,7 +1472,7 @@ class TestResourceControllerV2(unittest.TestCase):
     #     customHeaders = {}
     #     customHeaders["Transaction-Id"] = "rc-sdk-python-test53-" + self.transactionId
 
-    #     response = self.service.get_resource_instance(self.testReclaimInstanceGuid, headers=customHeaders)
+    #     response = self.resource_controller_service.get_resource_instance(self.testReclaimInstanceGuid, headers=customHeaders)
     #     assert response is not None
     #     assert response.get_status_code() == 200
 
@@ -1322,7 +1481,6 @@ class TestResourceControllerV2(unittest.TestCase):
     #     assert result.get('id') == self.testReclaimInstanceCrn
     #     assert result.get('state') == "removed"
     #     assert result.get('last_operation').get('type') == "reclamation"
-    #     assert result.get('last_operation').get('sub_type') == "delete"
     #     assert not result.get('last_operation').get('async')
     #     assert result.get('last_operation').get('state') == "succeeded"
 
@@ -1333,7 +1491,7 @@ class TestResourceControllerV2(unittest.TestCase):
                 customHeaders = {}
                 customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-" + \
                     cls.transactionId
-                cls.service.delete_resource_key(
+                cls.resource_controller_service.delete_resource_key(
                     cls.testInstanceKeyGuid, headers=customHeaders)
                 print('\nSuccessfully cleaned up key ' +
                       cls.testInstanceKeyGuid + '.')
@@ -1352,7 +1510,7 @@ class TestResourceControllerV2(unittest.TestCase):
                 customHeaders = {}
                 customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-" + \
                     cls.transactionId
-                cls.service.delete_resource_key(
+                cls.resource_controller_service.delete_resource_key(
                     cls.testAliasKeyGuid, headers=customHeaders)
                 print('\nSuccessfully cleaned up key ' +
                       cls.testAliasKeyGuid + '.')
@@ -1371,7 +1529,7 @@ class TestResourceControllerV2(unittest.TestCase):
                 customHeaders = {}
                 customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-" + \
                     cls.transactionId
-                cls.service.delete_resource_binding(
+                cls.resource_controller_service.delete_resource_binding(
                     cls.testBindingGuid, headers=customHeaders)
                 print('\nSuccessfully cleaned up binding ' +
                       cls.testBindingGuid + '.')
@@ -1390,7 +1548,7 @@ class TestResourceControllerV2(unittest.TestCase):
                 customHeaders = {}
                 customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-" + \
                     cls.transactionId
-                cls.service.delete_resource_alias(
+                cls.resource_controller_service.delete_resource_alias(
                     cls.testAliasGuid, headers=customHeaders)
                 print('\nSuccessfully cleaned up alias ' +
                       cls.testAliasGuid + '.')
@@ -1418,7 +1576,7 @@ class TestResourceControllerV2(unittest.TestCase):
                 customHeaders = {}
                 customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-by-name-" + \
                     cls.transactionId
-                response = cls.service.list_resource_keys(
+                response = cls.resource_controller_service.list_resource_keys(
                     name=resourceKeyName, headers=customHeaders)
             except ApiException as errResponse:
                 print('\nFailed to retrieve key with name' + resourceKeyName +
@@ -1432,7 +1590,7 @@ class TestResourceControllerV2(unittest.TestCase):
                             customHeaders = {}
                             customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-by-name-" + \
                                 cls.transactionId
-                            cls.service.delete_resource_key(
+                            cls.resource_controller_service.delete_resource_key(
                                 keyGuid, headers=customHeaders)
                             print('\nSuccessfully cleaned up key ' + keyGuid + '.')
                         except ApiException as errResponse:
@@ -1451,7 +1609,7 @@ class TestResourceControllerV2(unittest.TestCase):
                 customHeaders = {}
                 customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-by-name-" + \
                     cls.transactionId
-                response = cls.service.list_resource_instances(
+                response = cls.resource_controller_service.list_resource_instances(
                     name=resourceInstanceName, headers=customHeaders)
             except ApiException as errResponse:
                 print('\nFailed to retrieve instance with name' +
@@ -1467,7 +1625,7 @@ class TestResourceControllerV2(unittest.TestCase):
                                 customHeaders = {}
                                 customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-by-name" + \
                                     cls.transactionId
-                                cls.service.unlock_resource_instance(
+                                cls.resource_controller_service.unlock_resource_instance(
                                     instanceGuid, headers=customHeaders)
                                 print('\nSuccessfully unlocked instance ' +
                                       instanceGuid + ' for cleanup.')
@@ -1479,7 +1637,7 @@ class TestResourceControllerV2(unittest.TestCase):
                             customHeaders = {}
                             customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-by-name-" + \
                                 cls.transactionId
-                            cls.service.delete_resource_instance(
+                            cls.resource_controller_service.delete_resource_instance(
                                 instanceGuid, headers=customHeaders)
                             print('\nSuccessfully cleaned up instance ' +
                                   instanceGuid + '.')
@@ -1499,7 +1657,7 @@ class TestResourceControllerV2(unittest.TestCase):
                 customHeaders = {}
                 customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-by-name-" + \
                     cls.transactionId
-                response = cls.service.list_resource_bindings(
+                response = cls.resource_controller_service.list_resource_bindings(
                     name=resourceBindingName, headers=customHeaders)
             except ApiException as errResponse:
                 print('\nFailed to retrieve binding with name' +
@@ -1513,7 +1671,7 @@ class TestResourceControllerV2(unittest.TestCase):
                             customHeaders = {}
                             customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-by-name-" + \
                                 cls.transactionId
-                            cls.service.delete_resource_key(
+                            cls.resource_controller_service.delete_resource_key(
                                 bindingGuid, headers=customHeaders)
                             print('\nSuccessfully cleaned up binding ' +
                                   bindingGuid + '.')
@@ -1533,7 +1691,7 @@ class TestResourceControllerV2(unittest.TestCase):
                 customHeaders = {}
                 customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-by-name-" + \
                     cls.transactionId
-                response = cls.service.list_resource_aliases(
+                response = cls.resource_controller_service.list_resource_aliases(
                     name=resourceAliasName, headers=customHeaders)
             except ApiException as errResponse:
                 print('\nFailed to retrieve alias with name' +
@@ -1547,7 +1705,7 @@ class TestResourceControllerV2(unittest.TestCase):
                             customHeaders = {}
                             customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-by-name-" + \
                                 cls.transactionId
-                            cls.service.delete_resource_alias(
+                            cls.resource_controller_service.delete_resource_alias(
                                 aliasGuid, headers=customHeaders)
                             print('\nSuccessfully cleaned up alias ' +
                                   aliasGuid + '.')
@@ -1567,7 +1725,7 @@ class TestResourceControllerV2(unittest.TestCase):
             customHeaders = {}
             customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-" + \
                 cls.transactionId
-            response = cls.service.get_resource_instance(
+            response = cls.resource_controller_service.get_resource_instance(
                 cls.testInstanceGuid, headers=customHeaders)
         except ApiException as errResponse:
             print('\nFailed to retrieve instance ' + cls.testInstanceGuid +
@@ -1578,7 +1736,7 @@ class TestResourceControllerV2(unittest.TestCase):
                     customHeaders = {}
                     customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-" + \
                         cls.transactionId
-                    cls.service.unlock_resource_instance(
+                    cls.resource_controller_service.unlock_resource_instance(
                         cls.testInstanceGuid, headers=customHeaders)
                     print('\nSuccessfully unlocked instance ' +
                           cls.testInstanceGuid + ' for cleanup.')
@@ -1590,7 +1748,7 @@ class TestResourceControllerV2(unittest.TestCase):
             customHeaders = {}
             customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-" + \
                 cls.transactionId
-            cls.service.delete_resource_instance(
+            cls.resource_controller_service.delete_resource_instance(
                 cls.testInstanceGuid, headers=customHeaders)
             print('\nSuccessfully cleaned up instance ' +
                   cls.testInstanceGuid + '.')
@@ -1609,7 +1767,7 @@ class TestResourceControllerV2(unittest.TestCase):
                 customHeaders = {}
                 customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-" + \
                     cls.transactionId
-                response = cls.service.get_resource_instance(
+                response = cls.resource_controller_service.get_resource_instance(
                     cls.testReclaimInstanceGuid, headers=customHeaders)
             except ApiException as errResponse:
                 print('\nFailed to retrieve instance ' + cls.testReclaimInstanceGuid +
@@ -1625,7 +1783,7 @@ class TestResourceControllerV2(unittest.TestCase):
                         customHeaders = {}
                         customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-" + \
                             cls.transactionId
-                        cls.service.delete_resource_instance(
+                        cls.resource_controller_service.delete_resource_instance(
                             cls.testReclaimInstanceGuid, headers=customHeaders)
                         print('\nSuccessfully scheduled instance ' +
                               cls.testReclaimInstanceGuid + ' for reclamation.')
@@ -1644,7 +1802,7 @@ class TestResourceControllerV2(unittest.TestCase):
             customHeaders = {}
             customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-" + \
                 cls.transactionId
-            response = cls.service.list_reclamations(
+            response = cls.resource_controller_service.list_reclamations(
                 account_id=cls.testAccountId,
                 resource_instance_id=cls.testReclaimInstanceGuid,
                 headers=customHeaders
@@ -1663,7 +1821,7 @@ class TestResourceControllerV2(unittest.TestCase):
                     customHeaders = {}
                     customHeaders["Transaction-Id"] = "rc-sdk-python-cleanup-" + \
                         cls.transactionId
-                    response = cls.service.run_reclamation_action(
+                    response = cls.resource_controller_service.run_reclamation_action(
                         reclamationId, 'reclaim', headers=customHeaders)
                     print('\nSuccessfully reclaimed instance ' +
                           cls.testReclaimInstanceGuid)
