@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,12 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.32.0-4c6a3129-20210514-210323
+# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-f381b8c9-20221101-115055
 
 """
 Manage lifecycle of your Cloud resources using Resource Controller APIs. Resources are
 provisioned globally in an account scope. Supports asynchronous provisioning of resources.
 Enables consumption of a global resource through a Cloud Foundry space in any region.
+
+API Version: 2.0
 """
 
 from datetime import datetime
@@ -27,7 +29,7 @@ from enum import Enum
 from typing import Dict, List
 import json
 
-from ibm_cloud_sdk_core import BaseService, DetailedResponse
+from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
 from ibm_cloud_sdk_core.utils import convert_model, datetime_to_string, string_to_datetime
@@ -66,7 +68,7 @@ class ResourceControllerV2(BaseService):
         Construct a new client for the resource_controller service.
 
         :param Authenticator authenticator: The authenticator specifies the authentication mechanism.
-               Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
+               Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
         BaseService.__init__(self,
@@ -102,12 +104,9 @@ class ResourceControllerV2(BaseService):
         could mean anything from a service instance to a virtual machine associated with
         the customer account.
 
-        :param str guid: (optional) When you provision a new resource in the
-               specified location for the selected plan, a GUID (globally unique
-               identifier) is created. This is a unique internal GUID managed by Resource
-               controller that corresponds to the instance.
+        :param str guid: (optional) The GUID of the instance.
         :param str name: (optional) The human-readable name of the instance.
-        :param str resource_group_id: (optional) Short ID of a resource group.
+        :param str resource_group_id: (optional) The ID of the resource group.
         :param str resource_id: (optional) The unique ID of the offering. This
                value is provided by and stored in the global catalog.
         :param str resource_plan_id: (optional) The unique ID of the plan
@@ -116,13 +115,13 @@ class ResourceControllerV2(BaseService):
         :param str type: (optional) The type of the instance, for example,
                `service_instance`.
         :param str sub_type: (optional) The sub-type of instance, for example,
-               `cfaas`.
+               `kms`.
         :param int limit: (optional) Limit on how many items should be returned.
         :param str start: (optional) An optional token that indicates the beginning
                of the page of results to be returned. Any additional query parameters are
                ignored if a page token is present. If omitted, the first page of results
-               is returned. This value is obtained from the 'next_url' field of the
-               operation response.
+               is returned. This value is obtained from the 'start' query parameter in the
+               'next_url' field of the operation response.
         :param str state: (optional) The state of the instance. If not specified,
                instances in state `active` and `provisioning` are returned.
         :param str updated_from: (optional) Start date inclusive filter.
@@ -155,6 +154,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_instances'
@@ -163,7 +163,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -190,7 +190,7 @@ class ResourceControllerV2(BaseService):
                and cannot include any special characters other than `(space) - . _ :`.
         :param str target: The deployment location where the instance should be
                hosted.
-        :param str resource_group: Short or long ID of resource group.
+        :param str resource_group: The ID of the resource group.
         :param str resource_plan_id: The unique ID of the plan associated with the
                offering. This value is provided by and stored in the global catalog.
         :param List[str] tags: (optional) Tags that are attached to the instance
@@ -241,6 +241,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_instances'
@@ -249,7 +250,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -260,16 +261,16 @@ class ResourceControllerV2(BaseService):
         """
         Get a resource instance.
 
-        Retrieve a resource instance by ID. Find more details on a particular instance,
-        like when it was provisioned and who provisioned it.
+        Retrieve a resource instance by URL-encoded CRN or GUID. Find more details on a
+        particular instance, like when it was provisioned and who provisioned it.
 
-        :param str id: The short or long ID of the instance.
+        :param str id: The resource instance URL-encoded CRN or GUID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceInstance` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -279,6 +280,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
@@ -289,7 +291,7 @@ class ResourceControllerV2(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -302,10 +304,11 @@ class ResourceControllerV2(BaseService):
         """
         Delete a resource instance.
 
-        Delete a resource instance by ID. If the resource instance has any resource keys
-        or aliases associated with it, use the `recursive=true parameter` to delete it.
+        Delete a resource instance by URL-encoded CRN or GUID. If the resource instance
+        has any resource keys or aliases associated with it, use the `recursive=true`
+        parameter to delete it.
 
-        :param str id: The short or long ID of the instance.
+        :param str id: The resource instance URL-encoded CRN or GUID.
         :param bool recursive: (optional) Will delete resource bindings, keys and
                aliases associated with the instance.
         :param dict headers: A `dict` containing the request headers
@@ -313,7 +316,7 @@ class ResourceControllerV2(BaseService):
         :rtype: DetailedResponse
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -327,6 +330,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['id']
         path_param_values = self.encode_path_vars(id)
@@ -337,7 +341,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -353,10 +357,10 @@ class ResourceControllerV2(BaseService):
         """
         Update a resource instance.
 
-        You can use the ID to make updates to the resource instance, like changing the
-        name or plan.
+        Use the resource instance URL-encoded CRN or GUID to make updates to the resource
+        instance, like changing the name or plan.
 
-        :param str id: The short or long ID of the instance.
+        :param str id: The resource instance URL-encoded CRN or GUID.
         :param str name: (optional) The new name of the instance. Must be 180
                characters or less and cannot include any special characters other than
                `(space) - . _ :`.
@@ -373,7 +377,7 @@ class ResourceControllerV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `ResourceInstance` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -393,6 +397,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
@@ -404,7 +409,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -421,19 +426,19 @@ class ResourceControllerV2(BaseService):
         Retrieving a list of all resource aliases can help you find out who's using the
         resource instance.
 
-        :param str id: The short or long ID of the instance.
+        :param str id: The resource instance URL-encoded CRN or GUID.
         :param int limit: (optional) Limit on how many items should be returned.
         :param str start: (optional) An optional token that indicates the beginning
                of the page of results to be returned. Any additional query parameters are
                ignored if a page token is present. If omitted, the first page of results
-               is returned. This value is obtained from the 'next_url' field of the
-               operation response.
+               is returned. This value is obtained from the 'start' query parameter in the
+               'next_url' field of the operation response.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceAliasesList` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -448,6 +453,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
@@ -459,7 +465,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -476,19 +482,19 @@ class ResourceControllerV2(BaseService):
         You may have many resource keys for one resource instance. For example, you may
         have a different resource key for each user or each role.
 
-        :param str id: The short or long ID of the instance.
+        :param str id: The resource instance URL-encoded CRN or GUID.
         :param int limit: (optional) Limit on how many items should be returned.
         :param str start: (optional) An optional token that indicates the beginning
                of the page of results to be returned. Any additional query parameters are
                ignored if a page token is present. If omitted, the first page of results
-               is returned. This value is obtained from the 'next_url' field of the
-               operation response.
+               is returned. This value is obtained from the 'start' query parameter in the
+               'next_url' field of the operation response.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceKeysList` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -503,6 +509,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
@@ -514,7 +521,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -525,17 +532,17 @@ class ResourceControllerV2(BaseService):
         """
         Lock a resource instance.
 
-        Locks a resource instance by ID. A locked instance can not be updated or deleted.
-        It does not affect actions performed on child resources like aliases, bindings or
+        Locks a resource instance. A locked instance can not be updated or deleted. It
+        does not affect actions performed on child resources like aliases, bindings, or
         keys.
 
-        :param str id: The short or long ID of the instance.
+        :param str id: The resource instance URL-encoded CRN or GUID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceInstance` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -545,6 +552,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
@@ -555,7 +563,7 @@ class ResourceControllerV2(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -569,13 +577,13 @@ class ResourceControllerV2(BaseService):
         Unlock a resource instance to update or delete it. Unlocking a resource instance
         does not affect child resources like aliases, bindings or keys.
 
-        :param str id: The short or long ID of the instance.
+        :param str id: The resource instance URL-encoded CRN or GUID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceInstance` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -585,6 +593,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
@@ -595,8 +604,9 @@ class ResourceControllerV2(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
+
 
     def cancel_lastop_resource_instance(self,
         id: str,
@@ -614,7 +624,7 @@ class ResourceControllerV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `ResourceInstance` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -624,6 +634,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
@@ -634,8 +645,9 @@ class ResourceControllerV2(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
+
     #########################
     # Resource Keys
     #########################
@@ -658,20 +670,17 @@ class ResourceControllerV2(BaseService):
 
         View all of the resource keys that exist for all of your resource instances.
 
-        :param str guid: (optional) When you create a new key, a GUID (globally
-               unique identifier) is assigned. This is a unique internal GUID managed by
-               Resource controller that corresponds to the key.
+        :param str guid: (optional) The GUID of the key.
         :param str name: (optional) The human-readable name of the key.
-        :param str resource_group_id: (optional) The short ID of the resource
-               group.
+        :param str resource_group_id: (optional) The ID of the resource group.
         :param str resource_id: (optional) The unique ID of the offering. This
                value is provided by and stored in the global catalog.
         :param int limit: (optional) Limit on how many items should be returned.
         :param str start: (optional) An optional token that indicates the beginning
                of the page of results to be returned. Any additional query parameters are
                ignored if a page token is present. If omitted, the first page of results
-               is returned. This value is obtained from the 'next_url' field of the
-               operation response.
+               is returned. This value is obtained from the 'start' query parameter in the
+               'next_url' field of the operation response.
         :param str updated_from: (optional) Start date inclusive filter.
         :param str updated_to: (optional) End date inclusive filter.
         :param dict headers: A `dict` containing the request headers
@@ -698,6 +707,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_keys'
@@ -706,7 +716,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -725,12 +735,14 @@ class ResourceControllerV2(BaseService):
         instance.
 
         :param str name: The name of the key.
-        :param str source: The short or long ID of resource instance or alias.
+        :param str source: The ID of resource instance or alias.
         :param ResourceKeyPostParameters parameters: (optional) Configuration
                options represented as key-value pairs. Service defined options are passed
                through to the target resource brokers, whereas platform defined options
                are not.
-        :param str role: (optional) The role name or it's CRN.
+        :param str role: (optional) The base IAM service role name (Reader, Writer,
+               or Manager), or the service or custom role CRN. Refer to service’s
+               documentation for supported roles.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceKey` object
@@ -760,6 +772,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_keys'
@@ -768,7 +781,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -777,18 +790,18 @@ class ResourceControllerV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Get resource key by ID.
+        Get resource key.
 
-        View a resource key and all of its details, like the credentials for the key and
-        who created it.
+        View the details of a resource key by URL-encoded CRN or GUID, like the
+        credentials for the key and who created it.
 
-        :param str id: The short or long ID of the key.
+        :param str id: The resource key URL-encoded CRN or GUID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceKey` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -798,6 +811,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
@@ -808,7 +822,7 @@ class ResourceControllerV2(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -817,18 +831,18 @@ class ResourceControllerV2(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Delete a resource key by ID.
+        Delete a resource key.
 
         Deleting a resource key does not affect any resource instance or resource alias
         associated with the key.
 
-        :param str id: The short or long ID of the key.
+        :param str id: The resource key URL-encoded CRN or GUID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -838,6 +852,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['id']
         path_param_values = self.encode_path_vars(id)
@@ -847,7 +862,7 @@ class ResourceControllerV2(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -859,9 +874,9 @@ class ResourceControllerV2(BaseService):
         """
         Update a resource key.
 
-        Use the resource key ID to update the name of the resource key.
+        Use the resource key URL-encoded CRN or GUID to update the resource key.
 
-        :param str id: The short or long ID of the key.
+        :param str id: The resource key URL-encoded CRN or GUID.
         :param str name: The new name of the key. Must be 180 characters or less
                and cannot include any special characters other than `(space) - . _ :`.
         :param dict headers: A `dict` containing the request headers
@@ -869,7 +884,7 @@ class ResourceControllerV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `ResourceKey` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         if name is None:
             raise ValueError('name must be provided')
@@ -888,6 +903,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
@@ -899,7 +915,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -925,20 +941,20 @@ class ResourceControllerV2(BaseService):
 
         View all of the resource bindings that exist for all of your resource aliases.
 
-        :param str guid: (optional) The short ID of the binding.
+        :param str guid: (optional) The GUID of the binding.
         :param str name: (optional) The human-readable name of the binding.
-        :param str resource_group_id: (optional) Short ID of the resource group.
+        :param str resource_group_id: (optional) The ID of the resource group.
         :param str resource_id: (optional) The unique ID of the offering (service
                name). This value is provided by and stored in the global catalog.
-        :param str region_binding_id: (optional) Short ID of the binding in the
-               specific targeted environment, for example, service_binding_id in a given
-               IBM Cloud environment.
+        :param str region_binding_id: (optional) The ID of the binding in the
+               target environment. For example, `service_binding_id` in a given IBM Cloud
+               environment.
         :param int limit: (optional) Limit on how many items should be returned.
         :param str start: (optional) An optional token that indicates the beginning
                of the page of results to be returned. Any additional query parameters are
                ignored if a page token is present. If omitted, the first page of results
-               is returned. This value is obtained from the 'next_url' field of the
-               operation response.
+               is returned. This value is obtained from the 'start' query parameter in the
+               'next_url' field of the operation response.
         :param str updated_from: (optional) Start date inclusive filter.
         :param str updated_to: (optional) End date inclusive filter.
         :param dict headers: A `dict` containing the request headers
@@ -966,6 +982,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_bindings'
@@ -974,7 +991,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -993,7 +1010,7 @@ class ResourceControllerV2(BaseService):
         A resource binding connects credentials to a resource alias. The credentials are
         in the form of a resource key.
 
-        :param str source: The short or long ID of resource alias.
+        :param str source: The ID of resource alias.
         :param str target: The CRN of application to bind to in a specific
                environment, for example, Dallas YP, CFEE instance.
         :param str name: (optional) The name of the binding. Must be 180 characters
@@ -1003,7 +1020,9 @@ class ResourceControllerV2(BaseService):
                options represented as key-value pairs. Service defined options are passed
                through to the target resource brokers, whereas platform defined options
                are not.
-        :param str role: (optional) The role name or it's CRN.
+        :param str role: (optional) The base IAM service role name (Reader, Writer,
+               or Manager), or the service or custom role CRN. Refer to service’s
+               documentation for supported roles.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceBinding` object
@@ -1034,6 +1053,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_bindings'
@@ -1042,7 +1062,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1056,13 +1076,13 @@ class ResourceControllerV2(BaseService):
         View a resource binding and all of its details, like who created it, the
         credential, and the resource alias that the binding is associated with.
 
-        :param str id: The short or long ID of the binding.
+        :param str id: The resource binding URL-encoded CRN or GUID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceBinding` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -1072,6 +1092,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
@@ -1082,7 +1103,7 @@ class ResourceControllerV2(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1096,13 +1117,13 @@ class ResourceControllerV2(BaseService):
         Deleting a resource binding does not affect the resource alias that the binding is
         associated with.
 
-        :param str id: The short or long ID of the binding.
+        :param str id: The resource binding URL-encoded CRN or GUID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -1112,6 +1133,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['id']
         path_param_values = self.encode_path_vars(id)
@@ -1121,7 +1143,7 @@ class ResourceControllerV2(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1133,9 +1155,9 @@ class ResourceControllerV2(BaseService):
         """
         Update a resource binding.
 
-        Use the resource binding ID to update the name of the resource binding.
+        Use the resource binding URL-encoded CRN or GUID to update the resource binding.
 
-        :param str id: The short or long ID of the binding.
+        :param str id: The resource binding URL-encoded CRN or GUID.
         :param str name: The new name of the binding. Must be 180 characters or
                less and cannot include any special characters other than `(space) - . _
                :`.
@@ -1144,7 +1166,7 @@ class ResourceControllerV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `ResourceBinding` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         if name is None:
             raise ValueError('name must be provided')
@@ -1163,6 +1185,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
@@ -1174,7 +1197,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -1201,21 +1224,22 @@ class ResourceControllerV2(BaseService):
 
         View all of the resource aliases that exist for every resource instance.
 
-        :param str guid: (optional) Short ID of the alias.
+        :param str guid: (optional) The GUID of the alias.
         :param str name: (optional) The human-readable name of the alias.
-        :param str resource_instance_id: (optional) Resource instance short ID.
-        :param str region_instance_id: (optional) Short ID of the instance in a
-               specific targeted environment. For example, `service_instance_id` in a
-               given IBM Cloud environment.
+        :param str resource_instance_id: (optional) The ID of the resource
+               instance.
+        :param str region_instance_id: (optional) The ID of the instance in the
+               target environment. For example, `service_instance_id` in a given IBM Cloud
+               environment.
         :param str resource_id: (optional) The unique ID of the offering (service
                name). This value is provided by and stored in the global catalog.
-        :param str resource_group_id: (optional) Short ID of Resource group.
+        :param str resource_group_id: (optional) The ID of the resource group.
         :param int limit: (optional) Limit on how many items should be returned.
         :param str start: (optional) An optional token that indicates the beginning
                of the page of results to be returned. Any additional query parameters are
                ignored if a page token is present. If omitted, the first page of results
-               is returned. This value is obtained from the 'next_url' field of the
-               operation response.
+               is returned. This value is obtained from the 'start' query parameter in the
+               'next_url' field of the operation response.
         :param str updated_from: (optional) Start date inclusive filter.
         :param str updated_to: (optional) End date inclusive filter.
         :param dict headers: A `dict` containing the request headers
@@ -1244,6 +1268,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_aliases'
@@ -1252,7 +1277,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1269,7 +1294,7 @@ class ResourceControllerV2(BaseService):
 
         :param str name: The name of the alias. Must be 180 characters or less and
                cannot include any special characters other than `(space) - . _ :`.
-        :param str source: The short or long ID of resource instance.
+        :param str source: The ID of resource instance.
         :param str target: The CRN of target name(space) in a specific environment,
                for example, space in Dallas YP, CFEE instance etc.
         :param dict headers: A `dict` containing the request headers
@@ -1300,6 +1325,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_aliases'
@@ -1308,7 +1334,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1322,13 +1348,13 @@ class ResourceControllerV2(BaseService):
         View a resource alias and all of its details, like who created it and the resource
         instance that it's associated with.
 
-        :param str id: The short or long ID of the alias.
+        :param str id: The resource alias URL-encoded CRN or GUID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceAlias` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -1338,6 +1364,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
@@ -1348,27 +1375,32 @@ class ResourceControllerV2(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
     def delete_resource_alias(self,
         id: str,
+        *,
+        recursive: bool = None,
         **kwargs
     ) -> DetailedResponse:
         """
         Delete a resource alias.
 
-        If the resource alias has any resource keys or bindings associated with it, you
-        must delete those child resources before deleting the resource alias.
+        Delete a resource alias by URL-encoded CRN or GUID. If the resource alias has any
+        resource keys or bindings associated with it, use the `recursive=true` parameter
+        to delete it.
 
-        :param str id: The short or long ID of the alias.
+        :param str id: The resource alias URL-encoded CRN or GUID.
+        :param bool recursive: (optional) Deletes the resource bindings and keys
+               associated with the alias.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -1376,8 +1408,13 @@ class ResourceControllerV2(BaseService):
                                       operation_id='delete_resource_alias')
         headers.update(sdk_headers)
 
+        params = {
+            'recursive': recursive
+        }
+
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['id']
         path_param_values = self.encode_path_vars(id)
@@ -1385,9 +1422,10 @@ class ResourceControllerV2(BaseService):
         url = '/v2/resource_aliases/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
-                                       headers=headers)
+                                       headers=headers,
+                                       params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1399,9 +1437,9 @@ class ResourceControllerV2(BaseService):
         """
         Update a resource alias.
 
-        Use the resource alias ID to update the name of the resource alias.
+        Use the resource alias URL-encoded CRN or GUID to update the resource alias.
 
-        :param str id: The short or long ID of the alias.
+        :param str id: The resource alias URL-encoded CRN or GUID.
         :param str name: The new name of the alias. Must be 180 characters or less
                and cannot include any special characters other than `(space) - . _ :`.
         :param dict headers: A `dict` containing the request headers
@@ -1409,7 +1447,7 @@ class ResourceControllerV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `ResourceAlias` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         if name is None:
             raise ValueError('name must be provided')
@@ -1428,6 +1466,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
@@ -1439,7 +1478,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1455,19 +1494,19 @@ class ResourceControllerV2(BaseService):
 
         View all of the resource bindings associated with a specific resource alias.
 
-        :param str id: The short or long ID of the alias.
+        :param str id: The resource alias URL-encoded CRN or GUID.
         :param int limit: (optional) Limit on how many items should be returned.
         :param str start: (optional) An optional token that indicates the beginning
                of the page of results to be returned. Any additional query parameters are
                ignored if a page token is present. If omitted, the first page of results
-               is returned. This value is obtained from the 'next_url' field of the
-               operation response.
+               is returned. This value is obtained from the 'start' query parameter in the
+               'next_url' field of the operation response.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ResourceBindingsList` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -1482,6 +1521,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id']
@@ -1493,7 +1533,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -1514,7 +1554,7 @@ class ResourceControllerV2(BaseService):
 
         :param str account_id: (optional) An alpha-numeric value identifying the
                account ID.
-        :param str resource_instance_id: (optional) The short ID of the resource
+        :param str resource_instance_id: (optional) The GUID of the resource
                instance.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -1534,6 +1574,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v1/reclamations'
@@ -1542,7 +1583,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1571,9 +1612,9 @@ class ResourceControllerV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Reclamation` object
         """
 
-        if id is None:
+        if not id:
             raise ValueError('id must be provided')
-        if action_name is None:
+        if not action_name:
             raise ValueError('action_name must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -1591,6 +1632,7 @@ class ResourceControllerV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['id', 'action_name']
@@ -1602,7 +1644,7 @@ class ResourceControllerV2(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1617,7 +1659,11 @@ class ListResourceInstancesEnums:
         `provisioning` are returned.
         """
         ACTIVE = 'active'
+        INACTIVE = 'inactive'
+        FAILED = 'failed'
+        PENDING_RECLAMATION = 'pending_reclamation'
         PROVISIONING = 'provisioning'
+        PRE_PROVISIONING = 'pre_provisioning'
         REMOVED = 'removed'
 
 
@@ -1646,7 +1692,7 @@ class Credentials():
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(['REDACTED', 'apikey', 'iam_apikey_description', 'iam_apikey_name', 'iam_role_crn', 'iam_serviceid_crn'])
+    _properties = frozenset(['redacted', 'REDACTED', 'apikey', 'iam_apikey_description', 'iam_apikey_name', 'iam_role_crn', 'iam_serviceid_crn'])
 
     def __init__(self,
                  *,
@@ -1724,13 +1770,29 @@ class Credentials():
         if hasattr(self, 'iam_serviceid_crn') and self.iam_serviceid_crn is not None:
             _dict['iam_serviceid_crn'] = self.iam_serviceid_crn
         for _key in [k for k in vars(self).keys() if k not in Credentials._properties]:
-            if getattr(self, _key, None) is not None:
-                _dict[_key] = getattr(self, _key)
+            _dict[_key] = getattr(self, _key)
         return _dict
 
     def _to_dict(self):
         """Return a json dictionary representing this model."""
         return self.to_dict()
+
+    def get_properties(self) -> Dict:
+        """Return a dictionary of arbitrary properties from this instance of Credentials"""
+        _dict = {}
+
+        for _key in [k for k in vars(self).keys() if k not in Credentials._properties]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def set_properties(self, _dict: dict):
+        """Set a dictionary of arbitrary properties to this instance of Credentials"""
+        for _key in [k for k in vars(self).keys() if k not in Credentials._properties]:
+            delattr(self, _key)
+
+        for _key, _value in _dict.items():
+            if _key not in Credentials._properties:
+                setattr(self, _key, _value)
 
     def __str__(self) -> str:
         """Return a `str` version of this Credentials object."""
@@ -1745,6 +1807,17 @@ class Credentials():
     def __ne__(self, other: 'Credentials') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+    class RedactedEnum(str, Enum):
+        """
+        If present, the user doesn't have the correct access to view the credentials and
+        the details are redacted.  The string value identifies the level of access that's
+        required to view the credential. For additional information, see [viewing a
+        credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&interface=ui#viewing-credentials-ui).
+        """
+        REDACTED = 'REDACTED'
+        REDACTED_EXPLICIT = 'REDACTED_EXPLICIT'
+
 
 class PlanHistoryItem():
     """
@@ -1828,18 +1901,17 @@ class Reclamation():
     A reclamation.
 
     :attr str id: (optional) The ID associated with the reclamation.
-    :attr str entity_id: (optional) The short ID of the entity for the reclamation.
-    :attr str entity_type_id: (optional) The short ID of the entity type for the
+    :attr str entity_id: (optional) The ID of the entity for the reclamation.
+    :attr str entity_type_id: (optional) The ID of the entity type for the
           reclamation.
     :attr str entity_crn: (optional) The full Cloud Resource Name (CRN) associated
           with the binding. For more information about this format, see [Cloud Resource
           Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-    :attr str resource_instance_id: (optional) The short ID of the resource
-          instance.
-    :attr str resource_group_id: (optional) The short ID of the resource group.
+    :attr str resource_instance_id: (optional) The ID of the resource instance.
+    :attr str resource_group_id: (optional) The ID of the resource group.
     :attr str account_id: (optional) An alpha-numeric value identifying the account
           ID.
-    :attr str policy_id: (optional) The short ID of policy for the reclamation.
+    :attr str policy_id: (optional) The ID of policy for the reclamation.
     :attr str state: (optional) The state of the reclamation.
     :attr str target_time: (optional) The target time that the reclamation retention
           period end.
@@ -1873,22 +1945,19 @@ class Reclamation():
         Initialize a Reclamation object.
 
         :param str id: (optional) The ID associated with the reclamation.
-        :param str entity_id: (optional) The short ID of the entity for the
+        :param str entity_id: (optional) The ID of the entity for the reclamation.
+        :param str entity_type_id: (optional) The ID of the entity type for the
                reclamation.
-        :param str entity_type_id: (optional) The short ID of the entity type for
-               the reclamation.
         :param str entity_crn: (optional) The full Cloud Resource Name (CRN)
                associated with the binding. For more information about this format, see
                [Cloud Resource
                Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-        :param str resource_instance_id: (optional) The short ID of the resource
+        :param str resource_instance_id: (optional) The ID of the resource
                instance.
-        :param str resource_group_id: (optional) The short ID of the resource
-               group.
+        :param str resource_group_id: (optional) The ID of the resource group.
         :param str account_id: (optional) An alpha-numeric value identifying the
                account ID.
-        :param str policy_id: (optional) The short ID of policy for the
-               reclamation.
+        :param str policy_id: (optional) The ID of policy for the reclamation.
         :param str state: (optional) The state of the reclamation.
         :param str target_time: (optional) The target time that the reclamation
                retention period end.
@@ -2033,7 +2102,7 @@ class ReclamationsList():
         """Initialize a ReclamationsList object from a json dictionary."""
         args = {}
         if 'resources' in _dict:
-            args['resources'] = [Reclamation.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [Reclamation.from_dict(v) for v in _dict.get('resources')]
         return cls(**args)
 
     @classmethod
@@ -2045,7 +2114,13 @@ class ReclamationsList():
         """Return a json dictionary representing this model."""
         _dict = {}
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -2071,9 +2146,7 @@ class ResourceAlias():
     A resource alias.
 
     :attr str id: (optional) The ID associated with the alias.
-    :attr str guid: (optional) When you create a new alias, a globally unique
-          identifier (GUID) is assigned. This GUID is a unique internal indentifier
-          managed by the resource controller that corresponds to the alias.
+    :attr str guid: (optional) The GUID of the alias.
     :attr str url: (optional) When you created a new alias, a relative URL path is
           created identifying the location of the alias.
     :attr datetime created_at: (optional) The date when the alias was created.
@@ -2095,11 +2168,11 @@ class ResourceAlias():
     :attr str crn: (optional) The CRN of the alias. For more information about this
           format, see [Cloud Resource
           Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-    :attr str region_instance_id: (optional) The ID of the instance in the specific
-          target environment, for example, `service_instance_id` in a given IBM Cloud
+    :attr str region_instance_id: (optional) The ID of the instance in the target
+          environment. For example, `service_instance_id` in a given IBM Cloud
           environment.
-    :attr str region_instance_crn: (optional) The CRN of the instance in the
-          specific target environment.
+    :attr str region_instance_crn: (optional) The CRN of the instance in the target
+          environment.
     :attr str state: (optional) The state of the alias.
     :attr bool migrated: (optional) A boolean that dictates if the alias was
           migrated from a previous CF instance.
@@ -2140,9 +2213,7 @@ class ResourceAlias():
         Initialize a ResourceAlias object.
 
         :param str id: (optional) The ID associated with the alias.
-        :param str guid: (optional) When you create a new alias, a globally unique
-               identifier (GUID) is assigned. This GUID is a unique internal indentifier
-               managed by the resource controller that corresponds to the alias.
+        :param str guid: (optional) The GUID of the alias.
         :param str url: (optional) When you created a new alias, a relative URL
                path is created identifying the location of the alias.
         :param datetime created_at: (optional) The date when the alias was created.
@@ -2166,10 +2237,10 @@ class ResourceAlias():
                this format, see [Cloud Resource
                Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
         :param str region_instance_id: (optional) The ID of the instance in the
-               specific target environment, for example, `service_instance_id` in a given
-               IBM Cloud environment.
+               target environment. For example, `service_instance_id` in a given IBM Cloud
+               environment.
         :param str region_instance_crn: (optional) The CRN of the instance in the
-               specific target environment.
+               target environment.
         :param str state: (optional) The state of the alias.
         :param bool migrated: (optional) A boolean that dictates if the alias was
                migrated from a previous CF instance.
@@ -2367,7 +2438,7 @@ class ResourceAliasesList():
         else:
             raise ValueError('Required property \'next_url\' not present in ResourceAliasesList JSON')
         if 'resources' in _dict:
-            args['resources'] = [ResourceAlias.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [ResourceAlias.from_dict(v) for v in _dict.get('resources')]
         else:
             raise ValueError('Required property \'resources\' not present in ResourceAliasesList JSON')
         return cls(**args)
@@ -2385,7 +2456,13 @@ class ResourceAliasesList():
         if hasattr(self, 'next_url') and self.next_url is not None:
             _dict['next_url'] = self.next_url
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -2411,9 +2488,7 @@ class ResourceBinding():
     A resource binding.
 
     :attr str id: (optional) The ID associated with the binding.
-    :attr str guid: (optional) When you create a new binding, a globally unique
-          identifier (GUID) is assigned. This GUID is a unique internal identifier managed
-          by the resource controller that corresponds to the binding.
+    :attr str guid: (optional) The GUID of the binding.
     :attr str url: (optional) When you provision a new binding, a relative URL path
           is created identifying the location of the binding.
     :attr datetime created_at: (optional) The date when the binding was created.
@@ -2430,19 +2505,23 @@ class ResourceBinding():
     :attr str crn: (optional) The full Cloud Resource Name (CRN) associated with the
           binding. For more information about this format, see [Cloud Resource
           Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-    :attr str region_binding_id: (optional) The ID of the binding in the specific
-          target environment, for example, `service_binding_id` in a given IBM Cloud
+    :attr str region_binding_id: (optional) The ID of the binding in the target
+          environment. For example, `service_binding_id` in a given IBM Cloud environment.
+    :attr str region_binding_crn: (optional) The CRN of the binding in the target
           environment.
-    :attr str region_binding_crn: (optional) The CRN of the binding in the specific
-          target environment.
     :attr str name: (optional) The human-readable name of the binding.
     :attr str account_id: (optional) An alpha-numeric value identifying the account
           ID.
     :attr str resource_group_id: (optional) The ID of the resource group.
     :attr str state: (optional) The state of the binding.
     :attr Credentials credentials: (optional) The credentials for the binding.
-          Additional key-value pairs are passed through from the resource brokers.  For
-          additional details, see the service’s documentation.
+          Additional key-value pairs are passed through from the resource brokers. After a
+          credential is created for a service, it can be viewed at any time for users that
+          need the API key value. However, all users must have the correct level of access
+          to see the details of a credential that includes the API key value. For
+          additional details, see [viewing a
+          credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&interface=ui#viewing-credentials-ui)
+          or the service’s documentation.
     :attr bool iam_compatible: (optional) Specifies whether the binding’s
           credentials support IAM.
     :attr str resource_id: (optional) The unique ID of the offering. This value is
@@ -2482,10 +2561,7 @@ class ResourceBinding():
         Initialize a ResourceBinding object.
 
         :param str id: (optional) The ID associated with the binding.
-        :param str guid: (optional) When you create a new binding, a globally
-               unique identifier (GUID) is assigned. This GUID is a unique internal
-               identifier managed by the resource controller that corresponds to the
-               binding.
+        :param str guid: (optional) The GUID of the binding.
         :param str url: (optional) When you provision a new binding, a relative URL
                path is created identifying the location of the binding.
         :param datetime created_at: (optional) The date when the binding was
@@ -2505,10 +2581,10 @@ class ResourceBinding():
                with the binding. For more information about this format, see [Cloud
                Resource Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
         :param str region_binding_id: (optional) The ID of the binding in the
-               specific target environment, for example, `service_binding_id` in a given
-               IBM Cloud environment.
+               target environment. For example, `service_binding_id` in a given IBM Cloud
+               environment.
         :param str region_binding_crn: (optional) The CRN of the binding in the
-               specific target environment.
+               target environment.
         :param str name: (optional) The human-readable name of the binding.
         :param str account_id: (optional) An alpha-numeric value identifying the
                account ID.
@@ -2516,7 +2592,12 @@ class ResourceBinding():
         :param str state: (optional) The state of the binding.
         :param Credentials credentials: (optional) The credentials for the binding.
                Additional key-value pairs are passed through from the resource brokers.
-               For additional details, see the service’s documentation.
+               After a credential is created for a service, it can be viewed at any time
+               for users that need the API key value. However, all users must have the
+               correct level of access to see the details of a credential that includes
+               the API key value. For additional details, see [viewing a
+               credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&interface=ui#viewing-credentials-ui)
+               or the service’s documentation.
         :param bool iam_compatible: (optional) Specifies whether the binding’s
                credentials support IAM.
         :param str resource_id: (optional) The unique ID of the offering. This
@@ -2647,7 +2728,10 @@ class ResourceBinding():
         if hasattr(self, 'state') and self.state is not None:
             _dict['state'] = self.state
         if hasattr(self, 'credentials') and self.credentials is not None:
-            _dict['credentials'] = self.credentials.to_dict()
+            if isinstance(self.credentials, dict):
+                _dict['credentials'] = self.credentials
+            else:
+                _dict['credentials'] = self.credentials.to_dict()
         if hasattr(self, 'iam_compatible') and self.iam_compatible is not None:
             _dict['iam_compatible'] = self.iam_compatible
         if hasattr(self, 'resource_id') and self.resource_id is not None:
@@ -2724,13 +2808,29 @@ class ResourceBindingPostParameters():
         if hasattr(self, 'serviceid_crn') and self.serviceid_crn is not None:
             _dict['serviceid_crn'] = self.serviceid_crn
         for _key in [k for k in vars(self).keys() if k not in ResourceBindingPostParameters._properties]:
-            if getattr(self, _key, None) is not None:
-                _dict[_key] = getattr(self, _key)
+            _dict[_key] = getattr(self, _key)
         return _dict
 
     def _to_dict(self):
         """Return a json dictionary representing this model."""
         return self.to_dict()
+
+    def get_properties(self) -> Dict:
+        """Return a dictionary of arbitrary properties from this instance of ResourceBindingPostParameters"""
+        _dict = {}
+
+        for _key in [k for k in vars(self).keys() if k not in ResourceBindingPostParameters._properties]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def set_properties(self, _dict: dict):
+        """Set a dictionary of arbitrary properties to this instance of ResourceBindingPostParameters"""
+        for _key in [k for k in vars(self).keys() if k not in ResourceBindingPostParameters._properties]:
+            delattr(self, _key)
+
+        for _key, _value in _dict.items():
+            if _key not in ResourceBindingPostParameters._properties:
+                setattr(self, _key, _value)
 
     def __str__(self) -> str:
         """Return a `str` version of this ResourceBindingPostParameters object."""
@@ -2783,7 +2883,7 @@ class ResourceBindingsList():
         else:
             raise ValueError('Required property \'next_url\' not present in ResourceBindingsList JSON')
         if 'resources' in _dict:
-            args['resources'] = [ResourceBinding.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [ResourceBinding.from_dict(v) for v in _dict.get('resources')]
         else:
             raise ValueError('Required property \'resources\' not present in ResourceBindingsList JSON')
         return cls(**args)
@@ -2801,7 +2901,13 @@ class ResourceBindingsList():
         if hasattr(self, 'next_url') and self.next_url is not None:
             _dict['next_url'] = self.next_url
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -2827,9 +2933,7 @@ class ResourceInstance():
     A resource instance.
 
     :attr str id: (optional) The ID associated with the instance.
-    :attr str guid: (optional) When you create a new resource, a globally unique
-          identifier (GUID) is assigned. This GUID is a unique internal identifier managed
-          by the resource controller that corresponds to the instance.
+    :attr str guid: (optional) The GUID of the instance.
     :attr str url: (optional) When you provision a new resource, a relative URL path
           is created identifying the location of the instance.
     :attr datetime created_at: (optional) The date when the instance was created.
@@ -2878,8 +2982,8 @@ class ResourceInstance():
           provided by and stored in the global catalog.
     :attr str dashboard_url: (optional) The resource-broker-provided URL to access
           administrative features of the instance.
-    :attr dict last_operation: (optional) The status of the last operation requested
-          on the instance.
+    :attr ResourceInstanceLastOperation last_operation: (optional) The status of the
+          last operation requested on the instance.
     :attr str resource_aliases_url: (optional) The relative path to the resource
           aliases for the instance.
     :attr str resource_bindings_url: (optional) The relative path to the resource
@@ -2929,7 +3033,7 @@ class ResourceInstance():
                  sub_type: str = None,
                  resource_id: str = None,
                  dashboard_url: str = None,
-                 last_operation: dict = None,
+                 last_operation: 'ResourceInstanceLastOperation' = None,
                  resource_aliases_url: str = None,
                  resource_bindings_url: str = None,
                  resource_keys_url: str = None,
@@ -2942,10 +3046,7 @@ class ResourceInstance():
         Initialize a ResourceInstance object.
 
         :param str id: (optional) The ID associated with the instance.
-        :param str guid: (optional) When you create a new resource, a globally
-               unique identifier (GUID) is assigned. This GUID is a unique internal
-               identifier managed by the resource controller that corresponds to the
-               instance.
+        :param str guid: (optional) The GUID of the instance.
         :param str url: (optional) When you provision a new resource, a relative
                URL path is created identifying the location of the instance.
         :param datetime created_at: (optional) The date when the instance was
@@ -2998,8 +3099,8 @@ class ResourceInstance():
                value is provided by and stored in the global catalog.
         :param str dashboard_url: (optional) The resource-broker-provided URL to
                access administrative features of the instance.
-        :param dict last_operation: (optional) The status of the last operation
-               requested on the instance.
+        :param ResourceInstanceLastOperation last_operation: (optional) The status
+               of the last operation requested on the instance.
         :param str resource_aliases_url: (optional) The relative path to the
                resource aliases for the instance.
         :param str resource_bindings_url: (optional) The relative path to the
@@ -3120,7 +3221,7 @@ class ResourceInstance():
         if 'dashboard_url' in _dict:
             args['dashboard_url'] = _dict.get('dashboard_url')
         if 'last_operation' in _dict:
-            args['last_operation'] = _dict.get('last_operation')
+            args['last_operation'] = ResourceInstanceLastOperation.from_dict(_dict.get('last_operation'))
         if 'resource_aliases_url' in _dict:
             args['resource_aliases_url'] = _dict.get('resource_aliases_url')
         if 'resource_bindings_url' in _dict:
@@ -3128,7 +3229,7 @@ class ResourceInstance():
         if 'resource_keys_url' in _dict:
             args['resource_keys_url'] = _dict.get('resource_keys_url')
         if 'plan_history' in _dict:
-            args['plan_history'] = [PlanHistoryItem.from_dict(x) for x in _dict.get('plan_history')]
+            args['plan_history'] = [PlanHistoryItem.from_dict(v) for v in _dict.get('plan_history')]
         if 'migrated' in _dict:
             args['migrated'] = _dict.get('migrated')
         if 'extensions' in _dict:
@@ -3206,7 +3307,10 @@ class ResourceInstance():
         if hasattr(self, 'dashboard_url') and self.dashboard_url is not None:
             _dict['dashboard_url'] = self.dashboard_url
         if hasattr(self, 'last_operation') and self.last_operation is not None:
-            _dict['last_operation'] = self.last_operation
+            if isinstance(self.last_operation, dict):
+                _dict['last_operation'] = self.last_operation
+            else:
+                _dict['last_operation'] = self.last_operation.to_dict()
         if hasattr(self, 'resource_aliases_url') and self.resource_aliases_url is not None:
             _dict['resource_aliases_url'] = self.resource_aliases_url
         if hasattr(self, 'resource_bindings_url') and self.resource_bindings_url is not None:
@@ -3214,7 +3318,13 @@ class ResourceInstance():
         if hasattr(self, 'resource_keys_url') and self.resource_keys_url is not None:
             _dict['resource_keys_url'] = self.resource_keys_url
         if hasattr(self, 'plan_history') and self.plan_history is not None:
-            _dict['plan_history'] = [x.to_dict() for x in self.plan_history]
+            plan_history_list = []
+            for v in self.plan_history:
+                if isinstance(v, dict):
+                    plan_history_list.append(v)
+                else:
+                    plan_history_list.append(v.to_dict())
+            _dict['plan_history'] = plan_history_list
         if hasattr(self, 'migrated') and self.migrated is not None:
             _dict['migrated'] = self.migrated
         if hasattr(self, 'extensions') and self.extensions is not None:
@@ -3242,6 +3352,204 @@ class ResourceInstance():
     def __ne__(self, other: 'ResourceInstance') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+    class StateEnum(str, Enum):
+        """
+        The current state of the instance. For example, if the instance is deleted, it
+        will return removed.
+        """
+        ACTIVE = 'active'
+        INACTIVE = 'inactive'
+        REMOVED = 'removed'
+        PENDING_REMOVAL = 'pending_removal'
+        PENDING_RECLAMATION = 'pending_reclamation'
+        FAILED = 'failed'
+        PROVISIONING = 'provisioning'
+        PRE_PROVISIONING = 'pre_provisioning'
+
+
+class ResourceInstanceLastOperation():
+    """
+    The status of the last operation requested on the instance.
+
+    :attr str type: The last operation type of the resource instance.
+    :attr str state: The last operation state of the resoure instance. This
+          indicates if the resource's last operation is in progress, succeeded or failed.
+    :attr str sub_type: (optional) The last operation sub type of the resoure
+          instance.
+    :attr bool async_: A boolean that indicates if the resource is provisioned
+          asynchronously or not.
+    :attr str description: The description of the status of last operation.
+    :attr str reason_code: (optional) Optional string that states the reason code
+          for the last operation state change.
+    :attr float poll_after: (optional) A field which indicates the time after which
+          the instance's last operation is to be polled.
+    :attr bool cancelable: A boolean that indicates if the resource's last operation
+          is cancelable or not.
+    :attr bool poll: A boolean that indicates if the resource broker's last
+          operation can be polled or not.
+    """
+
+    # The set of defined properties for the class
+    _properties = frozenset(['type', 'state', 'sub_type', 'async_', 'async', 'description', 'reason_code', 'poll_after', 'cancelable', 'poll'])
+
+    def __init__(self,
+                 type: str,
+                 state: str,
+                 async_: bool,
+                 description: str,
+                 cancelable: bool,
+                 poll: bool,
+                 *,
+                 sub_type: str = None,
+                 reason_code: str = None,
+                 poll_after: float = None,
+                 **kwargs) -> None:
+        """
+        Initialize a ResourceInstanceLastOperation object.
+
+        :param str type: The last operation type of the resource instance.
+        :param str state: The last operation state of the resoure instance. This
+               indicates if the resource's last operation is in progress, succeeded or
+               failed.
+        :param bool async_: A boolean that indicates if the resource is provisioned
+               asynchronously or not.
+        :param str description: The description of the status of last operation.
+        :param bool cancelable: A boolean that indicates if the resource's last
+               operation is cancelable or not.
+        :param bool poll: A boolean that indicates if the resource broker's last
+               operation can be polled or not.
+        :param str sub_type: (optional) The last operation sub type of the resoure
+               instance.
+        :param str reason_code: (optional) Optional string that states the reason
+               code for the last operation state change.
+        :param float poll_after: (optional) A field which indicates the time after
+               which the instance's last operation is to be polled.
+        :param **kwargs: (optional) Any additional properties.
+        """
+        self.type = type
+        self.state = state
+        self.sub_type = sub_type
+        self.async_ = async_
+        self.description = description
+        self.reason_code = reason_code
+        self.poll_after = poll_after
+        self.cancelable = cancelable
+        self.poll = poll
+        for _key, _value in kwargs.items():
+            setattr(self, _key, _value)
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ResourceInstanceLastOperation':
+        """Initialize a ResourceInstanceLastOperation object from a json dictionary."""
+        args = {}
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in ResourceInstanceLastOperation JSON')
+        if 'state' in _dict:
+            args['state'] = _dict.get('state')
+        else:
+            raise ValueError('Required property \'state\' not present in ResourceInstanceLastOperation JSON')
+        if 'sub_type' in _dict:
+            args['sub_type'] = _dict.get('sub_type')
+        if 'async' in _dict:
+            args['async_'] = _dict.get('async')
+        else:
+            raise ValueError('Required property \'async\' not present in ResourceInstanceLastOperation JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        else:
+            raise ValueError('Required property \'description\' not present in ResourceInstanceLastOperation JSON')
+        if 'reason_code' in _dict:
+            args['reason_code'] = _dict.get('reason_code')
+        if 'poll_after' in _dict:
+            args['poll_after'] = _dict.get('poll_after')
+        if 'cancelable' in _dict:
+            args['cancelable'] = _dict.get('cancelable')
+        else:
+            raise ValueError('Required property \'cancelable\' not present in ResourceInstanceLastOperation JSON')
+        if 'poll' in _dict:
+            args['poll'] = _dict.get('poll')
+        else:
+            raise ValueError('Required property \'poll\' not present in ResourceInstanceLastOperation JSON')
+        args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ResourceInstanceLastOperation object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
+        if hasattr(self, 'sub_type') and self.sub_type is not None:
+            _dict['sub_type'] = self.sub_type
+        if hasattr(self, 'async_') and self.async_ is not None:
+            _dict['async'] = self.async_
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'reason_code') and self.reason_code is not None:
+            _dict['reason_code'] = self.reason_code
+        if hasattr(self, 'poll_after') and self.poll_after is not None:
+            _dict['poll_after'] = self.poll_after
+        if hasattr(self, 'cancelable') and self.cancelable is not None:
+            _dict['cancelable'] = self.cancelable
+        if hasattr(self, 'poll') and self.poll is not None:
+            _dict['poll'] = self.poll
+        for _key in [k for k in vars(self).keys() if k not in ResourceInstanceLastOperation._properties]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def get_properties(self) -> Dict:
+        """Return a dictionary of arbitrary properties from this instance of ResourceInstanceLastOperation"""
+        _dict = {}
+
+        for _key in [k for k in vars(self).keys() if k not in ResourceInstanceLastOperation._properties]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def set_properties(self, _dict: dict):
+        """Set a dictionary of arbitrary properties to this instance of ResourceInstanceLastOperation"""
+        for _key in [k for k in vars(self).keys() if k not in ResourceInstanceLastOperation._properties]:
+            delattr(self, _key)
+
+        for _key, _value in _dict.items():
+            if _key not in ResourceInstanceLastOperation._properties:
+                setattr(self, _key, _value)
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ResourceInstanceLastOperation object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ResourceInstanceLastOperation') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ResourceInstanceLastOperation') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class StateEnum(str, Enum):
+        """
+        The last operation state of the resoure instance. This indicates if the resource's
+        last operation is in progress, succeeded or failed.
+        """
+        IN_PROGRESS = 'in progress'
+        SUCCEEDED = 'succeeded'
+        FAILED = 'failed'
+
 
 class ResourceInstancesList():
     """
@@ -3280,7 +3588,7 @@ class ResourceInstancesList():
         else:
             raise ValueError('Required property \'next_url\' not present in ResourceInstancesList JSON')
         if 'resources' in _dict:
-            args['resources'] = [ResourceInstance.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [ResourceInstance.from_dict(v) for v in _dict.get('resources')]
         else:
             raise ValueError('Required property \'resources\' not present in ResourceInstancesList JSON')
         return cls(**args)
@@ -3298,7 +3606,13 @@ class ResourceInstancesList():
         if hasattr(self, 'next_url') and self.next_url is not None:
             _dict['next_url'] = self.next_url
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -3324,9 +3638,7 @@ class ResourceKey():
     A resource key.
 
     :attr str id: (optional) The ID associated with the key.
-    :attr str guid: (optional) When you create a new key, a globally unique
-          identifier (GUID) is assigned. This GUID is a unique internal identifier managed
-          by the resource controller that corresponds to the key.
+    :attr str guid: (optional) The GUID of the key.
     :attr str url: (optional) When you created a new key, a relative URL path is
           created identifying the location of the key.
     :attr datetime created_at: (optional) The date when the key was created.
@@ -3348,8 +3660,13 @@ class ResourceKey():
     :attr str resource_id: (optional) The unique ID of the offering. This value is
           provided by and stored in the global catalog.
     :attr Credentials credentials: (optional) The credentials for the key.
-          Additional key-value pairs are passed through from the resource brokers.  Refer
-          to service’s documentation for additional details.
+          Additional key-value pairs are passed through from the resource brokers. After a
+          credential is created for a service, it can be viewed at any time for users that
+          need the API key value. However, all users must have the correct level of access
+          to see the details of a credential that includes the API key value. For
+          additional details, see [viewing a
+          credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&interface=ui#viewing-credentials-ui)
+          or the service’s documentation.
     :attr bool iam_compatible: (optional) Specifies whether the key’s credentials
           support IAM.
     :attr bool migrated: (optional) A boolean that dictates if the alias was
@@ -3386,9 +3703,7 @@ class ResourceKey():
         Initialize a ResourceKey object.
 
         :param str id: (optional) The ID associated with the key.
-        :param str guid: (optional) When you create a new key, a globally unique
-               identifier (GUID) is assigned. This GUID is a unique internal identifier
-               managed by the resource controller that corresponds to the key.
+        :param str guid: (optional) The GUID of the key.
         :param str url: (optional) When you created a new key, a relative URL path
                is created identifying the location of the key.
         :param datetime created_at: (optional) The date when the key was created.
@@ -3412,7 +3727,12 @@ class ResourceKey():
                value is provided by and stored in the global catalog.
         :param Credentials credentials: (optional) The credentials for the key.
                Additional key-value pairs are passed through from the resource brokers.
-               Refer to service’s documentation for additional details.
+               After a credential is created for a service, it can be viewed at any time
+               for users that need the API key value. However, all users must have the
+               correct level of access to see the details of a credential that includes
+               the API key value. For additional details, see [viewing a
+               credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&interface=ui#viewing-credentials-ui)
+               or the service’s documentation.
         :param bool iam_compatible: (optional) Specifies whether the key’s
                credentials support IAM.
         :param bool migrated: (optional) A boolean that dictates if the alias was
@@ -3533,7 +3853,10 @@ class ResourceKey():
         if hasattr(self, 'resource_id') and self.resource_id is not None:
             _dict['resource_id'] = self.resource_id
         if hasattr(self, 'credentials') and self.credentials is not None:
-            _dict['credentials'] = self.credentials.to_dict()
+            if isinstance(self.credentials, dict):
+                _dict['credentials'] = self.credentials
+            else:
+                _dict['credentials'] = self.credentials.to_dict()
         if hasattr(self, 'iam_compatible') and self.iam_compatible is not None:
             _dict['iam_compatible'] = self.iam_compatible
         if hasattr(self, 'migrated') and self.migrated is not None:
@@ -3610,13 +3933,29 @@ class ResourceKeyPostParameters():
         if hasattr(self, 'serviceid_crn') and self.serviceid_crn is not None:
             _dict['serviceid_crn'] = self.serviceid_crn
         for _key in [k for k in vars(self).keys() if k not in ResourceKeyPostParameters._properties]:
-            if getattr(self, _key, None) is not None:
-                _dict[_key] = getattr(self, _key)
+            _dict[_key] = getattr(self, _key)
         return _dict
 
     def _to_dict(self):
         """Return a json dictionary representing this model."""
         return self.to_dict()
+
+    def get_properties(self) -> Dict:
+        """Return a dictionary of arbitrary properties from this instance of ResourceKeyPostParameters"""
+        _dict = {}
+
+        for _key in [k for k in vars(self).keys() if k not in ResourceKeyPostParameters._properties]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def set_properties(self, _dict: dict):
+        """Set a dictionary of arbitrary properties to this instance of ResourceKeyPostParameters"""
+        for _key in [k for k in vars(self).keys() if k not in ResourceKeyPostParameters._properties]:
+            delattr(self, _key)
+
+        for _key, _value in _dict.items():
+            if _key not in ResourceKeyPostParameters._properties:
+                setattr(self, _key, _value)
 
     def __str__(self) -> str:
         """Return a `str` version of this ResourceKeyPostParameters object."""
@@ -3669,7 +4008,7 @@ class ResourceKeysList():
         else:
             raise ValueError('Required property \'next_url\' not present in ResourceKeysList JSON')
         if 'resources' in _dict:
-            args['resources'] = [ResourceKey.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [ResourceKey.from_dict(v) for v in _dict.get('resources')]
         else:
             raise ValueError('Required property \'resources\' not present in ResourceKeysList JSON')
         return cls(**args)
@@ -3687,7 +4026,13 @@ class ResourceKeysList():
         if hasattr(self, 'next_url') and self.next_url is not None:
             _dict['next_url'] = self.next_url
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -3707,3 +4052,591 @@ class ResourceKeysList():
     def __ne__(self, other: 'ResourceKeysList') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+##############################################################################
+# Pagers
+##############################################################################
+
+class ResourceInstancesPager():
+    """
+    ResourceInstancesPager can be used to simplify the use of the "list_resource_instances" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: ResourceControllerV2,
+                 guid: str = None,
+                 name: str = None,
+                 resource_group_id: str = None,
+                 resource_id: str = None,
+                 resource_plan_id: str = None,
+                 type: str = None,
+                 sub_type: str = None,
+                 limit: int = None,
+                 state: str = None,
+                 updated_from: str = None,
+                 updated_to: str = None,
+    ) -> None:
+        """
+        Initialize a ResourceInstancesPager object.
+        :param str guid: (optional) The GUID of the instance.
+        :param str name: (optional) The human-readable name of the instance.
+        :param str resource_group_id: (optional) The ID of the resource group.
+        :param str resource_id: (optional) The unique ID of the offering. This
+               value is provided by and stored in the global catalog.
+        :param str resource_plan_id: (optional) The unique ID of the plan
+               associated with the offering. This value is provided by and stored in the
+               global catalog.
+        :param str type: (optional) The type of the instance, for example,
+               `service_instance`.
+        :param str sub_type: (optional) The sub-type of instance, for example,
+               `kms`.
+        :param int limit: (optional) Limit on how many items should be returned.
+        :param str state: (optional) The state of the instance. If not specified,
+               instances in state `active` and `provisioning` are returned.
+        :param str updated_from: (optional) Start date inclusive filter.
+        :param str updated_to: (optional) End date inclusive filter.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._guid = guid
+        self._name = name
+        self._resource_group_id = resource_group_id
+        self._resource_id = resource_id
+        self._resource_plan_id = resource_plan_id
+        self._type = type
+        self._sub_type = sub_type
+        self._limit = limit
+        self._state = state
+        self._updated_from = updated_from
+        self._updated_to = updated_to
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceInstance.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_resource_instances(
+            guid=self._guid,
+            name=self._name,
+            resource_group_id=self._resource_group_id,
+            resource_id=self._resource_id,
+            resource_plan_id=self._resource_plan_id,
+            type=self._type,
+            sub_type=self._sub_type,
+            limit=self._limit,
+            state=self._state,
+            updated_from=self._updated_from,
+            updated_to=self._updated_to,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next_url')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link, 'start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceInstance.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class ResourceAliasesForInstancePager():
+    """
+    ResourceAliasesForInstancePager can be used to simplify the use of the "list_resource_aliases_for_instance" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: ResourceControllerV2,
+                 id: str,
+                 limit: int = None,
+    ) -> None:
+        """
+        Initialize a ResourceAliasesForInstancePager object.
+        :param str id: The resource instance URL-encoded CRN or GUID.
+        :param int limit: (optional) Limit on how many items should be returned.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._id = id
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceAlias.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_resource_aliases_for_instance(
+            id=self._id,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next_url')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link, 'start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceAlias.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class ResourceKeysForInstancePager():
+    """
+    ResourceKeysForInstancePager can be used to simplify the use of the "list_resource_keys_for_instance" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: ResourceControllerV2,
+                 id: str,
+                 limit: int = None,
+    ) -> None:
+        """
+        Initialize a ResourceKeysForInstancePager object.
+        :param str id: The resource instance URL-encoded CRN or GUID.
+        :param int limit: (optional) Limit on how many items should be returned.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._id = id
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceKey.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_resource_keys_for_instance(
+            id=self._id,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next_url')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link, 'start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceKey.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class ResourceKeysPager():
+    """
+    ResourceKeysPager can be used to simplify the use of the "list_resource_keys" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: ResourceControllerV2,
+                 guid: str = None,
+                 name: str = None,
+                 resource_group_id: str = None,
+                 resource_id: str = None,
+                 limit: int = None,
+                 updated_from: str = None,
+                 updated_to: str = None,
+    ) -> None:
+        """
+        Initialize a ResourceKeysPager object.
+        :param str guid: (optional) The GUID of the key.
+        :param str name: (optional) The human-readable name of the key.
+        :param str resource_group_id: (optional) The ID of the resource group.
+        :param str resource_id: (optional) The unique ID of the offering. This
+               value is provided by and stored in the global catalog.
+        :param int limit: (optional) Limit on how many items should be returned.
+        :param str updated_from: (optional) Start date inclusive filter.
+        :param str updated_to: (optional) End date inclusive filter.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._guid = guid
+        self._name = name
+        self._resource_group_id = resource_group_id
+        self._resource_id = resource_id
+        self._limit = limit
+        self._updated_from = updated_from
+        self._updated_to = updated_to
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceKey.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_resource_keys(
+            guid=self._guid,
+            name=self._name,
+            resource_group_id=self._resource_group_id,
+            resource_id=self._resource_id,
+            limit=self._limit,
+            updated_from=self._updated_from,
+            updated_to=self._updated_to,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next_url')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link, 'start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceKey.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class ResourceBindingsPager():
+    """
+    ResourceBindingsPager can be used to simplify the use of the "list_resource_bindings" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: ResourceControllerV2,
+                 guid: str = None,
+                 name: str = None,
+                 resource_group_id: str = None,
+                 resource_id: str = None,
+                 region_binding_id: str = None,
+                 limit: int = None,
+                 updated_from: str = None,
+                 updated_to: str = None,
+    ) -> None:
+        """
+        Initialize a ResourceBindingsPager object.
+        :param str guid: (optional) The GUID of the binding.
+        :param str name: (optional) The human-readable name of the binding.
+        :param str resource_group_id: (optional) The ID of the resource group.
+        :param str resource_id: (optional) The unique ID of the offering (service
+               name). This value is provided by and stored in the global catalog.
+        :param str region_binding_id: (optional) The ID of the binding in the
+               target environment. For example, `service_binding_id` in a given IBM Cloud
+               environment.
+        :param int limit: (optional) Limit on how many items should be returned.
+        :param str updated_from: (optional) Start date inclusive filter.
+        :param str updated_to: (optional) End date inclusive filter.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._guid = guid
+        self._name = name
+        self._resource_group_id = resource_group_id
+        self._resource_id = resource_id
+        self._region_binding_id = region_binding_id
+        self._limit = limit
+        self._updated_from = updated_from
+        self._updated_to = updated_to
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceBinding.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_resource_bindings(
+            guid=self._guid,
+            name=self._name,
+            resource_group_id=self._resource_group_id,
+            resource_id=self._resource_id,
+            region_binding_id=self._region_binding_id,
+            limit=self._limit,
+            updated_from=self._updated_from,
+            updated_to=self._updated_to,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next_url')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link, 'start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceBinding.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class ResourceAliasesPager():
+    """
+    ResourceAliasesPager can be used to simplify the use of the "list_resource_aliases" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: ResourceControllerV2,
+                 guid: str = None,
+                 name: str = None,
+                 resource_instance_id: str = None,
+                 region_instance_id: str = None,
+                 resource_id: str = None,
+                 resource_group_id: str = None,
+                 limit: int = None,
+                 updated_from: str = None,
+                 updated_to: str = None,
+    ) -> None:
+        """
+        Initialize a ResourceAliasesPager object.
+        :param str guid: (optional) The GUID of the alias.
+        :param str name: (optional) The human-readable name of the alias.
+        :param str resource_instance_id: (optional) The ID of the resource
+               instance.
+        :param str region_instance_id: (optional) The ID of the instance in the
+               target environment. For example, `service_instance_id` in a given IBM Cloud
+               environment.
+        :param str resource_id: (optional) The unique ID of the offering (service
+               name). This value is provided by and stored in the global catalog.
+        :param str resource_group_id: (optional) The ID of the resource group.
+        :param int limit: (optional) Limit on how many items should be returned.
+        :param str updated_from: (optional) Start date inclusive filter.
+        :param str updated_to: (optional) End date inclusive filter.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._guid = guid
+        self._name = name
+        self._resource_instance_id = resource_instance_id
+        self._region_instance_id = region_instance_id
+        self._resource_id = resource_id
+        self._resource_group_id = resource_group_id
+        self._limit = limit
+        self._updated_from = updated_from
+        self._updated_to = updated_to
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceAlias.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_resource_aliases(
+            guid=self._guid,
+            name=self._name,
+            resource_instance_id=self._resource_instance_id,
+            region_instance_id=self._region_instance_id,
+            resource_id=self._resource_id,
+            resource_group_id=self._resource_group_id,
+            limit=self._limit,
+            updated_from=self._updated_from,
+            updated_to=self._updated_to,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next_url')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link, 'start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceAlias.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class ResourceBindingsForAliasPager():
+    """
+    ResourceBindingsForAliasPager can be used to simplify the use of the "list_resource_bindings_for_alias" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: ResourceControllerV2,
+                 id: str,
+                 limit: int = None,
+    ) -> None:
+        """
+        Initialize a ResourceBindingsForAliasPager object.
+        :param str id: The resource alias URL-encoded CRN or GUID.
+        :param int limit: (optional) Limit on how many items should be returned.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._id = id
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceBinding.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_resource_bindings_for_alias(
+            id=self._id,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next_url')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link, 'start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of ResourceBinding.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results

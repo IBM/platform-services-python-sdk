@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2020, 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -171,18 +171,22 @@ class TestResourceControllerV2Examples():
         list_resource_instances request example
         """
         try:
-            global resource_instance_name
             print('\nlist_resource_instances() result:')
             # begin-list_resource_instances
 
-            resource_instances_list = resource_controller_service.list_resource_instances(
-                name=resource_instance_name
-            ).get_result()
+            all_results = []
+            pager = ResourceInstancesPager(
+                client=resource_controller_service,
+                name=resource_instance_name,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(resource_instances_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_resource_instances
-
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -268,14 +272,19 @@ class TestResourceControllerV2Examples():
             print('\nlist_resource_aliases() result:')
             # begin-list_resource_aliases
 
-            resource_aliases_list = resource_controller_service.list_resource_aliases(
-                name=alias_name
-            ).get_result()
+            all_results = []
+            pager = ResourceAliasesPager(
+                client=resource_controller_service,
+                name=alias_name,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(resource_aliases_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_resource_aliases
-
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -311,14 +320,19 @@ class TestResourceControllerV2Examples():
             print('\nlist_resource_aliases_for_instance() result:')
             # begin-list_resource_aliases_for_instance
 
-            resource_aliases_list = resource_controller_service.list_resource_aliases_for_instance(
-                id=instance_guid
-            ).get_result()
+            all_results = []
+            pager = ResourceAliasesForInstancePager(
+                client=resource_controller_service,
+                id=instance_guid,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(resource_aliases_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_resource_aliases_for_instance
-
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -383,14 +397,19 @@ class TestResourceControllerV2Examples():
             print('\nlist_resource_bindings() result:')
             # begin-list_resource_bindings
 
-            resource_bindings_list = resource_controller_service.list_resource_bindings(
-                name=binding_name
-            ).get_result()
+            all_results = []
+            pager = ResourceBindingsPager(
+                client=resource_controller_service,
+                name=binding_name,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(resource_bindings_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_resource_bindings
-
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -426,14 +445,19 @@ class TestResourceControllerV2Examples():
             print('\nlist_resource_bindings_for_alias() result:')
             # begin-list_resource_bindings_for_alias
 
-            resource_bindings_list = resource_controller_service.list_resource_bindings_for_alias(
-                id=alias_guid
-            ).get_result()
+            all_results = []
+            pager = ResourceBindingsForAliasPager(
+                client=resource_controller_service,
+                id=alias_guid,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(resource_bindings_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_resource_bindings_for_alias
-
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -498,14 +522,19 @@ class TestResourceControllerV2Examples():
             print('\nlist_resource_keys() result:')
             # begin-list_resource_keys
 
-            resource_keys_list = resource_controller_service.list_resource_keys(
-                name=key_name
-            ).get_result()
+            all_results = []
+            pager = ResourceKeysPager(
+                client=resource_controller_service,
+                name=key_name,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(resource_keys_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_resource_keys
-
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -541,14 +570,19 @@ class TestResourceControllerV2Examples():
             print('\nlist_resource_keys_for_instance() result:')
             # begin-list_resource_keys_for_instance
 
-            resource_keys_list = resource_controller_service.list_resource_keys_for_instance(
-                id=instance_guid
-            ).get_result()
+            all_results = []
+            pager = ResourceKeysForInstancePager(
+                client=resource_controller_service,
+                id=instance_guid,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(resource_keys_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_resource_keys_for_instance
-
         except ApiException as e:
             pytest.fail(str(e))
 
