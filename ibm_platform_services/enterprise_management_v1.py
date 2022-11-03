@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,18 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.30.0-bd714324-20210406-200538
+# IBM OpenAPI SDK Code Generator Version: 3.60.2-95dc7721-20221102-203229
 
 """
 The Enterprise Management API enables you to create and manage an enterprise, account
 groups, and accounts within the enterprise.
+
+API Version: 1.0
 """
 
 from datetime import datetime
 from typing import Dict, List
 import json
 
-from ibm_cloud_sdk_core import BaseService, DetailedResponse
+from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
 from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
@@ -64,7 +66,7 @@ class EnterpriseManagementV1(BaseService):
         Construct a new client for the Enterprise Management service.
 
         :param Authenticator authenticator: The authenticator specifies the authentication mechanism.
-               Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
+               Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
         BaseService.__init__(self,
@@ -135,6 +137,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/enterprises'
@@ -143,7 +146,7 @@ class EnterpriseManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -204,6 +207,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/enterprises'
@@ -212,7 +216,7 @@ class EnterpriseManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -232,7 +236,7 @@ class EnterpriseManagementV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Enterprise` object
         """
 
-        if enterprise_id is None:
+        if not enterprise_id:
             raise ValueError('enterprise_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -242,6 +246,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['enterprise_id']
@@ -252,7 +257,7 @@ class EnterpriseManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -283,7 +288,7 @@ class EnterpriseManagementV1(BaseService):
         :rtype: DetailedResponse
         """
 
-        if enterprise_id is None:
+        if not enterprise_id:
             raise ValueError('enterprise_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -302,6 +307,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['enterprise_id']
         path_param_values = self.encode_path_vars(enterprise_id)
@@ -312,7 +318,7 @@ class EnterpriseManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -357,9 +363,9 @@ class EnterpriseManagementV1(BaseService):
         :rtype: DetailedResponse
         """
 
-        if enterprise_id is None:
+        if not enterprise_id:
             raise ValueError('enterprise_id must be provided')
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -377,6 +383,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['enterprise_id', 'account_id']
         path_param_values = self.encode_path_vars(enterprise_id, account_id)
@@ -387,7 +394,7 @@ class EnterpriseManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -441,6 +448,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/accounts'
@@ -449,7 +457,7 @@ class EnterpriseManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -513,6 +521,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/accounts'
@@ -521,7 +530,7 @@ class EnterpriseManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -541,7 +550,7 @@ class EnterpriseManagementV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `Account` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -551,6 +560,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id']
@@ -561,7 +571,7 @@ class EnterpriseManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -582,7 +592,7 @@ class EnterpriseManagementV1(BaseService):
         :rtype: DetailedResponse
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
         if parent is None:
             raise ValueError('parent must be provided')
@@ -601,6 +611,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['account_id']
         path_param_values = self.encode_path_vars(account_id)
@@ -611,7 +622,7 @@ class EnterpriseManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -669,6 +680,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/account-groups'
@@ -677,7 +689,7 @@ class EnterpriseManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -743,6 +755,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/account-groups'
@@ -751,7 +764,7 @@ class EnterpriseManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -772,7 +785,7 @@ class EnterpriseManagementV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `AccountGroup` object
         """
 
-        if account_group_id is None:
+        if not account_group_id:
             raise ValueError('account_group_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -782,6 +795,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_group_id']
@@ -792,7 +806,7 @@ class EnterpriseManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -819,7 +833,7 @@ class EnterpriseManagementV1(BaseService):
         :rtype: DetailedResponse
         """
 
-        if account_group_id is None:
+        if not account_group_id:
             raise ValueError('account_group_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -837,6 +851,7 @@ class EnterpriseManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['account_group_id']
         path_param_values = self.encode_path_vars(account_group_id)
@@ -847,7 +862,7 @@ class EnterpriseManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -1622,7 +1637,7 @@ class ListAccountGroupsResponse():
         if 'next_url' in _dict:
             args['next_url'] = _dict.get('next_url')
         if 'resources' in _dict:
-            args['resources'] = [AccountGroup.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [AccountGroup.from_dict(v) for v in _dict.get('resources')]
         return cls(**args)
 
     @classmethod
@@ -1638,7 +1653,13 @@ class ListAccountGroupsResponse():
         if hasattr(self, 'next_url') and self.next_url is not None:
             _dict['next_url'] = self.next_url
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -1697,7 +1718,7 @@ class ListAccountsResponse():
         if 'next_url' in _dict:
             args['next_url'] = _dict.get('next_url')
         if 'resources' in _dict:
-            args['resources'] = [Account.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [Account.from_dict(v) for v in _dict.get('resources')]
         return cls(**args)
 
     @classmethod
@@ -1713,7 +1734,13 @@ class ListAccountsResponse():
         if hasattr(self, 'next_url') and self.next_url is not None:
             _dict['next_url'] = self.next_url
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -1772,7 +1799,7 @@ class ListEnterprisesResponse():
         if 'next_url' in _dict:
             args['next_url'] = _dict.get('next_url')
         if 'resources' in _dict:
-            args['resources'] = [Enterprise.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [Enterprise.from_dict(v) for v in _dict.get('resources')]
         return cls(**args)
 
     @classmethod
@@ -1788,7 +1815,13 @@ class ListEnterprisesResponse():
         if hasattr(self, 'next_url') and self.next_url is not None:
             _dict['next_url'] = self.next_url
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -1808,3 +1841,243 @@ class ListEnterprisesResponse():
     def __ne__(self, other: 'ListEnterprisesResponse') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+##############################################################################
+# Pagers
+##############################################################################
+
+class EnterprisesPager():
+    """
+    EnterprisesPager can be used to simplify the use of the "list_enterprises" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: EnterpriseManagementV1,
+                 enterprise_account_id: str = None,
+                 account_group_id: str = None,
+                 account_id: str = None,
+                 limit: int = None,
+    ) -> None:
+        """
+        Initialize a EnterprisesPager object.
+        :param str enterprise_account_id: (optional) Get enterprises for a given
+               enterprise account ID.
+        :param str account_group_id: (optional) Get enterprises for a given account
+               group ID.
+        :param str account_id: (optional) Get enterprises for a given account ID.
+        :param int limit: (optional) Return results up to this limit. Valid values
+               are between `0` and `100`.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._enterprise_account_id = enterprise_account_id
+        self._account_group_id = account_group_id
+        self._account_id = account_id
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of Enterprise.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_enterprises(
+            enterprise_account_id=self._enterprise_account_id,
+            account_group_id=self._account_group_id,
+            account_id=self._account_id,
+            limit=self._limit,
+            next_docid=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next_url')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link, 'next_docid')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of Enterprise.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class AccountsPager():
+    """
+    AccountsPager can be used to simplify the use of the "list_accounts" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: EnterpriseManagementV1,
+                 enterprise_id: str = None,
+                 account_group_id: str = None,
+                 parent: str = None,
+                 limit: int = None,
+    ) -> None:
+        """
+        Initialize a AccountsPager object.
+        :param str enterprise_id: (optional) Get accounts that are either immediate
+               children or are a part of the hierarchy for a given enterprise ID.
+        :param str account_group_id: (optional) Get accounts that are either
+               immediate children or are a part of the hierarchy for a given account group
+               ID.
+        :param str parent: (optional) Get accounts that are either immediate
+               children or are a part of the hierarchy for a given parent CRN.
+        :param int limit: (optional) Return results up to this limit. Valid values
+               are between `0` and `100`.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._enterprise_id = enterprise_id
+        self._account_group_id = account_group_id
+        self._parent = parent
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of Account.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_accounts(
+            enterprise_id=self._enterprise_id,
+            account_group_id=self._account_group_id,
+            parent=self._parent,
+            limit=self._limit,
+            next_docid=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next_url')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link, 'next_docid')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of Account.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class AccountGroupsPager():
+    """
+    AccountGroupsPager can be used to simplify the use of the "list_account_groups" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: EnterpriseManagementV1,
+                 enterprise_id: str = None,
+                 parent_account_group_id: str = None,
+                 parent: str = None,
+                 limit: int = None,
+    ) -> None:
+        """
+        Initialize a AccountGroupsPager object.
+        :param str enterprise_id: (optional) Get account groups that are either
+               immediate children or are a part of the hierarchy for a given enterprise
+               ID.
+        :param str parent_account_group_id: (optional) Get account groups that are
+               either immediate children or are a part of the hierarchy for a given
+               account group ID.
+        :param str parent: (optional) Get account groups that are either immediate
+               children or are a part of the hierarchy for a given parent CRN.
+        :param int limit: (optional) Return results up to this limit. Valid values
+               are between `0` and `100`.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._enterprise_id = enterprise_id
+        self._parent_account_group_id = parent_account_group_id
+        self._parent = parent
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of AccountGroup.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_account_groups(
+            enterprise_id=self._enterprise_id,
+            parent_account_group_id=self._parent_account_group_id,
+            parent=self._parent,
+            limit=self._limit,
+            next_docid=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next_url')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link, 'next_docid')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of AccountGroup.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results

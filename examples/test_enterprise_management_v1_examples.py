@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2021, 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -148,18 +148,22 @@ class TestEnterpriseManagementV1Examples():
         assert enterprise_id is not None
 
         try:
-
             print('\nlist_account_groups() result:')
             # begin-list_account_groups
 
-            list_account_groups_response = enterprise_management_service.list_account_groups(
+            all_results = []
+            pager = AccountGroupsPager(
+                client=enterprise_management_service,
                 enterprise_id=enterprise_id,
-            ).get_result()
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(list_account_groups_response, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_account_groups
-
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -276,14 +280,19 @@ class TestEnterpriseManagementV1Examples():
             print('\nlist_accounts() result:')
             # begin-list_accounts
 
-            list_accounts_response = enterprise_management_service.list_accounts(
+            all_results = []
+            pager = AccountsPager(
+                client=enterprise_management_service,
                 enterprise_id=enterprise_id,
-            ).get_result()
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(list_accounts_response, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_accounts
-
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -374,14 +383,19 @@ class TestEnterpriseManagementV1Examples():
             print('\nlist_enterprises() result:')
             # begin-list_enterprises
 
-            list_enterprises_response = enterprise_management_service.list_enterprises(
+            all_results = []
+            pager = EnterprisesPager(
+                client=enterprise_management_service,
                 account_id=enterprise_account_id,
-            ).get_result()
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(list_enterprises_response, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_enterprises
-
         except ApiException as e:
             pytest.fail(str(e))
 
