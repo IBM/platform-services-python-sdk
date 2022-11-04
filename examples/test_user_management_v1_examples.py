@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2021, 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -175,23 +175,23 @@ class TestUserManagementV1Examples():
         """
         list_users request example
         """
-        assert account_id is not None
-
         try:
-
             print('\nlist_users() result:')
             # begin-list_users
 
-            user_list = user_management_service.list_users(
+            all_results = []
+            pager = UsersPager(
+                client=user_management_service,
                 account_id=account_id,
-                state='ACTIVE',
-                limit=100,
-            ).get_result()
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(user_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_users
-
         except ApiException as e:
             pytest.fail(str(e))
 
