@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2021, 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -128,6 +128,31 @@ class TestEnterpriseManagementV1():
         print(f'\nlist_account_groups() returned a total of {len(results)} account groups.')
 
     @needscredentials
+    def test_list_account_groups_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = AccountGroupsPager(
+            client=self.enterprise_management_service,
+            enterprise_id=self.enterprise_id,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = AccountGroupsPager(
+            client=self.enterprise_management_service,
+            enterprise_id=self.enterprise_id,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_account_groups() returned a total of {len(all_results)} items(s) using AccountGroupsPager.')
+
+    @needscredentials
     def test_get_account_group(self):
         assert first_example_account_group_id is not None
 
@@ -201,6 +226,31 @@ class TestEnterpriseManagementV1():
         print(f'\nlist_accounts() returned a total of {len(results)} accounts.')
 
     @needscredentials
+    def test_list_accounts_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = AccountsPager(
+            client=self.enterprise_management_service,
+            account_group_id=first_example_account_group_id,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = AccountsPager(
+            client=self.enterprise_management_service,
+            account_group_id=first_example_account_group_id,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_accounts() returned a total of {len(all_results)} items(s) using AccountsPager.')
+
+    @needscredentials
     def test_get_account(self):
         assert example_account_id is not None
 
@@ -252,6 +302,31 @@ class TestEnterpriseManagementV1():
         assert any(r['id'] == self.enterprise_id for r in results) is True
 
         print(f'\nlist_enterprises() returned a total of {len(results)} enterprises.')
+
+    @needscredentials
+    def test_list_enterprises_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = EnterprisesPager(
+            client=self.enterprise_management_service,
+            account_id=self.account_id,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = EnterprisesPager(
+            client=self.enterprise_management_service,
+            account_id=self.account_id,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_enterprises() returned a total of {len(all_results)} items(s) using EnterprisesPager.')
 
     @needscredentials
     def test_get_enterprise(self):

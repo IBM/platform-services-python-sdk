@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthen
 from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import inspect
 import json
+import os
 import pytest
 import re
 import requests
@@ -30,31 +31,76 @@ import urllib
 from ibm_platform_services.enterprise_management_v1 import *
 
 
-service = EnterpriseManagementV1(
+_service = EnterpriseManagementV1(
     authenticator=NoAuthAuthenticator()
-    )
+)
 
-base_url = 'https://enterprise.cloud.ibm.com/v1'
-service.set_service_url(base_url)
+_base_url = 'https://enterprise.cloud.ibm.com/v1'
+_service.set_service_url(_base_url)
+
+
+def preprocess_url(operation_path: str):
+    """
+    Returns the request url associated with the specified operation path.
+    This will be base_url concatenated with a quoted version of operation_path.
+    The returned request URL is used to register the mock response so it needs
+    to match the request URL that is formed by the requests library.
+    """
+    # First, unquote the path since it might have some quoted/escaped characters in it
+    # due to how the generator inserts the operation paths into the unit test code.
+    operation_path = urllib.parse.unquote(operation_path)
+
+    # Next, quote the path using urllib so that we approximate what will
+    # happen during request processing.
+    operation_path = urllib.parse.quote(operation_path, safe='/')
+
+    # Finally, form the request URL from the base URL and operation path.
+    request_url = _base_url + operation_path
+
+    # If the request url does NOT end with a /, then just return it as-is.
+    # Otherwise, return a regular expression that matches one or more trailing /.
+    if re.fullmatch('.*/+', request_url) is None:
+        return request_url
+    else:
+        return re.compile(request_url.rstrip('/') + '/+')
+
 
 ##############################################################################
 # Start of Service: EnterpriseOperations
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = EnterpriseManagementV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, EnterpriseManagementV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = EnterpriseManagementV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
 class TestCreateEnterprise():
     """
     Test Class for create_enterprise
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_create_enterprise_all_params(self):
@@ -62,7 +108,7 @@ class TestCreateEnterprise():
         create_enterprise()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises')
+        url = preprocess_url('/enterprises')
         mock_response = '{"enterprise_id": "enterprise_id", "enterprise_account_id": "enterprise_account_id"}'
         responses.add(responses.POST,
                       url,
@@ -77,7 +123,7 @@ class TestCreateEnterprise():
         domain = 'testString'
 
         # Invoke method
-        response = service.create_enterprise(
+        response = _service.create_enterprise(
             source_account_id,
             name,
             primary_contact_iam_id,
@@ -95,6 +141,14 @@ class TestCreateEnterprise():
         assert req_body['primary_contact_iam_id'] == 'testString'
         assert req_body['domain'] == 'testString'
 
+    def test_create_enterprise_all_params_with_retries(self):
+        # Enable retries and run test_create_enterprise_all_params.
+        _service.enable_retries()
+        self.test_create_enterprise_all_params()
+
+        # Disable retries and run test_create_enterprise_all_params.
+        _service.disable_retries()
+        self.test_create_enterprise_all_params()
 
     @responses.activate
     def test_create_enterprise_value_error(self):
@@ -102,7 +156,7 @@ class TestCreateEnterprise():
         test_create_enterprise_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises')
+        url = preprocess_url('/enterprises')
         mock_response = '{"enterprise_id": "enterprise_id", "enterprise_account_id": "enterprise_account_id"}'
         responses.add(responses.POST,
                       url,
@@ -125,23 +179,21 @@ class TestCreateEnterprise():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_enterprise(**req_copy)
+                _service.create_enterprise(**req_copy)
 
+    def test_create_enterprise_value_error_with_retries(self):
+        # Enable retries and run test_create_enterprise_value_error.
+        _service.enable_retries()
+        self.test_create_enterprise_value_error()
 
+        # Disable retries and run test_create_enterprise_value_error.
+        _service.disable_retries()
+        self.test_create_enterprise_value_error()
 
 class TestListEnterprises():
     """
     Test Class for list_enterprises
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_enterprises_all_params(self):
@@ -149,7 +201,7 @@ class TestListEnterprises():
         list_enterprises()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises')
+        url = preprocess_url('/enterprises')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
@@ -165,7 +217,7 @@ class TestListEnterprises():
         limit = 100
 
         # Invoke method
-        response = service.list_enterprises(
+        response = _service.list_enterprises(
             enterprise_account_id=enterprise_account_id,
             account_group_id=account_group_id,
             account_id=account_id,
@@ -186,6 +238,14 @@ class TestListEnterprises():
         assert 'next_docid={}'.format(next_docid) in query_string
         assert 'limit={}'.format(limit) in query_string
 
+    def test_list_enterprises_all_params_with_retries(self):
+        # Enable retries and run test_list_enterprises_all_params.
+        _service.enable_retries()
+        self.test_list_enterprises_all_params()
+
+        # Disable retries and run test_list_enterprises_all_params.
+        _service.disable_retries()
+        self.test_list_enterprises_all_params()
 
     @responses.activate
     def test_list_enterprises_required_params(self):
@@ -193,7 +253,7 @@ class TestListEnterprises():
         test_list_enterprises_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises')
+        url = preprocess_url('/enterprises')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
@@ -202,27 +262,93 @@ class TestListEnterprises():
                       status=200)
 
         # Invoke method
-        response = service.list_enterprises()
+        response = _service.list_enterprises()
 
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_enterprises_required_params_with_retries(self):
+        # Enable retries and run test_list_enterprises_required_params.
+        _service.enable_retries()
+        self.test_list_enterprises_required_params()
+
+        # Disable retries and run test_list_enterprises_required_params.
+        _service.disable_retries()
+        self.test_list_enterprises_required_params()
+
+    @responses.activate
+    def test_list_enterprises_with_pager_get_next(self):
+        """
+        test_list_enterprises_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/enterprises')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?next_docid=1","resources":[{"url":"url","id":"id","enterprise_account_id":"enterprise_account_id","crn":"crn","name":"name","domain":"domain","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"url":"url","id":"id","enterprise_account_id":"enterprise_account_id","crn":"crn","name":"name","domain":"domain","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = EnterprisesPager(
+            client=_service,
+            enterprise_account_id='testString',
+            account_group_id='testString',
+            account_id='testString',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_enterprises_with_pager_get_all(self):
+        """
+        test_list_enterprises_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/enterprises')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?next_docid=1","resources":[{"url":"url","id":"id","enterprise_account_id":"enterprise_account_id","crn":"crn","name":"name","domain":"domain","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"url":"url","id":"id","enterprise_account_id":"enterprise_account_id","crn":"crn","name":"name","domain":"domain","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = EnterprisesPager(
+            client=_service,
+            enterprise_account_id='testString',
+            account_group_id='testString',
+            account_id='testString',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestGetEnterprise():
     """
     Test Class for get_enterprise
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_enterprise_all_params(self):
@@ -230,7 +356,7 @@ class TestGetEnterprise():
         get_enterprise()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString')
+        url = preprocess_url('/enterprises/testString')
         mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
@@ -242,7 +368,7 @@ class TestGetEnterprise():
         enterprise_id = 'testString'
 
         # Invoke method
-        response = service.get_enterprise(
+        response = _service.get_enterprise(
             enterprise_id,
             headers={}
         )
@@ -251,6 +377,14 @@ class TestGetEnterprise():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_enterprise_all_params_with_retries(self):
+        # Enable retries and run test_get_enterprise_all_params.
+        _service.enable_retries()
+        self.test_get_enterprise_all_params()
+
+        # Disable retries and run test_get_enterprise_all_params.
+        _service.disable_retries()
+        self.test_get_enterprise_all_params()
 
     @responses.activate
     def test_get_enterprise_value_error(self):
@@ -258,7 +392,7 @@ class TestGetEnterprise():
         test_get_enterprise_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString')
+        url = preprocess_url('/enterprises/testString')
         mock_response = '{"url": "url", "id": "id", "enterprise_account_id": "enterprise_account_id", "crn": "crn", "name": "name", "domain": "domain", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
@@ -276,23 +410,21 @@ class TestGetEnterprise():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_enterprise(**req_copy)
+                _service.get_enterprise(**req_copy)
 
+    def test_get_enterprise_value_error_with_retries(self):
+        # Enable retries and run test_get_enterprise_value_error.
+        _service.enable_retries()
+        self.test_get_enterprise_value_error()
 
+        # Disable retries and run test_get_enterprise_value_error.
+        _service.disable_retries()
+        self.test_get_enterprise_value_error()
 
 class TestUpdateEnterprise():
     """
     Test Class for update_enterprise
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_enterprise_all_params(self):
@@ -300,7 +432,7 @@ class TestUpdateEnterprise():
         update_enterprise()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString')
+        url = preprocess_url('/enterprises/testString')
         responses.add(responses.PATCH,
                       url,
                       status=204)
@@ -312,7 +444,7 @@ class TestUpdateEnterprise():
         primary_contact_iam_id = 'testString'
 
         # Invoke method
-        response = service.update_enterprise(
+        response = _service.update_enterprise(
             enterprise_id,
             name=name,
             domain=domain,
@@ -329,6 +461,14 @@ class TestUpdateEnterprise():
         assert req_body['domain'] == 'testString'
         assert req_body['primary_contact_iam_id'] == 'testString'
 
+    def test_update_enterprise_all_params_with_retries(self):
+        # Enable retries and run test_update_enterprise_all_params.
+        _service.enable_retries()
+        self.test_update_enterprise_all_params()
+
+        # Disable retries and run test_update_enterprise_all_params.
+        _service.disable_retries()
+        self.test_update_enterprise_all_params()
 
     @responses.activate
     def test_update_enterprise_value_error(self):
@@ -336,7 +476,7 @@ class TestUpdateEnterprise():
         test_update_enterprise_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString')
+        url = preprocess_url('/enterprises/testString')
         responses.add(responses.PATCH,
                       url,
                       status=204)
@@ -354,9 +494,16 @@ class TestUpdateEnterprise():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_enterprise(**req_copy)
+                _service.update_enterprise(**req_copy)
 
+    def test_update_enterprise_value_error_with_retries(self):
+        # Enable retries and run test_update_enterprise_value_error.
+        _service.enable_retries()
+        self.test_update_enterprise_value_error()
 
+        # Disable retries and run test_update_enterprise_value_error.
+        _service.disable_retries()
+        self.test_update_enterprise_value_error()
 
 # endregion
 ##############################################################################
@@ -368,19 +515,37 @@ class TestUpdateEnterprise():
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = EnterpriseManagementV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, EnterpriseManagementV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = EnterpriseManagementV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
 class TestImportAccountToEnterprise():
     """
     Test Class for import_account_to_enterprise
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_import_account_to_enterprise_all_params(self):
@@ -388,7 +553,7 @@ class TestImportAccountToEnterprise():
         import_account_to_enterprise()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString/import/accounts/testString')
+        url = preprocess_url('/enterprises/testString/import/accounts/testString')
         responses.add(responses.PUT,
                       url,
                       status=202)
@@ -400,7 +565,7 @@ class TestImportAccountToEnterprise():
         billing_unit_id = 'testString'
 
         # Invoke method
-        response = service.import_account_to_enterprise(
+        response = _service.import_account_to_enterprise(
             enterprise_id,
             account_id,
             parent=parent,
@@ -416,6 +581,14 @@ class TestImportAccountToEnterprise():
         assert req_body['parent'] == 'testString'
         assert req_body['billing_unit_id'] == 'testString'
 
+    def test_import_account_to_enterprise_all_params_with_retries(self):
+        # Enable retries and run test_import_account_to_enterprise_all_params.
+        _service.enable_retries()
+        self.test_import_account_to_enterprise_all_params()
+
+        # Disable retries and run test_import_account_to_enterprise_all_params.
+        _service.disable_retries()
+        self.test_import_account_to_enterprise_all_params()
 
     @responses.activate
     def test_import_account_to_enterprise_required_params(self):
@@ -423,7 +596,7 @@ class TestImportAccountToEnterprise():
         test_import_account_to_enterprise_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString/import/accounts/testString')
+        url = preprocess_url('/enterprises/testString/import/accounts/testString')
         responses.add(responses.PUT,
                       url,
                       status=202)
@@ -433,7 +606,7 @@ class TestImportAccountToEnterprise():
         account_id = 'testString'
 
         # Invoke method
-        response = service.import_account_to_enterprise(
+        response = _service.import_account_to_enterprise(
             enterprise_id,
             account_id,
             headers={}
@@ -443,6 +616,14 @@ class TestImportAccountToEnterprise():
         assert len(responses.calls) == 1
         assert response.status_code == 202
 
+    def test_import_account_to_enterprise_required_params_with_retries(self):
+        # Enable retries and run test_import_account_to_enterprise_required_params.
+        _service.enable_retries()
+        self.test_import_account_to_enterprise_required_params()
+
+        # Disable retries and run test_import_account_to_enterprise_required_params.
+        _service.disable_retries()
+        self.test_import_account_to_enterprise_required_params()
 
     @responses.activate
     def test_import_account_to_enterprise_value_error(self):
@@ -450,7 +631,7 @@ class TestImportAccountToEnterprise():
         test_import_account_to_enterprise_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/enterprises/testString/import/accounts/testString')
+        url = preprocess_url('/enterprises/testString/import/accounts/testString')
         responses.add(responses.PUT,
                       url,
                       status=202)
@@ -467,23 +648,21 @@ class TestImportAccountToEnterprise():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.import_account_to_enterprise(**req_copy)
+                _service.import_account_to_enterprise(**req_copy)
 
+    def test_import_account_to_enterprise_value_error_with_retries(self):
+        # Enable retries and run test_import_account_to_enterprise_value_error.
+        _service.enable_retries()
+        self.test_import_account_to_enterprise_value_error()
 
+        # Disable retries and run test_import_account_to_enterprise_value_error.
+        _service.disable_retries()
+        self.test_import_account_to_enterprise_value_error()
 
 class TestCreateAccount():
     """
     Test Class for create_account
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_create_account_all_params(self):
@@ -491,7 +670,7 @@ class TestCreateAccount():
         create_account()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/accounts')
+        url = preprocess_url('/accounts')
         mock_response = '{"account_id": "account_id"}'
         responses.add(responses.POST,
                       url,
@@ -505,7 +684,7 @@ class TestCreateAccount():
         owner_iam_id = 'testString'
 
         # Invoke method
-        response = service.create_account(
+        response = _service.create_account(
             parent,
             name,
             owner_iam_id,
@@ -521,6 +700,14 @@ class TestCreateAccount():
         assert req_body['name'] == 'testString'
         assert req_body['owner_iam_id'] == 'testString'
 
+    def test_create_account_all_params_with_retries(self):
+        # Enable retries and run test_create_account_all_params.
+        _service.enable_retries()
+        self.test_create_account_all_params()
+
+        # Disable retries and run test_create_account_all_params.
+        _service.disable_retries()
+        self.test_create_account_all_params()
 
     @responses.activate
     def test_create_account_value_error(self):
@@ -528,7 +715,7 @@ class TestCreateAccount():
         test_create_account_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/accounts')
+        url = preprocess_url('/accounts')
         mock_response = '{"account_id": "account_id"}'
         responses.add(responses.POST,
                       url,
@@ -550,23 +737,21 @@ class TestCreateAccount():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_account(**req_copy)
+                _service.create_account(**req_copy)
 
+    def test_create_account_value_error_with_retries(self):
+        # Enable retries and run test_create_account_value_error.
+        _service.enable_retries()
+        self.test_create_account_value_error()
 
+        # Disable retries and run test_create_account_value_error.
+        _service.disable_retries()
+        self.test_create_account_value_error()
 
 class TestListAccounts():
     """
     Test Class for list_accounts
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_accounts_all_params(self):
@@ -574,7 +759,7 @@ class TestListAccounts():
         list_accounts()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/accounts')
+        url = preprocess_url('/accounts')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
@@ -590,7 +775,7 @@ class TestListAccounts():
         limit = 100
 
         # Invoke method
-        response = service.list_accounts(
+        response = _service.list_accounts(
             enterprise_id=enterprise_id,
             account_group_id=account_group_id,
             next_docid=next_docid,
@@ -611,6 +796,14 @@ class TestListAccounts():
         assert 'parent={}'.format(parent) in query_string
         assert 'limit={}'.format(limit) in query_string
 
+    def test_list_accounts_all_params_with_retries(self):
+        # Enable retries and run test_list_accounts_all_params.
+        _service.enable_retries()
+        self.test_list_accounts_all_params()
+
+        # Disable retries and run test_list_accounts_all_params.
+        _service.disable_retries()
+        self.test_list_accounts_all_params()
 
     @responses.activate
     def test_list_accounts_required_params(self):
@@ -618,7 +811,7 @@ class TestListAccounts():
         test_list_accounts_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/accounts')
+        url = preprocess_url('/accounts')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
@@ -627,27 +820,93 @@ class TestListAccounts():
                       status=200)
 
         # Invoke method
-        response = service.list_accounts()
+        response = _service.list_accounts()
 
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_accounts_required_params_with_retries(self):
+        # Enable retries and run test_list_accounts_required_params.
+        _service.enable_retries()
+        self.test_list_accounts_required_params()
+
+        # Disable retries and run test_list_accounts_required_params.
+        _service.disable_retries()
+        self.test_list_accounts_required_params()
+
+    @responses.activate
+    def test_list_accounts_with_pager_get_next(self):
+        """
+        test_list_accounts_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/accounts')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?next_docid=1","resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","owner_iam_id":"owner_iam_id","paid":true,"owner_email":"owner_email","is_enterprise_account":false,"created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","owner_iam_id":"owner_iam_id","paid":true,"owner_email":"owner_email","is_enterprise_account":false,"created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = AccountsPager(
+            client=_service,
+            enterprise_id='testString',
+            account_group_id='testString',
+            parent='testString',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_accounts_with_pager_get_all(self):
+        """
+        test_list_accounts_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/accounts')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?next_docid=1","resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","owner_iam_id":"owner_iam_id","paid":true,"owner_email":"owner_email","is_enterprise_account":false,"created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","owner_iam_id":"owner_iam_id","paid":true,"owner_email":"owner_email","is_enterprise_account":false,"created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = AccountsPager(
+            client=_service,
+            enterprise_id='testString',
+            account_group_id='testString',
+            parent='testString',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestGetAccount():
     """
     Test Class for get_account
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_account_all_params(self):
@@ -655,7 +914,7 @@ class TestGetAccount():
         get_account()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/accounts/testString')
+        url = preprocess_url('/accounts/testString')
         mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
@@ -667,7 +926,7 @@ class TestGetAccount():
         account_id = 'testString'
 
         # Invoke method
-        response = service.get_account(
+        response = _service.get_account(
             account_id,
             headers={}
         )
@@ -676,6 +935,14 @@ class TestGetAccount():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_account_all_params_with_retries(self):
+        # Enable retries and run test_get_account_all_params.
+        _service.enable_retries()
+        self.test_get_account_all_params()
+
+        # Disable retries and run test_get_account_all_params.
+        _service.disable_retries()
+        self.test_get_account_all_params()
 
     @responses.activate
     def test_get_account_value_error(self):
@@ -683,7 +950,7 @@ class TestGetAccount():
         test_get_account_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/accounts/testString')
+        url = preprocess_url('/accounts/testString')
         mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "owner_iam_id": "owner_iam_id", "paid": true, "owner_email": "owner_email", "is_enterprise_account": false, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
@@ -701,23 +968,21 @@ class TestGetAccount():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_account(**req_copy)
+                _service.get_account(**req_copy)
 
+    def test_get_account_value_error_with_retries(self):
+        # Enable retries and run test_get_account_value_error.
+        _service.enable_retries()
+        self.test_get_account_value_error()
 
+        # Disable retries and run test_get_account_value_error.
+        _service.disable_retries()
+        self.test_get_account_value_error()
 
 class TestUpdateAccount():
     """
     Test Class for update_account
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_account_all_params(self):
@@ -725,7 +990,7 @@ class TestUpdateAccount():
         update_account()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/accounts/testString')
+        url = preprocess_url('/accounts/testString')
         responses.add(responses.PATCH,
                       url,
                       status=202)
@@ -735,7 +1000,7 @@ class TestUpdateAccount():
         parent = 'testString'
 
         # Invoke method
-        response = service.update_account(
+        response = _service.update_account(
             account_id,
             parent,
             headers={}
@@ -748,6 +1013,14 @@ class TestUpdateAccount():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['parent'] == 'testString'
 
+    def test_update_account_all_params_with_retries(self):
+        # Enable retries and run test_update_account_all_params.
+        _service.enable_retries()
+        self.test_update_account_all_params()
+
+        # Disable retries and run test_update_account_all_params.
+        _service.disable_retries()
+        self.test_update_account_all_params()
 
     @responses.activate
     def test_update_account_value_error(self):
@@ -755,7 +1028,7 @@ class TestUpdateAccount():
         test_update_account_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/accounts/testString')
+        url = preprocess_url('/accounts/testString')
         responses.add(responses.PATCH,
                       url,
                       status=202)
@@ -772,9 +1045,16 @@ class TestUpdateAccount():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_account(**req_copy)
+                _service.update_account(**req_copy)
 
+    def test_update_account_value_error_with_retries(self):
+        # Enable retries and run test_update_account_value_error.
+        _service.enable_retries()
+        self.test_update_account_value_error()
 
+        # Disable retries and run test_update_account_value_error.
+        _service.disable_retries()
+        self.test_update_account_value_error()
 
 # endregion
 ##############################################################################
@@ -786,19 +1066,37 @@ class TestUpdateAccount():
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = EnterpriseManagementV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, EnterpriseManagementV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = EnterpriseManagementV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
 class TestCreateAccountGroup():
     """
     Test Class for create_account_group
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_create_account_group_all_params(self):
@@ -806,7 +1104,7 @@ class TestCreateAccountGroup():
         create_account_group()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups')
+        url = preprocess_url('/account-groups')
         mock_response = '{"account_group_id": "account_group_id"}'
         responses.add(responses.POST,
                       url,
@@ -820,7 +1118,7 @@ class TestCreateAccountGroup():
         primary_contact_iam_id = 'testString'
 
         # Invoke method
-        response = service.create_account_group(
+        response = _service.create_account_group(
             parent,
             name,
             primary_contact_iam_id,
@@ -836,6 +1134,14 @@ class TestCreateAccountGroup():
         assert req_body['name'] == 'testString'
         assert req_body['primary_contact_iam_id'] == 'testString'
 
+    def test_create_account_group_all_params_with_retries(self):
+        # Enable retries and run test_create_account_group_all_params.
+        _service.enable_retries()
+        self.test_create_account_group_all_params()
+
+        # Disable retries and run test_create_account_group_all_params.
+        _service.disable_retries()
+        self.test_create_account_group_all_params()
 
     @responses.activate
     def test_create_account_group_value_error(self):
@@ -843,7 +1149,7 @@ class TestCreateAccountGroup():
         test_create_account_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups')
+        url = preprocess_url('/account-groups')
         mock_response = '{"account_group_id": "account_group_id"}'
         responses.add(responses.POST,
                       url,
@@ -865,23 +1171,21 @@ class TestCreateAccountGroup():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.create_account_group(**req_copy)
+                _service.create_account_group(**req_copy)
 
+    def test_create_account_group_value_error_with_retries(self):
+        # Enable retries and run test_create_account_group_value_error.
+        _service.enable_retries()
+        self.test_create_account_group_value_error()
 
+        # Disable retries and run test_create_account_group_value_error.
+        _service.disable_retries()
+        self.test_create_account_group_value_error()
 
 class TestListAccountGroups():
     """
     Test Class for list_account_groups
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_account_groups_all_params(self):
@@ -889,7 +1193,7 @@ class TestListAccountGroups():
         list_account_groups()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups')
+        url = preprocess_url('/account-groups')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
@@ -905,7 +1209,7 @@ class TestListAccountGroups():
         limit = 100
 
         # Invoke method
-        response = service.list_account_groups(
+        response = _service.list_account_groups(
             enterprise_id=enterprise_id,
             parent_account_group_id=parent_account_group_id,
             next_docid=next_docid,
@@ -926,6 +1230,14 @@ class TestListAccountGroups():
         assert 'parent={}'.format(parent) in query_string
         assert 'limit={}'.format(limit) in query_string
 
+    def test_list_account_groups_all_params_with_retries(self):
+        # Enable retries and run test_list_account_groups_all_params.
+        _service.enable_retries()
+        self.test_list_account_groups_all_params()
+
+        # Disable retries and run test_list_account_groups_all_params.
+        _service.disable_retries()
+        self.test_list_account_groups_all_params()
 
     @responses.activate
     def test_list_account_groups_required_params(self):
@@ -933,7 +1245,7 @@ class TestListAccountGroups():
         test_list_account_groups_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups')
+        url = preprocess_url('/account-groups')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}]}'
         responses.add(responses.GET,
                       url,
@@ -942,27 +1254,93 @@ class TestListAccountGroups():
                       status=200)
 
         # Invoke method
-        response = service.list_account_groups()
+        response = _service.list_account_groups()
 
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_account_groups_required_params_with_retries(self):
+        # Enable retries and run test_list_account_groups_required_params.
+        _service.enable_retries()
+        self.test_list_account_groups_required_params()
+
+        # Disable retries and run test_list_account_groups_required_params.
+        _service.disable_retries()
+        self.test_list_account_groups_required_params()
+
+    @responses.activate
+    def test_list_account_groups_with_pager_get_next(self):
+        """
+        test_list_account_groups_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/account-groups')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?next_docid=1","resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = AccountGroupsPager(
+            client=_service,
+            enterprise_id='testString',
+            parent_account_group_id='testString',
+            parent='testString',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_account_groups_with_pager_get_all(self):
+        """
+        test_list_account_groups_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/account-groups')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?next_docid=1","resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"url":"url","id":"id","crn":"crn","parent":"parent","enterprise_account_id":"enterprise_account_id","enterprise_id":"enterprise_id","enterprise_path":"enterprise_path","name":"name","state":"state","primary_contact_iam_id":"primary_contact_iam_id","primary_contact_email":"primary_contact_email","created_at":"2019-01-01T12:00:00.000Z","created_by":"created_by","updated_at":"2019-01-01T12:00:00.000Z","updated_by":"updated_by"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = AccountGroupsPager(
+            client=_service,
+            enterprise_id='testString',
+            parent_account_group_id='testString',
+            parent='testString',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestGetAccountGroup():
     """
     Test Class for get_account_group
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_account_group_all_params(self):
@@ -970,7 +1348,7 @@ class TestGetAccountGroup():
         get_account_group()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups/testString')
+        url = preprocess_url('/account-groups/testString')
         mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
@@ -982,7 +1360,7 @@ class TestGetAccountGroup():
         account_group_id = 'testString'
 
         # Invoke method
-        response = service.get_account_group(
+        response = _service.get_account_group(
             account_group_id,
             headers={}
         )
@@ -991,6 +1369,14 @@ class TestGetAccountGroup():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_account_group_all_params_with_retries(self):
+        # Enable retries and run test_get_account_group_all_params.
+        _service.enable_retries()
+        self.test_get_account_group_all_params()
+
+        # Disable retries and run test_get_account_group_all_params.
+        _service.disable_retries()
+        self.test_get_account_group_all_params()
 
     @responses.activate
     def test_get_account_group_value_error(self):
@@ -998,7 +1384,7 @@ class TestGetAccountGroup():
         test_get_account_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups/testString')
+        url = preprocess_url('/account-groups/testString')
         mock_response = '{"url": "url", "id": "id", "crn": "crn", "parent": "parent", "enterprise_account_id": "enterprise_account_id", "enterprise_id": "enterprise_id", "enterprise_path": "enterprise_path", "name": "name", "state": "state", "primary_contact_iam_id": "primary_contact_iam_id", "primary_contact_email": "primary_contact_email", "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "updated_at": "2019-01-01T12:00:00.000Z", "updated_by": "updated_by"}'
         responses.add(responses.GET,
                       url,
@@ -1016,23 +1402,21 @@ class TestGetAccountGroup():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_account_group(**req_copy)
+                _service.get_account_group(**req_copy)
 
+    def test_get_account_group_value_error_with_retries(self):
+        # Enable retries and run test_get_account_group_value_error.
+        _service.enable_retries()
+        self.test_get_account_group_value_error()
 
+        # Disable retries and run test_get_account_group_value_error.
+        _service.disable_retries()
+        self.test_get_account_group_value_error()
 
 class TestUpdateAccountGroup():
     """
     Test Class for update_account_group
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_account_group_all_params(self):
@@ -1040,7 +1424,7 @@ class TestUpdateAccountGroup():
         update_account_group()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups/testString')
+        url = preprocess_url('/account-groups/testString')
         responses.add(responses.PATCH,
                       url,
                       status=204)
@@ -1051,7 +1435,7 @@ class TestUpdateAccountGroup():
         primary_contact_iam_id = 'testString'
 
         # Invoke method
-        response = service.update_account_group(
+        response = _service.update_account_group(
             account_group_id,
             name=name,
             primary_contact_iam_id=primary_contact_iam_id,
@@ -1066,6 +1450,14 @@ class TestUpdateAccountGroup():
         assert req_body['name'] == 'testString'
         assert req_body['primary_contact_iam_id'] == 'testString'
 
+    def test_update_account_group_all_params_with_retries(self):
+        # Enable retries and run test_update_account_group_all_params.
+        _service.enable_retries()
+        self.test_update_account_group_all_params()
+
+        # Disable retries and run test_update_account_group_all_params.
+        _service.disable_retries()
+        self.test_update_account_group_all_params()
 
     @responses.activate
     def test_update_account_group_value_error(self):
@@ -1073,7 +1465,7 @@ class TestUpdateAccountGroup():
         test_update_account_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/account-groups/testString')
+        url = preprocess_url('/account-groups/testString')
         responses.add(responses.PATCH,
                       url,
                       status=204)
@@ -1090,9 +1482,16 @@ class TestUpdateAccountGroup():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_account_group(**req_copy)
+                _service.update_account_group(**req_copy)
 
+    def test_update_account_group_value_error_with_retries(self):
+        # Enable retries and run test_update_account_group_value_error.
+        _service.enable_retries()
+        self.test_update_account_group_value_error()
 
+        # Disable retries and run test_update_account_group_value_error.
+        _service.disable_retries()
+        self.test_update_account_group_value_error()
 
 # endregion
 ##############################################################################
@@ -1104,7 +1503,7 @@ class TestUpdateAccountGroup():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestAccount():
+class TestModel_Account():
     """
     Test Class for Account
     """
@@ -1129,9 +1528,9 @@ class TestAccount():
         account_model_json['paid'] = True
         account_model_json['owner_email'] = 'testString'
         account_model_json['is_enterprise_account'] = True
-        account_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        account_model_json['created_at'] = '2019-01-01T12:00:00Z'
         account_model_json['created_by'] = 'testString'
-        account_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        account_model_json['updated_at'] = '2019-01-01T12:00:00Z'
         account_model_json['updated_by'] = 'testString'
 
         # Construct a model instance of Account by calling from_dict on the json representation
@@ -1149,7 +1548,7 @@ class TestAccount():
         account_model_json2 = account_model.to_dict()
         assert account_model_json2 == account_model_json
 
-class TestAccountGroup():
+class TestModel_AccountGroup():
     """
     Test Class for AccountGroup
     """
@@ -1172,9 +1571,9 @@ class TestAccountGroup():
         account_group_model_json['state'] = 'testString'
         account_group_model_json['primary_contact_iam_id'] = 'testString'
         account_group_model_json['primary_contact_email'] = 'testString'
-        account_group_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        account_group_model_json['created_at'] = '2019-01-01T12:00:00Z'
         account_group_model_json['created_by'] = 'testString'
-        account_group_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        account_group_model_json['updated_at'] = '2019-01-01T12:00:00Z'
         account_group_model_json['updated_by'] = 'testString'
 
         # Construct a model instance of AccountGroup by calling from_dict on the json representation
@@ -1192,7 +1591,7 @@ class TestAccountGroup():
         account_group_model_json2 = account_group_model.to_dict()
         assert account_group_model_json2 == account_group_model_json
 
-class TestCreateAccountGroupResponse():
+class TestModel_CreateAccountGroupResponse():
     """
     Test Class for CreateAccountGroupResponse
     """
@@ -1221,7 +1620,7 @@ class TestCreateAccountGroupResponse():
         create_account_group_response_model_json2 = create_account_group_response_model.to_dict()
         assert create_account_group_response_model_json2 == create_account_group_response_model_json
 
-class TestCreateAccountResponse():
+class TestModel_CreateAccountResponse():
     """
     Test Class for CreateAccountResponse
     """
@@ -1250,7 +1649,7 @@ class TestCreateAccountResponse():
         create_account_response_model_json2 = create_account_response_model.to_dict()
         assert create_account_response_model_json2 == create_account_response_model_json
 
-class TestCreateEnterpriseResponse():
+class TestModel_CreateEnterpriseResponse():
     """
     Test Class for CreateEnterpriseResponse
     """
@@ -1280,7 +1679,7 @@ class TestCreateEnterpriseResponse():
         create_enterprise_response_model_json2 = create_enterprise_response_model.to_dict()
         assert create_enterprise_response_model_json2 == create_enterprise_response_model_json
 
-class TestEnterprise():
+class TestModel_Enterprise():
     """
     Test Class for Enterprise
     """
@@ -1301,9 +1700,9 @@ class TestEnterprise():
         enterprise_model_json['state'] = 'testString'
         enterprise_model_json['primary_contact_iam_id'] = 'testString'
         enterprise_model_json['primary_contact_email'] = 'testString'
-        enterprise_model_json['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        enterprise_model_json['created_at'] = '2019-01-01T12:00:00Z'
         enterprise_model_json['created_by'] = 'testString'
-        enterprise_model_json['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        enterprise_model_json['updated_at'] = '2019-01-01T12:00:00Z'
         enterprise_model_json['updated_by'] = 'testString'
 
         # Construct a model instance of Enterprise by calling from_dict on the json representation
@@ -1321,7 +1720,7 @@ class TestEnterprise():
         enterprise_model_json2 = enterprise_model.to_dict()
         assert enterprise_model_json2 == enterprise_model_json
 
-class TestListAccountGroupsResponse():
+class TestModel_ListAccountGroupsResponse():
     """
     Test Class for ListAccountGroupsResponse
     """
@@ -1345,9 +1744,9 @@ class TestListAccountGroupsResponse():
         account_group_model['state'] = 'testString'
         account_group_model['primary_contact_iam_id'] = 'testString'
         account_group_model['primary_contact_email'] = 'testString'
-        account_group_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        account_group_model['created_at'] = '2019-01-01T12:00:00Z'
         account_group_model['created_by'] = 'testString'
-        account_group_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        account_group_model['updated_at'] = '2019-01-01T12:00:00Z'
         account_group_model['updated_by'] = 'testString'
 
         # Construct a json representation of a ListAccountGroupsResponse model
@@ -1371,7 +1770,7 @@ class TestListAccountGroupsResponse():
         list_account_groups_response_model_json2 = list_account_groups_response_model.to_dict()
         assert list_account_groups_response_model_json2 == list_account_groups_response_model_json
 
-class TestListAccountsResponse():
+class TestModel_ListAccountsResponse():
     """
     Test Class for ListAccountsResponse
     """
@@ -1397,9 +1796,9 @@ class TestListAccountsResponse():
         account_model['paid'] = True
         account_model['owner_email'] = 'testString'
         account_model['is_enterprise_account'] = True
-        account_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        account_model['created_at'] = '2019-01-01T12:00:00Z'
         account_model['created_by'] = 'testString'
-        account_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        account_model['updated_at'] = '2019-01-01T12:00:00Z'
         account_model['updated_by'] = 'testString'
 
         # Construct a json representation of a ListAccountsResponse model
@@ -1423,7 +1822,7 @@ class TestListAccountsResponse():
         list_accounts_response_model_json2 = list_accounts_response_model.to_dict()
         assert list_accounts_response_model_json2 == list_accounts_response_model_json
 
-class TestListEnterprisesResponse():
+class TestModel_ListEnterprisesResponse():
     """
     Test Class for ListEnterprisesResponse
     """
@@ -1445,9 +1844,9 @@ class TestListEnterprisesResponse():
         enterprise_model['state'] = 'testString'
         enterprise_model['primary_contact_iam_id'] = 'testString'
         enterprise_model['primary_contact_email'] = 'testString'
-        enterprise_model['created_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        enterprise_model['created_at'] = '2019-01-01T12:00:00Z'
         enterprise_model['created_by'] = 'testString'
-        enterprise_model['updated_at'] = datetime_to_string(string_to_datetime("2019-01-01T12:00:00.000Z"))
+        enterprise_model['updated_at'] = '2019-01-01T12:00:00Z'
         enterprise_model['updated_by'] = 'testString'
 
         # Construct a json representation of a ListEnterprisesResponse model
