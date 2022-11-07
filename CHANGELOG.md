@@ -1,3 +1,10 @@
+## [0.28.4](https://github.com/IBM/platform-services-python-sdk/compare/v0.28.3...v0.28.4) (2022-11-07)
+
+
+### Bug Fixes
+
+* **User Management:** re-gen service to get new Pagers ([#178](https://github.com/IBM/platform-services-python-sdk/issues/178)) ([b771181](https://github.com/IBM/platform-services-python-sdk/commit/b7711813e5c56b90881b425c3892450a94c6b556))
+
 ## [0.28.3](https://github.com/IBM/platform-services-python-sdk/compare/v0.28.2...v0.28.3) (2022-11-04)
 
 
