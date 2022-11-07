@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2020, 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -113,6 +113,30 @@ class TestUserManagementV1(unittest.TestCase):
 
         num_users = len(results)
         print(f'\nlist_users() returned a total of {num_users} users.')
+
+    def test_03a_list_users_with_pager(self):
+        all_results = []
+
+        # Test get_next().
+        pager = UsersPager(
+            client=self.user_management_service,
+            account_id=self.ACCOUNT_ID,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = UsersPager(
+            client=self.user_management_service,
+            account_id=self.ACCOUNT_ID,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_users() returned a total of {len(all_results)} items(s) using UsersPager.')
 
     def test_04_invite_users(self):
 

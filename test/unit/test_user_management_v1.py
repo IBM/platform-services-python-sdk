@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ Unit Tests for UserManagementV1
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 import inspect
 import json
+import os
 import pytest
 import re
 import requests
@@ -28,31 +29,76 @@ import urllib
 from ibm_platform_services.user_management_v1 import *
 
 
-service = UserManagementV1(
+_service = UserManagementV1(
     authenticator=NoAuthAuthenticator()
-    )
+)
 
-base_url = 'https://user-management.cloud.ibm.com'
-service.set_service_url(base_url)
+_base_url = 'https://user-management.cloud.ibm.com'
+_service.set_service_url(_base_url)
+
+
+def preprocess_url(operation_path: str):
+    """
+    Returns the request url associated with the specified operation path.
+    This will be base_url concatenated with a quoted version of operation_path.
+    The returned request URL is used to register the mock response so it needs
+    to match the request URL that is formed by the requests library.
+    """
+    # First, unquote the path since it might have some quoted/escaped characters in it
+    # due to how the generator inserts the operation paths into the unit test code.
+    operation_path = urllib.parse.unquote(operation_path)
+
+    # Next, quote the path using urllib so that we approximate what will
+    # happen during request processing.
+    operation_path = urllib.parse.quote(operation_path, safe='/')
+
+    # Finally, form the request URL from the base URL and operation path.
+    request_url = _base_url + operation_path
+
+    # If the request url does NOT end with a /, then just return it as-is.
+    # Otherwise, return a regular expression that matches one or more trailing /.
+    if re.fullmatch('.*/+', request_url) is None:
+        return request_url
+    else:
+        return re.compile(request_url.rstrip('/') + '/+')
+
 
 ##############################################################################
 # Start of Service: Users
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = UserManagementV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, UserManagementV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = UserManagementV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
 class TestListUsers():
     """
     Test Class for list_users
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_users_all_params(self):
@@ -60,8 +106,8 @@ class TestListUsers():
         list_users()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users')
-        mock_response = '{"total_results": 13, "limit": 5, "first_url": "first_url", "next_url": "next_url", "resources": [{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id"}]}'
+        url = preprocess_url('/v2/accounts/testString/users')
+        mock_response = '{"total_results": 13, "limit": 5, "first_url": "first_url", "next_url": "next_url", "resources": [{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id", "added_on": "added_on"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -70,16 +116,16 @@ class TestListUsers():
 
         # Set up parameter values
         account_id = 'testString'
-        state = 'testString'
         limit = 100
         start = 'testString'
+        user_id = 'testString'
 
         # Invoke method
-        response = service.list_users(
+        response = _service.list_users(
             account_id,
-            state=state,
             limit=limit,
             start=start,
+            user_id=user_id,
             headers={}
         )
 
@@ -89,10 +135,18 @@ class TestListUsers():
         # Validate query params
         query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'state={}'.format(state) in query_string
         assert 'limit={}'.format(limit) in query_string
         assert '_start={}'.format(start) in query_string
+        assert 'user_id={}'.format(user_id) in query_string
 
+    def test_list_users_all_params_with_retries(self):
+        # Enable retries and run test_list_users_all_params.
+        _service.enable_retries()
+        self.test_list_users_all_params()
+
+        # Disable retries and run test_list_users_all_params.
+        _service.disable_retries()
+        self.test_list_users_all_params()
 
     @responses.activate
     def test_list_users_required_params(self):
@@ -100,8 +154,8 @@ class TestListUsers():
         test_list_users_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users')
-        mock_response = '{"total_results": 13, "limit": 5, "first_url": "first_url", "next_url": "next_url", "resources": [{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id"}]}'
+        url = preprocess_url('/v2/accounts/testString/users')
+        mock_response = '{"total_results": 13, "limit": 5, "first_url": "first_url", "next_url": "next_url", "resources": [{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id", "added_on": "added_on"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -112,7 +166,7 @@ class TestListUsers():
         account_id = 'testString'
 
         # Invoke method
-        response = service.list_users(
+        response = _service.list_users(
             account_id,
             headers={}
         )
@@ -121,6 +175,14 @@ class TestListUsers():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_users_required_params_with_retries(self):
+        # Enable retries and run test_list_users_required_params.
+        _service.enable_retries()
+        self.test_list_users_required_params()
+
+        # Disable retries and run test_list_users_required_params.
+        _service.disable_retries()
+        self.test_list_users_required_params()
 
     @responses.activate
     def test_list_users_value_error(self):
@@ -128,8 +190,8 @@ class TestListUsers():
         test_list_users_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users')
-        mock_response = '{"total_results": 13, "limit": 5, "first_url": "first_url", "next_url": "next_url", "resources": [{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id"}]}'
+        url = preprocess_url('/v2/accounts/testString/users')
+        mock_response = '{"total_results": 13, "limit": 5, "first_url": "first_url", "next_url": "next_url", "resources": [{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id", "added_on": "added_on"}]}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -146,23 +208,86 @@ class TestListUsers():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.list_users(**req_copy)
+                _service.list_users(**req_copy)
 
+    def test_list_users_value_error_with_retries(self):
+        # Enable retries and run test_list_users_value_error.
+        _service.enable_retries()
+        self.test_list_users_value_error()
 
+        # Disable retries and run test_list_users_value_error.
+        _service.disable_retries()
+        self.test_list_users_value_error()
+
+    @responses.activate
+    def test_list_users_with_pager_get_next(self):
+        """
+        test_list_users_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/accounts/testString/users')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?_start=1","resources":[{"id":"id","iam_id":"iam_id","realm":"realm","user_id":"user_id","firstname":"firstname","lastname":"lastname","state":"state","email":"email","phonenumber":"phonenumber","altphonenumber":"altphonenumber","photo":"photo","account_id":"account_id","added_on":"added_on"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","iam_id":"iam_id","realm":"realm","user_id":"user_id","firstname":"firstname","lastname":"lastname","state":"state","email":"email","phonenumber":"phonenumber","altphonenumber":"altphonenumber","photo":"photo","account_id":"account_id","added_on":"added_on"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = UsersPager(
+            client=_service,
+            account_id='testString',
+            limit=10,
+            user_id='testString',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_users_with_pager_get_all(self):
+        """
+        test_list_users_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v2/accounts/testString/users')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?_start=1","resources":[{"id":"id","iam_id":"iam_id","realm":"realm","user_id":"user_id","firstname":"firstname","lastname":"lastname","state":"state","email":"email","phonenumber":"phonenumber","altphonenumber":"altphonenumber","photo":"photo","account_id":"account_id","added_on":"added_on"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","iam_id":"iam_id","realm":"realm","user_id":"user_id","firstname":"firstname","lastname":"lastname","state":"state","email":"email","phonenumber":"phonenumber","altphonenumber":"altphonenumber","photo":"photo","account_id":"account_id","added_on":"added_on"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = UsersPager(
+            client=_service,
+            account_id='testString',
+            limit=10,
+            user_id='testString',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestInviteUsers():
     """
     Test Class for invite_users
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_invite_users_all_params(self):
@@ -170,7 +295,7 @@ class TestInviteUsers():
         invite_users()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users')
+        url = preprocess_url('/v2/accounts/testString/users')
         mock_response = '{"resources": [{"email": "email", "id": "id", "state": "state"}]}'
         responses.add(responses.POST,
                       url,
@@ -209,7 +334,7 @@ class TestInviteUsers():
         access_groups = ['testString']
 
         # Invoke method
-        response = service.invite_users(
+        response = _service.invite_users(
             account_id,
             users=users,
             iam_policy=iam_policy,
@@ -226,6 +351,14 @@ class TestInviteUsers():
         assert req_body['iam_policy'] == [invite_user_iam_policy_model]
         assert req_body['access_groups'] == ['testString']
 
+    def test_invite_users_all_params_with_retries(self):
+        # Enable retries and run test_invite_users_all_params.
+        _service.enable_retries()
+        self.test_invite_users_all_params()
+
+        # Disable retries and run test_invite_users_all_params.
+        _service.disable_retries()
+        self.test_invite_users_all_params()
 
     @responses.activate
     def test_invite_users_required_params(self):
@@ -233,7 +366,7 @@ class TestInviteUsers():
         test_invite_users_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users')
+        url = preprocess_url('/v2/accounts/testString/users')
         mock_response = '{"resources": [{"email": "email", "id": "id", "state": "state"}]}'
         responses.add(responses.POST,
                       url,
@@ -245,7 +378,7 @@ class TestInviteUsers():
         account_id = 'testString'
 
         # Invoke method
-        response = service.invite_users(
+        response = _service.invite_users(
             account_id,
             headers={}
         )
@@ -254,6 +387,14 @@ class TestInviteUsers():
         assert len(responses.calls) == 1
         assert response.status_code == 202
 
+    def test_invite_users_required_params_with_retries(self):
+        # Enable retries and run test_invite_users_required_params.
+        _service.enable_retries()
+        self.test_invite_users_required_params()
+
+        # Disable retries and run test_invite_users_required_params.
+        _service.disable_retries()
+        self.test_invite_users_required_params()
 
     @responses.activate
     def test_invite_users_value_error(self):
@@ -261,7 +402,7 @@ class TestInviteUsers():
         test_invite_users_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users')
+        url = preprocess_url('/v2/accounts/testString/users')
         mock_response = '{"resources": [{"email": "email", "id": "id", "state": "state"}]}'
         responses.add(responses.POST,
                       url,
@@ -279,23 +420,21 @@ class TestInviteUsers():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.invite_users(**req_copy)
+                _service.invite_users(**req_copy)
 
+    def test_invite_users_value_error_with_retries(self):
+        # Enable retries and run test_invite_users_value_error.
+        _service.enable_retries()
+        self.test_invite_users_value_error()
 
+        # Disable retries and run test_invite_users_value_error.
+        _service.disable_retries()
+        self.test_invite_users_value_error()
 
 class TestGetUserProfile():
     """
     Test Class for get_user_profile
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_user_profile_all_params(self):
@@ -303,8 +442,52 @@ class TestGetUserProfile():
         get_user_profile()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users/testString')
-        mock_response = '{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id"}'
+        url = preprocess_url('/v2/accounts/testString/users/testString')
+        mock_response = '{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id", "added_on": "added_on"}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+        include_activity = 'testString'
+
+        # Invoke method
+        response = _service.get_user_profile(
+            account_id,
+            iam_id,
+            include_activity=include_activity,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'include_activity={}'.format(include_activity) in query_string
+
+    def test_get_user_profile_all_params_with_retries(self):
+        # Enable retries and run test_get_user_profile_all_params.
+        _service.enable_retries()
+        self.test_get_user_profile_all_params()
+
+        # Disable retries and run test_get_user_profile_all_params.
+        _service.disable_retries()
+        self.test_get_user_profile_all_params()
+
+    @responses.activate
+    def test_get_user_profile_required_params(self):
+        """
+        test_get_user_profile_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/accounts/testString/users/testString')
+        mock_response = '{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id", "added_on": "added_on"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -316,7 +499,7 @@ class TestGetUserProfile():
         iam_id = 'testString'
 
         # Invoke method
-        response = service.get_user_profile(
+        response = _service.get_user_profile(
             account_id,
             iam_id,
             headers={}
@@ -326,6 +509,14 @@ class TestGetUserProfile():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_user_profile_required_params_with_retries(self):
+        # Enable retries and run test_get_user_profile_required_params.
+        _service.enable_retries()
+        self.test_get_user_profile_required_params()
+
+        # Disable retries and run test_get_user_profile_required_params.
+        _service.disable_retries()
+        self.test_get_user_profile_required_params()
 
     @responses.activate
     def test_get_user_profile_value_error(self):
@@ -333,8 +524,8 @@ class TestGetUserProfile():
         test_get_user_profile_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users/testString')
-        mock_response = '{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id"}'
+        url = preprocess_url('/v2/accounts/testString/users/testString')
+        mock_response = '{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id", "added_on": "added_on"}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -353,23 +544,21 @@ class TestGetUserProfile():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_user_profile(**req_copy)
+                _service.get_user_profile(**req_copy)
 
+    def test_get_user_profile_value_error_with_retries(self):
+        # Enable retries and run test_get_user_profile_value_error.
+        _service.enable_retries()
+        self.test_get_user_profile_value_error()
 
+        # Disable retries and run test_get_user_profile_value_error.
+        _service.disable_retries()
+        self.test_get_user_profile_value_error()
 
 class TestUpdateUserProfile():
     """
     Test Class for update_user_profile
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_user_profile_all_params(self):
@@ -377,7 +566,7 @@ class TestUpdateUserProfile():
         update_user_profile()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users/testString')
+        url = preprocess_url('/v2/accounts/testString/users/testString')
         responses.add(responses.PATCH,
                       url,
                       status=204)
@@ -392,9 +581,10 @@ class TestUpdateUserProfile():
         phonenumber = 'testString'
         altphonenumber = 'testString'
         photo = 'testString'
+        include_activity = 'testString'
 
         # Invoke method
-        response = service.update_user_profile(
+        response = _service.update_user_profile(
             account_id,
             iam_id,
             firstname=firstname,
@@ -404,12 +594,17 @@ class TestUpdateUserProfile():
             phonenumber=phonenumber,
             altphonenumber=altphonenumber,
             photo=photo,
+            include_activity=include_activity,
             headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 204
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'include_activity={}'.format(include_activity) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['firstname'] == 'testString'
@@ -420,6 +615,14 @@ class TestUpdateUserProfile():
         assert req_body['altphonenumber'] == 'testString'
         assert req_body['photo'] == 'testString'
 
+    def test_update_user_profile_all_params_with_retries(self):
+        # Enable retries and run test_update_user_profile_all_params.
+        _service.enable_retries()
+        self.test_update_user_profile_all_params()
+
+        # Disable retries and run test_update_user_profile_all_params.
+        _service.disable_retries()
+        self.test_update_user_profile_all_params()
 
     @responses.activate
     def test_update_user_profile_required_params(self):
@@ -427,7 +630,7 @@ class TestUpdateUserProfile():
         test_update_user_profile_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users/testString')
+        url = preprocess_url('/v2/accounts/testString/users/testString')
         responses.add(responses.PATCH,
                       url,
                       status=204)
@@ -437,7 +640,7 @@ class TestUpdateUserProfile():
         iam_id = 'testString'
 
         # Invoke method
-        response = service.update_user_profile(
+        response = _service.update_user_profile(
             account_id,
             iam_id,
             headers={}
@@ -447,6 +650,14 @@ class TestUpdateUserProfile():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_update_user_profile_required_params_with_retries(self):
+        # Enable retries and run test_update_user_profile_required_params.
+        _service.enable_retries()
+        self.test_update_user_profile_required_params()
+
+        # Disable retries and run test_update_user_profile_required_params.
+        _service.disable_retries()
+        self.test_update_user_profile_required_params()
 
     @responses.activate
     def test_update_user_profile_value_error(self):
@@ -454,7 +665,7 @@ class TestUpdateUserProfile():
         test_update_user_profile_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users/testString')
+        url = preprocess_url('/v2/accounts/testString/users/testString')
         responses.add(responses.PATCH,
                       url,
                       status=204)
@@ -471,23 +682,21 @@ class TestUpdateUserProfile():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_user_profile(**req_copy)
+                _service.update_user_profile(**req_copy)
 
+    def test_update_user_profile_value_error_with_retries(self):
+        # Enable retries and run test_update_user_profile_value_error.
+        _service.enable_retries()
+        self.test_update_user_profile_value_error()
 
+        # Disable retries and run test_update_user_profile_value_error.
+        _service.disable_retries()
+        self.test_update_user_profile_value_error()
 
 class TestRemoveUser():
     """
     Test Class for remove_user
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_remove_user_all_params(self):
@@ -495,7 +704,48 @@ class TestRemoveUser():
         remove_user()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users/testString')
+        url = preprocess_url('/v2/accounts/testString/users/testString')
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+        include_activity = 'testString'
+
+        # Invoke method
+        response = _service.remove_user(
+            account_id,
+            iam_id,
+            include_activity=include_activity,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'include_activity={}'.format(include_activity) in query_string
+
+    def test_remove_user_all_params_with_retries(self):
+        # Enable retries and run test_remove_user_all_params.
+        _service.enable_retries()
+        self.test_remove_user_all_params()
+
+        # Disable retries and run test_remove_user_all_params.
+        _service.disable_retries()
+        self.test_remove_user_all_params()
+
+    @responses.activate
+    def test_remove_user_required_params(self):
+        """
+        test_remove_user_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/accounts/testString/users/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -505,7 +755,7 @@ class TestRemoveUser():
         iam_id = 'testString'
 
         # Invoke method
-        response = service.remove_user(
+        response = _service.remove_user(
             account_id,
             iam_id,
             headers={}
@@ -515,6 +765,14 @@ class TestRemoveUser():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_remove_user_required_params_with_retries(self):
+        # Enable retries and run test_remove_user_required_params.
+        _service.enable_retries()
+        self.test_remove_user_required_params()
+
+        # Disable retries and run test_remove_user_required_params.
+        _service.disable_retries()
+        self.test_remove_user_required_params()
 
     @responses.activate
     def test_remove_user_value_error(self):
@@ -522,7 +780,7 @@ class TestRemoveUser():
         test_remove_user_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users/testString')
+        url = preprocess_url('/v2/accounts/testString/users/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -539,9 +797,159 @@ class TestRemoveUser():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.remove_user(**req_copy)
+                _service.remove_user(**req_copy)
+
+    def test_remove_user_value_error_with_retries(self):
+        # Enable retries and run test_remove_user_value_error.
+        _service.enable_retries()
+        self.test_remove_user_value_error()
+
+        # Disable retries and run test_remove_user_value_error.
+        _service.disable_retries()
+        self.test_remove_user_value_error()
+
+class TestAccept():
+    """
+    Test Class for accept
+    """
+
+    @responses.activate
+    def test_accept_all_params(self):
+        """
+        accept()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/users/accept')
+        responses.add(responses.POST,
+                      url,
+                      status=202)
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.accept(
+            account_id=account_id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+
+    def test_accept_all_params_with_retries(self):
+        # Enable retries and run test_accept_all_params.
+        _service.enable_retries()
+        self.test_accept_all_params()
+
+        # Disable retries and run test_accept_all_params.
+        _service.disable_retries()
+        self.test_accept_all_params()
+
+    @responses.activate
+    def test_accept_required_params(self):
+        """
+        test_accept_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/users/accept')
+        responses.add(responses.POST,
+                      url,
+                      status=202)
+
+        # Invoke method
+        response = _service.accept()
 
 
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+
+    def test_accept_required_params_with_retries(self):
+        # Enable retries and run test_accept_required_params.
+        _service.enable_retries()
+        self.test_accept_required_params()
+
+        # Disable retries and run test_accept_required_params.
+        _service.disable_retries()
+        self.test_accept_required_params()
+
+class TestV3RemoveUser():
+    """
+    Test Class for v3_remove_user
+    """
+
+    @responses.activate
+    def test_v3_remove_user_all_params(self):
+        """
+        v3_remove_user()
+        """
+        # Set up mock
+        url = preprocess_url('/v3/accounts/testString/users/testString')
+        responses.add(responses.DELETE,
+                      url,
+                      status=202)
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+
+        # Invoke method
+        response = _service.v3_remove_user(
+            account_id,
+            iam_id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+
+    def test_v3_remove_user_all_params_with_retries(self):
+        # Enable retries and run test_v3_remove_user_all_params.
+        _service.enable_retries()
+        self.test_v3_remove_user_all_params()
+
+        # Disable retries and run test_v3_remove_user_all_params.
+        _service.disable_retries()
+        self.test_v3_remove_user_all_params()
+
+    @responses.activate
+    def test_v3_remove_user_value_error(self):
+        """
+        test_v3_remove_user_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v3/accounts/testString/users/testString')
+        responses.add(responses.DELETE,
+                      url,
+                      status=202)
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "iam_id": iam_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.v3_remove_user(**req_copy)
+
+    def test_v3_remove_user_value_error_with_retries(self):
+        # Enable retries and run test_v3_remove_user_value_error.
+        _service.enable_retries()
+        self.test_v3_remove_user_value_error()
+
+        # Disable retries and run test_v3_remove_user_value_error.
+        _service.disable_retries()
+        self.test_v3_remove_user_value_error()
 
 # endregion
 ##############################################################################
@@ -553,19 +961,37 @@ class TestRemoveUser():
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = UserManagementV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, UserManagementV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = UserManagementV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
 class TestGetUserSettings():
     """
     Test Class for get_user_settings
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_user_settings_all_params(self):
@@ -573,7 +999,7 @@ class TestGetUserSettings():
         get_user_settings()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users/testString/settings')
+        url = preprocess_url('/v2/accounts/testString/users/testString/settings')
         mock_response = '{"language": "language", "notification_language": "notification_language", "allowed_ip_addresses": "32.96.110.50,172.16.254.1", "self_manage": false}'
         responses.add(responses.GET,
                       url,
@@ -586,7 +1012,7 @@ class TestGetUserSettings():
         iam_id = 'testString'
 
         # Invoke method
-        response = service.get_user_settings(
+        response = _service.get_user_settings(
             account_id,
             iam_id,
             headers={}
@@ -596,6 +1022,14 @@ class TestGetUserSettings():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_user_settings_all_params_with_retries(self):
+        # Enable retries and run test_get_user_settings_all_params.
+        _service.enable_retries()
+        self.test_get_user_settings_all_params()
+
+        # Disable retries and run test_get_user_settings_all_params.
+        _service.disable_retries()
+        self.test_get_user_settings_all_params()
 
     @responses.activate
     def test_get_user_settings_value_error(self):
@@ -603,7 +1037,7 @@ class TestGetUserSettings():
         test_get_user_settings_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users/testString/settings')
+        url = preprocess_url('/v2/accounts/testString/users/testString/settings')
         mock_response = '{"language": "language", "notification_language": "notification_language", "allowed_ip_addresses": "32.96.110.50,172.16.254.1", "self_manage": false}'
         responses.add(responses.GET,
                       url,
@@ -623,23 +1057,21 @@ class TestGetUserSettings():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_user_settings(**req_copy)
+                _service.get_user_settings(**req_copy)
 
+    def test_get_user_settings_value_error_with_retries(self):
+        # Enable retries and run test_get_user_settings_value_error.
+        _service.enable_retries()
+        self.test_get_user_settings_value_error()
 
+        # Disable retries and run test_get_user_settings_value_error.
+        _service.disable_retries()
+        self.test_get_user_settings_value_error()
 
 class TestUpdateUserSettings():
     """
     Test Class for update_user_settings
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_user_settings_all_params(self):
@@ -647,7 +1079,7 @@ class TestUpdateUserSettings():
         update_user_settings()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users/testString/settings')
+        url = preprocess_url('/v2/accounts/testString/users/testString/settings')
         responses.add(responses.PATCH,
                       url,
                       status=204)
@@ -661,7 +1093,7 @@ class TestUpdateUserSettings():
         self_manage = True
 
         # Invoke method
-        response = service.update_user_settings(
+        response = _service.update_user_settings(
             account_id,
             iam_id,
             language=language,
@@ -681,6 +1113,14 @@ class TestUpdateUserSettings():
         assert req_body['allowed_ip_addresses'] == '32.96.110.50,172.16.254.1'
         assert req_body['self_manage'] == True
 
+    def test_update_user_settings_all_params_with_retries(self):
+        # Enable retries and run test_update_user_settings_all_params.
+        _service.enable_retries()
+        self.test_update_user_settings_all_params()
+
+        # Disable retries and run test_update_user_settings_all_params.
+        _service.disable_retries()
+        self.test_update_user_settings_all_params()
 
     @responses.activate
     def test_update_user_settings_required_params(self):
@@ -688,7 +1128,7 @@ class TestUpdateUserSettings():
         test_update_user_settings_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users/testString/settings')
+        url = preprocess_url('/v2/accounts/testString/users/testString/settings')
         responses.add(responses.PATCH,
                       url,
                       status=204)
@@ -698,7 +1138,7 @@ class TestUpdateUserSettings():
         iam_id = 'testString'
 
         # Invoke method
-        response = service.update_user_settings(
+        response = _service.update_user_settings(
             account_id,
             iam_id,
             headers={}
@@ -708,6 +1148,14 @@ class TestUpdateUserSettings():
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
+    def test_update_user_settings_required_params_with_retries(self):
+        # Enable retries and run test_update_user_settings_required_params.
+        _service.enable_retries()
+        self.test_update_user_settings_required_params()
+
+        # Disable retries and run test_update_user_settings_required_params.
+        _service.disable_retries()
+        self.test_update_user_settings_required_params()
 
     @responses.activate
     def test_update_user_settings_value_error(self):
@@ -715,7 +1163,7 @@ class TestUpdateUserSettings():
         test_update_user_settings_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v2/accounts/testString/users/testString/settings')
+        url = preprocess_url('/v2/accounts/testString/users/testString/settings')
         responses.add(responses.PATCH,
                       url,
                       status=204)
@@ -732,9 +1180,16 @@ class TestUpdateUserSettings():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.update_user_settings(**req_copy)
+                _service.update_user_settings(**req_copy)
 
+    def test_update_user_settings_value_error_with_retries(self):
+        # Enable retries and run test_update_user_settings_value_error.
+        _service.enable_retries()
+        self.test_update_user_settings_value_error()
 
+        # Disable retries and run test_update_user_settings_value_error.
+        _service.disable_retries()
+        self.test_update_user_settings_value_error()
 
 # endregion
 ##############################################################################
@@ -746,7 +1201,7 @@ class TestUpdateUserSettings():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestInvitedUser():
+class TestModel_InvitedUser():
     """
     Test Class for InvitedUser
     """
@@ -777,7 +1232,7 @@ class TestInvitedUser():
         invited_user_model_json2 = invited_user_model.to_dict()
         assert invited_user_model_json2 == invited_user_model_json
 
-class TestInvitedUserList():
+class TestModel_InvitedUserList():
     """
     Test Class for InvitedUserList
     """
@@ -813,7 +1268,7 @@ class TestInvitedUserList():
         invited_user_list_model_json2 = invited_user_list_model.to_dict()
         assert invited_user_list_model_json2 == invited_user_list_model_json
 
-class TestUserList():
+class TestModel_UserList():
     """
     Test Class for UserList
     """
@@ -838,6 +1293,7 @@ class TestUserList():
         user_profile_model['altphonenumber'] = 'testString'
         user_profile_model['photo'] = 'testString'
         user_profile_model['account_id'] = 'testString'
+        user_profile_model['added_on'] = 'testString'
 
         # Construct a json representation of a UserList model
         user_list_model_json = {}
@@ -862,7 +1318,7 @@ class TestUserList():
         user_list_model_json2 = user_list_model.to_dict()
         assert user_list_model_json2 == user_list_model_json
 
-class TestUserProfile():
+class TestModel_UserProfile():
     """
     Test Class for UserProfile
     """
@@ -886,6 +1342,7 @@ class TestUserProfile():
         user_profile_model_json['altphonenumber'] = 'testString'
         user_profile_model_json['photo'] = 'testString'
         user_profile_model_json['account_id'] = 'testString'
+        user_profile_model_json['added_on'] = 'testString'
 
         # Construct a model instance of UserProfile by calling from_dict on the json representation
         user_profile_model = UserProfile.from_dict(user_profile_model_json)
@@ -902,7 +1359,7 @@ class TestUserProfile():
         user_profile_model_json2 = user_profile_model.to_dict()
         assert user_profile_model_json2 == user_profile_model_json
 
-class TestUserSettings():
+class TestModel_UserSettings():
     """
     Test Class for UserSettings
     """
@@ -934,7 +1391,7 @@ class TestUserSettings():
         user_settings_model_json2 = user_settings_model.to_dict()
         assert user_settings_model_json2 == user_settings_model_json
 
-class TestAttribute():
+class TestModel_Attribute():
     """
     Test Class for Attribute
     """
@@ -964,7 +1421,7 @@ class TestAttribute():
         attribute_model_json2 = attribute_model.to_dict()
         assert attribute_model_json2 == attribute_model_json
 
-class TestInviteUser():
+class TestModel_InviteUser():
     """
     Test Class for InviteUser
     """
@@ -994,7 +1451,7 @@ class TestInviteUser():
         invite_user_model_json2 = invite_user_model.to_dict()
         assert invite_user_model_json2 == invite_user_model_json
 
-class TestInviteUserIamPolicy():
+class TestModel_InviteUserIamPolicy():
     """
     Test Class for InviteUserIamPolicy
     """
@@ -1037,7 +1494,7 @@ class TestInviteUserIamPolicy():
         invite_user_iam_policy_model_json2 = invite_user_iam_policy_model.to_dict()
         assert invite_user_iam_policy_model_json2 == invite_user_iam_policy_model_json
 
-class TestResource():
+class TestModel_Resource():
     """
     Test Class for Resource
     """
@@ -1072,7 +1529,7 @@ class TestResource():
         resource_model_json2 = resource_model.to_dict()
         assert resource_model_json2 == resource_model_json
 
-class TestRole():
+class TestModel_Role():
     """
     Test Class for Role
     """

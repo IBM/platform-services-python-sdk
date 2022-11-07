@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,16 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+# IBM OpenAPI SDK Code Generator Version: 3.60.2-95dc7721-20221102-203229
 
 """
 Manage the lifecycle of your users using User Management APIs.
+
+API Version: 1.0
 """
 
 from typing import Dict, List
 import json
 
-from ibm_cloud_sdk_core import BaseService, DetailedResponse
+from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
 from ibm_cloud_sdk_core.utils import convert_model
@@ -62,7 +64,7 @@ class UserManagementV1(BaseService):
         Construct a new client for the User Management service.
 
         :param Authenticator authenticator: The authenticator specifies the authentication mechanism.
-               Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
+               Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
         BaseService.__init__(self,
@@ -78,9 +80,9 @@ class UserManagementV1(BaseService):
     def list_users(self,
         account_id: str,
         *,
-        state: str = None,
         limit: int = None,
         start: str = None,
+        user_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -97,19 +99,19 @@ class UserManagementV1(BaseService):
         paginated list with a default limit of 100 users. You can iterate through all
         users by following the `next_url` field.
 
-        :param str account_id: The account ID.
-        :param str state: (optional) The state of the user.
+        :param str account_id: The account ID of the specified user.
         :param int limit: (optional) The number of results to be returned.
         :param str start: (optional) An optional token that indicates the beginning
                of the page of results to be returned. If omitted, the first page of
                results is returned. This value is obtained from the 'next_url' field of
                the operation response.
+        :param str user_id: (optional) Filter users based on their user ID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `UserList` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -118,13 +120,14 @@ class UserManagementV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
-            'state': state,
             'limit': limit,
-            '_start': start
+            '_start': start,
+            'user_id': user_id
         }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id']
@@ -136,7 +139,7 @@ class UserManagementV1(BaseService):
                                        headers=headers,
                                        params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -165,7 +168,7 @@ class UserManagementV1(BaseService):
         the user is transitioned to `ACTIVE` state. If the user email is already verified,
         no email is generated.
 
-        :param str account_id: The account ID.
+        :param str account_id: The account ID of the specified user.
         :param List[InviteUser] users: (optional) A list of users to be invited.
         :param List[InviteUserIamPolicy] iam_policy: (optional) A list of IAM
                policies.
@@ -175,7 +178,7 @@ class UserManagementV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `InvitedUserList` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
         if users is not None:
             users = [convert_model(x) for x in users]
@@ -198,6 +201,7 @@ class UserManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id']
@@ -209,13 +213,15 @@ class UserManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
     def get_user_profile(self,
         account_id: str,
         iam_id: str,
+        *,
+        include_activity: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -226,16 +232,18 @@ class UserManagementV1(BaseService):
         requesting user or service ID must have at least the viewer, editor, or
         administrator role on the User Management service.
 
-        :param str account_id: The account ID.
+        :param str account_id: The account ID of the specified user.
         :param str iam_id: The user's IAM ID.
+        :param str include_activity: (optional) Include activity information of the
+               user, such as the last authentication timestamp.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `UserProfile` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        if iam_id is None:
+        if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -243,8 +251,13 @@ class UserManagementV1(BaseService):
                                       operation_id='get_user_profile')
         headers.update(sdk_headers)
 
+        params = {
+            'include_activity': include_activity
+        }
+
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id', 'iam_id']
@@ -253,9 +266,10 @@ class UserManagementV1(BaseService):
         url = '/v2/accounts/{account_id}/users/{iam_id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET',
                                        url=url,
-                                       headers=headers)
+                                       headers=headers,
+                                       params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -270,6 +284,7 @@ class UserManagementV1(BaseService):
         phonenumber: str = None,
         altphonenumber: str = None,
         photo: str = None,
+        include_activity: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -284,7 +299,7 @@ class UserManagementV1(BaseService):
         states. For other request body fields, a user can update their own profile without
         having User Management service permissions.
 
-        :param str account_id: The account ID.
+        :param str account_id: The account ID of the specified user.
         :param str iam_id: The user's IAM ID.
         :param str firstname: (optional) The first name of the user.
         :param str lastname: (optional) The last name of the user.
@@ -296,20 +311,26 @@ class UserManagementV1(BaseService):
         :param str altphonenumber: (optional) The alternative phone number of the
                user.
         :param str photo: (optional) A link to a photo of the user.
+        :param str include_activity: (optional) Include activity information of the
+               user, such as the last authentication timestamp.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        if iam_id is None:
+        if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
                                       service_version='V1',
                                       operation_id='update_user_profile')
         headers.update(sdk_headers)
+
+        params = {
+            'include_activity': include_activity
+        }
 
         data = {
             'firstname': firstname,
@@ -326,6 +347,7 @@ class UserManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['account_id', 'iam_id']
         path_param_values = self.encode_path_vars(account_id, iam_id)
@@ -334,15 +356,18 @@ class UserManagementV1(BaseService):
         request = self.prepare_request(method='PATCH',
                                        url=url,
                                        headers=headers,
+                                       params=params,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
     def remove_user(self,
         account_id: str,
         iam_id: str,
+        *,
+        include_activity: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -354,16 +379,18 @@ class UserManagementV1(BaseService):
         Management service. For more information, see the [Removing
         users](https://cloud.ibm.com/docs/account?topic=account-remove) documentation.
 
-        :param str account_id: The account ID.
+        :param str account_id: The account ID of the specified user.
         :param str iam_id: The user's IAM ID.
+        :param str include_activity: (optional) Include activity information of the
+               user, such as the last authentication timestamp.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        if iam_id is None:
+        if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -371,8 +398,13 @@ class UserManagementV1(BaseService):
                                       operation_id='remove_user')
         headers.update(sdk_headers)
 
+        params = {
+            'include_activity': include_activity
+        }
+
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['account_id', 'iam_id']
         path_param_values = self.encode_path_vars(account_id, iam_id)
@@ -380,9 +412,104 @@ class UserManagementV1(BaseService):
         url = '/v2/accounts/{account_id}/users/{iam_id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE',
                                        url=url,
+                                       headers=headers,
+                                       params=params)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def accept(self,
+        *,
+        account_id: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Accept an invitation.
+
+        Accept a user invitation to an account. You can use the user's token for
+        authorization. To use this method, the requesting user must provide the account ID
+        for the account that they are accepting an invitation for. If the user already
+        accepted the invitation request, it returns 204 with no response body.
+
+        :param str account_id: (optional) The account ID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='accept')
+        headers.update(sdk_headers)
+
+        data = {
+            'account_id': account_id
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        url = '/v2/users/accept'
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def v3_remove_user(self,
+        account_id: str,
+        iam_id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Remove user from account (Asynchronous).
+
+        Remove users from an account by using the user's IAM ID. You must use a user token
+        for authorization. Service IDs can't remove users from an account. If removing the
+        user fails it will set the user's state to ERROR_WHILE_DELETING. To use this
+        method, the requesting user must have the editor or administrator role on the User
+        Management service. For more information, see the [Removing
+        users](https://cloud.ibm.com/docs/account?topic=account-remove) documentation.
+
+        :param str account_id: The account ID of the specified user.
+        :param str iam_id: The user's IAM ID.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        if not iam_id:
+            raise ValueError('iam_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='v3_remove_user')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['account_id', 'iam_id']
+        path_param_values = self.encode_path_vars(account_id, iam_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v3/accounts/{account_id}/users/{iam_id}'.format(**path_param_dict)
+        request = self.prepare_request(method='DELETE',
+                                       url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
@@ -411,16 +538,16 @@ class UserManagementV1(BaseService):
         the `self_manage` field, review information about the [user-managed login
         setting](https://cloud.ibm.com/docs/account?topic=account-types).
 
-        :param str account_id: The account ID.
+        :param str account_id: The account ID of the specified user.
         :param str iam_id: The user's IAM ID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `UserSettings` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        if iam_id is None:
+        if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -430,6 +557,7 @@ class UserManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id', 'iam_id']
@@ -440,7 +568,7 @@ class UserManagementV1(BaseService):
                                        url=url,
                                        headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -464,7 +592,7 @@ class UserManagementV1(BaseService):
         `notification_language` fields. If `self_manage` is `true`, the user can also
         update the `allowed_ip_addresses` field.
 
-        :param str account_id: The account ID.
+        :param str account_id: The account ID of the specified user.
         :param str iam_id: The user's IAM ID.
         :param str language: (optional) The console UI language. By default, this
                field is empty.
@@ -479,9 +607,9 @@ class UserManagementV1(BaseService):
         :rtype: DetailedResponse
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        if iam_id is None:
+        if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
@@ -501,6 +629,7 @@ class UserManagementV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
 
         path_param_keys = ['account_id', 'iam_id']
         path_param_values = self.encode_path_vars(account_id, iam_id)
@@ -511,7 +640,7 @@ class UserManagementV1(BaseService):
                                        headers=headers,
                                        data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -617,7 +746,7 @@ class InvitedUserList():
         """Initialize a InvitedUserList object from a json dictionary."""
         args = {}
         if 'resources' in _dict:
-            args['resources'] = [InvitedUser.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [InvitedUser.from_dict(v) for v in _dict.get('resources')]
         return cls(**args)
 
     @classmethod
@@ -629,7 +758,13 @@ class InvitedUserList():
         """Return a json dictionary representing this model."""
         _dict = {}
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -701,7 +836,7 @@ class UserList():
         if 'next_url' in _dict:
             args['next_url'] = _dict.get('next_url')
         if 'resources' in _dict:
-            args['resources'] = [UserProfile.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [UserProfile.from_dict(v) for v in _dict.get('resources')]
         return cls(**args)
 
     @classmethod
@@ -721,7 +856,13 @@ class UserList():
         if hasattr(self, 'next_url') and self.next_url is not None:
             _dict['next_url'] = self.next_url
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -763,6 +904,8 @@ class UserProfile():
     :attr str photo: (optional) A link to a photo of the user.
     :attr str account_id: (optional) An alphanumeric value identifying the account
           ID.
+    :attr str added_on: (optional) The timestamp for when the user was added to the
+          account.
     """
 
     def __init__(self,
@@ -778,7 +921,8 @@ class UserProfile():
                  phonenumber: str = None,
                  altphonenumber: str = None,
                  photo: str = None,
-                 account_id: str = None) -> None:
+                 account_id: str = None,
+                 added_on: str = None) -> None:
         """
         Initialize a UserProfile object.
 
@@ -801,6 +945,8 @@ class UserProfile():
         :param str photo: (optional) A link to a photo of the user.
         :param str account_id: (optional) An alphanumeric value identifying the
                account ID.
+        :param str added_on: (optional) The timestamp for when the user was added
+               to the account.
         """
         self.id = id
         self.iam_id = iam_id
@@ -814,6 +960,7 @@ class UserProfile():
         self.altphonenumber = altphonenumber
         self.photo = photo
         self.account_id = account_id
+        self.added_on = added_on
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'UserProfile':
@@ -843,6 +990,8 @@ class UserProfile():
             args['photo'] = _dict.get('photo')
         if 'account_id' in _dict:
             args['account_id'] = _dict.get('account_id')
+        if 'added_on' in _dict:
+            args['added_on'] = _dict.get('added_on')
         return cls(**args)
 
     @classmethod
@@ -877,6 +1026,8 @@ class UserProfile():
             _dict['photo'] = self.photo
         if hasattr(self, 'account_id') and self.account_id is not None:
             _dict['account_id'] = self.account_id
+        if hasattr(self, 'added_on') and self.added_on is not None:
+            _dict['added_on'] = self.added_on
         return _dict
 
     def _to_dict(self):
@@ -1146,9 +1297,9 @@ class InviteUserIamPolicy():
         else:
             raise ValueError('Required property \'type\' not present in InviteUserIamPolicy JSON')
         if 'roles' in _dict:
-            args['roles'] = [Role.from_dict(x) for x in _dict.get('roles')]
+            args['roles'] = [Role.from_dict(v) for v in _dict.get('roles')]
         if 'resources' in _dict:
-            args['resources'] = [Resource.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [Resource.from_dict(v) for v in _dict.get('resources')]
         return cls(**args)
 
     @classmethod
@@ -1162,9 +1313,21 @@ class InviteUserIamPolicy():
         if hasattr(self, 'type') and self.type is not None:
             _dict['type'] = self.type
         if hasattr(self, 'roles') and self.roles is not None:
-            _dict['roles'] = [x.to_dict() for x in self.roles]
+            roles_list = []
+            for v in self.roles:
+                if isinstance(v, dict):
+                    roles_list.append(v)
+                else:
+                    roles_list.append(v.to_dict())
+            _dict['roles'] = roles_list
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -1207,7 +1370,7 @@ class Resource():
         """Initialize a Resource object from a json dictionary."""
         args = {}
         if 'attributes' in _dict:
-            args['attributes'] = [Attribute.from_dict(x) for x in _dict.get('attributes')]
+            args['attributes'] = [Attribute.from_dict(v) for v in _dict.get('attributes')]
         return cls(**args)
 
     @classmethod
@@ -1219,7 +1382,13 @@ class Resource():
         """Return a json dictionary representing this model."""
         _dict = {}
         if hasattr(self, 'attributes') and self.attributes is not None:
-            _dict['attributes'] = [x.to_dict() for x in self.attributes]
+            attributes_list = []
+            for v in self.attributes:
+                if isinstance(v, dict):
+                    attributes_list.append(v)
+                else:
+                    attributes_list.append(v.to_dict())
+            _dict['attributes'] = attributes_list
         return _dict
 
     def _to_dict(self):
@@ -1295,3 +1464,77 @@ class Role():
     def __ne__(self, other: 'Role') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+##############################################################################
+# Pagers
+##############################################################################
+
+class UsersPager():
+    """
+    UsersPager can be used to simplify the use of the "list_users" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: UserManagementV1,
+                 account_id: str,
+                 limit: int = None,
+                 user_id: str = None,
+    ) -> None:
+        """
+        Initialize a UsersPager object.
+        :param str account_id: The account ID of the specified user.
+        :param int limit: (optional) The number of results to be returned.
+        :param str user_id: (optional) Filter users based on their user ID.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._account_id = account_id
+        self._limit = limit
+        self._user_id = user_id
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of UserProfile.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_users(
+            account_id=self._account_id,
+            limit=self._limit,
+            user_id=self._user_id,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next_url')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link, '_start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of UserProfile.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
