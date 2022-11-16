@@ -48,7 +48,7 @@ account_id = None
 # Start of Examples for Service: IbmCloudShellV1
 ##############################################################################
 # region
-class TestIbmCloudShellV1Examples():
+class TestIbmCloudShellV1Examples:
     """
     Example Test Class for IbmCloudShellV1
     """
@@ -61,8 +61,7 @@ class TestIbmCloudShellV1Examples():
 
             # begin-common
 
-            ibm_cloud_shell_service = IbmCloudShellV1.new_instance(
-            )
+            ibm_cloud_shell_service = IbmCloudShellV1.new_instance()
 
             # end-common
             assert ibm_cloud_shell_service is not None
@@ -92,9 +91,7 @@ class TestIbmCloudShellV1Examples():
             print('\nget_account_settings() result:')
             # begin-get_account_settings
 
-            account_settings = ibm_cloud_shell_service.get_account_settings(
-                account_id=account_id
-            ).get_result()
+            account_settings = ibm_cloud_shell_service.get_account_settings(account_id=account_id).get_result()
 
             print(json.dumps(account_settings, indent=2))
 
@@ -114,27 +111,31 @@ class TestIbmCloudShellV1Examples():
             print('\nupdate_account_settings() result:')
             # begin-update_account_settings
 
-            feature_model = [{
-                'enabled': True,
-                'key': 'server.file_manager',
-            },
-            {
-                'enabled': True,
-                'key': 'server.web_preview',
-            }]
+            feature_model = [
+                {
+                    'enabled': True,
+                    'key': 'server.file_manager',
+                },
+                {
+                    'enabled': True,
+                    'key': 'server.web_preview',
+                },
+            ]
 
-            region_setting_model = [{
-                'enabled': True,
-                'key': 'eu-de',
-            },
-            {
-                'enabled': True,
-                'key': 'jp-tok',
-            },
-            {
-                'enabled': True,
-                'key': 'us-south',
-            }]
+            region_setting_model = [
+                {
+                    'enabled': True,
+                    'key': 'eu-de',
+                },
+                {
+                    'enabled': True,
+                    'key': 'jp-tok',
+                },
+                {
+                    'enabled': True,
+                    'key': 'us-south',
+                },
+            ]
 
             account_settings = ibm_cloud_shell_service.update_account_settings(
                 account_id=account_id,
@@ -143,7 +144,7 @@ class TestIbmCloudShellV1Examples():
                 default_enable_new_regions=True,
                 enabled=True,
                 features=feature_model,
-                regions=region_setting_model
+                regions=region_setting_model,
             ).get_result()
 
             print(json.dumps(account_settings, indent=2))
@@ -152,6 +153,7 @@ class TestIbmCloudShellV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
+
 
 # endregion
 ##############################################################################

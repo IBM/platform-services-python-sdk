@@ -28,9 +28,7 @@ import urllib
 from ibm_platform_services.global_search_v2 import *
 
 
-_service = GlobalSearchV2(
-    authenticator=NoAuthAuthenticator()
-    )
+_service = GlobalSearchV2(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://api.global-search-tagging.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -40,7 +38,8 @@ _service.set_service_url(_base_url)
 ##############################################################################
 # region
 
-class TestSearch():
+
+class TestSearch:
     """
     Test Class for search
     """
@@ -62,11 +61,7 @@ class TestSearch():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v3/resources/search')
         mock_response = '{"search_cursor": "search_cursor", "limit": 5, "items": [{"crn": "crn"}]}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         query = 'testString'
@@ -88,14 +83,14 @@ class TestSearch():
             limit=limit,
             timeout=timeout,
             sort=sort,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'limit={}'.format(limit) in query_string
@@ -107,7 +102,6 @@ class TestSearch():
         assert req_body['fields'] == ['testString']
         assert req_body['search_cursor'] == 'testString'
 
-
     @responses.activate
     def test_search_required_params(self):
         """
@@ -116,11 +110,7 @@ class TestSearch():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v3/resources/search')
         mock_response = '{"search_cursor": "search_cursor", "limit": 5, "items": [{"crn": "crn"}]}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         query = 'testString'
@@ -128,12 +118,7 @@ class TestSearch():
         search_cursor = 'testString'
 
         # Invoke method
-        response = _service.search(
-            query=query,
-            fields=fields,
-            search_cursor=search_cursor,
-            headers={}
-        )
+        response = _service.search(query=query, fields=fields, search_cursor=search_cursor, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -155,7 +140,8 @@ class TestSearch():
 ##############################################################################
 # region
 
-class TestGetSupportedTypes():
+
+class TestGetSupportedTypes:
     """
     Test Class for get_supported_types
     """
@@ -177,15 +163,10 @@ class TestGetSupportedTypes():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/resources/supported_types')
         mock_response = '{"supported_types": ["supported_types"]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Invoke method
         response = _service.get_supported_types()
-
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -202,7 +183,7 @@ class TestGetSupportedTypes():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestModel_ResultItem():
+class TestModel_ResultItem:
     """
     Test Class for ResultItem
     """
@@ -215,7 +196,7 @@ class TestModel_ResultItem():
         # Construct a json representation of a ResultItem model
         result_item_model_json = {}
         result_item_model_json['crn'] = 'testString'
-        result_item_model_json['foo'] = { 'foo': 'bar' }
+        result_item_model_json['foo'] = {'foo': 'bar'}
 
         # Construct a model instance of ResultItem by calling from_dict on the json representation
         result_item_model = ResultItem.from_dict(result_item_model_json)
@@ -232,7 +213,8 @@ class TestModel_ResultItem():
         result_item_model_json2 = result_item_model.to_dict()
         assert result_item_model_json2 == result_item_model_json
 
-class TestModel_ScanResult():
+
+class TestModel_ScanResult:
     """
     Test Class for ScanResult
     """
@@ -244,9 +226,9 @@ class TestModel_ScanResult():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        result_item_model = {} # ResultItem
+        result_item_model = {}  # ResultItem
         result_item_model['crn'] = 'testString'
-        result_item_model['foo'] = { 'foo': 'bar' }
+        result_item_model['foo'] = {'foo': 'bar'}
 
         # Construct a json representation of a ScanResult model
         scan_result_model_json = {}
@@ -269,7 +251,8 @@ class TestModel_ScanResult():
         scan_result_model_json2 = scan_result_model.to_dict()
         assert scan_result_model_json2 == scan_result_model_json
 
-class TestModel_SupportedTypesList():
+
+class TestModel_SupportedTypesList:
     """
     Test Class for SupportedTypesList
     """

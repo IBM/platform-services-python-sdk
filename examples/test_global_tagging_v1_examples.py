@@ -48,10 +48,11 @@ resource_crn = None
 # Start of Examples for Service: GlobalTaggingV1
 ##############################################################################
 # region
-class TestGlobalTaggingV1Examples():
+class TestGlobalTaggingV1Examples:
     """
     Example Test Class for GlobalTaggingV1
     """
+
     @classmethod
     def setup_class(cls):
         global global_tagging_service
@@ -67,8 +68,7 @@ class TestGlobalTaggingV1Examples():
 
             # Load the configuration
             global config
-            config = read_external_sources(
-                GlobalTaggingV1.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(GlobalTaggingV1.DEFAULT_SERVICE_NAME)
 
             global resource_crn
             resource_crn = config.get("RESOURCE_CRN")
@@ -76,8 +76,8 @@ class TestGlobalTaggingV1Examples():
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
-        not os.path.exists(config_file),
-        reason="External configuration not available, skipping...")
+        not os.path.exists(config_file), reason="External configuration not available, skipping..."
+    )
 
     @needscredentials
     def test_create_tag_example(self):
@@ -89,8 +89,8 @@ class TestGlobalTaggingV1Examples():
             # begin-create_tag
 
             create_tag_results = global_tagging_service.create_tag(
-                tag_names=['env:example-access-tag'],
-                tag_type='access').get_result()
+                tag_names=['env:example-access-tag'], tag_type='access'
+            ).get_result()
 
             print(json.dumps(create_tag_results, indent=2))
 
@@ -109,11 +109,8 @@ class TestGlobalTaggingV1Examples():
             # begin-list_tags
 
             tag_list = global_tagging_service.list_tags(
-                tag_type='user',
-                attached_only=True,
-                full_data=True,
-                providers=['ghost'],
-                order_by_name='asc').get_result()
+                tag_type='user', attached_only=True, full_data=True, providers=['ghost'], order_by_name='asc'
+            ).get_result()
 
             print(json.dumps(tag_list, indent=2))
 
@@ -134,9 +131,8 @@ class TestGlobalTaggingV1Examples():
             resource_model = {'resource_id': resource_crn}
 
             tag_results = global_tagging_service.attach_tag(
-                resources=[resource_model],
-                tag_names=['tag_test_1', 'tag_test_2'],
-                tag_type='user').get_result()
+                resources=[resource_model], tag_names=['tag_test_1', 'tag_test_2'], tag_type='user'
+            ).get_result()
 
             print(json.dumps(tag_results, indent=2))
 
@@ -157,9 +153,8 @@ class TestGlobalTaggingV1Examples():
             resource_model = {'resource_id': resource_crn}
 
             tag_results = global_tagging_service.detach_tag(
-                resources=[resource_model],
-                tag_names=['tag_test_1', 'tag_test_2'],
-                tag_type='user').get_result()
+                resources=[resource_model], tag_names=['tag_test_1', 'tag_test_2'], tag_type='user'
+            ).get_result()
 
             print(json.dumps(tag_results, indent=2))
 
@@ -178,8 +173,8 @@ class TestGlobalTaggingV1Examples():
             # begin-delete_tag
 
             delete_tag_results = global_tagging_service.delete_tag(
-                tag_name='env:example-access-tag',
-                tag_type='access').get_result()
+                tag_name='env:example-access-tag', tag_type='access'
+            ).get_result()
 
             print(json.dumps(delete_tag_results, indent=2))
 
@@ -197,8 +192,7 @@ class TestGlobalTaggingV1Examples():
             print('\ndelete_tag_all() result:')
             # begin-delete_tag_all
 
-            delete_tags_result = global_tagging_service.delete_tag_all(
-                tag_type='user').get_result()
+            delete_tags_result = global_tagging_service.delete_tag_all(tag_type='user').get_result()
 
             print(json.dumps(delete_tags_result, indent=2))
 

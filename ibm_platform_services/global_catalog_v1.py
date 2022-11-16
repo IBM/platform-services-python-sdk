@@ -42,6 +42,7 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
+
 class GlobalCatalogV1(BaseService):
     """The Global Catalog V1 service."""
 
@@ -49,23 +50,23 @@ class GlobalCatalogV1(BaseService):
     DEFAULT_SERVICE_NAME = 'global_catalog'
 
     @classmethod
-    def new_instance(cls,
-                     service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'GlobalCatalogV1':
+    def new_instance(
+        cls,
+        service_name: str = DEFAULT_SERVICE_NAME,
+    ) -> 'GlobalCatalogV1':
         """
         Return a new client for the Global Catalog service using the specified
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
-    def __init__(self,
-                 authenticator: Authenticator = None,
-                ) -> None:
+    def __init__(
+        self,
+        authenticator: Authenticator = None,
+    ) -> None:
         """
         Construct a new client for the Global Catalog service.
 
@@ -73,17 +74,14 @@ class GlobalCatalogV1(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self,
-                             service_url=self.DEFAULT_SERVICE_URL,
-                             authenticator=authenticator)
-
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
     # Object
     #########################
 
-
-    def list_catalog_entries(self,
+    def list_catalog_entries(
+        self,
         *,
         account: str = None,
         include: str = None,
@@ -150,9 +148,9 @@ class GlobalCatalogV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_catalog_entries')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_catalog_entries'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -165,7 +163,7 @@ class GlobalCatalogV1(BaseService):
             'catalog': catalog,
             'complete': complete,
             '_offset': offset,
-            '_limit': limit
+            '_limit': limit,
         }
 
         if 'headers' in kwargs:
@@ -173,16 +171,13 @@ class GlobalCatalogV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request)
         return response
 
-
-    def create_catalog_entry(self,
+    def create_catalog_entry(
+        self,
         name: str,
         kind: str,
         overview_ui: dict,
@@ -262,14 +257,12 @@ class GlobalCatalogV1(BaseService):
         if metadata is not None:
             metadata = convert_model(metadata)
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='create_catalog_entry')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_catalog_entry'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account': account
-        }
+        params = {'account': account}
 
         data = {
             'name': name,
@@ -283,7 +276,7 @@ class GlobalCatalogV1(BaseService):
             'parent_id': parent_id,
             'group': group,
             'active': active,
-            'metadata': metadata
+            'metadata': metadata,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -294,17 +287,13 @@ class GlobalCatalogV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       params=params,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, params=params, data=data)
 
         response = self.send(request)
         return response
 
-
-    def get_catalog_entry(self,
+    def get_catalog_entry(
+        self,
         id: str,
         *,
         account: str = None,
@@ -354,18 +343,12 @@ class GlobalCatalogV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_catalog_entry')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_catalog_entry'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account': account,
-            'include': include,
-            'languages': languages,
-            'complete': complete,
-            'depth': depth
-        }
+        params = {'account': account, 'include': include, 'languages': languages, 'complete': complete, 'depth': depth}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -375,16 +358,13 @@ class GlobalCatalogV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request)
         return response
 
-
-    def update_catalog_entry(self,
+    def update_catalog_entry(
+        self,
         id: str,
         name: str,
         kind: str,
@@ -470,15 +450,12 @@ class GlobalCatalogV1(BaseService):
         if metadata is not None:
             metadata = convert_model(metadata)
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_catalog_entry')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_catalog_entry'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account': account,
-            'move': move
-        }
+        params = {'account': account, 'move': move}
 
         data = {
             'name': name,
@@ -491,7 +468,7 @@ class GlobalCatalogV1(BaseService):
             'parent_id': parent_id,
             'group': group,
             'active': active,
-            'metadata': metadata
+            'metadata': metadata,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -505,23 +482,12 @@ class GlobalCatalogV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       params=params,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, params=params, data=data)
 
         response = self.send(request)
         return response
 
-
-    def delete_catalog_entry(self,
-        id: str,
-        *,
-        account: str = None,
-        force: bool = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_catalog_entry(self, id: str, *, account: str = None, force: bool = None, **kwargs) -> DetailedResponse:
         """
         Delete a catalog entry.
 
@@ -546,15 +512,12 @@ class GlobalCatalogV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_catalog_entry')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_catalog_entry'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account': account,
-            'force': force
-        }
+        params = {'account': account, 'force': force}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -563,16 +526,13 @@ class GlobalCatalogV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers, params=params)
 
         response = self.send(request)
         return response
 
-
-    def get_child_objects(self,
+    def get_child_objects(
+        self,
         id: str,
         kind: str,
         *,
@@ -634,9 +594,9 @@ class GlobalCatalogV1(BaseService):
         if kind is None:
             raise ValueError('kind must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_child_objects')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_child_objects'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -648,7 +608,7 @@ class GlobalCatalogV1(BaseService):
             'languages': languages,
             'complete': complete,
             '_offset': offset,
-            '_limit': limit
+            '_limit': limit,
         }
 
         if 'headers' in kwargs:
@@ -659,21 +619,12 @@ class GlobalCatalogV1(BaseService):
         path_param_values = self.encode_path_vars(id, kind)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/{id}/{kind}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request)
         return response
 
-
-    def restore_catalog_entry(self,
-        id: str,
-        *,
-        account: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def restore_catalog_entry(self, id: str, *, account: str = None, **kwargs) -> DetailedResponse:
         """
         Restore archived catalog entry.
 
@@ -693,14 +644,12 @@ class GlobalCatalogV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='restore_catalog_entry')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='restore_catalog_entry'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account': account
-        }
+        params = {'account': account}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -709,10 +658,7 @@ class GlobalCatalogV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/{id}/restore'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, params=params)
 
         response = self.send(request)
         return response
@@ -721,13 +667,7 @@ class GlobalCatalogV1(BaseService):
     # Visibility
     #########################
 
-
-    def get_visibility(self,
-        id: str,
-        *,
-        account: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_visibility(self, id: str, *, account: str = None, **kwargs) -> DetailedResponse:
         """
         Get the visibility constraints for an object.
 
@@ -749,14 +689,12 @@ class GlobalCatalogV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_visibility')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_visibility'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account': account
-        }
+        params = {'account': account}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -766,16 +704,13 @@ class GlobalCatalogV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/{id}/visibility'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request)
         return response
 
-
-    def update_visibility(self,
+    def update_visibility(
+        self,
         id: str,
         *,
         extendable: bool = None,
@@ -812,20 +747,14 @@ class GlobalCatalogV1(BaseService):
         if exclude is not None:
             exclude = convert_model(exclude)
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_visibility')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_visibility'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account': account
-        }
+        params = {'account': account}
 
-        data = {
-            'extendable': extendable,
-            'include': include,
-            'exclude': exclude
-        }
+        data = {'extendable': extendable, 'include': include, 'exclude': exclude}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -837,11 +766,7 @@ class GlobalCatalogV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/{id}/visibility'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       params=params,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, params=params, data=data)
 
         response = self.send(request)
         return response
@@ -850,13 +775,7 @@ class GlobalCatalogV1(BaseService):
     # Pricing
     #########################
 
-
-    def get_pricing(self,
-        id: str,
-        *,
-        account: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_pricing(self, id: str, *, account: str = None, **kwargs) -> DetailedResponse:
         """
         Get the pricing for an object.
 
@@ -877,14 +796,12 @@ class GlobalCatalogV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_pricing')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_pricing'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account': account
-        }
+        params = {'account': account}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -894,10 +811,7 @@ class GlobalCatalogV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/{id}/pricing'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request)
         return response
@@ -906,8 +820,8 @@ class GlobalCatalogV1(BaseService):
     # Audit
     #########################
 
-
-    def get_audit_logs(self,
+    def get_audit_logs(
+        self,
         id: str,
         *,
         account: str = None,
@@ -948,18 +862,12 @@ class GlobalCatalogV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_audit_logs')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_audit_logs'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account': account,
-            'ascending': ascending,
-            'startat': startat,
-            '_offset': offset,
-            '_limit': limit
-        }
+        params = {'account': account, 'ascending': ascending, 'startat': startat, '_offset': offset, '_limit': limit}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -969,10 +877,7 @@ class GlobalCatalogV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/{id}/logs'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request)
         return response
@@ -981,13 +886,7 @@ class GlobalCatalogV1(BaseService):
     # Artifact
     #########################
 
-
-    def list_artifacts(self,
-        object_id: str,
-        *,
-        account: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def list_artifacts(self, object_id: str, *, account: str = None, **kwargs) -> DetailedResponse:
         """
         Get artifacts.
 
@@ -1006,14 +905,12 @@ class GlobalCatalogV1(BaseService):
         if object_id is None:
             raise ValueError('object_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_artifacts')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_artifacts'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account': account
-        }
+        params = {'account': account}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1023,22 +920,12 @@ class GlobalCatalogV1(BaseService):
         path_param_values = self.encode_path_vars(object_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/{object_id}/artifacts'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request)
         return response
 
-
-    def get_artifact(self,
-        object_id: str,
-        artifact_id: str,
-        *,
-        account: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_artifact(self, object_id: str, artifact_id: str, *, account: str = None, **kwargs) -> DetailedResponse:
         """
         Get artifact.
 
@@ -1060,14 +947,12 @@ class GlobalCatalogV1(BaseService):
         if artifact_id is None:
             raise ValueError('artifact_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_artifact')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_artifact'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account': account
-        }
+        params = {'account': account}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1077,16 +962,13 @@ class GlobalCatalogV1(BaseService):
         path_param_values = self.encode_path_vars(object_id, artifact_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/{object_id}/artifacts/{artifact_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request)
         return response
 
-
-    def upload_artifact(self,
+    def upload_artifact(
+        self,
         object_id: str,
         artifact_id: str,
         *,
@@ -1118,17 +1000,13 @@ class GlobalCatalogV1(BaseService):
             raise ValueError('object_id must be provided')
         if artifact_id is None:
             raise ValueError('artifact_id must be provided')
-        headers = {
-            'Content-Type': content_type
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='upload_artifact')
+        headers = {'Content-Type': content_type}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='upload_artifact'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account': account
-        }
+        params = {'account': account}
 
         data = artifact
 
@@ -1139,23 +1017,12 @@ class GlobalCatalogV1(BaseService):
         path_param_values = self.encode_path_vars(object_id, artifact_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/{object_id}/artifacts/{artifact_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       params=params,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, params=params, data=data)
 
         response = self.send(request)
         return response
 
-
-    def delete_artifact(self,
-        object_id: str,
-        artifact_id: str,
-        *,
-        account: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_artifact(self, object_id: str, artifact_id: str, *, account: str = None, **kwargs) -> DetailedResponse:
         """
         Delete artifact.
 
@@ -1178,14 +1045,12 @@ class GlobalCatalogV1(BaseService):
         if artifact_id is None:
             raise ValueError('artifact_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_artifact')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_artifact'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account': account
-        }
+        params = {'account': account}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1194,10 +1059,7 @@ class GlobalCatalogV1(BaseService):
         path_param_values = self.encode_path_vars(object_id, artifact_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/{object_id}/artifacts/{artifact_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers, params=params)
 
         response = self.send(request)
         return response
@@ -1208,7 +1070,7 @@ class GlobalCatalogV1(BaseService):
 ##############################################################################
 
 
-class AliasMetaData():
+class AliasMetaData:
     """
     Alias-related metadata.
 
@@ -1217,10 +1079,7 @@ class AliasMetaData():
           for.
     """
 
-    def __init__(self,
-                 *,
-                 type: str = None,
-                 plan_id: str = None) -> None:
+    def __init__(self, *, type: str = None, plan_id: str = None) -> None:
         """
         Initialize a AliasMetaData object.
 
@@ -1273,7 +1132,8 @@ class AliasMetaData():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Amount():
+
+class Amount:
     """
     Country-specific pricing information.
 
@@ -1282,11 +1142,7 @@ class Amount():
     :attr List[Price] prices: (optional) See Price for nested fields.
     """
 
-    def __init__(self,
-                 *,
-                 country: str = None,
-                 currency: str = None,
-                 prices: List['Price'] = None) -> None:
+    def __init__(self, *, country: str = None, currency: str = None, prices: List['Price'] = None) -> None:
         """
         Initialize a Amount object.
 
@@ -1344,7 +1200,8 @@ class Amount():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Artifact():
+
+class Artifact:
     """
     Artifact Details.
 
@@ -1356,13 +1213,9 @@ class Artifact():
     :attr int size: (optional) The content length of the artifact.
     """
 
-    def __init__(self,
-                 *,
-                 name: str = None,
-                 updated: datetime = None,
-                 url: str = None,
-                 etag: str = None,
-                 size: int = None) -> None:
+    def __init__(
+        self, *, name: str = None, updated: datetime = None, url: str = None, etag: str = None, size: int = None
+    ) -> None:
         """
         Initialize a Artifact object.
 
@@ -1433,7 +1286,8 @@ class Artifact():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Artifacts():
+
+class Artifacts:
     """
     Artifacts List.
 
@@ -1441,10 +1295,7 @@ class Artifacts():
     :attr List[Artifact] resources: (optional) The list of artifacts.
     """
 
-    def __init__(self,
-                 *,
-                 count: int = None,
-                 resources: List['Artifact'] = None) -> None:
+    def __init__(self, *, count: int = None, resources: List['Artifact'] = None) -> None:
         """
         Initialize a Artifacts object.
 
@@ -1496,7 +1347,8 @@ class Artifacts():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class AuditSearchResult():
+
+class AuditSearchResult:
     """
     A paginated search result containing audit logs.
 
@@ -1518,17 +1370,19 @@ class AuditSearchResult():
           contained in this page of search results.
     """
 
-    def __init__(self,
-                 *,
-                 offset: int = None,
-                 limit: int = None,
-                 count: int = None,
-                 resource_count: int = None,
-                 first: str = None,
-                 last: str = None,
-                 prev: str = None,
-                 next: str = None,
-                 resources: List['Message'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        offset: int = None,
+        limit: int = None,
+        count: int = None,
+        resource_count: int = None,
+        first: str = None,
+        last: str = None,
+        prev: str = None,
+        next: str = None,
+        resources: List['Message'] = None
+    ) -> None:
         """
         Initialize a AuditSearchResult object.
 
@@ -1631,7 +1485,8 @@ class AuditSearchResult():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Broker():
+
+class Broker:
     """
     The broker associated with a catalog entry.
 
@@ -1639,10 +1494,7 @@ class Broker():
     :attr str guid: (optional) Broker guid.
     """
 
-    def __init__(self,
-                 *,
-                 name: str = None,
-                 guid: str = None) -> None:
+    def __init__(self, *, name: str = None, guid: str = None) -> None:
         """
         Initialize a Broker object.
 
@@ -1694,7 +1546,8 @@ class Broker():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Bullets():
+
+class Bullets:
     """
     Information related to list delimiters.
 
@@ -1704,12 +1557,7 @@ class Bullets():
     :attr int quantity: (optional) The bullet quantity.
     """
 
-    def __init__(self,
-                 *,
-                 title: str = None,
-                 description: str = None,
-                 icon: str = None,
-                 quantity: int = None) -> None:
+    def __init__(self, *, title: str = None, description: str = None, icon: str = None, quantity: int = None) -> None:
         """
         Initialize a Bullets object.
 
@@ -1773,7 +1621,8 @@ class Bullets():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CFMetaData():
+
+class CFMetaData:
     """
     Service-related metadata.
 
@@ -1806,22 +1655,24 @@ class CFMetaData():
           `us-south=123`.
     """
 
-    def __init__(self,
-                 *,
-                 type: str = None,
-                 iam_compatible: bool = None,
-                 unique_api_key: bool = None,
-                 provisionable: bool = None,
-                 bindable: bool = None,
-                 async_provisioning_supported: bool = None,
-                 async_unprovisioning_supported: bool = None,
-                 requires: List[str] = None,
-                 plan_updateable: bool = None,
-                 state: str = None,
-                 service_check_enabled: bool = None,
-                 test_check_interval: int = None,
-                 service_key_supported: bool = None,
-                 cf_guid: dict = None) -> None:
+    def __init__(
+        self,
+        *,
+        type: str = None,
+        iam_compatible: bool = None,
+        unique_api_key: bool = None,
+        provisionable: bool = None,
+        bindable: bool = None,
+        async_provisioning_supported: bool = None,
+        async_unprovisioning_supported: bool = None,
+        requires: List[str] = None,
+        plan_updateable: bool = None,
+        state: str = None,
+        service_check_enabled: bool = None,
+        test_check_interval: int = None,
+        service_key_supported: bool = None,
+        cf_guid: dict = None
+    ) -> None:
         """
         Initialize a CFMetaData object.
 
@@ -1958,7 +1809,8 @@ class CFMetaData():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Callbacks():
+
+class Callbacks:
     """
     Callback-related information associated with a catalog entry.
 
@@ -1977,18 +1829,20 @@ class Callbacks():
     :attr dict api_endpoint: (optional) API endpoint.
     """
 
-    def __init__(self,
-                 *,
-                 controller_url: str = None,
-                 broker_url: str = None,
-                 broker_proxy_url: str = None,
-                 dashboard_url: str = None,
-                 dashboard_data_url: str = None,
-                 dashboard_detail_tab_url: str = None,
-                 dashboard_detail_tab_ext_url: str = None,
-                 service_monitor_api: str = None,
-                 service_monitor_app: str = None,
-                 api_endpoint: dict = None) -> None:
+    def __init__(
+        self,
+        *,
+        controller_url: str = None,
+        broker_url: str = None,
+        broker_proxy_url: str = None,
+        dashboard_url: str = None,
+        dashboard_data_url: str = None,
+        dashboard_detail_tab_url: str = None,
+        dashboard_detail_tab_ext_url: str = None,
+        service_monitor_api: str = None,
+        service_monitor_app: str = None,
+        api_endpoint: dict = None
+    ) -> None:
         """
         Initialize a Callbacks object.
 
@@ -2091,7 +1945,8 @@ class Callbacks():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CatalogEntry():
+
+class CatalogEntry:
     """
     An entry in the global catalog.
 
@@ -2130,27 +1985,29 @@ class CatalogEntry():
     :attr datetime updated: (optional) Date last updated.
     """
 
-    def __init__(self,
-                 name: str,
-                 kind: str,
-                 overview_ui: dict,
-                 images: 'Image',
-                 disabled: bool,
-                 tags: List[str],
-                 provider: 'Provider',
-                 *,
-                 parent_id: str = None,
-                 group: bool = None,
-                 active: bool = None,
-                 metadata: 'CatalogEntryMetadata' = None,
-                 id: str = None,
-                 catalog_crn: str = None,
-                 url: str = None,
-                 children_url: str = None,
-                 geo_tags: List[str] = None,
-                 pricing_tags: List[str] = None,
-                 created: datetime = None,
-                 updated: datetime = None) -> None:
+    def __init__(
+        self,
+        name: str,
+        kind: str,
+        overview_ui: dict,
+        images: 'Image',
+        disabled: bool,
+        tags: List[str],
+        provider: 'Provider',
+        *,
+        parent_id: str = None,
+        group: bool = None,
+        active: bool = None,
+        metadata: 'CatalogEntryMetadata' = None,
+        id: str = None,
+        catalog_crn: str = None,
+        url: str = None,
+        children_url: str = None,
+        geo_tags: List[str] = None,
+        pricing_tags: List[str] = None,
+        created: datetime = None,
+        updated: datetime = None
+    ) -> None:
         """
         Initialize a CatalogEntry object.
 
@@ -2212,7 +2069,7 @@ class CatalogEntry():
         else:
             raise ValueError('Required property \'kind\' not present in CatalogEntry JSON')
         if 'overview_ui' in _dict:
-            args['overview_ui'] = {k : Overview.from_dict(v) for k, v in _dict.get('overview_ui').items()}
+            args['overview_ui'] = {k: Overview.from_dict(v) for k, v in _dict.get('overview_ui').items()}
         else:
             raise ValueError('Required property \'overview_ui\' not present in CatalogEntry JSON')
         if 'images' in _dict:
@@ -2270,7 +2127,7 @@ class CatalogEntry():
         if hasattr(self, 'kind') and self.kind is not None:
             _dict['kind'] = self.kind
         if hasattr(self, 'overview_ui') and self.overview_ui is not None:
-            _dict['overview_ui'] = {k : v.to_dict() for k, v in self.overview_ui.items()}
+            _dict['overview_ui'] = {k: v.to_dict() for k, v in self.overview_ui.items()}
         if hasattr(self, 'images') and self.images is not None:
             _dict['images'] = self.images.to_dict()
         if hasattr(self, 'parent_id') and self.parent_id is not None:
@@ -2328,12 +2185,13 @@ class CatalogEntry():
         The type of catalog entry, **service**, **template**, **dashboard**, which
         determines the type and shape of the object.
         """
+
         SERVICE = 'service'
         TEMPLATE = 'template'
         DASHBOARD = 'dashboard'
 
 
-class CatalogEntryMetadata():
+class CatalogEntryMetadata:
     """
     Model used to describe metadata object returned.
 
@@ -2358,22 +2216,24 @@ class CatalogEntryMetadata():
           metadata.
     """
 
-    def __init__(self,
-                 *,
-                 rc_compatible: bool = None,
-                 service: 'CFMetaData' = None,
-                 plan: 'PlanMetaData' = None,
-                 alias: 'AliasMetaData' = None,
-                 template: 'TemplateMetaData' = None,
-                 ui: 'UIMetaData' = None,
-                 compliance: List[str] = None,
-                 sla: 'SLAMetaData' = None,
-                 callbacks: 'Callbacks' = None,
-                 original_name: str = None,
-                 version: str = None,
-                 other: dict = None,
-                 pricing: 'CatalogEntryMetadataPricing' = None,
-                 deployment: 'CatalogEntryMetadataDeployment' = None) -> None:
+    def __init__(
+        self,
+        *,
+        rc_compatible: bool = None,
+        service: 'CFMetaData' = None,
+        plan: 'PlanMetaData' = None,
+        alias: 'AliasMetaData' = None,
+        template: 'TemplateMetaData' = None,
+        ui: 'UIMetaData' = None,
+        compliance: List[str] = None,
+        sla: 'SLAMetaData' = None,
+        callbacks: 'Callbacks' = None,
+        original_name: str = None,
+        version: str = None,
+        other: dict = None,
+        pricing: 'CatalogEntryMetadataPricing' = None,
+        deployment: 'CatalogEntryMetadataDeployment' = None
+    ) -> None:
         """
         Initialize a CatalogEntryMetadata object.
 
@@ -2504,7 +2364,8 @@ class CatalogEntryMetadata():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CatalogEntryMetadataDeployment():
+
+class CatalogEntryMetadataDeployment:
     """
     Deployment-related metadata.
 
@@ -2523,17 +2384,19 @@ class CatalogEntryMetadataDeployment():
     :attr str target_network: (optional) network to use during deployment.
     """
 
-    def __init__(self,
-                 *,
-                 location: str = None,
-                 location_url: str = None,
-                 original_location: str = None,
-                 target_crn: str = None,
-                 service_crn: str = None,
-                 mccp_id: str = None,
-                 broker: 'Broker' = None,
-                 supports_rc_migration: bool = None,
-                 target_network: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        location: str = None,
+        location_url: str = None,
+        original_location: str = None,
+        target_crn: str = None,
+        service_crn: str = None,
+        mccp_id: str = None,
+        broker: 'Broker' = None,
+        supports_rc_migration: bool = None,
+        target_network: str = None
+    ) -> None:
         """
         Initialize a CatalogEntryMetadataDeployment object.
 
@@ -2631,7 +2494,8 @@ class CatalogEntryMetadataDeployment():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CatalogEntryMetadataPricing():
+
+class CatalogEntryMetadataPricing:
     """
     Pricing-related information.
 
@@ -2643,12 +2507,14 @@ class CatalogEntryMetadataPricing():
     :attr List[Metrics] metrics: (optional) Plan-specific cost metric structure.
     """
 
-    def __init__(self,
-                 *,
-                 type: str = None,
-                 origin: str = None,
-                 starting_price: 'StartingPrice' = None,
-                 metrics: List['Metrics'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        type: str = None,
+        origin: str = None,
+        starting_price: 'StartingPrice' = None,
+        metrics: List['Metrics'] = None
+    ) -> None:
         """
         Initialize a CatalogEntryMetadataPricing object.
 
@@ -2715,7 +2581,8 @@ class CatalogEntryMetadataPricing():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class DRMetaData():
+
+class DRMetaData:
     """
     SLA Disaster Recovery-related metadata.
 
@@ -2725,10 +2592,7 @@ class DRMetaData():
           implementation.
     """
 
-    def __init__(self,
-                 *,
-                 dr: bool = None,
-                 description: str = None) -> None:
+    def __init__(self, *, dr: bool = None, description: str = None) -> None:
         """
         Initialize a DRMetaData object.
 
@@ -2782,7 +2646,8 @@ class DRMetaData():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class DeploymentBase():
+
+class DeploymentBase:
     """
     Deployment-related metadata.
 
@@ -2800,17 +2665,19 @@ class DeploymentBase():
     :attr str target_network: (optional) network to use during deployment.
     """
 
-    def __init__(self,
-                 *,
-                 location: str = None,
-                 location_url: str = None,
-                 original_location: str = None,
-                 target_crn: str = None,
-                 service_crn: str = None,
-                 mccp_id: str = None,
-                 broker: 'Broker' = None,
-                 supports_rc_migration: bool = None,
-                 target_network: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        location: str = None,
+        location_url: str = None,
+        original_location: str = None,
+        target_crn: str = None,
+        service_crn: str = None,
+        mccp_id: str = None,
+        broker: 'Broker' = None,
+        supports_rc_migration: bool = None,
+        target_network: str = None
+    ) -> None:
         """
         Initialize a DeploymentBase object.
 
@@ -2909,7 +2776,8 @@ class DeploymentBase():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class EntrySearchResult():
+
+class EntrySearchResult:
     """
     A paginated search result containing catalog entries.
 
@@ -2931,17 +2799,19 @@ class EntrySearchResult():
           contained in this page of search results.
     """
 
-    def __init__(self,
-                 *,
-                 offset: int = None,
-                 limit: int = None,
-                 count: int = None,
-                 resource_count: int = None,
-                 first: str = None,
-                 last: str = None,
-                 prev: str = None,
-                 next: str = None,
-                 resources: List['CatalogEntry'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        offset: int = None,
+        limit: int = None,
+        count: int = None,
+        resource_count: int = None,
+        first: str = None,
+        last: str = None,
+        prev: str = None,
+        next: str = None,
+        resources: List['CatalogEntry'] = None
+    ) -> None:
         """
         Initialize a EntrySearchResult object.
 
@@ -3044,7 +2914,8 @@ class EntrySearchResult():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Image():
+
+class Image:
     """
     Image annotation for this catalog entry. The image is a URL.
 
@@ -3054,12 +2925,9 @@ class Image():
     :attr str feature_image: (optional) URL for a featured image.
     """
 
-    def __init__(self,
-                 image: str,
-                 *,
-                 small_image: str = None,
-                 medium_image: str = None,
-                 feature_image: str = None) -> None:
+    def __init__(
+        self, image: str, *, small_image: str = None, medium_image: str = None, feature_image: str = None
+    ) -> None:
         """
         Initialize a Image object.
 
@@ -3125,7 +2993,8 @@ class Image():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Message():
+
+class Message:
     """
     log object describing who did what.
 
@@ -3144,19 +3013,21 @@ class Message():
           object data.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 effective: 'Visibility' = None,
-                 time: datetime = None,
-                 who_id: str = None,
-                 who_name: str = None,
-                 who_email: str = None,
-                 instance: str = None,
-                 gid: str = None,
-                 type: str = None,
-                 message: str = None,
-                 data: dict = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        effective: 'Visibility' = None,
+        time: datetime = None,
+        who_id: str = None,
+        who_name: str = None,
+        who_email: str = None,
+        instance: str = None,
+        gid: str = None,
+        type: str = None,
+        message: str = None,
+        data: dict = None
+    ) -> None:
         """
         Initialize a Message object.
 
@@ -3264,7 +3135,8 @@ class Message():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Metrics():
+
+class Metrics:
     """
     Plan-specific cost metrics information.
 
@@ -3284,21 +3156,23 @@ class Metrics():
           currency.
     """
 
-    def __init__(self,
-                 *,
-                 part_ref: str = None,
-                 metric_id: str = None,
-                 tier_model: str = None,
-                 charge_unit: str = None,
-                 charge_unit_name: str = None,
-                 charge_unit_quantity: str = None,
-                 resource_display_name: str = None,
-                 charge_unit_display_name: str = None,
-                 usage_cap_qty: int = None,
-                 display_cap: int = None,
-                 effective_from: datetime = None,
-                 effective_until: datetime = None,
-                 amounts: List['Amount'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        part_ref: str = None,
+        metric_id: str = None,
+        tier_model: str = None,
+        charge_unit: str = None,
+        charge_unit_name: str = None,
+        charge_unit_quantity: str = None,
+        resource_display_name: str = None,
+        charge_unit_display_name: str = None,
+        usage_cap_qty: int = None,
+        display_cap: int = None,
+        effective_from: datetime = None,
+        effective_until: datetime = None,
+        amounts: List['Amount'] = None
+    ) -> None:
         """
         Initialize a Metrics object.
 
@@ -3418,7 +3292,8 @@ class Metrics():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ObjectMetadataSet():
+
+class ObjectMetadataSet:
     """
     Model used to describe metadata object that can be set.
 
@@ -3441,22 +3316,24 @@ class ObjectMetadataSet():
     :attr DeploymentBase deployment: (optional) Deployment-related metadata.
     """
 
-    def __init__(self,
-                 *,
-                 rc_compatible: bool = None,
-                 service: 'CFMetaData' = None,
-                 plan: 'PlanMetaData' = None,
-                 alias: 'AliasMetaData' = None,
-                 template: 'TemplateMetaData' = None,
-                 ui: 'UIMetaData' = None,
-                 compliance: List[str] = None,
-                 sla: 'SLAMetaData' = None,
-                 callbacks: 'Callbacks' = None,
-                 original_name: str = None,
-                 version: str = None,
-                 other: dict = None,
-                 pricing: 'PricingSet' = None,
-                 deployment: 'DeploymentBase' = None) -> None:
+    def __init__(
+        self,
+        *,
+        rc_compatible: bool = None,
+        service: 'CFMetaData' = None,
+        plan: 'PlanMetaData' = None,
+        alias: 'AliasMetaData' = None,
+        template: 'TemplateMetaData' = None,
+        ui: 'UIMetaData' = None,
+        compliance: List[str] = None,
+        sla: 'SLAMetaData' = None,
+        callbacks: 'Callbacks' = None,
+        original_name: str = None,
+        version: str = None,
+        other: dict = None,
+        pricing: 'PricingSet' = None,
+        deployment: 'DeploymentBase' = None
+    ) -> None:
         """
         Initialize a ObjectMetadataSet object.
 
@@ -3585,7 +3462,8 @@ class ObjectMetadataSet():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Overview():
+
+class Overview:
     """
     Overview is nested in the top level. The key value pair is `[_language_]overview_ui`.
 
@@ -3596,12 +3474,9 @@ class Overview():
           be featured.
     """
 
-    def __init__(self,
-                 display_name: str,
-                 long_description: str,
-                 description: str,
-                 *,
-                 featured_description: str = None) -> None:
+    def __init__(
+        self, display_name: str, long_description: str, description: str, *, featured_description: str = None
+    ) -> None:
         """
         Initialize a Overview object.
 
@@ -3672,7 +3547,8 @@ class Overview():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class PlanMetaData():
+
+class PlanMetaData:
     """
     Plan-related metadata.
 
@@ -3695,17 +3571,19 @@ class PlanMetaData():
           `us-south=123`.
     """
 
-    def __init__(self,
-                 *,
-                 bindable: bool = None,
-                 reservable: bool = None,
-                 allow_internal_users: bool = None,
-                 async_provisioning_supported: bool = None,
-                 async_unprovisioning_supported: bool = None,
-                 test_check_interval: int = None,
-                 single_scope_instance: str = None,
-                 service_check_enabled: bool = None,
-                 cf_guid: dict = None) -> None:
+    def __init__(
+        self,
+        *,
+        bindable: bool = None,
+        reservable: bool = None,
+        allow_internal_users: bool = None,
+        async_provisioning_supported: bool = None,
+        async_unprovisioning_supported: bool = None,
+        test_check_interval: int = None,
+        single_scope_instance: str = None,
+        service_check_enabled: bool = None,
+        cf_guid: dict = None
+    ) -> None:
         """
         Initialize a PlanMetaData object.
 
@@ -3807,7 +3685,8 @@ class PlanMetaData():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Price():
+
+class Price:
     """
     Pricing-related information.
 
@@ -3815,10 +3694,7 @@ class Price():
     :attr float price: (optional) Price in the selected currency.
     """
 
-    def __init__(self,
-                 *,
-                 quantity_tier: int = None,
-                 price: float = None) -> None:
+    def __init__(self, *, quantity_tier: int = None, price: float = None) -> None:
         """
         Initialize a Price object.
 
@@ -3870,7 +3746,8 @@ class Price():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class PricingGet():
+
+class PricingGet:
     """
     Pricing-related information.
 
@@ -3882,12 +3759,14 @@ class PricingGet():
     :attr List[Metrics] metrics: (optional) Plan-specific cost metric structure.
     """
 
-    def __init__(self,
-                 *,
-                 type: str = None,
-                 origin: str = None,
-                 starting_price: 'StartingPrice' = None,
-                 metrics: List['Metrics'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        type: str = None,
+        origin: str = None,
+        starting_price: 'StartingPrice' = None,
+        metrics: List['Metrics'] = None
+    ) -> None:
         """
         Initialize a PricingGet object.
 
@@ -3954,7 +3833,8 @@ class PricingGet():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class PricingSet():
+
+class PricingSet:
     """
     Pricing-related information.
 
@@ -3965,11 +3845,7 @@ class PricingSet():
           information.
     """
 
-    def __init__(self,
-                 *,
-                 type: str = None,
-                 origin: str = None,
-                 starting_price: 'StartingPrice' = None) -> None:
+    def __init__(self, *, type: str = None, origin: str = None, starting_price: 'StartingPrice' = None) -> None:
         """
         Initialize a PricingSet object.
 
@@ -4029,7 +3905,8 @@ class PricingSet():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Provider():
+
+class Provider:
     """
     Information related to the provider associated with a catalog entry.
 
@@ -4040,13 +3917,9 @@ class Provider():
     :attr str phone: (optional) Provider's contact phone.
     """
 
-    def __init__(self,
-                 email: str,
-                 name: str,
-                 *,
-                 contact: str = None,
-                 support_email: str = None,
-                 phone: str = None) -> None:
+    def __init__(
+        self, email: str, name: str, *, contact: str = None, support_email: str = None, phone: str = None
+    ) -> None:
         """
         Initialize a Provider object.
 
@@ -4120,7 +3993,8 @@ class Provider():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SLAMetaData():
+
+class SLAMetaData:
     """
     Service Level Agreement related metadata.
 
@@ -4134,13 +4008,15 @@ class SLAMetaData():
     :attr DRMetaData dr: (optional) SLA Disaster Recovery-related metadata.
     """
 
-    def __init__(self,
-                 *,
-                 terms: str = None,
-                 tenancy: str = None,
-                 provisioning: str = None,
-                 responsiveness: str = None,
-                 dr: 'DRMetaData' = None) -> None:
+    def __init__(
+        self,
+        *,
+        terms: str = None,
+        tenancy: str = None,
+        provisioning: str = None,
+        responsiveness: str = None,
+        dr: 'DRMetaData' = None
+    ) -> None:
         """
         Initialize a SLAMetaData object.
 
@@ -4215,7 +4091,8 @@ class SLAMetaData():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SourceMetaData():
+
+class SourceMetaData:
     """
     Location of your applications source files.
 
@@ -4224,11 +4101,7 @@ class SourceMetaData():
     :attr str url: (optional) URL to source.
     """
 
-    def __init__(self,
-                 *,
-                 path: str = None,
-                 type: str = None,
-                 url: str = None) -> None:
+    def __init__(self, *, path: str = None, type: str = None, url: str = None) -> None:
         """
         Initialize a SourceMetaData object.
 
@@ -4286,7 +4159,8 @@ class SourceMetaData():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class StartingPrice():
+
+class StartingPrice:
     """
     Plan-specific starting price information.
 
@@ -4298,12 +4172,9 @@ class StartingPrice():
           currency.
     """
 
-    def __init__(self,
-                 *,
-                 plan_id: str = None,
-                 deployment_id: str = None,
-                 unit: str = None,
-                 amount: List['Amount'] = None) -> None:
+    def __init__(
+        self, *, plan_id: str = None, deployment_id: str = None, unit: str = None, amount: List['Amount'] = None
+    ) -> None:
         """
         Initialize a StartingPrice object.
 
@@ -4370,7 +4241,8 @@ class StartingPrice():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Strings():
+
+class Strings:
     """
     Information related to a translated text message.
 
@@ -4385,15 +4257,17 @@ class Strings():
     :attr str instruction: (optional) Instructions for UI strings.
     """
 
-    def __init__(self,
-                 *,
-                 bullets: List['Bullets'] = None,
-                 media: List['UIMetaMedia'] = None,
-                 not_creatable_msg: str = None,
-                 not_creatable_robot_msg: str = None,
-                 deprecation_warning: str = None,
-                 popup_warning_message: str = None,
-                 instruction: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        bullets: List['Bullets'] = None,
+        media: List['UIMetaMedia'] = None,
+        not_creatable_msg: str = None,
+        not_creatable_robot_msg: str = None,
+        deprecation_warning: str = None,
+        popup_warning_message: str = None,
+        instruction: str = None
+    ) -> None:
         """
         Initialize a Strings object.
 
@@ -4478,7 +4352,8 @@ class Strings():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class TemplateMetaData():
+
+class TemplateMetaData:
     """
     Template-related metadata.
 
@@ -4497,18 +4372,20 @@ class TemplateMetaData():
           pairs) for the template.
     """
 
-    def __init__(self,
-                 *,
-                 services: List[str] = None,
-                 default_memory: int = None,
-                 start_cmd: str = None,
-                 source: 'SourceMetaData' = None,
-                 runtime_catalog_id: str = None,
-                 cf_runtime_id: str = None,
-                 template_id: str = None,
-                 executable_file: str = None,
-                 buildpack: str = None,
-                 environment_variables: dict = None) -> None:
+    def __init__(
+        self,
+        *,
+        services: List[str] = None,
+        default_memory: int = None,
+        start_cmd: str = None,
+        source: 'SourceMetaData' = None,
+        runtime_catalog_id: str = None,
+        cf_runtime_id: str = None,
+        template_id: str = None,
+        executable_file: str = None,
+        buildpack: str = None,
+        environment_variables: dict = None
+    ) -> None:
         """
         Initialize a TemplateMetaData object.
 
@@ -4612,7 +4489,8 @@ class TemplateMetaData():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class UIMetaData():
+
+class UIMetaData:
     """
     Information related to the UI presentation associated with a catalog entry.
 
@@ -4642,21 +4520,23 @@ class UIMetaData():
           occurr.
     """
 
-    def __init__(self,
-                 *,
-                 strings: dict = None,
-                 urls: 'URLS' = None,
-                 embeddable_dashboard: str = None,
-                 embeddable_dashboard_full_width: bool = None,
-                 navigation_order: List[str] = None,
-                 not_creatable: bool = None,
-                 primary_offering_id: str = None,
-                 accessible_during_provision: bool = None,
-                 side_by_side_index: int = None,
-                 end_of_service_time: datetime = None,
-                 hidden: bool = None,
-                 hide_lite_metering: bool = None,
-                 no_upgrade_next_step: bool = None) -> None:
+    def __init__(
+        self,
+        *,
+        strings: dict = None,
+        urls: 'URLS' = None,
+        embeddable_dashboard: str = None,
+        embeddable_dashboard_full_width: bool = None,
+        navigation_order: List[str] = None,
+        not_creatable: bool = None,
+        primary_offering_id: str = None,
+        accessible_during_provision: bool = None,
+        side_by_side_index: int = None,
+        end_of_service_time: datetime = None,
+        hidden: bool = None,
+        hide_lite_metering: bool = None,
+        no_upgrade_next_step: bool = None
+    ) -> None:
         """
         Initialize a UIMetaData object.
 
@@ -4705,7 +4585,7 @@ class UIMetaData():
         """Initialize a UIMetaData object from a json dictionary."""
         args = {}
         if 'strings' in _dict:
-            args['strings'] = {k : Strings.from_dict(v) for k, v in _dict.get('strings').items()}
+            args['strings'] = {k: Strings.from_dict(v) for k, v in _dict.get('strings').items()}
         if 'urls' in _dict:
             args['urls'] = URLS.from_dict(_dict.get('urls'))
         if 'embeddable_dashboard' in _dict:
@@ -4741,7 +4621,7 @@ class UIMetaData():
         """Return a json dictionary representing this model."""
         _dict = {}
         if hasattr(self, 'strings') and self.strings is not None:
-            _dict['strings'] = {k : v.to_dict() for k, v in self.strings.items()}
+            _dict['strings'] = {k: v.to_dict() for k, v in self.strings.items()}
         if hasattr(self, 'urls') and self.urls is not None:
             _dict['urls'] = self.urls.to_dict()
         if hasattr(self, 'embeddable_dashboard') and self.embeddable_dashboard is not None:
@@ -4786,7 +4666,8 @@ class UIMetaData():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class UIMetaMedia():
+
+class UIMetaMedia:
     """
     Media-related metadata.
 
@@ -4797,13 +4678,15 @@ class UIMetaMedia():
     :attr Bullets source: (optional) Information related to list delimiters.
     """
 
-    def __init__(self,
-                 *,
-                 caption: str = None,
-                 thumbnail_url: str = None,
-                 type: str = None,
-                 url: str = None,
-                 source: 'Bullets' = None) -> None:
+    def __init__(
+        self,
+        *,
+        caption: str = None,
+        thumbnail_url: str = None,
+        type: str = None,
+        url: str = None,
+        source: 'Bullets' = None
+    ) -> None:
         """
         Initialize a UIMetaMedia object.
 
@@ -4873,7 +4756,8 @@ class UIMetaMedia():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class URLS():
+
+class URLS:
     """
     UI based URLs.
 
@@ -4893,20 +4777,22 @@ class URLS():
     :attr str apidocsurl: (optional) URL for API documentation.
     """
 
-    def __init__(self,
-                 *,
-                 doc_url: str = None,
-                 instructions_url: str = None,
-                 api_url: str = None,
-                 create_url: str = None,
-                 sdk_download_url: str = None,
-                 terms_url: str = None,
-                 custom_create_page_url: str = None,
-                 catalog_details_url: str = None,
-                 deprecation_doc_url: str = None,
-                 dashboard_url: str = None,
-                 registration_url: str = None,
-                 apidocsurl: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        doc_url: str = None,
+        instructions_url: str = None,
+        api_url: str = None,
+        create_url: str = None,
+        sdk_download_url: str = None,
+        terms_url: str = None,
+        custom_create_page_url: str = None,
+        catalog_details_url: str = None,
+        deprecation_doc_url: str = None,
+        dashboard_url: str = None,
+        registration_url: str = None,
+        apidocsurl: str = None
+    ) -> None:
         """
         Initialize a URLS object.
 
@@ -5021,7 +4907,8 @@ class URLS():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Visibility():
+
+class Visibility:
     """
     Information related to the visibility of a catalog entry.
 
@@ -5041,14 +4928,16 @@ class Visibility():
           whitelist and making entries `private`, `ibm_only` or `public`.
     """
 
-    def __init__(self,
-                 *,
-                 restrictions: str = None,
-                 owner: str = None,
-                 extendable: bool = None,
-                 include: 'VisibilityDetail' = None,
-                 exclude: 'VisibilityDetail' = None,
-                 approved: bool = None) -> None:
+    def __init__(
+        self,
+        *,
+        restrictions: str = None,
+        owner: str = None,
+        extendable: bool = None,
+        include: 'VisibilityDetail' = None,
+        exclude: 'VisibilityDetail' = None,
+        approved: bool = None
+    ) -> None:
         """
         Initialize a Visibility object.
 
@@ -5123,7 +5012,8 @@ class Visibility():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class VisibilityDetail():
+
+class VisibilityDetail:
     """
     Visibility details related to a catalog entry.
 
@@ -5131,8 +5021,7 @@ class VisibilityDetail():
           which a catalog entry is visible.
     """
 
-    def __init__(self,
-                 accounts: 'VisibilityDetailAccounts') -> None:
+    def __init__(self, accounts: 'VisibilityDetailAccounts') -> None:
         """
         Initialize a VisibilityDetail object.
 
@@ -5181,7 +5070,8 @@ class VisibilityDetail():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class VisibilityDetailAccounts():
+
+class VisibilityDetailAccounts:
     """
     Information related to the accounts for which a catalog entry is visible.
 
@@ -5190,9 +5080,7 @@ class VisibilityDetailAccounts():
           is replaced with the owner scope when saved.
     """
 
-    def __init__(self,
-                 *,
-                 accountid: str = None) -> None:
+    def __init__(self, *, accountid: str = None) -> None:
         """
         Initialize a VisibilityDetailAccounts object.
 

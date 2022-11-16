@@ -52,7 +52,7 @@ billing_unit_id = None
 # Start of Examples for Service: EnterpriseBillingUnitsV1
 ##############################################################################
 # region
-class TestEnterpriseBillingUnitsV1Examples():
+class TestEnterpriseBillingUnitsV1Examples:
     """
     Example Test Class for EnterpriseBillingUnitsV1
     """
@@ -65,8 +65,7 @@ class TestEnterpriseBillingUnitsV1Examples():
 
             # begin-common
 
-            enterprise_billing_units_service = EnterpriseBillingUnitsV1.new_instance(
-            )
+            enterprise_billing_units_service = EnterpriseBillingUnitsV1.new_instance()
 
             # end-common
             assert enterprise_billing_units_service is not None
@@ -74,8 +73,7 @@ class TestEnterpriseBillingUnitsV1Examples():
             # Load the configuration
 
             global config, enterprise_id, billing_unit_id
-            config = read_external_sources(
-                EnterpriseBillingUnitsV1.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(EnterpriseBillingUnitsV1.DEFAULT_SERVICE_NAME)
 
             enterprise_id = config['ENTERPRISE_ID']
             billing_unit_id = config['BILLING_UNIT_ID']
@@ -83,8 +81,8 @@ class TestEnterpriseBillingUnitsV1Examples():
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
-        not os.path.exists(config_file),
-        reason="External configuration not available, skipping...")
+        not os.path.exists(config_file), reason="External configuration not available, skipping..."
+    )
 
     @needscredentials
     def test_get_billing_unit_example(self):
@@ -98,7 +96,8 @@ class TestEnterpriseBillingUnitsV1Examples():
             # begin-get_billing_unit
 
             billing_unit = enterprise_billing_units_service.get_billing_unit(
-                billing_unit_id=billing_unit_id).get_result()
+                billing_unit_id=billing_unit_id
+            ).get_result()
 
             print(json.dumps(billing_unit, indent=2))
 
@@ -118,7 +117,8 @@ class TestEnterpriseBillingUnitsV1Examples():
             # begin-list_billing_units
 
             billing_units_list = enterprise_billing_units_service.list_billing_units(
-                enterprise_id=enterprise_id).get_result()
+                enterprise_id=enterprise_id
+            ).get_result()
 
             print(json.dumps(billing_units_list, indent=2))
 
@@ -138,7 +138,8 @@ class TestEnterpriseBillingUnitsV1Examples():
             # begin-list_billing_options
 
             billing_options_list = enterprise_billing_units_service.list_billing_options(
-                billing_unit_id=billing_unit_id).get_result()
+                billing_unit_id=billing_unit_id
+            ).get_result()
 
             print(json.dumps(billing_options_list, indent=2))
 
@@ -159,7 +160,8 @@ class TestEnterpriseBillingUnitsV1Examples():
             # begin-get_credit_pools
 
             credit_pools_list = enterprise_billing_units_service.get_credit_pools(
-                billing_unit_id=billing_unit_id, type='PLATFORM').get_result()
+                billing_unit_id=billing_unit_id, type='PLATFORM'
+            ).get_result()
 
             print(json.dumps(credit_pools_list, indent=2))
 
@@ -167,6 +169,7 @@ class TestEnterpriseBillingUnitsV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
+
 
 # endregion
 ##############################################################################

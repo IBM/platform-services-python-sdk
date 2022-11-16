@@ -40,6 +40,7 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
+
 class CaseManagementV1(BaseService):
     """The Case Management V1 service."""
 
@@ -47,23 +48,23 @@ class CaseManagementV1(BaseService):
     DEFAULT_SERVICE_NAME = 'case_management'
 
     @classmethod
-    def new_instance(cls,
-                     service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'CaseManagementV1':
+    def new_instance(
+        cls,
+        service_name: str = DEFAULT_SERVICE_NAME,
+    ) -> 'CaseManagementV1':
         """
         Return a new client for the Case Management service using the specified
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
-    def __init__(self,
-                 authenticator: Authenticator = None,
-                ) -> None:
+    def __init__(
+        self,
+        authenticator: Authenticator = None,
+    ) -> None:
         """
         Construct a new client for the Case Management service.
 
@@ -71,17 +72,14 @@ class CaseManagementV1(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self,
-                             service_url=self.DEFAULT_SERVICE_URL,
-                             authenticator=authenticator)
-
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
     # default
     #########################
 
-
-    def get_cases(self,
+    def get_cases(
+        self,
         *,
         offset: int = None,
         limit: int = None,
@@ -89,7 +87,7 @@ class CaseManagementV1(BaseService):
         sort: str = None,
         status: List[str] = None,
         fields: List[str] = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get cases in account.
@@ -110,9 +108,9 @@ class CaseManagementV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_cases')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_cases'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -121,7 +119,7 @@ class CaseManagementV1(BaseService):
             'search': search,
             'sort': sort,
             'status': convert_list(status),
-            'fields': convert_list(fields)
+            'fields': convert_list(fields),
         }
 
         if 'headers' in kwargs:
@@ -130,16 +128,13 @@ class CaseManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/cases'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def create_case(self,
+    def create_case(
+        self,
         type: str,
         subject: str,
         description: str,
@@ -151,7 +146,7 @@ class CaseManagementV1(BaseService):
         watchlist: List['User'] = None,
         invoice_number: str = None,
         sla_credit_request: bool = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create a case.
@@ -199,9 +194,9 @@ class CaseManagementV1(BaseService):
         if watchlist is not None:
             watchlist = [convert_model(x) for x in watchlist]
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='create_case')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_case'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -214,7 +209,7 @@ class CaseManagementV1(BaseService):
             'resources': resources,
             'watchlist': watchlist,
             'invoice_number': invoice_number,
-            'sla_credit_request': sla_credit_request
+            'sla_credit_request': sla_credit_request,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -226,21 +221,12 @@ class CaseManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/cases'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_case(self,
-        case_number: str,
-        *,
-        fields: List[str] = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_case(self, case_number: str, *, fields: List[str] = None, **kwargs) -> DetailedResponse:
         """
         Get a case in account.
 
@@ -257,14 +243,12 @@ class CaseManagementV1(BaseService):
         if not case_number:
             raise ValueError('case_number must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_case')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_case'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'fields': convert_list(fields)
-        }
+        params = {'fields': convert_list(fields)}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -275,20 +259,12 @@ class CaseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(case_number)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/cases/{case_number}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_case_status(self,
-        case_number: str,
-        status_payload: 'StatusPayload',
-        **kwargs
-    ) -> DetailedResponse:
+    def update_case_status(self, case_number: str, status_payload: 'StatusPayload', **kwargs) -> DetailedResponse:
         """
         Update case status.
 
@@ -308,9 +284,9 @@ class CaseManagementV1(BaseService):
         if isinstance(status_payload, StatusPayload):
             status_payload = convert_model(status_payload)
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_case_status')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_case_status'
+        )
         headers.update(sdk_headers)
 
         data = json.dumps(status_payload)
@@ -325,20 +301,12 @@ class CaseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(case_number)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/cases/{case_number}/status'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def add_comment(self,
-        case_number: str,
-        comment: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def add_comment(self, case_number: str, comment: str, **kwargs) -> DetailedResponse:
         """
         Add comment to case.
 
@@ -356,14 +324,12 @@ class CaseManagementV1(BaseService):
         if comment is None:
             raise ValueError('comment must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='add_comment')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='add_comment'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'comment': comment
-        }
+        data = {'comment': comment}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -377,21 +343,12 @@ class CaseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(case_number)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/cases/{case_number}/comments'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def add_watchlist(self,
-        case_number: str,
-        *,
-        watchlist: List['User'] = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def add_watchlist(self, case_number: str, *, watchlist: List['User'] = None, **kwargs) -> DetailedResponse:
         """
         Add users to watchlist of case.
 
@@ -412,14 +369,12 @@ class CaseManagementV1(BaseService):
         if watchlist is not None:
             watchlist = [convert_model(x) for x in watchlist]
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='add_watchlist')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='add_watchlist'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'watchlist': watchlist
-        }
+        data = {'watchlist': watchlist}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -433,21 +388,12 @@ class CaseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(case_number)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/cases/{case_number}/watchlist'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def remove_watchlist(self,
-        case_number: str,
-        *,
-        watchlist: List['User'] = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def remove_watchlist(self, case_number: str, *, watchlist: List['User'] = None, **kwargs) -> DetailedResponse:
         """
         Remove users from watchlist of case.
 
@@ -466,14 +412,12 @@ class CaseManagementV1(BaseService):
         if watchlist is not None:
             watchlist = [convert_model(x) for x in watchlist]
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='remove_watchlist')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='remove_watchlist'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'watchlist': watchlist
-        }
+        data = {'watchlist': watchlist}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -487,23 +431,13 @@ class CaseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(case_number)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/cases/{case_number}/watchlist'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def add_resource(self,
-        case_number: str,
-        *,
-        crn: str = None,
-        type: str = None,
-        id: float = None,
-        note: str = None,
-        **kwargs
+    def add_resource(
+        self, case_number: str, *, crn: str = None, type: str = None, id: float = None, note: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Add a resource to case.
@@ -527,17 +461,12 @@ class CaseManagementV1(BaseService):
         if not case_number:
             raise ValueError('case_number must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='add_resource')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='add_resource'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'crn': crn,
-            'type': type,
-            'id': id,
-            'note': note
-        }
+        data = {'crn': crn, 'type': type, 'id': id, 'note': note}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -551,20 +480,12 @@ class CaseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(case_number)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/cases/{case_number}/resources'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def upload_file(self,
-        case_number: str,
-        file: List[BinaryIO],
-        **kwargs
-    ) -> DetailedResponse:
+    def upload_file(self, case_number: str, file: List[BinaryIO], **kwargs) -> DetailedResponse:
         """
         Add attachments to a support case.
 
@@ -584,9 +505,9 @@ class CaseManagementV1(BaseService):
         if file is None:
             raise ValueError('file must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='upload_file')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='upload_file'
+        )
         headers.update(sdk_headers)
 
         form_data = []
@@ -604,20 +525,12 @@ class CaseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(case_number)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/cases/{case_number}/attachments'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       files=form_data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, files=form_data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def download_file(self,
-        case_number: str,
-        file_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def download_file(self, case_number: str, file_id: str, **kwargs) -> DetailedResponse:
         """
         Download an attachment.
 
@@ -635,9 +548,9 @@ class CaseManagementV1(BaseService):
         if not file_id:
             raise ValueError('file_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='download_file')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='download_file'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -649,19 +562,12 @@ class CaseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(case_number, file_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/cases/{case_number}/attachments/{file_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_file(self,
-        case_number: str,
-        file_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_file(self, case_number: str, file_id: str, **kwargs) -> DetailedResponse:
         """
         Remove attachment from case.
 
@@ -679,9 +585,9 @@ class CaseManagementV1(BaseService):
         if not file_id:
             raise ValueError('file_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_file')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_file'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -693,9 +599,7 @@ class CaseManagementV1(BaseService):
         path_param_values = self.encode_path_vars(case_number, file_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/cases/{case_number}/attachments/{file_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -710,16 +614,19 @@ class GetCasesEnums:
         """
         Case status filter.
         """
+
         NEW = 'new'
         IN_PROGRESS = 'in_progress'
         WAITING_ON_CLIENT = 'waiting_on_client'
         RESOLUTION_PROVIDED = 'resolution_provided'
         RESOLVED = 'resolved'
         CLOSED = 'closed'
+
     class Fields(str, Enum):
         """
         Selected fields of interest instead of all of the case information.
         """
+
         NUMBER = 'number'
         SHORT_DESCRIPTION = 'short_description'
         DESCRIPTION = 'description'
@@ -753,6 +660,7 @@ class GetCaseEnums:
         """
         Selected fields of interest instead of all of the case information.
         """
+
         NUMBER = 'number'
         SHORT_DESCRIPTION = 'short_description'
         DESCRIPTION = 'description'
@@ -782,7 +690,7 @@ class GetCaseEnums:
 ##############################################################################
 
 
-class Attachment():
+class Attachment:
     """
     Details of an attachment.
 
@@ -793,13 +701,15 @@ class Attachment():
     :attr str url: (optional) URL of the attachment used to download.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 filename: str = None,
-                 size_in_bytes: int = None,
-                 created_at: str = None,
-                 url: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        filename: str = None,
+        size_in_bytes: int = None,
+        created_at: str = None,
+        url: str = None,
+    ) -> None:
         """
         Initialize a Attachment object.
 
@@ -869,16 +779,15 @@ class Attachment():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class AttachmentList():
+
+class AttachmentList:
     """
     List of attachments in the case.
 
     :attr List[Attachment] attachments: (optional) New attachments array.
     """
 
-    def __init__(self,
-                 *,
-                 attachments: List['Attachment'] = None) -> None:
+    def __init__(self, *, attachments: List['Attachment'] = None) -> None:
         """
         Initialize a AttachmentList object.
 
@@ -924,7 +833,8 @@ class AttachmentList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Case():
+
+class Case:
     """
     The support case.
 
@@ -955,28 +865,30 @@ class Case():
           sorted in chronological order.
     """
 
-    def __init__(self,
-                 *,
-                 number: str = None,
-                 short_description: str = None,
-                 description: str = None,
-                 created_at: str = None,
-                 created_by: 'User' = None,
-                 updated_at: str = None,
-                 updated_by: 'User' = None,
-                 contact_type: str = None,
-                 contact: 'User' = None,
-                 status: str = None,
-                 severity: float = None,
-                 support_tier: str = None,
-                 resolution: str = None,
-                 close_notes: str = None,
-                 eu: 'CaseEu' = None,
-                 watchlist: List['User'] = None,
-                 attachments: List['Attachment'] = None,
-                 offering: 'Offering' = None,
-                 resources: List['Resource'] = None,
-                 comments: List['Comment'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        number: str = None,
+        short_description: str = None,
+        description: str = None,
+        created_at: str = None,
+        created_by: 'User' = None,
+        updated_at: str = None,
+        updated_by: 'User' = None,
+        contact_type: str = None,
+        contact: 'User' = None,
+        status: str = None,
+        severity: float = None,
+        support_tier: str = None,
+        resolution: str = None,
+        close_notes: str = None,
+        eu: 'CaseEu' = None,
+        watchlist: List['User'] = None,
+        attachments: List['Attachment'] = None,
+        offering: 'Offering' = None,
+        resources: List['Resource'] = None,
+        comments: List['Comment'] = None,
+    ) -> None:
         """
         Initialize a Case object.
 
@@ -1147,21 +1059,22 @@ class Case():
         """
         Name of the console to interact with the contact.
         """
+
         CLOUD_SUPPORT_CENTER = 'Cloud Support Center'
         IMS_CONSOLE = 'IMS Console'
-
 
     class SupportTierEnum(str, Enum):
         """
         Support tier of the account.
         """
+
         FREE = 'Free'
         BASIC = 'Basic'
         STANDARD = 'Standard'
         PREMIUM = 'Premium'
 
 
-class CaseEu():
+class CaseEu:
     """
     EU support.
 
@@ -1169,10 +1082,7 @@ class CaseEu():
     :attr str data_center: (optional) Information about the data center.
     """
 
-    def __init__(self,
-                 *,
-                 support: bool = None,
-                 data_center: str = None) -> None:
+    def __init__(self, *, support: bool = None, data_center: str = None) -> None:
         """
         Initialize a CaseEu object.
 
@@ -1225,7 +1135,8 @@ class CaseEu():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CaseList():
+
+class CaseList:
     """
     Response of a GET /cases request.
 
@@ -1241,14 +1152,16 @@ class CaseList():
     :attr List[Case] cases: (optional) List of cases.
     """
 
-    def __init__(self,
-                 *,
-                 total_count: int = None,
-                 first: 'PaginationLink' = None,
-                 next: 'PaginationLink' = None,
-                 previous: 'PaginationLink' = None,
-                 last: 'PaginationLink' = None,
-                 cases: List['Case'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        total_count: int = None,
+        first: 'PaginationLink' = None,
+        next: 'PaginationLink' = None,
+        previous: 'PaginationLink' = None,
+        last: 'PaginationLink' = None,
+        cases: List['Case'] = None,
+    ) -> None:
         """
         Initialize a CaseList object.
 
@@ -1329,7 +1242,8 @@ class CaseList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CasePayloadEu():
+
+class CasePayloadEu:
     """
     Specify if the case should be treated as EU regulated. Only one of the following
     properties is required. Call EU support utility endpoint to determine which property
@@ -1340,10 +1254,7 @@ class CasePayloadEu():
           data center, then pass the data center id to mark a case as EU supported.
     """
 
-    def __init__(self,
-                 *,
-                 supported: bool = None,
-                 data_center: int = None) -> None:
+    def __init__(self, *, supported: bool = None, data_center: int = None) -> None:
         """
         Initialize a CasePayloadEu object.
 
@@ -1398,7 +1309,8 @@ class CasePayloadEu():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Comment():
+
+class Comment:
     """
     A comment in a case.
 
@@ -1407,11 +1319,7 @@ class Comment():
     :attr User added_by: (optional) User info in a case.
     """
 
-    def __init__(self,
-                 *,
-                 value: str = None,
-                 added_at: str = None,
-                 added_by: 'User' = None) -> None:
+    def __init__(self, *, value: str = None, added_at: str = None, added_by: 'User' = None) -> None:
         """
         Initialize a Comment object.
 
@@ -1469,7 +1377,8 @@ class Comment():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Offering():
+
+class Offering:
     """
     Offering details.
 
@@ -1477,9 +1386,7 @@ class Offering():
     :attr OfferingType type: Offering type.
     """
 
-    def __init__(self,
-                 name: str,
-                 type: 'OfferingType') -> None:
+    def __init__(self, name: str, type: 'OfferingType') -> None:
         """
         Initialize a Offering object.
 
@@ -1535,7 +1442,8 @@ class Offering():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class OfferingType():
+
+class OfferingType:
     """
     Offering type.
 
@@ -1547,12 +1455,7 @@ class OfferingType():
           identify the offering.
     """
 
-    def __init__(self,
-                 group: str,
-                 key: str,
-                 *,
-                 kind: str = None,
-                 id: str = None) -> None:
+    def __init__(self, group: str, key: str, *, kind: str = None, id: str = None) -> None:
         """
         Initialize a OfferingType object.
 
@@ -1627,20 +1530,19 @@ class OfferingType():
         Offering type group. "crn_service_name" is preferred over "category" as the latter
         is legacy and will be deprecated in the future.
         """
+
         CRN_SERVICE_NAME = 'crn_service_name'
         CATEGORY = 'category'
 
 
-class PaginationLink():
+class PaginationLink:
     """
     Container for URL pointer to related pages of cases.
 
     :attr str href: (optional) URL to related pages of cases.
     """
 
-    def __init__(self,
-                 *,
-                 href: str = None) -> None:
+    def __init__(self, *, href: str = None) -> None:
         """
         Initialize a PaginationLink object.
 
@@ -1686,7 +1588,8 @@ class PaginationLink():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Resource():
+
+class Resource:
     """
     A resource record of a case.
 
@@ -1697,13 +1600,9 @@ class Resource():
     :attr str note: (optional) Note about resource.
     """
 
-    def __init__(self,
-                 *,
-                 crn: str = None,
-                 name: str = None,
-                 type: str = None,
-                 url: str = None,
-                 note: str = None) -> None:
+    def __init__(
+        self, *, crn: str = None, name: str = None, type: str = None, url: str = None, note: str = None
+    ) -> None:
         """
         Initialize a Resource object.
 
@@ -1773,7 +1672,8 @@ class Resource():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourcePayload():
+
+class ResourcePayload:
     """
     Payload to add a resource to a case.
 
@@ -1786,12 +1686,7 @@ class ResourcePayload():
     :attr str note: (optional) A note about this resource.
     """
 
-    def __init__(self,
-                 *,
-                 crn: str = None,
-                 type: str = None,
-                 id: float = None,
-                 note: str = None) -> None:
+    def __init__(self, *, crn: str = None, type: str = None, id: float = None, note: str = None) -> None:
         """
         Initialize a ResourcePayload object.
 
@@ -1858,22 +1753,23 @@ class ResourcePayload():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class StatusPayload():
+
+class StatusPayload:
     """
     Payload to update status of the case.
 
     :attr str action: action to perform on the case.
     """
 
-    def __init__(self,
-                 action: str) -> None:
+    def __init__(self, action: str) -> None:
         """
         Initialize a StatusPayload object.
 
         :param str action: action to perform on the case.
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['ResolvePayload', 'UnresolvePayload', 'AcceptPayload']))
+            ", ".join(['ResolvePayload', 'UnresolvePayload', 'AcceptPayload'])
+        )
         raise Exception(msg)
 
     @classmethod
@@ -1882,9 +1778,10 @@ class StatusPayload():
         disc_class = cls._get_class_by_discriminator(_dict)
         if disc_class != cls:
             return disc_class.from_dict(_dict)
-        msg = ("Cannot convert dictionary into an instance of base class 'StatusPayload'. " +
-                "The discriminator value should map to a valid subclass: {1}").format(
-                  ", ".join(['ResolvePayload', 'UnresolvePayload', 'AcceptPayload']))
+        msg = (
+            "Cannot convert dictionary into an instance of base class 'StatusPayload'. "
+            + "The discriminator value should map to a valid subclass: {1}"
+        ).format(", ".join(['ResolvePayload', 'UnresolvePayload', 'AcceptPayload']))
         raise Exception(msg)
 
     @classmethod
@@ -1914,12 +1811,13 @@ class StatusPayload():
         """
         action to perform on the case.
         """
+
         RESOLVE = 'resolve'
         UNRESOLVE = 'unresolve'
         ACCEPT = 'accept'
 
 
-class User():
+class User:
     """
     User info in a case.
 
@@ -1928,11 +1826,7 @@ class User():
     :attr str user_id: unique user ID in the realm specified by the type.
     """
 
-    def __init__(self,
-                 realm: str,
-                 user_id: str,
-                 *,
-                 name: str = None) -> None:
+    def __init__(self, realm: str, user_id: str, *, name: str = None) -> None:
         """
         Initialize a User object.
 
@@ -1997,21 +1891,20 @@ class User():
         """
         the ID realm.
         """
+
         IBMID = 'IBMid'
         SL = 'SL'
         BSS = 'BSS'
 
 
-class Watchlist():
+class Watchlist:
     """
     Payload to add/remove users to/from the case watchlist.
 
     :attr List[User] watchlist: (optional) Array of user ID objects.
     """
 
-    def __init__(self,
-                 *,
-                 watchlist: List['User'] = None) -> None:
+    def __init__(self, *, watchlist: List['User'] = None) -> None:
         """
         Initialize a Watchlist object.
 
@@ -2057,7 +1950,8 @@ class Watchlist():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class WatchlistAddResponse():
+
+class WatchlistAddResponse:
     """
     Response of a request when adding to watchlist.
 
@@ -2065,10 +1959,7 @@ class WatchlistAddResponse():
     :attr List[User] failed: (optional) List of failed to add user.
     """
 
-    def __init__(self,
-                 *,
-                 added: List['User'] = None,
-                 failed: List['User'] = None) -> None:
+    def __init__(self, *, added: List['User'] = None, failed: List['User'] = None) -> None:
         """
         Initialize a WatchlistAddResponse object.
 
@@ -2120,6 +2011,7 @@ class WatchlistAddResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+
 class AcceptPayload(StatusPayload):
     """
     Payload to accept the proposed resolution of the case.
@@ -2128,10 +2020,7 @@ class AcceptPayload(StatusPayload):
     :attr str comment: (optional) Comment about accepting the proposed resolution.
     """
 
-    def __init__(self,
-                 action: str,
-                 *,
-                 comment: str = None) -> None:
+    def __init__(self, action: str, *, comment: str = None) -> None:
         """
         Initialize a AcceptPayload object.
 
@@ -2191,6 +2080,7 @@ class AcceptPayload(StatusPayload):
         """
         action to perform on the case.
         """
+
         RESOLVE = 'resolve'
         UNRESOLVE = 'unresolve'
         ACCEPT = 'accept'
@@ -2212,11 +2102,7 @@ class ResolvePayload(StatusPayload):
           * 8: Solution provided by IBM support engineer.
     """
 
-    def __init__(self,
-                 action: str,
-                 resolution_code: int,
-                 *,
-                 comment: str = None) -> None:
+    def __init__(self, action: str, resolution_code: int, *, comment: str = None) -> None:
         """
         Initialize a ResolvePayload object.
 
@@ -2290,6 +2176,7 @@ class ResolvePayload(StatusPayload):
         """
         action to perform on the case.
         """
+
         RESOLVE = 'resolve'
         UNRESOLVE = 'unresolve'
         ACCEPT = 'accept'
@@ -2303,9 +2190,7 @@ class UnresolvePayload(StatusPayload):
     :attr str comment: Comment why the case should be unresolved.
     """
 
-    def __init__(self,
-                 action: str,
-                 comment: str) -> None:
+    def __init__(self, action: str, comment: str) -> None:
         """
         Initialize a UnresolvePayload object.
 
@@ -2366,12 +2251,13 @@ class UnresolvePayload(StatusPayload):
         """
         action to perform on the case.
         """
+
         RESOLVE = 'resolve'
         UNRESOLVE = 'unresolve'
         ACCEPT = 'accept'
 
 
-class FileWithMetadata():
+class FileWithMetadata:
     """
     A file with its associated metadata.
 
@@ -2380,11 +2266,7 @@ class FileWithMetadata():
     :attr str content_type: (optional) The content type of the file.
     """
 
-    def __init__(self,
-                 data: BinaryIO,
-                 *,
-                 filename: str = None,
-                 content_type: str = None) -> None:
+    def __init__(self, data: BinaryIO, *, filename: str = None, content_type: str = None) -> None:
         """
         Initialize a FileWithMetadata object.
 
@@ -2444,23 +2326,26 @@ class FileWithMetadata():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+
 ##############################################################################
 # Pagers
 ##############################################################################
 
-class GetCasesPager():
+
+class GetCasesPager:
     """
     GetCasesPager can be used to simplify the use of the "get_cases" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: CaseManagementV1,
-                 limit: int = None,
-                 search: str = None,
-                 sort: str = None,
-                 status: List[str] = None,
-                 fields: List[str] = None,
+    def __init__(
+        self,
+        *,
+        client: CaseManagementV1,
+        limit: int = None,
+        search: str = None,
+        sort: str = None,
+        status: List[str] = None,
+        fields: List[str] = None,
     ) -> None:
         """
         Initialize a GetCasesPager object.
@@ -2474,7 +2359,7 @@ class GetCasesPager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._limit = limit
         self._search = search
         self._sort = sort

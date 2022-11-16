@@ -28,7 +28,7 @@ from ibm_platform_services.context_based_restrictions_v1 import *
 config_file = 'context_based_restrictions_v1.env'
 
 
-class TestContextBasedRestrictionsV1():
+class TestContextBasedRestrictionsV1:
     """
     Integration Test Class for ContextBasedRestrictionsV1
     """
@@ -51,8 +51,7 @@ class TestContextBasedRestrictionsV1():
             cls.context_based_restrictions_service = ContextBasedRestrictionsV1.new_instance()
             assert cls.context_based_restrictions_service is not None
 
-            cls.config = read_external_sources(
-                ContextBasedRestrictionsV1.DEFAULT_SERVICE_NAME)
+            cls.config = read_external_sources(ContextBasedRestrictionsV1.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
 
             cls.context_based_restrictions_service.enable_retries()
@@ -89,7 +88,7 @@ class TestContextBasedRestrictionsV1():
             account_id=TestContextBasedRestrictionsV1.test_account_id,
             addresses=[ip_address_model, service_ref_address_model],
             description='SDK TEST - this is an example of zone',
-            transaction_id=self.getTransactionID()
+            transaction_id=self.getTransactionID(),
         )
 
         assert create_zone_response.get_status_code() == 201
@@ -111,9 +110,8 @@ class TestContextBasedRestrictionsV1():
                 account_id=TestContextBasedRestrictionsV1.test_account_id,
                 addresses=[address_model],
                 description='SDK TEST - this is an example of zone',
-                transaction_id=self.getTransactionID()
-                 )
-
+                transaction_id=self.getTransactionID(),
+            )
 
     @needscredentials
     def test_create_zone_with_invalid_ip_address_format_error(self):
@@ -123,15 +121,13 @@ class TestContextBasedRestrictionsV1():
             'value': '16.923.562.34',
         }
         with pytest.raises(ApiException, match="400"):
-             self.context_based_restrictions_service.create_zone(
+            self.context_based_restrictions_service.create_zone(
                 name='SDK TEST - an example of zone',
                 account_id=TestContextBasedRestrictionsV1.test_account_id,
                 addresses=[address_model],
                 description='SDK TEST - this is an example of zone',
-                transaction_id=self.getTransactionID()
+                transaction_id=self.getTransactionID(),
             )
-
-
 
     @needscredentials
     def test_list_zones(self):
@@ -147,16 +143,15 @@ class TestContextBasedRestrictionsV1():
     @needscredentials
     def test_list_zones_with_invalid_account_id_parameter_error(self):
         with pytest.raises(ApiException, match="400"):
-             self.context_based_restrictions_service.list_zones(
-                account_id= self.InvalidID,
+            self.context_based_restrictions_service.list_zones(
+                account_id=self.InvalidID,
                 transaction_id=self.getTransactionID(),
             )
 
     @needscredentials
     def test_get_zone(self):
         get_zone_response = self.context_based_restrictions_service.get_zone(
-            zone_id=TestContextBasedRestrictionsV1.zone_id,
-            transaction_id=self.getTransactionID()
+            zone_id=TestContextBasedRestrictionsV1.zone_id, transaction_id=self.getTransactionID()
         )
 
         assert get_zone_response.get_status_code() == 200
@@ -167,11 +162,9 @@ class TestContextBasedRestrictionsV1():
     @needscredentials
     def test_get_zone_with_zone_not_found_error(self):
         with pytest.raises(ApiException, match="404"):
-             self.context_based_restrictions_service.get_zone(
-                zone_id=self.NonExistentID,
-                transaction_id=self.getTransactionID()
+            self.context_based_restrictions_service.get_zone(
+                zone_id=self.NonExistentID, transaction_id=self.getTransactionID()
             )
-
 
     @needscredentials
     def test_replace_zone(self):
@@ -188,7 +181,7 @@ class TestContextBasedRestrictionsV1():
             account_id=TestContextBasedRestrictionsV1.test_account_id,
             addresses=[address_model],
             description='SDK TEST - this is an example of updated zone',
-            transaction_id=self.getTransactionID()
+            transaction_id=self.getTransactionID(),
         )
 
         assert replace_zone_response.get_status_code() == 200
@@ -204,14 +197,14 @@ class TestContextBasedRestrictionsV1():
         }
 
         with pytest.raises(ApiException, match="404"):
-             self.context_based_restrictions_service.replace_zone(
+            self.context_based_restrictions_service.replace_zone(
                 zone_id=self.NonExistentID,
                 if_match=TestContextBasedRestrictionsV1.zone_rev,
                 name='SDK TEST - an example of updated zone',
                 account_id=TestContextBasedRestrictionsV1.test_account_id,
                 addresses=[address_model],
                 description='SDK TEST - this is an example of updated zone',
-                transaction_id=self.getTransactionID()
+                transaction_id=self.getTransactionID(),
             )
 
     @needscredentials
@@ -230,13 +223,13 @@ class TestContextBasedRestrictionsV1():
                 account_id=TestContextBasedRestrictionsV1.test_account_id,
                 addresses=[address_model],
                 description='SDK TEST - this is an example of updated zone',
-                transaction_id=self.getTransactionID()
+                transaction_id=self.getTransactionID(),
             )
 
     @needscredentials
     def test_list_available_serviceref_targets(self):
-        list_available_serviceref_targets_response = self.context_based_restrictions_service.list_available_serviceref_targets(
-            type='all'
+        list_available_serviceref_targets_response = (
+            self.context_based_restrictions_service.list_available_serviceref_targets(type='all')
         )
 
         assert list_available_serviceref_targets_response.get_status_code() == 200
@@ -246,9 +239,7 @@ class TestContextBasedRestrictionsV1():
     @needscredentials
     def test_list_available_serviceref_targets_list_with_invalid_type_parameter_error(self):
         with pytest.raises(ApiException, match="400"):
-         self.context_based_restrictions_service.list_available_serviceref_targets(
-            type='invalid-type'
-        )
+            self.context_based_restrictions_service.list_available_serviceref_targets(type='invalid-type')
 
     @needscredentials
     def test_create_rule(self):
@@ -284,7 +275,7 @@ class TestContextBasedRestrictionsV1():
             resources=[resource_model],
             description='SDK TEST - this is an example of rule',
             enforcement_mode='enabled',
-            transaction_id=self.getTransactionID()
+            transaction_id=self.getTransactionID(),
         )
 
         assert create_rule_response.get_status_code() == 201
@@ -322,14 +313,10 @@ class TestContextBasedRestrictionsV1():
         }
 
         # Construct a dict representation of a NewRuleOperationsApiTypesItem model
-        api_type_model = {
-            'api_type_id': 'crn:v1:bluemix:public:containers-kubernetes::::api-type:management'
-        }
+        api_type_model = {'api_type_id': 'crn:v1:bluemix:public:containers-kubernetes::::api-type:management'}
 
         # Construct a dict representation of a NewRuleOperations model
-        operations_model = {
-            'api_types': [api_type_model]
-        }
+        operations_model = {'api_types': [api_type_model]}
 
         create_rule_response = self.context_based_restrictions_service.create_rule(
             contexts=[rule_context_model],
@@ -337,7 +324,7 @@ class TestContextBasedRestrictionsV1():
             operations=operations_model,
             description='SDK TEST - this is an example of rule',
             enforcement_mode='enabled',
-            transaction_id=self.getTransactionID()
+            transaction_id=self.getTransactionID(),
         )
 
         assert create_rule_response.get_status_code() == 201
@@ -348,7 +335,7 @@ class TestContextBasedRestrictionsV1():
         delete_rule_response = self.context_based_restrictions_service.delete_rule(
             rule_id=rule['id'],
             # Using the standard X-Correlation-Id header in this case
-            x_correlation_id=self.getTransactionID()
+            x_correlation_id=self.getTransactionID(),
         )
 
         assert delete_rule_response.get_status_code() == 204
@@ -388,9 +375,8 @@ class TestContextBasedRestrictionsV1():
                 resources=[resource_model],
                 description='SDK TEST - this is an example of rule',
                 enforcement_mode='enabled',
-                transaction_id=self.getTransactionID()
+                transaction_id=self.getTransactionID(),
             )
-
 
     @needscredentials
     def test_list_rules(self):
@@ -413,7 +399,7 @@ class TestContextBasedRestrictionsV1():
     @needscredentials
     def list_rules_with_invalid_account_id_parameter_error(self):
         with pytest.raises(ApiException, match="400"):
-             self.context_based_restrictions_service.list_rules(
+            self.context_based_restrictions_service.list_rules(
                 account_id=self.InvalidID,
                 transaction_id=self.getTransactionID(),
             )
@@ -452,7 +438,7 @@ class TestContextBasedRestrictionsV1():
             resources=[resource_model],
             description='SDK TEST - this is an example of rule with a service group id',
             enforcement_mode='enabled',
-            transaction_id=self.getTransactionID()
+            transaction_id=self.getTransactionID(),
         )
 
         assert create_rule_response.get_status_code() == 201
@@ -474,7 +460,7 @@ class TestContextBasedRestrictionsV1():
         delete_rule_response = self.context_based_restrictions_service.delete_rule(
             rule_id=rule['id'],
             # Using the standard X-Correlation-Id header in this case
-            x_correlation_id=self.getTransactionID()
+            x_correlation_id=self.getTransactionID(),
         )
 
         assert delete_rule_response.get_status_code() == 204
@@ -482,8 +468,7 @@ class TestContextBasedRestrictionsV1():
     @needscredentials
     def test_get_rule(self):
         get_rule_response = self.context_based_restrictions_service.get_rule(
-            rule_id=TestContextBasedRestrictionsV1.rule_id,
-            transaction_id=self.getTransactionID()
+            rule_id=TestContextBasedRestrictionsV1.rule_id, transaction_id=self.getTransactionID()
         )
 
         assert get_rule_response.get_status_code() == 200
@@ -494,9 +479,8 @@ class TestContextBasedRestrictionsV1():
     @needscredentials
     def test_get_rule_with_rule_not_found_error(self):
         with pytest.raises(ApiException, match="404"):
-             self.context_based_restrictions_service.get_rule(
-                rule_id=self.NonExistentID,
-                transaction_id=self.getTransactionID()
+            self.context_based_restrictions_service.get_rule(
+                rule_id=self.NonExistentID, transaction_id=self.getTransactionID()
             )
 
     @needscredentials
@@ -542,7 +526,7 @@ class TestContextBasedRestrictionsV1():
             resources=[resource_model],
             description='SDK TEST - this is an example of updated rule',
             enforcement_mode='disabled',
-            transaction_id=self.getTransactionID()
+            transaction_id=self.getTransactionID(),
         )
 
         assert replace_rule_response.get_status_code() == 200
@@ -593,7 +577,7 @@ class TestContextBasedRestrictionsV1():
                 resources=[resource_model],
                 description='SDK TEST - this is an example of updated rule',
                 enforcement_mode='disabled',
-                transaction_id=self.getTransactionID()
+                transaction_id=self.getTransactionID(),
             )
 
     @needscredentials
@@ -640,14 +624,13 @@ class TestContextBasedRestrictionsV1():
                 resources=[resource_model],
                 description='SDK TEST - this is an example of updated rule',
                 enforcement_mode='disabled',
-                transaction_id=self.getTransactionID()
+                transaction_id=self.getTransactionID(),
             )
 
     @needscredentials
     def test_get_account_settings(self):
         get_account_settings_response = self.context_based_restrictions_service.get_account_settings(
-            account_id=TestContextBasedRestrictionsV1.test_account_id,
-            transaction_id=self.getTransactionID()
+            account_id=TestContextBasedRestrictionsV1.test_account_id, transaction_id=self.getTransactionID()
         )
 
         assert get_account_settings_response.get_status_code() == 200
@@ -658,16 +641,16 @@ class TestContextBasedRestrictionsV1():
     def test_get_account_settings_with_invalid_account_id_parameter(self):
         with pytest.raises(ApiException, match="400"):
             self.context_based_restrictions_service.get_account_settings(
-                account_id=self.InvalidID,
-                transaction_id=self.getTransactionID()
+                account_id=self.InvalidID, transaction_id=self.getTransactionID()
             )
 
     @needscredentials
     def test_list_available_service_operations(self):
 
-        list_available_service_operations_response = self.context_based_restrictions_service.list_available_service_operations(
-            service_name='containers-kubernetes',
-            transaction_id=self.getTransactionID()
+        list_available_service_operations_response = (
+            self.context_based_restrictions_service.list_available_service_operations(
+                service_name='containers-kubernetes', transaction_id=self.getTransactionID()
+            )
         )
 
         assert list_available_service_operations_response.get_status_code() == 200
@@ -679,7 +662,7 @@ class TestContextBasedRestrictionsV1():
         delete_rule_response = self.context_based_restrictions_service.delete_rule(
             rule_id=TestContextBasedRestrictionsV1.rule_id,
             # Using the standard X-Correlation-Id header in this case
-            x_correlation_id=self.getTransactionID()
+            x_correlation_id=self.getTransactionID(),
         )
 
         assert delete_rule_response.get_status_code() == 204
@@ -688,16 +671,13 @@ class TestContextBasedRestrictionsV1():
     def test_delete_rule_with_rule_not_found_error(self):
         with pytest.raises(ApiException, match="404"):
             self.context_based_restrictions_service.delete_rule(
-                rule_id=self.NonExistentID,
-                transaction_id=self.getTransactionID()
+                rule_id=self.NonExistentID, transaction_id=self.getTransactionID()
             )
-
 
     @needscredentials
     def test_delete_zone(self):
         delete_zone_response = self.context_based_restrictions_service.delete_zone(
-            zone_id=TestContextBasedRestrictionsV1.zone_id,
-            transaction_id=self.getTransactionID()
+            zone_id=TestContextBasedRestrictionsV1.zone_id, transaction_id=self.getTransactionID()
         )
 
         assert delete_zone_response.get_status_code() == 204
@@ -705,9 +685,8 @@ class TestContextBasedRestrictionsV1():
     @needscredentials
     def test_delete_zone_with_zone_not_found_error(self):
         with pytest.raises(ApiException, match="404"):
-             self.context_based_restrictions_service.delete_zone(
-                zone_id=self.NonExistentID,
-                transaction_id=self.getTransactionID()
+            self.context_based_restrictions_service.delete_zone(
+                zone_id=self.NonExistentID, transaction_id=self.getTransactionID()
             )
 
     def getTransactionID(self):

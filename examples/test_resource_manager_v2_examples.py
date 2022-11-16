@@ -51,7 +51,7 @@ resource_group_id = None
 # Start of Examples for Service: ResourceManagerV2
 ##############################################################################
 # region
-class TestResourceManagerV2Examples():
+class TestResourceManagerV2Examples:
     """
     Example Test Class for ResourceManagerV2
     """

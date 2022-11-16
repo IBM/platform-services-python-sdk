@@ -37,6 +37,7 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
+
 class ResourceManagerV2(BaseService):
     """The Resource Manager V2 service."""
 
@@ -44,23 +45,23 @@ class ResourceManagerV2(BaseService):
     DEFAULT_SERVICE_NAME = 'resource_manager'
 
     @classmethod
-    def new_instance(cls,
-                     service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'ResourceManagerV2':
+    def new_instance(
+        cls,
+        service_name: str = DEFAULT_SERVICE_NAME,
+    ) -> 'ResourceManagerV2':
         """
         Return a new client for the Resource Manager service using the specified
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
-    def __init__(self,
-                 authenticator: Authenticator = None,
-                ) -> None:
+    def __init__(
+        self,
+        authenticator: Authenticator = None,
+    ) -> None:
         """
         Construct a new client for the Resource Manager service.
 
@@ -68,17 +69,14 @@ class ResourceManagerV2(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self,
-                             service_url=self.DEFAULT_SERVICE_URL,
-                             authenticator=authenticator)
-
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
     # Resource Group
     #########################
 
-
-    def list_resource_groups(self,
+    def list_resource_groups(
+        self,
         *,
         account_id: str = None,
         date: str = None,
@@ -114,9 +112,9 @@ class ResourceManagerV2(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='list_resource_groups')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_resource_groups'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -124,7 +122,7 @@ class ResourceManagerV2(BaseService):
             'date': date,
             'name': name,
             'default': default,
-            'include_deleted': include_deleted
+            'include_deleted': include_deleted,
         }
 
         if 'headers' in kwargs:
@@ -132,21 +130,12 @@ class ResourceManagerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_groups'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def create_resource_group(self,
-        *,
-        name: str = None,
-        account_id: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def create_resource_group(self, *, name: str = None, account_id: str = None, **kwargs) -> DetailedResponse:
         """
         Create a resource group.
 
@@ -170,15 +159,12 @@ class ResourceManagerV2(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='create_resource_group')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='create_resource_group'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'name': name,
-            'account_id': account_id
-        }
+        data = {'name': name, 'account_id': account_id}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -188,19 +174,12 @@ class ResourceManagerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_groups'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_resource_group(self,
-        id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_resource_group(self, id: str, **kwargs) -> DetailedResponse:
         """
         Get a resource group.
 
@@ -221,9 +200,9 @@ class ResourceManagerV2(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='get_resource_group')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_resource_group'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -234,21 +213,12 @@ class ResourceManagerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_groups/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_resource_group(self,
-        id: str,
-        *,
-        name: str = None,
-        state: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def update_resource_group(self, id: str, *, name: str = None, state: str = None, **kwargs) -> DetailedResponse:
         """
         Update a resource group.
 
@@ -268,15 +238,12 @@ class ResourceManagerV2(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='update_resource_group')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='update_resource_group'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'name': name,
-            'state': state
-        }
+        data = {'name': name, 'state': state}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -289,19 +256,12 @@ class ResourceManagerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_groups/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_resource_group(self,
-        id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_resource_group(self, id: str, **kwargs) -> DetailedResponse:
         """
         Delete a resource group.
 
@@ -324,9 +284,9 @@ class ResourceManagerV2(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='delete_resource_group')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='delete_resource_group'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -336,9 +296,7 @@ class ResourceManagerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_groups/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -347,10 +305,7 @@ class ResourceManagerV2(BaseService):
     # Quota Definition
     #########################
 
-
-    def list_quota_definitions(self,
-        **kwargs
-    ) -> DetailedResponse:
+    def list_quota_definitions(self, **kwargs) -> DetailedResponse:
         """
         List quota definitions.
 
@@ -368,9 +323,9 @@ class ResourceManagerV2(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='list_quota_definitions')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_quota_definitions'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -378,18 +333,12 @@ class ResourceManagerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/quota_definitions'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_quota_definition(self,
-        id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_quota_definition(self, id: str, **kwargs) -> DetailedResponse:
         """
         Get a quota definition.
 
@@ -412,9 +361,9 @@ class ResourceManagerV2(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='get_quota_definition')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_quota_definition'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -425,9 +374,7 @@ class ResourceManagerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/quota_definitions/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -438,7 +385,7 @@ class ResourceManagerV2(BaseService):
 ##############################################################################
 
 
-class QuotaDefinition():
+class QuotaDefinition:
     """
     A returned quota definition.
 
@@ -461,21 +408,23 @@ class QuotaDefinition():
     :attr datetime updated_at: (optional) The date when the quota was last updated.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 name: str = None,
-                 type: str = None,
-                 number_of_apps: float = None,
-                 number_of_service_instances: float = None,
-                 default_number_of_instances_per_lite_plan: float = None,
-                 instances_per_app: float = None,
-                 instance_memory: str = None,
-                 total_app_memory: str = None,
-                 vsi_limit: float = None,
-                 resource_quotas: List['ResourceQuota'] = None,
-                 created_at: datetime = None,
-                 updated_at: datetime = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        name: str = None,
+        type: str = None,
+        number_of_apps: float = None,
+        number_of_service_instances: float = None,
+        default_number_of_instances_per_lite_plan: float = None,
+        instances_per_app: float = None,
+        instance_memory: str = None,
+        total_app_memory: str = None,
+        vsi_limit: float = None,
+        resource_quotas: List['ResourceQuota'] = None,
+        created_at: datetime = None,
+        updated_at: datetime = None
+    ) -> None:
         """
         Initialize a QuotaDefinition object.
 
@@ -563,7 +512,10 @@ class QuotaDefinition():
             _dict['number_of_apps'] = self.number_of_apps
         if hasattr(self, 'number_of_service_instances') and self.number_of_service_instances is not None:
             _dict['number_of_service_instances'] = self.number_of_service_instances
-        if hasattr(self, 'default_number_of_instances_per_lite_plan') and self.default_number_of_instances_per_lite_plan is not None:
+        if (
+            hasattr(self, 'default_number_of_instances_per_lite_plan')
+            and self.default_number_of_instances_per_lite_plan is not None
+        ):
             _dict['default_number_of_instances_per_lite_plan'] = self.default_number_of_instances_per_lite_plan
         if hasattr(self, 'instances_per_app') and self.instances_per_app is not None:
             _dict['instances_per_app'] = self.instances_per_app
@@ -599,15 +551,15 @@ class QuotaDefinition():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class QuotaDefinitionList():
+
+class QuotaDefinitionList:
     """
     A list of quota definitions.
 
     :attr List[QuotaDefinition] resources: The list of quota definitions.
     """
 
-    def __init__(self,
-                 resources: List['QuotaDefinition']) -> None:
+    def __init__(self, resources: List['QuotaDefinition']) -> None:
         """
         Initialize a QuotaDefinitionList object.
 
@@ -655,7 +607,8 @@ class QuotaDefinitionList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResCreateResourceGroup():
+
+class ResCreateResourceGroup:
     """
     A newly-created resource group.
 
@@ -665,10 +618,7 @@ class ResCreateResourceGroup():
           Names](https://cloud.ibm.com/docs/account?topic=account-crn).
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 crn: str = None) -> None:
+    def __init__(self, *, id: str = None, crn: str = None) -> None:
         """
         Initialize a ResCreateResourceGroup object.
 
@@ -723,7 +673,8 @@ class ResCreateResourceGroup():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceGroup():
+
+class ResourceGroup:
     """
     A resource group.
 
@@ -753,21 +704,23 @@ class ResourceGroup():
           updated.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 crn: str = None,
-                 account_id: str = None,
-                 name: str = None,
-                 state: str = None,
-                 default: bool = None,
-                 quota_id: str = None,
-                 quota_url: str = None,
-                 payment_methods_url: str = None,
-                 resource_linkages: List[object] = None,
-                 teams_url: str = None,
-                 created_at: datetime = None,
-                 updated_at: datetime = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        crn: str = None,
+        account_id: str = None,
+        name: str = None,
+        state: str = None,
+        default: bool = None,
+        quota_id: str = None,
+        quota_url: str = None,
+        payment_methods_url: str = None,
+        resource_linkages: List[object] = None,
+        teams_url: str = None,
+        created_at: datetime = None,
+        updated_at: datetime = None
+    ) -> None:
         """
         Initialize a ResourceGroup object.
 
@@ -897,15 +850,15 @@ class ResourceGroup():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceGroupList():
+
+class ResourceGroupList:
     """
     A list of resource groups.
 
     :attr List[ResourceGroup] resources: The list of resource groups.
     """
 
-    def __init__(self,
-                 resources: List['ResourceGroup']) -> None:
+    def __init__(self, resources: List['ResourceGroup']) -> None:
         """
         Initialize a ResourceGroupList object.
 
@@ -953,7 +906,8 @@ class ResourceGroupList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceQuota():
+
+class ResourceQuota:
     """
     A resource quota.
 
@@ -965,12 +919,7 @@ class ResourceQuota():
     :attr float limit: (optional) The limit number of this resource.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 resource_id: str = None,
-                 crn: str = None,
-                 limit: float = None) -> None:
+    def __init__(self, *, id: str = None, resource_id: str = None, crn: str = None, limit: float = None) -> None:
         """
         Initialize a ResourceQuota object.
 

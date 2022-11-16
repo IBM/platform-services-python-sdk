@@ -41,6 +41,7 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
+
 class CatalogManagementV1(BaseService):
     """The Catalog Management V1 service."""
 
@@ -48,23 +49,23 @@ class CatalogManagementV1(BaseService):
     DEFAULT_SERVICE_NAME = 'catalog_management'
 
     @classmethod
-    def new_instance(cls,
-                     service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'CatalogManagementV1':
+    def new_instance(
+        cls,
+        service_name: str = DEFAULT_SERVICE_NAME,
+    ) -> 'CatalogManagementV1':
         """
         Return a new client for the Catalog Management service using the specified
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
-    def __init__(self,
-                 authenticator: Authenticator = None,
-                ) -> None:
+    def __init__(
+        self,
+        authenticator: Authenticator = None,
+    ) -> None:
         """
         Construct a new client for the Catalog Management service.
 
@@ -72,19 +73,13 @@ class CatalogManagementV1(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self,
-                             service_url=self.DEFAULT_SERVICE_URL,
-                             authenticator=authenticator)
-
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
     # Account
     #########################
 
-
-    def get_catalog_account(self,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_catalog_account(self, **kwargs) -> DetailedResponse:
         """
         Get catalog account settings.
 
@@ -96,9 +91,9 @@ class CatalogManagementV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_catalog_account')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_catalog_account'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -106,20 +101,13 @@ class CatalogManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/catalogaccount'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_catalog_account(self,
-        *,
-        id: str = None,
-        hide_ibm_cloud_catalog: bool = None,
-        account_filters: 'Filters' = None,
-        **kwargs
+    def update_catalog_account(
+        self, *, id: str = None, hide_ibm_cloud_catalog: bool = None, account_filters: 'Filters' = None, **kwargs
     ) -> DetailedResponse:
         """
         Update account settings.
@@ -139,16 +127,12 @@ class CatalogManagementV1(BaseService):
         if account_filters is not None:
             account_filters = convert_model(account_filters)
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_catalog_account')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_catalog_account'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'id': id,
-            'hide_IBM_cloud_catalog': hide_ibm_cloud_catalog,
-            'account_filters': account_filters
-        }
+        data = {'id': id, 'hide_IBM_cloud_catalog': hide_ibm_cloud_catalog, 'account_filters': account_filters}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -157,18 +141,12 @@ class CatalogManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
 
         url = '/catalogaccount'
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_catalog_account_audit(self,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_catalog_account_audit(self, **kwargs) -> DetailedResponse:
         """
         Get catalog account audit log.
 
@@ -180,9 +158,9 @@ class CatalogManagementV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_catalog_account_audit')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_catalog_account_audit'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -190,19 +168,12 @@ class CatalogManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/catalogaccount/audit'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_catalog_account_filters(self,
-        *,
-        catalog: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_catalog_account_filters(self, *, catalog: str = None, **kwargs) -> DetailedResponse:
         """
         Get catalog account filters.
 
@@ -216,24 +187,19 @@ class CatalogManagementV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_catalog_account_filters')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_catalog_account_filters'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'catalog': catalog
-        }
+        params = {'catalog': catalog}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
         url = '/catalogaccount/filters'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
@@ -242,10 +208,7 @@ class CatalogManagementV1(BaseService):
     # Catalogs
     #########################
 
-
-    def list_catalogs(self,
-        **kwargs
-    ) -> DetailedResponse:
+    def list_catalogs(self, **kwargs) -> DetailedResponse:
         """
         Get list of catalogs.
 
@@ -258,9 +221,9 @@ class CatalogManagementV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_catalogs')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_catalogs'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -268,15 +231,13 @@ class CatalogManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/catalogs'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def create_catalog(self,
+    def create_catalog(
+        self,
         *,
         id: str = None,
         rev: str = None,
@@ -331,9 +292,9 @@ class CatalogManagementV1(BaseService):
         if syndication_settings is not None:
             syndication_settings = convert_model(syndication_settings)
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='create_catalog')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_catalog'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -349,7 +310,7 @@ class CatalogManagementV1(BaseService):
             'owning_account': owning_account,
             'catalog_filters': catalog_filters,
             'syndication_settings': syndication_settings,
-            'kind': kind
+            'kind': kind,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -360,19 +321,12 @@ class CatalogManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/catalogs'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_catalog(self,
-        catalog_identifier: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_catalog(self, catalog_identifier: str, **kwargs) -> DetailedResponse:
         """
         Get catalog.
 
@@ -388,9 +342,9 @@ class CatalogManagementV1(BaseService):
         if catalog_identifier is None:
             raise ValueError('catalog_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_catalog')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_catalog'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -401,15 +355,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def replace_catalog(self,
+    def replace_catalog(
+        self,
         catalog_identifier: str,
         *,
         id: str = None,
@@ -468,9 +420,9 @@ class CatalogManagementV1(BaseService):
         if syndication_settings is not None:
             syndication_settings = convert_model(syndication_settings)
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='replace_catalog')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='replace_catalog'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -486,7 +438,7 @@ class CatalogManagementV1(BaseService):
             'owning_account': owning_account,
             'catalog_filters': catalog_filters,
             'syndication_settings': syndication_settings,
-            'kind': kind
+            'kind': kind,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -500,19 +452,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_catalog(self,
-        catalog_identifier: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_catalog(self, catalog_identifier: str, **kwargs) -> DetailedResponse:
         """
         Delete catalog.
 
@@ -527,9 +472,9 @@ class CatalogManagementV1(BaseService):
         if catalog_identifier is None:
             raise ValueError('catalog_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_catalog')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_catalog'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -539,18 +484,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_catalog_audit(self,
-        catalog_identifier: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_catalog_audit(self, catalog_identifier: str, **kwargs) -> DetailedResponse:
         """
         Get catalog audit log.
 
@@ -565,9 +504,9 @@ class CatalogManagementV1(BaseService):
         if catalog_identifier is None:
             raise ValueError('catalog_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_catalog_audit')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_catalog_audit'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -578,9 +517,7 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/audit'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -589,8 +526,8 @@ class CatalogManagementV1(BaseService):
     # Offerings
     #########################
 
-
-    def get_consumption_offerings(self,
+    def get_consumption_offerings(
+        self,
         *,
         digest: bool = None,
         catalog: str = None,
@@ -629,9 +566,9 @@ class CatalogManagementV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_consumption_offerings')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_consumption_offerings'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -640,7 +577,7 @@ class CatalogManagementV1(BaseService):
             'select': select,
             'includeHidden': include_hidden,
             'limit': limit,
-            'offset': offset
+            'offset': offset,
         }
 
         if 'headers' in kwargs:
@@ -648,16 +585,13 @@ class CatalogManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/offerings'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def list_offerings(self,
+    def list_offerings(
+        self,
         catalog_identifier: str,
         *,
         digest: bool = None,
@@ -695,18 +629,12 @@ class CatalogManagementV1(BaseService):
         if catalog_identifier is None:
             raise ValueError('catalog_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_offerings')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_offerings'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'digest': digest,
-            'limit': limit,
-            'offset': offset,
-            'name': name,
-            'sort': sort
-        }
+        params = {'digest': digest, 'limit': limit, 'offset': offset, 'name': name, 'sort': sort}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -716,16 +644,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/offerings'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def create_offering(self,
+    def create_offering(
+        self,
         catalog_identifier: str,
         *,
         id: str = None,
@@ -853,9 +778,9 @@ class CatalogManagementV1(BaseService):
         if media is not None:
             media = [convert_model(x) for x in media]
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='create_offering')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_offering'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -893,7 +818,7 @@ class CatalogManagementV1(BaseService):
             'provider_info': provider_info,
             'repo_info': repo_info,
             'support': support,
-            'media': media
+            'media': media,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -907,16 +832,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/offerings'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def import_offering_version(self,
+    def import_offering_version(
+        self,
         catalog_identifier: str,
         offering_id: str,
         *,
@@ -964,9 +886,9 @@ class CatalogManagementV1(BaseService):
         if content is not None:
             content = str(base64.b64encode(content), 'utf-8')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='import_offering_version')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='import_offering_version'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -974,14 +896,10 @@ class CatalogManagementV1(BaseService):
             'targetVersion': target_version,
             'includeConfig': include_config,
             'isVSI': is_vsi,
-            'repoType': repo_type
+            'repoType': repo_type,
         }
 
-        data = {
-            'tags': tags,
-            'target_kinds': target_kinds,
-            'content': content
-        }
+        data = {'tags': tags, 'target_kinds': target_kinds, 'content': content}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -994,17 +912,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/version'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       params=params,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, params=params, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def import_offering(self,
+    def import_offering(
+        self,
         catalog_identifier: str,
         *,
         tags: List[str] = None,
@@ -1053,12 +967,10 @@ class CatalogManagementV1(BaseService):
             raise ValueError('catalog_identifier must be provided')
         if content is not None:
             content = str(base64.b64encode(content), 'utf-8')
-        headers = {
-            'X-Auth-Token': x_auth_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='import_offering')
+        headers = {'X-Auth-Token': x_auth_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='import_offering'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -1067,14 +979,10 @@ class CatalogManagementV1(BaseService):
             'targetVersion': target_version,
             'includeConfig': include_config,
             'isVSI': is_vsi,
-            'repoType': repo_type
+            'repoType': repo_type,
         }
 
-        data = {
-            'tags': tags,
-            'target_kinds': target_kinds,
-            'content': content
-        }
+        data = {'tags': tags, 'target_kinds': target_kinds, 'content': content}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1087,17 +995,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/import/offerings'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       params=params,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, params=params, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def reload_offering(self,
+    def reload_offering(
+        self,
         catalog_identifier: str,
         offering_id: str,
         target_version: str,
@@ -1140,22 +1044,14 @@ class CatalogManagementV1(BaseService):
         if content is not None:
             content = str(base64.b64encode(content), 'utf-8')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='reload_offering')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='reload_offering'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'targetVersion': target_version,
-            'zipurl': zipurl,
-            'repoType': repo_type
-        }
+        params = {'targetVersion': target_version, 'zipurl': zipurl, 'repoType': repo_type}
 
-        data = {
-            'tags': tags,
-            'target_kinds': target_kinds,
-            'content': content
-        }
+        data = {'tags': tags, 'target_kinds': target_kinds, 'content': content}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1168,23 +1064,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/reload'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       params=params,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, params=params, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_offering(self,
-        catalog_identifier: str,
-        offering_id: str,
-        *,
-        type: str = None,
-        digest: bool = None,
-        **kwargs
+    def get_offering(
+        self, catalog_identifier: str, offering_id: str, *, type: str = None, digest: bool = None, **kwargs
     ) -> DetailedResponse:
         """
         Get offering.
@@ -1208,15 +1094,12 @@ class CatalogManagementV1(BaseService):
         if offering_id is None:
             raise ValueError('offering_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_offering')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_offering'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'type': type,
-            'digest': digest
-        }
+        params = {'type': type, 'digest': digest}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1226,16 +1109,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/offerings/{offering_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def replace_offering(self,
+    def replace_offering(
+        self,
         catalog_identifier: str,
         offering_id: str,
         *,
@@ -1367,9 +1247,9 @@ class CatalogManagementV1(BaseService):
         if media is not None:
             media = [convert_model(x) for x in media]
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='replace_offering')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='replace_offering'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -1407,7 +1287,7 @@ class CatalogManagementV1(BaseService):
             'provider_info': provider_info,
             'repo_info': repo_info,
             'support': support,
-            'media': media
+            'media': media,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -1421,16 +1301,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/offerings/{offering_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_offering(self,
+    def update_offering(
+        self,
         catalog_identifier: str,
         offering_id: str,
         if_match: str,
@@ -1460,12 +1337,10 @@ class CatalogManagementV1(BaseService):
             raise ValueError('if_match must be provided')
         if updates is not None:
             updates = [convert_model(x) for x in updates]
-        headers = {
-            'If-Match': if_match
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_offering')
+        headers = {'If-Match': if_match}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_offering'
+        )
         headers.update(sdk_headers)
 
         data = json.dumps(updates)
@@ -1479,20 +1354,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/offerings/{offering_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_offering(self,
-        catalog_identifier: str,
-        offering_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_offering(self, catalog_identifier: str, offering_id: str, **kwargs) -> DetailedResponse:
         """
         Delete offering.
 
@@ -1510,9 +1377,9 @@ class CatalogManagementV1(BaseService):
         if offering_id is None:
             raise ValueError('offering_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_offering')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_offering'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1522,19 +1389,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/offerings/{offering_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_offering_audit(self,
-        catalog_identifier: str,
-        offering_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_offering_audit(self, catalog_identifier: str, offering_id: str, **kwargs) -> DetailedResponse:
         """
         Get offering audit log.
 
@@ -1552,9 +1412,9 @@ class CatalogManagementV1(BaseService):
         if offering_id is None:
             raise ValueError('offering_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_offering_audit')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_offering_audit'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1565,19 +1425,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/audit'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def replace_offering_icon(self,
-        catalog_identifier: str,
-        offering_id: str,
-        file_name: str,
-        **kwargs
+    def replace_offering_icon(
+        self, catalog_identifier: str, offering_id: str, file_name: str, **kwargs
     ) -> DetailedResponse:
         """
         Upload icon for offering.
@@ -1600,9 +1454,9 @@ class CatalogManagementV1(BaseService):
         if file_name is None:
             raise ValueError('file_name must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='replace_offering_icon')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='replace_offering_icon'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1613,20 +1467,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, offering_id, file_name)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/icon/{file_name}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='PUT', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_offering_ibm(self,
-        catalog_identifier: str,
-        offering_id: str,
-        approval_type: str,
-        approved: str,
-        **kwargs
+    def update_offering_ibm(
+        self, catalog_identifier: str, offering_id: str, approval_type: str, approved: str, **kwargs
     ) -> DetailedResponse:
         """
         Allow offering to be published.
@@ -1662,9 +1509,9 @@ class CatalogManagementV1(BaseService):
         if approved is None:
             raise ValueError('approved must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_offering_ibm')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_offering_ibm'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1674,16 +1521,16 @@ class CatalogManagementV1(BaseService):
         path_param_keys = ['catalog_identifier', 'offering_id', 'approval_type', 'approved']
         path_param_values = self.encode_path_vars(catalog_identifier, offering_id, approval_type, approved)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/publish/{approval_type}/{approved}'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers)
+        url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/publish/{approval_type}/{approved}'.format(
+            **path_param_dict
+        )
+        request = self.prepare_request(method='POST', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def deprecate_offering(self,
+    def deprecate_offering(
+        self,
         catalog_identifier: str,
         offering_id: str,
         setting: str,
@@ -1716,15 +1563,12 @@ class CatalogManagementV1(BaseService):
         if setting is None:
             raise ValueError('setting must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='deprecate_offering')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='deprecate_offering'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'description': description,
-            'days_until_deprecate': days_until_deprecate
-        }
+        data = {'description': description, 'days_until_deprecate': days_until_deprecate}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1736,16 +1580,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, offering_id, setting)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/deprecate/{setting}'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_offering_updates(self,
+    def get_offering_updates(
+        self,
         catalog_identifier: str,
         offering_id: str,
         kind: str,
@@ -1805,12 +1646,10 @@ class CatalogManagementV1(BaseService):
             raise ValueError('kind must be provided')
         if x_auth_refresh_token is None:
             raise ValueError('x_auth_refresh_token must be provided')
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_offering_updates')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_offering_updates'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -1824,7 +1663,7 @@ class CatalogManagementV1(BaseService):
             'sha': sha,
             'channel': channel,
             'namespaces': convert_list(namespaces),
-            'all_namespaces': all_namespaces
+            'all_namespaces': all_namespaces,
         }
 
         if 'headers' in kwargs:
@@ -1835,16 +1674,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, offering_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/offerings/{offering_id}/updates'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_offering_source(self,
+    def get_offering_source(
+        self,
         version: str,
         *,
         accept: str = None,
@@ -1880,31 +1716,19 @@ class CatalogManagementV1(BaseService):
 
         if version is None:
             raise ValueError('version must be provided')
-        headers = {
-            'Accept': accept
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_offering_source')
+        headers = {'Accept': accept}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_offering_source'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'version': version,
-            'catalogID': catalog_id,
-            'name': name,
-            'id': id,
-            'kind': kind,
-            'channel': channel
-        }
+        params = {'version': version, 'catalogID': catalog_id, 'name': name, 'id': id, 'kind': kind, 'channel': channel}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
         url = '/offering/source'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
@@ -1913,11 +1737,7 @@ class CatalogManagementV1(BaseService):
     # Versions
     #########################
 
-
-    def get_offering_about(self,
-        version_loc_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_offering_about(self, version_loc_id: str, **kwargs) -> DetailedResponse:
         """
         Get version about information.
 
@@ -1932,9 +1752,9 @@ class CatalogManagementV1(BaseService):
         if version_loc_id is None:
             raise ValueError('version_loc_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_offering_about')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_offering_about'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1945,19 +1765,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/about'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_offering_license(self,
-        version_loc_id: str,
-        license_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_offering_license(self, version_loc_id: str, license_id: str, **kwargs) -> DetailedResponse:
         """
         Get version license content.
 
@@ -1976,9 +1789,9 @@ class CatalogManagementV1(BaseService):
         if license_id is None:
             raise ValueError('license_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_offering_license')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_offering_license'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1989,18 +1802,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id, license_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/licenses/{license_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_offering_container_images(self,
-        version_loc_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_offering_container_images(self, version_loc_id: str, **kwargs) -> DetailedResponse:
         """
         Get version's container images.
 
@@ -2017,9 +1824,9 @@ class CatalogManagementV1(BaseService):
         if version_loc_id is None:
             raise ValueError('version_loc_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_offering_container_images')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_offering_container_images'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -2030,18 +1837,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/containerImages'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def deprecate_version(self,
-        version_loc_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def deprecate_version(self, version_loc_id: str, **kwargs) -> DetailedResponse:
         """
         Deprecate version immediately.
 
@@ -2056,9 +1857,9 @@ class CatalogManagementV1(BaseService):
         if version_loc_id is None:
             raise ValueError('version_loc_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='deprecate_version')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='deprecate_version'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -2068,21 +1869,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/deprecate'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='POST', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def set_deprecate_version(self,
-        version_loc_id: str,
-        setting: str,
-        *,
-        description: str = None,
-        days_until_deprecate: int = None,
-        **kwargs
+    def set_deprecate_version(
+        self, version_loc_id: str, setting: str, *, description: str = None, days_until_deprecate: int = None, **kwargs
     ) -> DetailedResponse:
         """
         Sets version to be deprecated in a certain time period.
@@ -2105,15 +1898,12 @@ class CatalogManagementV1(BaseService):
         if setting is None:
             raise ValueError('setting must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='set_deprecate_version')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='set_deprecate_version'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'description': description,
-            'days_until_deprecate': days_until_deprecate
-        }
+        data = {'description': description, 'days_until_deprecate': days_until_deprecate}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -2125,19 +1915,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id, setting)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/deprecate/{setting}'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def account_publish_version(self,
-        version_loc_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def account_publish_version(self, version_loc_id: str, **kwargs) -> DetailedResponse:
         """
         Publish version to account members.
 
@@ -2152,9 +1935,9 @@ class CatalogManagementV1(BaseService):
         if version_loc_id is None:
             raise ValueError('version_loc_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='account_publish_version')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='account_publish_version'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -2164,18 +1947,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/account-publish'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='POST', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def ibm_publish_version(self,
-        version_loc_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def ibm_publish_version(self, version_loc_id: str, **kwargs) -> DetailedResponse:
         """
         Publish version to IBMers in public catalog.
 
@@ -2191,9 +1968,9 @@ class CatalogManagementV1(BaseService):
         if version_loc_id is None:
             raise ValueError('version_loc_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='ibm_publish_version')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='ibm_publish_version'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -2203,18 +1980,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/ibm-publish'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='POST', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def public_publish_version(self,
-        version_loc_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def public_publish_version(self, version_loc_id: str, **kwargs) -> DetailedResponse:
         """
         Publish version to all users in public catalog.
 
@@ -2229,9 +2000,9 @@ class CatalogManagementV1(BaseService):
         if version_loc_id is None:
             raise ValueError('version_loc_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='public_publish_version')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='public_publish_version'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -2241,18 +2012,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/public-publish'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='POST', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def commit_version(self,
-        version_loc_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def commit_version(self, version_loc_id: str, **kwargs) -> DetailedResponse:
         """
         Commit version.
 
@@ -2267,9 +2032,9 @@ class CatalogManagementV1(BaseService):
         if version_loc_id is None:
             raise ValueError('version_loc_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='commit_version')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='commit_version'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -2279,15 +2044,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/commit'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='POST', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def copy_version(self,
+    def copy_version(
+        self,
         version_loc_id: str,
         *,
         tags: List[str] = None,
@@ -2316,16 +2079,12 @@ class CatalogManagementV1(BaseService):
         if content is not None:
             content = str(base64.b64encode(content), 'utf-8')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='copy_version')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='copy_version'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'tags': tags,
-            'target_kinds': target_kinds,
-            'content': content
-        }
+        data = {'tags': tags, 'target_kinds': target_kinds, 'content': content}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -2337,19 +2096,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/copy'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_offering_working_copy(self,
-        version_loc_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_offering_working_copy(self, version_loc_id: str, **kwargs) -> DetailedResponse:
         """
         Create working copy of version.
 
@@ -2364,9 +2116,9 @@ class CatalogManagementV1(BaseService):
         if version_loc_id is None:
             raise ValueError('version_loc_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_offering_working_copy')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_offering_working_copy'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -2377,18 +2129,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/workingcopy'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='POST', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_version(self,
-        version_loc_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_version(self, version_loc_id: str, **kwargs) -> DetailedResponse:
         """
         Get offering/kind/version 'branch'.
 
@@ -2403,9 +2149,9 @@ class CatalogManagementV1(BaseService):
         if version_loc_id is None:
             raise ValueError('version_loc_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_version')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_version'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -2416,18 +2162,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_version(self,
-        version_loc_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_version(self, version_loc_id: str, **kwargs) -> DetailedResponse:
         """
         Delete version.
 
@@ -2443,9 +2183,9 @@ class CatalogManagementV1(BaseService):
         if version_loc_id is None:
             raise ValueError('version_loc_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_version')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_version'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -2455,9 +2195,7 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -2466,13 +2204,7 @@ class CatalogManagementV1(BaseService):
     # Deploy
     #########################
 
-
-    def get_cluster(self,
-        cluster_id: str,
-        region: str,
-        x_auth_refresh_token: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_cluster(self, cluster_id: str, region: str, x_auth_refresh_token: str, **kwargs) -> DetailedResponse:
         """
         Get kubernetes cluster.
 
@@ -2492,17 +2224,13 @@ class CatalogManagementV1(BaseService):
             raise ValueError('region must be provided')
         if x_auth_refresh_token is None:
             raise ValueError('x_auth_refresh_token must be provided')
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_cluster')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_cluster'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'region': region
-        }
+        params = {'region': region}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -2512,16 +2240,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(cluster_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/deploy/kubernetes/clusters/{cluster_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_namespaces(self,
+    def get_namespaces(
+        self,
         cluster_id: str,
         region: str,
         x_auth_refresh_token: str,
@@ -2552,19 +2277,13 @@ class CatalogManagementV1(BaseService):
             raise ValueError('region must be provided')
         if x_auth_refresh_token is None:
             raise ValueError('x_auth_refresh_token must be provided')
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_namespaces')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_namespaces'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'region': region,
-            'limit': limit,
-            'offset': offset
-        }
+        params = {'region': region, 'limit': limit, 'offset': offset}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -2574,16 +2293,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(cluster_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/deploy/kubernetes/clusters/{cluster_id}/namespaces'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def deploy_operators(self,
+    def deploy_operators(
+        self,
         x_auth_refresh_token: str,
         *,
         cluster_id: str = None,
@@ -2614,12 +2330,10 @@ class CatalogManagementV1(BaseService):
 
         if x_auth_refresh_token is None:
             raise ValueError('x_auth_refresh_token must be provided')
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='deploy_operators')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='deploy_operators'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -2627,7 +2341,7 @@ class CatalogManagementV1(BaseService):
             'region': region,
             'namespaces': namespaces,
             'all_namespaces': all_namespaces,
-            'version_locator_id': version_locator_id
+            'version_locator_id': version_locator_id,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -2638,21 +2352,13 @@ class CatalogManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/deploy/kubernetes/olm/operator'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def list_operators(self,
-        x_auth_refresh_token: str,
-        cluster_id: str,
-        region: str,
-        version_locator_id: str,
-        **kwargs
+    def list_operators(
+        self, x_auth_refresh_token: str, cluster_id: str, region: str, version_locator_id: str, **kwargs
     ) -> DetailedResponse:
         """
         List operators.
@@ -2676,35 +2382,26 @@ class CatalogManagementV1(BaseService):
             raise ValueError('region must be provided')
         if version_locator_id is None:
             raise ValueError('version_locator_id must be provided')
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_operators')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_operators'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'cluster_id': cluster_id,
-            'region': region,
-            'version_locator_id': version_locator_id
-        }
+        params = {'cluster_id': cluster_id, 'region': region, 'version_locator_id': version_locator_id}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
         url = '/deploy/kubernetes/olm/operator'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def replace_operators(self,
+    def replace_operators(
+        self,
         x_auth_refresh_token: str,
         *,
         cluster_id: str = None,
@@ -2735,12 +2432,10 @@ class CatalogManagementV1(BaseService):
 
         if x_auth_refresh_token is None:
             raise ValueError('x_auth_refresh_token must be provided')
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='replace_operators')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='replace_operators'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -2748,7 +2443,7 @@ class CatalogManagementV1(BaseService):
             'region': region,
             'namespaces': namespaces,
             'all_namespaces': all_namespaces,
-            'version_locator_id': version_locator_id
+            'version_locator_id': version_locator_id,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -2759,21 +2454,13 @@ class CatalogManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/deploy/kubernetes/olm/operator'
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_operators(self,
-        x_auth_refresh_token: str,
-        cluster_id: str,
-        region: str,
-        version_locator_id: str,
-        **kwargs
+    def delete_operators(
+        self, x_auth_refresh_token: str, cluster_id: str, region: str, version_locator_id: str, **kwargs
     ) -> DetailedResponse:
         """
         Delete operators.
@@ -2797,34 +2484,25 @@ class CatalogManagementV1(BaseService):
             raise ValueError('region must be provided')
         if version_locator_id is None:
             raise ValueError('version_locator_id must be provided')
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_operators')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_operators'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'cluster_id': cluster_id,
-            'region': region,
-            'version_locator_id': version_locator_id
-        }
+        params = {'cluster_id': cluster_id, 'region': region, 'version_locator_id': version_locator_id}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
 
         url = '/deploy/kubernetes/olm/operator'
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def install_version(self,
+    def install_version(
+        self,
         version_loc_id: str,
         x_auth_refresh_token: str,
         *,
@@ -2882,12 +2560,10 @@ class CatalogManagementV1(BaseService):
             raise ValueError('x_auth_refresh_token must be provided')
         if schematics is not None:
             schematics = convert_model(schematics)
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='install_version')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='install_version'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -2904,7 +2580,7 @@ class CatalogManagementV1(BaseService):
             'vcenter_user': vcenter_user,
             'vcenter_password': vcenter_password,
             'vcenter_location': vcenter_location,
-            'vcenter_datastore': vcenter_datastore
+            'vcenter_datastore': vcenter_datastore,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -2917,16 +2593,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/install'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def preinstall_version(self,
+    def preinstall_version(
+        self,
         version_loc_id: str,
         x_auth_refresh_token: str,
         *,
@@ -2984,12 +2657,10 @@ class CatalogManagementV1(BaseService):
             raise ValueError('x_auth_refresh_token must be provided')
         if schematics is not None:
             schematics = convert_model(schematics)
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='preinstall_version')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='preinstall_version'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -3006,7 +2677,7 @@ class CatalogManagementV1(BaseService):
             'vcenter_user': vcenter_user,
             'vcenter_password': vcenter_password,
             'vcenter_location': vcenter_location,
-            'vcenter_datastore': vcenter_datastore
+            'vcenter_datastore': vcenter_datastore,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -3019,16 +2690,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/preinstall'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_preinstall(self,
+    def get_preinstall(
+        self,
         version_loc_id: str,
         x_auth_refresh_token: str,
         *,
@@ -3057,19 +2725,13 @@ class CatalogManagementV1(BaseService):
             raise ValueError('version_loc_id must be provided')
         if x_auth_refresh_token is None:
             raise ValueError('x_auth_refresh_token must be provided')
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_preinstall')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_preinstall'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'cluster_id': cluster_id,
-            'region': region,
-            'namespace': namespace
-        }
+        params = {'cluster_id': cluster_id, 'region': region, 'namespace': namespace}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -3079,16 +2741,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/preinstall'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def validate_install(self,
+    def validate_install(
+        self,
         version_loc_id: str,
         x_auth_refresh_token: str,
         *,
@@ -3146,12 +2805,10 @@ class CatalogManagementV1(BaseService):
             raise ValueError('x_auth_refresh_token must be provided')
         if schematics is not None:
             schematics = convert_model(schematics)
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='validate_install')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='validate_install'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -3168,7 +2825,7 @@ class CatalogManagementV1(BaseService):
             'vcenter_user': vcenter_user,
             'vcenter_password': vcenter_password,
             'vcenter_location': vcenter_location,
-            'vcenter_datastore': vcenter_datastore
+            'vcenter_datastore': vcenter_datastore,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -3181,20 +2838,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/validation/install'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_validation_status(self,
-        version_loc_id: str,
-        x_auth_refresh_token: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_validation_status(self, version_loc_id: str, x_auth_refresh_token: str, **kwargs) -> DetailedResponse:
         """
         Get offering install status.
 
@@ -3211,12 +2860,10 @@ class CatalogManagementV1(BaseService):
             raise ValueError('version_loc_id must be provided')
         if x_auth_refresh_token is None:
             raise ValueError('x_auth_refresh_token must be provided')
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_validation_status')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_validation_status'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -3227,18 +2874,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/validation/install'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_override_values(self,
-        version_loc_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_override_values(self, version_loc_id: str, **kwargs) -> DetailedResponse:
         """
         Get override values.
 
@@ -3254,9 +2895,9 @@ class CatalogManagementV1(BaseService):
         if version_loc_id is None:
             raise ValueError('version_loc_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_override_values')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_override_values'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -3267,9 +2908,7 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(version_loc_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/versions/{version_loc_id}/validation/overridevalues'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -3278,15 +2917,8 @@ class CatalogManagementV1(BaseService):
     # Objects
     #########################
 
-
-    def search_objects(self,
-        query: str,
-        *,
-        limit: int = None,
-        offset: int = None,
-        collapse: bool = None,
-        digest: bool = None,
-        **kwargs
+    def search_objects(
+        self, query: str, *, limit: int = None, offset: int = None, collapse: bool = None, digest: bool = None, **kwargs
     ) -> DetailedResponse:
         """
         List objects across catalogs.
@@ -3311,34 +2943,25 @@ class CatalogManagementV1(BaseService):
         if query is None:
             raise ValueError('query must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='search_objects')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='search_objects'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'query': query,
-            'limit': limit,
-            'offset': offset,
-            'collapse': collapse,
-            'digest': digest
-        }
+        params = {'query': query, 'limit': limit, 'offset': offset, 'collapse': collapse, 'digest': digest}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
         url = '/objects'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def list_objects(self,
+    def list_objects(
+        self,
         catalog_identifier: str,
         *,
         limit: int = None,
@@ -3371,17 +2994,12 @@ class CatalogManagementV1(BaseService):
         if catalog_identifier is None:
             raise ValueError('catalog_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_objects')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_objects'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'limit': limit,
-            'offset': offset,
-            'name': name,
-            'sort': sort
-        }
+        params = {'limit': limit, 'offset': offset, 'name': name, 'sort': sort}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -3391,16 +3009,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/objects'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def create_object(self,
+    def create_object(
+        self,
         catalog_identifier: str,
         *,
         id: str = None,
@@ -3472,9 +3087,9 @@ class CatalogManagementV1(BaseService):
         if state is not None:
             state = convert_model(state)
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='create_object')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_object'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -3496,7 +3111,7 @@ class CatalogManagementV1(BaseService):
             'state': state,
             'catalog_id': catalog_id,
             'catalog_name': catalog_name,
-            'data': data
+            'data': data,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -3510,20 +3125,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/objects'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_object(self,
-        catalog_identifier: str,
-        object_identifier: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_object(self, catalog_identifier: str, object_identifier: str, **kwargs) -> DetailedResponse:
         """
         Get catalog object.
 
@@ -3541,9 +3148,9 @@ class CatalogManagementV1(BaseService):
         if object_identifier is None:
             raise ValueError('object_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_object')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_object'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -3554,15 +3161,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/objects/{object_identifier}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def replace_object(self,
+    def replace_object(
+        self,
         catalog_identifier: str,
         object_identifier: str,
         *,
@@ -3638,9 +3243,9 @@ class CatalogManagementV1(BaseService):
         if state is not None:
             state = convert_model(state)
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='replace_object')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='replace_object'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -3662,7 +3267,7 @@ class CatalogManagementV1(BaseService):
             'state': state,
             'catalog_id': catalog_id,
             'catalog_name': catalog_name,
-            'data': data
+            'data': data,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -3676,20 +3281,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/objects/{object_identifier}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_object(self,
-        catalog_identifier: str,
-        object_identifier: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_object(self, catalog_identifier: str, object_identifier: str, **kwargs) -> DetailedResponse:
         """
         Delete catalog object.
 
@@ -3707,9 +3304,9 @@ class CatalogManagementV1(BaseService):
         if object_identifier is None:
             raise ValueError('object_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_object')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_object'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -3719,19 +3316,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/objects/{object_identifier}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_object_audit(self,
-        catalog_identifier: str,
-        object_identifier: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_object_audit(self, catalog_identifier: str, object_identifier: str, **kwargs) -> DetailedResponse:
         """
         Get catalog object audit log.
 
@@ -3749,9 +3339,9 @@ class CatalogManagementV1(BaseService):
         if object_identifier is None:
             raise ValueError('object_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_object_audit')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_object_audit'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -3762,19 +3352,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/objects/{object_identifier}/audit'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def account_publish_object(self,
-        catalog_identifier: str,
-        object_identifier: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def account_publish_object(self, catalog_identifier: str, object_identifier: str, **kwargs) -> DetailedResponse:
         """
         Publish object to account.
 
@@ -3792,9 +3375,9 @@ class CatalogManagementV1(BaseService):
         if object_identifier is None:
             raise ValueError('object_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='account_publish_object')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='account_publish_object'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -3804,19 +3387,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/objects/{object_identifier}/account-publish'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='POST', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def shared_publish_object(self,
-        catalog_identifier: str,
-        object_identifier: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def shared_publish_object(self, catalog_identifier: str, object_identifier: str, **kwargs) -> DetailedResponse:
         """
         Publish object to share with allow list.
 
@@ -3834,9 +3410,9 @@ class CatalogManagementV1(BaseService):
         if object_identifier is None:
             raise ValueError('object_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='shared_publish_object')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='shared_publish_object'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -3846,19 +3422,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/objects/{object_identifier}/shared-publish'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='POST', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def ibm_publish_object(self,
-        catalog_identifier: str,
-        object_identifier: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def ibm_publish_object(self, catalog_identifier: str, object_identifier: str, **kwargs) -> DetailedResponse:
         """
         Publish object to share with IBMers.
 
@@ -3877,9 +3446,9 @@ class CatalogManagementV1(BaseService):
         if object_identifier is None:
             raise ValueError('object_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='ibm_publish_object')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='ibm_publish_object'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -3889,19 +3458,12 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/objects/{object_identifier}/ibm-publish'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='POST', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def public_publish_object(self,
-        catalog_identifier: str,
-        object_identifier: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def public_publish_object(self, catalog_identifier: str, object_identifier: str, **kwargs) -> DetailedResponse:
         """
         Publish object to share with all users.
 
@@ -3919,9 +3481,9 @@ class CatalogManagementV1(BaseService):
         if object_identifier is None:
             raise ValueError('object_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='public_publish_object')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='public_publish_object'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -3931,19 +3493,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/objects/{object_identifier}/public-publish'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='POST', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def create_object_access(self,
-        catalog_identifier: str,
-        object_identifier: str,
-        account_identifier: str,
-        **kwargs
+    def create_object_access(
+        self, catalog_identifier: str, object_identifier: str, account_identifier: str, **kwargs
     ) -> DetailedResponse:
         """
         Add account ID to object access list.
@@ -3965,9 +3521,9 @@ class CatalogManagementV1(BaseService):
         if account_identifier is None:
             raise ValueError('account_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='create_object_access')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_object_access'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -3976,20 +3532,16 @@ class CatalogManagementV1(BaseService):
         path_param_keys = ['catalog_identifier', 'object_identifier', 'account_identifier']
         path_param_values = self.encode_path_vars(catalog_identifier, object_identifier, account_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/catalogs/{catalog_identifier}/objects/{object_identifier}/access/{account_identifier}'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers)
+        url = '/catalogs/{catalog_identifier}/objects/{object_identifier}/access/{account_identifier}'.format(
+            **path_param_dict
+        )
+        request = self.prepare_request(method='POST', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_object_access(self,
-        catalog_identifier: str,
-        object_identifier: str,
-        account_identifier: str,
-        **kwargs
+    def get_object_access(
+        self, catalog_identifier: str, object_identifier: str, account_identifier: str, **kwargs
     ) -> DetailedResponse:
         """
         Check for account ID in object access list.
@@ -4011,9 +3563,9 @@ class CatalogManagementV1(BaseService):
         if account_identifier is None:
             raise ValueError('account_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_object_access')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_object_access'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -4023,20 +3575,16 @@ class CatalogManagementV1(BaseService):
         path_param_keys = ['catalog_identifier', 'object_identifier', 'account_identifier']
         path_param_values = self.encode_path_vars(catalog_identifier, object_identifier, account_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/catalogs/{catalog_identifier}/objects/{object_identifier}/access/{account_identifier}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        url = '/catalogs/{catalog_identifier}/objects/{object_identifier}/access/{account_identifier}'.format(
+            **path_param_dict
+        )
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_object_access(self,
-        catalog_identifier: str,
-        object_identifier: str,
-        account_identifier: str,
-        **kwargs
+    def delete_object_access(
+        self, catalog_identifier: str, object_identifier: str, account_identifier: str, **kwargs
     ) -> DetailedResponse:
         """
         Remove account ID from object access list.
@@ -4058,9 +3606,9 @@ class CatalogManagementV1(BaseService):
         if account_identifier is None:
             raise ValueError('account_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_object_access')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_object_access'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -4069,22 +3617,16 @@ class CatalogManagementV1(BaseService):
         path_param_keys = ['catalog_identifier', 'object_identifier', 'account_identifier']
         path_param_values = self.encode_path_vars(catalog_identifier, object_identifier, account_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/catalogs/{catalog_identifier}/objects/{object_identifier}/access/{account_identifier}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        url = '/catalogs/{catalog_identifier}/objects/{object_identifier}/access/{account_identifier}'.format(
+            **path_param_dict
+        )
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_object_access_list(self,
-        catalog_identifier: str,
-        object_identifier: str,
-        *,
-        limit: int = None,
-        offset: int = None,
-        **kwargs
+    def get_object_access_list(
+        self, catalog_identifier: str, object_identifier: str, *, limit: int = None, offset: int = None, **kwargs
     ) -> DetailedResponse:
         """
         Get object access list.
@@ -4106,15 +3648,12 @@ class CatalogManagementV1(BaseService):
         if object_identifier is None:
             raise ValueError('object_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_object_access_list')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_object_access_list'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'limit': limit,
-            'offset': offset
-        }
+        params = {'limit': limit, 'offset': offset}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -4124,20 +3663,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/objects/{object_identifier}/access'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_object_access_list(self,
-        catalog_identifier: str,
-        object_identifier: str,
-        accounts: List[str],
-        **kwargs
+    def delete_object_access_list(
+        self, catalog_identifier: str, object_identifier: str, accounts: List[str], **kwargs
     ) -> DetailedResponse:
         """
         Delete accounts from object access list.
@@ -4160,9 +3692,9 @@ class CatalogManagementV1(BaseService):
         if accounts is None:
             raise ValueError('accounts must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_object_access_list')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_object_access_list'
+        )
         headers.update(sdk_headers)
 
         data = json.dumps(accounts)
@@ -4176,20 +3708,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/objects/{object_identifier}/access'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def add_object_access_list(self,
-        catalog_identifier: str,
-        object_identifier: str,
-        accounts: List[str],
-        **kwargs
+    def add_object_access_list(
+        self, catalog_identifier: str, object_identifier: str, accounts: List[str], **kwargs
     ) -> DetailedResponse:
         """
         Add accounts to object access list.
@@ -4211,9 +3736,9 @@ class CatalogManagementV1(BaseService):
         if accounts is None:
             raise ValueError('accounts must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='add_object_access_list')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='add_object_access_list'
+        )
         headers.update(sdk_headers)
 
         data = json.dumps(accounts)
@@ -4227,10 +3752,7 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(catalog_identifier, object_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/catalogs/{catalog_identifier}/objects/{object_identifier}/access'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
@@ -4239,8 +3761,8 @@ class CatalogManagementV1(BaseService):
     # Instances
     #########################
 
-
-    def create_offering_instance(self,
+    def create_offering_instance(
+        self,
         x_auth_refresh_token: str,
         *,
         id: str = None,
@@ -4311,12 +3833,10 @@ class CatalogManagementV1(BaseService):
             raise ValueError('x_auth_refresh_token must be provided')
         if last_operation is not None:
             last_operation = convert_model(last_operation)
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='create_offering_instance')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_offering_instance'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -4338,7 +3858,7 @@ class CatalogManagementV1(BaseService):
             'install_plan': install_plan,
             'channel': channel,
             'metadata': metadata,
-            'last_operation': last_operation
+            'last_operation': last_operation,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -4349,19 +3869,12 @@ class CatalogManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/instances/offerings'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_offering_instance(self,
-        instance_identifier: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_offering_instance(self, instance_identifier: str, **kwargs) -> DetailedResponse:
         """
         Get Offering Instance.
 
@@ -4376,9 +3889,9 @@ class CatalogManagementV1(BaseService):
         if instance_identifier is None:
             raise ValueError('instance_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_offering_instance')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_offering_instance'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -4389,15 +3902,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(instance_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/instances/offerings/{instance_identifier}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def put_offering_instance(self,
+    def put_offering_instance(
+        self,
         instance_identifier: str,
         x_auth_refresh_token: str,
         *,
@@ -4472,12 +3983,10 @@ class CatalogManagementV1(BaseService):
             raise ValueError('x_auth_refresh_token must be provided')
         if last_operation is not None:
             last_operation = convert_model(last_operation)
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='put_offering_instance')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='put_offering_instance'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -4499,7 +4008,7 @@ class CatalogManagementV1(BaseService):
             'install_plan': install_plan,
             'channel': channel,
             'metadata': metadata,
-            'last_operation': last_operation
+            'last_operation': last_operation,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -4513,19 +4022,13 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(instance_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/instances/offerings/{instance_identifier}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_offering_instance(self,
-        instance_identifier: str,
-        x_auth_refresh_token: str,
-        **kwargs
+    def delete_offering_instance(
+        self, instance_identifier: str, x_auth_refresh_token: str, **kwargs
     ) -> DetailedResponse:
         """
         Delete a version instance.
@@ -4543,12 +4046,10 @@ class CatalogManagementV1(BaseService):
             raise ValueError('instance_identifier must be provided')
         if x_auth_refresh_token is None:
             raise ValueError('x_auth_refresh_token must be provided')
-        headers = {
-            'X-Auth-Refresh-Token': x_auth_refresh_token
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_offering_instance')
+        headers = {'X-Auth-Refresh-Token': x_auth_refresh_token}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_offering_instance'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -4558,9 +4059,7 @@ class CatalogManagementV1(BaseService):
         path_param_values = self.encode_path_vars(instance_identifier)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/instances/offerings/{instance_identifier}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -4577,6 +4076,7 @@ class GetConsumptionOfferingsEnums:
         private offerings. 'public' returns only the public offerings and 'private'
         returns only the private offerings.
         """
+
         ALL = 'all'
         PUBLIC = 'public'
         PRIVATE = 'private'
@@ -4591,14 +4091,17 @@ class UpdateOfferingIbmEnums:
         """
         Type of approval, ibm or public.
         """
+
         PC_MANAGED = 'pc_managed'
         ALLOW_REQUEST = 'allow_request'
         IBM = 'ibm'
         PUBLIC = 'public'
+
     class Approved(str, Enum):
         """
         Approve (true) or disapprove (false).
         """
+
         TRUE = 'true'
         FALSE = 'false'
 
@@ -4612,6 +4115,7 @@ class DeprecateOfferingEnums:
         """
         Set deprecation (true) or cancel deprecation (false).
         """
+
         TRUE = 'true'
         FALSE = 'false'
 
@@ -4626,6 +4130,7 @@ class GetOfferingSourceEnums:
         The type of the response: application/yaml, application/json, or
         application/x-gzip.
         """
+
         APPLICATION_YAML = 'application/yaml'
         APPLICATION_JSON = 'application/json'
         APPLICATION_X_GZIP = 'application/x-gzip'
@@ -4640,6 +4145,7 @@ class SetDeprecateVersionEnums:
         """
         Set deprecation (true) or cancel deprecation (false).
         """
+
         TRUE = 'true'
         FALSE = 'false'
 
@@ -4649,7 +4155,7 @@ class SetDeprecateVersionEnums:
 ##############################################################################
 
 
-class AccessListBulkResponse():
+class AccessListBulkResponse:
     """
     Access List Add/Remove result.
 
@@ -4657,9 +4163,7 @@ class AccessListBulkResponse():
           account: error.
     """
 
-    def __init__(self,
-                 *,
-                 errors: dict = None) -> None:
+    def __init__(self, *, errors: dict = None) -> None:
         """
         Initialize a AccessListBulkResponse object.
 
@@ -4706,7 +4210,8 @@ class AccessListBulkResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Account():
+
+class Account:
     """
     Account information.
 
@@ -4717,11 +4222,9 @@ class Account():
           filters.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 hide_ibm_cloud_catalog: bool = None,
-                 account_filters: 'Filters' = None) -> None:
+    def __init__(
+        self, *, id: str = None, hide_ibm_cloud_catalog: bool = None, account_filters: 'Filters' = None
+    ) -> None:
         """
         Initialize a Account object.
 
@@ -4781,7 +4284,8 @@ class Account():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class AccumulatedFilters():
+
+class AccumulatedFilters:
     """
     The accumulated filters for an account. This will return the account filters plus a
     filter for each catalog the user has access to.
@@ -4792,10 +4296,12 @@ class AccumulatedFilters():
           filters for all of the accessible catalogs.
     """
 
-    def __init__(self,
-                 *,
-                 account_filters: List['Filters'] = None,
-                 catalog_filters: List['AccumulatedFiltersCatalogFiltersItem'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        account_filters: List['Filters'] = None,
+        catalog_filters: List['AccumulatedFiltersCatalogFiltersItem'] = None
+    ) -> None:
         """
         Initialize a AccumulatedFilters object.
 
@@ -4814,7 +4320,9 @@ class AccumulatedFilters():
         if 'account_filters' in _dict:
             args['account_filters'] = [Filters.from_dict(x) for x in _dict.get('account_filters')]
         if 'catalog_filters' in _dict:
-            args['catalog_filters'] = [AccumulatedFiltersCatalogFiltersItem.from_dict(x) for x in _dict.get('catalog_filters')]
+            args['catalog_filters'] = [
+                AccumulatedFiltersCatalogFiltersItem.from_dict(x) for x in _dict.get('catalog_filters')
+            ]
         return cls(**args)
 
     @classmethod
@@ -4849,7 +4357,8 @@ class AccumulatedFilters():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class AccumulatedFiltersCatalogFiltersItem():
+
+class AccumulatedFiltersCatalogFiltersItem:
     """
     AccumulatedFiltersCatalogFiltersItem.
 
@@ -4858,10 +4367,9 @@ class AccumulatedFiltersCatalogFiltersItem():
     :attr Filters filters: (optional) Filters for account and catalog filters.
     """
 
-    def __init__(self,
-                 *,
-                 catalog: 'AccumulatedFiltersCatalogFiltersItemCatalog' = None,
-                 filters: 'Filters' = None) -> None:
+    def __init__(
+        self, *, catalog: 'AccumulatedFiltersCatalogFiltersItemCatalog' = None, filters: 'Filters' = None
+    ) -> None:
         """
         Initialize a AccumulatedFiltersCatalogFiltersItem object.
 
@@ -4914,7 +4422,8 @@ class AccumulatedFiltersCatalogFiltersItem():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class AccumulatedFiltersCatalogFiltersItemCatalog():
+
+class AccumulatedFiltersCatalogFiltersItemCatalog:
     """
     Filters for catalog.
 
@@ -4922,10 +4431,7 @@ class AccumulatedFiltersCatalogFiltersItemCatalog():
     :attr str name: (optional) The name of the catalog.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 name: str = None) -> None:
+    def __init__(self, *, id: str = None, name: str = None) -> None:
         """
         Initialize a AccumulatedFiltersCatalogFiltersItemCatalog object.
 
@@ -4977,7 +4483,8 @@ class AccumulatedFiltersCatalogFiltersItemCatalog():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ApprovalResult():
+
+class ApprovalResult:
     """
     Result of approval.
 
@@ -4987,12 +4494,9 @@ class ApprovalResult():
     :attr bool changed: (optional) Denotes whether approval has changed.
     """
 
-    def __init__(self,
-                 *,
-                 allow_request: bool = None,
-                 ibm: bool = None,
-                 public: bool = None,
-                 changed: bool = None) -> None:
+    def __init__(
+        self, *, allow_request: bool = None, ibm: bool = None, public: bool = None, changed: bool = None
+    ) -> None:
         """
         Initialize a ApprovalResult object.
 
@@ -5056,16 +4560,15 @@ class ApprovalResult():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class AuditLog():
+
+class AuditLog:
     """
     A collection of audit records.
 
     :attr List[AuditRecord] list: (optional) A list of audit records.
     """
 
-    def __init__(self,
-                 *,
-                 list: List['AuditRecord'] = None) -> None:
+    def __init__(self, *, list: List['AuditRecord'] = None) -> None:
         """
         Initialize a AuditLog object.
 
@@ -5111,7 +4614,8 @@ class AuditLog():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class AuditRecord():
+
+class AuditRecord:
     """
     An audit record which describes a change made to a catalog or associated resource.
 
@@ -5126,15 +4630,17 @@ class AuditRecord():
     :attr str message: (optional) A message which describes the change.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 created: datetime = None,
-                 change_type: str = None,
-                 target_type: str = None,
-                 target_id: str = None,
-                 who_delegate_email: str = None,
-                 message: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        created: datetime = None,
+        change_type: str = None,
+        target_type: str = None,
+        target_id: str = None,
+        who_delegate_email: str = None,
+        message: str = None
+    ) -> None:
         """
         Initialize a AuditRecord object.
 
@@ -5220,7 +4726,8 @@ class AuditRecord():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Catalog():
+
+class Catalog:
     """
     Catalog information.
 
@@ -5249,26 +4756,28 @@ class Catalog():
           vpe.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 rev: str = None,
-                 label: str = None,
-                 short_description: str = None,
-                 catalog_icon_url: str = None,
-                 tags: List[str] = None,
-                 url: str = None,
-                 crn: str = None,
-                 offerings_url: str = None,
-                 features: List['Feature'] = None,
-                 disabled: bool = None,
-                 created: datetime = None,
-                 updated: datetime = None,
-                 resource_group_id: str = None,
-                 owning_account: str = None,
-                 catalog_filters: 'Filters' = None,
-                 syndication_settings: 'SyndicationResource' = None,
-                 kind: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        rev: str = None,
+        label: str = None,
+        short_description: str = None,
+        catalog_icon_url: str = None,
+        tags: List[str] = None,
+        url: str = None,
+        crn: str = None,
+        offerings_url: str = None,
+        features: List['Feature'] = None,
+        disabled: bool = None,
+        created: datetime = None,
+        updated: datetime = None,
+        resource_group_id: str = None,
+        owning_account: str = None,
+        catalog_filters: 'Filters' = None,
+        syndication_settings: 'SyndicationResource' = None,
+        kind: str = None
+    ) -> None:
         """
         Initialize a Catalog object.
 
@@ -5419,7 +4928,8 @@ class Catalog():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CatalogObject():
+
+class CatalogObject:
     """
     object information.
 
@@ -5447,27 +4957,29 @@ class CatalogObject():
     :attr dict data: (optional) Map of data values for this object.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 name: str = None,
-                 rev: str = None,
-                 crn: str = None,
-                 url: str = None,
-                 parent_id: str = None,
-                 label_i18n: str = None,
-                 label: str = None,
-                 tags: List[str] = None,
-                 created: datetime = None,
-                 updated: datetime = None,
-                 short_description: str = None,
-                 short_description_i18n: str = None,
-                 kind: str = None,
-                 publish: 'PublishObject' = None,
-                 state: 'State' = None,
-                 catalog_id: str = None,
-                 catalog_name: str = None,
-                 data: dict = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        name: str = None,
+        rev: str = None,
+        crn: str = None,
+        url: str = None,
+        parent_id: str = None,
+        label_i18n: str = None,
+        label: str = None,
+        tags: List[str] = None,
+        created: datetime = None,
+        updated: datetime = None,
+        short_description: str = None,
+        short_description_i18n: str = None,
+        kind: str = None,
+        publish: 'PublishObject' = None,
+        state: 'State' = None,
+        catalog_id: str = None,
+        catalog_name: str = None,
+        data: dict = None
+    ) -> None:
         """
         Initialize a CatalogObject object.
 
@@ -5628,7 +5140,8 @@ class CatalogObject():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CatalogSearchResult():
+
+class CatalogSearchResult:
     """
     Paginated catalog search result.
 
@@ -5637,10 +5150,7 @@ class CatalogSearchResult():
     :attr List[Catalog] resources: (optional) Resulting objects.
     """
 
-    def __init__(self,
-                 *,
-                 total_count: int = None,
-                 resources: List['Catalog'] = None) -> None:
+    def __init__(self, *, total_count: int = None, resources: List['Catalog'] = None) -> None:
         """
         Initialize a CatalogSearchResult object.
 
@@ -5693,7 +5203,8 @@ class CatalogSearchResult():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CategoryFilter():
+
+class CategoryFilter:
     """
     Filter on a category. The filter will match against the values of the given category
     with include or exclude.
@@ -5703,10 +5214,7 @@ class CategoryFilter():
     :attr FilterTerms filter: (optional) Offering filter terms.
     """
 
-    def __init__(self,
-                 *,
-                 include: bool = None,
-                 filter: 'FilterTerms' = None) -> None:
+    def __init__(self, *, include: bool = None, filter: 'FilterTerms' = None) -> None:
         """
         Initialize a CategoryFilter object.
 
@@ -5759,7 +5267,8 @@ class CategoryFilter():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ClusterInfo():
+
+class ClusterInfo:
     """
     Cluster information.
 
@@ -5770,13 +5279,15 @@ class ClusterInfo():
     :attr str region: (optional) Cluster region.
     """
 
-    def __init__(self,
-                 *,
-                 resource_group_id: str = None,
-                 resource_group_name: str = None,
-                 id: str = None,
-                 name: str = None,
-                 region: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        resource_group_id: str = None,
+        resource_group_name: str = None,
+        id: str = None,
+        name: str = None,
+        region: str = None
+    ) -> None:
         """
         Initialize a ClusterInfo object.
 
@@ -5846,7 +5357,8 @@ class ClusterInfo():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Configuration():
+
+class Configuration:
     """
     Configuration description.
 
@@ -5863,16 +5375,18 @@ class Configuration():
     :attr bool hidden: (optional) Hide values.
     """
 
-    def __init__(self,
-                 *,
-                 key: str = None,
-                 type: str = None,
-                 default_value: object = None,
-                 value_constraint: str = None,
-                 description: str = None,
-                 required: bool = None,
-                 options: List[object] = None,
-                 hidden: bool = None) -> None:
+    def __init__(
+        self,
+        *,
+        key: str = None,
+        type: str = None,
+        default_value: object = None,
+        value_constraint: str = None,
+        description: str = None,
+        required: bool = None,
+        options: List[object] = None,
+        hidden: bool = None
+    ) -> None:
         """
         Initialize a Configuration object.
 
@@ -5963,7 +5477,8 @@ class Configuration():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class DeployRequestBodySchematics():
+
+class DeployRequestBodySchematics:
     """
     Schematics workspace configuration.
 
@@ -5974,12 +5489,9 @@ class DeployRequestBodySchematics():
           schematics workspace.
     """
 
-    def __init__(self,
-                 *,
-                 name: str = None,
-                 description: str = None,
-                 tags: List[str] = None,
-                 resource_group_id: str = None) -> None:
+    def __init__(
+        self, *, name: str = None, description: str = None, tags: List[str] = None, resource_group_id: str = None
+    ) -> None:
         """
         Initialize a DeployRequestBodySchematics object.
 
@@ -6044,7 +5556,8 @@ class DeployRequestBodySchematics():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Deployment():
+
+class Deployment:
     """
     Deployment for offering.
 
@@ -6061,17 +5574,19 @@ class Deployment():
     :attr datetime updated: (optional) the date'time this catalog was last updated.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 label: str = None,
-                 name: str = None,
-                 short_description: str = None,
-                 long_description: str = None,
-                 metadata: dict = None,
-                 tags: List[str] = None,
-                 created: datetime = None,
-                 updated: datetime = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        label: str = None,
+        name: str = None,
+        short_description: str = None,
+        long_description: str = None,
+        metadata: dict = None,
+        tags: List[str] = None,
+        created: datetime = None,
+        updated: datetime = None
+    ) -> None:
         """
         Initialize a Deployment object.
 
@@ -6169,7 +5684,8 @@ class Deployment():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Feature():
+
+class Feature:
     """
     Feature information.
 
@@ -6177,10 +5693,7 @@ class Feature():
     :attr str description: (optional) Feature description.
     """
 
-    def __init__(self,
-                 *,
-                 title: str = None,
-                 description: str = None) -> None:
+    def __init__(self, *, title: str = None, description: str = None) -> None:
         """
         Initialize a Feature object.
 
@@ -6232,7 +5745,8 @@ class Feature():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class FilterTerms():
+
+class FilterTerms:
     """
     Offering filter terms.
 
@@ -6242,9 +5756,7 @@ class FilterTerms():
           the offering is excluded.
     """
 
-    def __init__(self,
-                 *,
-                 filter_terms: List[str] = None) -> None:
+    def __init__(self, *, filter_terms: List[str] = None) -> None:
         """
         Initialize a FilterTerms object.
 
@@ -6293,7 +5805,8 @@ class FilterTerms():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Filters():
+
+class Filters:
     """
     Filters for account and catalog filters.
 
@@ -6306,11 +5819,9 @@ class Filters():
           include filter and an exclule filter. Both can be set.
     """
 
-    def __init__(self,
-                 *,
-                 include_all: bool = None,
-                 category_filters: dict = None,
-                 id_filters: 'IDFilter' = None) -> None:
+    def __init__(
+        self, *, include_all: bool = None, category_filters: dict = None, id_filters: 'IDFilter' = None
+    ) -> None:
         """
         Initialize a Filters object.
 
@@ -6334,7 +5845,9 @@ class Filters():
         if 'include_all' in _dict:
             args['include_all'] = _dict.get('include_all')
         if 'category_filters' in _dict:
-            args['category_filters'] = {k : CategoryFilter.from_dict(v) for k, v in _dict.get('category_filters').items()}
+            args['category_filters'] = {
+                k: CategoryFilter.from_dict(v) for k, v in _dict.get('category_filters').items()
+            }
         if 'id_filters' in _dict:
             args['id_filters'] = IDFilter.from_dict(_dict.get('id_filters'))
         return cls(**args)
@@ -6350,7 +5863,7 @@ class Filters():
         if hasattr(self, 'include_all') and self.include_all is not None:
             _dict['include_all'] = self.include_all
         if hasattr(self, 'category_filters') and self.category_filters is not None:
-            _dict['category_filters'] = {k : v.to_dict() for k, v in self.category_filters.items()}
+            _dict['category_filters'] = {k: v.to_dict() for k, v in self.category_filters.items()}
         if hasattr(self, 'id_filters') and self.id_filters is not None:
             _dict['id_filters'] = self.id_filters.to_dict()
         return _dict
@@ -6373,7 +5886,8 @@ class Filters():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class IDFilter():
+
+class IDFilter:
     """
     Filter on offering ID's. There is an include filter and an exclule filter. Both can be
     set.
@@ -6382,10 +5896,7 @@ class IDFilter():
     :attr FilterTerms exclude: (optional) Offering filter terms.
     """
 
-    def __init__(self,
-                 *,
-                 include: 'FilterTerms' = None,
-                 exclude: 'FilterTerms' = None) -> None:
+    def __init__(self, *, include: 'FilterTerms' = None, exclude: 'FilterTerms' = None) -> None:
         """
         Initialize a IDFilter object.
 
@@ -6437,16 +5948,15 @@ class IDFilter():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Image():
+
+class Image:
     """
     Image.
 
     :attr str image: (optional) Image.
     """
 
-    def __init__(self,
-                 *,
-                 image: str = None) -> None:
+    def __init__(self, *, image: str = None) -> None:
         """
         Initialize a Image object.
 
@@ -6492,7 +6002,8 @@ class Image():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ImageManifest():
+
+class ImageManifest:
     """
     Image Manifest.
 
@@ -6500,10 +6011,7 @@ class ImageManifest():
     :attr List[Image] images: (optional) List of images.
     """
 
-    def __init__(self,
-                 *,
-                 description: str = None,
-                 images: List['Image'] = None) -> None:
+    def __init__(self, *, description: str = None, images: List['Image'] = None) -> None:
         """
         Initialize a ImageManifest object.
 
@@ -6555,7 +6063,8 @@ class ImageManifest():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class InstallStatus():
+
+class InstallStatus:
     """
     Installation status.
 
@@ -6565,11 +6074,13 @@ class InstallStatus():
           information.
     """
 
-    def __init__(self,
-                 *,
-                 metadata: 'InstallStatusMetadata' = None,
-                 release: 'InstallStatusRelease' = None,
-                 content_mgmt: 'InstallStatusContentMgmt' = None) -> None:
+    def __init__(
+        self,
+        *,
+        metadata: 'InstallStatusMetadata' = None,
+        release: 'InstallStatusRelease' = None,
+        content_mgmt: 'InstallStatusContentMgmt' = None
+    ) -> None:
         """
         Initialize a InstallStatus object.
 
@@ -6629,7 +6140,8 @@ class InstallStatus():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class InstallStatusContentMgmt():
+
+class InstallStatusContentMgmt:
     """
     Content management information.
 
@@ -6637,10 +6149,7 @@ class InstallStatusContentMgmt():
     :attr List[dict] errors: (optional) Errors.
     """
 
-    def __init__(self,
-                 *,
-                 pods: List[dict] = None,
-                 errors: List[dict] = None) -> None:
+    def __init__(self, *, pods: List[dict] = None, errors: List[dict] = None) -> None:
         """
         Initialize a InstallStatusContentMgmt object.
 
@@ -6692,7 +6201,8 @@ class InstallStatusContentMgmt():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class InstallStatusMetadata():
+
+class InstallStatusMetadata:
     """
     Installation status metadata.
 
@@ -6703,13 +6213,15 @@ class InstallStatusMetadata():
     :attr str workspace_name: (optional) Workspace name.
     """
 
-    def __init__(self,
-                 *,
-                 cluster_id: str = None,
-                 region: str = None,
-                 namespace: str = None,
-                 workspace_id: str = None,
-                 workspace_name: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        cluster_id: str = None,
+        region: str = None,
+        namespace: str = None,
+        workspace_id: str = None,
+        workspace_name: str = None
+    ) -> None:
         """
         Initialize a InstallStatusMetadata object.
 
@@ -6779,7 +6291,8 @@ class InstallStatusMetadata():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class InstallStatusRelease():
+
+class InstallStatusRelease:
     """
     Release information.
 
@@ -6790,13 +6303,15 @@ class InstallStatusRelease():
     :attr List[dict] errors: (optional) Kube errors.
     """
 
-    def __init__(self,
-                 *,
-                 deployments: List[dict] = None,
-                 replicasets: List[dict] = None,
-                 statefulsets: List[dict] = None,
-                 pods: List[dict] = None,
-                 errors: List[dict] = None) -> None:
+    def __init__(
+        self,
+        *,
+        deployments: List[dict] = None,
+        replicasets: List[dict] = None,
+        statefulsets: List[dict] = None,
+        pods: List[dict] = None,
+        errors: List[dict] = None
+    ) -> None:
         """
         Initialize a InstallStatusRelease object.
 
@@ -6866,7 +6381,8 @@ class InstallStatusRelease():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class JsonPatchOperation():
+
+class JsonPatchOperation:
     """
     This model represents an individual patch operation to be performed on a JSON
     document, as defined by RFC 6902.
@@ -6879,12 +6395,7 @@ class JsonPatchOperation():
     :attr object value: (optional) The value to be used within the operation.
     """
 
-    def __init__(self,
-                 op: str,
-                 path: str,
-                 *,
-                 from_: str = None,
-                 value: object = None) -> None:
+    def __init__(self, op: str, path: str, *, from_: str = None, value: object = None) -> None:
         """
         Initialize a JsonPatchOperation object.
 
@@ -6958,6 +6469,7 @@ class JsonPatchOperation():
         """
         The operation to be performed.
         """
+
         ADD = 'add'
         REMOVE = 'remove'
         REPLACE = 'replace'
@@ -6966,7 +6478,7 @@ class JsonPatchOperation():
         TEST = 'test'
 
 
-class Kind():
+class Kind:
     """
     Offering kind.
 
@@ -6986,19 +6498,21 @@ class Kind():
     :attr List[Plan] plans: (optional) list of plans.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 format_kind: str = None,
-                 target_kind: str = None,
-                 metadata: dict = None,
-                 install_description: str = None,
-                 tags: List[str] = None,
-                 additional_features: List['Feature'] = None,
-                 created: datetime = None,
-                 updated: datetime = None,
-                 versions: List['Version'] = None,
-                 plans: List['Plan'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        format_kind: str = None,
+        target_kind: str = None,
+        metadata: dict = None,
+        install_description: str = None,
+        tags: List[str] = None,
+        additional_features: List['Feature'] = None,
+        created: datetime = None,
+        updated: datetime = None,
+        versions: List['Version'] = None,
+        plans: List['Plan'] = None
+    ) -> None:
         """
         Initialize a Kind object.
 
@@ -7109,7 +6623,8 @@ class Kind():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class License():
+
+class License:
     """
     BSS license.
 
@@ -7120,13 +6635,9 @@ class License():
     :attr str description: (optional) License description.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 name: str = None,
-                 type: str = None,
-                 url: str = None,
-                 description: str = None) -> None:
+    def __init__(
+        self, *, id: str = None, name: str = None, type: str = None, url: str = None, description: str = None
+    ) -> None:
         """
         Initialize a License object.
 
@@ -7196,7 +6707,8 @@ class License():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class MediaItem():
+
+class MediaItem:
     """
     Offering Media information.
 
@@ -7206,12 +6718,7 @@ class MediaItem():
     :attr str thumbnail_url: (optional) Thumbnail URL for this media item.
     """
 
-    def __init__(self,
-                 *,
-                 url: str = None,
-                 caption: str = None,
-                 type: str = None,
-                 thumbnail_url: str = None) -> None:
+    def __init__(self, *, url: str = None, caption: str = None, type: str = None, thumbnail_url: str = None) -> None:
         """
         Initialize a MediaItem object.
 
@@ -7275,7 +6782,8 @@ class MediaItem():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class NamespaceSearchResult():
+
+class NamespaceSearchResult:
     """
     Paginated list of namespace search results.
 
@@ -7296,17 +6804,19 @@ class NamespaceSearchResult():
     :attr List[str] resources: (optional) Resulting objects.
     """
 
-    def __init__(self,
-                 offset: int,
-                 limit: int,
-                 *,
-                 total_count: int = None,
-                 resource_count: int = None,
-                 first: str = None,
-                 last: str = None,
-                 prev: str = None,
-                 next: str = None,
-                 resources: List[str] = None) -> None:
+    def __init__(
+        self,
+        offset: int,
+        limit: int,
+        *,
+        total_count: int = None,
+        resource_count: int = None,
+        first: str = None,
+        last: str = None,
+        prev: str = None,
+        next: str = None,
+        resources: List[str] = None
+    ) -> None:
         """
         Initialize a NamespaceSearchResult object.
 
@@ -7412,7 +6922,8 @@ class NamespaceSearchResult():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ObjectAccess():
+
+class ObjectAccess:
     """
     object access.
 
@@ -7423,13 +6934,15 @@ class ObjectAccess():
     :attr datetime create: (optional) date and time create.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 account: str = None,
-                 catalog_id: str = None,
-                 target_id: str = None,
-                 create: datetime = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        account: str = None,
+        catalog_id: str = None,
+        target_id: str = None,
+        create: datetime = None
+    ) -> None:
         """
         Initialize a ObjectAccess object.
 
@@ -7499,7 +7012,8 @@ class ObjectAccess():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ObjectAccessListResult():
+
+class ObjectAccessListResult:
     """
     Paginated object search result.
 
@@ -7520,17 +7034,19 @@ class ObjectAccessListResult():
     :attr List[ObjectAccess] resources: (optional) Resulting objects.
     """
 
-    def __init__(self,
-                 offset: int,
-                 limit: int,
-                 *,
-                 total_count: int = None,
-                 resource_count: int = None,
-                 first: str = None,
-                 last: str = None,
-                 prev: str = None,
-                 next: str = None,
-                 resources: List['ObjectAccess'] = None) -> None:
+    def __init__(
+        self,
+        offset: int,
+        limit: int,
+        *,
+        total_count: int = None,
+        resource_count: int = None,
+        first: str = None,
+        last: str = None,
+        prev: str = None,
+        next: str = None,
+        resources: List['ObjectAccess'] = None
+    ) -> None:
         """
         Initialize a ObjectAccessListResult object.
 
@@ -7636,7 +7152,8 @@ class ObjectAccessListResult():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ObjectListResult():
+
+class ObjectListResult:
     """
     Paginated object search result.
 
@@ -7657,17 +7174,19 @@ class ObjectListResult():
     :attr List[CatalogObject] resources: (optional) Resulting objects.
     """
 
-    def __init__(self,
-                 offset: int,
-                 limit: int,
-                 *,
-                 total_count: int = None,
-                 resource_count: int = None,
-                 first: str = None,
-                 last: str = None,
-                 prev: str = None,
-                 next: str = None,
-                 resources: List['CatalogObject'] = None) -> None:
+    def __init__(
+        self,
+        offset: int,
+        limit: int,
+        *,
+        total_count: int = None,
+        resource_count: int = None,
+        first: str = None,
+        last: str = None,
+        prev: str = None,
+        next: str = None,
+        resources: List['CatalogObject'] = None
+    ) -> None:
         """
         Initialize a ObjectListResult object.
 
@@ -7773,7 +7292,8 @@ class ObjectListResult():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ObjectSearchResult():
+
+class ObjectSearchResult:
     """
     Paginated object search result.
 
@@ -7794,17 +7314,19 @@ class ObjectSearchResult():
     :attr List[CatalogObject] resources: (optional) Resulting objects.
     """
 
-    def __init__(self,
-                 offset: int,
-                 limit: int,
-                 *,
-                 total_count: int = None,
-                 resource_count: int = None,
-                 first: str = None,
-                 last: str = None,
-                 prev: str = None,
-                 next: str = None,
-                 resources: List['CatalogObject'] = None) -> None:
+    def __init__(
+        self,
+        offset: int,
+        limit: int,
+        *,
+        total_count: int = None,
+        resource_count: int = None,
+        first: str = None,
+        last: str = None,
+        prev: str = None,
+        next: str = None,
+        resources: List['CatalogObject'] = None
+    ) -> None:
         """
         Initialize a ObjectSearchResult object.
 
@@ -7910,7 +7432,8 @@ class ObjectSearchResult():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Offering():
+
+class Offering:
     """
     Offering information.
 
@@ -7968,43 +7491,45 @@ class Offering():
           offering.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 rev: str = None,
-                 url: str = None,
-                 crn: str = None,
-                 label: str = None,
-                 name: str = None,
-                 offering_icon_url: str = None,
-                 offering_docs_url: str = None,
-                 offering_support_url: str = None,
-                 tags: List[str] = None,
-                 keywords: List[str] = None,
-                 rating: 'Rating' = None,
-                 created: datetime = None,
-                 updated: datetime = None,
-                 short_description: str = None,
-                 long_description: str = None,
-                 features: List['Feature'] = None,
-                 kinds: List['Kind'] = None,
-                 permit_request_ibm_public_publish: bool = None,
-                 ibm_publish_approved: bool = None,
-                 public_publish_approved: bool = None,
-                 public_original_crn: str = None,
-                 publish_public_crn: str = None,
-                 portal_approval_record: str = None,
-                 portal_ui_url: str = None,
-                 catalog_id: str = None,
-                 catalog_name: str = None,
-                 metadata: dict = None,
-                 disclaimer: str = None,
-                 hidden: bool = None,
-                 provider: str = None,
-                 provider_info: 'ProviderInfo' = None,
-                 repo_info: 'RepoInfo' = None,
-                 support: 'Support' = None,
-                 media: List['MediaItem'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        rev: str = None,
+        url: str = None,
+        crn: str = None,
+        label: str = None,
+        name: str = None,
+        offering_icon_url: str = None,
+        offering_docs_url: str = None,
+        offering_support_url: str = None,
+        tags: List[str] = None,
+        keywords: List[str] = None,
+        rating: 'Rating' = None,
+        created: datetime = None,
+        updated: datetime = None,
+        short_description: str = None,
+        long_description: str = None,
+        features: List['Feature'] = None,
+        kinds: List['Kind'] = None,
+        permit_request_ibm_public_publish: bool = None,
+        ibm_publish_approved: bool = None,
+        public_publish_approved: bool = None,
+        public_original_crn: str = None,
+        publish_public_crn: str = None,
+        portal_approval_record: str = None,
+        portal_ui_url: str = None,
+        catalog_id: str = None,
+        catalog_name: str = None,
+        metadata: dict = None,
+        disclaimer: str = None,
+        hidden: bool = None,
+        provider: str = None,
+        provider_info: 'ProviderInfo' = None,
+        repo_info: 'RepoInfo' = None,
+        support: 'Support' = None,
+        media: List['MediaItem'] = None
+    ) -> None:
         """
         Initialize a Offering object.
 
@@ -8275,7 +7800,8 @@ class Offering():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class OfferingInstance():
+
+class OfferingInstance:
     """
     A offering instance resource (provision instance of a catalog offering).
 
@@ -8311,27 +7837,29 @@ class OfferingInstance():
           operation performed and status.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 rev: str = None,
-                 url: str = None,
-                 crn: str = None,
-                 label: str = None,
-                 catalog_id: str = None,
-                 offering_id: str = None,
-                 kind_format: str = None,
-                 version: str = None,
-                 cluster_id: str = None,
-                 cluster_region: str = None,
-                 cluster_namespaces: List[str] = None,
-                 cluster_all_namespaces: bool = None,
-                 schematics_workspace_id: str = None,
-                 resource_group_id: str = None,
-                 install_plan: str = None,
-                 channel: str = None,
-                 metadata: dict = None,
-                 last_operation: 'OfferingInstanceLastOperation' = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        rev: str = None,
+        url: str = None,
+        crn: str = None,
+        label: str = None,
+        catalog_id: str = None,
+        offering_id: str = None,
+        kind_format: str = None,
+        version: str = None,
+        cluster_id: str = None,
+        cluster_region: str = None,
+        cluster_namespaces: List[str] = None,
+        cluster_all_namespaces: bool = None,
+        schematics_workspace_id: str = None,
+        resource_group_id: str = None,
+        install_plan: str = None,
+        channel: str = None,
+        metadata: dict = None,
+        last_operation: 'OfferingInstanceLastOperation' = None
+    ) -> None:
         """
         Initialize a OfferingInstance object.
 
@@ -8498,7 +8026,8 @@ class OfferingInstance():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class OfferingInstanceLastOperation():
+
+class OfferingInstanceLastOperation:
     """
     the last operation performed and status.
 
@@ -8509,13 +8038,15 @@ class OfferingInstanceLastOperation():
     :attr str updated: (optional) Date and time last updated.
     """
 
-    def __init__(self,
-                 *,
-                 operation: str = None,
-                 state: str = None,
-                 message: str = None,
-                 transaction_id: str = None,
-                 updated: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        operation: str = None,
+        state: str = None,
+        message: str = None,
+        transaction_id: str = None,
+        updated: str = None
+    ) -> None:
         """
         Initialize a OfferingInstanceLastOperation object.
 
@@ -8587,7 +8118,8 @@ class OfferingInstanceLastOperation():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class OfferingSearchResult():
+
+class OfferingSearchResult:
     """
     Paginated offering search result.
 
@@ -8608,17 +8140,19 @@ class OfferingSearchResult():
     :attr List[Offering] resources: (optional) Resulting objects.
     """
 
-    def __init__(self,
-                 offset: int,
-                 limit: int,
-                 *,
-                 total_count: int = None,
-                 resource_count: int = None,
-                 first: str = None,
-                 last: str = None,
-                 prev: str = None,
-                 next: str = None,
-                 resources: List['Offering'] = None) -> None:
+    def __init__(
+        self,
+        offset: int,
+        limit: int,
+        *,
+        total_count: int = None,
+        resource_count: int = None,
+        first: str = None,
+        last: str = None,
+        prev: str = None,
+        next: str = None,
+        resources: List['Offering'] = None
+    ) -> None:
         """
         Initialize a OfferingSearchResult object.
 
@@ -8724,7 +8258,8 @@ class OfferingSearchResult():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class OperatorDeployResult():
+
+class OperatorDeployResult:
     """
     Operator deploy result.
 
@@ -8738,16 +8273,18 @@ class OperatorDeployResult():
     :attr str catalog_id: (optional) Catalog identification.
     """
 
-    def __init__(self,
-                 *,
-                 phase: str = None,
-                 message: str = None,
-                 link: str = None,
-                 name: str = None,
-                 version: str = None,
-                 namespace: str = None,
-                 package_name: str = None,
-                 catalog_id: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        phase: str = None,
+        message: str = None,
+        link: str = None,
+        name: str = None,
+        version: str = None,
+        namespace: str = None,
+        package_name: str = None,
+        catalog_id: str = None
+    ) -> None:
         """
         Initialize a OperatorDeployResult object.
 
@@ -8835,7 +8372,8 @@ class OperatorDeployResult():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Plan():
+
+class Plan:
     """
     Offering plan.
 
@@ -8855,19 +8393,21 @@ class Plan():
     :attr List[Deployment] deployments: (optional) list of deployments.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 label: str = None,
-                 name: str = None,
-                 short_description: str = None,
-                 long_description: str = None,
-                 metadata: dict = None,
-                 tags: List[str] = None,
-                 additional_features: List['Feature'] = None,
-                 created: datetime = None,
-                 updated: datetime = None,
-                 deployments: List['Deployment'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        label: str = None,
+        name: str = None,
+        short_description: str = None,
+        long_description: str = None,
+        metadata: dict = None,
+        tags: List[str] = None,
+        additional_features: List['Feature'] = None,
+        created: datetime = None,
+        updated: datetime = None,
+        deployments: List['Deployment'] = None
+    ) -> None:
         """
         Initialize a Plan object.
 
@@ -8978,7 +8518,8 @@ class Plan():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ProviderInfo():
+
+class ProviderInfo:
     """
     Information on the provider for this offering, or omitted if no provider information
     is given.
@@ -8987,10 +8528,7 @@ class ProviderInfo():
     :attr str name: (optional) The name of this provider.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 name: str = None) -> None:
+    def __init__(self, *, id: str = None, name: str = None) -> None:
         """
         Initialize a ProviderInfo object.
 
@@ -9042,7 +8580,8 @@ class ProviderInfo():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class PublishObject():
+
+class PublishObject:
     """
     Publish information.
 
@@ -9056,13 +8595,15 @@ class PublishObject():
     :attr str portal_url: (optional) The portal UI URL.
     """
 
-    def __init__(self,
-                 *,
-                 permit_ibm_public_publish: bool = None,
-                 ibm_approved: bool = None,
-                 public_approved: bool = None,
-                 portal_approval_record: str = None,
-                 portal_url: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        permit_ibm_public_publish: bool = None,
+        ibm_approved: bool = None,
+        public_approved: bool = None,
+        portal_approval_record: str = None,
+        portal_url: str = None
+    ) -> None:
         """
         Initialize a PublishObject object.
 
@@ -9136,7 +8677,8 @@ class PublishObject():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Rating():
+
+class Rating:
     """
     Repository info for offerings.
 
@@ -9146,12 +8688,14 @@ class Rating():
     :attr int four_star_count: (optional) Four start rating.
     """
 
-    def __init__(self,
-                 *,
-                 one_star_count: int = None,
-                 two_star_count: int = None,
-                 three_star_count: int = None,
-                 four_star_count: int = None) -> None:
+    def __init__(
+        self,
+        *,
+        one_star_count: int = None,
+        two_star_count: int = None,
+        three_star_count: int = None,
+        four_star_count: int = None
+    ) -> None:
         """
         Initialize a Rating object.
 
@@ -9215,7 +8759,8 @@ class Rating():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class RepoInfo():
+
+class RepoInfo:
     """
     Repository info for offerings.
 
@@ -9223,10 +8768,7 @@ class RepoInfo():
     :attr str type: (optional) Public or enterprise GitHub.
     """
 
-    def __init__(self,
-                 *,
-                 token: str = None,
-                 type: str = None) -> None:
+    def __init__(self, *, token: str = None, type: str = None) -> None:
         """
         Initialize a RepoInfo object.
 
@@ -9278,7 +8820,8 @@ class RepoInfo():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Resource():
+
+class Resource:
     """
     Resource requirements.
 
@@ -9287,10 +8830,7 @@ class Resource():
           int.  targetVersion will be a semver range value.
     """
 
-    def __init__(self,
-                 *,
-                 type: str = None,
-                 value: object = None) -> None:
+    def __init__(self, *, type: str = None, value: object = None) -> None:
         """
         Initialize a Resource object.
 
@@ -9347,6 +8887,7 @@ class Resource():
         """
         Type of requirement.
         """
+
         MEM = 'mem'
         DISK = 'disk'
         CORES = 'cores'
@@ -9354,7 +8895,7 @@ class Resource():
         NODES = 'nodes'
 
 
-class Script():
+class Script:
     """
     Script information.
 
@@ -9370,13 +8911,15 @@ class Script():
           to a namespace or the entire cluster.
     """
 
-    def __init__(self,
-                 *,
-                 instructions: str = None,
-                 script: str = None,
-                 script_permission: str = None,
-                 delete_script: str = None,
-                 scope: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        instructions: str = None,
+        script: str = None,
+        script_permission: str = None,
+        delete_script: str = None,
+        scope: str = None
+    ) -> None:
         """
         Initialize a Script object.
 
@@ -9452,7 +8995,8 @@ class Script():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class State():
+
+class State:
     """
     Offering state.
 
@@ -9466,13 +9010,15 @@ class State():
           ibm-published, public-published.
     """
 
-    def __init__(self,
-                 *,
-                 current: str = None,
-                 current_entered: datetime = None,
-                 pending: str = None,
-                 pending_requested: datetime = None,
-                 previous: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        current: str = None,
+        current_entered: datetime = None,
+        pending: str = None,
+        pending_requested: datetime = None,
+        previous: str = None
+    ) -> None:
         """
         Initialize a State object.
 
@@ -9547,7 +9093,8 @@ class State():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Support():
+
+class Support:
     """
     Offering Support information.
 
@@ -9558,11 +9105,7 @@ class Support():
           support is provided.
     """
 
-    def __init__(self,
-                 *,
-                 url: str = None,
-                 process: str = None,
-                 locations: List[str] = None) -> None:
+    def __init__(self, *, url: str = None, process: str = None, locations: List[str] = None) -> None:
         """
         Initialize a Support object.
 
@@ -9622,7 +9165,8 @@ class Support():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SyndicationAuthorization():
+
+class SyndicationAuthorization:
     """
     Feature information.
 
@@ -9630,10 +9174,7 @@ class SyndicationAuthorization():
     :attr datetime last_run: (optional) Date and time last updated.
     """
 
-    def __init__(self,
-                 *,
-                 token: str = None,
-                 last_run: datetime = None) -> None:
+    def __init__(self, *, token: str = None, last_run: datetime = None) -> None:
         """
         Initialize a SyndicationAuthorization object.
 
@@ -9685,7 +9226,8 @@ class SyndicationAuthorization():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SyndicationCluster():
+
+class SyndicationCluster:
     """
     Feature information.
 
@@ -9698,15 +9240,17 @@ class SyndicationCluster():
     :attr bool all_namespaces: (optional) Syndicated to all namespaces on cluster.
     """
 
-    def __init__(self,
-                 *,
-                 region: str = None,
-                 id: str = None,
-                 name: str = None,
-                 resource_group_name: str = None,
-                 type: str = None,
-                 namespaces: List[str] = None,
-                 all_namespaces: bool = None) -> None:
+    def __init__(
+        self,
+        *,
+        region: str = None,
+        id: str = None,
+        name: str = None,
+        resource_group_name: str = None,
+        type: str = None,
+        namespaces: List[str] = None,
+        all_namespaces: bool = None
+    ) -> None:
         """
         Initialize a SyndicationCluster object.
 
@@ -9789,7 +9333,8 @@ class SyndicationCluster():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SyndicationHistory():
+
+class SyndicationHistory:
     """
     Feature information.
 
@@ -9799,11 +9344,9 @@ class SyndicationHistory():
     :attr datetime last_run: (optional) Date and time last syndicated.
     """
 
-    def __init__(self,
-                 *,
-                 namespaces: List[str] = None,
-                 clusters: List['SyndicationCluster'] = None,
-                 last_run: datetime = None) -> None:
+    def __init__(
+        self, *, namespaces: List[str] = None, clusters: List['SyndicationCluster'] = None, last_run: datetime = None
+    ) -> None:
         """
         Initialize a SyndicationHistory object.
 
@@ -9862,7 +9405,8 @@ class SyndicationHistory():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SyndicationResource():
+
+class SyndicationResource:
     """
     Feature information.
 
@@ -9872,12 +9416,14 @@ class SyndicationResource():
     :attr SyndicationAuthorization authorization: (optional) Feature information.
     """
 
-    def __init__(self,
-                 *,
-                 remove_related_components: bool = None,
-                 clusters: List['SyndicationCluster'] = None,
-                 history: 'SyndicationHistory' = None,
-                 authorization: 'SyndicationAuthorization' = None) -> None:
+    def __init__(
+        self,
+        *,
+        remove_related_components: bool = None,
+        clusters: List['SyndicationCluster'] = None,
+        history: 'SyndicationHistory' = None,
+        authorization: 'SyndicationAuthorization' = None
+    ) -> None:
         """
         Initialize a SyndicationResource object.
 
@@ -9943,7 +9489,8 @@ class SyndicationResource():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Validation():
+
+class Validation:
     """
     Validation response.
 
@@ -9959,13 +9506,15 @@ class Validation():
           region, namespace, etc).  Values will vary by Content type.
     """
 
-    def __init__(self,
-                 *,
-                 validated: datetime = None,
-                 requested: datetime = None,
-                 state: str = None,
-                 last_operation: str = None,
-                 target: dict = None) -> None:
+    def __init__(
+        self,
+        *,
+        validated: datetime = None,
+        requested: datetime = None,
+        state: str = None,
+        last_operation: str = None,
+        target: dict = None
+    ) -> None:
         """
         Initialize a Validation object.
 
@@ -10040,7 +9589,8 @@ class Validation():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Version():
+
+class Version:
     """
     Offering version information.
 
@@ -10086,39 +9636,41 @@ class Version():
           version.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 rev: str = None,
-                 crn: str = None,
-                 version: str = None,
-                 sha: str = None,
-                 created: datetime = None,
-                 updated: datetime = None,
-                 offering_id: str = None,
-                 catalog_id: str = None,
-                 kind_id: str = None,
-                 tags: List[str] = None,
-                 repo_url: str = None,
-                 source_url: str = None,
-                 tgz_url: str = None,
-                 configuration: List['Configuration'] = None,
-                 metadata: dict = None,
-                 validation: 'Validation' = None,
-                 required_resources: List['Resource'] = None,
-                 single_instance: bool = None,
-                 install: 'Script' = None,
-                 pre_install: List['Script'] = None,
-                 entitlement: 'VersionEntitlement' = None,
-                 licenses: List['License'] = None,
-                 image_manifest_url: str = None,
-                 deprecated: bool = None,
-                 package_version: str = None,
-                 state: 'State' = None,
-                 version_locator: str = None,
-                 console_url: str = None,
-                 long_description: str = None,
-                 whitelisted_accounts: List[str] = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        rev: str = None,
+        crn: str = None,
+        version: str = None,
+        sha: str = None,
+        created: datetime = None,
+        updated: datetime = None,
+        offering_id: str = None,
+        catalog_id: str = None,
+        kind_id: str = None,
+        tags: List[str] = None,
+        repo_url: str = None,
+        source_url: str = None,
+        tgz_url: str = None,
+        configuration: List['Configuration'] = None,
+        metadata: dict = None,
+        validation: 'Validation' = None,
+        required_resources: List['Resource'] = None,
+        single_instance: bool = None,
+        install: 'Script' = None,
+        pre_install: List['Script'] = None,
+        entitlement: 'VersionEntitlement' = None,
+        licenses: List['License'] = None,
+        image_manifest_url: str = None,
+        deprecated: bool = None,
+        package_version: str = None,
+        state: 'State' = None,
+        version_locator: str = None,
+        console_url: str = None,
+        long_description: str = None,
+        whitelisted_accounts: List[str] = None
+    ) -> None:
         """
         Initialize a Version object.
 
@@ -10357,7 +9909,8 @@ class Version():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class VersionEntitlement():
+
+class VersionEntitlement:
     """
     Entitlement license info.
 
@@ -10369,13 +9922,15 @@ class VersionEntitlement():
     :attr str image_repo_name: (optional) Image repository name.
     """
 
-    def __init__(self,
-                 *,
-                 provider_name: str = None,
-                 provider_id: str = None,
-                 product_id: str = None,
-                 part_numbers: List[str] = None,
-                 image_repo_name: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        provider_name: str = None,
+        provider_id: str = None,
+        product_id: str = None,
+        part_numbers: List[str] = None,
+        image_repo_name: str = None
+    ) -> None:
         """
         Initialize a VersionEntitlement object.
 
@@ -10446,7 +10001,8 @@ class VersionEntitlement():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class VersionUpdateDescriptor():
+
+class VersionUpdateDescriptor:
     """
     Indicates if the current version can be upgraded to the version identified by the
     descriptor.
@@ -10465,16 +10021,18 @@ class VersionUpdateDescriptor():
           include nodes, cores, mem, disk, targetVersion, and install-permission-check.
     """
 
-    def __init__(self,
-                 *,
-                 version_locator: str = None,
-                 version: str = None,
-                 state: 'State' = None,
-                 required_resources: List['Resource'] = None,
-                 package_version: str = None,
-                 sha: str = None,
-                 can_update: bool = None,
-                 messages: dict = None) -> None:
+    def __init__(
+        self,
+        *,
+        version_locator: str = None,
+        version: str = None,
+        state: 'State' = None,
+        required_resources: List['Resource'] = None,
+        package_version: str = None,
+        sha: str = None,
+        can_update: bool = None,
+        messages: dict = None
+    ) -> None:
         """
         Initialize a VersionUpdateDescriptor object.
 

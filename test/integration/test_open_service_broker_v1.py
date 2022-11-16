@@ -41,8 +41,7 @@ class TestOpenServiceBrokerV1(unittest.TestCase):
         if os.path.exists(configFile):
             os.environ['IBM_CREDENTIALS_FILE'] = configFile
         else:
-            raise unittest.SkipTest(
-                'External configuration not available, skipping...')
+            raise unittest.SkipTest('External configuration not available, skipping...')
 
         cls.service = OpenServiceBrokerV1.new_instance()
         assert cls.service is not None
@@ -55,10 +54,14 @@ class TestOpenServiceBrokerV1(unittest.TestCase):
         cls.testPlanId1 = 'a10e4820-3685-11e9-b210-d663bd873d93'
         cls.testPlanId2 = 'a10e4410-3685-11e9-b210-d663bd873d933'
         cls.testPlanId3 = 'a10e4960-3685-11e9-b210-d663bd873d93'
-        cls.testInstanceId = 'crn:v1:staging:public:bss-monitor:global:a/bc2b2fca0af84354a916dc1de6eee42e:sdkTestInstance::'
+        cls.testInstanceId = (
+            'crn:v1:staging:public:bss-monitor:global:a/bc2b2fca0af84354a916dc1de6eee42e:sdkTestInstance::'
+        )
         cls.testInstanceId2 = 'crn:v1:staging:public:bss-monitor:us-south:a/bc2b2fca0af84354a916dc1de6eee42e:osb-sdk-test00:resource-binding:osb-sdk-binding-test00'
         cls.testBindingId = 'crn:v1:staging:public:bss-monitor:us-south:a/bc2b2fca0af84354a916dc1de6eee42e:sdkTestInstance:resource-binding:sdkTestBinding'
-        cls.testBindingId2 = 'crnL:v1:staging:public:bss-monitor:global:a/bc2b2fca0af84354a916dc1de6eee42e:osb-sdk-test00::'
+        cls.testBindingId2 = (
+            'crnL:v1:staging:public:bss-monitor:global:a/bc2b2fca0af84354a916dc1de6eee42e:osb-sdk-test00::'
+        )
 
         cls.testPlatform = 'ibmcloud'
         cls.testReasonCode = 'test_reason'
@@ -78,11 +81,9 @@ class TestOpenServiceBrokerV1(unittest.TestCase):
 
     def test_00_create_service_instance(self):
         customHeaders = {}
-        customHeaders["Transaction-Id"] = "osb-sdk-python-test00-" + \
-            self.transactionId
+        customHeaders["Transaction-Id"] = "osb-sdk-python-test00-" + self.transactionId
 
-        testContext = Context(account_id=self.testAccountId,
-                              crn=self.testInstanceId, platform=self.testPlatform)
+        testContext = Context(account_id=self.testAccountId, crn=self.testInstanceId, platform=self.testPlatform)
         testPars = {}
 
         response = self.service.replace_service_instance(
@@ -94,7 +95,7 @@ class TestOpenServiceBrokerV1(unittest.TestCase):
             context=testContext,
             parameters=testPars,
             accepts_incomplete=True,
-            headers=customHeaders
+            headers=customHeaders,
         )
 
         assert response is not None
@@ -106,11 +107,9 @@ class TestOpenServiceBrokerV1(unittest.TestCase):
 
     def test_01_update_service_instance(self):
         customHeaders = {}
-        customHeaders["Transaction-Id"] = "osb-sdk-python-test01-" + \
-            self.transactionId
+        customHeaders["Transaction-Id"] = "osb-sdk-python-test01-" + self.transactionId
 
-        testContext = Context(account_id=self.testAccountId,
-                              crn=self.testInstanceId, platform=self.testPlatform)
+        testContext = Context(account_id=self.testAccountId, crn=self.testInstanceId, platform=self.testPlatform)
         testPars = {}
         testPrevValues = {}
 
@@ -122,7 +121,7 @@ class TestOpenServiceBrokerV1(unittest.TestCase):
             plan_id=self.testPlanId1,
             previous_values=testPrevValues,
             accepts_incomplete=True,
-            headers=customHeaders
+            headers=customHeaders,
         )
 
         assert response is not None
@@ -135,15 +134,14 @@ class TestOpenServiceBrokerV1(unittest.TestCase):
 
     def test_02_disable_service_instance_state(self):
         customHeaders = {}
-        customHeaders["Transaction-Id"] = "osb-sdk-python-test02-" + \
-            self.transactionId
+        customHeaders["Transaction-Id"] = "osb-sdk-python-test02-" + self.transactionId
 
         response = self.service.replace_service_instance_state(
             instance_id=self.testInstanceId,
             enabled=False,
             initiator_id=self.testInitiatorId,
             reason_code=self.testReasonCode,
-            headers=customHeaders
+            headers=customHeaders,
         )
 
         assert response is not None
@@ -156,15 +154,14 @@ class TestOpenServiceBrokerV1(unittest.TestCase):
 
     def test_03_enable_service_instance_state(self):
         customHeaders = {}
-        customHeaders["Transaction-Id"] = "osb-sdk-python-test03-" + \
-            self.transactionId
+        customHeaders["Transaction-Id"] = "osb-sdk-python-test03-" + self.transactionId
 
         response = self.service.replace_service_instance_state(
             instance_id=self.testInstanceId,
             enabled=True,
             initiator_id=self.testInitiatorId,
             reason_code=self.testReasonCode,
-            headers=customHeaders
+            headers=customHeaders,
         )
 
         assert response is not None
@@ -177,11 +174,9 @@ class TestOpenServiceBrokerV1(unittest.TestCase):
 
     def test_04_bind_service_instance_state(self):
         customHeaders = {}
-        customHeaders["Transaction-Id"] = "osb-sdk-python-test04-" + \
-            self.transactionId
+        customHeaders["Transaction-Id"] = "osb-sdk-python-test04-" + self.transactionId
         testParams = {}
-        testBindResource = BindResource(
-            account_id=self.testAccountId, serviceid_crn=self.testAppGuid)
+        testBindResource = BindResource(account_id=self.testAccountId, serviceid_crn=self.testAppGuid)
 
         response = self.service.replace_service_binding(
             binding_id=self.testBindingId2,
@@ -190,7 +185,7 @@ class TestOpenServiceBrokerV1(unittest.TestCase):
             service_id=self.testServiceId,
             bind_resource=testBindResource,
             parameters=testParams,
-            headers=customHeaders
+            headers=customHeaders,
         )
 
         assert response is not None
@@ -202,13 +197,9 @@ class TestOpenServiceBrokerV1(unittest.TestCase):
 
     def test_05_get_service_instance_state(self):
         customHeaders = {}
-        customHeaders["Transaction-Id"] = "osb-sdk-python-test05-" + \
-            self.transactionId
+        customHeaders["Transaction-Id"] = "osb-sdk-python-test05-" + self.transactionId
 
-        response = self.service.get_service_instance_state(
-            instance_id=self.testInstanceId,
-            headers=customHeaders
-        )
+        response = self.service.get_service_instance_state(instance_id=self.testInstanceId, headers=customHeaders)
 
         assert response is not None
         assert response.get_status_code() == 200
@@ -220,12 +211,9 @@ class TestOpenServiceBrokerV1(unittest.TestCase):
 
     def test_06_get_catalog_metadata(self):
         customHeaders = {}
-        customHeaders["Transaction-Id"] = "osb-sdk-python-test06-" + \
-            self.transactionId
+        customHeaders["Transaction-Id"] = "osb-sdk-python-test06-" + self.transactionId
 
-        response = self.service.list_catalog(
-            headers=customHeaders
-        )
+        response = self.service.list_catalog(headers=customHeaders)
 
         assert response is not None
         assert response.get_status_code() == 200
@@ -239,15 +227,14 @@ class TestOpenServiceBrokerV1(unittest.TestCase):
 
     def test_07_delete_service_binding(self):
         customHeaders = {}
-        customHeaders["Transaction-Id"] = "osb-sdk-python-test07-" + \
-            self.transactionId
+        customHeaders["Transaction-Id"] = "osb-sdk-python-test07-" + self.transactionId
 
         response = self.service.delete_service_binding(
             binding_id=self.testBindingId2,
             instance_id=self.testInstanceId2,
             plan_id=self.testPlanId3,
             service_id=self.testServiceId,
-            headers=customHeaders
+            headers=customHeaders,
         )
 
         assert response is not None
@@ -255,14 +242,13 @@ class TestOpenServiceBrokerV1(unittest.TestCase):
 
     def test_08_delete_service_instance(self):
         customHeaders = {}
-        customHeaders["Transaction-Id"] = "osb-sdk-python-test08-" + \
-            self.transactionId
+        customHeaders["Transaction-Id"] = "osb-sdk-python-test08-" + self.transactionId
 
         response = self.service.delete_service_instance(
             service_id=self.testServiceId,
             plan_id=self.testPlanId3,
             instance_id=self.testInstanceId2,
-            headers=customHeaders
+            headers=customHeaders,
         )
 
         assert response is not None
