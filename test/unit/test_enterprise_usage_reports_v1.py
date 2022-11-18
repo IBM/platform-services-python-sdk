@@ -29,7 +29,9 @@ import urllib
 from ibm_platform_services.enterprise_usage_reports_v1 import *
 
 
-_service = EnterpriseUsageReportsV1(authenticator=NoAuthAuthenticator())
+_service = EnterpriseUsageReportsV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://enterprise.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -66,8 +68,7 @@ def preprocess_url(operation_path: str):
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -94,8 +95,7 @@ class TestNewInstance:
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-
-class TestGetResourceUsageReport:
+class TestGetResourceUsageReport():
     """
     Test Class for get_resource_usage_report
     """
@@ -108,7 +108,11 @@ class TestGetResourceUsageReport:
         # Set up mock
         url = preprocess_url('/v1/resource-usage-reports')
         mock_response = '{"limit": 5, "first": {"href": "href"}, "next": {"href": "href"}, "reports": [{"entity_id": "de129b787b86403db7d3a14be2ae5f76", "entity_type": "enterprise", "entity_crn": "crn:v1:bluemix:public:enterprise::a/e9a57260546c4b4aa9ebfa316a82e56e::enterprise:de129b787b86403db7d3a14be2ae5f76", "entity_name": "Platform-Services", "billing_unit_id": "65719a07280a4022a9efa2f6ff4c3369", "billing_unit_crn": "crn:v1:bluemix:public:billing::a/3f99f8accbc848ea96f3c61a0ae22c44::billing-unit:65719a07280a4022a9efa2f6ff4c3369", "billing_unit_name": "Operations", "country_code": "USA", "currency_code": "USD", "month": "2017-08", "billable_cost": 13, "non_billable_cost": 17, "billable_rated_cost": 19, "non_billable_rated_cost": 23, "resources": [{"resource_id": "resource_id", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "unit": "HOURS", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130, "price": [{"anyKey": "anyValue"}]}]}]}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         enterprise_id = 'abc12340d4bf4e36b0423d209b286f24'
@@ -130,14 +134,14 @@ class TestGetResourceUsageReport:
             billing_unit_id=billing_unit_id,
             limit=limit,
             offset=offset,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'enterprise_id={}'.format(enterprise_id) in query_string
         assert 'account_group_id={}'.format(account_group_id) in query_string
@@ -165,10 +169,15 @@ class TestGetResourceUsageReport:
         # Set up mock
         url = preprocess_url('/v1/resource-usage-reports')
         mock_response = '{"limit": 5, "first": {"href": "href"}, "next": {"href": "href"}, "reports": [{"entity_id": "de129b787b86403db7d3a14be2ae5f76", "entity_type": "enterprise", "entity_crn": "crn:v1:bluemix:public:enterprise::a/e9a57260546c4b4aa9ebfa316a82e56e::enterprise:de129b787b86403db7d3a14be2ae5f76", "entity_name": "Platform-Services", "billing_unit_id": "65719a07280a4022a9efa2f6ff4c3369", "billing_unit_crn": "crn:v1:bluemix:public:billing::a/3f99f8accbc848ea96f3c61a0ae22c44::billing-unit:65719a07280a4022a9efa2f6ff4c3369", "billing_unit_name": "Operations", "country_code": "USA", "currency_code": "USD", "month": "2017-08", "billable_cost": 13, "non_billable_cost": 17, "billable_rated_cost": 19, "non_billable_rated_cost": 23, "resources": [{"resource_id": "resource_id", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "pricing_region": "pricing_region", "pricing_plan_id": "pricing_plan_id", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "unit": "HOURS", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130, "price": [{"anyKey": "anyValue"}]}]}]}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Invoke method
         response = _service.get_resource_usage_report()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -192,8 +201,16 @@ class TestGetResourceUsageReport:
         url = preprocess_url('/v1/resource-usage-reports')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"reports":[{"entity_id":"de129b787b86403db7d3a14be2ae5f76","entity_type":"enterprise","entity_crn":"crn:v1:bluemix:public:enterprise::a/e9a57260546c4b4aa9ebfa316a82e56e::enterprise:de129b787b86403db7d3a14be2ae5f76","entity_name":"Platform-Services","billing_unit_id":"65719a07280a4022a9efa2f6ff4c3369","billing_unit_crn":"crn:v1:bluemix:public:billing::a/3f99f8accbc848ea96f3c61a0ae22c44::billing-unit:65719a07280a4022a9efa2f6ff4c3369","billing_unit_name":"Operations","country_code":"USA","currency_code":"USD","month":"2017-08","billable_cost":13,"non_billable_cost":17,"billable_rated_cost":19,"non_billable_rated_cost":23,"resources":[{"resource_id":"resource_id","billable_cost":13,"billable_rated_cost":19,"non_billable_cost":17,"non_billable_rated_cost":23,"plans":[{"plan_id":"plan_id","pricing_region":"pricing_region","pricing_plan_id":"pricing_plan_id","billable":true,"cost":4,"rated_cost":10,"usage":[{"metric":"UP-TIME","unit":"HOURS","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130,"price":[{"anyKey":"anyValue"}]}]}]}]}],"total_count":2,"limit":1}'
         mock_response2 = '{"reports":[{"entity_id":"de129b787b86403db7d3a14be2ae5f76","entity_type":"enterprise","entity_crn":"crn:v1:bluemix:public:enterprise::a/e9a57260546c4b4aa9ebfa316a82e56e::enterprise:de129b787b86403db7d3a14be2ae5f76","entity_name":"Platform-Services","billing_unit_id":"65719a07280a4022a9efa2f6ff4c3369","billing_unit_crn":"crn:v1:bluemix:public:billing::a/3f99f8accbc848ea96f3c61a0ae22c44::billing-unit:65719a07280a4022a9efa2f6ff4c3369","billing_unit_name":"Operations","country_code":"USA","currency_code":"USD","month":"2017-08","billable_cost":13,"non_billable_cost":17,"billable_rated_cost":19,"non_billable_rated_cost":23,"resources":[{"resource_id":"resource_id","billable_cost":13,"billable_rated_cost":19,"non_billable_cost":17,"non_billable_rated_cost":23,"plans":[{"plan_id":"plan_id","pricing_region":"pricing_region","pricing_plan_id":"pricing_plan_id","billable":true,"cost":4,"rated_cost":10,"usage":[{"metric":"UP-TIME","unit":"HOURS","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130,"price":[{"anyKey":"anyValue"}]}]}]}]}],"total_count":2,"limit":1}'
-        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
-        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
 
         # Exercise the pager class for this operation
         all_results = []
@@ -222,8 +239,16 @@ class TestGetResourceUsageReport:
         url = preprocess_url('/v1/resource-usage-reports')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"reports":[{"entity_id":"de129b787b86403db7d3a14be2ae5f76","entity_type":"enterprise","entity_crn":"crn:v1:bluemix:public:enterprise::a/e9a57260546c4b4aa9ebfa316a82e56e::enterprise:de129b787b86403db7d3a14be2ae5f76","entity_name":"Platform-Services","billing_unit_id":"65719a07280a4022a9efa2f6ff4c3369","billing_unit_crn":"crn:v1:bluemix:public:billing::a/3f99f8accbc848ea96f3c61a0ae22c44::billing-unit:65719a07280a4022a9efa2f6ff4c3369","billing_unit_name":"Operations","country_code":"USA","currency_code":"USD","month":"2017-08","billable_cost":13,"non_billable_cost":17,"billable_rated_cost":19,"non_billable_rated_cost":23,"resources":[{"resource_id":"resource_id","billable_cost":13,"billable_rated_cost":19,"non_billable_cost":17,"non_billable_rated_cost":23,"plans":[{"plan_id":"plan_id","pricing_region":"pricing_region","pricing_plan_id":"pricing_plan_id","billable":true,"cost":4,"rated_cost":10,"usage":[{"metric":"UP-TIME","unit":"HOURS","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130,"price":[{"anyKey":"anyValue"}]}]}]}]}],"total_count":2,"limit":1}'
         mock_response2 = '{"reports":[{"entity_id":"de129b787b86403db7d3a14be2ae5f76","entity_type":"enterprise","entity_crn":"crn:v1:bluemix:public:enterprise::a/e9a57260546c4b4aa9ebfa316a82e56e::enterprise:de129b787b86403db7d3a14be2ae5f76","entity_name":"Platform-Services","billing_unit_id":"65719a07280a4022a9efa2f6ff4c3369","billing_unit_crn":"crn:v1:bluemix:public:billing::a/3f99f8accbc848ea96f3c61a0ae22c44::billing-unit:65719a07280a4022a9efa2f6ff4c3369","billing_unit_name":"Operations","country_code":"USA","currency_code":"USD","month":"2017-08","billable_cost":13,"non_billable_cost":17,"billable_rated_cost":19,"non_billable_rated_cost":23,"resources":[{"resource_id":"resource_id","billable_cost":13,"billable_rated_cost":19,"non_billable_cost":17,"non_billable_rated_cost":23,"plans":[{"plan_id":"plan_id","pricing_region":"pricing_region","pricing_plan_id":"pricing_plan_id","billable":true,"cost":4,"rated_cost":10,"usage":[{"metric":"UP-TIME","unit":"HOURS","quantity":711.11,"rateable_quantity":700,"cost":123.45,"rated_cost":130,"price":[{"anyKey":"anyValue"}]}]}]}]}],"total_count":2,"limit":1}'
-        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
-        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
 
         # Exercise the pager class for this operation
         pager = GetResourceUsageReportPager(
@@ -240,7 +265,6 @@ class TestGetResourceUsageReport:
         assert all_results is not None
         assert len(all_results) == 2
 
-
 # endregion
 ##############################################################################
 # End of Service: EnterpriseUsageReports
@@ -251,7 +275,7 @@ class TestGetResourceUsageReport:
 # Start of Model Tests
 ##############################################################################
 # region
-class TestModel_Link:
+class TestModel_Link():
     """
     Test Class for Link
     """
@@ -280,8 +304,7 @@ class TestModel_Link:
         link_model_json2 = link_model.to_dict()
         assert link_model_json2 == link_model_json
 
-
-class TestModel_MetricUsage:
+class TestModel_MetricUsage():
     """
     Test Class for MetricUsage
     """
@@ -316,8 +339,7 @@ class TestModel_MetricUsage:
         metric_usage_model_json2 = metric_usage_model.to_dict()
         assert metric_usage_model_json2 == metric_usage_model_json
 
-
-class TestModel_PlanUsage:
+class TestModel_PlanUsage():
     """
     Test Class for PlanUsage
     """
@@ -329,7 +351,7 @@ class TestModel_PlanUsage:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        metric_usage_model = {}  # MetricUsage
+        metric_usage_model = {} # MetricUsage
         metric_usage_model['metric'] = 'UP-TIME'
         metric_usage_model['unit'] = 'HOURS'
         metric_usage_model['quantity'] = 711.11
@@ -363,8 +385,7 @@ class TestModel_PlanUsage:
         plan_usage_model_json2 = plan_usage_model.to_dict()
         assert plan_usage_model_json2 == plan_usage_model_json
 
-
-class TestModel_Reports:
+class TestModel_Reports():
     """
     Test Class for Reports
     """
@@ -376,12 +397,10 @@ class TestModel_Reports:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        link_model = {}  # Link
-        link_model[
-            'href'
-        ] = '/v1/resource-usage-reports?enterprise_id=5ac9eb23c91b429b893e038aa5a2dec8&children=true&month=2019-06&limit=2'
+        link_model = {} # Link
+        link_model['href'] = '/v1/resource-usage-reports?enterprise_id=5ac9eb23c91b429b893e038aa5a2dec8&children=true&month=2019-06&limit=2'
 
-        metric_usage_model = {}  # MetricUsage
+        metric_usage_model = {} # MetricUsage
         metric_usage_model['metric'] = 'GB_STORAGE_ACCRUED_PER_MONTH'
         metric_usage_model['unit'] = 'GIGABYTE_MONTHS'
         metric_usage_model['quantity'] = 10
@@ -390,7 +409,7 @@ class TestModel_Reports:
         metric_usage_model['rated_cost'] = 10
         metric_usage_model['price'] = [{'foo': 'bar'}]
 
-        plan_usage_model = {}  # PlanUsage
+        plan_usage_model = {} # PlanUsage
         plan_usage_model['plan_id'] = 'cloudant-standard'
         plan_usage_model['pricing_region'] = 'testString'
         plan_usage_model['pricing_plan_id'] = 'billable:v4:cloudant-standard::1552694400000:'
@@ -399,7 +418,7 @@ class TestModel_Reports:
         plan_usage_model['rated_cost'] = 75
         plan_usage_model['usage'] = [metric_usage_model]
 
-        resource_usage_model = {}  # ResourceUsage
+        resource_usage_model = {} # ResourceUsage
         resource_usage_model['resource_id'] = 'cloudant'
         resource_usage_model['billable_cost'] = 75
         resource_usage_model['billable_rated_cost'] = 75
@@ -407,17 +426,13 @@ class TestModel_Reports:
         resource_usage_model['non_billable_rated_cost'] = 0
         resource_usage_model['plans'] = [plan_usage_model]
 
-        resource_usage_report_model = {}  # ResourceUsageReport
+        resource_usage_report_model = {} # ResourceUsageReport
         resource_usage_report_model['entity_id'] = '41848d0e2711434bbc134242452f7fc7'
         resource_usage_report_model['entity_type'] = 'account'
-        resource_usage_report_model[
-            'entity_crn'
-        ] = 'crn:v1:bluemix:public:enterprise::a/3f99f8accbc848ea96f3c61a0ae22c44::account:41848d0e2711434bbc134242452f7fc7'
+        resource_usage_report_model['entity_crn'] = 'crn:v1:bluemix:public:enterprise::a/3f99f8accbc848ea96f3c61a0ae22c44::account:41848d0e2711434bbc134242452f7fc7'
         resource_usage_report_model['entity_name'] = 'Example Account'
         resource_usage_report_model['billing_unit_id'] = '65719a07280a4022a9efa2f6ff4c3369'
-        resource_usage_report_model[
-            'billing_unit_crn'
-        ] = 'crn:v1:bluemix:public:billing::a/3f99f8accbc848ea96f3c61a0ae22c44::billing-unit:65719a07280a4022a9efa2f6ff4c3369'
+        resource_usage_report_model['billing_unit_crn'] = 'crn:v1:bluemix:public:billing::a/3f99f8accbc848ea96f3c61a0ae22c44::billing-unit:65719a07280a4022a9efa2f6ff4c3369'
         resource_usage_report_model['billing_unit_name'] = 'Example Billing Unit'
         resource_usage_report_model['country_code'] = 'USA'
         resource_usage_report_model['currency_code'] = 'USD'
@@ -450,8 +465,7 @@ class TestModel_Reports:
         reports_model_json2 = reports_model.to_dict()
         assert reports_model_json2 == reports_model_json
 
-
-class TestModel_ResourceUsage:
+class TestModel_ResourceUsage():
     """
     Test Class for ResourceUsage
     """
@@ -463,7 +477,7 @@ class TestModel_ResourceUsage:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        metric_usage_model = {}  # MetricUsage
+        metric_usage_model = {} # MetricUsage
         metric_usage_model['metric'] = 'UP-TIME'
         metric_usage_model['unit'] = 'HOURS'
         metric_usage_model['quantity'] = 711.11
@@ -472,7 +486,7 @@ class TestModel_ResourceUsage:
         metric_usage_model['rated_cost'] = 130
         metric_usage_model['price'] = [{'foo': 'bar'}]
 
-        plan_usage_model = {}  # PlanUsage
+        plan_usage_model = {} # PlanUsage
         plan_usage_model['plan_id'] = 'testString'
         plan_usage_model['pricing_region'] = 'testString'
         plan_usage_model['pricing_plan_id'] = 'testString'
@@ -505,8 +519,7 @@ class TestModel_ResourceUsage:
         resource_usage_model_json2 = resource_usage_model.to_dict()
         assert resource_usage_model_json2 == resource_usage_model_json
 
-
-class TestModel_ResourceUsageReport:
+class TestModel_ResourceUsageReport():
     """
     Test Class for ResourceUsageReport
     """
@@ -518,7 +531,7 @@ class TestModel_ResourceUsageReport:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        metric_usage_model = {}  # MetricUsage
+        metric_usage_model = {} # MetricUsage
         metric_usage_model['metric'] = 'UP-TIME'
         metric_usage_model['unit'] = 'HOURS'
         metric_usage_model['quantity'] = 711.11
@@ -527,7 +540,7 @@ class TestModel_ResourceUsageReport:
         metric_usage_model['rated_cost'] = 130
         metric_usage_model['price'] = [{'foo': 'bar'}]
 
-        plan_usage_model = {}  # PlanUsage
+        plan_usage_model = {} # PlanUsage
         plan_usage_model['plan_id'] = 'testString'
         plan_usage_model['pricing_region'] = 'testString'
         plan_usage_model['pricing_plan_id'] = 'testString'
@@ -536,7 +549,7 @@ class TestModel_ResourceUsageReport:
         plan_usage_model['rated_cost'] = 72.5
         plan_usage_model['usage'] = [metric_usage_model]
 
-        resource_usage_model = {}  # ResourceUsage
+        resource_usage_model = {} # ResourceUsage
         resource_usage_model['resource_id'] = 'testString'
         resource_usage_model['billable_cost'] = 72.5
         resource_usage_model['billable_rated_cost'] = 72.5
@@ -548,14 +561,10 @@ class TestModel_ResourceUsageReport:
         resource_usage_report_model_json = {}
         resource_usage_report_model_json['entity_id'] = 'de129b787b86403db7d3a14be2ae5f76'
         resource_usage_report_model_json['entity_type'] = 'enterprise'
-        resource_usage_report_model_json[
-            'entity_crn'
-        ] = 'crn:v1:bluemix:public:enterprise::a/e9a57260546c4b4aa9ebfa316a82e56e::enterprise:de129b787b86403db7d3a14be2ae5f76'
+        resource_usage_report_model_json['entity_crn'] = 'crn:v1:bluemix:public:enterprise::a/e9a57260546c4b4aa9ebfa316a82e56e::enterprise:de129b787b86403db7d3a14be2ae5f76'
         resource_usage_report_model_json['entity_name'] = 'Platform-Services'
         resource_usage_report_model_json['billing_unit_id'] = '65719a07280a4022a9efa2f6ff4c3369'
-        resource_usage_report_model_json[
-            'billing_unit_crn'
-        ] = 'crn:v1:bluemix:public:billing::a/3f99f8accbc848ea96f3c61a0ae22c44::billing-unit:65719a07280a4022a9efa2f6ff4c3369'
+        resource_usage_report_model_json['billing_unit_crn'] = 'crn:v1:bluemix:public:billing::a/3f99f8accbc848ea96f3c61a0ae22c44::billing-unit:65719a07280a4022a9efa2f6ff4c3369'
         resource_usage_report_model_json['billing_unit_name'] = 'Operations'
         resource_usage_report_model_json['country_code'] = 'USA'
         resource_usage_report_model_json['currency_code'] = 'USD'

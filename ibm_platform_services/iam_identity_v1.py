@@ -39,7 +39,6 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
-
 class IamIdentityV1(BaseService):
     """The iam_identity V1 service."""
 
@@ -47,23 +46,23 @@ class IamIdentityV1(BaseService):
     DEFAULT_SERVICE_NAME = 'iam_identity'
 
     @classmethod
-    def new_instance(
-        cls,
-        service_name: str = DEFAULT_SERVICE_NAME,
-    ) -> 'IamIdentityV1':
+    def new_instance(cls,
+                     service_name: str = DEFAULT_SERVICE_NAME,
+                    ) -> 'IamIdentityV1':
         """
         Return a new client for the iam_identity service using the specified
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
-    def __init__(
-        self,
-        authenticator: Authenticator = None,
-    ) -> None:
+    def __init__(self,
+                 authenticator: Authenticator = None,
+                ) -> None:
         """
         Construct a new client for the iam_identity service.
 
@@ -71,14 +70,17 @@ class IamIdentityV1(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
+        BaseService.__init__(self,
+                             service_url=self.DEFAULT_SERVICE_URL,
+                             authenticator=authenticator)
+
 
     #########################
     # API key Operations
     #########################
 
-    def list_api_keys(
-        self,
+
+    def list_api_keys(self,
         *,
         account_id: str = None,
         iam_id: str = None,
@@ -129,9 +131,9 @@ class IamIdentityV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_api_keys'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_api_keys')
         headers.update(sdk_headers)
 
         params = {
@@ -143,7 +145,7 @@ class IamIdentityV1(BaseService):
             'type': type,
             'sort': sort,
             'order': order,
-            'include_history': include_history,
+            'include_history': include_history
         }
 
         if 'headers' in kwargs:
@@ -151,13 +153,16 @@ class IamIdentityV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/apikeys'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-    def create_api_key(
-        self,
+
+    def create_api_key(self,
         name: str,
         iam_id: str,
         *,
@@ -204,10 +209,12 @@ class IamIdentityV1(BaseService):
             raise ValueError('name must be provided')
         if iam_id is None:
             raise ValueError('iam_id must be provided')
-        headers = {'Entity-Lock': entity_lock}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_api_key'
-        )
+        headers = {
+            'Entity-Lock': entity_lock
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='create_api_key')
         headers.update(sdk_headers)
 
         data = {
@@ -216,7 +223,7 @@ class IamIdentityV1(BaseService):
             'description': description,
             'account_id': account_id,
             'apikey': apikey,
-            'store_value': store_value,
+            'store_value': store_value
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -227,13 +234,20 @@ class IamIdentityV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/apikeys'
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-    def get_api_keys_details(
-        self, *, iam_api_key: str = None, include_history: bool = None, **kwargs
+
+    def get_api_keys_details(self,
+        *,
+        iam_api_key: str = None,
+        include_history: bool = None,
+        **kwargs
     ) -> DetailedResponse:
         """
         Get details of an API key by its value.
@@ -250,26 +264,38 @@ class IamIdentityV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `ApiKey` object
         """
 
-        headers = {'IAM-ApiKey': iam_api_key}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_api_keys_details'
-        )
+        headers = {
+            'IAM-ApiKey': iam_api_key
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_api_keys_details')
         headers.update(sdk_headers)
 
-        params = {'include_history': include_history}
+        params = {
+            'include_history': include_history
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
         url = '/v1/apikeys/details'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-    def get_api_key(
-        self, id: str, *, include_history: bool = None, include_activity: bool = None, **kwargs
+
+    def get_api_key(self,
+        id: str,
+        *,
+        include_history: bool = None,
+        include_activity: bool = None,
+        **kwargs
     ) -> DetailedResponse:
         """
         Get details of an API key.
@@ -294,12 +320,15 @@ class IamIdentityV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_api_key'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_api_key')
         headers.update(sdk_headers)
 
-        params = {'include_history': include_history, 'include_activity': include_activity}
+        params = {
+            'include_history': include_history,
+            'include_activity': include_activity
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -309,13 +338,22 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/apikeys/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-    def update_api_key(
-        self, id: str, if_match: str, *, name: str = None, description: str = None, **kwargs
+
+    def update_api_key(self,
+        id: str,
+        if_match: str,
+        *,
+        name: str = None,
+        description: str = None,
+        **kwargs
     ) -> DetailedResponse:
         """
         Updates an API key.
@@ -347,13 +385,18 @@ class IamIdentityV1(BaseService):
             raise ValueError('id must be provided')
         if if_match is None:
             raise ValueError('if_match must be provided')
-        headers = {'If-Match': if_match}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_api_key'
-        )
+        headers = {
+            'If-Match': if_match
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='update_api_key')
         headers.update(sdk_headers)
 
-        data = {'name': name, 'description': description}
+        data = {
+            'name': name,
+            'description': description
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -366,12 +409,19 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/apikeys/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
+        request = self.prepare_request(method='PUT',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-    def delete_api_key(self, id: str, **kwargs) -> DetailedResponse:
+
+    def delete_api_key(self,
+        id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Deletes an API key.
 
@@ -388,9 +438,9 @@ class IamIdentityV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_api_key'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='delete_api_key')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -400,12 +450,18 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/apikeys/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(method='DELETE',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-    def lock_api_key(self, id: str, **kwargs) -> DetailedResponse:
+
+    def lock_api_key(self,
+        id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Lock the API key.
 
@@ -424,9 +480,9 @@ class IamIdentityV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='lock_api_key'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='lock_api_key')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -436,12 +492,18 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/apikeys/{id}/lock'.format(**path_param_dict)
-        request = self.prepare_request(method='POST', url=url, headers=headers)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-    def unlock_api_key(self, id: str, **kwargs) -> DetailedResponse:
+
+    def unlock_api_key(self,
+        id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Unlock the API key.
 
@@ -460,9 +522,9 @@ class IamIdentityV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='unlock_api_key'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='unlock_api_key')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -472,7 +534,9 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/apikeys/{id}/lock'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(method='DELETE',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -481,8 +545,8 @@ class IamIdentityV1(BaseService):
     # Service ID Operations
     #########################
 
-    def list_service_ids(
-        self,
+
+    def list_service_ids(self,
         *,
         account_id: str = None,
         name: str = None,
@@ -522,9 +586,9 @@ class IamIdentityV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_service_ids'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_service_ids')
         headers.update(sdk_headers)
 
         params = {
@@ -534,7 +598,7 @@ class IamIdentityV1(BaseService):
             'pagetoken': pagetoken,
             'sort': sort,
             'order': order,
-            'include_history': include_history,
+            'include_history': include_history
         }
 
         if 'headers' in kwargs:
@@ -542,13 +606,16 @@ class IamIdentityV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/serviceids/'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-    def create_service_id(
-        self,
+
+    def create_service_id(self,
         account_id: str,
         name: str,
         *,
@@ -589,10 +656,12 @@ class IamIdentityV1(BaseService):
             raise ValueError('name must be provided')
         if apikey is not None:
             apikey = convert_model(apikey)
-        headers = {'Entity-Lock': entity_lock}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_service_id'
-        )
+        headers = {
+            'Entity-Lock': entity_lock
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='create_service_id')
         headers.update(sdk_headers)
 
         data = {
@@ -600,7 +669,7 @@ class IamIdentityV1(BaseService):
             'name': name,
             'description': description,
             'unique_instance_crns': unique_instance_crns,
-            'apikey': apikey,
+            'apikey': apikey
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -611,13 +680,21 @@ class IamIdentityV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/serviceids/'
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-    def get_service_id(
-        self, id: str, *, include_history: bool = None, include_activity: bool = None, **kwargs
+
+    def get_service_id(self,
+        id: str,
+        *,
+        include_history: bool = None,
+        include_activity: bool = None,
+        **kwargs
     ) -> DetailedResponse:
         """
         Get details of a service ID.
@@ -641,12 +718,15 @@ class IamIdentityV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_service_id'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_service_id')
         headers.update(sdk_headers)
 
-        params = {'include_history': include_history, 'include_activity': include_activity}
+        params = {
+            'include_history': include_history,
+            'include_activity': include_activity
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -656,13 +736,16 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/serviceids/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-    def update_service_id(
-        self,
+
+    def update_service_id(self,
         id: str,
         if_match: str,
         *,
@@ -707,13 +790,19 @@ class IamIdentityV1(BaseService):
             raise ValueError('id must be provided')
         if if_match is None:
             raise ValueError('if_match must be provided')
-        headers = {'If-Match': if_match}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_service_id'
-        )
+        headers = {
+            'If-Match': if_match
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='update_service_id')
         headers.update(sdk_headers)
 
-        data = {'name': name, 'description': description, 'unique_instance_crns': unique_instance_crns}
+        data = {
+            'name': name,
+            'description': description,
+            'unique_instance_crns': unique_instance_crns
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -726,12 +815,19 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/serviceids/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
+        request = self.prepare_request(method='PUT',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-    def delete_service_id(self, id: str, **kwargs) -> DetailedResponse:
+
+    def delete_service_id(self,
+        id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Deletes a service ID and associated API keys.
 
@@ -751,9 +847,9 @@ class IamIdentityV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_service_id'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='delete_service_id')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -763,12 +859,18 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/serviceids/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(method='DELETE',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-    def lock_service_id(self, id: str, **kwargs) -> DetailedResponse:
+
+    def lock_service_id(self,
+        id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Lock the service ID.
 
@@ -787,9 +889,9 @@ class IamIdentityV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='lock_service_id'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='lock_service_id')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -799,12 +901,18 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/serviceids/{id}/lock'.format(**path_param_dict)
-        request = self.prepare_request(method='POST', url=url, headers=headers)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-    def unlock_service_id(self, id: str, **kwargs) -> DetailedResponse:
+
+    def unlock_service_id(self,
+        id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Unlock the service ID.
 
@@ -823,9 +931,9 @@ class IamIdentityV1(BaseService):
         if id is None:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='unlock_service_id'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='unlock_service_id')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -835,7 +943,9 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/serviceids/{id}/lock'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(method='DELETE',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -844,7 +954,14 @@ class IamIdentityV1(BaseService):
     # Trusted Profiles Operations
     #########################
 
-    def create_profile(self, name: str, account_id: str, *, description: str = None, **kwargs) -> DetailedResponse:
+
+    def create_profile(self,
+        name: str,
+        account_id: str,
+        *,
+        description: str = None,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Create a trusted profile.
 
@@ -867,12 +984,16 @@ class IamIdentityV1(BaseService):
         if account_id is None:
             raise ValueError('account_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_profile'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='create_profile')
         headers.update(sdk_headers)
 
-        data = {'name': name, 'account_id': account_id, 'description': description}
+        data = {
+            'name': name,
+            'account_id': account_id,
+            'description': description
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -882,13 +1003,16 @@ class IamIdentityV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/profiles'
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-    def list_profiles(
-        self,
+
+    def list_profiles(self,
         account_id: str,
         *,
         name: str = None,
@@ -926,9 +1050,9 @@ class IamIdentityV1(BaseService):
         if account_id is None:
             raise ValueError('account_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_profiles'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_profiles')
         headers.update(sdk_headers)
 
         params = {
@@ -938,7 +1062,7 @@ class IamIdentityV1(BaseService):
             'sort': sort,
             'order': order,
             'include_history': include_history,
-            'pagetoken': pagetoken,
+            'pagetoken': pagetoken
         }
 
         if 'headers' in kwargs:
@@ -946,12 +1070,21 @@ class IamIdentityV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/profiles'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-    def get_profile(self, profile_id: str, *, include_activity: bool = None, **kwargs) -> DetailedResponse:
+
+    def get_profile(self,
+        profile_id: str,
+        *,
+        include_activity: bool = None,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Get a trusted profile.
 
@@ -971,12 +1104,14 @@ class IamIdentityV1(BaseService):
         if profile_id is None:
             raise ValueError('profile_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_profile'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_profile')
         headers.update(sdk_headers)
 
-        params = {'include_activity': include_activity}
+        params = {
+            'include_activity': include_activity
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -986,13 +1121,22 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(profile_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/profiles/{profile-id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-    def update_profile(
-        self, profile_id: str, if_match: str, *, name: str = None, description: str = None, **kwargs
+
+    def update_profile(self,
+        profile_id: str,
+        if_match: str,
+        *,
+        name: str = None,
+        description: str = None,
+        **kwargs
     ) -> DetailedResponse:
         """
         Update a trusted profile.
@@ -1021,13 +1165,18 @@ class IamIdentityV1(BaseService):
             raise ValueError('profile_id must be provided')
         if if_match is None:
             raise ValueError('if_match must be provided')
-        headers = {'If-Match': if_match}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_profile'
-        )
+        headers = {
+            'If-Match': if_match
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='update_profile')
         headers.update(sdk_headers)
 
-        data = {'name': name, 'description': description}
+        data = {
+            'name': name,
+            'description': description
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1040,12 +1189,19 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(profile_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/profiles/{profile-id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
+        request = self.prepare_request(method='PUT',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-    def delete_profile(self, profile_id: str, **kwargs) -> DetailedResponse:
+
+    def delete_profile(self,
+        profile_id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Delete a trusted profile.
 
@@ -1062,9 +1218,9 @@ class IamIdentityV1(BaseService):
         if profile_id is None:
             raise ValueError('profile_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_profile'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='delete_profile')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1074,13 +1230,15 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(profile_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/profiles/{profile-id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(method='DELETE',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-    def create_claim_rule(
-        self,
+
+    def create_claim_rule(self,
         profile_id: str,
         type: str,
         conditions: List['ProfileClaimRuleConditions'],
@@ -1130,9 +1288,9 @@ class IamIdentityV1(BaseService):
         if context is not None:
             context = convert_model(context)
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_claim_rule'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='create_claim_rule')
         headers.update(sdk_headers)
 
         data = {
@@ -1142,7 +1300,7 @@ class IamIdentityV1(BaseService):
             'name': name,
             'realm_name': realm_name,
             'cr_type': cr_type,
-            'expiration': expiration,
+            'expiration': expiration
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -1156,12 +1314,19 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(profile_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/profiles/{profile-id}/rules'.format(**path_param_dict)
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-    def list_claim_rules(self, profile_id: str, **kwargs) -> DetailedResponse:
+
+    def list_claim_rules(self,
+        profile_id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         List claim rules for a trusted profile.
 
@@ -1177,9 +1342,9 @@ class IamIdentityV1(BaseService):
         if profile_id is None:
             raise ValueError('profile_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_claim_rules'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_claim_rules')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1190,12 +1355,19 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(profile_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/profiles/{profile-id}/rules'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-    def get_claim_rule(self, profile_id: str, rule_id: str, **kwargs) -> DetailedResponse:
+
+    def get_claim_rule(self,
+        profile_id: str,
+        rule_id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Get a claim rule for a trusted profile.
 
@@ -1213,9 +1385,9 @@ class IamIdentityV1(BaseService):
         if rule_id is None:
             raise ValueError('rule_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_claim_rule'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_claim_rule')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1226,13 +1398,15 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(profile_id, rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/profiles/{profile-id}/rules/{rule-id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-    def update_claim_rule(
-        self,
+
+    def update_claim_rule(self,
         profile_id: str,
         rule_id: str,
         if_match: str,
@@ -1291,10 +1465,12 @@ class IamIdentityV1(BaseService):
         conditions = [convert_model(x) for x in conditions]
         if context is not None:
             context = convert_model(context)
-        headers = {'If-Match': if_match}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_claim_rule'
-        )
+        headers = {
+            'If-Match': if_match
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='update_claim_rule')
         headers.update(sdk_headers)
 
         data = {
@@ -1304,7 +1480,7 @@ class IamIdentityV1(BaseService):
             'name': name,
             'realm_name': realm_name,
             'cr_type': cr_type,
-            'expiration': expiration,
+            'expiration': expiration
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -1318,12 +1494,20 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(profile_id, rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/profiles/{profile-id}/rules/{rule-id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
+        request = self.prepare_request(method='PUT',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-    def delete_claim_rule(self, profile_id: str, rule_id: str, **kwargs) -> DetailedResponse:
+
+    def delete_claim_rule(self,
+        profile_id: str,
+        rule_id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Delete a claim rule.
 
@@ -1343,9 +1527,9 @@ class IamIdentityV1(BaseService):
         if rule_id is None:
             raise ValueError('rule_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_claim_rule'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='delete_claim_rule')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1355,13 +1539,21 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(profile_id, rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/profiles/{profile-id}/rules/{rule-id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(method='DELETE',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-    def create_link(
-        self, profile_id: str, cr_type: str, link: 'CreateProfileLinkRequestLink', *, name: str = None, **kwargs
+
+    def create_link(self,
+        profile_id: str,
+        cr_type: str,
+        link: 'CreateProfileLinkRequestLink',
+        *,
+        name: str = None,
+        **kwargs
     ) -> DetailedResponse:
         """
         Create link to a trusted profile.
@@ -1388,12 +1580,16 @@ class IamIdentityV1(BaseService):
             raise ValueError('link must be provided')
         link = convert_model(link)
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_link'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='create_link')
         headers.update(sdk_headers)
 
-        data = {'cr_type': cr_type, 'link': link, 'name': name}
+        data = {
+            'cr_type': cr_type,
+            'link': link,
+            'name': name
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1406,12 +1602,19 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(profile_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/profiles/{profile-id}/links'.format(**path_param_dict)
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-    def list_links(self, profile_id: str, **kwargs) -> DetailedResponse:
+
+    def list_links(self,
+        profile_id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         List links to a trusted profile.
 
@@ -1426,9 +1629,9 @@ class IamIdentityV1(BaseService):
         if profile_id is None:
             raise ValueError('profile_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_links'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_links')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1439,12 +1642,19 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(profile_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/profiles/{profile-id}/links'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-    def get_link(self, profile_id: str, link_id: str, **kwargs) -> DetailedResponse:
+
+    def get_link(self,
+        profile_id: str,
+        link_id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Get link to a trusted profile.
 
@@ -1462,9 +1672,9 @@ class IamIdentityV1(BaseService):
         if link_id is None:
             raise ValueError('link_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_link'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_link')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1475,12 +1685,19 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(profile_id, link_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/profiles/{profile-id}/links/{link-id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-    def delete_link(self, profile_id: str, link_id: str, **kwargs) -> DetailedResponse:
+
+    def delete_link(self,
+        profile_id: str,
+        link_id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Delete link to a trusted profile.
 
@@ -1498,9 +1715,9 @@ class IamIdentityV1(BaseService):
         if link_id is None:
             raise ValueError('link_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_link'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='delete_link')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1510,7 +1727,9 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(profile_id, link_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/profiles/{profile-id}/links/{link-id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(method='DELETE',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -1519,7 +1738,13 @@ class IamIdentityV1(BaseService):
     # Account Settings
     #########################
 
-    def get_account_settings(self, account_id: str, *, include_history: bool = None, **kwargs) -> DetailedResponse:
+
+    def get_account_settings(self,
+        account_id: str,
+        *,
+        include_history: bool = None,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Get account configurations.
 
@@ -1536,12 +1761,14 @@ class IamIdentityV1(BaseService):
         if account_id is None:
             raise ValueError('account_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_account_settings'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_account_settings')
         headers.update(sdk_headers)
 
-        params = {'include_history': include_history}
+        params = {
+            'include_history': include_history
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1551,13 +1778,16 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/accounts/{account_id}/settings/identity'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-    def update_account_settings(
-        self,
+
+    def update_account_settings(self,
         if_match: str,
         account_id: str,
         *,
@@ -1625,10 +1855,12 @@ class IamIdentityV1(BaseService):
             raise ValueError('if_match must be provided')
         if account_id is None:
             raise ValueError('account_id must be provided')
-        headers = {'If-Match': if_match}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_account_settings'
-        )
+        headers = {
+            'If-Match': if_match
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='update_account_settings')
         headers.update(sdk_headers)
 
         data = {
@@ -1638,7 +1870,7 @@ class IamIdentityV1(BaseService):
             'mfa': mfa,
             'session_expiration_in_seconds': session_expiration_in_seconds,
             'session_invalidation_in_seconds': session_invalidation_in_seconds,
-            'max_sessions_per_identity': max_sessions_per_identity,
+            'max_sessions_per_identity': max_sessions_per_identity
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -1652,7 +1884,10 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/accounts/{account_id}/settings/identity'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
+        request = self.prepare_request(method='PUT',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
 
         response = self.send(request, **kwargs)
         return response
@@ -1661,7 +1896,14 @@ class IamIdentityV1(BaseService):
     # activityOperations
     #########################
 
-    def create_report(self, account_id: str, *, type: str = None, duration: str = None, **kwargs) -> DetailedResponse:
+
+    def create_report(self,
+        account_id: str,
+        *,
+        type: str = None,
+        duration: str = None,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Trigger activity report across on account scope.
 
@@ -1681,12 +1923,15 @@ class IamIdentityV1(BaseService):
         if account_id is None:
             raise ValueError('account_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_report'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='create_report')
         headers.update(sdk_headers)
 
-        params = {'type': type, 'duration': duration}
+        params = {
+            'type': type,
+            'duration': duration
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1696,12 +1941,20 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/activity/accounts/{account_id}/report'.format(**path_param_dict)
-        request = self.prepare_request(method='POST', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-    def get_report(self, account_id: str, reference: str, **kwargs) -> DetailedResponse:
+
+    def get_report(self,
+        account_id: str,
+        reference: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Get activity report across on account scope.
 
@@ -1720,9 +1973,9 @@ class IamIdentityV1(BaseService):
         if reference is None:
             raise ValueError('reference must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_report'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_report')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1733,7 +1986,9 @@ class IamIdentityV1(BaseService):
         path_param_values = self.encode_path_vars(account_id, reference)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/activity/accounts/{account_id}/report/{reference}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -1749,24 +2004,19 @@ class ListApiKeysEnums:
         Optional parameter to define the scope of the queried API keys. Can be 'entity'
         (default) or 'account'.
         """
-
         ENTITY = 'entity'
         ACCOUNT = 'account'
-
     class Type(str, Enum):
         """
         Optional parameter to filter the type of the queried API keys. Can be 'user' or
         'serviceid'.
         """
-
         USER = 'user'
         SERVICEID = 'serviceid'
-
     class Order(str, Enum):
         """
         Optional sort order, valid values are asc and desc. Default: asc.
         """
-
         ASC = 'asc'
         DESC = 'desc'
 
@@ -1780,7 +2030,6 @@ class ListServiceIdsEnums:
         """
         Optional sort order, valid values are asc and desc. Default: asc.
         """
-
         ASC = 'asc'
         DESC = 'desc'
 
@@ -1794,7 +2043,6 @@ class ListProfilesEnums:
         """
         Optional sort order, valid values are asc and desc. Default: asc.
         """
-
         ASC = 'asc'
         DESC = 'desc'
 
@@ -1804,7 +2052,7 @@ class ListProfilesEnums:
 ##############################################################################
 
 
-class AccountSettingsResponse:
+class AccountSettingsResponse():
     """
     Response body format for Account Settings REST requests.
 
@@ -1847,21 +2095,19 @@ class AccountSettingsResponse:
             * NOT_SET - To unset account setting and use service default.
     """
 
-    def __init__(
-        self,
-        account_id: str,
-        restrict_create_service_id: str,
-        restrict_create_platform_apikey: str,
-        allowed_ip_addresses: str,
-        entity_tag: str,
-        mfa: str,
-        session_expiration_in_seconds: str,
-        session_invalidation_in_seconds: str,
-        max_sessions_per_identity: str,
-        *,
-        context: 'ResponseContext' = None,
-        history: List['EnityHistoryRecord'] = None
-    ) -> None:
+    def __init__(self,
+                 account_id: str,
+                 restrict_create_service_id: str,
+                 restrict_create_platform_apikey: str,
+                 allowed_ip_addresses: str,
+                 entity_tag: str,
+                 mfa: str,
+                 session_expiration_in_seconds: str,
+                 session_invalidation_in_seconds: str,
+                 max_sessions_per_identity: str,
+                 *,
+                 context: 'ResponseContext' = None,
+                 history: List['EnityHistoryRecord'] = None) -> None:
         """
         Initialize a AccountSettingsResponse object.
 
@@ -1929,15 +2175,11 @@ class AccountSettingsResponse:
         if 'restrict_create_service_id' in _dict:
             args['restrict_create_service_id'] = _dict.get('restrict_create_service_id')
         else:
-            raise ValueError(
-                'Required property \'restrict_create_service_id\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'restrict_create_service_id\' not present in AccountSettingsResponse JSON')
         if 'restrict_create_platform_apikey' in _dict:
             args['restrict_create_platform_apikey'] = _dict.get('restrict_create_platform_apikey')
         else:
-            raise ValueError(
-                'Required property \'restrict_create_platform_apikey\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'restrict_create_platform_apikey\' not present in AccountSettingsResponse JSON')
         if 'allowed_ip_addresses' in _dict:
             args['allowed_ip_addresses'] = _dict.get('allowed_ip_addresses')
         else:
@@ -1955,21 +2197,15 @@ class AccountSettingsResponse:
         if 'session_expiration_in_seconds' in _dict:
             args['session_expiration_in_seconds'] = _dict.get('session_expiration_in_seconds')
         else:
-            raise ValueError(
-                'Required property \'session_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'session_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
         if 'session_invalidation_in_seconds' in _dict:
             args['session_invalidation_in_seconds'] = _dict.get('session_invalidation_in_seconds')
         else:
-            raise ValueError(
-                'Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON')
         if 'max_sessions_per_identity' in _dict:
             args['max_sessions_per_identity'] = _dict.get('max_sessions_per_identity')
         else:
-            raise ValueError(
-                'Required property \'max_sessions_per_identity\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'max_sessions_per_identity\' not present in AccountSettingsResponse JSON')
         return cls(**args)
 
     @classmethod
@@ -2029,10 +2265,10 @@ class AccountSettingsResponse:
           * NOT_RESTRICTED - to remove access control
           * NOT_SET - to 'unset' a previous set value.
         """
-
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
@@ -2042,10 +2278,10 @@ class AccountSettingsResponse:
           * NOT_RESTRICTED - to remove access control
           * NOT_SET - to 'unset' a previous set value.
         """
-
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
     class MfaEnum(str, Enum):
         """
@@ -2057,7 +2293,6 @@ class AccountSettingsResponse:
           * LEVEL2 - TOTP-based MFA for all users
           * LEVEL3 - U2F MFA for all users.
         """
-
         NONE = 'NONE'
         TOTP = 'TOTP'
         TOTP4ALL = 'TOTP4ALL'
@@ -2066,7 +2301,7 @@ class AccountSettingsResponse:
         LEVEL3 = 'LEVEL3'
 
 
-class Activity:
+class Activity():
     """
     Activity.
 
@@ -2075,7 +2310,10 @@ class Activity:
           authenticated.
     """
 
-    def __init__(self, authn_count: int, *, last_authn: str = None) -> None:
+    def __init__(self,
+                 authn_count: int,
+                 *,
+                 last_authn: str = None) -> None:
         """
         Initialize a Activity object.
 
@@ -2131,8 +2369,7 @@ class Activity:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ApiKey:
+class ApiKey():
     """
     Response body format for API key V1 REST requests.
 
@@ -2167,25 +2404,23 @@ class ApiKey:
     :attr Activity activity: (optional)
     """
 
-    def __init__(
-        self,
-        id: str,
-        crn: str,
-        locked: bool,
-        created_by: str,
-        name: str,
-        iam_id: str,
-        account_id: str,
-        apikey: str,
-        *,
-        context: 'ResponseContext' = None,
-        entity_tag: str = None,
-        created_at: datetime = None,
-        modified_at: datetime = None,
-        description: str = None,
-        history: List['EnityHistoryRecord'] = None,
-        activity: 'Activity' = None
-    ) -> None:
+    def __init__(self,
+                 id: str,
+                 crn: str,
+                 locked: bool,
+                 created_by: str,
+                 name: str,
+                 iam_id: str,
+                 account_id: str,
+                 apikey: str,
+                 *,
+                 context: 'ResponseContext' = None,
+                 entity_tag: str = None,
+                 created_at: datetime = None,
+                 modified_at: datetime = None,
+                 description: str = None,
+                 history: List['EnityHistoryRecord'] = None,
+                 activity: 'Activity' = None) -> None:
         """
         Initialize a ApiKey object.
 
@@ -2349,8 +2584,7 @@ class ApiKey:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ApiKeyInsideCreateServiceIdRequest:
+class ApiKeyInsideCreateServiceIdRequest():
     """
     Parameters for the API key in the Create service Id V1 REST request.
 
@@ -2371,7 +2605,12 @@ class ApiKeyInsideCreateServiceIdRequest:
           the value. We don't allow storing of API keys for users.
     """
 
-    def __init__(self, name: str, *, description: str = None, apikey: str = None, store_value: bool = None) -> None:
+    def __init__(self,
+                 name: str,
+                 *,
+                 description: str = None,
+                 apikey: str = None,
+                 store_value: bool = None) -> None:
         """
         Initialize a ApiKeyInsideCreateServiceIdRequest object.
 
@@ -2449,8 +2688,7 @@ class ApiKeyInsideCreateServiceIdRequest:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ApiKeyList:
+class ApiKeyList():
     """
     Response body format for the List API keys V1 REST request.
 
@@ -2469,17 +2707,15 @@ class ApiKeyList:
           empty depending on the query parameters values provided.
     """
 
-    def __init__(
-        self,
-        apikeys: List['ApiKey'],
-        *,
-        context: 'ResponseContext' = None,
-        offset: int = None,
-        limit: int = None,
-        first: str = None,
-        previous: str = None,
-        next: str = None
-    ) -> None:
+    def __init__(self,
+                 apikeys: List['ApiKey'],
+                 *,
+                 context: 'ResponseContext' = None,
+                 offset: int = None,
+                 limit: int = None,
+                 first: str = None,
+                 previous: str = None,
+                 next: str = None) -> None:
         """
         Initialize a ApiKeyList object.
 
@@ -2570,8 +2806,7 @@ class ApiKeyList:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ApikeyActivity:
+class ApikeyActivity():
     """
     Apikeys activity details.
 
@@ -2585,16 +2820,14 @@ class ApikeyActivity:
     :attr str last_authn: (optional) Time when the apikey was last authenticated.
     """
 
-    def __init__(
-        self,
-        id: str,
-        type: str,
-        *,
-        name: str = None,
-        serviceid: 'ApikeyActivityServiceid' = None,
-        user: 'ApikeyActivityUser' = None,
-        last_authn: str = None
-    ) -> None:
+    def __init__(self,
+                 id: str,
+                 type: str,
+                 *,
+                 name: str = None,
+                 serviceid: 'ApikeyActivityServiceid' = None,
+                 user: 'ApikeyActivityUser' = None,
+                 last_authn: str = None) -> None:
         """
         Initialize a ApikeyActivity object.
 
@@ -2678,8 +2911,7 @@ class ApikeyActivity:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ApikeyActivityServiceid:
+class ApikeyActivityServiceid():
     """
     serviceid details will be present if type is `serviceid`.
 
@@ -2687,7 +2919,10 @@ class ApikeyActivityServiceid:
     :attr str name: (optional) Name provided during creation of the serviceid.
     """
 
-    def __init__(self, *, id: str = None, name: str = None) -> None:
+    def __init__(self,
+                 *,
+                 id: str = None,
+                 name: str = None) -> None:
         """
         Initialize a ApikeyActivityServiceid object.
 
@@ -2739,8 +2974,7 @@ class ApikeyActivityServiceid:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ApikeyActivityUser:
+class ApikeyActivityUser():
     """
     user details will be present if type is `user`.
 
@@ -2750,7 +2984,12 @@ class ApikeyActivityUser:
     :attr str email: (optional) Email of the user.
     """
 
-    def __init__(self, *, iam_id: str = None, name: str = None, username: str = None, email: str = None) -> None:
+    def __init__(self,
+                 *,
+                 iam_id: str = None,
+                 name: str = None,
+                 username: str = None,
+                 email: str = None) -> None:
         """
         Initialize a ApikeyActivityUser object.
 
@@ -2814,8 +3053,7 @@ class ApikeyActivityUser:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class CreateProfileLinkRequestLink:
+class CreateProfileLinkRequestLink():
     """
     Link details.
 
@@ -2826,7 +3064,11 @@ class CreateProfileLinkRequestLink:
           cr_type is IKS_SA or ROKS_SA.
     """
 
-    def __init__(self, crn: str, namespace: str, *, name: str = None) -> None:
+    def __init__(self,
+                 crn: str,
+                 namespace: str,
+                 *,
+                 name: str = None) -> None:
         """
         Initialize a CreateProfileLinkRequestLink object.
 
@@ -2890,8 +3132,7 @@ class CreateProfileLinkRequestLink:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class EnityHistoryRecord:
+class EnityHistoryRecord():
     """
     Response body format for an entity history record.
 
@@ -2903,9 +3144,13 @@ class EnityHistoryRecord:
     :attr str message: Message which summarizes the executed action.
     """
 
-    def __init__(
-        self, timestamp: str, iam_id: str, iam_id_account: str, action: str, params: List[str], message: str
-    ) -> None:
+    def __init__(self,
+                 timestamp: str,
+                 iam_id: str,
+                 iam_id_account: str,
+                 action: str,
+                 params: List[str],
+                 message: str) -> None:
         """
         Initialize a EnityHistoryRecord object.
 
@@ -2994,8 +3239,7 @@ class EnityHistoryRecord:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class EntityActivity:
+class EntityActivity():
     """
     EntityActivity.
 
@@ -3004,7 +3248,11 @@ class EntityActivity:
     :attr str last_authn: (optional) Time when the entity was last authenticated.
     """
 
-    def __init__(self, id: str, *, name: str = None, last_authn: str = None) -> None:
+    def __init__(self,
+                 id: str,
+                 *,
+                 name: str = None,
+                 last_authn: str = None) -> None:
         """
         Initialize a EntityActivity object.
 
@@ -3065,8 +3313,7 @@ class EntityActivity:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ProfileClaimRule:
+class ProfileClaimRule():
     """
     ProfileClaimRule.
 
@@ -3087,20 +3334,18 @@ class ProfileClaimRule:
           rule.
     """
 
-    def __init__(
-        self,
-        id: str,
-        entity_tag: str,
-        created_at: datetime,
-        type: str,
-        expiration: int,
-        conditions: List['ProfileClaimRuleConditions'],
-        *,
-        modified_at: datetime = None,
-        name: str = None,
-        realm_name: str = None,
-        cr_type: str = None
-    ) -> None:
+    def __init__(self,
+                 id: str,
+                 entity_tag: str,
+                 created_at: datetime,
+                 type: str,
+                 expiration: int,
+                 conditions: List['ProfileClaimRuleConditions'],
+                 *,
+                 modified_at: datetime = None,
+                 name: str = None,
+                 realm_name: str = None,
+                 cr_type: str = None) -> None:
         """
         Initialize a ProfileClaimRule object.
 
@@ -3218,8 +3463,7 @@ class ProfileClaimRule:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ProfileClaimRuleConditions:
+class ProfileClaimRuleConditions():
     """
     ProfileClaimRuleConditions.
 
@@ -3230,7 +3474,10 @@ class ProfileClaimRuleConditions:
           the operator.
     """
 
-    def __init__(self, claim: str, operator: str, value: str) -> None:
+    def __init__(self,
+                 claim: str,
+                 operator: str,
+                 value: str) -> None:
         """
         Initialize a ProfileClaimRuleConditions object.
 
@@ -3297,8 +3544,7 @@ class ProfileClaimRuleConditions:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ProfileClaimRuleList:
+class ProfileClaimRuleList():
     """
     ProfileClaimRuleList.
 
@@ -3307,7 +3553,10 @@ class ProfileClaimRuleList:
     :attr List[ProfileClaimRule] rules: List of claim rules.
     """
 
-    def __init__(self, rules: List['ProfileClaimRule'], *, context: 'ResponseContext' = None) -> None:
+    def __init__(self,
+                 rules: List['ProfileClaimRule'],
+                 *,
+                 context: 'ResponseContext' = None) -> None:
         """
         Initialize a ProfileClaimRuleList object.
 
@@ -3362,8 +3611,7 @@ class ProfileClaimRuleList:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ProfileLink:
+class ProfileLink():
     """
     Link details.
 
@@ -3379,17 +3627,15 @@ class ProfileLink:
     :attr ProfileLinkLink link:
     """
 
-    def __init__(
-        self,
-        id: str,
-        entity_tag: str,
-        created_at: datetime,
-        modified_at: datetime,
-        cr_type: str,
-        link: 'ProfileLinkLink',
-        *,
-        name: str = None
-    ) -> None:
+    def __init__(self,
+                 id: str,
+                 entity_tag: str,
+                 created_at: datetime,
+                 modified_at: datetime,
+                 cr_type: str,
+                 link: 'ProfileLinkLink',
+                 *,
+                 name: str = None) -> None:
         """
         Initialize a ProfileLink object.
 
@@ -3486,8 +3732,7 @@ class ProfileLink:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ProfileLinkLink:
+class ProfileLinkLink():
     """
     ProfileLinkLink.
 
@@ -3498,7 +3743,11 @@ class ProfileLinkLink:
           cr_type is IKS_SA or ROKS_SA.
     """
 
-    def __init__(self, *, crn: str = None, namespace: str = None, name: str = None) -> None:
+    def __init__(self,
+                 *,
+                 crn: str = None,
+                 namespace: str = None,
+                 name: str = None) -> None:
         """
         Initialize a ProfileLinkLink object.
 
@@ -3558,15 +3807,15 @@ class ProfileLinkLink:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ProfileLinkList:
+class ProfileLinkList():
     """
     ProfileLinkList.
 
     :attr List[ProfileLink] links: List of links to a trusted profile.
     """
 
-    def __init__(self, links: List['ProfileLink']) -> None:
+    def __init__(self,
+                 links: List['ProfileLink']) -> None:
         """
         Initialize a ProfileLinkList object.
 
@@ -3614,8 +3863,7 @@ class ProfileLinkList:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class Report:
+class Report():
     """
     Report.
 
@@ -3630,19 +3878,17 @@ class Report:
     :attr List[EntityActivity] profiles: (optional) List of profiles.
     """
 
-    def __init__(
-        self,
-        created_by: str,
-        reference: str,
-        report_duration: str,
-        report_start_time: str,
-        report_end_time: str,
-        *,
-        users: List['UserActivity'] = None,
-        apikeys: List['ApikeyActivity'] = None,
-        serviceids: List['EntityActivity'] = None,
-        profiles: List['EntityActivity'] = None
-    ) -> None:
+    def __init__(self,
+                 created_by: str,
+                 reference: str,
+                 report_duration: str,
+                 report_start_time: str,
+                 report_end_time: str,
+                 *,
+                 users: List['UserActivity'] = None,
+                 apikeys: List['ApikeyActivity'] = None,
+                 serviceids: List['EntityActivity'] = None,
+                 profiles: List['EntityActivity'] = None) -> None:
         """
         Initialize a Report object.
 
@@ -3747,15 +3993,15 @@ class Report:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ReportReference:
+class ReportReference():
     """
     ReportReference.
 
     :attr str reference: Reference for the report to be generated.
     """
 
-    def __init__(self, reference: str) -> None:
+    def __init__(self,
+                 reference: str) -> None:
         """
         Initialize a ReportReference object.
 
@@ -3803,8 +4049,7 @@ class ReportReference:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ResponseContext:
+class ResponseContext():
     """
     Context with key properties for problem determination.
 
@@ -3825,21 +4070,19 @@ class ResponseContext:
     :attr str cluster_name: (optional) The cluster name.
     """
 
-    def __init__(
-        self,
-        *,
-        transaction_id: str = None,
-        operation: str = None,
-        user_agent: str = None,
-        url: str = None,
-        instance_id: str = None,
-        thread_id: str = None,
-        host: str = None,
-        start_time: str = None,
-        end_time: str = None,
-        elapsed_time: str = None,
-        cluster_name: str = None
-    ) -> None:
+    def __init__(self,
+                 *,
+                 transaction_id: str = None,
+                 operation: str = None,
+                 user_agent: str = None,
+                 url: str = None,
+                 instance_id: str = None,
+                 thread_id: str = None,
+                 host: str = None,
+                 start_time: str = None,
+                 end_time: str = None,
+                 elapsed_time: str = None,
+                 cluster_name: str = None) -> None:
         """
         Initialize a ResponseContext object.
 
@@ -3950,8 +4193,7 @@ class ResponseContext:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ServiceId:
+class ServiceId():
     """
     Response body format for service ID V1 REST requests.
 
@@ -3983,25 +4225,23 @@ class ServiceId:
     :attr Activity activity: (optional)
     """
 
-    def __init__(
-        self,
-        id: str,
-        iam_id: str,
-        entity_tag: str,
-        crn: str,
-        locked: bool,
-        created_at: datetime,
-        modified_at: datetime,
-        account_id: str,
-        name: str,
-        *,
-        context: 'ResponseContext' = None,
-        description: str = None,
-        unique_instance_crns: List[str] = None,
-        history: List['EnityHistoryRecord'] = None,
-        apikey: 'ApiKey' = None,
-        activity: 'Activity' = None
-    ) -> None:
+    def __init__(self,
+                 id: str,
+                 iam_id: str,
+                 entity_tag: str,
+                 crn: str,
+                 locked: bool,
+                 created_at: datetime,
+                 modified_at: datetime,
+                 account_id: str,
+                 name: str,
+                 *,
+                 context: 'ResponseContext' = None,
+                 description: str = None,
+                 unique_instance_crns: List[str] = None,
+                 history: List['EnityHistoryRecord'] = None,
+                 apikey: 'ApiKey' = None,
+                 activity: 'Activity' = None) -> None:
         """
         Initialize a ServiceId object.
 
@@ -4162,8 +4402,7 @@ class ServiceId:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ServiceIdList:
+class ServiceIdList():
     """
     Response body format for the list service ID V1 REST request.
 
@@ -4182,17 +4421,15 @@ class ServiceIdList:
           response but might be empty depending on the query parameter values provided.
     """
 
-    def __init__(
-        self,
-        serviceids: List['ServiceId'],
-        *,
-        context: 'ResponseContext' = None,
-        offset: int = None,
-        limit: int = None,
-        first: str = None,
-        previous: str = None,
-        next: str = None
-    ) -> None:
+    def __init__(self,
+                 serviceids: List['ServiceId'],
+                 *,
+                 context: 'ResponseContext' = None,
+                 offset: int = None,
+                 limit: int = None,
+                 first: str = None,
+                 previous: str = None,
+                 next: str = None) -> None:
         """
         Initialize a ServiceIdList object.
 
@@ -4284,8 +4521,7 @@ class ServiceIdList:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class TrustedProfile:
+class TrustedProfile():
     """
     Response body format for trusted profile V1 REST requests.
 
@@ -4316,24 +4552,22 @@ class TrustedProfile:
     :attr Activity activity: (optional)
     """
 
-    def __init__(
-        self,
-        id: str,
-        entity_tag: str,
-        crn: str,
-        name: str,
-        iam_id: str,
-        account_id: str,
-        *,
-        context: 'ResponseContext' = None,
-        description: str = None,
-        created_at: datetime = None,
-        modified_at: datetime = None,
-        ims_account_id: int = None,
-        ims_user_id: int = None,
-        history: List['EnityHistoryRecord'] = None,
-        activity: 'Activity' = None
-    ) -> None:
+    def __init__(self,
+                 id: str,
+                 entity_tag: str,
+                 crn: str,
+                 name: str,
+                 iam_id: str,
+                 account_id: str,
+                 *,
+                 context: 'ResponseContext' = None,
+                 description: str = None,
+                 created_at: datetime = None,
+                 modified_at: datetime = None,
+                 ims_account_id: int = None,
+                 ims_user_id: int = None,
+                 history: List['EnityHistoryRecord'] = None,
+                 activity: 'Activity' = None) -> None:
         """
         Initialize a TrustedProfile object.
 
@@ -4483,8 +4717,7 @@ class TrustedProfile:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class TrustedProfilesList:
+class TrustedProfilesList():
     """
     Response body format for the List trusted profiles V1 REST request.
 
@@ -4501,17 +4734,15 @@ class TrustedProfilesList:
     :attr List[TrustedProfile] profiles: List of trusted profiles.
     """
 
-    def __init__(
-        self,
-        profiles: List['TrustedProfile'],
-        *,
-        context: 'ResponseContext' = None,
-        offset: int = None,
-        limit: int = None,
-        first: str = None,
-        previous: str = None,
-        next: str = None
-    ) -> None:
+    def __init__(self,
+                 profiles: List['TrustedProfile'],
+                 *,
+                 context: 'ResponseContext' = None,
+                 offset: int = None,
+                 limit: int = None,
+                 first: str = None,
+                 previous: str = None,
+                 next: str = None) -> None:
         """
         Initialize a TrustedProfilesList object.
 
@@ -4600,8 +4831,7 @@ class TrustedProfilesList:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class UserActivity:
+class UserActivity():
     """
     UserActivity.
 
@@ -4612,9 +4842,13 @@ class UserActivity:
     :attr str last_authn: (optional) Time when the user was last authenticated.
     """
 
-    def __init__(
-        self, iam_id: str, username: str, *, name: str = None, email: str = None, last_authn: str = None
-    ) -> None:
+    def __init__(self,
+                 iam_id: str,
+                 username: str,
+                 *,
+                 name: str = None,
+                 email: str = None,
+                 last_authn: str = None) -> None:
         """
         Initialize a UserActivity object.
 

@@ -74,7 +74,7 @@ target_region = 'global'
 # region
 
 
-class TestResourceControllerV2Examples:
+class TestResourceControllerV2Examples():
     """
     Example Test Class for ResourceControllerV2
     """
@@ -94,7 +94,8 @@ class TestResourceControllerV2Examples:
 
             # Load the configuration
             global config
-            config = read_external_sources(ResourceControllerV2.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(
+                ResourceControllerV2.DEFAULT_SERVICE_NAME)
 
             global resource_group
             resource_group = config['RESOURCE_GROUP']
@@ -131,7 +132,7 @@ class TestResourceControllerV2Examples:
                 name=resource_instance_name,
                 target=target_region,
                 resource_group=resource_group,
-                resource_plan_id=resource_plan_id,
+                resource_plan_id=resource_plan_id
             ).get_result()
 
             print(json.dumps(resource_instance, indent=2))
@@ -153,7 +154,9 @@ class TestResourceControllerV2Examples:
             print('\nget_resource_instance() result:')
             # begin-get_resource_instance
 
-            resource_instance = resource_controller_service.get_resource_instance(id=instance_guid).get_result()
+            resource_instance = resource_controller_service.get_resource_instance(
+                id=instance_guid
+            ).get_result()
 
             print(json.dumps(resource_instance, indent=2))
 
@@ -197,9 +200,13 @@ class TestResourceControllerV2Examples:
             print('\nupdate_resource_instance() result:')
             # begin-update_resource_instance
 
-            parameters = {'exampleProperty': 'exampleValue'}
+            parameters = {
+                'exampleProperty': 'exampleValue'
+            }
             resource_instance = resource_controller_service.update_resource_instance(
-                id=instance_guid, name=resource_instance_update_name, parameters=parameters
+                id=instance_guid,
+                name=resource_instance_update_name,
+                parameters=parameters
             ).get_result()
 
             print(json.dumps(resource_instance, indent=2))
@@ -220,7 +227,9 @@ class TestResourceControllerV2Examples:
             # begin-create_resource_alias
 
             resource_alias = resource_controller_service.create_resource_alias(
-                name=alias_name, source=instance_guid, target=alias_target_crn
+                name=alias_name,
+                source=instance_guid,
+                target=alias_target_crn
             ).get_result()
 
             print(json.dumps(resource_alias, indent=2))
@@ -242,7 +251,9 @@ class TestResourceControllerV2Examples:
             print('\nget_resource_alias() result:')
             # begin-get_resource_alias
 
-            resource_alias = resource_controller_service.get_resource_alias(id=alias_guid).get_result()
+            resource_alias = resource_controller_service.get_resource_alias(
+                id=alias_guid
+            ).get_result()
 
             print(json.dumps(resource_alias, indent=2))
 
@@ -288,7 +299,8 @@ class TestResourceControllerV2Examples:
             # begin-update_resource_alias
 
             resource_alias = resource_controller_service.update_resource_alias(
-                id=alias_guid, name=alias_update_name
+                id=alias_guid,
+                name=alias_update_name
             ).get_result()
 
             print(json.dumps(resource_alias, indent=2))
@@ -334,9 +346,14 @@ class TestResourceControllerV2Examples:
             print('\ncreate_resource_binding() result:')
             # begin-create_resource_binding
 
-            parameters = {'exampleParameter': 'exampleValue'}
+            parameters = {
+                'exampleParameter': 'exampleValue'
+            }
             resource_binding = resource_controller_service.create_resource_binding(
-                source=alias_guid, target=binding_target_crn, name=binding_name, parameters=parameters
+                source=alias_guid,
+                target=binding_target_crn,
+                name=binding_name,
+                parameters=parameters
             ).get_result()
 
             print(json.dumps(resource_binding, indent=2))
@@ -358,13 +375,11 @@ class TestResourceControllerV2Examples:
             print('\nget_resource_binding() result:')
             # begin-get_resource_binding
 
-            resource_binding = resource_controller_service.get_resource_binding(id=binding_guid).get_result()
+            resource_binding = resource_controller_service.get_resource_binding(
+                id=binding_guid
+            ).get_result()
             if resource_binding.get('credentials') and resource_binding.get('credentials').get('REDACTED'):
-                print(
-                    "Credentials are redacted with code:",
-                    resource_binding.get('credentials').get('REDACTED'),
-                    ".The User doesn't have the correct access to view the credentials. Refer to the API documentation for additional details.",
-                )
+                print("Credentials are redacted with code:", resource_binding.get('credentials').get('REDACTED'), ".The User doesn't have the correct access to view the credentials. Refer to the API documentation for additional details.")
             print(json.dumps(resource_binding, indent=2))
 
             # end-get_resource_binding
@@ -409,7 +424,8 @@ class TestResourceControllerV2Examples:
             # begin-update_resource_binding
 
             resource_binding = resource_controller_service.update_resource_binding(
-                id=binding_guid, name=binding_update_name
+                id=binding_guid,
+                name=binding_update_name
             ).get_result()
 
             print(json.dumps(resource_binding, indent=2))
@@ -455,9 +471,13 @@ class TestResourceControllerV2Examples:
             print('\ncreate_resource_key() result:')
             # begin-create_resource_key
 
-            parameters = {'exampleParameter': 'exampleValue'}
+            parameters = {
+                'exampleParameter': 'exampleValue'
+            }
             resource_key = resource_controller_service.create_resource_key(
-                name=key_name, source=instance_guid, parameters=parameters
+                name=key_name,
+                source=instance_guid,
+                parameters=parameters
             ).get_result()
 
             print(json.dumps(resource_key, indent=2))
@@ -479,13 +499,11 @@ class TestResourceControllerV2Examples:
             print('\nget_resource_key() result:')
             # begin-get_resource_key
 
-            resource_key = resource_controller_service.get_resource_key(id=instance_key_guid).get_result()
+            resource_key = resource_controller_service.get_resource_key(
+                id=instance_key_guid
+            ).get_result()
             if resource_key.get('credentials') and resource_key.get('credentials').get('REDACTED'):
-                print(
-                    "Credentials are redacted with code:",
-                    resource_key.get('credentials').get('REDACTED'),
-                    ".The User doesn't have the correct access to view the credentials. Refer to the API documentation for additional details.",
-                )
+                print("Credentials are redacted with code:", resource_key.get('credentials').get('REDACTED'), ".The User doesn't have the correct access to view the credentials. Refer to the API documentation for additional details.")
 
             print(json.dumps(resource_key, indent=2))
 
@@ -531,7 +549,8 @@ class TestResourceControllerV2Examples:
             # begin-update_resource_key
 
             resource_key = resource_controller_service.update_resource_key(
-                id=instance_key_guid, name=key_update_name
+                id=instance_key_guid,
+                name=key_update_name
             ).get_result()
 
             print(json.dumps(resource_key, indent=2))
@@ -576,10 +595,12 @@ class TestResourceControllerV2Examples:
             global binding_guid
             # begin-delete_resource_binding
 
-            response = resource_controller_service.delete_resource_binding(id=binding_guid)
+            response = resource_controller_service.delete_resource_binding(
+                id=binding_guid)
 
             # end-delete_resource_binding
-            print('\ndelete_resource_binding() response status code: ', response.get_status_code())
+            print('\ndelete_resource_binding() response status code: ',
+                  response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -593,10 +614,12 @@ class TestResourceControllerV2Examples:
             global instance_key_guid
             # begin-delete_resource_key
 
-            response = resource_controller_service.delete_resource_key(id=instance_key_guid)
+            response = resource_controller_service.delete_resource_key(
+                id=instance_key_guid)
 
             # end-delete_resource_key
-            print('\ndelete_resource_key() response status code: ', response.get_status_code())
+            print('\ndelete_resource_key() response status code: ',
+                  response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -610,10 +633,13 @@ class TestResourceControllerV2Examples:
             global alias_guid
             # begin-delete_resource_alias
 
-            response = resource_controller_service.delete_resource_alias(id=alias_guid)
+            response = resource_controller_service.delete_resource_alias(
+                id=alias_guid
+            )
 
             # end-delete_resource_alias
-            print('\ndelete_resource_alias() response status code: ', response.get_status_code())
+            print('\ndelete_resource_alias() response status code: ',
+                  response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -628,7 +654,9 @@ class TestResourceControllerV2Examples:
             print('\nlock_resource_instance() result:')
             # begin-lock_resource_instance
 
-            resource_instance = resource_controller_service.lock_resource_instance(id=instance_guid).get_result()
+            resource_instance = resource_controller_service.lock_resource_instance(
+                id=instance_guid
+            ).get_result()
 
             print(json.dumps(resource_instance, indent=2))
 
@@ -647,7 +675,9 @@ class TestResourceControllerV2Examples:
             print('\nunlock_resource_instance() result:')
             # begin-unlock_resource_instance
 
-            resource_instance = resource_controller_service.unlock_resource_instance(id=instance_guid).get_result()
+            resource_instance = resource_controller_service.unlock_resource_instance(
+                id=instance_guid
+            ).get_result()
 
             print(json.dumps(resource_instance, indent=2))
 
@@ -665,10 +695,14 @@ class TestResourceControllerV2Examples:
             global instance_guid
             # begin-delete_resource_instance
 
-            response = resource_controller_service.delete_resource_instance(id=instance_guid, recursive=False)
+            response = resource_controller_service.delete_resource_instance(
+                id=instance_guid,
+                recursive=False
+            )
 
             # end-delete_resource_instance
-            print('\ndelete_resource_instance() response status code: ', response.get_status_code())
+            print('\ndelete_resource_instance() response status code: ',
+                  response.get_status_code())
 
             # wait for reclamation object to be created
             time.sleep(20)
@@ -686,7 +720,9 @@ class TestResourceControllerV2Examples:
             print('\nlist_reclamations() result:')
             # begin-list_reclamations
 
-            reclamations_list = resource_controller_service.list_reclamations(account_id=account_id).get_result()
+            reclamations_list = resource_controller_service.list_reclamations(
+                account_id=account_id
+            ).get_result()
 
             print(json.dumps(reclamations_list, indent=2))
 
@@ -711,7 +747,8 @@ class TestResourceControllerV2Examples:
             # begin-run_reclamation_action
 
             reclamation = resource_controller_service.run_reclamation_action(
-                id=reclamation_id, action_name='reclaim'
+                id=reclamation_id,
+                action_name='reclaim'
             ).get_result()
 
             print(json.dumps(reclamation, indent=2))
@@ -742,7 +779,6 @@ class TestResourceControllerV2Examples:
                 print("The instance is not cancelable")
             else:
                 pytest.fail(str(e))
-
 
 # endregion
 ##############################################################################

@@ -35,21 +35,25 @@ class TestUserManagementV1(unittest.TestCase):
     """
     Integration Test Class for UserManagementV1
     """
-
     @classmethod
     def setup_class(cls):
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
         else:
-            raise unittest.SkipTest('External configuration not available, skipping...')
+            raise unittest.SkipTest(
+                'External configuration not available, skipping...')
 
-        cls.config = read_external_sources(UserManagementV1.DEFAULT_SERVICE_NAME)
+        cls.config = read_external_sources(
+            UserManagementV1.DEFAULT_SERVICE_NAME
+        )
         assert cls.config is not None
 
-        cls.user_management_service = UserManagementV1.new_instance(service_name=UserManagementV1.DEFAULT_SERVICE_NAME)
+        cls.user_management_service = UserManagementV1.new_instance(
+            service_name=UserManagementV1.DEFAULT_SERVICE_NAME)
         assert cls.user_management_service is not None
 
-        cls.user_management_admin_service = UserManagementV1.new_instance(service_name='USER_MANAGEMENT_ADMIN')
+        cls.user_management_admin_service = UserManagementV1.new_instance(
+            service_name='USER_MANAGEMENT_ADMIN')
         assert cls.user_management_admin_service is not None
 
         cls.ACCOUNT_ID = cls.config['ACCOUNT_ID']
@@ -64,12 +68,12 @@ class TestUserManagementV1(unittest.TestCase):
     def test_01_get_user_settings(self):
 
         user_settings = self.user_management_service.get_user_settings(
-            account_id=self.ACCOUNT_ID, iam_id=self.IAM_USERID
-        )
+            account_id=self.ACCOUNT_ID, iam_id=self.IAM_USERID)
 
         assert user_settings.get_status_code() == 200
         assert user_settings.get_result() is not None
-        print('\nget_user_settings() result: ', json.dumps(user_settings.get_result(), indent=2))
+        print('\nget_user_settings() result: ',
+              json.dumps(user_settings.get_result(), indent=2))
 
     def test_02_update_user_settings(self):
 
@@ -79,8 +83,7 @@ class TestUserManagementV1(unittest.TestCase):
             language='French',
             notification_language='English',
             allowed_ip_addresses='32.96.110.50,172.16.254.1',
-            self_manage=True,
-        )
+            self_manage=True)
 
         assert user_settings.get_status_code() == 204
 
@@ -89,7 +92,8 @@ class TestUserManagementV1(unittest.TestCase):
         start = None
 
         while True:
-            response = self.user_management_service.list_users(account_id=self.ACCOUNT_ID, limit=10, start=start)
+            response = self.user_management_service.list_users(
+                account_id=self.ACCOUNT_ID, limit=10, start=start)
             assert response.get_status_code() == 200
 
             user_list = response.get_result()
@@ -137,7 +141,10 @@ class TestUserManagementV1(unittest.TestCase):
     def test_04_invite_users(self):
 
         # Construct a dict representation of a InviteUser model
-        invite_user_model = {'email': self.INVITED_USER_EMAIL, 'account_role': 'Member'}
+        invite_user_model = {
+            'email': self.INVITED_USER_EMAIL,
+            'account_role': 'Member'
+        }
 
         # Construct a dict representation of a Role model
         role_model = {'role_id': self.VIEWER_ROLEID}
@@ -151,18 +158,22 @@ class TestUserManagementV1(unittest.TestCase):
         resource_model = {'attributes': [attribute_model, attribute_model2]}
 
         # Construct a dict representation of a InviteUserIamPolicy model
-        invite_user_iam_policy_model = {'type': 'access', 'roles': [role_model], 'resources': [resource_model]}
+        invite_user_iam_policy_model = {
+            'type': 'access',
+            'roles': [role_model],
+            'resources': [resource_model]
+        }
 
         response = self.user_management_admin_service.invite_users(
             account_id=self.ACCOUNT_ID,
             users=[invite_user_model],
             iam_policy=[invite_user_iam_policy_model],
-            access_groups=[self.ACCESS_GROUP_ID],
-        )
+            access_groups=[self.ACCESS_GROUP_ID])
 
         assert response.get_status_code() == 202
         assert response.get_result() is not None
-        print('\ninvite_users() result: ', json.dumps(response.get_result(), indent=2))
+        print('\ninvite_users() result: ',
+              json.dumps(response.get_result(), indent=2))
 
         invited_users = response.get_result().get('resources')
         assert invited_users is not None
@@ -173,11 +184,13 @@ class TestUserManagementV1(unittest.TestCase):
 
     def test_05_get_user_profile(self):
 
-        user_profile = self.user_management_service.get_user_profile(account_id=self.ACCOUNT_ID, iam_id=self.IAM_USERID)
+        user_profile = self.user_management_service.get_user_profile(
+            account_id=self.ACCOUNT_ID, iam_id=self.IAM_USERID)
 
         assert user_profile.get_status_code() == 200
         assert user_profile.get_result() is not None
-        print('\nget_user_profile() result: ', json.dumps(user_profile.get_result(), indent=2))
+        print('\nget_user_profile() result: ',
+              json.dumps(user_profile.get_result(), indent=2))
 
     def test_06_update_user_profile(self):
 
@@ -187,8 +200,8 @@ class TestUserManagementV1(unittest.TestCase):
             firstname='John',
             lastname='Doe',
             state='ACTIVE',
-            email='do_not_delete_user_without_iam_policy_stage@mail.test.ibm.com',
-        )
+            email=
+            'do_not_delete_user_without_iam_policy_stage@mail.test.ibm.com')
 
         assert response.get_status_code() == 204
 
@@ -196,7 +209,8 @@ class TestUserManagementV1(unittest.TestCase):
         global REMOVED_USERID
         assert REMOVED_USERID is not None
 
-        response = self.user_management_service.remove_user(account_id=self.ACCOUNT_ID, iam_id=REMOVED_USERID)
+        response = self.user_management_service.remove_user(
+            account_id=self.ACCOUNT_ID, iam_id=REMOVED_USERID)
 
         assert response.get_status_code() == 204
 

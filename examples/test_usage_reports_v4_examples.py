@@ -56,7 +56,7 @@ billing_month = None
 # region
 
 
-class TestUsageReportsV4Examples:
+class TestUsageReportsV4Examples():
     """
     Example Test Class for UsageReportsV4
     """
@@ -69,7 +69,8 @@ class TestUsageReportsV4Examples:
 
             # begin-common
 
-            usage_reports_service = UsageReportsV4.new_instance()
+            usage_reports_service = UsageReportsV4.new_instance(
+            )
 
             # end-common
             assert usage_reports_service is not None
@@ -114,7 +115,8 @@ class TestUsageReportsV4Examples:
             # begin-get_account_summary
 
             account_summary = usage_reports_service.get_account_summary(
-                account_id=account_id, billingmonth=billing_month
+                account_id=account_id,
+                billingmonth=billing_month
             ).get_result()
 
             print(json.dumps(account_summary, indent=2))
@@ -136,7 +138,8 @@ class TestUsageReportsV4Examples:
             # begin-get_account_usage
 
             account_usage = usage_reports_service.get_account_usage(
-                account_id=account_id, billingmonth=billing_month
+                account_id=account_id,
+                billingmonth=billing_month
             ).get_result()
 
             print(json.dumps(account_usage, indent=2))
@@ -158,7 +161,9 @@ class TestUsageReportsV4Examples:
             # begin-get_resource_group_usage
 
             resource_group_usage = usage_reports_service.get_resource_group_usage(
-                account_id=account_id, resource_group_id=resource_group_id, billingmonth=billing_month
+                account_id=account_id,
+                resource_group_id=resource_group_id,
+                billingmonth=billing_month
             ).get_result()
 
             print(json.dumps(resource_group_usage, indent=2))
@@ -180,7 +185,9 @@ class TestUsageReportsV4Examples:
             # begin-get_org_usage
 
             org_usage = usage_reports_service.get_org_usage(
-                account_id=account_id, organization_id=org_id, billingmonth=billing_month
+                account_id=account_id,
+                organization_id=org_id,
+                billingmonth=billing_month
             ).get_result()
 
             print(json.dumps(org_usage, indent=2))
@@ -202,7 +209,8 @@ class TestUsageReportsV4Examples:
             # begin-get_resource_usage_account
 
             instances_usage = usage_reports_service.get_resource_usage_account(
-                account_id=account_id, billingmonth=billing_month
+                account_id=account_id,
+                billingmonth=billing_month
             ).get_result()
 
             print(json.dumps(instances_usage, indent=2))
@@ -224,7 +232,9 @@ class TestUsageReportsV4Examples:
             # begin-get_resource_usage_resource_group
 
             instances_usage = usage_reports_service.get_resource_usage_resource_group(
-                account_id=account_id, resource_group_id=resource_group_id, billingmonth=billing_month
+                account_id=account_id,
+                resource_group_id=resource_group_id,
+                billingmonth=billing_month
             ).get_result()
 
             print(json.dumps(instances_usage, indent=2))
@@ -246,7 +256,9 @@ class TestUsageReportsV4Examples:
             # begin-get_resource_usage_org
 
             instances_usage = usage_reports_service.get_resource_usage_org(
-                account_id=account_id, organization_id=org_id, billingmonth=billing_month
+                account_id=account_id,
+                organization_id=org_id,
+                billingmonth=billing_month
             ).get_result()
 
             print(json.dumps(instances_usage, indent=2))
@@ -255,7 +267,6 @@ class TestUsageReportsV4Examples:
 
         except ApiException as e:
             pytest.fail(str(e))
-
 
 # endregion
 ##############################################################################

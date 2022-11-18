@@ -58,7 +58,7 @@ example_service_name = "iam-groups"
 # region
 
 
-class TestIamPolicyManagementV1Examples:
+class TestIamPolicyManagementV1Examples():
     """
     Example Test Class for IamPolicyManagementV1
     """
@@ -71,14 +71,16 @@ class TestIamPolicyManagementV1Examples:
 
             # begin-common
 
-            iam_policy_management_service = IamPolicyManagementV1.new_instance()
+            iam_policy_management_service = IamPolicyManagementV1.new_instance(
+            )
 
             # end-common
             assert iam_policy_management_service is not None
 
             # Load the configuration
             global config, example_account_id
-            config = read_external_sources(IamPolicyManagementV1.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(
+                IamPolicyManagementV1.DEFAULT_SERVICE_NAME)
             example_account_id = config['TEST_ACCOUNT_ID']
 
         print('Setup complete.')
@@ -98,17 +100,26 @@ class TestIamPolicyManagementV1Examples:
             print('\ncreate_policy() result:')
             # begin-create_policy
 
-            policy_subjects = PolicySubject(attributes=[SubjectAttribute(name='iam_id', value=example_user_id)])
-            policy_roles = PolicyRole(role_id='crn:v1:bluemix:public:iam::::role:Viewer')
-            account_id_resource_attribute = ResourceAttribute(name='accountId', value=example_account_id)
-            service_name_resource_attribute = ResourceAttribute(name='serviceType', value='service')
-            policy_resource_tag = ResourceTag(name='project', value='prototype')
+            policy_subjects = PolicySubject(
+                attributes=[SubjectAttribute(name='iam_id', value=example_user_id)])
+            policy_roles = PolicyRole(
+                role_id='crn:v1:bluemix:public:iam::::role:Viewer')
+            account_id_resource_attribute = ResourceAttribute(
+                name='accountId', value=example_account_id)
+            service_name_resource_attribute = ResourceAttribute(
+                name='serviceType', value='service')
+            policy_resource_tag = ResourceTag(
+                name='project', value='prototype')
             policy_resources = PolicyResource(
-                attributes=[account_id_resource_attribute, service_name_resource_attribute], tags=[policy_resource_tag]
-            )
+                attributes=[account_id_resource_attribute,
+                            service_name_resource_attribute],
+                tags=[policy_resource_tag])
 
             policy = iam_policy_management_service.create_policy(
-                type='access', subjects=[policy_subjects], roles=[policy_roles], resources=[policy_resources]
+                type='access',
+                subjects=[policy_subjects],
+                roles=[policy_roles],
+                resources=[policy_resources]
             ).get_result()
 
             print(json.dumps(policy, indent=2))
@@ -131,7 +142,9 @@ class TestIamPolicyManagementV1Examples:
             print('\nget_policy() result:')
             # begin-get_policy
 
-            response = iam_policy_management_service.get_policy(policy_id=example_policy_id)
+            response = iam_policy_management_service.get_policy(
+                policy_id=example_policy_id
+            )
             policy = response.get_result()
 
             print(json.dumps(policy, indent=2))
@@ -154,14 +167,20 @@ class TestIamPolicyManagementV1Examples:
             print('\nupdate_policy() result:')
             # begin-update_policy
 
-            policy_subjects = PolicySubject(attributes=[SubjectAttribute(name='iam_id', value=example_user_id)])
-            account_id_resource_attribute = ResourceAttribute(name='accountId', value=example_account_id)
-            service_name_resource_attribute = ResourceAttribute(name='serviceType', value='service')
-            policy_resource_tag = ResourceTag(name='project', value='prototype')
+            policy_subjects = PolicySubject(
+                attributes=[SubjectAttribute(name='iam_id', value=example_user_id)])
+            account_id_resource_attribute = ResourceAttribute(
+                name='accountId', value=example_account_id)
+            service_name_resource_attribute = ResourceAttribute(
+                name='serviceType', value='service')
+            policy_resource_tag = ResourceTag(
+                name='project', value='prototype')
             policy_resources = PolicyResource(
-                attributes=[account_id_resource_attribute, service_name_resource_attribute], tags=[policy_resource_tag]
-            )
-            updated_policy_roles = PolicyRole(role_id='crn:v1:bluemix:public:iam::::role:Editor')
+                attributes=[account_id_resource_attribute,
+                            service_name_resource_attribute],
+                tags=[policy_resource_tag])
+            updated_policy_roles = PolicyRole(
+                role_id='crn:v1:bluemix:public:iam::::role:Editor')
 
             response = iam_policy_management_service.update_policy(
                 type='access',
@@ -169,7 +188,7 @@ class TestIamPolicyManagementV1Examples:
                 if_match=example_policy_etag,
                 subjects=[policy_subjects],
                 roles=[updated_policy_roles],
-                resources=[policy_resources],
+                resources=[policy_resources]
             )
             policy = response.get_result()
 
@@ -193,7 +212,9 @@ class TestIamPolicyManagementV1Examples:
             # begin-patch_policy
 
             policy = iam_policy_management_service.patch_policy(
-                policy_id=example_policy_id, if_match=example_updated_policy_etag, state='active'
+                policy_id=example_policy_id,
+                if_match=example_updated_policy_etag,
+                state='active'
             ).get_result()
 
             print(json.dumps(policy, indent=2))
@@ -234,7 +255,9 @@ class TestIamPolicyManagementV1Examples:
             print('\ndelete_policy() result:')
             # begin-delete_policy
 
-            response = iam_policy_management_service.delete_policy(policy_id=example_policy_id).get_result()
+            response = iam_policy_management_service.delete_policy(
+                policy_id=example_policy_id
+            ).get_result()
 
             print(json.dumps(response, indent=2))
 
@@ -259,7 +282,7 @@ class TestIamPolicyManagementV1Examples:
                 actions=['iam-groups.groups.read'],
                 name='ExampleRoleIAMGroups',
                 account_id=example_account_id,
-                service_name=example_service_name,
+                service_name=example_service_name
             ).get_result()
 
             print(json.dumps(custom_role, indent=2))
@@ -282,7 +305,9 @@ class TestIamPolicyManagementV1Examples:
             print('\nget_role() result:')
             # begin-get_role
 
-            response = iam_policy_management_service.get_role(role_id=example_custom_role_id)
+            response = iam_policy_management_service.get_role(
+                role_id=example_custom_role_id
+            )
             custom_role = response.get_result()
 
             print(json.dumps(custom_role, indent=2))
@@ -304,9 +329,12 @@ class TestIamPolicyManagementV1Examples:
             print('\nupdate_role() result:')
             # begin-update_role
 
-            updated_role_actions = ['iam-groups.groups.read', 'iam-groups.groups.list']
+            updated_role_actions = [
+                'iam-groups.groups.read', 'iam-groups.groups.list']
             custom_role = iam_policy_management_service.update_role(
-                role_id=example_custom_role_id, if_match=example_custom_role_etag, actions=updated_role_actions
+                role_id=example_custom_role_id,
+                if_match=example_custom_role_etag,
+                actions=updated_role_actions
             ).get_result()
 
             print(json.dumps(custom_role, indent=2))
@@ -326,7 +354,9 @@ class TestIamPolicyManagementV1Examples:
             print('\nlist_roles() result:')
             # begin-list_roles
 
-            role_list = iam_policy_management_service.list_roles(account_id=example_account_id).get_result()
+            role_list = iam_policy_management_service.list_roles(
+                account_id=example_account_id
+            ).get_result()
 
             print(json.dumps(role_list, indent=2))
 
@@ -345,7 +375,9 @@ class TestIamPolicyManagementV1Examples:
             print('\ndelete_role() result:')
             # begin-delete_role
 
-            response = iam_policy_management_service.delete_role(role_id=example_custom_role_id).get_result()
+            response = iam_policy_management_service.delete_role(
+                role_id=example_custom_role_id
+            ).get_result()
 
             print(json.dumps(response, indent=2))
 
@@ -353,7 +385,6 @@ class TestIamPolicyManagementV1Examples:
 
         except ApiException as e:
             pytest.fail(str(e))
-
 
 # endregion
 ##############################################################################

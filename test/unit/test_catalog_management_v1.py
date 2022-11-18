@@ -31,7 +31,9 @@ import urllib
 from ibm_platform_services.catalog_management_v1 import *
 
 
-_service = CatalogManagementV1(authenticator=NoAuthAuthenticator())
+_service = CatalogManagementV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://cm.globalcatalog.cloud.ibm.com/api/v1-beta'
 _service.set_service_url(_base_url)
@@ -41,8 +43,7 @@ _service.set_service_url(_base_url)
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -65,10 +66,10 @@ class TestNewInstance:
         new_instance_without_authenticator()
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = CatalogManagementV1.new_instance()
+            service = CatalogManagementV1.new_instance(
+            )
 
-
-class TestGetCatalogAccount:
+class TestGetCatalogAccount():
     """
     Test Class for get_catalog_account
     """
@@ -77,7 +78,7 @@ class TestGetCatalogAccount:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -92,10 +93,15 @@ class TestGetCatalogAccount:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogaccount')
         mock_response = '{"id": "id", "hide_IBM_cloud_catalog": true, "account_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Invoke method
         response = _service.get_catalog_account()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -110,8 +116,7 @@ class TestGetCatalogAccount:
         _service.disable_retries()
         self.test_get_catalog_account_all_params()
 
-
-class TestUpdateCatalogAccount:
+class TestUpdateCatalogAccount():
     """
     Test Class for update_catalog_account
     """
@@ -120,7 +125,7 @@ class TestUpdateCatalogAccount:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -134,7 +139,9 @@ class TestUpdateCatalogAccount:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogaccount')
-        responses.add(responses.PUT, url, status=200)
+        responses.add(responses.PUT,
+                      url,
+                      status=200)
 
         # Construct a dict representation of a FilterTerms model
         filter_terms_model = {}
@@ -163,7 +170,10 @@ class TestUpdateCatalogAccount:
 
         # Invoke method
         response = _service.update_catalog_account(
-            id=id, hide_ibm_cloud_catalog=hide_ibm_cloud_catalog, account_filters=account_filters, headers={}
+            id=id,
+            hide_ibm_cloud_catalog=hide_ibm_cloud_catalog,
+            account_filters=account_filters,
+            headers={}
         )
 
         # Check for correct operation
@@ -191,10 +201,13 @@ class TestUpdateCatalogAccount:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogaccount')
-        responses.add(responses.PUT, url, status=200)
+        responses.add(responses.PUT,
+                      url,
+                      status=200)
 
         # Invoke method
         response = _service.update_catalog_account()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -209,8 +222,7 @@ class TestUpdateCatalogAccount:
         _service.disable_retries()
         self.test_update_catalog_account_required_params()
 
-
-class TestGetCatalogAccountAudit:
+class TestGetCatalogAccountAudit():
     """
     Test Class for get_catalog_account_audit
     """
@@ -219,7 +231,7 @@ class TestGetCatalogAccountAudit:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -234,10 +246,15 @@ class TestGetCatalogAccountAudit:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogaccount/audit')
         mock_response = '{"list": [{"id": "id", "created": "2019-01-01T12:00:00.000Z", "change_type": "change_type", "target_type": "target_type", "target_id": "target_id", "who_delegate_email": "who_delegate_email", "message": "message"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Invoke method
         response = _service.get_catalog_account_audit()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -252,8 +269,7 @@ class TestGetCatalogAccountAudit:
         _service.disable_retries()
         self.test_get_catalog_account_audit_all_params()
 
-
-class TestGetCatalogAccountFilters:
+class TestGetCatalogAccountFilters():
     """
     Test Class for get_catalog_account_filters
     """
@@ -262,7 +278,7 @@ class TestGetCatalogAccountFilters:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -277,19 +293,26 @@ class TestGetCatalogAccountFilters:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogaccount/filters')
         mock_response = '{"account_filters": [{"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}], "catalog_filters": [{"catalog": {"id": "id", "name": "name"}, "filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog = 'testString'
 
         # Invoke method
-        response = _service.get_catalog_account_filters(catalog=catalog, headers={})
+        response = _service.get_catalog_account_filters(
+            catalog=catalog,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'catalog={}'.format(catalog) in query_string
 
@@ -310,10 +333,15 @@ class TestGetCatalogAccountFilters:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogaccount/filters')
         mock_response = '{"account_filters": [{"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}], "catalog_filters": [{"catalog": {"id": "id", "name": "name"}, "filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Invoke method
         response = _service.get_catalog_account_filters()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -328,7 +356,6 @@ class TestGetCatalogAccountFilters:
         _service.disable_retries()
         self.test_get_catalog_account_filters_required_params()
 
-
 # endregion
 ##############################################################################
 # End of Service: Account
@@ -339,8 +366,7 @@ class TestGetCatalogAccountFilters:
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -363,10 +389,10 @@ class TestNewInstance:
         new_instance_without_authenticator()
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = CatalogManagementV1.new_instance()
+            service = CatalogManagementV1.new_instance(
+            )
 
-
-class TestListCatalogs:
+class TestListCatalogs():
     """
     Test Class for list_catalogs
     """
@@ -375,7 +401,7 @@ class TestListCatalogs:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -390,10 +416,15 @@ class TestListCatalogs:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs')
         mock_response = '{"total_count": 11, "resources": [{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Invoke method
         response = _service.list_catalogs()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -408,8 +439,7 @@ class TestListCatalogs:
         _service.disable_retries()
         self.test_list_catalogs_all_params()
 
-
-class TestCreateCatalog:
+class TestCreateCatalog():
     """
     Test Class for create_catalog
     """
@@ -418,7 +448,7 @@ class TestCreateCatalog:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -433,7 +463,11 @@ class TestCreateCatalog:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs')
         mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Construct a dict representation of a Feature model
         feature_model = {}
@@ -518,7 +552,7 @@ class TestCreateCatalog:
             catalog_filters=catalog_filters,
             syndication_settings=syndication_settings,
             kind=kind,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -557,10 +591,15 @@ class TestCreateCatalog:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs')
         mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Invoke method
         response = _service.create_catalog()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -575,8 +614,7 @@ class TestCreateCatalog:
         _service.disable_retries()
         self.test_create_catalog_required_params()
 
-
-class TestGetCatalog:
+class TestGetCatalog():
     """
     Test Class for get_catalog
     """
@@ -585,7 +623,7 @@ class TestGetCatalog:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -600,13 +638,20 @@ class TestGetCatalog:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString')
         mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = _service.get_catalog(catalog_identifier, headers={})
+        response = _service.get_catalog(
+            catalog_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -629,7 +674,11 @@ class TestGetCatalog:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString')
         mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -639,9 +688,10 @@ class TestGetCatalog:
             "catalog_identifier": catalog_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_catalog(**req_copy)
+
 
     def test_get_catalog_value_error_with_retries(self):
         # Enable retries and run test_get_catalog_value_error.
@@ -652,8 +702,7 @@ class TestGetCatalog:
         _service.disable_retries()
         self.test_get_catalog_value_error()
 
-
-class TestReplaceCatalog:
+class TestReplaceCatalog():
     """
     Test Class for replace_catalog
     """
@@ -662,7 +711,7 @@ class TestReplaceCatalog:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -677,7 +726,11 @@ class TestReplaceCatalog:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString')
         mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a Feature model
         feature_model = {}
@@ -764,7 +817,7 @@ class TestReplaceCatalog:
             catalog_filters=catalog_filters,
             syndication_settings=syndication_settings,
             kind=kind,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -803,13 +856,20 @@ class TestReplaceCatalog:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString')
         mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = _service.replace_catalog(catalog_identifier, headers={})
+        response = _service.replace_catalog(
+            catalog_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -832,7 +892,11 @@ class TestReplaceCatalog:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString')
         mock_response = '{"id": "id", "_rev": "rev", "label": "label", "short_description": "short_description", "catalog_icon_url": "catalog_icon_url", "tags": ["tags"], "url": "url", "crn": "crn", "offerings_url": "offerings_url", "features": [{"title": "title", "description": "description"}], "disabled": true, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "resource_group_id": "resource_group_id", "owning_account": "owning_account", "catalog_filters": {"include_all": false, "category_filters": {"mapKey": {"include": false, "filter": {"filter_terms": ["filter_terms"]}}}, "id_filters": {"include": {"filter_terms": ["filter_terms"]}, "exclude": {"filter_terms": ["filter_terms"]}}}, "syndication_settings": {"remove_related_components": false, "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "history": {"namespaces": ["namespaces"], "clusters": [{"region": "region", "id": "id", "name": "name", "resource_group_name": "resource_group_name", "type": "type", "namespaces": ["namespaces"], "all_namespaces": true}], "last_run": "2019-01-01T12:00:00.000Z"}, "authorization": {"token": "token", "last_run": "2019-01-01T12:00:00.000Z"}}, "kind": "kind"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -842,9 +906,10 @@ class TestReplaceCatalog:
             "catalog_identifier": catalog_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.replace_catalog(**req_copy)
+
 
     def test_replace_catalog_value_error_with_retries(self):
         # Enable retries and run test_replace_catalog_value_error.
@@ -855,8 +920,7 @@ class TestReplaceCatalog:
         _service.disable_retries()
         self.test_replace_catalog_value_error()
 
-
-class TestDeleteCatalog:
+class TestDeleteCatalog():
     """
     Test Class for delete_catalog
     """
@@ -865,7 +929,7 @@ class TestDeleteCatalog:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -879,13 +943,18 @@ class TestDeleteCatalog:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = _service.delete_catalog(catalog_identifier, headers={})
+        response = _service.delete_catalog(
+            catalog_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -907,7 +976,9 @@ class TestDeleteCatalog:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -917,9 +988,10 @@ class TestDeleteCatalog:
             "catalog_identifier": catalog_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_catalog(**req_copy)
+
 
     def test_delete_catalog_value_error_with_retries(self):
         # Enable retries and run test_delete_catalog_value_error.
@@ -930,8 +1002,7 @@ class TestDeleteCatalog:
         _service.disable_retries()
         self.test_delete_catalog_value_error()
 
-
-class TestGetCatalogAudit:
+class TestGetCatalogAudit():
     """
     Test Class for get_catalog_audit
     """
@@ -940,7 +1011,7 @@ class TestGetCatalogAudit:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -955,13 +1026,20 @@ class TestGetCatalogAudit:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/audit')
         mock_response = '{"list": [{"id": "id", "created": "2019-01-01T12:00:00.000Z", "change_type": "change_type", "target_type": "target_type", "target_id": "target_id", "who_delegate_email": "who_delegate_email", "message": "message"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = _service.get_catalog_audit(catalog_identifier, headers={})
+        response = _service.get_catalog_audit(
+            catalog_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -984,7 +1062,11 @@ class TestGetCatalogAudit:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/audit')
         mock_response = '{"list": [{"id": "id", "created": "2019-01-01T12:00:00.000Z", "change_type": "change_type", "target_type": "target_type", "target_id": "target_id", "who_delegate_email": "who_delegate_email", "message": "message"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -994,9 +1076,10 @@ class TestGetCatalogAudit:
             "catalog_identifier": catalog_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_catalog_audit(**req_copy)
+
 
     def test_get_catalog_audit_value_error_with_retries(self):
         # Enable retries and run test_get_catalog_audit_value_error.
@@ -1006,7 +1089,6 @@ class TestGetCatalogAudit:
         # Disable retries and run test_get_catalog_audit_value_error.
         _service.disable_retries()
         self.test_get_catalog_audit_value_error()
-
 
 # endregion
 ##############################################################################
@@ -1018,8 +1100,7 @@ class TestGetCatalogAudit:
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -1042,10 +1123,10 @@ class TestNewInstance:
         new_instance_without_authenticator()
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = CatalogManagementV1.new_instance()
+            service = CatalogManagementV1.new_instance(
+            )
 
-
-class TestGetConsumptionOfferings:
+class TestGetConsumptionOfferings():
     """
     Test Class for get_consumption_offerings
     """
@@ -1054,7 +1135,7 @@ class TestGetConsumptionOfferings:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -1069,7 +1150,11 @@ class TestGetConsumptionOfferings:
         # Set up mock
         url = self.preprocess_url(_base_url + '/offerings')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         digest = True
@@ -1087,14 +1172,14 @@ class TestGetConsumptionOfferings:
             include_hidden=include_hidden,
             limit=limit,
             offset=offset,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'digest={}'.format('true' if digest else 'false') in query_string
         assert 'catalog={}'.format(catalog) in query_string
@@ -1120,10 +1205,15 @@ class TestGetConsumptionOfferings:
         # Set up mock
         url = self.preprocess_url(_base_url + '/offerings')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Invoke method
         response = _service.get_consumption_offerings()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1138,8 +1228,7 @@ class TestGetConsumptionOfferings:
         _service.disable_retries()
         self.test_get_consumption_offerings_required_params()
 
-
-class TestListOfferings:
+class TestListOfferings():
     """
     Test Class for list_offerings
     """
@@ -1148,7 +1237,7 @@ class TestListOfferings:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -1163,7 +1252,11 @@ class TestListOfferings:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -1175,14 +1268,20 @@ class TestListOfferings:
 
         # Invoke method
         response = _service.list_offerings(
-            catalog_identifier, digest=digest, limit=limit, offset=offset, name=name, sort=sort, headers={}
+            catalog_identifier,
+            digest=digest,
+            limit=limit,
+            offset=offset,
+            name=name,
+            sort=sort,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'digest={}'.format('true' if digest else 'false') in query_string
         assert 'limit={}'.format(limit) in query_string
@@ -1207,13 +1306,20 @@ class TestListOfferings:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = _service.list_offerings(catalog_identifier, headers={})
+        response = _service.list_offerings(
+            catalog_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1236,7 +1342,11 @@ class TestListOfferings:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -1246,9 +1356,10 @@ class TestListOfferings:
             "catalog_identifier": catalog_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_offerings(**req_copy)
+
 
     def test_list_offerings_value_error_with_retries(self):
         # Enable retries and run test_list_offerings_value_error.
@@ -1259,8 +1370,7 @@ class TestListOfferings:
         _service.disable_retries()
         self.test_list_offerings_value_error()
 
-
-class TestCreateOffering:
+class TestCreateOffering():
     """
     Test Class for create_offering
     """
@@ -1269,7 +1379,7 @@ class TestCreateOffering:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -1284,7 +1394,11 @@ class TestCreateOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Construct a dict representation of a Rating model
         rating_model = {}
@@ -1527,7 +1641,7 @@ class TestCreateOffering:
             repo_info=repo_info,
             support=support,
             media=media,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -1588,13 +1702,20 @@ class TestCreateOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = _service.create_offering(catalog_identifier, headers={})
+        response = _service.create_offering(
+            catalog_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1617,7 +1738,11 @@ class TestCreateOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -1627,9 +1752,10 @@ class TestCreateOffering:
             "catalog_identifier": catalog_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_offering(**req_copy)
+
 
     def test_create_offering_value_error_with_retries(self):
         # Enable retries and run test_create_offering_value_error.
@@ -1640,8 +1766,7 @@ class TestCreateOffering:
         _service.disable_retries()
         self.test_create_offering_value_error()
 
-
-class TestImportOfferingVersion:
+class TestImportOfferingVersion():
     """
     Test Class for import_offering_version
     """
@@ -1650,7 +1775,7 @@ class TestImportOfferingVersion:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -1665,7 +1790,11 @@ class TestImportOfferingVersion:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/version')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -1691,14 +1820,14 @@ class TestImportOfferingVersion:
             include_config=include_config,
             is_vsi=is_vsi,
             repo_type=repo_type,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 201
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'zipurl={}'.format(zipurl) in query_string
         assert 'targetVersion={}'.format(target_version) in query_string
@@ -1728,14 +1857,22 @@ class TestImportOfferingVersion:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/version')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
         offering_id = 'testString'
 
         # Invoke method
-        response = _service.import_offering_version(catalog_identifier, offering_id, headers={})
+        response = _service.import_offering_version(
+            catalog_identifier,
+            offering_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1758,7 +1895,11 @@ class TestImportOfferingVersion:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/version')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -1770,9 +1911,10 @@ class TestImportOfferingVersion:
             "offering_id": offering_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.import_offering_version(**req_copy)
+
 
     def test_import_offering_version_value_error_with_retries(self):
         # Enable retries and run test_import_offering_version_value_error.
@@ -1783,8 +1925,7 @@ class TestImportOfferingVersion:
         _service.disable_retries()
         self.test_import_offering_version_value_error()
 
-
-class TestImportOffering:
+class TestImportOffering():
     """
     Test Class for import_offering
     """
@@ -1793,7 +1934,7 @@ class TestImportOffering:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -1808,7 +1949,11 @@ class TestImportOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/import/offerings')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -1836,14 +1981,14 @@ class TestImportOffering:
             is_vsi=is_vsi,
             repo_type=repo_type,
             x_auth_token=x_auth_token,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 201
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'zipurl={}'.format(zipurl) in query_string
         assert 'offeringID={}'.format(offering_id) in query_string
@@ -1874,13 +2019,20 @@ class TestImportOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/import/offerings')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = _service.import_offering(catalog_identifier, headers={})
+        response = _service.import_offering(
+            catalog_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1903,7 +2055,11 @@ class TestImportOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/import/offerings')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -1913,9 +2069,10 @@ class TestImportOffering:
             "catalog_identifier": catalog_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.import_offering(**req_copy)
+
 
     def test_import_offering_value_error_with_retries(self):
         # Enable retries and run test_import_offering_value_error.
@@ -1926,8 +2083,7 @@ class TestImportOffering:
         _service.disable_retries()
         self.test_import_offering_value_error()
 
-
-class TestReloadOffering:
+class TestReloadOffering():
     """
     Test Class for reload_offering
     """
@@ -1936,7 +2092,7 @@ class TestReloadOffering:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -1951,7 +2107,11 @@ class TestReloadOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/reload')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -1973,14 +2133,14 @@ class TestReloadOffering:
             content=content,
             zipurl=zipurl,
             repo_type=repo_type,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 201
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'targetVersion={}'.format(target_version) in query_string
         assert 'zipurl={}'.format(zipurl) in query_string
@@ -2008,7 +2168,11 @@ class TestReloadOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/reload')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -2016,13 +2180,18 @@ class TestReloadOffering:
         target_version = 'testString'
 
         # Invoke method
-        response = _service.reload_offering(catalog_identifier, offering_id, target_version, headers={})
+        response = _service.reload_offering(
+            catalog_identifier,
+            offering_id,
+            target_version,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 201
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'targetVersion={}'.format(target_version) in query_string
 
@@ -2043,7 +2212,11 @@ class TestReloadOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/reload')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -2057,9 +2230,10 @@ class TestReloadOffering:
             "target_version": target_version,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.reload_offering(**req_copy)
+
 
     def test_reload_offering_value_error_with_retries(self):
         # Enable retries and run test_reload_offering_value_error.
@@ -2070,8 +2244,7 @@ class TestReloadOffering:
         _service.disable_retries()
         self.test_reload_offering_value_error()
 
-
-class TestGetOffering:
+class TestGetOffering():
     """
     Test Class for get_offering
     """
@@ -2080,7 +2253,7 @@ class TestGetOffering:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -2095,7 +2268,11 @@ class TestGetOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -2104,13 +2281,19 @@ class TestGetOffering:
         digest = True
 
         # Invoke method
-        response = _service.get_offering(catalog_identifier, offering_id, type=type, digest=digest, headers={})
+        response = _service.get_offering(
+            catalog_identifier,
+            offering_id,
+            type=type,
+            digest=digest,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'type={}'.format(type) in query_string
         assert 'digest={}'.format('true' if digest else 'false') in query_string
@@ -2132,14 +2315,22 @@ class TestGetOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
         offering_id = 'testString'
 
         # Invoke method
-        response = _service.get_offering(catalog_identifier, offering_id, headers={})
+        response = _service.get_offering(
+            catalog_identifier,
+            offering_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2162,7 +2353,11 @@ class TestGetOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -2174,9 +2369,10 @@ class TestGetOffering:
             "offering_id": offering_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_offering(**req_copy)
+
 
     def test_get_offering_value_error_with_retries(self):
         # Enable retries and run test_get_offering_value_error.
@@ -2187,8 +2383,7 @@ class TestGetOffering:
         _service.disable_retries()
         self.test_get_offering_value_error()
 
-
-class TestReplaceOffering:
+class TestReplaceOffering():
     """
     Test Class for replace_offering
     """
@@ -2197,7 +2392,7 @@ class TestReplaceOffering:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -2212,7 +2407,11 @@ class TestReplaceOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a Rating model
         rating_model = {}
@@ -2457,7 +2656,7 @@ class TestReplaceOffering:
             repo_info=repo_info,
             support=support,
             media=media,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -2518,14 +2717,22 @@ class TestReplaceOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
         offering_id = 'testString'
 
         # Invoke method
-        response = _service.replace_offering(catalog_identifier, offering_id, headers={})
+        response = _service.replace_offering(
+            catalog_identifier,
+            offering_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2548,7 +2755,11 @@ class TestReplaceOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -2560,9 +2771,10 @@ class TestReplaceOffering:
             "offering_id": offering_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.replace_offering(**req_copy)
+
 
     def test_replace_offering_value_error_with_retries(self):
         # Enable retries and run test_replace_offering_value_error.
@@ -2573,8 +2785,7 @@ class TestReplaceOffering:
         _service.disable_retries()
         self.test_replace_offering_value_error()
 
-
-class TestUpdateOffering:
+class TestUpdateOffering():
     """
     Test Class for update_offering
     """
@@ -2583,7 +2794,7 @@ class TestUpdateOffering:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -2598,7 +2809,11 @@ class TestUpdateOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a JsonPatchOperation model
         json_patch_operation_model = {}
@@ -2614,7 +2829,13 @@ class TestUpdateOffering:
         updates = [json_patch_operation_model]
 
         # Invoke method
-        response = _service.update_offering(catalog_identifier, offering_id, if_match, updates=updates, headers={})
+        response = _service.update_offering(
+            catalog_identifier,
+            offering_id,
+            if_match,
+            updates=updates,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2640,7 +2861,11 @@ class TestUpdateOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -2648,7 +2873,12 @@ class TestUpdateOffering:
         if_match = 'testString'
 
         # Invoke method
-        response = _service.update_offering(catalog_identifier, offering_id, if_match, headers={})
+        response = _service.update_offering(
+            catalog_identifier,
+            offering_id,
+            if_match,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2671,7 +2901,11 @@ class TestUpdateOffering:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -2685,9 +2919,10 @@ class TestUpdateOffering:
             "if_match": if_match,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_offering(**req_copy)
+
 
     def test_update_offering_value_error_with_retries(self):
         # Enable retries and run test_update_offering_value_error.
@@ -2698,8 +2933,7 @@ class TestUpdateOffering:
         _service.disable_retries()
         self.test_update_offering_value_error()
 
-
-class TestDeleteOffering:
+class TestDeleteOffering():
     """
     Test Class for delete_offering
     """
@@ -2708,7 +2942,7 @@ class TestDeleteOffering:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -2722,14 +2956,20 @@ class TestDeleteOffering:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
         offering_id = 'testString'
 
         # Invoke method
-        response = _service.delete_offering(catalog_identifier, offering_id, headers={})
+        response = _service.delete_offering(
+            catalog_identifier,
+            offering_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2751,7 +2991,9 @@ class TestDeleteOffering:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -2763,9 +3005,10 @@ class TestDeleteOffering:
             "offering_id": offering_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_offering(**req_copy)
+
 
     def test_delete_offering_value_error_with_retries(self):
         # Enable retries and run test_delete_offering_value_error.
@@ -2776,8 +3019,7 @@ class TestDeleteOffering:
         _service.disable_retries()
         self.test_delete_offering_value_error()
 
-
-class TestGetOfferingAudit:
+class TestGetOfferingAudit():
     """
     Test Class for get_offering_audit
     """
@@ -2786,7 +3028,7 @@ class TestGetOfferingAudit:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -2801,14 +3043,22 @@ class TestGetOfferingAudit:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/audit')
         mock_response = '{"list": [{"id": "id", "created": "2019-01-01T12:00:00.000Z", "change_type": "change_type", "target_type": "target_type", "target_id": "target_id", "who_delegate_email": "who_delegate_email", "message": "message"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
         offering_id = 'testString'
 
         # Invoke method
-        response = _service.get_offering_audit(catalog_identifier, offering_id, headers={})
+        response = _service.get_offering_audit(
+            catalog_identifier,
+            offering_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2831,7 +3081,11 @@ class TestGetOfferingAudit:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/audit')
         mock_response = '{"list": [{"id": "id", "created": "2019-01-01T12:00:00.000Z", "change_type": "change_type", "target_type": "target_type", "target_id": "target_id", "who_delegate_email": "who_delegate_email", "message": "message"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -2843,9 +3097,10 @@ class TestGetOfferingAudit:
             "offering_id": offering_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_offering_audit(**req_copy)
+
 
     def test_get_offering_audit_value_error_with_retries(self):
         # Enable retries and run test_get_offering_audit_value_error.
@@ -2856,8 +3111,7 @@ class TestGetOfferingAudit:
         _service.disable_retries()
         self.test_get_offering_audit_value_error()
 
-
-class TestReplaceOfferingIcon:
+class TestReplaceOfferingIcon():
     """
     Test Class for replace_offering_icon
     """
@@ -2866,7 +3120,7 @@ class TestReplaceOfferingIcon:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -2881,7 +3135,11 @@ class TestReplaceOfferingIcon:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/icon/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -2889,7 +3147,12 @@ class TestReplaceOfferingIcon:
         file_name = 'testString'
 
         # Invoke method
-        response = _service.replace_offering_icon(catalog_identifier, offering_id, file_name, headers={})
+        response = _service.replace_offering_icon(
+            catalog_identifier,
+            offering_id,
+            file_name,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2912,7 +3175,11 @@ class TestReplaceOfferingIcon:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/icon/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -2926,9 +3193,10 @@ class TestReplaceOfferingIcon:
             "file_name": file_name,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.replace_offering_icon(**req_copy)
+
 
     def test_replace_offering_icon_value_error_with_retries(self):
         # Enable retries and run test_replace_offering_icon_value_error.
@@ -2939,8 +3207,7 @@ class TestReplaceOfferingIcon:
         _service.disable_retries()
         self.test_replace_offering_icon_value_error()
 
-
-class TestUpdateOfferingIbm:
+class TestUpdateOfferingIbm():
     """
     Test Class for update_offering_ibm
     """
@@ -2949,7 +3216,7 @@ class TestUpdateOfferingIbm:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -2964,7 +3231,11 @@ class TestUpdateOfferingIbm:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/publish/pc_managed/true')
         mock_response = '{"allow_request": false, "ibm": false, "public": true, "changed": false}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -2973,7 +3244,13 @@ class TestUpdateOfferingIbm:
         approved = 'true'
 
         # Invoke method
-        response = _service.update_offering_ibm(catalog_identifier, offering_id, approval_type, approved, headers={})
+        response = _service.update_offering_ibm(
+            catalog_identifier,
+            offering_id,
+            approval_type,
+            approved,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2996,7 +3273,11 @@ class TestUpdateOfferingIbm:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/publish/pc_managed/true')
         mock_response = '{"allow_request": false, "ibm": false, "public": true, "changed": false}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -3012,9 +3293,10 @@ class TestUpdateOfferingIbm:
             "approved": approved,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_offering_ibm(**req_copy)
+
 
     def test_update_offering_ibm_value_error_with_retries(self):
         # Enable retries and run test_update_offering_ibm_value_error.
@@ -3025,8 +3307,7 @@ class TestUpdateOfferingIbm:
         _service.disable_retries()
         self.test_update_offering_ibm_value_error()
 
-
-class TestDeprecateOffering:
+class TestDeprecateOffering():
     """
     Test Class for deprecate_offering
     """
@@ -3035,7 +3316,7 @@ class TestDeprecateOffering:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -3049,7 +3330,9 @@ class TestDeprecateOffering:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/deprecate/true')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -3065,7 +3348,7 @@ class TestDeprecateOffering:
             setting,
             description=description,
             days_until_deprecate=days_until_deprecate,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -3092,7 +3375,9 @@ class TestDeprecateOffering:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/deprecate/true')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -3100,7 +3385,12 @@ class TestDeprecateOffering:
         setting = 'true'
 
         # Invoke method
-        response = _service.deprecate_offering(catalog_identifier, offering_id, setting, headers={})
+        response = _service.deprecate_offering(
+            catalog_identifier,
+            offering_id,
+            setting,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -3122,7 +3412,9 @@ class TestDeprecateOffering:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/deprecate/true')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -3136,9 +3428,10 @@ class TestDeprecateOffering:
             "setting": setting,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.deprecate_offering(**req_copy)
+
 
     def test_deprecate_offering_value_error_with_retries(self):
         # Enable retries and run test_deprecate_offering_value_error.
@@ -3149,8 +3442,7 @@ class TestDeprecateOffering:
         _service.disable_retries()
         self.test_deprecate_offering_value_error()
 
-
-class TestGetOfferingUpdates:
+class TestGetOfferingUpdates():
     """
     Test Class for get_offering_updates
     """
@@ -3159,7 +3451,7 @@ class TestGetOfferingUpdates:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -3174,7 +3466,11 @@ class TestGetOfferingUpdates:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/updates')
         mock_response = '[{"version_locator": "version_locator", "version": "version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "required_resources": [{"type": "mem", "value": "anyValue"}], "package_version": "package_version", "sha": "sha", "can_update": true, "messages": {"mapKey": "inner"}}]'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -3208,14 +3504,14 @@ class TestGetOfferingUpdates:
             channel=channel,
             namespaces=namespaces,
             all_namespaces=all_namespaces,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'kind={}'.format(kind) in query_string
         assert 'target={}'.format(target) in query_string
@@ -3246,7 +3542,11 @@ class TestGetOfferingUpdates:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/updates')
         mock_response = '[{"version_locator": "version_locator", "version": "version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "required_resources": [{"type": "mem", "value": "anyValue"}], "package_version": "package_version", "sha": "sha", "can_update": true, "messages": {"mapKey": "inner"}}]'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -3256,14 +3556,18 @@ class TestGetOfferingUpdates:
 
         # Invoke method
         response = _service.get_offering_updates(
-            catalog_identifier, offering_id, kind, x_auth_refresh_token, headers={}
+            catalog_identifier,
+            offering_id,
+            kind,
+            x_auth_refresh_token,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'kind={}'.format(kind) in query_string
 
@@ -3284,7 +3588,11 @@ class TestGetOfferingUpdates:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/offerings/testString/updates')
         mock_response = '[{"version_locator": "version_locator", "version": "version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "required_resources": [{"type": "mem", "value": "anyValue"}], "package_version": "package_version", "sha": "sha", "can_update": true, "messages": {"mapKey": "inner"}}]'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -3300,9 +3608,10 @@ class TestGetOfferingUpdates:
             "x_auth_refresh_token": x_auth_refresh_token,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_offering_updates(**req_copy)
+
 
     def test_get_offering_updates_value_error_with_retries(self):
         # Enable retries and run test_get_offering_updates_value_error.
@@ -3313,8 +3622,7 @@ class TestGetOfferingUpdates:
         _service.disable_retries()
         self.test_get_offering_updates_value_error()
 
-
-class TestGetOfferingSource:
+class TestGetOfferingSource():
     """
     Test Class for get_offering_source
     """
@@ -3323,7 +3631,7 @@ class TestGetOfferingSource:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -3338,7 +3646,11 @@ class TestGetOfferingSource:
         # Set up mock
         url = self.preprocess_url(_base_url + '/offering/source')
         mock_response = 'This is a mock binary response.'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/yaml', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/yaml',
+                      status=200)
 
         # Set up parameter values
         version = 'testString'
@@ -3351,14 +3663,21 @@ class TestGetOfferingSource:
 
         # Invoke method
         response = _service.get_offering_source(
-            version, accept=accept, catalog_id=catalog_id, name=name, id=id, kind=kind, channel=channel, headers={}
+            version,
+            accept=accept,
+            catalog_id=catalog_id,
+            name=name,
+            id=id,
+            kind=kind,
+            channel=channel,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'version={}'.format(version) in query_string
         assert 'catalogID={}'.format(catalog_id) in query_string
@@ -3384,19 +3703,26 @@ class TestGetOfferingSource:
         # Set up mock
         url = self.preprocess_url(_base_url + '/offering/source')
         mock_response = 'This is a mock binary response.'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/yaml', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/yaml',
+                      status=200)
 
         # Set up parameter values
         version = 'testString'
 
         # Invoke method
-        response = _service.get_offering_source(version, headers={})
+        response = _service.get_offering_source(
+            version,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'version={}'.format(version) in query_string
 
@@ -3417,7 +3743,11 @@ class TestGetOfferingSource:
         # Set up mock
         url = self.preprocess_url(_base_url + '/offering/source')
         mock_response = 'This is a mock binary response.'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/yaml', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/yaml',
+                      status=200)
 
         # Set up parameter values
         version = 'testString'
@@ -3427,9 +3757,10 @@ class TestGetOfferingSource:
             "version": version,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_offering_source(**req_copy)
+
 
     def test_get_offering_source_value_error_with_retries(self):
         # Enable retries and run test_get_offering_source_value_error.
@@ -3439,7 +3770,6 @@ class TestGetOfferingSource:
         # Disable retries and run test_get_offering_source_value_error.
         _service.disable_retries()
         self.test_get_offering_source_value_error()
-
 
 # endregion
 ##############################################################################
@@ -3451,8 +3781,7 @@ class TestGetOfferingSource:
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -3475,10 +3804,10 @@ class TestNewInstance:
         new_instance_without_authenticator()
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = CatalogManagementV1.new_instance()
+            service = CatalogManagementV1.new_instance(
+            )
 
-
-class TestGetOfferingAbout:
+class TestGetOfferingAbout():
     """
     Test Class for get_offering_about
     """
@@ -3487,7 +3816,7 @@ class TestGetOfferingAbout:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -3502,13 +3831,20 @@ class TestGetOfferingAbout:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/about')
         mock_response = '"operation_response"'
-        responses.add(responses.GET, url, body=mock_response, content_type='text/markdown', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='text/markdown',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
 
         # Invoke method
-        response = _service.get_offering_about(version_loc_id, headers={})
+        response = _service.get_offering_about(
+            version_loc_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -3531,7 +3867,11 @@ class TestGetOfferingAbout:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/about')
         mock_response = '"operation_response"'
-        responses.add(responses.GET, url, body=mock_response, content_type='text/markdown', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='text/markdown',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -3541,9 +3881,10 @@ class TestGetOfferingAbout:
             "version_loc_id": version_loc_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_offering_about(**req_copy)
+
 
     def test_get_offering_about_value_error_with_retries(self):
         # Enable retries and run test_get_offering_about_value_error.
@@ -3554,8 +3895,7 @@ class TestGetOfferingAbout:
         _service.disable_retries()
         self.test_get_offering_about_value_error()
 
-
-class TestGetOfferingLicense:
+class TestGetOfferingLicense():
     """
     Test Class for get_offering_license
     """
@@ -3564,7 +3904,7 @@ class TestGetOfferingLicense:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -3579,14 +3919,22 @@ class TestGetOfferingLicense:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/licenses/testString')
         mock_response = '"operation_response"'
-        responses.add(responses.GET, url, body=mock_response, content_type='text/plain', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='text/plain',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
         license_id = 'testString'
 
         # Invoke method
-        response = _service.get_offering_license(version_loc_id, license_id, headers={})
+        response = _service.get_offering_license(
+            version_loc_id,
+            license_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -3609,7 +3957,11 @@ class TestGetOfferingLicense:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/licenses/testString')
         mock_response = '"operation_response"'
-        responses.add(responses.GET, url, body=mock_response, content_type='text/plain', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='text/plain',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -3621,9 +3973,10 @@ class TestGetOfferingLicense:
             "license_id": license_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_offering_license(**req_copy)
+
 
     def test_get_offering_license_value_error_with_retries(self):
         # Enable retries and run test_get_offering_license_value_error.
@@ -3634,8 +3987,7 @@ class TestGetOfferingLicense:
         _service.disable_retries()
         self.test_get_offering_license_value_error()
 
-
-class TestGetOfferingContainerImages:
+class TestGetOfferingContainerImages():
     """
     Test Class for get_offering_container_images
     """
@@ -3644,7 +3996,7 @@ class TestGetOfferingContainerImages:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -3659,13 +4011,20 @@ class TestGetOfferingContainerImages:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/containerImages')
         mock_response = '{"description": "description", "images": [{"image": "image"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
 
         # Invoke method
-        response = _service.get_offering_container_images(version_loc_id, headers={})
+        response = _service.get_offering_container_images(
+            version_loc_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -3688,7 +4047,11 @@ class TestGetOfferingContainerImages:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/containerImages')
         mock_response = '{"description": "description", "images": [{"image": "image"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -3698,9 +4061,10 @@ class TestGetOfferingContainerImages:
             "version_loc_id": version_loc_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_offering_container_images(**req_copy)
+
 
     def test_get_offering_container_images_value_error_with_retries(self):
         # Enable retries and run test_get_offering_container_images_value_error.
@@ -3711,8 +4075,7 @@ class TestGetOfferingContainerImages:
         _service.disable_retries()
         self.test_get_offering_container_images_value_error()
 
-
-class TestDeprecateVersion:
+class TestDeprecateVersion():
     """
     Test Class for deprecate_version
     """
@@ -3721,7 +4084,7 @@ class TestDeprecateVersion:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -3735,13 +4098,18 @@ class TestDeprecateVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/deprecate')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
 
         # Invoke method
-        response = _service.deprecate_version(version_loc_id, headers={})
+        response = _service.deprecate_version(
+            version_loc_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -3763,7 +4131,9 @@ class TestDeprecateVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/deprecate')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -3773,9 +4143,10 @@ class TestDeprecateVersion:
             "version_loc_id": version_loc_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.deprecate_version(**req_copy)
+
 
     def test_deprecate_version_value_error_with_retries(self):
         # Enable retries and run test_deprecate_version_value_error.
@@ -3786,8 +4157,7 @@ class TestDeprecateVersion:
         _service.disable_retries()
         self.test_deprecate_version_value_error()
 
-
-class TestSetDeprecateVersion:
+class TestSetDeprecateVersion():
     """
     Test Class for set_deprecate_version
     """
@@ -3796,7 +4166,7 @@ class TestSetDeprecateVersion:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -3810,7 +4180,9 @@ class TestSetDeprecateVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/deprecate/true')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -3820,7 +4192,11 @@ class TestSetDeprecateVersion:
 
         # Invoke method
         response = _service.set_deprecate_version(
-            version_loc_id, setting, description=description, days_until_deprecate=days_until_deprecate, headers={}
+            version_loc_id,
+            setting,
+            description=description,
+            days_until_deprecate=days_until_deprecate,
+            headers={}
         )
 
         # Check for correct operation
@@ -3847,14 +4223,20 @@ class TestSetDeprecateVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/deprecate/true')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
         setting = 'true'
 
         # Invoke method
-        response = _service.set_deprecate_version(version_loc_id, setting, headers={})
+        response = _service.set_deprecate_version(
+            version_loc_id,
+            setting,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -3876,7 +4258,9 @@ class TestSetDeprecateVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/deprecate/true')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -3888,9 +4272,10 @@ class TestSetDeprecateVersion:
             "setting": setting,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.set_deprecate_version(**req_copy)
+
 
     def test_set_deprecate_version_value_error_with_retries(self):
         # Enable retries and run test_set_deprecate_version_value_error.
@@ -3901,8 +4286,7 @@ class TestSetDeprecateVersion:
         _service.disable_retries()
         self.test_set_deprecate_version_value_error()
 
-
-class TestAccountPublishVersion:
+class TestAccountPublishVersion():
     """
     Test Class for account_publish_version
     """
@@ -3911,7 +4295,7 @@ class TestAccountPublishVersion:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -3925,13 +4309,18 @@ class TestAccountPublishVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/account-publish')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
 
         # Invoke method
-        response = _service.account_publish_version(version_loc_id, headers={})
+        response = _service.account_publish_version(
+            version_loc_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -3953,7 +4342,9 @@ class TestAccountPublishVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/account-publish')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -3963,9 +4354,10 @@ class TestAccountPublishVersion:
             "version_loc_id": version_loc_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.account_publish_version(**req_copy)
+
 
     def test_account_publish_version_value_error_with_retries(self):
         # Enable retries and run test_account_publish_version_value_error.
@@ -3976,8 +4368,7 @@ class TestAccountPublishVersion:
         _service.disable_retries()
         self.test_account_publish_version_value_error()
 
-
-class TestIbmPublishVersion:
+class TestIbmPublishVersion():
     """
     Test Class for ibm_publish_version
     """
@@ -3986,7 +4377,7 @@ class TestIbmPublishVersion:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -4000,13 +4391,18 @@ class TestIbmPublishVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/ibm-publish')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
 
         # Invoke method
-        response = _service.ibm_publish_version(version_loc_id, headers={})
+        response = _service.ibm_publish_version(
+            version_loc_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -4028,7 +4424,9 @@ class TestIbmPublishVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/ibm-publish')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -4038,9 +4436,10 @@ class TestIbmPublishVersion:
             "version_loc_id": version_loc_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.ibm_publish_version(**req_copy)
+
 
     def test_ibm_publish_version_value_error_with_retries(self):
         # Enable retries and run test_ibm_publish_version_value_error.
@@ -4051,8 +4450,7 @@ class TestIbmPublishVersion:
         _service.disable_retries()
         self.test_ibm_publish_version_value_error()
 
-
-class TestPublicPublishVersion:
+class TestPublicPublishVersion():
     """
     Test Class for public_publish_version
     """
@@ -4061,7 +4459,7 @@ class TestPublicPublishVersion:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -4075,13 +4473,18 @@ class TestPublicPublishVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/public-publish')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
 
         # Invoke method
-        response = _service.public_publish_version(version_loc_id, headers={})
+        response = _service.public_publish_version(
+            version_loc_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -4103,7 +4506,9 @@ class TestPublicPublishVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/public-publish')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -4113,9 +4518,10 @@ class TestPublicPublishVersion:
             "version_loc_id": version_loc_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.public_publish_version(**req_copy)
+
 
     def test_public_publish_version_value_error_with_retries(self):
         # Enable retries and run test_public_publish_version_value_error.
@@ -4126,8 +4532,7 @@ class TestPublicPublishVersion:
         _service.disable_retries()
         self.test_public_publish_version_value_error()
 
-
-class TestCommitVersion:
+class TestCommitVersion():
     """
     Test Class for commit_version
     """
@@ -4136,7 +4541,7 @@ class TestCommitVersion:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -4150,13 +4555,18 @@ class TestCommitVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/commit')
-        responses.add(responses.POST, url, status=200)
+        responses.add(responses.POST,
+                      url,
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
 
         # Invoke method
-        response = _service.commit_version(version_loc_id, headers={})
+        response = _service.commit_version(
+            version_loc_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -4178,7 +4588,9 @@ class TestCommitVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/commit')
-        responses.add(responses.POST, url, status=200)
+        responses.add(responses.POST,
+                      url,
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -4188,9 +4600,10 @@ class TestCommitVersion:
             "version_loc_id": version_loc_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.commit_version(**req_copy)
+
 
     def test_commit_version_value_error_with_retries(self):
         # Enable retries and run test_commit_version_value_error.
@@ -4201,8 +4614,7 @@ class TestCommitVersion:
         _service.disable_retries()
         self.test_commit_version_value_error()
 
-
-class TestCopyVersion:
+class TestCopyVersion():
     """
     Test Class for copy_version
     """
@@ -4211,7 +4623,7 @@ class TestCopyVersion:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -4225,7 +4637,9 @@ class TestCopyVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/copy')
-        responses.add(responses.POST, url, status=200)
+        responses.add(responses.POST,
+                      url,
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -4235,7 +4649,11 @@ class TestCopyVersion:
 
         # Invoke method
         response = _service.copy_version(
-            version_loc_id, tags=tags, target_kinds=target_kinds, content=content, headers={}
+            version_loc_id,
+            tags=tags,
+            target_kinds=target_kinds,
+            content=content,
+            headers={}
         )
 
         # Check for correct operation
@@ -4263,13 +4681,18 @@ class TestCopyVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/copy')
-        responses.add(responses.POST, url, status=200)
+        responses.add(responses.POST,
+                      url,
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
 
         # Invoke method
-        response = _service.copy_version(version_loc_id, headers={})
+        response = _service.copy_version(
+            version_loc_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -4291,7 +4714,9 @@ class TestCopyVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/copy')
-        responses.add(responses.POST, url, status=200)
+        responses.add(responses.POST,
+                      url,
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -4301,9 +4726,10 @@ class TestCopyVersion:
             "version_loc_id": version_loc_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.copy_version(**req_copy)
+
 
     def test_copy_version_value_error_with_retries(self):
         # Enable retries and run test_copy_version_value_error.
@@ -4314,8 +4740,7 @@ class TestCopyVersion:
         _service.disable_retries()
         self.test_copy_version_value_error()
 
-
-class TestGetOfferingWorkingCopy:
+class TestGetOfferingWorkingCopy():
     """
     Test Class for get_offering_working_copy
     """
@@ -4324,7 +4749,7 @@ class TestGetOfferingWorkingCopy:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -4339,13 +4764,20 @@ class TestGetOfferingWorkingCopy:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/workingcopy')
         mock_response = '{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
 
         # Invoke method
-        response = _service.get_offering_working_copy(version_loc_id, headers={})
+        response = _service.get_offering_working_copy(
+            version_loc_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -4368,7 +4800,11 @@ class TestGetOfferingWorkingCopy:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/workingcopy')
         mock_response = '{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -4378,9 +4814,10 @@ class TestGetOfferingWorkingCopy:
             "version_loc_id": version_loc_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_offering_working_copy(**req_copy)
+
 
     def test_get_offering_working_copy_value_error_with_retries(self):
         # Enable retries and run test_get_offering_working_copy_value_error.
@@ -4391,8 +4828,7 @@ class TestGetOfferingWorkingCopy:
         _service.disable_retries()
         self.test_get_offering_working_copy_value_error()
 
-
-class TestGetVersion:
+class TestGetVersion():
     """
     Test Class for get_version
     """
@@ -4401,7 +4837,7 @@ class TestGetVersion:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -4416,13 +4852,20 @@ class TestGetVersion:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
 
         # Invoke method
-        response = _service.get_version(version_loc_id, headers={})
+        response = _service.get_version(
+            version_loc_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -4445,7 +4888,11 @@ class TestGetVersion:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "name": "name", "offering_icon_url": "offering_icon_url", "offering_docs_url": "offering_docs_url", "offering_support_url": "offering_support_url", "tags": ["tags"], "keywords": ["keywords"], "rating": {"one_star_count": 14, "two_star_count": 14, "three_star_count": 16, "four_star_count": 15}, "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "long_description": "long_description", "features": [{"title": "title", "description": "description"}], "kinds": [{"id": "id", "format_kind": "format_kind", "target_kind": "target_kind", "metadata": {"mapKey": "anyValue"}, "install_description": "install_description", "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "versions": [{"id": "id", "_rev": "rev", "crn": "crn", "version": "version", "sha": "sha", "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "offering_id": "offering_id", "catalog_id": "catalog_id", "kind_id": "kind_id", "tags": ["tags"], "repo_url": "repo_url", "source_url": "source_url", "tgz_url": "tgz_url", "configuration": [{"key": "key", "type": "type", "default_value": "anyValue", "value_constraint": "value_constraint", "description": "description", "required": true, "options": ["anyValue"], "hidden": true}], "metadata": {"mapKey": "anyValue"}, "validation": {"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}, "required_resources": [{"type": "mem", "value": "anyValue"}], "single_instance": false, "install": {"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}, "pre_install": [{"instructions": "instructions", "script": "script", "script_permission": "script_permission", "delete_script": "delete_script", "scope": "scope"}], "entitlement": {"provider_name": "provider_name", "provider_id": "provider_id", "product_id": "product_id", "part_numbers": ["part_numbers"], "image_repo_name": "image_repo_name"}, "licenses": [{"id": "id", "name": "name", "type": "type", "url": "url", "description": "description"}], "image_manifest_url": "image_manifest_url", "deprecated": true, "package_version": "package_version", "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "version_locator": "version_locator", "console_url": "console_url", "long_description": "long_description", "whitelisted_accounts": ["whitelisted_accounts"]}], "plans": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "additional_features": [{"title": "title", "description": "description"}], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "deployments": [{"id": "id", "label": "label", "name": "name", "short_description": "short_description", "long_description": "long_description", "metadata": {"mapKey": "anyValue"}, "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z"}]}]}], "permit_request_ibm_public_publish": false, "ibm_publish_approved": true, "public_publish_approved": false, "public_original_crn": "public_original_crn", "publish_public_crn": "publish_public_crn", "portal_approval_record": "portal_approval_record", "portal_ui_url": "portal_ui_url", "catalog_id": "catalog_id", "catalog_name": "catalog_name", "metadata": {"mapKey": "anyValue"}, "disclaimer": "disclaimer", "hidden": true, "provider": "provider", "provider_info": {"id": "id", "name": "name"}, "repo_info": {"token": "token", "type": "type"}, "support": {"url": "url", "process": "process", "locations": ["locations"]}, "media": [{"url": "url", "caption": "caption", "type": "type", "thumbnail_url": "thumbnail_url"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -4455,9 +4902,10 @@ class TestGetVersion:
             "version_loc_id": version_loc_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_version(**req_copy)
+
 
     def test_get_version_value_error_with_retries(self):
         # Enable retries and run test_get_version_value_error.
@@ -4468,8 +4916,7 @@ class TestGetVersion:
         _service.disable_retries()
         self.test_get_version_value_error()
 
-
-class TestDeleteVersion:
+class TestDeleteVersion():
     """
     Test Class for delete_version
     """
@@ -4478,7 +4925,7 @@ class TestDeleteVersion:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -4492,13 +4939,18 @@ class TestDeleteVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
 
         # Invoke method
-        response = _service.delete_version(version_loc_id, headers={})
+        response = _service.delete_version(
+            version_loc_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -4520,7 +4972,9 @@ class TestDeleteVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -4530,9 +4984,10 @@ class TestDeleteVersion:
             "version_loc_id": version_loc_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_version(**req_copy)
+
 
     def test_delete_version_value_error_with_retries(self):
         # Enable retries and run test_delete_version_value_error.
@@ -4542,7 +4997,6 @@ class TestDeleteVersion:
         # Disable retries and run test_delete_version_value_error.
         _service.disable_retries()
         self.test_delete_version_value_error()
-
 
 # endregion
 ##############################################################################
@@ -4554,8 +5008,7 @@ class TestDeleteVersion:
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -4578,10 +5031,10 @@ class TestNewInstance:
         new_instance_without_authenticator()
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = CatalogManagementV1.new_instance()
+            service = CatalogManagementV1.new_instance(
+            )
 
-
-class TestGetCluster:
+class TestGetCluster():
     """
     Test Class for get_cluster
     """
@@ -4590,7 +5043,7 @@ class TestGetCluster:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -4605,7 +5058,11 @@ class TestGetCluster:
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/clusters/testString')
         mock_response = '{"resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "id": "id", "name": "name", "region": "region"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         cluster_id = 'testString'
@@ -4613,13 +5070,18 @@ class TestGetCluster:
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = _service.get_cluster(cluster_id, region, x_auth_refresh_token, headers={})
+        response = _service.get_cluster(
+            cluster_id,
+            region,
+            x_auth_refresh_token,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'region={}'.format(region) in query_string
 
@@ -4640,7 +5102,11 @@ class TestGetCluster:
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/clusters/testString')
         mock_response = '{"resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "id": "id", "name": "name", "region": "region"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         cluster_id = 'testString'
@@ -4654,9 +5120,10 @@ class TestGetCluster:
             "x_auth_refresh_token": x_auth_refresh_token,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_cluster(**req_copy)
+
 
     def test_get_cluster_value_error_with_retries(self):
         # Enable retries and run test_get_cluster_value_error.
@@ -4667,8 +5134,7 @@ class TestGetCluster:
         _service.disable_retries()
         self.test_get_cluster_value_error()
 
-
-class TestGetNamespaces:
+class TestGetNamespaces():
     """
     Test Class for get_namespaces
     """
@@ -4677,7 +5143,7 @@ class TestGetNamespaces:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -4692,7 +5158,11 @@ class TestGetNamespaces:
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/clusters/testString/namespaces')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": ["resources"]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         cluster_id = 'testString'
@@ -4703,14 +5173,19 @@ class TestGetNamespaces:
 
         # Invoke method
         response = _service.get_namespaces(
-            cluster_id, region, x_auth_refresh_token, limit=limit, offset=offset, headers={}
+            cluster_id,
+            region,
+            x_auth_refresh_token,
+            limit=limit,
+            offset=offset,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'region={}'.format(region) in query_string
         assert 'limit={}'.format(limit) in query_string
@@ -4733,7 +5208,11 @@ class TestGetNamespaces:
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/clusters/testString/namespaces')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": ["resources"]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         cluster_id = 'testString'
@@ -4741,13 +5220,18 @@ class TestGetNamespaces:
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = _service.get_namespaces(cluster_id, region, x_auth_refresh_token, headers={})
+        response = _service.get_namespaces(
+            cluster_id,
+            region,
+            x_auth_refresh_token,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'region={}'.format(region) in query_string
 
@@ -4768,7 +5252,11 @@ class TestGetNamespaces:
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/clusters/testString/namespaces')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": ["resources"]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         cluster_id = 'testString'
@@ -4782,9 +5270,10 @@ class TestGetNamespaces:
             "x_auth_refresh_token": x_auth_refresh_token,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_namespaces(**req_copy)
+
 
     def test_get_namespaces_value_error_with_retries(self):
         # Enable retries and run test_get_namespaces_value_error.
@@ -4795,8 +5284,7 @@ class TestGetNamespaces:
         _service.disable_retries()
         self.test_get_namespaces_value_error()
 
-
-class TestDeployOperators:
+class TestDeployOperators():
     """
     Test Class for deploy_operators
     """
@@ -4805,7 +5293,7 @@ class TestDeployOperators:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -4820,7 +5308,11 @@ class TestDeployOperators:
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         x_auth_refresh_token = 'testString'
@@ -4838,7 +5330,7 @@ class TestDeployOperators:
             namespaces=namespaces,
             all_namespaces=all_namespaces,
             version_locator_id=version_locator_id,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -4869,13 +5361,20 @@ class TestDeployOperators:
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = _service.deploy_operators(x_auth_refresh_token, headers={})
+        response = _service.deploy_operators(
+            x_auth_refresh_token,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -4898,7 +5397,11 @@ class TestDeployOperators:
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         x_auth_refresh_token = 'testString'
@@ -4908,9 +5411,10 @@ class TestDeployOperators:
             "x_auth_refresh_token": x_auth_refresh_token,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.deploy_operators(**req_copy)
+
 
     def test_deploy_operators_value_error_with_retries(self):
         # Enable retries and run test_deploy_operators_value_error.
@@ -4921,8 +5425,7 @@ class TestDeployOperators:
         _service.disable_retries()
         self.test_deploy_operators_value_error()
 
-
-class TestListOperators:
+class TestListOperators():
     """
     Test Class for list_operators
     """
@@ -4931,7 +5434,7 @@ class TestListOperators:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -4946,7 +5449,11 @@ class TestListOperators:
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         x_auth_refresh_token = 'testString'
@@ -4955,13 +5462,19 @@ class TestListOperators:
         version_locator_id = 'testString'
 
         # Invoke method
-        response = _service.list_operators(x_auth_refresh_token, cluster_id, region, version_locator_id, headers={})
+        response = _service.list_operators(
+            x_auth_refresh_token,
+            cluster_id,
+            region,
+            version_locator_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'cluster_id={}'.format(cluster_id) in query_string
         assert 'region={}'.format(region) in query_string
@@ -4984,7 +5497,11 @@ class TestListOperators:
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         x_auth_refresh_token = 'testString'
@@ -5000,9 +5517,10 @@ class TestListOperators:
             "version_locator_id": version_locator_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_operators(**req_copy)
+
 
     def test_list_operators_value_error_with_retries(self):
         # Enable retries and run test_list_operators_value_error.
@@ -5013,8 +5531,7 @@ class TestListOperators:
         _service.disable_retries()
         self.test_list_operators_value_error()
 
-
-class TestReplaceOperators:
+class TestReplaceOperators():
     """
     Test Class for replace_operators
     """
@@ -5023,7 +5540,7 @@ class TestReplaceOperators:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -5038,7 +5555,11 @@ class TestReplaceOperators:
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         x_auth_refresh_token = 'testString'
@@ -5056,7 +5577,7 @@ class TestReplaceOperators:
             namespaces=namespaces,
             all_namespaces=all_namespaces,
             version_locator_id=version_locator_id,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -5087,13 +5608,20 @@ class TestReplaceOperators:
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = _service.replace_operators(x_auth_refresh_token, headers={})
+        response = _service.replace_operators(
+            x_auth_refresh_token,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -5116,7 +5644,11 @@ class TestReplaceOperators:
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
         mock_response = '[{"phase": "phase", "message": "message", "link": "link", "name": "name", "version": "version", "namespace": "namespace", "package_name": "package_name", "catalog_id": "catalog_id"}]'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         x_auth_refresh_token = 'testString'
@@ -5126,9 +5658,10 @@ class TestReplaceOperators:
             "x_auth_refresh_token": x_auth_refresh_token,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.replace_operators(**req_copy)
+
 
     def test_replace_operators_value_error_with_retries(self):
         # Enable retries and run test_replace_operators_value_error.
@@ -5139,8 +5672,7 @@ class TestReplaceOperators:
         _service.disable_retries()
         self.test_replace_operators_value_error()
 
-
-class TestDeleteOperators:
+class TestDeleteOperators():
     """
     Test Class for delete_operators
     """
@@ -5149,7 +5681,7 @@ class TestDeleteOperators:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -5163,7 +5695,9 @@ class TestDeleteOperators:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         x_auth_refresh_token = 'testString'
@@ -5172,13 +5706,19 @@ class TestDeleteOperators:
         version_locator_id = 'testString'
 
         # Invoke method
-        response = _service.delete_operators(x_auth_refresh_token, cluster_id, region, version_locator_id, headers={})
+        response = _service.delete_operators(
+            x_auth_refresh_token,
+            cluster_id,
+            region,
+            version_locator_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'cluster_id={}'.format(cluster_id) in query_string
         assert 'region={}'.format(region) in query_string
@@ -5200,7 +5740,9 @@ class TestDeleteOperators:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/deploy/kubernetes/olm/operator')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         x_auth_refresh_token = 'testString'
@@ -5216,9 +5758,10 @@ class TestDeleteOperators:
             "version_locator_id": version_locator_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_operators(**req_copy)
+
 
     def test_delete_operators_value_error_with_retries(self):
         # Enable retries and run test_delete_operators_value_error.
@@ -5229,8 +5772,7 @@ class TestDeleteOperators:
         _service.disable_retries()
         self.test_delete_operators_value_error()
 
-
-class TestInstallVersion:
+class TestInstallVersion():
     """
     Test Class for install_version
     """
@@ -5239,7 +5781,7 @@ class TestInstallVersion:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -5253,7 +5795,9 @@ class TestInstallVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/install')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Construct a dict representation of a DeployRequestBodySchematics model
         deploy_request_body_schematics_model = {}
@@ -5298,7 +5842,7 @@ class TestInstallVersion:
             vcenter_password=vcenter_password,
             vcenter_location=vcenter_location,
             vcenter_datastore=vcenter_datastore,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -5337,14 +5881,20 @@ class TestInstallVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/install')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = _service.install_version(version_loc_id, x_auth_refresh_token, headers={})
+        response = _service.install_version(
+            version_loc_id,
+            x_auth_refresh_token,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -5366,7 +5916,9 @@ class TestInstallVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/install')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -5378,9 +5930,10 @@ class TestInstallVersion:
             "x_auth_refresh_token": x_auth_refresh_token,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.install_version(**req_copy)
+
 
     def test_install_version_value_error_with_retries(self):
         # Enable retries and run test_install_version_value_error.
@@ -5391,8 +5944,7 @@ class TestInstallVersion:
         _service.disable_retries()
         self.test_install_version_value_error()
 
-
-class TestPreinstallVersion:
+class TestPreinstallVersion():
     """
     Test Class for preinstall_version
     """
@@ -5401,7 +5953,7 @@ class TestPreinstallVersion:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -5415,7 +5967,9 @@ class TestPreinstallVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/preinstall')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Construct a dict representation of a DeployRequestBodySchematics model
         deploy_request_body_schematics_model = {}
@@ -5460,7 +6014,7 @@ class TestPreinstallVersion:
             vcenter_password=vcenter_password,
             vcenter_location=vcenter_location,
             vcenter_datastore=vcenter_datastore,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -5499,14 +6053,20 @@ class TestPreinstallVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/preinstall')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = _service.preinstall_version(version_loc_id, x_auth_refresh_token, headers={})
+        response = _service.preinstall_version(
+            version_loc_id,
+            x_auth_refresh_token,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -5528,7 +6088,9 @@ class TestPreinstallVersion:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/preinstall')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -5540,9 +6102,10 @@ class TestPreinstallVersion:
             "x_auth_refresh_token": x_auth_refresh_token,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.preinstall_version(**req_copy)
+
 
     def test_preinstall_version_value_error_with_retries(self):
         # Enable retries and run test_preinstall_version_value_error.
@@ -5553,8 +6116,7 @@ class TestPreinstallVersion:
         _service.disable_retries()
         self.test_preinstall_version_value_error()
 
-
-class TestGetPreinstall:
+class TestGetPreinstall():
     """
     Test Class for get_preinstall
     """
@@ -5563,7 +6125,7 @@ class TestGetPreinstall:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -5578,7 +6140,11 @@ class TestGetPreinstall:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/preinstall')
         mock_response = '{"metadata": {"cluster_id": "cluster_id", "region": "region", "namespace": "namespace", "workspace_id": "workspace_id", "workspace_name": "workspace_name"}, "release": {"deployments": [{"mapKey": "anyValue"}], "replicasets": [{"mapKey": "anyValue"}], "statefulsets": [{"mapKey": "anyValue"}], "pods": [{"mapKey": "anyValue"}], "errors": [{"mapKey": "inner"}]}, "content_mgmt": {"pods": [{"mapKey": "inner"}], "errors": [{"mapKey": "inner"}]}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -5589,14 +6155,19 @@ class TestGetPreinstall:
 
         # Invoke method
         response = _service.get_preinstall(
-            version_loc_id, x_auth_refresh_token, cluster_id=cluster_id, region=region, namespace=namespace, headers={}
+            version_loc_id,
+            x_auth_refresh_token,
+            cluster_id=cluster_id,
+            region=region,
+            namespace=namespace,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'cluster_id={}'.format(cluster_id) in query_string
         assert 'region={}'.format(region) in query_string
@@ -5619,14 +6190,22 @@ class TestGetPreinstall:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/preinstall')
         mock_response = '{"metadata": {"cluster_id": "cluster_id", "region": "region", "namespace": "namespace", "workspace_id": "workspace_id", "workspace_name": "workspace_name"}, "release": {"deployments": [{"mapKey": "anyValue"}], "replicasets": [{"mapKey": "anyValue"}], "statefulsets": [{"mapKey": "anyValue"}], "pods": [{"mapKey": "anyValue"}], "errors": [{"mapKey": "inner"}]}, "content_mgmt": {"pods": [{"mapKey": "inner"}], "errors": [{"mapKey": "inner"}]}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = _service.get_preinstall(version_loc_id, x_auth_refresh_token, headers={})
+        response = _service.get_preinstall(
+            version_loc_id,
+            x_auth_refresh_token,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -5649,7 +6228,11 @@ class TestGetPreinstall:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/preinstall')
         mock_response = '{"metadata": {"cluster_id": "cluster_id", "region": "region", "namespace": "namespace", "workspace_id": "workspace_id", "workspace_name": "workspace_name"}, "release": {"deployments": [{"mapKey": "anyValue"}], "replicasets": [{"mapKey": "anyValue"}], "statefulsets": [{"mapKey": "anyValue"}], "pods": [{"mapKey": "anyValue"}], "errors": [{"mapKey": "inner"}]}, "content_mgmt": {"pods": [{"mapKey": "inner"}], "errors": [{"mapKey": "inner"}]}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -5661,9 +6244,10 @@ class TestGetPreinstall:
             "x_auth_refresh_token": x_auth_refresh_token,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_preinstall(**req_copy)
+
 
     def test_get_preinstall_value_error_with_retries(self):
         # Enable retries and run test_get_preinstall_value_error.
@@ -5674,8 +6258,7 @@ class TestGetPreinstall:
         _service.disable_retries()
         self.test_get_preinstall_value_error()
 
-
-class TestValidateInstall:
+class TestValidateInstall():
     """
     Test Class for validate_install
     """
@@ -5684,7 +6267,7 @@ class TestValidateInstall:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -5698,7 +6281,9 @@ class TestValidateInstall:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/validation/install')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Construct a dict representation of a DeployRequestBodySchematics model
         deploy_request_body_schematics_model = {}
@@ -5743,7 +6328,7 @@ class TestValidateInstall:
             vcenter_password=vcenter_password,
             vcenter_location=vcenter_location,
             vcenter_datastore=vcenter_datastore,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -5782,14 +6367,20 @@ class TestValidateInstall:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/validation/install')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = _service.validate_install(version_loc_id, x_auth_refresh_token, headers={})
+        response = _service.validate_install(
+            version_loc_id,
+            x_auth_refresh_token,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -5811,7 +6402,9 @@ class TestValidateInstall:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/validation/install')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -5823,9 +6416,10 @@ class TestValidateInstall:
             "x_auth_refresh_token": x_auth_refresh_token,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.validate_install(**req_copy)
+
 
     def test_validate_install_value_error_with_retries(self):
         # Enable retries and run test_validate_install_value_error.
@@ -5836,8 +6430,7 @@ class TestValidateInstall:
         _service.disable_retries()
         self.test_validate_install_value_error()
 
-
-class TestGetValidationStatus:
+class TestGetValidationStatus():
     """
     Test Class for get_validation_status
     """
@@ -5846,7 +6439,7 @@ class TestGetValidationStatus:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -5861,14 +6454,22 @@ class TestGetValidationStatus:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/validation/install')
         mock_response = '{"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = _service.get_validation_status(version_loc_id, x_auth_refresh_token, headers={})
+        response = _service.get_validation_status(
+            version_loc_id,
+            x_auth_refresh_token,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -5891,7 +6492,11 @@ class TestGetValidationStatus:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/validation/install')
         mock_response = '{"validated": "2019-01-01T12:00:00.000Z", "requested": "2019-01-01T12:00:00.000Z", "state": "state", "last_operation": "last_operation", "target": {"mapKey": "anyValue"}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -5903,9 +6508,10 @@ class TestGetValidationStatus:
             "x_auth_refresh_token": x_auth_refresh_token,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_validation_status(**req_copy)
+
 
     def test_get_validation_status_value_error_with_retries(self):
         # Enable retries and run test_get_validation_status_value_error.
@@ -5916,8 +6522,7 @@ class TestGetValidationStatus:
         _service.disable_retries()
         self.test_get_validation_status_value_error()
 
-
-class TestGetOverrideValues:
+class TestGetOverrideValues():
     """
     Test Class for get_override_values
     """
@@ -5926,7 +6531,7 @@ class TestGetOverrideValues:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -5941,13 +6546,20 @@ class TestGetOverrideValues:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/validation/overridevalues')
         mock_response = '{"mapKey": "anyValue"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
 
         # Invoke method
-        response = _service.get_override_values(version_loc_id, headers={})
+        response = _service.get_override_values(
+            version_loc_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -5970,7 +6582,11 @@ class TestGetOverrideValues:
         # Set up mock
         url = self.preprocess_url(_base_url + '/versions/testString/validation/overridevalues')
         mock_response = '{"mapKey": "anyValue"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         version_loc_id = 'testString'
@@ -5980,9 +6596,10 @@ class TestGetOverrideValues:
             "version_loc_id": version_loc_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_override_values(**req_copy)
+
 
     def test_get_override_values_value_error_with_retries(self):
         # Enable retries and run test_get_override_values_value_error.
@@ -5992,7 +6609,6 @@ class TestGetOverrideValues:
         # Disable retries and run test_get_override_values_value_error.
         _service.disable_retries()
         self.test_get_override_values_value_error()
-
 
 # endregion
 ##############################################################################
@@ -6004,8 +6620,7 @@ class TestGetOverrideValues:
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -6028,10 +6643,10 @@ class TestNewInstance:
         new_instance_without_authenticator()
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = CatalogManagementV1.new_instance()
+            service = CatalogManagementV1.new_instance(
+            )
 
-
-class TestSearchObjects:
+class TestSearchObjects():
     """
     Test Class for search_objects
     """
@@ -6040,7 +6655,7 @@ class TestSearchObjects:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -6055,7 +6670,11 @@ class TestSearchObjects:
         # Set up mock
         url = self.preprocess_url(_base_url + '/objects')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": "anyValue"}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         query = 'testString'
@@ -6066,14 +6685,19 @@ class TestSearchObjects:
 
         # Invoke method
         response = _service.search_objects(
-            query, limit=limit, offset=offset, collapse=collapse, digest=digest, headers={}
+            query,
+            limit=limit,
+            offset=offset,
+            collapse=collapse,
+            digest=digest,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'query={}'.format(query) in query_string
         assert 'limit={}'.format(limit) in query_string
@@ -6098,19 +6722,26 @@ class TestSearchObjects:
         # Set up mock
         url = self.preprocess_url(_base_url + '/objects')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": "anyValue"}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         query = 'testString'
 
         # Invoke method
-        response = _service.search_objects(query, headers={})
+        response = _service.search_objects(
+            query,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'query={}'.format(query) in query_string
 
@@ -6131,7 +6762,11 @@ class TestSearchObjects:
         # Set up mock
         url = self.preprocess_url(_base_url + '/objects')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": "anyValue"}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         query = 'testString'
@@ -6141,9 +6776,10 @@ class TestSearchObjects:
             "query": query,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.search_objects(**req_copy)
+
 
     def test_search_objects_value_error_with_retries(self):
         # Enable retries and run test_search_objects_value_error.
@@ -6154,8 +6790,7 @@ class TestSearchObjects:
         _service.disable_retries()
         self.test_search_objects_value_error()
 
-
-class TestListObjects:
+class TestListObjects():
     """
     Test Class for list_objects
     """
@@ -6164,7 +6799,7 @@ class TestListObjects:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -6179,7 +6814,11 @@ class TestListObjects:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": "anyValue"}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -6190,14 +6829,19 @@ class TestListObjects:
 
         # Invoke method
         response = _service.list_objects(
-            catalog_identifier, limit=limit, offset=offset, name=name, sort=sort, headers={}
+            catalog_identifier,
+            limit=limit,
+            offset=offset,
+            name=name,
+            sort=sort,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'limit={}'.format(limit) in query_string
         assert 'offset={}'.format(offset) in query_string
@@ -6221,13 +6865,20 @@ class TestListObjects:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": "anyValue"}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = _service.list_objects(catalog_identifier, headers={})
+        response = _service.list_objects(
+            catalog_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -6250,7 +6901,11 @@ class TestListObjects:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": "anyValue"}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -6260,9 +6915,10 @@ class TestListObjects:
             "catalog_identifier": catalog_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_objects(**req_copy)
+
 
     def test_list_objects_value_error_with_retries(self):
         # Enable retries and run test_list_objects_value_error.
@@ -6273,8 +6929,7 @@ class TestListObjects:
         _service.disable_retries()
         self.test_list_objects_value_error()
 
-
-class TestCreateObject:
+class TestCreateObject():
     """
     Test Class for create_object
     """
@@ -6283,7 +6938,7 @@ class TestCreateObject:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -6298,7 +6953,11 @@ class TestCreateObject:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects')
         mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": "anyValue"}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Construct a dict representation of a PublishObject model
         publish_object_model = {}
@@ -6360,7 +7019,7 @@ class TestCreateObject:
             catalog_id=catalog_id,
             catalog_name=catalog_name,
             data=data,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -6405,13 +7064,20 @@ class TestCreateObject:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects')
         mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": "anyValue"}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
 
         # Invoke method
-        response = _service.create_object(catalog_identifier, headers={})
+        response = _service.create_object(
+            catalog_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -6434,7 +7100,11 @@ class TestCreateObject:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects')
         mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": "anyValue"}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -6444,9 +7114,10 @@ class TestCreateObject:
             "catalog_identifier": catalog_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_object(**req_copy)
+
 
     def test_create_object_value_error_with_retries(self):
         # Enable retries and run test_create_object_value_error.
@@ -6457,8 +7128,7 @@ class TestCreateObject:
         _service.disable_retries()
         self.test_create_object_value_error()
 
-
-class TestGetObject:
+class TestGetObject():
     """
     Test Class for get_object
     """
@@ -6467,7 +7137,7 @@ class TestGetObject:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -6482,14 +7152,22 @@ class TestGetObject:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString')
         mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": "anyValue"}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
         object_identifier = 'testString'
 
         # Invoke method
-        response = _service.get_object(catalog_identifier, object_identifier, headers={})
+        response = _service.get_object(
+            catalog_identifier,
+            object_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -6512,7 +7190,11 @@ class TestGetObject:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString')
         mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": "anyValue"}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -6524,9 +7206,10 @@ class TestGetObject:
             "object_identifier": object_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_object(**req_copy)
+
 
     def test_get_object_value_error_with_retries(self):
         # Enable retries and run test_get_object_value_error.
@@ -6537,8 +7220,7 @@ class TestGetObject:
         _service.disable_retries()
         self.test_get_object_value_error()
 
-
-class TestReplaceObject:
+class TestReplaceObject():
     """
     Test Class for replace_object
     """
@@ -6547,7 +7229,7 @@ class TestReplaceObject:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -6562,7 +7244,11 @@ class TestReplaceObject:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString')
         mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": "anyValue"}}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a PublishObject model
         publish_object_model = {}
@@ -6626,7 +7312,7 @@ class TestReplaceObject:
             catalog_id=catalog_id,
             catalog_name=catalog_name,
             data=data,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -6671,14 +7357,22 @@ class TestReplaceObject:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString')
         mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": "anyValue"}}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
         object_identifier = 'testString'
 
         # Invoke method
-        response = _service.replace_object(catalog_identifier, object_identifier, headers={})
+        response = _service.replace_object(
+            catalog_identifier,
+            object_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -6701,7 +7395,11 @@ class TestReplaceObject:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString')
         mock_response = '{"id": "id", "name": "name", "_rev": "rev", "crn": "crn", "url": "url", "parent_id": "parent_id", "label_i18n": "label_i18n", "label": "label", "tags": ["tags"], "created": "2019-01-01T12:00:00.000Z", "updated": "2019-01-01T12:00:00.000Z", "short_description": "short_description", "short_description_i18n": "short_description_i18n", "kind": "kind", "publish": {"permit_ibm_public_publish": false, "ibm_approved": true, "public_approved": false, "portal_approval_record": "portal_approval_record", "portal_url": "portal_url"}, "state": {"current": "current", "current_entered": "2019-01-01T12:00:00.000Z", "pending": "pending", "pending_requested": "2019-01-01T12:00:00.000Z", "previous": "previous"}, "catalog_id": "catalog_id", "catalog_name": "catalog_name", "data": {"mapKey": "anyValue"}}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -6713,9 +7411,10 @@ class TestReplaceObject:
             "object_identifier": object_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.replace_object(**req_copy)
+
 
     def test_replace_object_value_error_with_retries(self):
         # Enable retries and run test_replace_object_value_error.
@@ -6726,8 +7425,7 @@ class TestReplaceObject:
         _service.disable_retries()
         self.test_replace_object_value_error()
 
-
-class TestDeleteObject:
+class TestDeleteObject():
     """
     Test Class for delete_object
     """
@@ -6736,7 +7434,7 @@ class TestDeleteObject:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -6750,14 +7448,20 @@ class TestDeleteObject:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
         object_identifier = 'testString'
 
         # Invoke method
-        response = _service.delete_object(catalog_identifier, object_identifier, headers={})
+        response = _service.delete_object(
+            catalog_identifier,
+            object_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -6779,7 +7483,9 @@ class TestDeleteObject:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -6791,9 +7497,10 @@ class TestDeleteObject:
             "object_identifier": object_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_object(**req_copy)
+
 
     def test_delete_object_value_error_with_retries(self):
         # Enable retries and run test_delete_object_value_error.
@@ -6804,8 +7511,7 @@ class TestDeleteObject:
         _service.disable_retries()
         self.test_delete_object_value_error()
 
-
-class TestGetObjectAudit:
+class TestGetObjectAudit():
     """
     Test Class for get_object_audit
     """
@@ -6814,7 +7520,7 @@ class TestGetObjectAudit:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -6829,14 +7535,22 @@ class TestGetObjectAudit:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/audit')
         mock_response = '{"list": [{"id": "id", "created": "2019-01-01T12:00:00.000Z", "change_type": "change_type", "target_type": "target_type", "target_id": "target_id", "who_delegate_email": "who_delegate_email", "message": "message"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
         object_identifier = 'testString'
 
         # Invoke method
-        response = _service.get_object_audit(catalog_identifier, object_identifier, headers={})
+        response = _service.get_object_audit(
+            catalog_identifier,
+            object_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -6859,7 +7573,11 @@ class TestGetObjectAudit:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/audit')
         mock_response = '{"list": [{"id": "id", "created": "2019-01-01T12:00:00.000Z", "change_type": "change_type", "target_type": "target_type", "target_id": "target_id", "who_delegate_email": "who_delegate_email", "message": "message"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -6871,9 +7589,10 @@ class TestGetObjectAudit:
             "object_identifier": object_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_object_audit(**req_copy)
+
 
     def test_get_object_audit_value_error_with_retries(self):
         # Enable retries and run test_get_object_audit_value_error.
@@ -6884,8 +7603,7 @@ class TestGetObjectAudit:
         _service.disable_retries()
         self.test_get_object_audit_value_error()
 
-
-class TestAccountPublishObject:
+class TestAccountPublishObject():
     """
     Test Class for account_publish_object
     """
@@ -6894,7 +7612,7 @@ class TestAccountPublishObject:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -6908,14 +7626,20 @@ class TestAccountPublishObject:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/account-publish')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         catalog_identifier = 'testString'
         object_identifier = 'testString'
 
         # Invoke method
-        response = _service.account_publish_object(catalog_identifier, object_identifier, headers={})
+        response = _service.account_publish_object(
+            catalog_identifier,
+            object_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -6937,7 +7661,9 @@ class TestAccountPublishObject:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/account-publish')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -6949,9 +7675,10 @@ class TestAccountPublishObject:
             "object_identifier": object_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.account_publish_object(**req_copy)
+
 
     def test_account_publish_object_value_error_with_retries(self):
         # Enable retries and run test_account_publish_object_value_error.
@@ -6962,8 +7689,7 @@ class TestAccountPublishObject:
         _service.disable_retries()
         self.test_account_publish_object_value_error()
 
-
-class TestSharedPublishObject:
+class TestSharedPublishObject():
     """
     Test Class for shared_publish_object
     """
@@ -6972,7 +7698,7 @@ class TestSharedPublishObject:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -6986,14 +7712,20 @@ class TestSharedPublishObject:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/shared-publish')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         catalog_identifier = 'testString'
         object_identifier = 'testString'
 
         # Invoke method
-        response = _service.shared_publish_object(catalog_identifier, object_identifier, headers={})
+        response = _service.shared_publish_object(
+            catalog_identifier,
+            object_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -7015,7 +7747,9 @@ class TestSharedPublishObject:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/shared-publish')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7027,9 +7761,10 @@ class TestSharedPublishObject:
             "object_identifier": object_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.shared_publish_object(**req_copy)
+
 
     def test_shared_publish_object_value_error_with_retries(self):
         # Enable retries and run test_shared_publish_object_value_error.
@@ -7040,8 +7775,7 @@ class TestSharedPublishObject:
         _service.disable_retries()
         self.test_shared_publish_object_value_error()
 
-
-class TestIbmPublishObject:
+class TestIbmPublishObject():
     """
     Test Class for ibm_publish_object
     """
@@ -7050,7 +7784,7 @@ class TestIbmPublishObject:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -7064,14 +7798,20 @@ class TestIbmPublishObject:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/ibm-publish')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         catalog_identifier = 'testString'
         object_identifier = 'testString'
 
         # Invoke method
-        response = _service.ibm_publish_object(catalog_identifier, object_identifier, headers={})
+        response = _service.ibm_publish_object(
+            catalog_identifier,
+            object_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -7093,7 +7833,9 @@ class TestIbmPublishObject:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/ibm-publish')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7105,9 +7847,10 @@ class TestIbmPublishObject:
             "object_identifier": object_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.ibm_publish_object(**req_copy)
+
 
     def test_ibm_publish_object_value_error_with_retries(self):
         # Enable retries and run test_ibm_publish_object_value_error.
@@ -7118,8 +7861,7 @@ class TestIbmPublishObject:
         _service.disable_retries()
         self.test_ibm_publish_object_value_error()
 
-
-class TestPublicPublishObject:
+class TestPublicPublishObject():
     """
     Test Class for public_publish_object
     """
@@ -7128,7 +7870,7 @@ class TestPublicPublishObject:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -7142,14 +7884,20 @@ class TestPublicPublishObject:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/public-publish')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         catalog_identifier = 'testString'
         object_identifier = 'testString'
 
         # Invoke method
-        response = _service.public_publish_object(catalog_identifier, object_identifier, headers={})
+        response = _service.public_publish_object(
+            catalog_identifier,
+            object_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -7171,7 +7919,9 @@ class TestPublicPublishObject:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/public-publish')
-        responses.add(responses.POST, url, status=202)
+        responses.add(responses.POST,
+                      url,
+                      status=202)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7183,9 +7933,10 @@ class TestPublicPublishObject:
             "object_identifier": object_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.public_publish_object(**req_copy)
+
 
     def test_public_publish_object_value_error_with_retries(self):
         # Enable retries and run test_public_publish_object_value_error.
@@ -7196,8 +7947,7 @@ class TestPublicPublishObject:
         _service.disable_retries()
         self.test_public_publish_object_value_error()
 
-
-class TestCreateObjectAccess:
+class TestCreateObjectAccess():
     """
     Test Class for create_object_access
     """
@@ -7206,7 +7956,7 @@ class TestCreateObjectAccess:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -7220,7 +7970,9 @@ class TestCreateObjectAccess:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access/testString')
-        responses.add(responses.POST, url, status=201)
+        responses.add(responses.POST,
+                      url,
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7228,7 +7980,12 @@ class TestCreateObjectAccess:
         account_identifier = 'testString'
 
         # Invoke method
-        response = _service.create_object_access(catalog_identifier, object_identifier, account_identifier, headers={})
+        response = _service.create_object_access(
+            catalog_identifier,
+            object_identifier,
+            account_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -7250,7 +8007,9 @@ class TestCreateObjectAccess:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access/testString')
-        responses.add(responses.POST, url, status=201)
+        responses.add(responses.POST,
+                      url,
+                      status=201)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7264,9 +8023,10 @@ class TestCreateObjectAccess:
             "account_identifier": account_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_object_access(**req_copy)
+
 
     def test_create_object_access_value_error_with_retries(self):
         # Enable retries and run test_create_object_access_value_error.
@@ -7277,8 +8037,7 @@ class TestCreateObjectAccess:
         _service.disable_retries()
         self.test_create_object_access_value_error()
 
-
-class TestGetObjectAccess:
+class TestGetObjectAccess():
     """
     Test Class for get_object_access
     """
@@ -7287,7 +8046,7 @@ class TestGetObjectAccess:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -7302,7 +8061,11 @@ class TestGetObjectAccess:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access/testString')
         mock_response = '{"id": "id", "account": "account", "catalog_id": "catalog_id", "target_id": "target_id", "create": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7310,7 +8073,12 @@ class TestGetObjectAccess:
         account_identifier = 'testString'
 
         # Invoke method
-        response = _service.get_object_access(catalog_identifier, object_identifier, account_identifier, headers={})
+        response = _service.get_object_access(
+            catalog_identifier,
+            object_identifier,
+            account_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -7333,7 +8101,11 @@ class TestGetObjectAccess:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access/testString')
         mock_response = '{"id": "id", "account": "account", "catalog_id": "catalog_id", "target_id": "target_id", "create": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7347,9 +8119,10 @@ class TestGetObjectAccess:
             "account_identifier": account_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_object_access(**req_copy)
+
 
     def test_get_object_access_value_error_with_retries(self):
         # Enable retries and run test_get_object_access_value_error.
@@ -7360,8 +8133,7 @@ class TestGetObjectAccess:
         _service.disable_retries()
         self.test_get_object_access_value_error()
 
-
-class TestDeleteObjectAccess:
+class TestDeleteObjectAccess():
     """
     Test Class for delete_object_access
     """
@@ -7370,7 +8142,7 @@ class TestDeleteObjectAccess:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -7384,7 +8156,9 @@ class TestDeleteObjectAccess:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access/testString')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7392,7 +8166,12 @@ class TestDeleteObjectAccess:
         account_identifier = 'testString'
 
         # Invoke method
-        response = _service.delete_object_access(catalog_identifier, object_identifier, account_identifier, headers={})
+        response = _service.delete_object_access(
+            catalog_identifier,
+            object_identifier,
+            account_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -7414,7 +8193,9 @@ class TestDeleteObjectAccess:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access/testString')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7428,9 +8209,10 @@ class TestDeleteObjectAccess:
             "account_identifier": account_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_object_access(**req_copy)
+
 
     def test_delete_object_access_value_error_with_retries(self):
         # Enable retries and run test_delete_object_access_value_error.
@@ -7441,8 +8223,7 @@ class TestDeleteObjectAccess:
         _service.disable_retries()
         self.test_delete_object_access_value_error()
 
-
-class TestGetObjectAccessList:
+class TestGetObjectAccessList():
     """
     Test Class for get_object_access_list
     """
@@ -7451,7 +8232,7 @@ class TestGetObjectAccessList:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -7466,7 +8247,11 @@ class TestGetObjectAccessList:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "account": "account", "catalog_id": "catalog_id", "target_id": "target_id", "create": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7476,14 +8261,18 @@ class TestGetObjectAccessList:
 
         # Invoke method
         response = _service.get_object_access_list(
-            catalog_identifier, object_identifier, limit=limit, offset=offset, headers={}
+            catalog_identifier,
+            object_identifier,
+            limit=limit,
+            offset=offset,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'limit={}'.format(limit) in query_string
         assert 'offset={}'.format(offset) in query_string
@@ -7505,14 +8294,22 @@ class TestGetObjectAccessList:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "account": "account", "catalog_id": "catalog_id", "target_id": "target_id", "create": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
         object_identifier = 'testString'
 
         # Invoke method
-        response = _service.get_object_access_list(catalog_identifier, object_identifier, headers={})
+        response = _service.get_object_access_list(
+            catalog_identifier,
+            object_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -7535,7 +8332,11 @@ class TestGetObjectAccessList:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access')
         mock_response = '{"offset": 6, "limit": 5, "total_count": 11, "resource_count": 14, "first": "first", "last": "last", "prev": "prev", "next": "next", "resources": [{"id": "id", "account": "account", "catalog_id": "catalog_id", "target_id": "target_id", "create": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7547,9 +8348,10 @@ class TestGetObjectAccessList:
             "object_identifier": object_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_object_access_list(**req_copy)
+
 
     def test_get_object_access_list_value_error_with_retries(self):
         # Enable retries and run test_get_object_access_list_value_error.
@@ -7560,8 +8362,7 @@ class TestGetObjectAccessList:
         _service.disable_retries()
         self.test_get_object_access_list_value_error()
 
-
-class TestDeleteObjectAccessList:
+class TestDeleteObjectAccessList():
     """
     Test Class for delete_object_access_list
     """
@@ -7570,7 +8371,7 @@ class TestDeleteObjectAccessList:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -7585,7 +8386,11 @@ class TestDeleteObjectAccessList:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access')
         mock_response = '{"errors": {"mapKey": "inner"}}'
-        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7593,7 +8398,12 @@ class TestDeleteObjectAccessList:
         accounts = ['testString']
 
         # Invoke method
-        response = _service.delete_object_access_list(catalog_identifier, object_identifier, accounts, headers={})
+        response = _service.delete_object_access_list(
+            catalog_identifier,
+            object_identifier,
+            accounts,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -7619,7 +8429,11 @@ class TestDeleteObjectAccessList:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access')
         mock_response = '{"errors": {"mapKey": "inner"}}'
-        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7633,9 +8447,10 @@ class TestDeleteObjectAccessList:
             "accounts": accounts,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_object_access_list(**req_copy)
+
 
     def test_delete_object_access_list_value_error_with_retries(self):
         # Enable retries and run test_delete_object_access_list_value_error.
@@ -7646,8 +8461,7 @@ class TestDeleteObjectAccessList:
         _service.disable_retries()
         self.test_delete_object_access_list_value_error()
 
-
-class TestAddObjectAccessList:
+class TestAddObjectAccessList():
     """
     Test Class for add_object_access_list
     """
@@ -7656,7 +8470,7 @@ class TestAddObjectAccessList:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -7671,7 +8485,11 @@ class TestAddObjectAccessList:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access')
         mock_response = '{"errors": {"mapKey": "inner"}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7679,7 +8497,12 @@ class TestAddObjectAccessList:
         accounts = ['testString']
 
         # Invoke method
-        response = _service.add_object_access_list(catalog_identifier, object_identifier, accounts, headers={})
+        response = _service.add_object_access_list(
+            catalog_identifier,
+            object_identifier,
+            accounts,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -7705,7 +8528,11 @@ class TestAddObjectAccessList:
         # Set up mock
         url = self.preprocess_url(_base_url + '/catalogs/testString/objects/testString/access')
         mock_response = '{"errors": {"mapKey": "inner"}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         catalog_identifier = 'testString'
@@ -7719,9 +8546,10 @@ class TestAddObjectAccessList:
             "accounts": accounts,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.add_object_access_list(**req_copy)
+
 
     def test_add_object_access_list_value_error_with_retries(self):
         # Enable retries and run test_add_object_access_list_value_error.
@@ -7731,7 +8559,6 @@ class TestAddObjectAccessList:
         # Disable retries and run test_add_object_access_list_value_error.
         _service.disable_retries()
         self.test_add_object_access_list_value_error()
-
 
 # endregion
 ##############################################################################
@@ -7743,8 +8570,7 @@ class TestAddObjectAccessList:
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -7767,10 +8593,10 @@ class TestNewInstance:
         new_instance_without_authenticator()
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = CatalogManagementV1.new_instance()
+            service = CatalogManagementV1.new_instance(
+            )
 
-
-class TestCreateOfferingInstance:
+class TestCreateOfferingInstance():
     """
     Test Class for create_offering_instance
     """
@@ -7779,7 +8605,7 @@ class TestCreateOfferingInstance:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -7794,7 +8620,11 @@ class TestCreateOfferingInstance:
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": "anyValue"}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Construct a dict representation of a OfferingInstanceLastOperation model
         offering_instance_last_operation_model = {}
@@ -7848,7 +8678,7 @@ class TestCreateOfferingInstance:
             channel=channel,
             metadata=metadata,
             last_operation=last_operation,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -7893,13 +8723,20 @@ class TestCreateOfferingInstance:
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": "anyValue"}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = _service.create_offering_instance(x_auth_refresh_token, headers={})
+        response = _service.create_offering_instance(
+            x_auth_refresh_token,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -7922,7 +8759,11 @@ class TestCreateOfferingInstance:
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": "anyValue"}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         x_auth_refresh_token = 'testString'
@@ -7932,9 +8773,10 @@ class TestCreateOfferingInstance:
             "x_auth_refresh_token": x_auth_refresh_token,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_offering_instance(**req_copy)
+
 
     def test_create_offering_instance_value_error_with_retries(self):
         # Enable retries and run test_create_offering_instance_value_error.
@@ -7945,8 +8787,7 @@ class TestCreateOfferingInstance:
         _service.disable_retries()
         self.test_create_offering_instance_value_error()
 
-
-class TestGetOfferingInstance:
+class TestGetOfferingInstance():
     """
     Test Class for get_offering_instance
     """
@@ -7955,7 +8796,7 @@ class TestGetOfferingInstance:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -7970,13 +8811,20 @@ class TestGetOfferingInstance:
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": "anyValue"}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_identifier = 'testString'
 
         # Invoke method
-        response = _service.get_offering_instance(instance_identifier, headers={})
+        response = _service.get_offering_instance(
+            instance_identifier,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -7999,7 +8847,11 @@ class TestGetOfferingInstance:
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": "anyValue"}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_identifier = 'testString'
@@ -8009,9 +8861,10 @@ class TestGetOfferingInstance:
             "instance_identifier": instance_identifier,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_offering_instance(**req_copy)
+
 
     def test_get_offering_instance_value_error_with_retries(self):
         # Enable retries and run test_get_offering_instance_value_error.
@@ -8022,8 +8875,7 @@ class TestGetOfferingInstance:
         _service.disable_retries()
         self.test_get_offering_instance_value_error()
 
-
-class TestPutOfferingInstance:
+class TestPutOfferingInstance():
     """
     Test Class for put_offering_instance
     """
@@ -8032,7 +8884,7 @@ class TestPutOfferingInstance:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -8047,7 +8899,11 @@ class TestPutOfferingInstance:
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": "anyValue"}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a OfferingInstanceLastOperation model
         offering_instance_last_operation_model = {}
@@ -8103,7 +8959,7 @@ class TestPutOfferingInstance:
             channel=channel,
             metadata=metadata,
             last_operation=last_operation,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -8148,14 +9004,22 @@ class TestPutOfferingInstance:
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": "anyValue"}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_identifier = 'testString'
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = _service.put_offering_instance(instance_identifier, x_auth_refresh_token, headers={})
+        response = _service.put_offering_instance(
+            instance_identifier,
+            x_auth_refresh_token,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -8178,7 +9042,11 @@ class TestPutOfferingInstance:
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings/testString')
         mock_response = '{"id": "id", "_rev": "rev", "url": "url", "crn": "crn", "label": "label", "catalog_id": "catalog_id", "offering_id": "offering_id", "kind_format": "kind_format", "version": "version", "cluster_id": "cluster_id", "cluster_region": "cluster_region", "cluster_namespaces": ["cluster_namespaces"], "cluster_all_namespaces": true, "schematics_workspace_id": "schematics_workspace_id", "resource_group_id": "resource_group_id", "install_plan": "install_plan", "channel": "channel", "metadata": {"mapKey": "anyValue"}, "last_operation": {"operation": "operation", "state": "state", "message": "message", "transaction_id": "transaction_id", "updated": "updated"}}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_identifier = 'testString'
@@ -8190,9 +9058,10 @@ class TestPutOfferingInstance:
             "x_auth_refresh_token": x_auth_refresh_token,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.put_offering_instance(**req_copy)
+
 
     def test_put_offering_instance_value_error_with_retries(self):
         # Enable retries and run test_put_offering_instance_value_error.
@@ -8203,8 +9072,7 @@ class TestPutOfferingInstance:
         _service.disable_retries()
         self.test_put_offering_instance_value_error()
 
-
-class TestDeleteOfferingInstance:
+class TestDeleteOfferingInstance():
     """
     Test Class for delete_offering_instance
     """
@@ -8213,7 +9081,7 @@ class TestDeleteOfferingInstance:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -8227,14 +9095,20 @@ class TestDeleteOfferingInstance:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings/testString')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         instance_identifier = 'testString'
         x_auth_refresh_token = 'testString'
 
         # Invoke method
-        response = _service.delete_offering_instance(instance_identifier, x_auth_refresh_token, headers={})
+        response = _service.delete_offering_instance(
+            instance_identifier,
+            x_auth_refresh_token,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -8256,7 +9130,9 @@ class TestDeleteOfferingInstance:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/instances/offerings/testString')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         instance_identifier = 'testString'
@@ -8268,9 +9144,10 @@ class TestDeleteOfferingInstance:
             "x_auth_refresh_token": x_auth_refresh_token,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_offering_instance(**req_copy)
+
 
     def test_delete_offering_instance_value_error_with_retries(self):
         # Enable retries and run test_delete_offering_instance_value_error.
@@ -8280,7 +9157,6 @@ class TestDeleteOfferingInstance:
         # Disable retries and run test_delete_offering_instance_value_error.
         _service.disable_retries()
         self.test_delete_offering_instance_value_error()
-
 
 # endregion
 ##############################################################################
@@ -8292,7 +9168,7 @@ class TestDeleteOfferingInstance:
 # Start of Model Tests
 ##############################################################################
 # region
-class TestModel_AccessListBulkResponse:
+class TestModel_AccessListBulkResponse():
     """
     Test Class for AccessListBulkResponse
     """
@@ -8311,9 +9187,7 @@ class TestModel_AccessListBulkResponse:
         assert access_list_bulk_response_model != False
 
         # Construct a model instance of AccessListBulkResponse by calling from_dict on the json representation
-        access_list_bulk_response_model_dict = AccessListBulkResponse.from_dict(
-            access_list_bulk_response_model_json
-        ).__dict__
+        access_list_bulk_response_model_dict = AccessListBulkResponse.from_dict(access_list_bulk_response_model_json).__dict__
         access_list_bulk_response_model2 = AccessListBulkResponse(**access_list_bulk_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -8323,8 +9197,7 @@ class TestModel_AccessListBulkResponse:
         access_list_bulk_response_model_json2 = access_list_bulk_response_model.to_dict()
         assert access_list_bulk_response_model_json2 == access_list_bulk_response_model_json
 
-
-class TestModel_Account:
+class TestModel_Account():
     """
     Test Class for Account
     """
@@ -8336,18 +9209,18 @@ class TestModel_Account:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        filter_terms_model = {}  # FilterTerms
+        filter_terms_model = {} # FilterTerms
         filter_terms_model['filter_terms'] = ['testString']
 
-        category_filter_model = {}  # CategoryFilter
+        category_filter_model = {} # CategoryFilter
         category_filter_model['include'] = True
         category_filter_model['filter'] = filter_terms_model
 
-        id_filter_model = {}  # IDFilter
+        id_filter_model = {} # IDFilter
         id_filter_model['include'] = filter_terms_model
         id_filter_model['exclude'] = filter_terms_model
 
-        filters_model = {}  # Filters
+        filters_model = {} # Filters
         filters_model['include_all'] = True
         filters_model['category_filters'] = {}
         filters_model['id_filters'] = id_filter_model
@@ -8373,8 +9246,7 @@ class TestModel_Account:
         account_model_json2 = account_model.to_dict()
         assert account_model_json2 == account_model_json
 
-
-class TestModel_AccumulatedFilters:
+class TestModel_AccumulatedFilters():
     """
     Test Class for AccumulatedFilters
     """
@@ -8386,30 +9258,28 @@ class TestModel_AccumulatedFilters:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        filter_terms_model = {}  # FilterTerms
+        filter_terms_model = {} # FilterTerms
         filter_terms_model['filter_terms'] = ['testString']
 
-        category_filter_model = {}  # CategoryFilter
+        category_filter_model = {} # CategoryFilter
         category_filter_model['include'] = True
         category_filter_model['filter'] = filter_terms_model
 
-        id_filter_model = {}  # IDFilter
+        id_filter_model = {} # IDFilter
         id_filter_model['include'] = filter_terms_model
         id_filter_model['exclude'] = filter_terms_model
 
-        filters_model = {}  # Filters
+        filters_model = {} # Filters
         filters_model['include_all'] = True
         filters_model['category_filters'] = {}
         filters_model['id_filters'] = id_filter_model
 
-        accumulated_filters_catalog_filters_item_catalog_model = {}  # AccumulatedFiltersCatalogFiltersItemCatalog
+        accumulated_filters_catalog_filters_item_catalog_model = {} # AccumulatedFiltersCatalogFiltersItemCatalog
         accumulated_filters_catalog_filters_item_catalog_model['id'] = 'testString'
         accumulated_filters_catalog_filters_item_catalog_model['name'] = 'testString'
 
-        accumulated_filters_catalog_filters_item_model = {}  # AccumulatedFiltersCatalogFiltersItem
-        accumulated_filters_catalog_filters_item_model[
-            'catalog'
-        ] = accumulated_filters_catalog_filters_item_catalog_model
+        accumulated_filters_catalog_filters_item_model = {} # AccumulatedFiltersCatalogFiltersItem
+        accumulated_filters_catalog_filters_item_model['catalog'] = accumulated_filters_catalog_filters_item_catalog_model
         accumulated_filters_catalog_filters_item_model['filters'] = filters_model
 
         # Construct a json representation of a AccumulatedFilters model
@@ -8432,8 +9302,7 @@ class TestModel_AccumulatedFilters:
         accumulated_filters_model_json2 = accumulated_filters_model.to_dict()
         assert accumulated_filters_model_json2 == accumulated_filters_model_json
 
-
-class TestModel_AccumulatedFiltersCatalogFiltersItem:
+class TestModel_AccumulatedFiltersCatalogFiltersItem():
     """
     Test Class for AccumulatedFiltersCatalogFiltersItem
     """
@@ -8445,58 +9314,47 @@ class TestModel_AccumulatedFiltersCatalogFiltersItem:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        accumulated_filters_catalog_filters_item_catalog_model = {}  # AccumulatedFiltersCatalogFiltersItemCatalog
+        accumulated_filters_catalog_filters_item_catalog_model = {} # AccumulatedFiltersCatalogFiltersItemCatalog
         accumulated_filters_catalog_filters_item_catalog_model['id'] = 'testString'
         accumulated_filters_catalog_filters_item_catalog_model['name'] = 'testString'
 
-        filter_terms_model = {}  # FilterTerms
+        filter_terms_model = {} # FilterTerms
         filter_terms_model['filter_terms'] = ['testString']
 
-        category_filter_model = {}  # CategoryFilter
+        category_filter_model = {} # CategoryFilter
         category_filter_model['include'] = True
         category_filter_model['filter'] = filter_terms_model
 
-        id_filter_model = {}  # IDFilter
+        id_filter_model = {} # IDFilter
         id_filter_model['include'] = filter_terms_model
         id_filter_model['exclude'] = filter_terms_model
 
-        filters_model = {}  # Filters
+        filters_model = {} # Filters
         filters_model['include_all'] = True
         filters_model['category_filters'] = {}
         filters_model['id_filters'] = id_filter_model
 
         # Construct a json representation of a AccumulatedFiltersCatalogFiltersItem model
         accumulated_filters_catalog_filters_item_model_json = {}
-        accumulated_filters_catalog_filters_item_model_json[
-            'catalog'
-        ] = accumulated_filters_catalog_filters_item_catalog_model
+        accumulated_filters_catalog_filters_item_model_json['catalog'] = accumulated_filters_catalog_filters_item_catalog_model
         accumulated_filters_catalog_filters_item_model_json['filters'] = filters_model
 
         # Construct a model instance of AccumulatedFiltersCatalogFiltersItem by calling from_dict on the json representation
-        accumulated_filters_catalog_filters_item_model = AccumulatedFiltersCatalogFiltersItem.from_dict(
-            accumulated_filters_catalog_filters_item_model_json
-        )
+        accumulated_filters_catalog_filters_item_model = AccumulatedFiltersCatalogFiltersItem.from_dict(accumulated_filters_catalog_filters_item_model_json)
         assert accumulated_filters_catalog_filters_item_model != False
 
         # Construct a model instance of AccumulatedFiltersCatalogFiltersItem by calling from_dict on the json representation
-        accumulated_filters_catalog_filters_item_model_dict = AccumulatedFiltersCatalogFiltersItem.from_dict(
-            accumulated_filters_catalog_filters_item_model_json
-        ).__dict__
-        accumulated_filters_catalog_filters_item_model2 = AccumulatedFiltersCatalogFiltersItem(
-            **accumulated_filters_catalog_filters_item_model_dict
-        )
+        accumulated_filters_catalog_filters_item_model_dict = AccumulatedFiltersCatalogFiltersItem.from_dict(accumulated_filters_catalog_filters_item_model_json).__dict__
+        accumulated_filters_catalog_filters_item_model2 = AccumulatedFiltersCatalogFiltersItem(**accumulated_filters_catalog_filters_item_model_dict)
 
         # Verify the model instances are equivalent
         assert accumulated_filters_catalog_filters_item_model == accumulated_filters_catalog_filters_item_model2
 
         # Convert model instance back to dict and verify no loss of data
         accumulated_filters_catalog_filters_item_model_json2 = accumulated_filters_catalog_filters_item_model.to_dict()
-        assert (
-            accumulated_filters_catalog_filters_item_model_json2 == accumulated_filters_catalog_filters_item_model_json
-        )
+        assert accumulated_filters_catalog_filters_item_model_json2 == accumulated_filters_catalog_filters_item_model_json
 
-
-class TestModel_AccumulatedFiltersCatalogFiltersItemCatalog:
+class TestModel_AccumulatedFiltersCatalogFiltersItemCatalog():
     """
     Test Class for AccumulatedFiltersCatalogFiltersItemCatalog
     """
@@ -8512,38 +9370,21 @@ class TestModel_AccumulatedFiltersCatalogFiltersItemCatalog:
         accumulated_filters_catalog_filters_item_catalog_model_json['name'] = 'testString'
 
         # Construct a model instance of AccumulatedFiltersCatalogFiltersItemCatalog by calling from_dict on the json representation
-        accumulated_filters_catalog_filters_item_catalog_model = AccumulatedFiltersCatalogFiltersItemCatalog.from_dict(
-            accumulated_filters_catalog_filters_item_catalog_model_json
-        )
+        accumulated_filters_catalog_filters_item_catalog_model = AccumulatedFiltersCatalogFiltersItemCatalog.from_dict(accumulated_filters_catalog_filters_item_catalog_model_json)
         assert accumulated_filters_catalog_filters_item_catalog_model != False
 
         # Construct a model instance of AccumulatedFiltersCatalogFiltersItemCatalog by calling from_dict on the json representation
-        accumulated_filters_catalog_filters_item_catalog_model_dict = (
-            AccumulatedFiltersCatalogFiltersItemCatalog.from_dict(
-                accumulated_filters_catalog_filters_item_catalog_model_json
-            ).__dict__
-        )
-        accumulated_filters_catalog_filters_item_catalog_model2 = AccumulatedFiltersCatalogFiltersItemCatalog(
-            **accumulated_filters_catalog_filters_item_catalog_model_dict
-        )
+        accumulated_filters_catalog_filters_item_catalog_model_dict = AccumulatedFiltersCatalogFiltersItemCatalog.from_dict(accumulated_filters_catalog_filters_item_catalog_model_json).__dict__
+        accumulated_filters_catalog_filters_item_catalog_model2 = AccumulatedFiltersCatalogFiltersItemCatalog(**accumulated_filters_catalog_filters_item_catalog_model_dict)
 
         # Verify the model instances are equivalent
-        assert (
-            accumulated_filters_catalog_filters_item_catalog_model
-            == accumulated_filters_catalog_filters_item_catalog_model2
-        )
+        assert accumulated_filters_catalog_filters_item_catalog_model == accumulated_filters_catalog_filters_item_catalog_model2
 
         # Convert model instance back to dict and verify no loss of data
-        accumulated_filters_catalog_filters_item_catalog_model_json2 = (
-            accumulated_filters_catalog_filters_item_catalog_model.to_dict()
-        )
-        assert (
-            accumulated_filters_catalog_filters_item_catalog_model_json2
-            == accumulated_filters_catalog_filters_item_catalog_model_json
-        )
+        accumulated_filters_catalog_filters_item_catalog_model_json2 = accumulated_filters_catalog_filters_item_catalog_model.to_dict()
+        assert accumulated_filters_catalog_filters_item_catalog_model_json2 == accumulated_filters_catalog_filters_item_catalog_model_json
 
-
-class TestModel_ApprovalResult:
+class TestModel_ApprovalResult():
     """
     Test Class for ApprovalResult
     """
@@ -8575,8 +9416,7 @@ class TestModel_ApprovalResult:
         approval_result_model_json2 = approval_result_model.to_dict()
         assert approval_result_model_json2 == approval_result_model_json
 
-
-class TestModel_AuditLog:
+class TestModel_AuditLog():
     """
     Test Class for AuditLog
     """
@@ -8588,7 +9428,7 @@ class TestModel_AuditLog:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        audit_record_model = {}  # AuditRecord
+        audit_record_model = {} # AuditRecord
         audit_record_model['id'] = 'testString'
         audit_record_model['created'] = "2019-01-01T12:00:00Z"
         audit_record_model['change_type'] = 'testString'
@@ -8616,8 +9456,7 @@ class TestModel_AuditLog:
         audit_log_model_json2 = audit_log_model.to_dict()
         assert audit_log_model_json2 == audit_log_model_json
 
-
-class TestModel_AuditRecord:
+class TestModel_AuditRecord():
     """
     Test Class for AuditRecord
     """
@@ -8652,8 +9491,7 @@ class TestModel_AuditRecord:
         audit_record_model_json2 = audit_record_model.to_dict()
         assert audit_record_model_json2 == audit_record_model_json
 
-
-class TestModel_Catalog:
+class TestModel_Catalog():
     """
     Test Class for Catalog
     """
@@ -8665,27 +9503,27 @@ class TestModel_Catalog:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        feature_model = {}  # Feature
+        feature_model = {} # Feature
         feature_model['title'] = 'testString'
         feature_model['description'] = 'testString'
 
-        filter_terms_model = {}  # FilterTerms
+        filter_terms_model = {} # FilterTerms
         filter_terms_model['filter_terms'] = ['testString']
 
-        category_filter_model = {}  # CategoryFilter
+        category_filter_model = {} # CategoryFilter
         category_filter_model['include'] = True
         category_filter_model['filter'] = filter_terms_model
 
-        id_filter_model = {}  # IDFilter
+        id_filter_model = {} # IDFilter
         id_filter_model['include'] = filter_terms_model
         id_filter_model['exclude'] = filter_terms_model
 
-        filters_model = {}  # Filters
+        filters_model = {} # Filters
         filters_model['include_all'] = True
         filters_model['category_filters'] = {}
         filters_model['id_filters'] = id_filter_model
 
-        syndication_cluster_model = {}  # SyndicationCluster
+        syndication_cluster_model = {} # SyndicationCluster
         syndication_cluster_model['region'] = 'testString'
         syndication_cluster_model['id'] = 'testString'
         syndication_cluster_model['name'] = 'testString'
@@ -8694,16 +9532,16 @@ class TestModel_Catalog:
         syndication_cluster_model['namespaces'] = ['testString']
         syndication_cluster_model['all_namespaces'] = True
 
-        syndication_history_model = {}  # SyndicationHistory
+        syndication_history_model = {} # SyndicationHistory
         syndication_history_model['namespaces'] = ['testString']
         syndication_history_model['clusters'] = [syndication_cluster_model]
         syndication_history_model['last_run'] = "2019-01-01T12:00:00Z"
 
-        syndication_authorization_model = {}  # SyndicationAuthorization
+        syndication_authorization_model = {} # SyndicationAuthorization
         syndication_authorization_model['token'] = 'testString'
         syndication_authorization_model['last_run'] = "2019-01-01T12:00:00Z"
 
-        syndication_resource_model = {}  # SyndicationResource
+        syndication_resource_model = {} # SyndicationResource
         syndication_resource_model['remove_related_components'] = True
         syndication_resource_model['clusters'] = [syndication_cluster_model]
         syndication_resource_model['history'] = syndication_history_model
@@ -8745,8 +9583,7 @@ class TestModel_Catalog:
         catalog_model_json2 = catalog_model.to_dict()
         assert catalog_model_json2 == catalog_model_json
 
-
-class TestModel_CatalogObject:
+class TestModel_CatalogObject():
     """
     Test Class for CatalogObject
     """
@@ -8758,14 +9595,14 @@ class TestModel_CatalogObject:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        publish_object_model = {}  # PublishObject
+        publish_object_model = {} # PublishObject
         publish_object_model['permit_ibm_public_publish'] = True
         publish_object_model['ibm_approved'] = True
         publish_object_model['public_approved'] = True
         publish_object_model['portal_approval_record'] = 'testString'
         publish_object_model['portal_url'] = 'testString'
 
-        state_model = {}  # State
+        state_model = {} # State
         state_model['current'] = 'testString'
         state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
@@ -8809,8 +9646,7 @@ class TestModel_CatalogObject:
         catalog_object_model_json2 = catalog_object_model.to_dict()
         assert catalog_object_model_json2 == catalog_object_model_json
 
-
-class TestModel_CatalogSearchResult:
+class TestModel_CatalogSearchResult():
     """
     Test Class for CatalogSearchResult
     """
@@ -8822,27 +9658,27 @@ class TestModel_CatalogSearchResult:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        feature_model = {}  # Feature
+        feature_model = {} # Feature
         feature_model['title'] = 'testString'
         feature_model['description'] = 'testString'
 
-        filter_terms_model = {}  # FilterTerms
+        filter_terms_model = {} # FilterTerms
         filter_terms_model['filter_terms'] = ['testString']
 
-        category_filter_model = {}  # CategoryFilter
+        category_filter_model = {} # CategoryFilter
         category_filter_model['include'] = True
         category_filter_model['filter'] = filter_terms_model
 
-        id_filter_model = {}  # IDFilter
+        id_filter_model = {} # IDFilter
         id_filter_model['include'] = filter_terms_model
         id_filter_model['exclude'] = filter_terms_model
 
-        filters_model = {}  # Filters
+        filters_model = {} # Filters
         filters_model['include_all'] = True
         filters_model['category_filters'] = {}
         filters_model['id_filters'] = id_filter_model
 
-        syndication_cluster_model = {}  # SyndicationCluster
+        syndication_cluster_model = {} # SyndicationCluster
         syndication_cluster_model['region'] = 'testString'
         syndication_cluster_model['id'] = 'testString'
         syndication_cluster_model['name'] = 'testString'
@@ -8851,22 +9687,22 @@ class TestModel_CatalogSearchResult:
         syndication_cluster_model['namespaces'] = ['testString']
         syndication_cluster_model['all_namespaces'] = True
 
-        syndication_history_model = {}  # SyndicationHistory
+        syndication_history_model = {} # SyndicationHistory
         syndication_history_model['namespaces'] = ['testString']
         syndication_history_model['clusters'] = [syndication_cluster_model]
         syndication_history_model['last_run'] = "2019-01-01T12:00:00Z"
 
-        syndication_authorization_model = {}  # SyndicationAuthorization
+        syndication_authorization_model = {} # SyndicationAuthorization
         syndication_authorization_model['token'] = 'testString'
         syndication_authorization_model['last_run'] = "2019-01-01T12:00:00Z"
 
-        syndication_resource_model = {}  # SyndicationResource
+        syndication_resource_model = {} # SyndicationResource
         syndication_resource_model['remove_related_components'] = True
         syndication_resource_model['clusters'] = [syndication_cluster_model]
         syndication_resource_model['history'] = syndication_history_model
         syndication_resource_model['authorization'] = syndication_authorization_model
 
-        catalog_model = {}  # Catalog
+        catalog_model = {} # Catalog
         catalog_model['id'] = 'testString'
         catalog_model['_rev'] = 'testString'
         catalog_model['label'] = 'testString'
@@ -8906,8 +9742,7 @@ class TestModel_CatalogSearchResult:
         catalog_search_result_model_json2 = catalog_search_result_model.to_dict()
         assert catalog_search_result_model_json2 == catalog_search_result_model_json
 
-
-class TestModel_CategoryFilter:
+class TestModel_CategoryFilter():
     """
     Test Class for CategoryFilter
     """
@@ -8919,7 +9754,7 @@ class TestModel_CategoryFilter:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        filter_terms_model = {}  # FilterTerms
+        filter_terms_model = {} # FilterTerms
         filter_terms_model['filter_terms'] = ['testString']
 
         # Construct a json representation of a CategoryFilter model
@@ -8942,8 +9777,7 @@ class TestModel_CategoryFilter:
         category_filter_model_json2 = category_filter_model.to_dict()
         assert category_filter_model_json2 == category_filter_model_json
 
-
-class TestModel_ClusterInfo:
+class TestModel_ClusterInfo():
     """
     Test Class for ClusterInfo
     """
@@ -8976,8 +9810,7 @@ class TestModel_ClusterInfo:
         cluster_info_model_json2 = cluster_info_model.to_dict()
         assert cluster_info_model_json2 == cluster_info_model_json
 
-
-class TestModel_Configuration:
+class TestModel_Configuration():
     """
     Test Class for Configuration
     """
@@ -9013,8 +9846,7 @@ class TestModel_Configuration:
         configuration_model_json2 = configuration_model.to_dict()
         assert configuration_model_json2 == configuration_model_json
 
-
-class TestModel_DeployRequestBodySchematics:
+class TestModel_DeployRequestBodySchematics():
     """
     Test Class for DeployRequestBodySchematics
     """
@@ -9032,15 +9864,11 @@ class TestModel_DeployRequestBodySchematics:
         deploy_request_body_schematics_model_json['resource_group_id'] = 'testString'
 
         # Construct a model instance of DeployRequestBodySchematics by calling from_dict on the json representation
-        deploy_request_body_schematics_model = DeployRequestBodySchematics.from_dict(
-            deploy_request_body_schematics_model_json
-        )
+        deploy_request_body_schematics_model = DeployRequestBodySchematics.from_dict(deploy_request_body_schematics_model_json)
         assert deploy_request_body_schematics_model != False
 
         # Construct a model instance of DeployRequestBodySchematics by calling from_dict on the json representation
-        deploy_request_body_schematics_model_dict = DeployRequestBodySchematics.from_dict(
-            deploy_request_body_schematics_model_json
-        ).__dict__
+        deploy_request_body_schematics_model_dict = DeployRequestBodySchematics.from_dict(deploy_request_body_schematics_model_json).__dict__
         deploy_request_body_schematics_model2 = DeployRequestBodySchematics(**deploy_request_body_schematics_model_dict)
 
         # Verify the model instances are equivalent
@@ -9050,8 +9878,7 @@ class TestModel_DeployRequestBodySchematics:
         deploy_request_body_schematics_model_json2 = deploy_request_body_schematics_model.to_dict()
         assert deploy_request_body_schematics_model_json2 == deploy_request_body_schematics_model_json
 
-
-class TestModel_Deployment:
+class TestModel_Deployment():
     """
     Test Class for Deployment
     """
@@ -9088,8 +9915,7 @@ class TestModel_Deployment:
         deployment_model_json2 = deployment_model.to_dict()
         assert deployment_model_json2 == deployment_model_json
 
-
-class TestModel_Feature:
+class TestModel_Feature():
     """
     Test Class for Feature
     """
@@ -9119,8 +9945,7 @@ class TestModel_Feature:
         feature_model_json2 = feature_model.to_dict()
         assert feature_model_json2 == feature_model_json
 
-
-class TestModel_FilterTerms:
+class TestModel_FilterTerms():
     """
     Test Class for FilterTerms
     """
@@ -9149,8 +9974,7 @@ class TestModel_FilterTerms:
         filter_terms_model_json2 = filter_terms_model.to_dict()
         assert filter_terms_model_json2 == filter_terms_model_json
 
-
-class TestModel_Filters:
+class TestModel_Filters():
     """
     Test Class for Filters
     """
@@ -9162,14 +9986,14 @@ class TestModel_Filters:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        filter_terms_model = {}  # FilterTerms
+        filter_terms_model = {} # FilterTerms
         filter_terms_model['filter_terms'] = ['testString']
 
-        category_filter_model = {}  # CategoryFilter
+        category_filter_model = {} # CategoryFilter
         category_filter_model['include'] = True
         category_filter_model['filter'] = filter_terms_model
 
-        id_filter_model = {}  # IDFilter
+        id_filter_model = {} # IDFilter
         id_filter_model['include'] = filter_terms_model
         id_filter_model['exclude'] = filter_terms_model
 
@@ -9194,8 +10018,7 @@ class TestModel_Filters:
         filters_model_json2 = filters_model.to_dict()
         assert filters_model_json2 == filters_model_json
 
-
-class TestModel_IDFilter:
+class TestModel_IDFilter():
     """
     Test Class for IDFilter
     """
@@ -9207,7 +10030,7 @@ class TestModel_IDFilter:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        filter_terms_model = {}  # FilterTerms
+        filter_terms_model = {} # FilterTerms
         filter_terms_model['filter_terms'] = ['testString']
 
         # Construct a json representation of a IDFilter model
@@ -9230,8 +10053,7 @@ class TestModel_IDFilter:
         id_filter_model_json2 = id_filter_model.to_dict()
         assert id_filter_model_json2 == id_filter_model_json
 
-
-class TestModel_Image:
+class TestModel_Image():
     """
     Test Class for Image
     """
@@ -9260,8 +10082,7 @@ class TestModel_Image:
         image_model_json2 = image_model.to_dict()
         assert image_model_json2 == image_model_json
 
-
-class TestModel_ImageManifest:
+class TestModel_ImageManifest():
     """
     Test Class for ImageManifest
     """
@@ -9273,7 +10094,7 @@ class TestModel_ImageManifest:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        image_model = {}  # Image
+        image_model = {} # Image
         image_model['image'] = 'testString'
 
         # Construct a json representation of a ImageManifest model
@@ -9296,8 +10117,7 @@ class TestModel_ImageManifest:
         image_manifest_model_json2 = image_manifest_model.to_dict()
         assert image_manifest_model_json2 == image_manifest_model_json
 
-
-class TestModel_InstallStatus:
+class TestModel_InstallStatus():
     """
     Test Class for InstallStatus
     """
@@ -9309,21 +10129,21 @@ class TestModel_InstallStatus:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        install_status_metadata_model = {}  # InstallStatusMetadata
+        install_status_metadata_model = {} # InstallStatusMetadata
         install_status_metadata_model['cluster_id'] = 'testString'
         install_status_metadata_model['region'] = 'testString'
         install_status_metadata_model['namespace'] = 'testString'
         install_status_metadata_model['workspace_id'] = 'testString'
         install_status_metadata_model['workspace_name'] = 'testString'
 
-        install_status_release_model = {}  # InstallStatusRelease
+        install_status_release_model = {} # InstallStatusRelease
         install_status_release_model['deployments'] = [{}]
         install_status_release_model['replicasets'] = [{}]
         install_status_release_model['statefulsets'] = [{}]
         install_status_release_model['pods'] = [{}]
         install_status_release_model['errors'] = [{}]
 
-        install_status_content_mgmt_model = {}  # InstallStatusContentMgmt
+        install_status_content_mgmt_model = {} # InstallStatusContentMgmt
         install_status_content_mgmt_model['pods'] = [{}]
         install_status_content_mgmt_model['errors'] = [{}]
 
@@ -9348,8 +10168,7 @@ class TestModel_InstallStatus:
         install_status_model_json2 = install_status_model.to_dict()
         assert install_status_model_json2 == install_status_model_json
 
-
-class TestModel_InstallStatusContentMgmt:
+class TestModel_InstallStatusContentMgmt():
     """
     Test Class for InstallStatusContentMgmt
     """
@@ -9369,9 +10188,7 @@ class TestModel_InstallStatusContentMgmt:
         assert install_status_content_mgmt_model != False
 
         # Construct a model instance of InstallStatusContentMgmt by calling from_dict on the json representation
-        install_status_content_mgmt_model_dict = InstallStatusContentMgmt.from_dict(
-            install_status_content_mgmt_model_json
-        ).__dict__
+        install_status_content_mgmt_model_dict = InstallStatusContentMgmt.from_dict(install_status_content_mgmt_model_json).__dict__
         install_status_content_mgmt_model2 = InstallStatusContentMgmt(**install_status_content_mgmt_model_dict)
 
         # Verify the model instances are equivalent
@@ -9381,8 +10198,7 @@ class TestModel_InstallStatusContentMgmt:
         install_status_content_mgmt_model_json2 = install_status_content_mgmt_model.to_dict()
         assert install_status_content_mgmt_model_json2 == install_status_content_mgmt_model_json
 
-
-class TestModel_InstallStatusMetadata:
+class TestModel_InstallStatusMetadata():
     """
     Test Class for InstallStatusMetadata
     """
@@ -9405,9 +10221,7 @@ class TestModel_InstallStatusMetadata:
         assert install_status_metadata_model != False
 
         # Construct a model instance of InstallStatusMetadata by calling from_dict on the json representation
-        install_status_metadata_model_dict = InstallStatusMetadata.from_dict(
-            install_status_metadata_model_json
-        ).__dict__
+        install_status_metadata_model_dict = InstallStatusMetadata.from_dict(install_status_metadata_model_json).__dict__
         install_status_metadata_model2 = InstallStatusMetadata(**install_status_metadata_model_dict)
 
         # Verify the model instances are equivalent
@@ -9417,8 +10231,7 @@ class TestModel_InstallStatusMetadata:
         install_status_metadata_model_json2 = install_status_metadata_model.to_dict()
         assert install_status_metadata_model_json2 == install_status_metadata_model_json
 
-
-class TestModel_InstallStatusRelease:
+class TestModel_InstallStatusRelease():
     """
     Test Class for InstallStatusRelease
     """
@@ -9451,8 +10264,7 @@ class TestModel_InstallStatusRelease:
         install_status_release_model_json2 = install_status_release_model.to_dict()
         assert install_status_release_model_json2 == install_status_release_model_json
 
-
-class TestModel_JsonPatchOperation:
+class TestModel_JsonPatchOperation():
     """
     Test Class for JsonPatchOperation
     """
@@ -9484,8 +10296,7 @@ class TestModel_JsonPatchOperation:
         json_patch_operation_model_json2 = json_patch_operation_model.to_dict()
         assert json_patch_operation_model_json2 == json_patch_operation_model_json
 
-
-class TestModel_Kind:
+class TestModel_Kind():
     """
     Test Class for Kind
     """
@@ -9497,11 +10308,11 @@ class TestModel_Kind:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        feature_model = {}  # Feature
+        feature_model = {} # Feature
         feature_model['title'] = 'testString'
         feature_model['description'] = 'testString'
 
-        configuration_model = {}  # Configuration
+        configuration_model = {} # Configuration
         configuration_model['key'] = 'testString'
         configuration_model['type'] = 'testString'
         configuration_model['default_value'] = 'testString'
@@ -9511,46 +10322,46 @@ class TestModel_Kind:
         configuration_model['options'] = ['testString']
         configuration_model['hidden'] = True
 
-        validation_model = {}  # Validation
+        validation_model = {} # Validation
         validation_model['validated'] = "2019-01-01T12:00:00Z"
         validation_model['requested'] = "2019-01-01T12:00:00Z"
         validation_model['state'] = 'testString'
         validation_model['last_operation'] = 'testString'
         validation_model['target'] = {}
 
-        resource_model = {}  # Resource
+        resource_model = {} # Resource
         resource_model['type'] = 'mem'
         resource_model['value'] = 'testString'
 
-        script_model = {}  # Script
+        script_model = {} # Script
         script_model['instructions'] = 'testString'
         script_model['script'] = 'testString'
         script_model['script_permission'] = 'testString'
         script_model['delete_script'] = 'testString'
         script_model['scope'] = 'testString'
 
-        version_entitlement_model = {}  # VersionEntitlement
+        version_entitlement_model = {} # VersionEntitlement
         version_entitlement_model['provider_name'] = 'testString'
         version_entitlement_model['provider_id'] = 'testString'
         version_entitlement_model['product_id'] = 'testString'
         version_entitlement_model['part_numbers'] = ['testString']
         version_entitlement_model['image_repo_name'] = 'testString'
 
-        license_model = {}  # License
+        license_model = {} # License
         license_model['id'] = 'testString'
         license_model['name'] = 'testString'
         license_model['type'] = 'testString'
         license_model['url'] = 'testString'
         license_model['description'] = 'testString'
 
-        state_model = {}  # State
+        state_model = {} # State
         state_model['current'] = 'testString'
         state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
         state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
-        version_model = {}  # Version
+        version_model = {} # Version
         version_model['id'] = 'testString'
         version_model['_rev'] = 'testString'
         version_model['crn'] = 'testString'
@@ -9583,7 +10394,7 @@ class TestModel_Kind:
         version_model['long_description'] = 'testString'
         version_model['whitelisted_accounts'] = ['testString']
 
-        deployment_model = {}  # Deployment
+        deployment_model = {} # Deployment
         deployment_model['id'] = 'testString'
         deployment_model['label'] = 'testString'
         deployment_model['name'] = 'testString'
@@ -9594,7 +10405,7 @@ class TestModel_Kind:
         deployment_model['created'] = "2019-01-01T12:00:00Z"
         deployment_model['updated'] = "2019-01-01T12:00:00Z"
 
-        plan_model = {}  # Plan
+        plan_model = {} # Plan
         plan_model['id'] = 'testString'
         plan_model['label'] = 'testString'
         plan_model['name'] = 'testString'
@@ -9636,8 +10447,7 @@ class TestModel_Kind:
         kind_model_json2 = kind_model.to_dict()
         assert kind_model_json2 == kind_model_json
 
-
-class TestModel_License:
+class TestModel_License():
     """
     Test Class for License
     """
@@ -9670,8 +10480,7 @@ class TestModel_License:
         license_model_json2 = license_model.to_dict()
         assert license_model_json2 == license_model_json
 
-
-class TestModel_MediaItem:
+class TestModel_MediaItem():
     """
     Test Class for MediaItem
     """
@@ -9703,8 +10512,7 @@ class TestModel_MediaItem:
         media_item_model_json2 = media_item_model.to_dict()
         assert media_item_model_json2 == media_item_model_json
 
-
-class TestModel_NamespaceSearchResult:
+class TestModel_NamespaceSearchResult():
     """
     Test Class for NamespaceSearchResult
     """
@@ -9731,9 +10539,7 @@ class TestModel_NamespaceSearchResult:
         assert namespace_search_result_model != False
 
         # Construct a model instance of NamespaceSearchResult by calling from_dict on the json representation
-        namespace_search_result_model_dict = NamespaceSearchResult.from_dict(
-            namespace_search_result_model_json
-        ).__dict__
+        namespace_search_result_model_dict = NamespaceSearchResult.from_dict(namespace_search_result_model_json).__dict__
         namespace_search_result_model2 = NamespaceSearchResult(**namespace_search_result_model_dict)
 
         # Verify the model instances are equivalent
@@ -9743,8 +10549,7 @@ class TestModel_NamespaceSearchResult:
         namespace_search_result_model_json2 = namespace_search_result_model.to_dict()
         assert namespace_search_result_model_json2 == namespace_search_result_model_json
 
-
-class TestModel_ObjectAccess:
+class TestModel_ObjectAccess():
     """
     Test Class for ObjectAccess
     """
@@ -9777,8 +10582,7 @@ class TestModel_ObjectAccess:
         object_access_model_json2 = object_access_model.to_dict()
         assert object_access_model_json2 == object_access_model_json
 
-
-class TestModel_ObjectAccessListResult:
+class TestModel_ObjectAccessListResult():
     """
     Test Class for ObjectAccessListResult
     """
@@ -9790,7 +10594,7 @@ class TestModel_ObjectAccessListResult:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        object_access_model = {}  # ObjectAccess
+        object_access_model = {} # ObjectAccess
         object_access_model['id'] = 'testString'
         object_access_model['account'] = 'testString'
         object_access_model['catalog_id'] = 'testString'
@@ -9814,9 +10618,7 @@ class TestModel_ObjectAccessListResult:
         assert object_access_list_result_model != False
 
         # Construct a model instance of ObjectAccessListResult by calling from_dict on the json representation
-        object_access_list_result_model_dict = ObjectAccessListResult.from_dict(
-            object_access_list_result_model_json
-        ).__dict__
+        object_access_list_result_model_dict = ObjectAccessListResult.from_dict(object_access_list_result_model_json).__dict__
         object_access_list_result_model2 = ObjectAccessListResult(**object_access_list_result_model_dict)
 
         # Verify the model instances are equivalent
@@ -9826,8 +10628,7 @@ class TestModel_ObjectAccessListResult:
         object_access_list_result_model_json2 = object_access_list_result_model.to_dict()
         assert object_access_list_result_model_json2 == object_access_list_result_model_json
 
-
-class TestModel_ObjectListResult:
+class TestModel_ObjectListResult():
     """
     Test Class for ObjectListResult
     """
@@ -9839,21 +10640,21 @@ class TestModel_ObjectListResult:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        publish_object_model = {}  # PublishObject
+        publish_object_model = {} # PublishObject
         publish_object_model['permit_ibm_public_publish'] = True
         publish_object_model['ibm_approved'] = True
         publish_object_model['public_approved'] = True
         publish_object_model['portal_approval_record'] = 'testString'
         publish_object_model['portal_url'] = 'testString'
 
-        state_model = {}  # State
+        state_model = {} # State
         state_model['current'] = 'testString'
         state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
         state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
-        catalog_object_model = {}  # CatalogObject
+        catalog_object_model = {} # CatalogObject
         catalog_object_model['id'] = 'testString'
         catalog_object_model['name'] = 'testString'
         catalog_object_model['_rev'] = 'testString'
@@ -9901,8 +10702,7 @@ class TestModel_ObjectListResult:
         object_list_result_model_json2 = object_list_result_model.to_dict()
         assert object_list_result_model_json2 == object_list_result_model_json
 
-
-class TestModel_ObjectSearchResult:
+class TestModel_ObjectSearchResult():
     """
     Test Class for ObjectSearchResult
     """
@@ -9914,21 +10714,21 @@ class TestModel_ObjectSearchResult:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        publish_object_model = {}  # PublishObject
+        publish_object_model = {} # PublishObject
         publish_object_model['permit_ibm_public_publish'] = True
         publish_object_model['ibm_approved'] = True
         publish_object_model['public_approved'] = True
         publish_object_model['portal_approval_record'] = 'testString'
         publish_object_model['portal_url'] = 'testString'
 
-        state_model = {}  # State
+        state_model = {} # State
         state_model['current'] = 'testString'
         state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
         state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
-        catalog_object_model = {}  # CatalogObject
+        catalog_object_model = {} # CatalogObject
         catalog_object_model['id'] = 'testString'
         catalog_object_model['name'] = 'testString'
         catalog_object_model['_rev'] = 'testString'
@@ -9976,8 +10776,7 @@ class TestModel_ObjectSearchResult:
         object_search_result_model_json2 = object_search_result_model.to_dict()
         assert object_search_result_model_json2 == object_search_result_model_json
 
-
-class TestModel_Offering:
+class TestModel_Offering():
     """
     Test Class for Offering
     """
@@ -9989,17 +10788,17 @@ class TestModel_Offering:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        rating_model = {}  # Rating
+        rating_model = {} # Rating
         rating_model['one_star_count'] = 38
         rating_model['two_star_count'] = 38
         rating_model['three_star_count'] = 38
         rating_model['four_star_count'] = 38
 
-        feature_model = {}  # Feature
+        feature_model = {} # Feature
         feature_model['title'] = 'testString'
         feature_model['description'] = 'testString'
 
-        configuration_model = {}  # Configuration
+        configuration_model = {} # Configuration
         configuration_model['key'] = 'testString'
         configuration_model['type'] = 'testString'
         configuration_model['default_value'] = 'testString'
@@ -10009,46 +10808,46 @@ class TestModel_Offering:
         configuration_model['options'] = ['testString']
         configuration_model['hidden'] = True
 
-        validation_model = {}  # Validation
+        validation_model = {} # Validation
         validation_model['validated'] = "2019-01-01T12:00:00Z"
         validation_model['requested'] = "2019-01-01T12:00:00Z"
         validation_model['state'] = 'testString'
         validation_model['last_operation'] = 'testString'
         validation_model['target'] = {}
 
-        resource_model = {}  # Resource
+        resource_model = {} # Resource
         resource_model['type'] = 'mem'
         resource_model['value'] = 'testString'
 
-        script_model = {}  # Script
+        script_model = {} # Script
         script_model['instructions'] = 'testString'
         script_model['script'] = 'testString'
         script_model['script_permission'] = 'testString'
         script_model['delete_script'] = 'testString'
         script_model['scope'] = 'testString'
 
-        version_entitlement_model = {}  # VersionEntitlement
+        version_entitlement_model = {} # VersionEntitlement
         version_entitlement_model['provider_name'] = 'testString'
         version_entitlement_model['provider_id'] = 'testString'
         version_entitlement_model['product_id'] = 'testString'
         version_entitlement_model['part_numbers'] = ['testString']
         version_entitlement_model['image_repo_name'] = 'testString'
 
-        license_model = {}  # License
+        license_model = {} # License
         license_model['id'] = 'testString'
         license_model['name'] = 'testString'
         license_model['type'] = 'testString'
         license_model['url'] = 'testString'
         license_model['description'] = 'testString'
 
-        state_model = {}  # State
+        state_model = {} # State
         state_model['current'] = 'testString'
         state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
         state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
-        version_model = {}  # Version
+        version_model = {} # Version
         version_model['id'] = 'testString'
         version_model['_rev'] = 'testString'
         version_model['crn'] = 'testString'
@@ -10081,7 +10880,7 @@ class TestModel_Offering:
         version_model['long_description'] = 'testString'
         version_model['whitelisted_accounts'] = ['testString']
 
-        deployment_model = {}  # Deployment
+        deployment_model = {} # Deployment
         deployment_model['id'] = 'testString'
         deployment_model['label'] = 'testString'
         deployment_model['name'] = 'testString'
@@ -10092,7 +10891,7 @@ class TestModel_Offering:
         deployment_model['created'] = "2019-01-01T12:00:00Z"
         deployment_model['updated'] = "2019-01-01T12:00:00Z"
 
-        plan_model = {}  # Plan
+        plan_model = {} # Plan
         plan_model['id'] = 'testString'
         plan_model['label'] = 'testString'
         plan_model['name'] = 'testString'
@@ -10105,7 +10904,7 @@ class TestModel_Offering:
         plan_model['updated'] = "2019-01-01T12:00:00Z"
         plan_model['deployments'] = [deployment_model]
 
-        kind_model = {}  # Kind
+        kind_model = {} # Kind
         kind_model['id'] = 'testString'
         kind_model['format_kind'] = 'testString'
         kind_model['target_kind'] = 'testString'
@@ -10118,20 +10917,20 @@ class TestModel_Offering:
         kind_model['versions'] = [version_model]
         kind_model['plans'] = [plan_model]
 
-        provider_info_model = {}  # ProviderInfo
+        provider_info_model = {} # ProviderInfo
         provider_info_model['id'] = 'testString'
         provider_info_model['name'] = 'testString'
 
-        repo_info_model = {}  # RepoInfo
+        repo_info_model = {} # RepoInfo
         repo_info_model['token'] = 'testString'
         repo_info_model['type'] = 'testString'
 
-        support_model = {}  # Support
+        support_model = {} # Support
         support_model['url'] = 'testString'
         support_model['process'] = 'testString'
         support_model['locations'] = ['testString']
 
-        media_item_model = {}  # MediaItem
+        media_item_model = {} # MediaItem
         media_item_model['url'] = 'testString'
         media_item_model['caption'] = 'testString'
         media_item_model['type'] = 'testString'
@@ -10190,8 +10989,7 @@ class TestModel_Offering:
         offering_model_json2 = offering_model.to_dict()
         assert offering_model_json2 == offering_model_json
 
-
-class TestModel_OfferingInstance:
+class TestModel_OfferingInstance():
     """
     Test Class for OfferingInstance
     """
@@ -10203,7 +11001,7 @@ class TestModel_OfferingInstance:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        offering_instance_last_operation_model = {}  # OfferingInstanceLastOperation
+        offering_instance_last_operation_model = {} # OfferingInstanceLastOperation
         offering_instance_last_operation_model['operation'] = 'testString'
         offering_instance_last_operation_model['state'] = 'testString'
         offering_instance_last_operation_model['message'] = 'testString'
@@ -10247,8 +11045,7 @@ class TestModel_OfferingInstance:
         offering_instance_model_json2 = offering_instance_model.to_dict()
         assert offering_instance_model_json2 == offering_instance_model_json
 
-
-class TestModel_OfferingInstanceLastOperation:
+class TestModel_OfferingInstanceLastOperation():
     """
     Test Class for OfferingInstanceLastOperation
     """
@@ -10267,18 +11064,12 @@ class TestModel_OfferingInstanceLastOperation:
         offering_instance_last_operation_model_json['updated'] = 'testString'
 
         # Construct a model instance of OfferingInstanceLastOperation by calling from_dict on the json representation
-        offering_instance_last_operation_model = OfferingInstanceLastOperation.from_dict(
-            offering_instance_last_operation_model_json
-        )
+        offering_instance_last_operation_model = OfferingInstanceLastOperation.from_dict(offering_instance_last_operation_model_json)
         assert offering_instance_last_operation_model != False
 
         # Construct a model instance of OfferingInstanceLastOperation by calling from_dict on the json representation
-        offering_instance_last_operation_model_dict = OfferingInstanceLastOperation.from_dict(
-            offering_instance_last_operation_model_json
-        ).__dict__
-        offering_instance_last_operation_model2 = OfferingInstanceLastOperation(
-            **offering_instance_last_operation_model_dict
-        )
+        offering_instance_last_operation_model_dict = OfferingInstanceLastOperation.from_dict(offering_instance_last_operation_model_json).__dict__
+        offering_instance_last_operation_model2 = OfferingInstanceLastOperation(**offering_instance_last_operation_model_dict)
 
         # Verify the model instances are equivalent
         assert offering_instance_last_operation_model == offering_instance_last_operation_model2
@@ -10287,8 +11078,7 @@ class TestModel_OfferingInstanceLastOperation:
         offering_instance_last_operation_model_json2 = offering_instance_last_operation_model.to_dict()
         assert offering_instance_last_operation_model_json2 == offering_instance_last_operation_model_json
 
-
-class TestModel_OfferingSearchResult:
+class TestModel_OfferingSearchResult():
     """
     Test Class for OfferingSearchResult
     """
@@ -10300,17 +11090,17 @@ class TestModel_OfferingSearchResult:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        rating_model = {}  # Rating
+        rating_model = {} # Rating
         rating_model['one_star_count'] = 38
         rating_model['two_star_count'] = 38
         rating_model['three_star_count'] = 38
         rating_model['four_star_count'] = 38
 
-        feature_model = {}  # Feature
+        feature_model = {} # Feature
         feature_model['title'] = 'testString'
         feature_model['description'] = 'testString'
 
-        configuration_model = {}  # Configuration
+        configuration_model = {} # Configuration
         configuration_model['key'] = 'testString'
         configuration_model['type'] = 'testString'
         configuration_model['default_value'] = 'testString'
@@ -10320,46 +11110,46 @@ class TestModel_OfferingSearchResult:
         configuration_model['options'] = ['testString']
         configuration_model['hidden'] = True
 
-        validation_model = {}  # Validation
+        validation_model = {} # Validation
         validation_model['validated'] = "2019-01-01T12:00:00Z"
         validation_model['requested'] = "2019-01-01T12:00:00Z"
         validation_model['state'] = 'testString'
         validation_model['last_operation'] = 'testString'
         validation_model['target'] = {}
 
-        resource_model = {}  # Resource
+        resource_model = {} # Resource
         resource_model['type'] = 'mem'
         resource_model['value'] = 'testString'
 
-        script_model = {}  # Script
+        script_model = {} # Script
         script_model['instructions'] = 'testString'
         script_model['script'] = 'testString'
         script_model['script_permission'] = 'testString'
         script_model['delete_script'] = 'testString'
         script_model['scope'] = 'testString'
 
-        version_entitlement_model = {}  # VersionEntitlement
+        version_entitlement_model = {} # VersionEntitlement
         version_entitlement_model['provider_name'] = 'testString'
         version_entitlement_model['provider_id'] = 'testString'
         version_entitlement_model['product_id'] = 'testString'
         version_entitlement_model['part_numbers'] = ['testString']
         version_entitlement_model['image_repo_name'] = 'testString'
 
-        license_model = {}  # License
+        license_model = {} # License
         license_model['id'] = 'testString'
         license_model['name'] = 'testString'
         license_model['type'] = 'testString'
         license_model['url'] = 'testString'
         license_model['description'] = 'testString'
 
-        state_model = {}  # State
+        state_model = {} # State
         state_model['current'] = 'testString'
         state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
         state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
-        version_model = {}  # Version
+        version_model = {} # Version
         version_model['id'] = 'testString'
         version_model['_rev'] = 'testString'
         version_model['crn'] = 'testString'
@@ -10392,7 +11182,7 @@ class TestModel_OfferingSearchResult:
         version_model['long_description'] = 'testString'
         version_model['whitelisted_accounts'] = ['testString']
 
-        deployment_model = {}  # Deployment
+        deployment_model = {} # Deployment
         deployment_model['id'] = 'testString'
         deployment_model['label'] = 'testString'
         deployment_model['name'] = 'testString'
@@ -10403,7 +11193,7 @@ class TestModel_OfferingSearchResult:
         deployment_model['created'] = "2019-01-01T12:00:00Z"
         deployment_model['updated'] = "2019-01-01T12:00:00Z"
 
-        plan_model = {}  # Plan
+        plan_model = {} # Plan
         plan_model['id'] = 'testString'
         plan_model['label'] = 'testString'
         plan_model['name'] = 'testString'
@@ -10416,7 +11206,7 @@ class TestModel_OfferingSearchResult:
         plan_model['updated'] = "2019-01-01T12:00:00Z"
         plan_model['deployments'] = [deployment_model]
 
-        kind_model = {}  # Kind
+        kind_model = {} # Kind
         kind_model['id'] = 'testString'
         kind_model['format_kind'] = 'testString'
         kind_model['target_kind'] = 'testString'
@@ -10429,26 +11219,26 @@ class TestModel_OfferingSearchResult:
         kind_model['versions'] = [version_model]
         kind_model['plans'] = [plan_model]
 
-        provider_info_model = {}  # ProviderInfo
+        provider_info_model = {} # ProviderInfo
         provider_info_model['id'] = 'testString'
         provider_info_model['name'] = 'testString'
 
-        repo_info_model = {}  # RepoInfo
+        repo_info_model = {} # RepoInfo
         repo_info_model['token'] = 'testString'
         repo_info_model['type'] = 'testString'
 
-        support_model = {}  # Support
+        support_model = {} # Support
         support_model['url'] = 'testString'
         support_model['process'] = 'testString'
         support_model['locations'] = ['testString']
 
-        media_item_model = {}  # MediaItem
+        media_item_model = {} # MediaItem
         media_item_model['url'] = 'testString'
         media_item_model['caption'] = 'testString'
         media_item_model['type'] = 'testString'
         media_item_model['thumbnail_url'] = 'testString'
 
-        offering_model = {}  # Offering
+        offering_model = {} # Offering
         offering_model['id'] = 'testString'
         offering_model['_rev'] = 'testString'
         offering_model['url'] = 'testString'
@@ -10512,8 +11302,7 @@ class TestModel_OfferingSearchResult:
         offering_search_result_model_json2 = offering_search_result_model.to_dict()
         assert offering_search_result_model_json2 == offering_search_result_model_json
 
-
-class TestModel_OperatorDeployResult:
+class TestModel_OperatorDeployResult():
     """
     Test Class for OperatorDeployResult
     """
@@ -10549,8 +11338,7 @@ class TestModel_OperatorDeployResult:
         operator_deploy_result_model_json2 = operator_deploy_result_model.to_dict()
         assert operator_deploy_result_model_json2 == operator_deploy_result_model_json
 
-
-class TestModel_Plan:
+class TestModel_Plan():
     """
     Test Class for Plan
     """
@@ -10562,11 +11350,11 @@ class TestModel_Plan:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        feature_model = {}  # Feature
+        feature_model = {} # Feature
         feature_model['title'] = 'testString'
         feature_model['description'] = 'testString'
 
-        deployment_model = {}  # Deployment
+        deployment_model = {} # Deployment
         deployment_model['id'] = 'testString'
         deployment_model['label'] = 'testString'
         deployment_model['name'] = 'testString'
@@ -10606,8 +11394,7 @@ class TestModel_Plan:
         plan_model_json2 = plan_model.to_dict()
         assert plan_model_json2 == plan_model_json
 
-
-class TestModel_ProviderInfo:
+class TestModel_ProviderInfo():
     """
     Test Class for ProviderInfo
     """
@@ -10637,8 +11424,7 @@ class TestModel_ProviderInfo:
         provider_info_model_json2 = provider_info_model.to_dict()
         assert provider_info_model_json2 == provider_info_model_json
 
-
-class TestModel_PublishObject:
+class TestModel_PublishObject():
     """
     Test Class for PublishObject
     """
@@ -10671,8 +11457,7 @@ class TestModel_PublishObject:
         publish_object_model_json2 = publish_object_model.to_dict()
         assert publish_object_model_json2 == publish_object_model_json
 
-
-class TestModel_Rating:
+class TestModel_Rating():
     """
     Test Class for Rating
     """
@@ -10704,8 +11489,7 @@ class TestModel_Rating:
         rating_model_json2 = rating_model.to_dict()
         assert rating_model_json2 == rating_model_json
 
-
-class TestModel_RepoInfo:
+class TestModel_RepoInfo():
     """
     Test Class for RepoInfo
     """
@@ -10735,8 +11519,7 @@ class TestModel_RepoInfo:
         repo_info_model_json2 = repo_info_model.to_dict()
         assert repo_info_model_json2 == repo_info_model_json
 
-
-class TestModel_Resource:
+class TestModel_Resource():
     """
     Test Class for Resource
     """
@@ -10766,8 +11549,7 @@ class TestModel_Resource:
         resource_model_json2 = resource_model.to_dict()
         assert resource_model_json2 == resource_model_json
 
-
-class TestModel_Script:
+class TestModel_Script():
     """
     Test Class for Script
     """
@@ -10800,8 +11582,7 @@ class TestModel_Script:
         script_model_json2 = script_model.to_dict()
         assert script_model_json2 == script_model_json
 
-
-class TestModel_State:
+class TestModel_State():
     """
     Test Class for State
     """
@@ -10834,8 +11615,7 @@ class TestModel_State:
         state_model_json2 = state_model.to_dict()
         assert state_model_json2 == state_model_json
 
-
-class TestModel_Support:
+class TestModel_Support():
     """
     Test Class for Support
     """
@@ -10866,8 +11646,7 @@ class TestModel_Support:
         support_model_json2 = support_model.to_dict()
         assert support_model_json2 == support_model_json
 
-
-class TestModel_SyndicationAuthorization:
+class TestModel_SyndicationAuthorization():
     """
     Test Class for SyndicationAuthorization
     """
@@ -10887,9 +11666,7 @@ class TestModel_SyndicationAuthorization:
         assert syndication_authorization_model != False
 
         # Construct a model instance of SyndicationAuthorization by calling from_dict on the json representation
-        syndication_authorization_model_dict = SyndicationAuthorization.from_dict(
-            syndication_authorization_model_json
-        ).__dict__
+        syndication_authorization_model_dict = SyndicationAuthorization.from_dict(syndication_authorization_model_json).__dict__
         syndication_authorization_model2 = SyndicationAuthorization(**syndication_authorization_model_dict)
 
         # Verify the model instances are equivalent
@@ -10899,8 +11676,7 @@ class TestModel_SyndicationAuthorization:
         syndication_authorization_model_json2 = syndication_authorization_model.to_dict()
         assert syndication_authorization_model_json2 == syndication_authorization_model_json
 
-
-class TestModel_SyndicationCluster:
+class TestModel_SyndicationCluster():
     """
     Test Class for SyndicationCluster
     """
@@ -10935,8 +11711,7 @@ class TestModel_SyndicationCluster:
         syndication_cluster_model_json2 = syndication_cluster_model.to_dict()
         assert syndication_cluster_model_json2 == syndication_cluster_model_json
 
-
-class TestModel_SyndicationHistory:
+class TestModel_SyndicationHistory():
     """
     Test Class for SyndicationHistory
     """
@@ -10948,7 +11723,7 @@ class TestModel_SyndicationHistory:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        syndication_cluster_model = {}  # SyndicationCluster
+        syndication_cluster_model = {} # SyndicationCluster
         syndication_cluster_model['region'] = 'testString'
         syndication_cluster_model['id'] = 'testString'
         syndication_cluster_model['name'] = 'testString'
@@ -10978,8 +11753,7 @@ class TestModel_SyndicationHistory:
         syndication_history_model_json2 = syndication_history_model.to_dict()
         assert syndication_history_model_json2 == syndication_history_model_json
 
-
-class TestModel_SyndicationResource:
+class TestModel_SyndicationResource():
     """
     Test Class for SyndicationResource
     """
@@ -10991,7 +11765,7 @@ class TestModel_SyndicationResource:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        syndication_cluster_model = {}  # SyndicationCluster
+        syndication_cluster_model = {} # SyndicationCluster
         syndication_cluster_model['region'] = 'testString'
         syndication_cluster_model['id'] = 'testString'
         syndication_cluster_model['name'] = 'testString'
@@ -11000,12 +11774,12 @@ class TestModel_SyndicationResource:
         syndication_cluster_model['namespaces'] = ['testString']
         syndication_cluster_model['all_namespaces'] = True
 
-        syndication_history_model = {}  # SyndicationHistory
+        syndication_history_model = {} # SyndicationHistory
         syndication_history_model['namespaces'] = ['testString']
         syndication_history_model['clusters'] = [syndication_cluster_model]
         syndication_history_model['last_run'] = "2019-01-01T12:00:00Z"
 
-        syndication_authorization_model = {}  # SyndicationAuthorization
+        syndication_authorization_model = {} # SyndicationAuthorization
         syndication_authorization_model['token'] = 'testString'
         syndication_authorization_model['last_run'] = "2019-01-01T12:00:00Z"
 
@@ -11031,8 +11805,7 @@ class TestModel_SyndicationResource:
         syndication_resource_model_json2 = syndication_resource_model.to_dict()
         assert syndication_resource_model_json2 == syndication_resource_model_json
 
-
-class TestModel_Validation:
+class TestModel_Validation():
     """
     Test Class for Validation
     """
@@ -11065,8 +11838,7 @@ class TestModel_Validation:
         validation_model_json2 = validation_model.to_dict()
         assert validation_model_json2 == validation_model_json
 
-
-class TestModel_Version:
+class TestModel_Version():
     """
     Test Class for Version
     """
@@ -11078,7 +11850,7 @@ class TestModel_Version:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        configuration_model = {}  # Configuration
+        configuration_model = {} # Configuration
         configuration_model['key'] = 'testString'
         configuration_model['type'] = 'testString'
         configuration_model['default_value'] = 'testString'
@@ -11088,39 +11860,39 @@ class TestModel_Version:
         configuration_model['options'] = ['testString']
         configuration_model['hidden'] = True
 
-        validation_model = {}  # Validation
+        validation_model = {} # Validation
         validation_model['validated'] = "2019-01-01T12:00:00Z"
         validation_model['requested'] = "2019-01-01T12:00:00Z"
         validation_model['state'] = 'testString'
         validation_model['last_operation'] = 'testString'
         validation_model['target'] = {}
 
-        resource_model = {}  # Resource
+        resource_model = {} # Resource
         resource_model['type'] = 'mem'
         resource_model['value'] = 'testString'
 
-        script_model = {}  # Script
+        script_model = {} # Script
         script_model['instructions'] = 'testString'
         script_model['script'] = 'testString'
         script_model['script_permission'] = 'testString'
         script_model['delete_script'] = 'testString'
         script_model['scope'] = 'testString'
 
-        version_entitlement_model = {}  # VersionEntitlement
+        version_entitlement_model = {} # VersionEntitlement
         version_entitlement_model['provider_name'] = 'testString'
         version_entitlement_model['provider_id'] = 'testString'
         version_entitlement_model['product_id'] = 'testString'
         version_entitlement_model['part_numbers'] = ['testString']
         version_entitlement_model['image_repo_name'] = 'testString'
 
-        license_model = {}  # License
+        license_model = {} # License
         license_model['id'] = 'testString'
         license_model['name'] = 'testString'
         license_model['type'] = 'testString'
         license_model['url'] = 'testString'
         license_model['description'] = 'testString'
 
-        state_model = {}  # State
+        state_model = {} # State
         state_model['current'] = 'testString'
         state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
@@ -11176,8 +11948,7 @@ class TestModel_Version:
         version_model_json2 = version_model.to_dict()
         assert version_model_json2 == version_model_json
 
-
-class TestModel_VersionEntitlement:
+class TestModel_VersionEntitlement():
     """
     Test Class for VersionEntitlement
     """
@@ -11210,8 +11981,7 @@ class TestModel_VersionEntitlement:
         version_entitlement_model_json2 = version_entitlement_model.to_dict()
         assert version_entitlement_model_json2 == version_entitlement_model_json
 
-
-class TestModel_VersionUpdateDescriptor:
+class TestModel_VersionUpdateDescriptor():
     """
     Test Class for VersionUpdateDescriptor
     """
@@ -11223,14 +11993,14 @@ class TestModel_VersionUpdateDescriptor:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        state_model = {}  # State
+        state_model = {} # State
         state_model['current'] = 'testString'
         state_model['current_entered'] = "2019-01-01T12:00:00Z"
         state_model['pending'] = 'testString'
         state_model['pending_requested'] = "2019-01-01T12:00:00Z"
         state_model['previous'] = 'testString'
 
-        resource_model = {}  # Resource
+        resource_model = {} # Resource
         resource_model['type'] = 'mem'
         resource_model['value'] = 'testString'
 
@@ -11250,9 +12020,7 @@ class TestModel_VersionUpdateDescriptor:
         assert version_update_descriptor_model != False
 
         # Construct a model instance of VersionUpdateDescriptor by calling from_dict on the json representation
-        version_update_descriptor_model_dict = VersionUpdateDescriptor.from_dict(
-            version_update_descriptor_model_json
-        ).__dict__
+        version_update_descriptor_model_dict = VersionUpdateDescriptor.from_dict(version_update_descriptor_model_json).__dict__
         version_update_descriptor_model2 = VersionUpdateDescriptor(**version_update_descriptor_model_dict)
 
         # Verify the model instances are equivalent

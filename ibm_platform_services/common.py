@@ -24,15 +24,15 @@ from .version import __version__
 HEADER_NAME_USER_AGENT = 'User-Agent'
 SDK_NAME = 'platform-services-python-sdk'
 
-
 def get_system_info():
     """
     Get information about the system to be inserted into the User-Agent header
     """
-    format_msg = '(lang=python; os.name={0}; os.version={1}; python.version={2})'
+    format_msg='(lang=python; os.name={0}; os.version={1}; python.version={2})'
     return format_msg.format(
-        platform.system(), platform.release(), platform.python_version()  # OS  # OS version
-    )  # Python version
+        platform.system(), # OS
+        platform.release(), # OS version
+        platform.python_version()) # Python version
 
 
 def get_user_agent():

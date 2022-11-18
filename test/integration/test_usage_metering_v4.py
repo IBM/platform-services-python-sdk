@@ -26,11 +26,10 @@ from ibm_platform_services.usage_metering_v4 import *
 config_file = 'usage_metering.env'
 
 
-class TestUsageMeteringV4:
+class TestUsageMeteringV4():
     """
     Integration Test Class for UsageMeteringV4
     """
-
     @classmethod
     def setup_class(cls):
         if os.path.exists(config_file):
@@ -42,8 +41,8 @@ class TestUsageMeteringV4:
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
-        not os.path.exists(config_file), reason="External configuration not available, skipping..."
-    )
+        not os.path.exists(config_file),
+        reason="External configuration not available, skipping...")
 
     @needscredentials
     def test_report_resource_usage(self):
@@ -86,10 +85,11 @@ class TestUsageMeteringV4:
         }
 
         report_resource_usage_response = self.usage_metering_service.report_resource_usage(
-            resource_id=resource_id, resource_usage=[resource_instance_usage_model]
-        )
+            resource_id=resource_id,
+            resource_usage=[resource_instance_usage_model])
 
         assert report_resource_usage_response.get_status_code() == 202
         response_accepted = report_resource_usage_response.get_result()
         assert response_accepted is not None
-        print('report_resource_usage() result: ', json.dumps(response_accepted))
+        print('report_resource_usage() result: ',
+              json.dumps(response_accepted))

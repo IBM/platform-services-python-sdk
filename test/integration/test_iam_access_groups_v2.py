@@ -29,8 +29,7 @@ from ibm_platform_services.iam_access_groups_v2 import *
 # Config file name
 config_file = 'iam_access_groups_v2.env'
 
-
-class TestIamAccessGroupsV2:
+class TestIamAccessGroupsV2():
     """
     Integration Test Class for IamAccessGroupsV2
     """
@@ -40,24 +39,25 @@ class TestIamAccessGroupsV2:
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
-            cls.iam_access_groups_service = IamAccessGroupsV2.new_instance()
+            cls.iam_access_groups_service = IamAccessGroupsV2.new_instance(
+            )
             assert cls.iam_access_groups_service is not None
 
-            cls.config = read_external_sources(IamAccessGroupsV2.DEFAULT_SERVICE_NAME)
+            cls.config = read_external_sources(
+                IamAccessGroupsV2.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
 
             cls.iam_access_groups_service.enable_retries()
 
-            cls.config = read_external_sources(IamAccessGroupsV2.DEFAULT_SERVICE_NAME)
+            cls.config = read_external_sources(
+                IamAccessGroupsV2.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
             cls.testAccountId = cls.config.get('TEST_ACCOUNT_ID')
             assert cls.testAccountId is not None
 
             cls.etagHeader = "ETag"
             cls.testGroupName = "SDK Test Group - Python"
-            cls.testGroupDescription = (
-                "This group is used for integration test purposes. It can be deleted at any time."
-            )
+            cls.testGroupDescription = "This group is used for integration test purposes. It can be deleted at any time."
             cls.testGroupETag = ""
             cls.testGroupId = ""
             cls.testUserId = "IBMid-" + str(random.randint(0, 99999))
@@ -78,8 +78,7 @@ class TestIamAccessGroupsV2:
         #
         # List all groups in the account(minus the public access group)
         response = cls.iam_access_groups_service.list_access_groups(
-            account_id=cls.testAccountId, hide_public_access=True
-        )
+            account_id=cls.testAccountId, hide_public_access=True)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -98,7 +97,8 @@ class TestIamAccessGroupsV2:
                 minutesDifference = (now - group.created_at).seconds / 60
 
                 if group.id == cls.testGroupId or minutesDifference > 5:
-                    response = cls.iam_access_groups_service.delete_access_group(access_group_id=group.id, force=True)
+                    response = cls.iam_access_groups_service.delete_access_group(
+                        access_group_id=group.id, force=True)
                     assert response is not None
                     assert response.get_status_code() == 204
         print('\nClean up complete.')
@@ -111,8 +111,7 @@ class TestIamAccessGroupsV2:
     @needscredentials
     def test_01_create_access_group(self):
         response = self.iam_access_groups_service.create_access_group(
-            account_id=self.testAccountId, name=self.testGroupName
-        )
+            account_id=self.testAccountId, name=self.testGroupName)
         assert response is not None
         assert response.get_status_code() == 201
 
@@ -131,7 +130,8 @@ class TestIamAccessGroupsV2:
         assert self.testGroupId
         print("Group ID: ", self.testGroupId)
 
-        response = self.iam_access_groups_service.get_access_group(access_group_id=self.testGroupId)
+        response = self.iam_access_groups_service.get_access_group(
+            access_group_id=self.testGroupId)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -154,8 +154,7 @@ class TestIamAccessGroupsV2:
         print("Group ID: ", self.testGroupId)
 
         response = self.iam_access_groups_service.update_access_group(
-            access_group_id=self.testGroupId, if_match=self.testGroupETag, description=self.testGroupDescription
-        )
+            access_group_id=self.testGroupId, if_match=self.testGroupETag, description=self.testGroupDescription)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -174,8 +173,7 @@ class TestIamAccessGroupsV2:
         print("Group ID: ", self.testGroupId)
 
         response = self.iam_access_groups_service.list_access_groups(
-            account_id=self.testAccountId, hide_public_access=True
-        )
+            account_id=self.testAccountId, hide_public_access=True)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -226,11 +224,11 @@ class TestIamAccessGroupsV2:
         print("Group ID: ", self.testGroupId)
         print("User ID: ", self.testUserId)
 
-        members = [AddGroupMembersRequestMembersItem(iam_id=self.testUserId, type=self.testUserType)]
+        members = [AddGroupMembersRequestMembersItem(
+            iam_id=self.testUserId, type=self.testUserType)]
 
         response = self.iam_access_groups_service.add_members_to_access_group(
-            access_group_id=self.testGroupId, members=members
-        )
+            access_group_id=self.testGroupId, members=members)
         assert response is not None
         assert response.get_status_code() == 207
 
@@ -254,11 +252,11 @@ class TestIamAccessGroupsV2:
         print("Group ID: ", self.testGroupId)
         print("User ID: ", self.testUserId)
 
-        members = [AddGroupMembersRequestMembersItem(iam_id=self.testUserId, type=self.testUserType)]
+        members = [AddGroupMembersRequestMembersItem(
+            iam_id=self.testUserId, type=self.testUserType)]
 
         response = self.iam_access_groups_service.add_member_to_multiple_access_groups(
-            account_id=self.testAccountId, iam_id=self.testUserId, type=self.testUserType, groups=[self.testGroupId]
-        )
+            account_id=self.testAccountId, iam_id=self.testUserId, type=self.testUserType, groups=[self.testGroupId])
         assert response is not None
         assert response.get_status_code() == 207
 
@@ -283,8 +281,7 @@ class TestIamAccessGroupsV2:
         print("User ID: ", self.testUserId)
 
         response = self.iam_access_groups_service.is_member_of_access_group(
-            access_group_id=self.testGroupId, iam_id=self.testUserId
-        )
+            access_group_id=self.testGroupId, iam_id=self.testUserId)
         assert response is not None
         assert response.get_status_code() == 204
 
@@ -297,7 +294,8 @@ class TestIamAccessGroupsV2:
         print("Group ID: ", self.testGroupId)
         print("User ID: ", self.testUserId)
 
-        response = self.iam_access_groups_service.list_access_group_members(access_group_id=self.testGroupId)
+        response = self.iam_access_groups_service.list_access_group_members(
+            access_group_id=self.testGroupId)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -338,9 +336,7 @@ class TestIamAccessGroupsV2:
         assert all_items is not None
 
         assert len(all_results) == len(all_items)
-        print(
-            f'\nlist_access_group_members() returned a total of {len(all_results)} items(s) using AccessGroupMembersPager.'
-        )
+        print(f'\nlist_access_group_members() returned a total of {len(all_results)} items(s) using AccessGroupMembersPager.')
 
     @needscredentials
     def test_09_delete_group_membership(self):
@@ -349,8 +345,7 @@ class TestIamAccessGroupsV2:
         print("User ID: ", self.testUserId)
 
         response = self.iam_access_groups_service.remove_member_from_access_group(
-            access_group_id=self.testGroupId, iam_id=self.testUserId
-        )
+            access_group_id=self.testGroupId, iam_id=self.testUserId)
         assert response is not None
         assert response.get_status_code() == 204
 
@@ -365,8 +360,7 @@ class TestIamAccessGroupsV2:
 
         try:
             response = self.iam_access_groups_service.remove_member_from_all_access_groups(
-                account_id=self.testAccountId, iam_id=self.testUserId
-            )
+                account_id=self.testAccountId, iam_id=self.testUserId)
         except ApiException as e:
             assert e.http_response.status_code == 404
             assert e.code == 404
@@ -380,8 +374,7 @@ class TestIamAccessGroupsV2:
 
         try:
             response = self.iam_access_groups_service.remove_members_from_access_group(
-                access_group_id=self.testGroupId, members=[self.testUserId]
-            )
+                access_group_id=self.testGroupId, members=[self.testUserId])
         except ApiException as e:
             assert e.http_response.status_code == 404
             assert e.code == 404
@@ -398,7 +391,7 @@ class TestIamAccessGroupsV2:
             access_group_id=self.testGroupId,
             expiration=testExpiration,
             realm_name="test realm name",
-            conditions=[RuleConditions("test claim", "EQUALS", "1")],
+            conditions=[RuleConditions("test claim", "EQUALS", "1")]
         )
         assert response is not None
         assert response.get_status_code() == 201
@@ -422,8 +415,7 @@ class TestIamAccessGroupsV2:
         print("Rule ID: ", self.testClaimRuleId)
 
         response = self.iam_access_groups_service.get_access_group_rule(
-            access_group_id=self.testGroupId, rule_id=self.testClaimRuleId
-        )
+            access_group_id=self.testGroupId, rule_id=self.testClaimRuleId)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -444,7 +436,8 @@ class TestIamAccessGroupsV2:
         print("Group ID: ", self.testGroupId)
         print("Rule ID: ", self.testClaimRuleId)
 
-        response = self.iam_access_groups_service.list_access_group_rules(access_group_id=self.testGroupId)
+        response = self.iam_access_groups_service.list_access_group_rules(
+            access_group_id=self.testGroupId)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -477,7 +470,7 @@ class TestIamAccessGroupsV2:
             if_match=self.testClaimRuleETag,
             expiration=testExpiration,
             realm_name="updated test realm name",
-            conditions=[RuleConditions("test claim", "EQUALS", "1")],
+            conditions=[RuleConditions("test claim", "EQUALS", "1")]
         )
         assert response is not None
         assert response.get_status_code() == 200
@@ -499,8 +492,7 @@ class TestIamAccessGroupsV2:
         print("Rule ID: ", self.testClaimRuleId)
 
         response = self.iam_access_groups_service.remove_access_group_rule(
-            access_group_id=self.testGroupId, rule_id=self.testClaimRuleId
-        )
+            access_group_id=self.testGroupId, rule_id=self.testClaimRuleId)
         assert response is not None
         assert response.get_status_code() == 204
 
@@ -509,7 +501,8 @@ class TestIamAccessGroupsV2:
 
     @needscredentials
     def test_17_get_account_settings(self):
-        response = self.iam_access_groups_service.get_account_settings(account_id=self.testAccountId)
+        response = self.iam_access_groups_service.get_account_settings(
+            account_id=self.testAccountId)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -525,7 +518,8 @@ class TestIamAccessGroupsV2:
     @needscredentials
     def test_18_update_account_settings(self):
         response = self.iam_access_groups_service.update_account_settings(
-            account_id=self.testAccountId, public_access_enabled=self.testAccountSettings.public_access_enabled
+            account_id=self.testAccountId,
+            public_access_enabled=self.testAccountSettings.public_access_enabled
         )
         assert response is not None
         assert response.get_status_code() == 200

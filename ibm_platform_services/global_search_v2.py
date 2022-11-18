@@ -41,7 +41,6 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
-
 class GlobalSearchV2(BaseService):
     """The global_search V2 service."""
 
@@ -49,23 +48,23 @@ class GlobalSearchV2(BaseService):
     DEFAULT_SERVICE_NAME = 'global_search'
 
     @classmethod
-    def new_instance(
-        cls,
-        service_name: str = DEFAULT_SERVICE_NAME,
-    ) -> 'GlobalSearchV2':
+    def new_instance(cls,
+                     service_name: str = DEFAULT_SERVICE_NAME,
+                    ) -> 'GlobalSearchV2':
         """
         Return a new client for the global_search service using the specified
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
-    def __init__(
-        self,
-        authenticator: Authenticator = None,
-    ) -> None:
+    def __init__(self,
+                 authenticator: Authenticator = None,
+                ) -> None:
         """
         Construct a new client for the global_search service.
 
@@ -73,14 +72,17 @@ class GlobalSearchV2(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
+        BaseService.__init__(self,
+                             service_url=self.DEFAULT_SERVICE_URL,
+                             authenticator=authenticator)
+
 
     #########################
     # Search
     #########################
 
-    def search(
-        self,
+
+    def search(self,
         *,
         query: str = None,
         fields: List[str] = None,
@@ -135,15 +137,26 @@ class GlobalSearchV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `ScanResult` object
         """
 
-        headers = {'transaction-id': transaction_id}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='search'
-        )
+        headers = {
+            'transaction-id': transaction_id
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V2',
+                                      operation_id='search')
         headers.update(sdk_headers)
 
-        params = {'account_id': account_id, 'limit': limit, 'timeout': timeout, 'sort': convert_list(sort)}
+        params = {
+            'account_id': account_id,
+            'limit': limit,
+            'timeout': timeout,
+            'sort': convert_list(sort)
+        }
 
-        data = {'query': query, 'fields': fields, 'search_cursor': search_cursor}
+        data = {
+            'query': query,
+            'fields': fields,
+            'search_cursor': search_cursor
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -153,7 +166,11 @@ class GlobalSearchV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v3/resources/search'
-        request = self.prepare_request(method='POST', url=url, headers=headers, params=params, data=data)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       params=params,
+                                       data=data)
 
         response = self.send(request)
         return response
@@ -162,7 +179,10 @@ class GlobalSearchV2(BaseService):
     # Resource Types
     #########################
 
-    def get_supported_types(self, **kwargs) -> DetailedResponse:
+
+    def get_supported_types(self,
+        **kwargs
+    ) -> DetailedResponse:
         """
         DEPRECATED. Get all GhoST indices.
 
@@ -174,9 +194,9 @@ class GlobalSearchV2(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_supported_types'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V2',
+                                      operation_id='get_supported_types')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -184,7 +204,9 @@ class GlobalSearchV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resources/supported_types'
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request)
         return response
@@ -195,7 +217,7 @@ class GlobalSearchV2(BaseService):
 ##############################################################################
 
 
-class ResultItem:
+class ResultItem():
     """
     A resource returned in a search result.
 
@@ -205,7 +227,10 @@ class ResultItem:
     # The set of defined properties for the class
     _properties = frozenset(['crn'])
 
-    def __init__(self, *, crn: str = None, **kwargs) -> None:
+    def __init__(self,
+                 *,
+                 crn: str = None,
+                 **kwargs) -> None:
         """
         Initialize a ResultItem object.
 
@@ -222,7 +247,7 @@ class ResultItem:
         args = {}
         if 'crn' in _dict:
             args['crn'] = _dict.get('crn')
-        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
+        args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
     @classmethod
@@ -258,8 +283,7 @@ class ResultItem:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ScanResult:
+class ScanResult():
     """
     The search scan response.
 
@@ -271,7 +295,11 @@ class ScanResult:
           hits to fetch.
     """
 
-    def __init__(self, search_cursor: str, items: List['ResultItem'], *, limit: int = None) -> None:
+    def __init__(self,
+                 search_cursor: str,
+                 items: List['ResultItem'],
+                 *,
+                 limit: int = None) -> None:
         """
         Initialize a ScanResult object.
 
@@ -337,15 +365,16 @@ class ScanResult:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class SupportedTypesList:
+class SupportedTypesList():
     """
     A list of all GhoST indices.
 
     :attr List[str] supported_types: (optional) A list of all GhoST indices.
     """
 
-    def __init__(self, *, supported_types: List[str] = None) -> None:
+    def __init__(self,
+                 *,
+                 supported_types: List[str] = None) -> None:
         """
         Initialize a SupportedTypesList object.
 

@@ -21,7 +21,6 @@ Test methods in the common module
 import unittest
 from ibm_platform_services import common
 
-
 class TestCommon(unittest.TestCase):
     """
     Test methods in the common module

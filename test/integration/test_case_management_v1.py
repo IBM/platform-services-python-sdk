@@ -48,7 +48,8 @@ class TestCaseManagementV1(unittest.TestCase):
         if os.path.exists(configFile):
             os.environ['IBM_CREDENTIALS_FILE'] = configFile
         else:
-            raise unittest.SkipTest('External configuration not available, skipping...')
+            raise unittest.SkipTest(
+                'External configuration not available, skipping...')
 
         cls.service = CaseManagementV1.new_instance()
         assert cls.service is not None
@@ -61,7 +62,8 @@ class TestCaseManagementV1(unittest.TestCase):
         offering_payload_type_model = {}
         offering_payload_type_model['group'] = 'crn_service_name'
         offering_payload_type_model['key'] = 'cloud-object-storage'
-        offering_payload_type_model['id'] = 'dff97f5c-bc5e-4455-b470-411c3edbe49c'
+        offering_payload_type_model[
+            'id'] = 'dff97f5c-bc5e-4455-b470-411c3edbe49c'
 
         offering_payload_model = {}
         offering_payload_model['name'] = 'Cloud Object Storage'
@@ -73,12 +75,16 @@ class TestCaseManagementV1(unittest.TestCase):
         severity = 4
         offering = offering_payload_model
 
-        response = self.service.create_case(
-            type, subject, description, severity=severity, offering=offering, headers={}
-        )
+        response = self.service.create_case(type,
+                                            subject,
+                                            description,
+                                            severity=severity,
+                                            offering=offering,
+                                            headers={})
         assert response.get_status_code() == 200
         assert response.result is not None
-        print('create_case() response:\n{}'.format(json.dumps(response.result, indent=2)))
+        print('create_case() response:\n{}'.format(
+            json.dumps(response.result, indent=2)))
 
         # Storing the new case number for subsequent test cases
         TestCaseManagementV1.new_case_number = response.result['number']
@@ -94,7 +100,11 @@ class TestCaseManagementV1(unittest.TestCase):
         severity = 4
 
         with pytest.raises(ApiException) as e:
-            self.service.create_case(type, subject, description, severity=severity, headers={})
+            self.service.create_case(type,
+                                     subject,
+                                     description,
+                                     severity=severity,
+                                     headers={})
         assert e.value.code == 400
 
     def test_03_create_case_with_empty_subject_and_description(self):
@@ -103,7 +113,8 @@ class TestCaseManagementV1(unittest.TestCase):
         offering_payload_type_model = {}
         offering_payload_type_model['group'] = 'crn_service_name'
         offering_payload_type_model['key'] = 'cloud-object-storage'
-        offering_payload_type_model['id'] = 'dff97f5c-bc5e-4455-b470-411c3edbe49c'
+        offering_payload_type_model[
+            'id'] = 'dff97f5c-bc5e-4455-b470-411c3edbe49c'
 
         offering_payload_model = {}
         offering_payload_model['name'] = 'Cloud Object Storage'
@@ -117,7 +128,12 @@ class TestCaseManagementV1(unittest.TestCase):
 
         # Subject and description are required
         with pytest.raises(ApiException) as e:
-            self.service.create_case(type, subject, description, severity=severity, offering=offering, headers={})
+            self.service.create_case(type,
+                                     subject,
+                                     description,
+                                     severity=severity,
+                                     offering=offering,
+                                     headers={})
         assert e.value.code == 400
 
     def test_04_get_cases(self):
@@ -181,9 +197,12 @@ class TestCaseManagementV1(unittest.TestCase):
         fields = ['number', 'short_description']
         case_number = TestCaseManagementV1.new_case_number
 
-        response = self.service.get_case(self.new_case_number, fields=fields, headers={})
+        response = self.service.get_case(self.new_case_number,
+                                         fields=fields,
+                                         headers={})
 
-        assert TestCaseManagementV1.new_case_number == response.result['number']
+        assert TestCaseManagementV1.new_case_number == response.result[
+            'number']
         assert response.result['short_description'] != ''
 
     def test_06_get_case_with_invalid_field(self):
@@ -192,7 +211,9 @@ class TestCaseManagementV1(unittest.TestCase):
         case_number = TestCaseManagementV1.new_case_number
 
         with pytest.raises(ApiException) as e:
-            self.service.get_case(self.new_case_number, fields=fields, headers={})
+            self.service.get_case(self.new_case_number,
+                                  fields=fields,
+                                  headers={})
         assert e.value.code == 400
 
     def test_07_add_comment(self):
@@ -223,7 +244,10 @@ class TestCaseManagementV1(unittest.TestCase):
 
         watchlist = [user_id_and_realm_model]
 
-        response = self.service.add_watchlist(TestCaseManagementV1.new_case_number, watchlist=watchlist, headers={})
+        response = self.service.add_watchlist(
+            TestCaseManagementV1.new_case_number,
+            watchlist=watchlist,
+            headers={})
 
         # Non-account member cannot be added to the watch-list,
         # therefore the response will include a "failed" list
@@ -231,7 +255,8 @@ class TestCaseManagementV1(unittest.TestCase):
 
         # Loop over all returned users and find the matching one by user id
         found_users = [
-            user for user in response.result['failed'] if user['user_id'] == user_id_and_realm_model['user_id']
+            user for user in response.result['failed']
+            if user['user_id'] == user_id_and_realm_model['user_id']
         ]
         assert len(found_users) == 1
 
@@ -240,12 +265,14 @@ class TestCaseManagementV1(unittest.TestCase):
         fileName = "test_file.txt"
 
         file_with_metadata_model = {}
-        file_with_metadata_model['data'] = io.BytesIO(b'This is a mock file.').getvalue()
+        file_with_metadata_model['data'] = io.BytesIO(
+            b'This is a mock file.').getvalue()
         file_with_metadata_model['filename'] = fileName
 
         file = [file_with_metadata_model]
 
-        response = self.service.upload_file(TestCaseManagementV1.new_case_number, file, headers={})
+        response = self.service.upload_file(
+            TestCaseManagementV1.new_case_number, file, headers={})
 
         TestCaseManagementV1.file_attachment_id = response.result['id']
 
@@ -255,8 +282,9 @@ class TestCaseManagementV1(unittest.TestCase):
     def test_11_download_file(self):
 
         response = self.service.download_file(
-            TestCaseManagementV1.new_case_number, TestCaseManagementV1.file_attachment_id, headers={}
-        )
+            TestCaseManagementV1.new_case_number,
+            TestCaseManagementV1.file_attachment_id,
+            headers={})
 
         assert response.status_code == 200
         assert 'content-type' in response.headers
@@ -264,8 +292,9 @@ class TestCaseManagementV1(unittest.TestCase):
     def test_12_delete_file(self):
 
         response = self.service.delete_file(
-            TestCaseManagementV1.new_case_number, TestCaseManagementV1.file_attachment_id, headers={}
-        )
+            TestCaseManagementV1.new_case_number,
+            TestCaseManagementV1.file_attachment_id,
+            headers={})
 
         assert response.status_code == 200
         # Assert the file attachment list is empty
@@ -274,8 +303,9 @@ class TestCaseManagementV1(unittest.TestCase):
     def test_13_add_resource(self):
 
         response = self.service.add_resource(
-            TestCaseManagementV1.new_case_number, crn=TestCaseManagementV1.resource_crn, note='Test resource'
-        )
+            TestCaseManagementV1.new_case_number,
+            crn=TestCaseManagementV1.resource_crn,
+            note='Test resource')
         assert response.status_code == 200
         assert response is not None
 
@@ -286,7 +316,9 @@ class TestCaseManagementV1(unittest.TestCase):
         status_payload['comment'] = 'testString'
         status_payload['resolution_code'] = 1
 
-        response = self.service.update_case_status(TestCaseManagementV1.new_case_number, status_payload, headers={})
+        response = self.service.update_case_status(
+            TestCaseManagementV1.new_case_number, status_payload, headers={})
 
         assert response.status_code == 200
-        assert TestCaseManagementV1.new_case_number == response.result["number"]
+        assert TestCaseManagementV1.new_case_number == response.result[
+            "number"]

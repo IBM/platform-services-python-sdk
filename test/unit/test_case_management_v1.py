@@ -31,7 +31,9 @@ import urllib
 from ibm_platform_services.case_management_v1 import *
 
 
-_service = CaseManagementV1(authenticator=NoAuthAuthenticator())
+_service = CaseManagementV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://support-center.cloud.ibm.com/case-management/v1'
 _service.set_service_url(_base_url)
@@ -68,8 +70,7 @@ def preprocess_url(operation_path: str):
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -96,8 +97,7 @@ class TestNewInstance:
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-
-class TestGetCases:
+class TestGetCases():
     """
     Test Class for get_cases
     """
@@ -110,7 +110,11 @@ class TestGetCases:
         # Set up mock
         url = preprocess_url('/cases')
         mock_response = '{"total_count": 11, "first": {"href": "href"}, "next": {"href": "href"}, "previous": {"href": "href"}, "last": {"href": "href"}, "cases": [{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         offset = 38
@@ -122,14 +126,20 @@ class TestGetCases:
 
         # Invoke method
         response = _service.get_cases(
-            offset=offset, limit=limit, search=search, sort=sort, status=status, fields=fields, headers={}
+            offset=offset,
+            limit=limit,
+            search=search,
+            sort=sort,
+            status=status,
+            fields=fields,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'offset={}'.format(offset) in query_string
         assert 'limit={}'.format(limit) in query_string
@@ -155,10 +165,15 @@ class TestGetCases:
         # Set up mock
         url = preprocess_url('/cases')
         mock_response = '{"total_count": 11, "first": {"href": "href"}, "next": {"href": "href"}, "previous": {"href": "href"}, "last": {"href": "href"}, "cases": [{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Invoke method
         response = _service.get_cases()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -182,8 +197,16 @@ class TestGetCases:
         url = preprocess_url('/cases')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"cases":[{"number":"number","short_description":"short_description","description":"description","created_at":"created_at","created_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"updated_at":"updated_at","updated_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"contact_type":"Cloud Support Center","contact":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"status":"status","severity":8,"support_tier":"Free","resolution":"resolution","close_notes":"close_notes","eu":{"support":false,"data_center":"data_center"},"watchlist":[{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}],"attachments":[{"id":"id","filename":"filename","size_in_bytes":13,"created_at":"created_at","url":"url"}],"offering":{"name":"name","type":{"group":"crn_service_name","key":"key","kind":"kind","id":"id"}},"resources":[{"crn":"crn","name":"name","type":"type","url":"url","note":"note"}],"comments":[{"value":"value","added_at":"added_at","added_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}}]}],"total_count":2,"limit":1}'
         mock_response2 = '{"cases":[{"number":"number","short_description":"short_description","description":"description","created_at":"created_at","created_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"updated_at":"updated_at","updated_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"contact_type":"Cloud Support Center","contact":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"status":"status","severity":8,"support_tier":"Free","resolution":"resolution","close_notes":"close_notes","eu":{"support":false,"data_center":"data_center"},"watchlist":[{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}],"attachments":[{"id":"id","filename":"filename","size_in_bytes":13,"created_at":"created_at","url":"url"}],"offering":{"name":"name","type":{"group":"crn_service_name","key":"key","kind":"kind","id":"id"}},"resources":[{"crn":"crn","name":"name","type":"type","url":"url","note":"note"}],"comments":[{"value":"value","added_at":"added_at","added_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}}]}],"total_count":2,"limit":1}'
-        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
-        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
 
         # Exercise the pager class for this operation
         all_results = []
@@ -210,8 +233,16 @@ class TestGetCases:
         url = preprocess_url('/cases')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"cases":[{"number":"number","short_description":"short_description","description":"description","created_at":"created_at","created_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"updated_at":"updated_at","updated_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"contact_type":"Cloud Support Center","contact":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"status":"status","severity":8,"support_tier":"Free","resolution":"resolution","close_notes":"close_notes","eu":{"support":false,"data_center":"data_center"},"watchlist":[{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}],"attachments":[{"id":"id","filename":"filename","size_in_bytes":13,"created_at":"created_at","url":"url"}],"offering":{"name":"name","type":{"group":"crn_service_name","key":"key","kind":"kind","id":"id"}},"resources":[{"crn":"crn","name":"name","type":"type","url":"url","note":"note"}],"comments":[{"value":"value","added_at":"added_at","added_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}}]}],"total_count":2,"limit":1}'
         mock_response2 = '{"cases":[{"number":"number","short_description":"short_description","description":"description","created_at":"created_at","created_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"updated_at":"updated_at","updated_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"contact_type":"Cloud Support Center","contact":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"},"status":"status","severity":8,"support_tier":"Free","resolution":"resolution","close_notes":"close_notes","eu":{"support":false,"data_center":"data_center"},"watchlist":[{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}],"attachments":[{"id":"id","filename":"filename","size_in_bytes":13,"created_at":"created_at","url":"url"}],"offering":{"name":"name","type":{"group":"crn_service_name","key":"key","kind":"kind","id":"id"}},"resources":[{"crn":"crn","name":"name","type":"type","url":"url","note":"note"}],"comments":[{"value":"value","added_at":"added_at","added_by":{"name":"name","realm":"IBMid","user_id":"abc@ibm.com"}}]}],"total_count":2,"limit":1}'
-        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
-        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
 
         # Exercise the pager class for this operation
         pager = GetCasesPager(
@@ -226,8 +257,7 @@ class TestGetCases:
         assert all_results is not None
         assert len(all_results) == 2
 
-
-class TestCreateCase:
+class TestCreateCase():
     """
     Test Class for create_case
     """
@@ -240,7 +270,11 @@ class TestCreateCase:
         # Set up mock
         url = preprocess_url('/cases')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a CasePayloadEu model
         case_payload_eu_model = {}
@@ -295,7 +329,7 @@ class TestCreateCase:
             watchlist=watchlist,
             invoice_number=invoice_number,
             sla_credit_request=sla_credit_request,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -331,7 +365,11 @@ class TestCreateCase:
         # Set up mock
         url = preprocess_url('/cases')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a CasePayloadEu model
         case_payload_eu_model = {}
@@ -381,7 +419,7 @@ class TestCreateCase:
             "description": description,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_case(**req_copy)
 
@@ -394,8 +432,7 @@ class TestCreateCase:
         _service.disable_retries()
         self.test_create_case_value_error()
 
-
-class TestGetCase:
+class TestGetCase():
     """
     Test Class for get_case
     """
@@ -408,20 +445,28 @@ class TestGetCase:
         # Set up mock
         url = preprocess_url('/cases/testString')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         case_number = 'testString'
         fields = ['number']
 
         # Invoke method
-        response = _service.get_case(case_number, fields=fields, headers={})
+        response = _service.get_case(
+            case_number,
+            fields=fields,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'fields={}'.format(','.join(fields)) in query_string
 
@@ -442,13 +487,20 @@ class TestGetCase:
         # Set up mock
         url = preprocess_url('/cases/testString')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         case_number = 'testString'
 
         # Invoke method
-        response = _service.get_case(case_number, headers={})
+        response = _service.get_case(
+            case_number,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -471,7 +523,11 @@ class TestGetCase:
         # Set up mock
         url = preprocess_url('/cases/testString')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         case_number = 'testString'
@@ -481,7 +537,7 @@ class TestGetCase:
             "case_number": case_number,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_case(**req_copy)
 
@@ -494,8 +550,7 @@ class TestGetCase:
         _service.disable_retries()
         self.test_get_case_value_error()
 
-
-class TestUpdateCaseStatus:
+class TestUpdateCaseStatus():
     """
     Test Class for update_case_status
     """
@@ -508,7 +563,11 @@ class TestUpdateCaseStatus:
         # Set up mock
         url = preprocess_url('/cases/testString/status')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a ResolvePayload model
         status_payload_model = {}
@@ -521,7 +580,11 @@ class TestUpdateCaseStatus:
         status_payload = status_payload_model
 
         # Invoke method
-        response = _service.update_case_status(case_number, status_payload, headers={})
+        response = _service.update_case_status(
+            case_number,
+            status_payload,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -547,7 +610,11 @@ class TestUpdateCaseStatus:
         # Set up mock
         url = preprocess_url('/cases/testString/status')
         mock_response = '{"number": "number", "short_description": "short_description", "description": "description", "created_at": "created_at", "created_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "updated_at": "updated_at", "updated_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "contact_type": "Cloud Support Center", "contact": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}, "status": "status", "severity": 8, "support_tier": "Free", "resolution": "resolution", "close_notes": "close_notes", "eu": {"support": false, "data_center": "data_center"}, "watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}], "offering": {"name": "name", "type": {"group": "crn_service_name", "key": "key", "kind": "kind", "id": "id"}}, "resources": [{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}], "comments": [{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a ResolvePayload model
         status_payload_model = {}
@@ -565,7 +632,7 @@ class TestUpdateCaseStatus:
             "status_payload": status_payload,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_case_status(**req_copy)
 
@@ -578,8 +645,7 @@ class TestUpdateCaseStatus:
         _service.disable_retries()
         self.test_update_case_status_value_error()
 
-
-class TestAddComment:
+class TestAddComment():
     """
     Test Class for add_comment
     """
@@ -592,14 +658,22 @@ class TestAddComment:
         # Set up mock
         url = preprocess_url('/cases/testString/comments')
         mock_response = '{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         case_number = 'testString'
         comment = 'This is a test comment'
 
         # Invoke method
-        response = _service.add_comment(case_number, comment, headers={})
+        response = _service.add_comment(
+            case_number,
+            comment,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -625,7 +699,11 @@ class TestAddComment:
         # Set up mock
         url = preprocess_url('/cases/testString/comments')
         mock_response = '{"value": "value", "added_at": "added_at", "added_by": {"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         case_number = 'testString'
@@ -637,7 +715,7 @@ class TestAddComment:
             "comment": comment,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.add_comment(**req_copy)
 
@@ -650,8 +728,7 @@ class TestAddComment:
         _service.disable_retries()
         self.test_add_comment_value_error()
 
-
-class TestAddWatchlist:
+class TestAddWatchlist():
     """
     Test Class for add_watchlist
     """
@@ -664,7 +741,11 @@ class TestAddWatchlist:
         # Set up mock
         url = preprocess_url('/cases/testString/watchlist')
         mock_response = '{"added": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "failed": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a User model
         user_model = {}
@@ -676,7 +757,11 @@ class TestAddWatchlist:
         watchlist = [user_model]
 
         # Invoke method
-        response = _service.add_watchlist(case_number, watchlist=watchlist, headers={})
+        response = _service.add_watchlist(
+            case_number,
+            watchlist=watchlist,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -702,7 +787,11 @@ class TestAddWatchlist:
         # Set up mock
         url = preprocess_url('/cases/testString/watchlist')
         mock_response = '{"added": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}], "failed": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a User model
         user_model = {}
@@ -718,7 +807,7 @@ class TestAddWatchlist:
             "case_number": case_number,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.add_watchlist(**req_copy)
 
@@ -731,8 +820,7 @@ class TestAddWatchlist:
         _service.disable_retries()
         self.test_add_watchlist_value_error()
 
-
-class TestRemoveWatchlist:
+class TestRemoveWatchlist():
     """
     Test Class for remove_watchlist
     """
@@ -745,7 +833,11 @@ class TestRemoveWatchlist:
         # Set up mock
         url = preprocess_url('/cases/testString/watchlist')
         mock_response = '{"watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]}'
-        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a User model
         user_model = {}
@@ -757,7 +849,11 @@ class TestRemoveWatchlist:
         watchlist = [user_model]
 
         # Invoke method
-        response = _service.remove_watchlist(case_number, watchlist=watchlist, headers={})
+        response = _service.remove_watchlist(
+            case_number,
+            watchlist=watchlist,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -783,7 +879,11 @@ class TestRemoveWatchlist:
         # Set up mock
         url = preprocess_url('/cases/testString/watchlist')
         mock_response = '{"watchlist": [{"name": "name", "realm": "IBMid", "user_id": "abc@ibm.com"}]}'
-        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a User model
         user_model = {}
@@ -799,7 +899,7 @@ class TestRemoveWatchlist:
             "case_number": case_number,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.remove_watchlist(**req_copy)
 
@@ -812,8 +912,7 @@ class TestRemoveWatchlist:
         _service.disable_retries()
         self.test_remove_watchlist_value_error()
 
-
-class TestAddResource:
+class TestAddResource():
     """
     Test Class for add_resource
     """
@@ -826,7 +925,11 @@ class TestAddResource:
         # Set up mock
         url = preprocess_url('/cases/testString/resources')
         mock_response = '{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         case_number = 'testString'
@@ -836,7 +939,14 @@ class TestAddResource:
         note = 'testString'
 
         # Invoke method
-        response = _service.add_resource(case_number, crn=crn, type=type, id=id, note=note, headers={})
+        response = _service.add_resource(
+            case_number,
+            crn=crn,
+            type=type,
+            id=id,
+            note=note,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -865,7 +975,11 @@ class TestAddResource:
         # Set up mock
         url = preprocess_url('/cases/testString/resources')
         mock_response = '{"crn": "crn", "name": "name", "type": "type", "url": "url", "note": "note"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         case_number = 'testString'
@@ -879,7 +993,7 @@ class TestAddResource:
             "case_number": case_number,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.add_resource(**req_copy)
 
@@ -892,8 +1006,7 @@ class TestAddResource:
         _service.disable_retries()
         self.test_add_resource_value_error()
 
-
-class TestUploadFile:
+class TestUploadFile():
     """
     Test Class for upload_file
     """
@@ -905,10 +1018,12 @@ class TestUploadFile:
         """
         # Set up mock
         url = preprocess_url('/cases/testString/attachments')
-        mock_response = (
-            '{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}'
-        )
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        mock_response = '{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}'
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a FileWithMetadata model
         file_with_metadata_model = {}
@@ -921,7 +1036,11 @@ class TestUploadFile:
         file = [file_with_metadata_model]
 
         # Invoke method
-        response = _service.upload_file(case_number, file, headers={})
+        response = _service.upload_file(
+            case_number,
+            file,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -943,10 +1062,12 @@ class TestUploadFile:
         """
         # Set up mock
         url = preprocess_url('/cases/testString/attachments')
-        mock_response = (
-            '{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}'
-        )
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        mock_response = '{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}'
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a FileWithMetadata model
         file_with_metadata_model = {}
@@ -964,7 +1085,7 @@ class TestUploadFile:
             "file": file,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.upload_file(**req_copy)
 
@@ -977,8 +1098,7 @@ class TestUploadFile:
         _service.disable_retries()
         self.test_upload_file_value_error()
 
-
-class TestDownloadFile:
+class TestDownloadFile():
     """
     Test Class for download_file
     """
@@ -991,14 +1111,22 @@ class TestDownloadFile:
         # Set up mock
         url = preprocess_url('/cases/testString/attachments/testString')
         mock_response = 'This is a mock binary response.'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/octet-stream', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/octet-stream',
+                      status=200)
 
         # Set up parameter values
         case_number = 'testString'
         file_id = 'testString'
 
         # Invoke method
-        response = _service.download_file(case_number, file_id, headers={})
+        response = _service.download_file(
+            case_number,
+            file_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1021,7 +1149,11 @@ class TestDownloadFile:
         # Set up mock
         url = preprocess_url('/cases/testString/attachments/testString')
         mock_response = 'This is a mock binary response.'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/octet-stream', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/octet-stream',
+                      status=200)
 
         # Set up parameter values
         case_number = 'testString'
@@ -1033,7 +1165,7 @@ class TestDownloadFile:
             "file_id": file_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.download_file(**req_copy)
 
@@ -1046,8 +1178,7 @@ class TestDownloadFile:
         _service.disable_retries()
         self.test_download_file_value_error()
 
-
-class TestDeleteFile:
+class TestDeleteFile():
     """
     Test Class for delete_file
     """
@@ -1060,14 +1191,22 @@ class TestDeleteFile:
         # Set up mock
         url = preprocess_url('/cases/testString/attachments/testString')
         mock_response = '{"attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}]}'
-        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         case_number = 'testString'
         file_id = 'testString'
 
         # Invoke method
-        response = _service.delete_file(case_number, file_id, headers={})
+        response = _service.delete_file(
+            case_number,
+            file_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1090,7 +1229,11 @@ class TestDeleteFile:
         # Set up mock
         url = preprocess_url('/cases/testString/attachments/testString')
         mock_response = '{"attachments": [{"id": "id", "filename": "filename", "size_in_bytes": 13, "created_at": "created_at", "url": "url"}]}'
-        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         case_number = 'testString'
@@ -1102,7 +1245,7 @@ class TestDeleteFile:
             "file_id": file_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_file(**req_copy)
 
@@ -1115,7 +1258,6 @@ class TestDeleteFile:
         _service.disable_retries()
         self.test_delete_file_value_error()
 
-
 # endregion
 ##############################################################################
 # End of Service: Default
@@ -1126,7 +1268,7 @@ class TestDeleteFile:
 # Start of Model Tests
 ##############################################################################
 # region
-class TestModel_Attachment:
+class TestModel_Attachment():
     """
     Test Class for Attachment
     """
@@ -1159,8 +1301,7 @@ class TestModel_Attachment:
         attachment_model_json2 = attachment_model.to_dict()
         assert attachment_model_json2 == attachment_model_json
 
-
-class TestModel_AttachmentList:
+class TestModel_AttachmentList():
     """
     Test Class for AttachmentList
     """
@@ -1172,7 +1313,7 @@ class TestModel_AttachmentList:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        attachment_model = {}  # Attachment
+        attachment_model = {} # Attachment
         attachment_model['id'] = 'string'
         attachment_model['filename'] = 'string'
         attachment_model['size_in_bytes'] = 0
@@ -1198,8 +1339,7 @@ class TestModel_AttachmentList:
         attachment_list_model_json2 = attachment_list_model.to_dict()
         assert attachment_list_model_json2 == attachment_list_model_json
 
-
-class TestModel_Case:
+class TestModel_Case():
     """
     Test Class for Case
     """
@@ -1211,39 +1351,39 @@ class TestModel_Case:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        user_model = {}  # User
+        user_model = {} # User
         user_model['realm'] = 'IBMid'
         user_model['user_id'] = 'abc@ibm.com'
 
-        case_eu_model = {}  # CaseEu
+        case_eu_model = {} # CaseEu
         case_eu_model['support'] = True
         case_eu_model['data_center'] = 'testString'
 
-        attachment_model = {}  # Attachment
+        attachment_model = {} # Attachment
         attachment_model['id'] = 'testString'
         attachment_model['filename'] = 'testString'
         attachment_model['size_in_bytes'] = 38
         attachment_model['created_at'] = 'testString'
         attachment_model['url'] = 'testString'
 
-        offering_type_model = {}  # OfferingType
+        offering_type_model = {} # OfferingType
         offering_type_model['group'] = 'crn_service_name'
         offering_type_model['key'] = 'testString'
         offering_type_model['kind'] = 'testString'
         offering_type_model['id'] = 'testString'
 
-        offering_model = {}  # Offering
+        offering_model = {} # Offering
         offering_model['name'] = 'testString'
         offering_model['type'] = offering_type_model
 
-        resource_model = {}  # Resource
+        resource_model = {} # Resource
         resource_model['crn'] = 'testString'
         resource_model['name'] = 'testString'
         resource_model['type'] = 'testString'
         resource_model['url'] = 'testString'
         resource_model['note'] = 'testString'
 
-        comment_model = {}  # Comment
+        comment_model = {} # Comment
         comment_model['value'] = 'testString'
         comment_model['added_at'] = 'testString'
         comment_model['added_by'] = user_model
@@ -1286,8 +1426,7 @@ class TestModel_Case:
         case_model_json2 = case_model.to_dict()
         assert case_model_json2 == case_model_json
 
-
-class TestModel_CaseEu:
+class TestModel_CaseEu():
     """
     Test Class for CaseEu
     """
@@ -1317,8 +1456,7 @@ class TestModel_CaseEu:
         case_eu_model_json2 = case_eu_model.to_dict()
         assert case_eu_model_json2 == case_eu_model_json
 
-
-class TestModel_CaseList:
+class TestModel_CaseList():
     """
     Test Class for CaseList
     """
@@ -1330,47 +1468,47 @@ class TestModel_CaseList:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        pagination_link_model = {}  # PaginationLink
+        pagination_link_model = {} # PaginationLink
         pagination_link_model['href'] = 'testString'
 
-        user_model = {}  # User
+        user_model = {} # User
         user_model['realm'] = 'IBMid'
         user_model['user_id'] = 'abc@ibm.com'
 
-        case_eu_model = {}  # CaseEu
+        case_eu_model = {} # CaseEu
         case_eu_model['support'] = True
         case_eu_model['data_center'] = 'testString'
 
-        attachment_model = {}  # Attachment
+        attachment_model = {} # Attachment
         attachment_model['id'] = 'testString'
         attachment_model['filename'] = 'testString'
         attachment_model['size_in_bytes'] = 38
         attachment_model['created_at'] = 'testString'
         attachment_model['url'] = 'testString'
 
-        offering_type_model = {}  # OfferingType
+        offering_type_model = {} # OfferingType
         offering_type_model['group'] = 'crn_service_name'
         offering_type_model['key'] = 'testString'
         offering_type_model['kind'] = 'testString'
         offering_type_model['id'] = 'testString'
 
-        offering_model = {}  # Offering
+        offering_model = {} # Offering
         offering_model['name'] = 'testString'
         offering_model['type'] = offering_type_model
 
-        resource_model = {}  # Resource
+        resource_model = {} # Resource
         resource_model['crn'] = 'testString'
         resource_model['name'] = 'testString'
         resource_model['type'] = 'testString'
         resource_model['url'] = 'testString'
         resource_model['note'] = 'testString'
 
-        comment_model = {}  # Comment
+        comment_model = {} # Comment
         comment_model['value'] = 'testString'
         comment_model['added_at'] = 'testString'
         comment_model['added_by'] = user_model
 
-        case_model = {}  # Case
+        case_model = {} # Case
         case_model['number'] = 'testString'
         case_model['short_description'] = 'testString'
         case_model['description'] = 'testString'
@@ -1416,8 +1554,7 @@ class TestModel_CaseList:
         case_list_model_json2 = case_list_model.to_dict()
         assert case_list_model_json2 == case_list_model_json
 
-
-class TestModel_CasePayloadEu:
+class TestModel_CasePayloadEu():
     """
     Test Class for CasePayloadEu
     """
@@ -1447,8 +1584,7 @@ class TestModel_CasePayloadEu:
         case_payload_eu_model_json2 = case_payload_eu_model.to_dict()
         assert case_payload_eu_model_json2 == case_payload_eu_model_json
 
-
-class TestModel_Comment:
+class TestModel_Comment():
     """
     Test Class for Comment
     """
@@ -1460,7 +1596,7 @@ class TestModel_Comment:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        user_model = {}  # User
+        user_model = {} # User
         user_model['realm'] = 'IBMid'
         user_model['user_id'] = 'abc@ibm.com'
 
@@ -1485,8 +1621,7 @@ class TestModel_Comment:
         comment_model_json2 = comment_model.to_dict()
         assert comment_model_json2 == comment_model_json
 
-
-class TestModel_Offering:
+class TestModel_Offering():
     """
     Test Class for Offering
     """
@@ -1498,7 +1633,7 @@ class TestModel_Offering:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        offering_type_model = {}  # OfferingType
+        offering_type_model = {} # OfferingType
         offering_type_model['group'] = 'crn_service_name'
         offering_type_model['key'] = 'testString'
         offering_type_model['kind'] = 'testString'
@@ -1524,8 +1659,7 @@ class TestModel_Offering:
         offering_model_json2 = offering_model.to_dict()
         assert offering_model_json2 == offering_model_json
 
-
-class TestModel_OfferingType:
+class TestModel_OfferingType():
     """
     Test Class for OfferingType
     """
@@ -1557,8 +1691,7 @@ class TestModel_OfferingType:
         offering_type_model_json2 = offering_type_model.to_dict()
         assert offering_type_model_json2 == offering_type_model_json
 
-
-class TestModel_PaginationLink:
+class TestModel_PaginationLink():
     """
     Test Class for PaginationLink
     """
@@ -1587,8 +1720,7 @@ class TestModel_PaginationLink:
         pagination_link_model_json2 = pagination_link_model.to_dict()
         assert pagination_link_model_json2 == pagination_link_model_json
 
-
-class TestModel_Resource:
+class TestModel_Resource():
     """
     Test Class for Resource
     """
@@ -1621,8 +1753,7 @@ class TestModel_Resource:
         resource_model_json2 = resource_model.to_dict()
         assert resource_model_json2 == resource_model_json
 
-
-class TestModel_ResourcePayload:
+class TestModel_ResourcePayload():
     """
     Test Class for ResourcePayload
     """
@@ -1654,8 +1785,7 @@ class TestModel_ResourcePayload:
         resource_payload_model_json2 = resource_payload_model.to_dict()
         assert resource_payload_model_json2 == resource_payload_model_json
 
-
-class TestModel_User:
+class TestModel_User():
     """
     Test Class for User
     """
@@ -1685,8 +1815,7 @@ class TestModel_User:
         user_model_json2 = user_model.to_dict()
         assert user_model_json2 == user_model_json
 
-
-class TestModel_Watchlist:
+class TestModel_Watchlist():
     """
     Test Class for Watchlist
     """
@@ -1698,7 +1827,7 @@ class TestModel_Watchlist:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        user_model = {}  # User
+        user_model = {} # User
         user_model['realm'] = 'IBMid'
         user_model['user_id'] = 'abc@ibm.com'
 
@@ -1721,8 +1850,7 @@ class TestModel_Watchlist:
         watchlist_model_json2 = watchlist_model.to_dict()
         assert watchlist_model_json2 == watchlist_model_json
 
-
-class TestModel_WatchlistAddResponse:
+class TestModel_WatchlistAddResponse():
     """
     Test Class for WatchlistAddResponse
     """
@@ -1734,7 +1862,7 @@ class TestModel_WatchlistAddResponse:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        user_model = {}  # User
+        user_model = {} # User
         user_model['realm'] = 'IBMid'
         user_model['user_id'] = 'johndoe@ibm.com'
 
@@ -1758,8 +1886,7 @@ class TestModel_WatchlistAddResponse:
         watchlist_add_response_model_json2 = watchlist_add_response_model.to_dict()
         assert watchlist_add_response_model_json2 == watchlist_add_response_model_json
 
-
-class TestModel_AcceptPayload:
+class TestModel_AcceptPayload():
     """
     Test Class for AcceptPayload
     """
@@ -1789,8 +1916,7 @@ class TestModel_AcceptPayload:
         accept_payload_model_json2 = accept_payload_model.to_dict()
         assert accept_payload_model_json2 == accept_payload_model_json
 
-
-class TestModel_ResolvePayload:
+class TestModel_ResolvePayload():
     """
     Test Class for ResolvePayload
     """
@@ -1821,8 +1947,7 @@ class TestModel_ResolvePayload:
         resolve_payload_model_json2 = resolve_payload_model.to_dict()
         assert resolve_payload_model_json2 == resolve_payload_model_json
 
-
-class TestModel_UnresolvePayload:
+class TestModel_UnresolvePayload():
     """
     Test Class for UnresolvePayload
     """
@@ -1852,8 +1977,7 @@ class TestModel_UnresolvePayload:
         unresolve_payload_model_json2 = unresolve_payload_model.to_dict()
         assert unresolve_payload_model_json2 == unresolve_payload_model_json
 
-
-class TestModel_FileWithMetadata:
+class TestModel_FileWithMetadata():
     """
     Test Class for FileWithMetadata
     """

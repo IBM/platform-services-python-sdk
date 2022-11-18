@@ -28,7 +28,9 @@ import urllib
 from ibm_platform_services.open_service_broker_v1 import *
 
 
-service = OpenServiceBrokerV1(authenticator=NoAuthAuthenticator())
+service = OpenServiceBrokerV1(
+    authenticator=NoAuthAuthenticator()
+    )
 
 base_url = 'https://fake'
 service.set_service_url(base_url)
@@ -38,8 +40,7 @@ service.set_service_url(base_url)
 ##############################################################################
 # region
 
-
-class TestGetServiceInstanceState:
+class TestGetServiceInstanceState():
     """
     Test Class for get_service_instance_state
     """
@@ -61,17 +62,25 @@ class TestGetServiceInstanceState:
         # Set up mock
         url = self.preprocess_url(base_url + '/bluemix_v1/service_instances/testString')
         mock_response = '{"active": true, "enabled": false, "last_active": 11}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_id = 'testString'
 
         # Invoke method
-        response = service.get_service_instance_state(instance_id, headers={})
+        response = service.get_service_instance_state(
+            instance_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
+
 
     @responses.activate
     def test_get_service_instance_state_value_error(self):
@@ -81,7 +90,11 @@ class TestGetServiceInstanceState:
         # Set up mock
         url = self.preprocess_url(base_url + '/bluemix_v1/service_instances/testString')
         mock_response = '{"active": true, "enabled": false, "last_active": 11}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_id = 'testString'
@@ -91,12 +104,13 @@ class TestGetServiceInstanceState:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 service.get_service_instance_state(**req_copy)
 
 
-class TestReplaceServiceInstanceState:
+
+class TestReplaceServiceInstanceState():
     """
     Test Class for replace_service_instance_state
     """
@@ -118,7 +132,11 @@ class TestReplaceServiceInstanceState:
         # Set up mock
         url = self.preprocess_url(base_url + '/bluemix_v1/service_instances/testString')
         mock_response = '{"active": true, "enabled": false, "last_active": 11}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_id = 'testString'
@@ -128,7 +146,11 @@ class TestReplaceServiceInstanceState:
 
         # Invoke method
         response = service.replace_service_instance_state(
-            instance_id, enabled=enabled, initiator_id=initiator_id, reason_code=reason_code, headers={}
+            instance_id,
+            enabled=enabled,
+            initiator_id=initiator_id,
+            reason_code=reason_code,
+            headers={}
         )
 
         # Check for correct operation
@@ -140,6 +162,7 @@ class TestReplaceServiceInstanceState:
         assert req_body['initiator_id'] == 'null'
         assert req_body['reason_code'] == 'null'
 
+
     @responses.activate
     def test_replace_service_instance_state_required_params(self):
         """
@@ -148,17 +171,25 @@ class TestReplaceServiceInstanceState:
         # Set up mock
         url = self.preprocess_url(base_url + '/bluemix_v1/service_instances/testString')
         mock_response = '{"active": true, "enabled": false, "last_active": 11}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_id = 'testString'
 
         # Invoke method
-        response = service.replace_service_instance_state(instance_id, headers={})
+        response = service.replace_service_instance_state(
+            instance_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
+
 
     @responses.activate
     def test_replace_service_instance_state_value_error(self):
@@ -168,7 +199,11 @@ class TestReplaceServiceInstanceState:
         # Set up mock
         url = self.preprocess_url(base_url + '/bluemix_v1/service_instances/testString')
         mock_response = '{"active": true, "enabled": false, "last_active": 11}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_id = 'testString'
@@ -178,9 +213,10 @@ class TestReplaceServiceInstanceState:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 service.replace_service_instance_state(**req_copy)
+
 
 
 # endregion
@@ -193,8 +229,7 @@ class TestReplaceServiceInstanceState:
 ##############################################################################
 # region
 
-
-class TestReplaceServiceInstance:
+class TestReplaceServiceInstance():
     """
     Test Class for replace_service_instance
     """
@@ -216,7 +251,11 @@ class TestReplaceServiceInstance:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString')
         mock_response = '{"dashboard_url": "dashboard_url", "operation": "operation"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a Context model
         context_model = {}
@@ -244,14 +283,14 @@ class TestReplaceServiceInstance:
             context=context,
             parameters=parameters,
             accepts_incomplete=accepts_incomplete,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'accepts_incomplete={}'.format('true' if accepts_incomplete else 'false') in query_string
         # Validate body params
@@ -263,6 +302,7 @@ class TestReplaceServiceInstance:
         assert req_body['context'] == context_model
         assert req_body['parameters'] == {}
 
+
     @responses.activate
     def test_replace_service_instance_required_params(self):
         """
@@ -271,17 +311,25 @@ class TestReplaceServiceInstance:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString')
         mock_response = '{"dashboard_url": "dashboard_url", "operation": "operation"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_id = 'testString'
 
         # Invoke method
-        response = service.replace_service_instance(instance_id, headers={})
+        response = service.replace_service_instance(
+            instance_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
+
 
     @responses.activate
     def test_replace_service_instance_value_error(self):
@@ -291,7 +339,11 @@ class TestReplaceServiceInstance:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString')
         mock_response = '{"dashboard_url": "dashboard_url", "operation": "operation"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_id = 'testString'
@@ -301,12 +353,13 @@ class TestReplaceServiceInstance:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 service.replace_service_instance(**req_copy)
 
 
-class TestUpdateServiceInstance:
+
+class TestUpdateServiceInstance():
     """
     Test Class for update_service_instance
     """
@@ -328,7 +381,11 @@ class TestUpdateServiceInstance:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString')
         mock_response = '{"operation": "operation"}'
-        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a Context model
         context_model = {}
@@ -354,14 +411,14 @@ class TestUpdateServiceInstance:
             plan_id=plan_id,
             previous_values=previous_values,
             accepts_incomplete=accepts_incomplete,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'accepts_incomplete={}'.format('true' if accepts_incomplete else 'false') in query_string
         # Validate body params
@@ -372,6 +429,7 @@ class TestUpdateServiceInstance:
         assert req_body['plan_id'] == 'null'
         assert req_body['previous_values'] == {}
 
+
     @responses.activate
     def test_update_service_instance_required_params(self):
         """
@@ -380,17 +438,25 @@ class TestUpdateServiceInstance:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString')
         mock_response = '{"operation": "operation"}'
-        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_id = 'testString'
 
         # Invoke method
-        response = service.update_service_instance(instance_id, headers={})
+        response = service.update_service_instance(
+            instance_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
+
 
     @responses.activate
     def test_update_service_instance_value_error(self):
@@ -400,7 +466,11 @@ class TestUpdateServiceInstance:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString')
         mock_response = '{"operation": "operation"}'
-        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_id = 'testString'
@@ -410,12 +480,13 @@ class TestUpdateServiceInstance:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 service.update_service_instance(**req_copy)
 
 
-class TestDeleteServiceInstance:
+
+class TestDeleteServiceInstance():
     """
     Test Class for delete_service_instance
     """
@@ -437,7 +508,11 @@ class TestDeleteServiceInstance:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString')
         mock_response = '{"operation": "operation"}'
-        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         service_id = 'testString'
@@ -447,18 +522,23 @@ class TestDeleteServiceInstance:
 
         # Invoke method
         response = service.delete_service_instance(
-            service_id, plan_id, instance_id, accepts_incomplete=accepts_incomplete, headers={}
+            service_id,
+            plan_id,
+            instance_id,
+            accepts_incomplete=accepts_incomplete,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'service_id={}'.format(service_id) in query_string
         assert 'plan_id={}'.format(plan_id) in query_string
         assert 'accepts_incomplete={}'.format('true' if accepts_incomplete else 'false') in query_string
+
 
     @responses.activate
     def test_delete_service_instance_required_params(self):
@@ -468,7 +548,11 @@ class TestDeleteServiceInstance:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString')
         mock_response = '{"operation": "operation"}'
-        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         service_id = 'testString'
@@ -476,16 +560,22 @@ class TestDeleteServiceInstance:
         instance_id = 'testString'
 
         # Invoke method
-        response = service.delete_service_instance(service_id, plan_id, instance_id, headers={})
+        response = service.delete_service_instance(
+            service_id,
+            plan_id,
+            instance_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'service_id={}'.format(service_id) in query_string
         assert 'plan_id={}'.format(plan_id) in query_string
+
 
     @responses.activate
     def test_delete_service_instance_value_error(self):
@@ -495,7 +585,11 @@ class TestDeleteServiceInstance:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString')
         mock_response = '{"operation": "operation"}'
-        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         service_id = 'testString'
@@ -509,9 +603,10 @@ class TestDeleteServiceInstance:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 service.delete_service_instance(**req_copy)
+
 
 
 # endregion
@@ -524,8 +619,7 @@ class TestDeleteServiceInstance:
 ##############################################################################
 # region
 
-
-class TestListCatalog:
+class TestListCatalog():
     """
     Test Class for list_catalog
     """
@@ -547,10 +641,15 @@ class TestListCatalog:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/catalog')
         mock_response = '{"services": [{"bindable": true, "description": "description", "id": "id", "name": "name", "plan_updateable": false, "plans": [{"description": "description", "free": true, "id": "id", "name": "name"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Invoke method
         response = service.list_catalog()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -567,8 +666,7 @@ class TestListCatalog:
 ##############################################################################
 # region
 
-
-class TestGetLastOperation:
+class TestGetLastOperation():
     """
     Test Class for get_last_operation
     """
@@ -590,7 +688,11 @@ class TestGetLastOperation:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString/last_operation')
         mock_response = '{"description": "description", "state": "state"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_id = 'testString'
@@ -600,18 +702,23 @@ class TestGetLastOperation:
 
         # Invoke method
         response = service.get_last_operation(
-            instance_id, operation=operation, plan_id=plan_id, service_id=service_id, headers={}
+            instance_id,
+            operation=operation,
+            plan_id=plan_id,
+            service_id=service_id,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'operation={}'.format(operation) in query_string
         assert 'plan_id={}'.format(plan_id) in query_string
         assert 'service_id={}'.format(service_id) in query_string
+
 
     @responses.activate
     def test_get_last_operation_required_params(self):
@@ -621,17 +728,25 @@ class TestGetLastOperation:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString/last_operation')
         mock_response = '{"description": "description", "state": "state"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_id = 'testString'
 
         # Invoke method
-        response = service.get_last_operation(instance_id, headers={})
+        response = service.get_last_operation(
+            instance_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
+
 
     @responses.activate
     def test_get_last_operation_value_error(self):
@@ -641,7 +756,11 @@ class TestGetLastOperation:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString/last_operation')
         mock_response = '{"description": "description", "state": "state"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_id = 'testString'
@@ -651,9 +770,10 @@ class TestGetLastOperation:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 service.get_last_operation(**req_copy)
+
 
 
 # endregion
@@ -666,8 +786,7 @@ class TestGetLastOperation:
 ##############################################################################
 # region
 
-
-class TestReplaceServiceBinding:
+class TestReplaceServiceBinding():
     """
     Test Class for replace_service_binding
     """
@@ -689,7 +808,11 @@ class TestReplaceServiceBinding:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString/service_bindings/testString')
         mock_response = '{"credentials": {"anyKey": "anyValue"}, "syslog_drain_url": "syslog_drain_url", "route_service_url": "route_service_url", "volume_mounts": [{"driver": "driver", "container_dir": "container_dir", "mode": "mode", "device_type": "device_type", "device": "device"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a BindResource model
         bind_resource_model = {}
@@ -715,7 +838,7 @@ class TestReplaceServiceBinding:
             service_id=service_id,
             bind_resource=bind_resource,
             parameters=parameters,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -728,6 +851,7 @@ class TestReplaceServiceBinding:
         assert req_body['bind_resource'] == bind_resource_model
         assert req_body['parameters'] == {}
 
+
     @responses.activate
     def test_replace_service_binding_required_params(self):
         """
@@ -736,18 +860,27 @@ class TestReplaceServiceBinding:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString/service_bindings/testString')
         mock_response = '{"credentials": {"anyKey": "anyValue"}, "syslog_drain_url": "syslog_drain_url", "route_service_url": "route_service_url", "volume_mounts": [{"driver": "driver", "container_dir": "container_dir", "mode": "mode", "device_type": "device_type", "device": "device"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         binding_id = 'testString'
         instance_id = 'testString'
 
         # Invoke method
-        response = service.replace_service_binding(binding_id, instance_id, headers={})
+        response = service.replace_service_binding(
+            binding_id,
+            instance_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
+
 
     @responses.activate
     def test_replace_service_binding_value_error(self):
@@ -757,7 +890,11 @@ class TestReplaceServiceBinding:
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString/service_bindings/testString')
         mock_response = '{"credentials": {"anyKey": "anyValue"}, "syslog_drain_url": "syslog_drain_url", "route_service_url": "route_service_url", "volume_mounts": [{"driver": "driver", "container_dir": "container_dir", "mode": "mode", "device_type": "device_type", "device": "device"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         binding_id = 'testString'
@@ -769,12 +906,13 @@ class TestReplaceServiceBinding:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 service.replace_service_binding(**req_copy)
 
 
-class TestDeleteServiceBinding:
+
+class TestDeleteServiceBinding():
     """
     Test Class for delete_service_binding
     """
@@ -795,7 +933,9 @@ class TestDeleteServiceBinding:
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString/service_bindings/testString')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         binding_id = 'testString'
@@ -804,16 +944,23 @@ class TestDeleteServiceBinding:
         service_id = 'testString'
 
         # Invoke method
-        response = service.delete_service_binding(binding_id, instance_id, plan_id, service_id, headers={})
+        response = service.delete_service_binding(
+            binding_id,
+            instance_id,
+            plan_id,
+            service_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'plan_id={}'.format(plan_id) in query_string
         assert 'service_id={}'.format(service_id) in query_string
+
 
     @responses.activate
     def test_delete_service_binding_value_error(self):
@@ -822,7 +969,9 @@ class TestDeleteServiceBinding:
         """
         # Set up mock
         url = self.preprocess_url(base_url + '/v2/service_instances/testString/service_bindings/testString')
-        responses.add(responses.DELETE, url, status=200)
+        responses.add(responses.DELETE,
+                      url,
+                      status=200)
 
         # Set up parameter values
         binding_id = 'testString'
@@ -838,9 +987,10 @@ class TestDeleteServiceBinding:
             "service_id": service_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 service.delete_service_binding(**req_copy)
+
 
 
 # endregion
@@ -853,7 +1003,7 @@ class TestDeleteServiceBinding:
 # Start of Model Tests
 ##############################################################################
 # region
-class TestResp1874644Root:
+class TestResp1874644Root():
     """
     Test Class for Resp1874644Root
     """
@@ -884,8 +1034,7 @@ class TestResp1874644Root:
         resp1874644_root_model_json2 = resp1874644_root_model.to_dict()
         assert resp1874644_root_model_json2 == resp1874644_root_model_json
 
-
-class TestResp1874650Root:
+class TestResp1874650Root():
     """
     Test Class for Resp1874650Root
     """
@@ -897,13 +1046,13 @@ class TestResp1874650Root:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        plans_model = {}  # Plans
+        plans_model = {} # Plans
         plans_model['description'] = 'testString'
         plans_model['free'] = True
         plans_model['id'] = 'testString'
         plans_model['name'] = 'testString'
 
-        services_model = {}  # Services
+        services_model = {} # Services
         services_model['bindable'] = True
         services_model['description'] = 'testString'
         services_model['id'] = 'testString'
@@ -930,8 +1079,7 @@ class TestResp1874650Root:
         resp1874650_root_model_json2 = resp1874650_root_model.to_dict()
         assert resp1874650_root_model_json2 == resp1874650_root_model_json
 
-
-class TestResp2079872Root:
+class TestResp2079872Root():
     """
     Test Class for Resp2079872Root
     """
@@ -961,8 +1109,7 @@ class TestResp2079872Root:
         resp2079872_root_model_json2 = resp2079872_root_model.to_dict()
         assert resp2079872_root_model_json2 == resp2079872_root_model_json
 
-
-class TestResp2079874Root:
+class TestResp2079874Root():
     """
     Test Class for Resp2079874Root
     """
@@ -991,8 +1138,7 @@ class TestResp2079874Root:
         resp2079874_root_model_json2 = resp2079874_root_model.to_dict()
         assert resp2079874_root_model_json2 == resp2079874_root_model_json
 
-
-class TestResp2079876Root:
+class TestResp2079876Root():
     """
     Test Class for Resp2079876Root
     """
@@ -1004,7 +1150,7 @@ class TestResp2079876Root:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        volume_mount_model = {}  # VolumeMount
+        volume_mount_model = {} # VolumeMount
         volume_mount_model['driver'] = 'testString'
         volume_mount_model['container_dir'] = 'testString'
         volume_mount_model['mode'] = 'testString'
@@ -1013,7 +1159,7 @@ class TestResp2079876Root:
 
         # Construct a json representation of a Resp2079876Root model
         resp2079876_root_model_json = {}
-        resp2079876_root_model_json['credentials'] = {'foo': 'bar'}
+        resp2079876_root_model_json['credentials'] = { 'foo': 'bar' }
         resp2079876_root_model_json['syslog_drain_url'] = 'testString'
         resp2079876_root_model_json['route_service_url'] = 'testString'
         resp2079876_root_model_json['volume_mounts'] = [volume_mount_model]
@@ -1033,8 +1179,7 @@ class TestResp2079876Root:
         resp2079876_root_model_json2 = resp2079876_root_model.to_dict()
         assert resp2079876_root_model_json2 == resp2079876_root_model_json
 
-
-class TestResp2079894Root:
+class TestResp2079894Root():
     """
     Test Class for Resp2079894Root
     """
@@ -1064,8 +1209,7 @@ class TestResp2079894Root:
         resp2079894_root_model_json2 = resp2079894_root_model.to_dict()
         assert resp2079894_root_model_json2 == resp2079894_root_model_json
 
-
-class TestResp2448145Root:
+class TestResp2448145Root():
     """
     Test Class for Resp2448145Root
     """
@@ -1096,8 +1240,7 @@ class TestResp2448145Root:
         resp2448145_root_model_json2 = resp2448145_root_model.to_dict()
         assert resp2448145_root_model_json2 == resp2448145_root_model_json
 
-
-class TestBindResource:
+class TestBindResource():
     """
     Test Class for BindResource
     """
@@ -1130,8 +1273,7 @@ class TestBindResource:
         bind_resource_model_json2 = bind_resource_model.to_dict()
         assert bind_resource_model_json2 == bind_resource_model_json
 
-
-class TestContext:
+class TestContext():
     """
     Test Class for Context
     """
@@ -1162,8 +1304,7 @@ class TestContext:
         context_model_json2 = context_model.to_dict()
         assert context_model_json2 == context_model_json
 
-
-class TestPlans:
+class TestPlans():
     """
     Test Class for Plans
     """
@@ -1195,8 +1336,7 @@ class TestPlans:
         plans_model_json2 = plans_model.to_dict()
         assert plans_model_json2 == plans_model_json
 
-
-class TestServices:
+class TestServices():
     """
     Test Class for Services
     """
@@ -1208,7 +1348,7 @@ class TestServices:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        plans_model = {}  # Plans
+        plans_model = {} # Plans
         plans_model['description'] = 'testString'
         plans_model['free'] = True
         plans_model['id'] = 'testString'
@@ -1238,8 +1378,7 @@ class TestServices:
         services_model_json2 = services_model.to_dict()
         assert services_model_json2 == services_model_json
 
-
-class TestVolumeMount:
+class TestVolumeMount():
     """
     Test Class for VolumeMount
     """

@@ -31,7 +31,9 @@ import urllib
 from ibm_platform_services.resource_manager_v2 import *
 
 
-_service = ResourceManagerV2(authenticator=NoAuthAuthenticator())
+_service = ResourceManagerV2(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://resource-controller.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -41,8 +43,7 @@ _service.set_service_url(_base_url)
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -65,10 +66,10 @@ class TestNewInstance:
         new_instance_without_authenticator()
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = ResourceManagerV2.new_instance()
+            service = ResourceManagerV2.new_instance(
+            )
 
-
-class TestListResourceGroups:
+class TestListResourceGroups():
     """
     Test Class for list_resource_groups
     """
@@ -77,7 +78,7 @@ class TestListResourceGroups:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -92,7 +93,11 @@ class TestListResourceGroups:
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/resource_groups')
         mock_response = '{"resources": [{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -103,14 +108,19 @@ class TestListResourceGroups:
 
         # Invoke method
         response = _service.list_resource_groups(
-            account_id=account_id, date=date, name=name, default=default, include_deleted=include_deleted, headers={}
+            account_id=account_id,
+            date=date,
+            name=name,
+            default=default,
+            include_deleted=include_deleted,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'date={}'.format(date) in query_string
@@ -135,10 +145,15 @@ class TestListResourceGroups:
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/resource_groups')
         mock_response = '{"resources": [{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Invoke method
         response = _service.list_resource_groups()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -153,8 +168,7 @@ class TestListResourceGroups:
         _service.disable_retries()
         self.test_list_resource_groups_required_params()
 
-
-class TestCreateResourceGroup:
+class TestCreateResourceGroup():
     """
     Test Class for create_resource_group
     """
@@ -163,7 +177,7 @@ class TestCreateResourceGroup:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -178,14 +192,22 @@ class TestCreateResourceGroup:
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/resource_groups')
         mock_response = '{"id": "id", "crn": "crn"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         name = 'test1'
         account_id = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd'
 
         # Invoke method
-        response = _service.create_resource_group(name=name, account_id=account_id, headers={})
+        response = _service.create_resource_group(
+            name=name,
+            account_id=account_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -212,10 +234,15 @@ class TestCreateResourceGroup:
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/resource_groups')
         mock_response = '{"id": "id", "crn": "crn"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Invoke method
         response = _service.create_resource_group()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -230,8 +257,7 @@ class TestCreateResourceGroup:
         _service.disable_retries()
         self.test_create_resource_group_required_params()
 
-
-class TestGetResourceGroup:
+class TestGetResourceGroup():
     """
     Test Class for get_resource_group
     """
@@ -240,7 +266,7 @@ class TestGetResourceGroup:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -255,13 +281,20 @@ class TestGetResourceGroup:
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         id = 'testString'
 
         # Invoke method
-        response = _service.get_resource_group(id, headers={})
+        response = _service.get_resource_group(
+            id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -284,7 +317,11 @@ class TestGetResourceGroup:
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         id = 'testString'
@@ -294,9 +331,10 @@ class TestGetResourceGroup:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_resource_group(**req_copy)
+
 
     def test_get_resource_group_value_error_with_retries(self):
         # Enable retries and run test_get_resource_group_value_error.
@@ -307,8 +345,7 @@ class TestGetResourceGroup:
         _service.disable_retries()
         self.test_get_resource_group_value_error()
 
-
-class TestUpdateResourceGroup:
+class TestUpdateResourceGroup():
     """
     Test Class for update_resource_group
     """
@@ -317,7 +354,7 @@ class TestUpdateResourceGroup:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -332,7 +369,11 @@ class TestUpdateResourceGroup:
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         id = 'testString'
@@ -340,7 +381,12 @@ class TestUpdateResourceGroup:
         state = 'testString'
 
         # Invoke method
-        response = _service.update_resource_group(id, name=name, state=state, headers={})
+        response = _service.update_resource_group(
+            id,
+            name=name,
+            state=state,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -367,13 +413,20 @@ class TestUpdateResourceGroup:
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         id = 'testString'
 
         # Invoke method
-        response = _service.update_resource_group(id, headers={})
+        response = _service.update_resource_group(
+            id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -396,7 +449,11 @@ class TestUpdateResourceGroup:
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/resource_groups/testString')
         mock_response = '{"id": "id", "crn": "crn", "account_id": "account_id", "name": "name", "state": "state", "default": false, "quota_id": "quota_id", "quota_url": "quota_url", "payment_methods_url": "payment_methods_url", "resource_linkages": [{"anyKey": "anyValue"}], "teams_url": "teams_url", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         id = 'testString'
@@ -406,9 +463,10 @@ class TestUpdateResourceGroup:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_resource_group(**req_copy)
+
 
     def test_update_resource_group_value_error_with_retries(self):
         # Enable retries and run test_update_resource_group_value_error.
@@ -419,8 +477,7 @@ class TestUpdateResourceGroup:
         _service.disable_retries()
         self.test_update_resource_group_value_error()
 
-
-class TestDeleteResourceGroup:
+class TestDeleteResourceGroup():
     """
     Test Class for delete_resource_group
     """
@@ -429,7 +486,7 @@ class TestDeleteResourceGroup:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -443,13 +500,18 @@ class TestDeleteResourceGroup:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/resource_groups/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
 
         # Set up parameter values
         id = 'testString'
 
         # Invoke method
-        response = _service.delete_resource_group(id, headers={})
+        response = _service.delete_resource_group(
+            id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -471,7 +533,9 @@ class TestDeleteResourceGroup:
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/resource_groups/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
 
         # Set up parameter values
         id = 'testString'
@@ -481,9 +545,10 @@ class TestDeleteResourceGroup:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_resource_group(**req_copy)
+
 
     def test_delete_resource_group_value_error_with_retries(self):
         # Enable retries and run test_delete_resource_group_value_error.
@@ -493,7 +558,6 @@ class TestDeleteResourceGroup:
         # Disable retries and run test_delete_resource_group_value_error.
         _service.disable_retries()
         self.test_delete_resource_group_value_error()
-
 
 # endregion
 ##############################################################################
@@ -505,8 +569,7 @@ class TestDeleteResourceGroup:
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -529,10 +592,10 @@ class TestNewInstance:
         new_instance_without_authenticator()
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = ResourceManagerV2.new_instance()
+            service = ResourceManagerV2.new_instance(
+            )
 
-
-class TestListQuotaDefinitions:
+class TestListQuotaDefinitions():
     """
     Test Class for list_quota_definitions
     """
@@ -541,7 +604,7 @@ class TestListQuotaDefinitions:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -556,10 +619,15 @@ class TestListQuotaDefinitions:
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/quota_definitions')
         mock_response = '{"resources": [{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": [{"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}], "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Invoke method
         response = _service.list_quota_definitions()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -574,8 +642,7 @@ class TestListQuotaDefinitions:
         _service.disable_retries()
         self.test_list_quota_definitions_all_params()
 
-
-class TestGetQuotaDefinition:
+class TestGetQuotaDefinition():
     """
     Test Class for get_quota_definition
     """
@@ -584,7 +651,7 @@ class TestGetQuotaDefinition:
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -599,13 +666,20 @@ class TestGetQuotaDefinition:
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/quota_definitions/testString')
         mock_response = '{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": [{"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}], "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         id = 'testString'
 
         # Invoke method
-        response = _service.get_quota_definition(id, headers={})
+        response = _service.get_quota_definition(
+            id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -628,7 +702,11 @@ class TestGetQuotaDefinition:
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/quota_definitions/testString')
         mock_response = '{"id": "id", "name": "name", "type": "type", "number_of_apps": 14, "number_of_service_instances": 27, "default_number_of_instances_per_lite_plan": 41, "instances_per_app": 17, "instance_memory": "instance_memory", "total_app_memory": "total_app_memory", "vsi_limit": 9, "resource_quotas": [{"_id": "id", "resource_id": "resource_id", "crn": "crn", "limit": 5}], "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         id = 'testString'
@@ -638,9 +716,10 @@ class TestGetQuotaDefinition:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_quota_definition(**req_copy)
+
 
     def test_get_quota_definition_value_error_with_retries(self):
         # Enable retries and run test_get_quota_definition_value_error.
@@ -650,7 +729,6 @@ class TestGetQuotaDefinition:
         # Disable retries and run test_get_quota_definition_value_error.
         _service.disable_retries()
         self.test_get_quota_definition_value_error()
-
 
 # endregion
 ##############################################################################
@@ -662,7 +740,7 @@ class TestGetQuotaDefinition:
 # Start of Model Tests
 ##############################################################################
 # region
-class TestModel_QuotaDefinition:
+class TestModel_QuotaDefinition():
     """
     Test Class for QuotaDefinition
     """
@@ -674,7 +752,7 @@ class TestModel_QuotaDefinition:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        resource_quota_model = {}  # ResourceQuota
+        resource_quota_model = {} # ResourceQuota
         resource_quota_model['_id'] = 'testString'
         resource_quota_model['resource_id'] = 'testString'
         resource_quota_model['crn'] = 'testString'
@@ -711,8 +789,7 @@ class TestModel_QuotaDefinition:
         quota_definition_model_json2 = quota_definition_model.to_dict()
         assert quota_definition_model_json2 == quota_definition_model_json
 
-
-class TestModel_QuotaDefinitionList:
+class TestModel_QuotaDefinitionList():
     """
     Test Class for QuotaDefinitionList
     """
@@ -724,13 +801,13 @@ class TestModel_QuotaDefinitionList:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        resource_quota_model = {}  # ResourceQuota
+        resource_quota_model = {} # ResourceQuota
         resource_quota_model['_id'] = 'testString'
         resource_quota_model['resource_id'] = 'testString'
         resource_quota_model['crn'] = 'testString'
         resource_quota_model['limit'] = 72.5
 
-        quota_definition_model = {}  # QuotaDefinition
+        quota_definition_model = {} # QuotaDefinition
         quota_definition_model['id'] = 'testString'
         quota_definition_model['name'] = 'testString'
         quota_definition_model['type'] = 'testString'
@@ -764,8 +841,7 @@ class TestModel_QuotaDefinitionList:
         quota_definition_list_model_json2 = quota_definition_list_model.to_dict()
         assert quota_definition_list_model_json2 == quota_definition_list_model_json
 
-
-class TestModel_ResCreateResourceGroup:
+class TestModel_ResCreateResourceGroup():
     """
     Test Class for ResCreateResourceGroup
     """
@@ -785,9 +861,7 @@ class TestModel_ResCreateResourceGroup:
         assert res_create_resource_group_model != False
 
         # Construct a model instance of ResCreateResourceGroup by calling from_dict on the json representation
-        res_create_resource_group_model_dict = ResCreateResourceGroup.from_dict(
-            res_create_resource_group_model_json
-        ).__dict__
+        res_create_resource_group_model_dict = ResCreateResourceGroup.from_dict(res_create_resource_group_model_json).__dict__
         res_create_resource_group_model2 = ResCreateResourceGroup(**res_create_resource_group_model_dict)
 
         # Verify the model instances are equivalent
@@ -797,8 +871,7 @@ class TestModel_ResCreateResourceGroup:
         res_create_resource_group_model_json2 = res_create_resource_group_model.to_dict()
         assert res_create_resource_group_model_json2 == res_create_resource_group_model_json
 
-
-class TestModel_ResourceGroup:
+class TestModel_ResourceGroup():
     """
     Test Class for ResourceGroup
     """
@@ -819,7 +892,7 @@ class TestModel_ResourceGroup:
         resource_group_model_json['quota_id'] = 'testString'
         resource_group_model_json['quota_url'] = 'testString'
         resource_group_model_json['payment_methods_url'] = 'testString'
-        resource_group_model_json['resource_linkages'] = [{'foo': 'bar'}]
+        resource_group_model_json['resource_linkages'] = [{ 'foo': 'bar' }]
         resource_group_model_json['teams_url'] = 'testString'
         resource_group_model_json['created_at'] = "2019-01-01T12:00:00Z"
         resource_group_model_json['updated_at'] = "2019-01-01T12:00:00Z"
@@ -839,8 +912,7 @@ class TestModel_ResourceGroup:
         resource_group_model_json2 = resource_group_model.to_dict()
         assert resource_group_model_json2 == resource_group_model_json
 
-
-class TestModel_ResourceGroupList:
+class TestModel_ResourceGroupList():
     """
     Test Class for ResourceGroupList
     """
@@ -852,7 +924,7 @@ class TestModel_ResourceGroupList:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        resource_group_model = {}  # ResourceGroup
+        resource_group_model = {} # ResourceGroup
         resource_group_model['id'] = 'testString'
         resource_group_model['crn'] = 'testString'
         resource_group_model['account_id'] = 'testString'
@@ -862,7 +934,7 @@ class TestModel_ResourceGroupList:
         resource_group_model['quota_id'] = 'testString'
         resource_group_model['quota_url'] = 'testString'
         resource_group_model['payment_methods_url'] = 'testString'
-        resource_group_model['resource_linkages'] = [{'foo': 'bar'}]
+        resource_group_model['resource_linkages'] = [{ 'foo': 'bar' }]
         resource_group_model['teams_url'] = 'testString'
         resource_group_model['created_at'] = "2019-01-01T12:00:00Z"
         resource_group_model['updated_at'] = "2019-01-01T12:00:00Z"
@@ -886,8 +958,7 @@ class TestModel_ResourceGroupList:
         resource_group_list_model_json2 = resource_group_list_model.to_dict()
         assert resource_group_list_model_json2 == resource_group_list_model_json
 
-
-class TestModel_ResourceQuota:
+class TestModel_ResourceQuota():
     """
     Test Class for ResourceQuota
     """

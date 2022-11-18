@@ -54,7 +54,7 @@ billing_month = None
 # region
 
 
-class TestEnterpriseUsageReportsV1Examples:
+class TestEnterpriseUsageReportsV1Examples():
     """
     Example Test Class for EnterpriseUsageReportsV1
     """
@@ -74,7 +74,8 @@ class TestEnterpriseUsageReportsV1Examples:
 
             # Load the configuration
             global config
-            config = read_external_sources(EnterpriseUsageReportsV1.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(
+                EnterpriseUsageReportsV1.DEFAULT_SERVICE_NAME)
 
             global enterprise_id
             enterprise_id = config.get("ENTERPRISE_ID")
@@ -116,7 +117,6 @@ class TestEnterpriseUsageReportsV1Examples:
             # end-get_resource_usage_report
         except ApiException as e:
             pytest.fail(str(e))
-
 
 # endregion
 ##############################################################################

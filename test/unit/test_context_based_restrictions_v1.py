@@ -31,7 +31,9 @@ import urllib
 from ibm_platform_services.context_based_restrictions_v1 import *
 
 
-_service = ContextBasedRestrictionsV1(authenticator=NoAuthAuthenticator())
+_service = ContextBasedRestrictionsV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://cbr.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -68,8 +70,7 @@ def preprocess_url(operation_path: str):
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -96,8 +97,7 @@ class TestNewInstance:
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-
-class TestCreateZone:
+class TestCreateZone():
     """
     Test Class for create_zone
     """
@@ -110,7 +110,11 @@ class TestCreateZone:
         # Set up mock
         url = preprocess_url('/v1/zones')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Construct a dict representation of a AddressIPAddress model
         address_model = {}
@@ -135,7 +139,7 @@ class TestCreateZone:
             excluded=excluded,
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -166,10 +170,15 @@ class TestCreateZone:
         # Set up mock
         url = preprocess_url('/v1/zones')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Invoke method
         response = _service.create_zone()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -184,8 +193,7 @@ class TestCreateZone:
         _service.disable_retries()
         self.test_create_zone_required_params()
 
-
-class TestListZones:
+class TestListZones():
     """
     Test Class for list_zones
     """
@@ -198,7 +206,11 @@ class TestListZones:
         # Set up mock
         url = preprocess_url('/v1/zones')
         mock_response = '{"count": 5, "zones": [{"id": "id", "crn": "crn", "name": "name", "description": "description", "addresses_preview": [{"type": "ipAddress", "value": "value"}], "address_count": 13, "excluded_count": 14, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -214,14 +226,14 @@ class TestListZones:
             transaction_id=transaction_id,
             name=name,
             sort=sort,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'name={}'.format(name) in query_string
@@ -244,19 +256,26 @@ class TestListZones:
         # Set up mock
         url = preprocess_url('/v1/zones')
         mock_response = '{"count": 5, "zones": [{"id": "id", "crn": "crn", "name": "name", "description": "description", "addresses_preview": [{"type": "ipAddress", "value": "value"}], "address_count": 13, "excluded_count": 14, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.list_zones(account_id, headers={})
+        response = _service.list_zones(
+            account_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
@@ -277,7 +296,11 @@ class TestListZones:
         # Set up mock
         url = preprocess_url('/v1/zones')
         mock_response = '{"count": 5, "zones": [{"id": "id", "crn": "crn", "name": "name", "description": "description", "addresses_preview": [{"type": "ipAddress", "value": "value"}], "address_count": 13, "excluded_count": 14, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -287,7 +310,7 @@ class TestListZones:
             "account_id": account_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_zones(**req_copy)
 
@@ -300,8 +323,7 @@ class TestListZones:
         _service.disable_retries()
         self.test_list_zones_value_error()
 
-
-class TestGetZone:
+class TestGetZone():
     """
     Test Class for get_zone
     """
@@ -314,7 +336,11 @@ class TestGetZone:
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         zone_id = 'testString'
@@ -323,7 +349,10 @@ class TestGetZone:
 
         # Invoke method
         response = _service.get_zone(
-            zone_id, x_correlation_id=x_correlation_id, transaction_id=transaction_id, headers={}
+            zone_id,
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            headers={}
         )
 
         # Check for correct operation
@@ -347,13 +376,20 @@ class TestGetZone:
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         zone_id = 'testString'
 
         # Invoke method
-        response = _service.get_zone(zone_id, headers={})
+        response = _service.get_zone(
+            zone_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -376,7 +412,11 @@ class TestGetZone:
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         zone_id = 'testString'
@@ -386,7 +426,7 @@ class TestGetZone:
             "zone_id": zone_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_zone(**req_copy)
 
@@ -399,8 +439,7 @@ class TestGetZone:
         _service.disable_retries()
         self.test_get_zone_value_error()
 
-
-class TestReplaceZone:
+class TestReplaceZone():
     """
     Test Class for replace_zone
     """
@@ -413,7 +452,11 @@ class TestReplaceZone:
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a AddressIPAddress model
         address_model = {}
@@ -442,7 +485,7 @@ class TestReplaceZone:
             excluded=excluded,
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -473,14 +516,22 @@ class TestReplaceZone:
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         zone_id = 'testString'
         if_match = 'testString'
 
         # Invoke method
-        response = _service.replace_zone(zone_id, if_match, headers={})
+        response = _service.replace_zone(
+            zone_id,
+            if_match,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -503,7 +554,11 @@ class TestReplaceZone:
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
         mock_response = '{"id": "id", "crn": "crn", "address_count": 13, "excluded_count": 14, "name": "name", "account_id": "account_id", "description": "description", "addresses": [{"type": "ipAddress", "value": "value"}], "excluded": [{"type": "ipAddress", "value": "value"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         zone_id = 'testString'
@@ -515,7 +570,7 @@ class TestReplaceZone:
             "if_match": if_match,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.replace_zone(**req_copy)
 
@@ -528,8 +583,7 @@ class TestReplaceZone:
         _service.disable_retries()
         self.test_replace_zone_value_error()
 
-
-class TestDeleteZone:
+class TestDeleteZone():
     """
     Test Class for delete_zone
     """
@@ -541,7 +595,9 @@ class TestDeleteZone:
         """
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
 
         # Set up parameter values
         zone_id = 'testString'
@@ -550,7 +606,10 @@ class TestDeleteZone:
 
         # Invoke method
         response = _service.delete_zone(
-            zone_id, x_correlation_id=x_correlation_id, transaction_id=transaction_id, headers={}
+            zone_id,
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            headers={}
         )
 
         # Check for correct operation
@@ -573,13 +632,18 @@ class TestDeleteZone:
         """
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
 
         # Set up parameter values
         zone_id = 'testString'
 
         # Invoke method
-        response = _service.delete_zone(zone_id, headers={})
+        response = _service.delete_zone(
+            zone_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -601,7 +665,9 @@ class TestDeleteZone:
         """
         # Set up mock
         url = preprocess_url('/v1/zones/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
 
         # Set up parameter values
         zone_id = 'testString'
@@ -611,7 +677,7 @@ class TestDeleteZone:
             "zone_id": zone_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_zone(**req_copy)
 
@@ -624,8 +690,7 @@ class TestDeleteZone:
         _service.disable_retries()
         self.test_delete_zone_value_error()
 
-
-class TestListAvailableServicerefTargets:
+class TestListAvailableServicerefTargets():
     """
     Test Class for list_available_serviceref_targets
     """
@@ -638,7 +703,11 @@ class TestListAvailableServicerefTargets:
         # Set up mock
         url = preprocess_url('/v1/zones/serviceref_targets')
         mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type", "locations": [{"name": "name"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         x_correlation_id = 'testString'
@@ -647,14 +716,17 @@ class TestListAvailableServicerefTargets:
 
         # Invoke method
         response = _service.list_available_serviceref_targets(
-            x_correlation_id=x_correlation_id, transaction_id=transaction_id, type=type, headers={}
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            type=type,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'type={}'.format(type) in query_string
 
@@ -675,10 +747,15 @@ class TestListAvailableServicerefTargets:
         # Set up mock
         url = preprocess_url('/v1/zones/serviceref_targets')
         mock_response = '{"count": 5, "targets": [{"service_name": "service_name", "service_type": "service_type", "locations": [{"name": "name"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Invoke method
         response = _service.list_available_serviceref_targets()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -693,7 +770,6 @@ class TestListAvailableServicerefTargets:
         _service.disable_retries()
         self.test_list_available_serviceref_targets_required_params()
 
-
 # endregion
 ##############################################################################
 # End of Service: Zones
@@ -704,8 +780,7 @@ class TestListAvailableServicerefTargets:
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -732,8 +807,7 @@ class TestNewInstance:
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-
-class TestCreateRule:
+class TestCreateRule():
     """
     Test Class for create_rule
     """
@@ -746,7 +820,11 @@ class TestCreateRule:
         # Set up mock
         url = preprocess_url('/v1/rules')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Construct a dict representation of a RuleContextAttribute model
         rule_context_attribute_model = {}
@@ -800,7 +878,7 @@ class TestCreateRule:
             enforcement_mode=enforcement_mode,
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -831,10 +909,15 @@ class TestCreateRule:
         # Set up mock
         url = preprocess_url('/v1/rules')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Invoke method
         response = _service.create_rule()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -849,8 +932,7 @@ class TestCreateRule:
         _service.disable_retries()
         self.test_create_rule_required_params()
 
-
-class TestListRules:
+class TestListRules():
     """
     Test Class for list_rules
     """
@@ -863,7 +945,11 @@ class TestListRules:
         # Set up mock
         url = preprocess_url('/v1/rules')
         mock_response = '{"count": 5, "rules": [{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -895,14 +981,14 @@ class TestListRules:
             zone_id=zone_id,
             sort=sort,
             enforcement_mode=enforcement_mode,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'region={}'.format(region) in query_string
@@ -933,19 +1019,26 @@ class TestListRules:
         # Set up mock
         url = preprocess_url('/v1/rules')
         mock_response = '{"count": 5, "rules": [{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.list_rules(account_id, headers={})
+        response = _service.list_rules(
+            account_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
@@ -966,7 +1059,11 @@ class TestListRules:
         # Set up mock
         url = preprocess_url('/v1/rules')
         mock_response = '{"count": 5, "rules": [{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -976,7 +1073,7 @@ class TestListRules:
             "account_id": account_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_rules(**req_copy)
 
@@ -989,8 +1086,7 @@ class TestListRules:
         _service.disable_retries()
         self.test_list_rules_value_error()
 
-
-class TestGetRule:
+class TestGetRule():
     """
     Test Class for get_rule
     """
@@ -1003,7 +1099,11 @@ class TestGetRule:
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         rule_id = 'testString'
@@ -1012,7 +1112,10 @@ class TestGetRule:
 
         # Invoke method
         response = _service.get_rule(
-            rule_id, x_correlation_id=x_correlation_id, transaction_id=transaction_id, headers={}
+            rule_id,
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            headers={}
         )
 
         # Check for correct operation
@@ -1036,13 +1139,20 @@ class TestGetRule:
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         rule_id = 'testString'
 
         # Invoke method
-        response = _service.get_rule(rule_id, headers={})
+        response = _service.get_rule(
+            rule_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1065,7 +1175,11 @@ class TestGetRule:
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         rule_id = 'testString'
@@ -1075,7 +1189,7 @@ class TestGetRule:
             "rule_id": rule_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_rule(**req_copy)
 
@@ -1088,8 +1202,7 @@ class TestGetRule:
         _service.disable_retries()
         self.test_get_rule_value_error()
 
-
-class TestReplaceRule:
+class TestReplaceRule():
     """
     Test Class for replace_rule
     """
@@ -1102,7 +1215,11 @@ class TestReplaceRule:
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Construct a dict representation of a RuleContextAttribute model
         rule_context_attribute_model = {}
@@ -1160,7 +1277,7 @@ class TestReplaceRule:
             enforcement_mode=enforcement_mode,
             x_correlation_id=x_correlation_id,
             transaction_id=transaction_id,
-            headers={},
+            headers={}
         )
 
         # Check for correct operation
@@ -1191,14 +1308,22 @@ class TestReplaceRule:
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         rule_id = 'testString'
         if_match = 'testString'
 
         # Invoke method
-        response = _service.replace_rule(rule_id, if_match, headers={})
+        response = _service.replace_rule(
+            rule_id,
+            if_match,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1221,7 +1346,11 @@ class TestReplaceRule:
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
         mock_response = '{"id": "id", "crn": "crn", "description": "description", "contexts": [{"attributes": [{"name": "name", "value": "value"}]}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "operations": {"api_types": [{"api_type_id": "api_type_id"}]}, "enforcement_mode": "enabled", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         rule_id = 'testString'
@@ -1233,7 +1362,7 @@ class TestReplaceRule:
             "if_match": if_match,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.replace_rule(**req_copy)
 
@@ -1246,8 +1375,7 @@ class TestReplaceRule:
         _service.disable_retries()
         self.test_replace_rule_value_error()
 
-
-class TestDeleteRule:
+class TestDeleteRule():
     """
     Test Class for delete_rule
     """
@@ -1259,7 +1387,9 @@ class TestDeleteRule:
         """
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
 
         # Set up parameter values
         rule_id = 'testString'
@@ -1268,7 +1398,10 @@ class TestDeleteRule:
 
         # Invoke method
         response = _service.delete_rule(
-            rule_id, x_correlation_id=x_correlation_id, transaction_id=transaction_id, headers={}
+            rule_id,
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            headers={}
         )
 
         # Check for correct operation
@@ -1291,13 +1424,18 @@ class TestDeleteRule:
         """
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
 
         # Set up parameter values
         rule_id = 'testString'
 
         # Invoke method
-        response = _service.delete_rule(rule_id, headers={})
+        response = _service.delete_rule(
+            rule_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1319,7 +1457,9 @@ class TestDeleteRule:
         """
         # Set up mock
         url = preprocess_url('/v1/rules/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
 
         # Set up parameter values
         rule_id = 'testString'
@@ -1329,7 +1469,7 @@ class TestDeleteRule:
             "rule_id": rule_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_rule(**req_copy)
 
@@ -1342,7 +1482,6 @@ class TestDeleteRule:
         _service.disable_retries()
         self.test_delete_rule_value_error()
 
-
 # endregion
 ##############################################################################
 # End of Service: Rules
@@ -1353,8 +1492,7 @@ class TestDeleteRule:
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -1381,8 +1519,7 @@ class TestNewInstance:
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-
-class TestGetAccountSettings:
+class TestGetAccountSettings():
     """
     Test Class for get_account_settings
     """
@@ -1395,7 +1532,11 @@ class TestGetAccountSettings:
         # Set up mock
         url = preprocess_url('/v1/account_settings/testString')
         mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "current_rule_count": 18, "current_zone_count": 18, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -1404,7 +1545,10 @@ class TestGetAccountSettings:
 
         # Invoke method
         response = _service.get_account_settings(
-            account_id, x_correlation_id=x_correlation_id, transaction_id=transaction_id, headers={}
+            account_id,
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            headers={}
         )
 
         # Check for correct operation
@@ -1428,13 +1572,20 @@ class TestGetAccountSettings:
         # Set up mock
         url = preprocess_url('/v1/account_settings/testString')
         mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "current_rule_count": 18, "current_zone_count": 18, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.get_account_settings(account_id, headers={})
+        response = _service.get_account_settings(
+            account_id,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1457,7 +1608,11 @@ class TestGetAccountSettings:
         # Set up mock
         url = preprocess_url('/v1/account_settings/testString')
         mock_response = '{"id": "id", "crn": "crn", "rule_count_limit": 16, "zone_count_limit": 16, "current_rule_count": 18, "current_zone_count": 18, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -1467,7 +1622,7 @@ class TestGetAccountSettings:
             "account_id": account_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_account_settings(**req_copy)
 
@@ -1480,7 +1635,6 @@ class TestGetAccountSettings:
         _service.disable_retries()
         self.test_get_account_settings_value_error()
 
-
 # endregion
 ##############################################################################
 # End of Service: AccountSettings
@@ -1491,8 +1645,7 @@ class TestGetAccountSettings:
 ##############################################################################
 # region
 
-
-class TestNewInstance:
+class TestNewInstance():
     """
     Test Class for new_instance
     """
@@ -1519,8 +1672,7 @@ class TestNewInstance:
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-
-class TestListAvailableServiceOperations:
+class TestListAvailableServiceOperations():
     """
     Test Class for list_available_service_operations
     """
@@ -1533,7 +1685,11 @@ class TestListAvailableServiceOperations:
         # Set up mock
         url = preprocess_url('/v1/operations')
         mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         service_name = 'testString'
@@ -1542,14 +1698,17 @@ class TestListAvailableServiceOperations:
 
         # Invoke method
         response = _service.list_available_service_operations(
-            service_name, x_correlation_id=x_correlation_id, transaction_id=transaction_id, headers={}
+            service_name,
+            x_correlation_id=x_correlation_id,
+            transaction_id=transaction_id,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'service_name={}'.format(service_name) in query_string
 
@@ -1570,19 +1729,26 @@ class TestListAvailableServiceOperations:
         # Set up mock
         url = preprocess_url('/v1/operations')
         mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         service_name = 'testString'
 
         # Invoke method
-        response = _service.list_available_service_operations(service_name, headers={})
+        response = _service.list_available_service_operations(
+            service_name,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'service_name={}'.format(service_name) in query_string
 
@@ -1603,7 +1769,11 @@ class TestListAvailableServiceOperations:
         # Set up mock
         url = preprocess_url('/v1/operations')
         mock_response = '{"api_types": [{"api_type_id": "api_type_id", "display_name": "display_name", "description": "description", "actions": [{"action_id": "action_id", "description": "description"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         service_name = 'testString'
@@ -1613,7 +1783,7 @@ class TestListAvailableServiceOperations:
             "service_name": service_name,
         }
         for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_available_service_operations(**req_copy)
 
@@ -1626,7 +1796,6 @@ class TestListAvailableServiceOperations:
         _service.disable_retries()
         self.test_list_available_service_operations_value_error()
 
-
 # endregion
 ##############################################################################
 # End of Service: Operations
@@ -1637,7 +1806,7 @@ class TestListAvailableServiceOperations:
 # Start of Model Tests
 ##############################################################################
 # region
-class TestModel_APIType:
+class TestModel_APIType():
     """
     Test Class for APIType
     """
@@ -1649,7 +1818,7 @@ class TestModel_APIType:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        action_model = {}  # Action
+        action_model = {} # Action
         action_model['action_id'] = 'testString'
         action_model['description'] = 'testString'
 
@@ -1675,8 +1844,7 @@ class TestModel_APIType:
         api_type_model_json2 = api_type_model.to_dict()
         assert api_type_model_json2 == api_type_model_json
 
-
-class TestModel_AccountSettings:
+class TestModel_AccountSettings():
     """
     Test Class for AccountSettings
     """
@@ -1715,8 +1883,7 @@ class TestModel_AccountSettings:
         account_settings_model_json2 = account_settings_model.to_dict()
         assert account_settings_model_json2 == account_settings_model_json
 
-
-class TestModel_Action:
+class TestModel_Action():
     """
     Test Class for Action
     """
@@ -1746,8 +1913,7 @@ class TestModel_Action:
         action_model_json2 = action_model.to_dict()
         assert action_model_json2 == action_model_json
 
-
-class TestModel_NewRuleOperations:
+class TestModel_NewRuleOperations():
     """
     Test Class for NewRuleOperations
     """
@@ -1759,7 +1925,7 @@ class TestModel_NewRuleOperations:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        new_rule_operations_api_types_item_model = {}  # NewRuleOperationsApiTypesItem
+        new_rule_operations_api_types_item_model = {} # NewRuleOperationsApiTypesItem
         new_rule_operations_api_types_item_model['api_type_id'] = 'testString'
 
         # Construct a json representation of a NewRuleOperations model
@@ -1781,8 +1947,7 @@ class TestModel_NewRuleOperations:
         new_rule_operations_model_json2 = new_rule_operations_model.to_dict()
         assert new_rule_operations_model_json2 == new_rule_operations_model_json
 
-
-class TestModel_NewRuleOperationsApiTypesItem:
+class TestModel_NewRuleOperationsApiTypesItem():
     """
     Test Class for NewRuleOperationsApiTypesItem
     """
@@ -1797,18 +1962,12 @@ class TestModel_NewRuleOperationsApiTypesItem:
         new_rule_operations_api_types_item_model_json['api_type_id'] = 'testString'
 
         # Construct a model instance of NewRuleOperationsApiTypesItem by calling from_dict on the json representation
-        new_rule_operations_api_types_item_model = NewRuleOperationsApiTypesItem.from_dict(
-            new_rule_operations_api_types_item_model_json
-        )
+        new_rule_operations_api_types_item_model = NewRuleOperationsApiTypesItem.from_dict(new_rule_operations_api_types_item_model_json)
         assert new_rule_operations_api_types_item_model != False
 
         # Construct a model instance of NewRuleOperationsApiTypesItem by calling from_dict on the json representation
-        new_rule_operations_api_types_item_model_dict = NewRuleOperationsApiTypesItem.from_dict(
-            new_rule_operations_api_types_item_model_json
-        ).__dict__
-        new_rule_operations_api_types_item_model2 = NewRuleOperationsApiTypesItem(
-            **new_rule_operations_api_types_item_model_dict
-        )
+        new_rule_operations_api_types_item_model_dict = NewRuleOperationsApiTypesItem.from_dict(new_rule_operations_api_types_item_model_json).__dict__
+        new_rule_operations_api_types_item_model2 = NewRuleOperationsApiTypesItem(**new_rule_operations_api_types_item_model_dict)
 
         # Verify the model instances are equivalent
         assert new_rule_operations_api_types_item_model == new_rule_operations_api_types_item_model2
@@ -1817,8 +1976,7 @@ class TestModel_NewRuleOperationsApiTypesItem:
         new_rule_operations_api_types_item_model_json2 = new_rule_operations_api_types_item_model.to_dict()
         assert new_rule_operations_api_types_item_model_json2 == new_rule_operations_api_types_item_model_json
 
-
-class TestModel_OperationsList:
+class TestModel_OperationsList():
     """
     Test Class for OperationsList
     """
@@ -1830,11 +1988,11 @@ class TestModel_OperationsList:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        action_model = {}  # Action
+        action_model = {} # Action
         action_model['action_id'] = 'testString'
         action_model['description'] = 'testString'
 
-        api_type_model = {}  # APIType
+        api_type_model = {} # APIType
         api_type_model['api_type_id'] = 'testString'
         api_type_model['display_name'] = 'testString'
         api_type_model['description'] = 'testString'
@@ -1859,8 +2017,7 @@ class TestModel_OperationsList:
         operations_list_model_json2 = operations_list_model.to_dict()
         assert operations_list_model_json2 == operations_list_model_json
 
-
-class TestModel_Resource:
+class TestModel_Resource():
     """
     Test Class for Resource
     """
@@ -1872,12 +2029,12 @@ class TestModel_Resource:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        resource_attribute_model = {}  # ResourceAttribute
+        resource_attribute_model = {} # ResourceAttribute
         resource_attribute_model['name'] = 'testString'
         resource_attribute_model['value'] = 'testString'
         resource_attribute_model['operator'] = 'testString'
 
-        resource_tag_attribute_model = {}  # ResourceTagAttribute
+        resource_tag_attribute_model = {} # ResourceTagAttribute
         resource_tag_attribute_model['name'] = 'testString'
         resource_tag_attribute_model['value'] = 'testString'
         resource_tag_attribute_model['operator'] = 'testString'
@@ -1902,8 +2059,7 @@ class TestModel_Resource:
         resource_model_json2 = resource_model.to_dict()
         assert resource_model_json2 == resource_model_json
 
-
-class TestModel_ResourceAttribute:
+class TestModel_ResourceAttribute():
     """
     Test Class for ResourceAttribute
     """
@@ -1934,8 +2090,7 @@ class TestModel_ResourceAttribute:
         resource_attribute_model_json2 = resource_attribute_model.to_dict()
         assert resource_attribute_model_json2 == resource_attribute_model_json
 
-
-class TestModel_ResourceTagAttribute:
+class TestModel_ResourceTagAttribute():
     """
     Test Class for ResourceTagAttribute
     """
@@ -1966,8 +2121,7 @@ class TestModel_ResourceTagAttribute:
         resource_tag_attribute_model_json2 = resource_tag_attribute_model.to_dict()
         assert resource_tag_attribute_model_json2 == resource_tag_attribute_model_json
 
-
-class TestModel_Rule:
+class TestModel_Rule():
     """
     Test Class for Rule
     """
@@ -1979,31 +2133,31 @@ class TestModel_Rule:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        rule_context_attribute_model = {}  # RuleContextAttribute
+        rule_context_attribute_model = {} # RuleContextAttribute
         rule_context_attribute_model['name'] = 'testString'
         rule_context_attribute_model['value'] = 'testString'
 
-        rule_context_model = {}  # RuleContext
+        rule_context_model = {} # RuleContext
         rule_context_model['attributes'] = [rule_context_attribute_model]
 
-        resource_attribute_model = {}  # ResourceAttribute
+        resource_attribute_model = {} # ResourceAttribute
         resource_attribute_model['name'] = 'testString'
         resource_attribute_model['value'] = 'testString'
         resource_attribute_model['operator'] = 'testString'
 
-        resource_tag_attribute_model = {}  # ResourceTagAttribute
+        resource_tag_attribute_model = {} # ResourceTagAttribute
         resource_tag_attribute_model['name'] = 'testString'
         resource_tag_attribute_model['value'] = 'testString'
         resource_tag_attribute_model['operator'] = 'testString'
 
-        resource_model = {}  # Resource
+        resource_model = {} # Resource
         resource_model['attributes'] = [resource_attribute_model]
         resource_model['tags'] = [resource_tag_attribute_model]
 
-        new_rule_operations_api_types_item_model = {}  # NewRuleOperationsApiTypesItem
+        new_rule_operations_api_types_item_model = {} # NewRuleOperationsApiTypesItem
         new_rule_operations_api_types_item_model['api_type_id'] = 'testString'
 
-        new_rule_operations_model = {}  # NewRuleOperations
+        new_rule_operations_model = {} # NewRuleOperations
         new_rule_operations_model['api_types'] = [new_rule_operations_api_types_item_model]
 
         # Construct a json representation of a Rule model
@@ -2036,8 +2190,7 @@ class TestModel_Rule:
         rule_model_json2 = rule_model.to_dict()
         assert rule_model_json2 == rule_model_json
 
-
-class TestModel_RuleContext:
+class TestModel_RuleContext():
     """
     Test Class for RuleContext
     """
@@ -2049,7 +2202,7 @@ class TestModel_RuleContext:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        rule_context_attribute_model = {}  # RuleContextAttribute
+        rule_context_attribute_model = {} # RuleContextAttribute
         rule_context_attribute_model['name'] = 'testString'
         rule_context_attribute_model['value'] = 'testString'
 
@@ -2072,8 +2225,7 @@ class TestModel_RuleContext:
         rule_context_model_json2 = rule_context_model.to_dict()
         assert rule_context_model_json2 == rule_context_model_json
 
-
-class TestModel_RuleContextAttribute:
+class TestModel_RuleContextAttribute():
     """
     Test Class for RuleContextAttribute
     """
@@ -2103,8 +2255,7 @@ class TestModel_RuleContextAttribute:
         rule_context_attribute_model_json2 = rule_context_attribute_model.to_dict()
         assert rule_context_attribute_model_json2 == rule_context_attribute_model_json
 
-
-class TestModel_RuleList:
+class TestModel_RuleList():
     """
     Test Class for RuleList
     """
@@ -2116,34 +2267,34 @@ class TestModel_RuleList:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        rule_context_attribute_model = {}  # RuleContextAttribute
+        rule_context_attribute_model = {} # RuleContextAttribute
         rule_context_attribute_model['name'] = 'testString'
         rule_context_attribute_model['value'] = 'testString'
 
-        rule_context_model = {}  # RuleContext
+        rule_context_model = {} # RuleContext
         rule_context_model['attributes'] = [rule_context_attribute_model]
 
-        resource_attribute_model = {}  # ResourceAttribute
+        resource_attribute_model = {} # ResourceAttribute
         resource_attribute_model['name'] = 'testString'
         resource_attribute_model['value'] = 'testString'
         resource_attribute_model['operator'] = 'testString'
 
-        resource_tag_attribute_model = {}  # ResourceTagAttribute
+        resource_tag_attribute_model = {} # ResourceTagAttribute
         resource_tag_attribute_model['name'] = 'testString'
         resource_tag_attribute_model['value'] = 'testString'
         resource_tag_attribute_model['operator'] = 'testString'
 
-        resource_model = {}  # Resource
+        resource_model = {} # Resource
         resource_model['attributes'] = [resource_attribute_model]
         resource_model['tags'] = [resource_tag_attribute_model]
 
-        new_rule_operations_api_types_item_model = {}  # NewRuleOperationsApiTypesItem
+        new_rule_operations_api_types_item_model = {} # NewRuleOperationsApiTypesItem
         new_rule_operations_api_types_item_model['api_type_id'] = 'testString'
 
-        new_rule_operations_model = {}  # NewRuleOperations
+        new_rule_operations_model = {} # NewRuleOperations
         new_rule_operations_model['api_types'] = [new_rule_operations_api_types_item_model]
 
-        rule_model = {}  # Rule
+        rule_model = {} # Rule
         rule_model['id'] = 'testString'
         rule_model['crn'] = 'testString'
         rule_model['description'] = 'testString'
@@ -2177,8 +2328,7 @@ class TestModel_RuleList:
         rule_list_model_json2 = rule_list_model.to_dict()
         assert rule_list_model_json2 == rule_list_model_json
 
-
-class TestModel_ServiceRefTarget:
+class TestModel_ServiceRefTarget():
     """
     Test Class for ServiceRefTarget
     """
@@ -2190,7 +2340,7 @@ class TestModel_ServiceRefTarget:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        service_ref_target_locations_item_model = {}  # ServiceRefTargetLocationsItem
+        service_ref_target_locations_item_model = {} # ServiceRefTargetLocationsItem
         service_ref_target_locations_item_model['name'] = 'testString'
 
         # Construct a json representation of a ServiceRefTarget model
@@ -2214,8 +2364,7 @@ class TestModel_ServiceRefTarget:
         service_ref_target_model_json2 = service_ref_target_model.to_dict()
         assert service_ref_target_model_json2 == service_ref_target_model_json
 
-
-class TestModel_ServiceRefTargetList:
+class TestModel_ServiceRefTargetList():
     """
     Test Class for ServiceRefTargetList
     """
@@ -2227,10 +2376,10 @@ class TestModel_ServiceRefTargetList:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        service_ref_target_locations_item_model = {}  # ServiceRefTargetLocationsItem
+        service_ref_target_locations_item_model = {} # ServiceRefTargetLocationsItem
         service_ref_target_locations_item_model['name'] = 'testString'
 
-        service_ref_target_model = {}  # ServiceRefTarget
+        service_ref_target_model = {} # ServiceRefTarget
         service_ref_target_model['service_name'] = 'testString'
         service_ref_target_model['service_type'] = 'testString'
         service_ref_target_model['locations'] = [service_ref_target_locations_item_model]
@@ -2255,8 +2404,7 @@ class TestModel_ServiceRefTargetList:
         service_ref_target_list_model_json2 = service_ref_target_list_model.to_dict()
         assert service_ref_target_list_model_json2 == service_ref_target_list_model_json
 
-
-class TestModel_ServiceRefTargetLocationsItem:
+class TestModel_ServiceRefTargetLocationsItem():
     """
     Test Class for ServiceRefTargetLocationsItem
     """
@@ -2271,18 +2419,12 @@ class TestModel_ServiceRefTargetLocationsItem:
         service_ref_target_locations_item_model_json['name'] = 'testString'
 
         # Construct a model instance of ServiceRefTargetLocationsItem by calling from_dict on the json representation
-        service_ref_target_locations_item_model = ServiceRefTargetLocationsItem.from_dict(
-            service_ref_target_locations_item_model_json
-        )
+        service_ref_target_locations_item_model = ServiceRefTargetLocationsItem.from_dict(service_ref_target_locations_item_model_json)
         assert service_ref_target_locations_item_model != False
 
         # Construct a model instance of ServiceRefTargetLocationsItem by calling from_dict on the json representation
-        service_ref_target_locations_item_model_dict = ServiceRefTargetLocationsItem.from_dict(
-            service_ref_target_locations_item_model_json
-        ).__dict__
-        service_ref_target_locations_item_model2 = ServiceRefTargetLocationsItem(
-            **service_ref_target_locations_item_model_dict
-        )
+        service_ref_target_locations_item_model_dict = ServiceRefTargetLocationsItem.from_dict(service_ref_target_locations_item_model_json).__dict__
+        service_ref_target_locations_item_model2 = ServiceRefTargetLocationsItem(**service_ref_target_locations_item_model_dict)
 
         # Verify the model instances are equivalent
         assert service_ref_target_locations_item_model == service_ref_target_locations_item_model2
@@ -2291,8 +2433,7 @@ class TestModel_ServiceRefTargetLocationsItem:
         service_ref_target_locations_item_model_json2 = service_ref_target_locations_item_model.to_dict()
         assert service_ref_target_locations_item_model_json2 == service_ref_target_locations_item_model_json
 
-
-class TestModel_ServiceRefValue:
+class TestModel_ServiceRefValue():
     """
     Test Class for ServiceRefValue
     """
@@ -2325,8 +2466,7 @@ class TestModel_ServiceRefValue:
         service_ref_value_model_json2 = service_ref_value_model.to_dict()
         assert service_ref_value_model_json2 == service_ref_value_model_json
 
-
-class TestModel_Zone:
+class TestModel_Zone():
     """
     Test Class for Zone
     """
@@ -2338,7 +2478,7 @@ class TestModel_Zone:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        address_model = {}  # AddressIPAddress
+        address_model = {} # AddressIPAddress
         address_model['type'] = 'ipAddress'
         address_model['value'] = 'testString'
 
@@ -2374,8 +2514,7 @@ class TestModel_Zone:
         zone_model_json2 = zone_model.to_dict()
         assert zone_model_json2 == zone_model_json
 
-
-class TestModel_ZoneList:
+class TestModel_ZoneList():
     """
     Test Class for ZoneList
     """
@@ -2387,11 +2526,11 @@ class TestModel_ZoneList:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        address_model = {}  # AddressIPAddress
+        address_model = {} # AddressIPAddress
         address_model['type'] = 'ipAddress'
         address_model['value'] = 'testString'
 
-        zone_summary_model = {}  # ZoneSummary
+        zone_summary_model = {} # ZoneSummary
         zone_summary_model['id'] = 'testString'
         zone_summary_model['crn'] = 'testString'
         zone_summary_model['name'] = 'testString'
@@ -2425,8 +2564,7 @@ class TestModel_ZoneList:
         zone_list_model_json2 = zone_list_model.to_dict()
         assert zone_list_model_json2 == zone_list_model_json
 
-
-class TestModel_ZoneSummary:
+class TestModel_ZoneSummary():
     """
     Test Class for ZoneSummary
     """
@@ -2438,7 +2576,7 @@ class TestModel_ZoneSummary:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        address_model = {}  # AddressIPAddress
+        address_model = {} # AddressIPAddress
         address_model['type'] = 'ipAddress'
         address_model['value'] = 'testString'
 
@@ -2472,8 +2610,7 @@ class TestModel_ZoneSummary:
         zone_summary_model_json2 = zone_summary_model.to_dict()
         assert zone_summary_model_json2 == zone_summary_model_json
 
-
-class TestModel_AddressIPAddress:
+class TestModel_AddressIPAddress():
     """
     Test Class for AddressIPAddress
     """
@@ -2503,8 +2640,7 @@ class TestModel_AddressIPAddress:
         address_ip_address_model_json2 = address_ip_address_model.to_dict()
         assert address_ip_address_model_json2 == address_ip_address_model_json
 
-
-class TestModel_AddressIPAddressRange:
+class TestModel_AddressIPAddressRange():
     """
     Test Class for AddressIPAddressRange
     """
@@ -2524,9 +2660,7 @@ class TestModel_AddressIPAddressRange:
         assert address_ip_address_range_model != False
 
         # Construct a model instance of AddressIPAddressRange by calling from_dict on the json representation
-        address_ip_address_range_model_dict = AddressIPAddressRange.from_dict(
-            address_ip_address_range_model_json
-        ).__dict__
+        address_ip_address_range_model_dict = AddressIPAddressRange.from_dict(address_ip_address_range_model_json).__dict__
         address_ip_address_range_model2 = AddressIPAddressRange(**address_ip_address_range_model_dict)
 
         # Verify the model instances are equivalent
@@ -2536,8 +2670,7 @@ class TestModel_AddressIPAddressRange:
         address_ip_address_range_model_json2 = address_ip_address_range_model.to_dict()
         assert address_ip_address_range_model_json2 == address_ip_address_range_model_json
 
-
-class TestModel_AddressServiceRef:
+class TestModel_AddressServiceRef():
     """
     Test Class for AddressServiceRef
     """
@@ -2549,7 +2682,7 @@ class TestModel_AddressServiceRef:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        service_ref_value_model = {}  # ServiceRefValue
+        service_ref_value_model = {} # ServiceRefValue
         service_ref_value_model['account_id'] = 'testString'
         service_ref_value_model['service_type'] = 'testString'
         service_ref_value_model['service_name'] = 'testString'
@@ -2576,8 +2709,7 @@ class TestModel_AddressServiceRef:
         address_service_ref_model_json2 = address_service_ref_model.to_dict()
         assert address_service_ref_model_json2 == address_service_ref_model_json
 
-
-class TestModel_AddressSubnet:
+class TestModel_AddressSubnet():
     """
     Test Class for AddressSubnet
     """
@@ -2607,8 +2739,7 @@ class TestModel_AddressSubnet:
         address_subnet_model_json2 = address_subnet_model.to_dict()
         assert address_subnet_model_json2 == address_subnet_model_json
 
-
-class TestModel_AddressVPC:
+class TestModel_AddressVPC():
     """
     Test Class for AddressVPC
     """

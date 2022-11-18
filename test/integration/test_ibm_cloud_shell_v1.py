@@ -26,7 +26,6 @@ from ibm_platform_services.ibm_cloud_shell_v1 import *
 # Config file name
 config_file = 'ibm_cloud_shell_v1.env'
 
-
 class IbmCloudShellV1IntegrationTests(unittest.TestCase):
     """
     Integration Test Class for IbmCloudShellV1
@@ -37,10 +36,12 @@ class IbmCloudShellV1IntegrationTests(unittest.TestCase):
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
-            cls.ibm_cloud_shell_service = IbmCloudShellV1.new_instance()
+            cls.ibm_cloud_shell_service = IbmCloudShellV1.new_instance(
+                )
             assert cls.ibm_cloud_shell_service is not None
 
-            cls.config = read_external_sources(IbmCloudShellV1.DEFAULT_SERVICE_NAME)
+            cls.config = read_external_sources(
+                IbmCloudShellV1.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
 
             cls.ACCOUNT_ID = cls.config['ACCOUNT_ID']
@@ -55,7 +56,9 @@ class IbmCloudShellV1IntegrationTests(unittest.TestCase):
     @needscredentials
     def test_get_account_settings(self):
 
-        get_account_settings_response = self.ibm_cloud_shell_service.get_account_settings(account_id=self.ACCOUNT_ID)
+        get_account_settings_response = self.ibm_cloud_shell_service.get_account_settings(
+            account_id=self.ACCOUNT_ID
+        )
 
         assert get_account_settings_response.get_status_code() == 200
         account_settings = get_account_settings_response.get_result()
@@ -64,39 +67,37 @@ class IbmCloudShellV1IntegrationTests(unittest.TestCase):
     @needscredentials
     def test_update_account_settings(self):
 
-        get_account_settings_response = self.ibm_cloud_shell_service.get_account_settings(account_id=self.ACCOUNT_ID)
+        get_account_settings_response = self.ibm_cloud_shell_service.get_account_settings(
+            account_id=self.ACCOUNT_ID
+        )
 
         assert get_account_settings_response.get_status_code() == 200
         existing_account_settings = get_account_settings_response.get_result()
         assert existing_account_settings is not None
 
         # Construct a dict representation of a Feature model
-        feature_model = [
-            {
-                'enabled': False,
-                'key': 'server.file_manager',
-            },
-            {
-                'enabled': True,
-                'key': 'server.web_preview',
-            },
-        ]
+        feature_model = [{
+            'enabled': False,
+            'key': 'server.file_manager',
+        },
+        {
+            'enabled': True,
+            'key': 'server.web_preview',
+        }]
 
         # Construct a dict representation of a RegionSetting model
-        region_setting_model = [
-            {
-                'enabled': True,
-                'key': 'eu-de',
-            },
-            {
-                'enabled': False,
-                'key': 'jp-tok',
-            },
-            {
-                'enabled': False,
-                'key': 'us-south',
-            },
-        ]
+        region_setting_model = [{
+            'enabled': True,
+            'key': 'eu-de',
+        },
+        {
+            'enabled': False,
+            'key': 'jp-tok',
+        },
+        {
+            'enabled': False,
+            'key': 'us-south',
+        }]
 
         update_account_settings_response = self.ibm_cloud_shell_service.update_account_settings(
             account_id=self.ACCOUNT_ID,
@@ -105,7 +106,7 @@ class IbmCloudShellV1IntegrationTests(unittest.TestCase):
             default_enable_new_regions=True,
             enabled=True,
             features=feature_model,
-            regions=region_setting_model,
+            regions=region_setting_model
         )
 
         assert update_account_settings_response.get_status_code() == 200
@@ -116,3 +117,5 @@ class IbmCloudShellV1IntegrationTests(unittest.TestCase):
         assert account_settings.get('enabled') == True
         assert account_settings.get('features') == feature_model
         assert account_settings.get('regions') == region_setting_model
+
+

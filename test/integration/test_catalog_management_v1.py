@@ -44,10 +44,8 @@ object_name = 'object_created_by_python_sdk_5'
 object_crn = 'crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com'
 region_us_south = 'us-south'
 namespace_python_sdk = 'python-sdk'
-import_offering_zip_url = (
-    'https://github.com/rhm-samples/node-red-operator/blob/master/node-red-operator/bundle/0.0'
-    '.2/node-red-operator.v0.0.2.clusterserviceversion.yaml'
-)
+import_offering_zip_url = 'https://github.com/rhm-samples/node-red-operator/blob/master/node-red-operator/bundle/0.0' \
+                          '.2/node-red-operator.v0.0.2.clusterserviceversion.yaml'
 
 label_python_sdk = 'python-sdk'
 
@@ -55,7 +53,7 @@ bogus_revision = 'bogus-revision'
 bogus_version_locator_id = 'bogus-version-locator-id'
 
 
-class TestCatalogManagementV1:
+class TestCatalogManagementV1():
     """
     Integration Test Class for CatalogManagementV1
     """
@@ -65,13 +63,17 @@ class TestCatalogManagementV1:
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
-            cls.catalog_management_service_authorized = CatalogManagementV1.new_instance()
+            cls.catalog_management_service_authorized = CatalogManagementV1.new_instance(
+            )
             assert cls.catalog_management_service_authorized is not None
 
-            cls.catalog_management_service_not_authorized = CatalogManagementV1.new_instance('NOT_AUTHORIZED')
+            cls.catalog_management_service_not_authorized = CatalogManagementV1.new_instance(
+                'NOT_AUTHORIZED'
+            )
             assert cls.catalog_management_service_not_authorized is not None
 
-            cls.config = read_external_sources(CatalogManagementV1.DEFAULT_SERVICE_NAME)
+            cls.config = read_external_sources(
+                CatalogManagementV1.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
 
             cls.account_id = cls.config.get('ACCOUNT_ID')
@@ -156,7 +158,7 @@ class TestCatalogManagementV1:
         try:
 
             self.catalog_management_service_authorized.get_catalog(
-                catalog_identifier='invalid-' + catalog_id,
+                catalog_identifier='invalid-'+catalog_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -210,7 +212,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.replace_catalog(
                 catalog_identifier=catalog_id,
-                id='invalid-' + catalog_id,
+                id='invalid-'+catalog_id,
                 owning_account=self.account_id,
                 kind=kind_vpe,
             )
@@ -223,8 +225,8 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.replace_catalog(
-                catalog_identifier='invalid-' + catalog_id,
-                id='invalid-' + catalog_id,
+                catalog_identifier='invalid-'+catalog_id,
+                id='invalid-'+catalog_id,
                 owning_account=self.account_id,
                 kind=kind_vpe,
             )
@@ -263,10 +265,9 @@ class TestCatalogManagementV1:
         catalog_search_result = list_catalogs_response.get_result()
         assert catalog_search_result is not None
 
-        assert (
-            next((catalog for catalog in catalog_search_result['resources'] if catalog['id'] == catalog_id), None)
-            is not None
-        )
+        assert next((catalog for catalog in catalog_search_result['resources']
+                     if catalog['id'] == catalog_id),
+                    None) is not None
 
     ####
     # Create Offering
@@ -278,7 +279,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.create_offering(
-                catalog_identifier='invalid-' + catalog_id,
+                catalog_identifier='invalid-'+catalog_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -319,7 +320,7 @@ class TestCatalogManagementV1:
             create_offering_response = self.catalog_management_service_authorized.create_offering(
                 catalog_identifier=catalog_id,
                 label=label_python_sdk,
-                name='offering-created-by-python-sdk-' + str(i),
+                name='offering-created-by-python-sdk-'+str(i),
             )
 
             assert create_offering_response.get_status_code() == 201
@@ -327,7 +328,7 @@ class TestCatalogManagementV1:
 
             assert offering is not None
             assert offering['id'] is not None
-            print('offering id: ' + offering['id'])
+            print('offering id: '+offering['id'])
             if offering_id is None:
                 offering_id = offering['id']
 
@@ -345,7 +346,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.get_offering(
                 catalog_identifier=catalog_id,
-                offering_id='invalid-' + offering_id,
+                offering_id='invalid-'+offering_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -391,8 +392,8 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.replace_offering(
                 catalog_identifier=catalog_id,
-                offering_id='invalid-' + offering_id,
-                id='invalid-' + offering_id,
+                offering_id='invalid-'+offering_id,
+                id='invalid-'+offering_id,
                 name='updated-offering-name-by-python-sdk',
             )
         except ApiException as e:
@@ -492,8 +493,12 @@ class TestCatalogManagementV1:
         update_offering_response = self.catalog_management_service_authorized.update_offering(
             catalog_identifier=catalog_id,
             offering_id=offering_id,
-            if_match='"' + offering['_rev'] + '"',
-            updates=[JsonPatchOperation(op="replace", path="/name", value="updated-offering-name-by-python-sdk-patch")],
+            if_match='"'+offering['_rev']+'"',
+            updates=[JsonPatchOperation(
+                op="replace",
+                path="/name",
+                value="updated-offering-name-by-python-sdk-patch"
+            )]
         )
 
         assert update_offering_response.get_status_code() == 200
@@ -513,9 +518,11 @@ class TestCatalogManagementV1:
                 catalog_identifier=catalog_id,
                 offering_id=offering_id,
                 if_match='"bogus_rev"',
-                updates=[
-                    JsonPatchOperation(op="replace", path="/name", value="updated-offering-name-by-python-sdk-patch")
-                ],
+                updates=[JsonPatchOperation(
+                    op="replace",
+                    path="/name",
+                    value="updated-offering-name-by-python-sdk-patch"
+                )]
             )
         except ApiException as e:
             assert e.code == 412
@@ -541,7 +548,9 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.list_offerings(
-                catalog_identifier=catalog_id, digest=True, sort='bogus-sort-value'
+                catalog_identifier=catalog_id,
+                digest=True,
+                sort='bogus-sort-value'
             )
         except ApiException as e:
             assert e.code == 400
@@ -552,7 +561,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.list_offerings(
-                catalog_identifier='invalid-' + catalog_id,
+                catalog_identifier='invalid-'+catalog_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -577,14 +586,14 @@ class TestCatalogManagementV1:
             assert offering_search_result is not None
 
             offset_value = get_query_param(offering_search_result.next, 'offset')
-            print('offset value: ' + offset_value)
+            print('offset value: '+offset_value)
 
             if offset_value is None:
                 offset = offset_value
             else:
                 offset = 0
 
-        print('Amount of offerings is: ' + str(amount_of_offerings))
+        print('Amount of offerings is: '+str(amount_of_offerings))
 
     ####
     # Import Offering
@@ -635,7 +644,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.import_offering(
-                catalog_identifier='invalid-' + catalog_id,
+                catalog_identifier='invalid-'+catalog_id,
                 tags=['python', 'sdk'],
                 target_kinds=[kind_roks],
                 zipurl=import_offering_zip_url,
@@ -702,7 +711,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.reload_offering(
                 catalog_identifier=catalog_id,
-                offering_id='invalid-' + offering_id,
+                offering_id='invalid-'+offering_id,
                 target_version='0.0.2',
                 target_kinds=kind_roks,
                 zipurl=import_offering_zip_url,
@@ -825,8 +834,8 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.create_object(
-                catalog_identifier='invalid-' + catalog_id,
-                catalog_id='invalid-' + catalog_id,
+                catalog_identifier='invalid-'+catalog_id,
+                catalog_id='invalid-'+catalog_id,
                 name=object_name,
                 crn=object_crn,
                 parent_id=region_us_south,
@@ -853,7 +862,7 @@ class TestCatalogManagementV1:
                 'current': 'new',
             }
 
-            name = object_name + '_' + str(i)
+            name = object_name+'_'+str(i)
             create_object_response = self.catalog_management_service_authorized.create_object(
                 catalog_identifier=catalog_id,
                 catalog_id=catalog_id,
@@ -886,7 +895,7 @@ class TestCatalogManagementV1:
 
         get_offering_audit_response = self.catalog_management_service_authorized.get_offering_audit(
             catalog_identifier=catalog_id,
-            offering_id='invalid-' + offering_id,
+            offering_id='invalid-'+offering_id,
         )
 
         assert get_offering_audit_response.get_status_code() == 200
@@ -940,7 +949,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.update_catalog_account(
-                id='invalid-' + self.account_id,
+                id='invalid-'+self.account_id,
             )
         except ApiException as e:
             assert e.code == 400
@@ -1022,7 +1031,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.get_catalog_account_filters(
-                catalog='invalid-' + catalog_id,
+                catalog='invalid-'+catalog_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -1047,7 +1056,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.get_catalog_audit(
-                catalog_identifier='invalid-' + catalog_id,
+                catalog_identifier='invalid-'+catalog_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -1097,7 +1106,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.get_consumption_offerings(
-                catalog='invalid-' + catalog_id,
+                catalog='invalid-'+catalog_id,
                 select='all',
             )
         except ApiException as e:
@@ -1145,7 +1154,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.import_offering_version(
                 catalog_identifier=catalog_id,
-                offering_id='invalid-' + offering_id,
+                offering_id='invalid-'+offering_id,
                 target_kinds=[kind_roks],
                 zipurl=import_offering_zip_url,
                 target_version='0.0.3',
@@ -1204,7 +1213,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.replace_offering_icon(
                 catalog_identifier=catalog_id,
-                offering_id='invalid-' + offering_id,
+                offering_id='invalid-'+offering_id,
                 file_name='filename.jpg',
             )
         except ApiException as e:
@@ -1278,7 +1287,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.update_offering_ibm(
                 catalog_identifier=catalog_id,
-                offering_id='invalid-' + offering_id,
+                offering_id='invalid-'+offering_id,
                 approval_type='allow_request',
                 approved='true',
             )
@@ -1353,7 +1362,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.get_offering_updates(
                 catalog_identifier=catalog_id,
-                offering_id='invalid-' + offering_id,
+                offering_id='invalid-'+offering_id,
                 version='0.0.2',
                 kind=kind_vpe,
                 cluster_id=self.cluster_id,
@@ -1426,7 +1435,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.get_offering_about(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
             )
 
         except ApiException as e:
@@ -1479,7 +1488,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.get_offering_license(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
                 license_id='license-id-is-needed',
             )
 
@@ -1534,7 +1543,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.get_offering_container_images(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -1554,10 +1563,8 @@ class TestCatalogManagementV1:
     def test_get_offering_container_images(self):
         assert version_locator_id is not None
 
-        get_offering_container_images_response = (
-            self.catalog_management_service_authorized.get_offering_container_images(
-                version_loc_id=version_locator_id,
-            )
+        get_offering_container_images_response = self.catalog_management_service_authorized.get_offering_container_images(
+            version_loc_id=version_locator_id,
         )
 
         assert get_offering_container_images_response.get_status_code() == 200
@@ -1574,7 +1581,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.deprecate_version(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -1634,7 +1641,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.account_publish_version(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -1684,7 +1691,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.ibm_publish_version(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -1733,7 +1740,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.public_publish_version(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -1782,7 +1789,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.commit_version(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -1834,7 +1841,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.copy_version(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
                 target_kinds=[kind_roks],
             )
         except ApiException as e:
@@ -1896,7 +1903,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.get_offering_working_copy(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -1938,7 +1945,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.get_version(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -1990,7 +1997,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.get_cluster(
-                cluster_id='invalid-' + self.cluster_id,
+                cluster_id='invalid-'+self.cluster_id,
                 region=region_us_south,
                 x_auth_refresh_token=self.refresh_token_authorized,
             )
@@ -2023,7 +2030,7 @@ class TestCatalogManagementV1:
     def test_get_namespaces_returns_404_when_no_such_cluster(self):
         try:
             self.catalog_management_service_authorized.get_namespaces(
-                cluster_id='invalid-' + self.cluster_id,
+                cluster_id='invalid-'+self.cluster_id,
                 region=region_us_south,
                 x_auth_refresh_token=self.refresh_token_authorized,
             )
@@ -2093,7 +2100,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.deploy_operators(
                 x_auth_refresh_token=self.refresh_token_authorized,
-                cluster_id='invalid-' + self.cluster_id,
+                cluster_id='invalid-'+self.cluster_id,
                 region=region_us_south,
                 all_namespaces=True,
                 version_locator_id=version_locator_id,
@@ -2175,7 +2182,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.list_operators(
                 x_auth_refresh_token=self.refresh_token_authorized,
-                cluster_id='invalid-' + self.cluster_id,
+                cluster_id='invalid-'+self.cluster_id,
                 region=region_us_south,
                 version_locator_id=version_locator_id,
             )
@@ -2229,7 +2236,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.replace_operators(
                 x_auth_refresh_token=self.refresh_token_authorized,
-                cluster_id='invalid-' + self.cluster_id,
+                cluster_id='invalid-'+self.cluster_id,
                 region=region_us_south,
                 all_namespaces=True,
                 version_locator_id=version_locator_id,
@@ -2300,7 +2307,7 @@ class TestCatalogManagementV1:
             self.catalog_management_service_authorized.install_version(
                 version_loc_id=version_locator_id,
                 x_auth_refresh_token=self.refresh_token_authorized,
-                cluster_id='invalid-' + self.cluster_id,
+                cluster_id='invalid-'+self.cluster_id,
                 region=region_us_south,
                 version_locator_id=version_locator_id,
             )
@@ -2374,7 +2381,7 @@ class TestCatalogManagementV1:
             self.catalog_management_service_authorized.preinstall_version(
                 version_loc_id=version_locator_id,
                 x_auth_refresh_token=self.refresh_token_authorized,
-                cluster_id='invalid-' + self.cluster_id,
+                cluster_id='invalid-'+self.cluster_id,
                 region=region_us_south,
                 version_locator_id=version_locator_id,
             )
@@ -2436,7 +2443,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.get_preinstall(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
                 x_auth_refresh_token=self.refresh_token_authorized,
                 cluster_id=self.cluster_id,
                 region=region_us_south,
@@ -2500,11 +2507,11 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.validate_install(
-                version_loc_id='invalid' + version_locator_id,
+                version_loc_id='invalid'+version_locator_id,
                 x_auth_refresh_token=self.refresh_token_authorized,
                 cluster_id=self.cluster_id,
                 region=region_us_south,
-                version_locator_id='invalid-' + version_locator_id,
+                version_locator_id='invalid-'+version_locator_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -2565,7 +2572,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.get_validation_status(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
                 x_auth_refresh_token=self.refresh_token_authorized,
             )
         except ApiException as e:
@@ -2616,7 +2623,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.get_override_values(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -2667,7 +2674,7 @@ class TestCatalogManagementV1:
     def test_search_objects_returns_200_when_user_is_not_authorized(self):
 
         search_objects_response = self.catalog_management_service_not_authorized.search_objects(
-            query='name: ' + object_name,
+            query='name: '+object_name,
             collapse=True,
             digest=True,
         )
@@ -2709,7 +2716,11 @@ class TestCatalogManagementV1:
         assert catalog_id is not None
 
         try:
-            self.catalog_management_service_authorized.list_objects(catalog_identifier=catalog_id, name=' ', sort=' ')
+            self.catalog_management_service_authorized.list_objects(
+                catalog_identifier=catalog_id,
+                name=' ',
+                sort=' '
+            )
         except ApiException as e:
             assert e.code == 400
 
@@ -2741,7 +2752,7 @@ class TestCatalogManagementV1:
             assert list_objects_response.get_status_code() == 200
             object_list_result = list_objects_response.get_result()
             assert object_list_result is not None
-            offset_value = get_query_param(object_list_result.next, 'offset')
+            offset_value = get_query_param(object_list_result.next, 'offset');
             if offset_value is not None:
                 offset = offset_value
             else:
@@ -2778,8 +2789,8 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.replace_object(
                 catalog_identifier=catalog_id,
-                object_identifier='invalid-' + object_id,
-                id='invalid-' + object_id,
+                object_identifier='invalid-'+object_id,
+                id='invalid-'+object_id,
                 name='updated-object-name-created-by-python-sdk',
                 parent_id=region_us_south,
                 kind=kind_vpe,
@@ -2857,7 +2868,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.get_object(
                 catalog_identifier=catalog_id,
-                object_identifier='invalid-' + object_id,
+                object_identifier='invalid-'+object_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -2900,7 +2911,7 @@ class TestCatalogManagementV1:
 
         get_object_audit_response = self.catalog_management_service_authorized.get_object_audit(
             catalog_identifier=catalog_id,
-            object_identifier='invalid-' + object_id,
+            object_identifier='invalid-'+object_id,
         )
 
         assert get_object_audit_response.get_status_code() == 200
@@ -2946,7 +2957,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.account_publish_object(
                 catalog_identifier=catalog_id,
-                object_identifier='invalid-' + object_id,
+                object_identifier='invalid-'+object_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -2988,7 +2999,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.shared_publish_object(
                 catalog_identifier=catalog_id,
-                object_identifier='invalid-' + object_id,
+                object_identifier='invalid-'+object_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -3033,7 +3044,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.ibm_publish_object(
                 catalog_identifier=catalog_id,
-                object_identifier='invalid-' + object_id,
+                object_identifier='invalid-'+object_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -3078,7 +3089,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.public_publish_object(
                 catalog_identifier=catalog_id,
-                object_identifier='invalid-' + object_id,
+                object_identifier='invalid-'+object_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -3124,7 +3135,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.create_object_access(
                 catalog_identifier=catalog_id,
-                object_identifier='invalid-' + object_id,
+                object_identifier='invalid-'+object_id,
                 account_identifier=self.account_id,
             )
         except ApiException as e:
@@ -3167,7 +3178,7 @@ class TestCatalogManagementV1:
 
         get_object_access_list_response = self.catalog_management_service_authorized.get_object_access_list(
             catalog_identifier=catalog_id,
-            object_identifier='invalid-' + object_id,
+            object_identifier='invalid-'+object_id,
         )
 
         assert get_object_access_list_response.get_status_code() == 200
@@ -3215,7 +3226,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.get_object_access(
                 catalog_identifier=catalog_id,
-                object_identifier='invalid-' + object_id,
+                object_identifier='invalid-'+object_id,
                 account_identifier=self.account_id,
             )
         except ApiException as e:
@@ -3266,7 +3277,7 @@ class TestCatalogManagementV1:
         try:
             self.catalog_management_service_authorized.add_object_access_list(
                 catalog_identifier=catalog_id,
-                object_identifier='invalid-' + object_id,
+                object_identifier='invalid-'+object_id,
                 accounts=[self.account_id],
             )
         except ApiException as e:
@@ -3303,7 +3314,7 @@ class TestCatalogManagementV1:
             self.catalog_management_service_authorized.create_offering_instance(
                 x_auth_refresh_token=self.refresh_token_authorized,
                 id=offering_id,
-                catalog_id='invalid-' + catalog_id,
+                catalog_id='invalid-'+catalog_id,
                 offering_id=offering_id,
                 kind_format=kind_vpe,
                 version='0.0.2',
@@ -3406,7 +3417,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.get_offering_instance(
-                instance_identifier='invalid-' + offering_instance_id
+                instance_identifier='invalid-'+offering_instance_id
             )
         except ApiException as e:
             assert e.code == 404
@@ -3463,7 +3474,7 @@ class TestCatalogManagementV1:
                 instance_identifier=offering_instance_id,
                 x_auth_refresh_token=self.refresh_token_authorized,
                 id=offering_instance_id,
-                catalog_id='invalid-' + catalog_id,
+                catalog_id='invalid-'+catalog_id,
                 offering_id=offering_id,
                 kind_format=kind_vpe,
                 version='0.0.3',
@@ -3541,7 +3552,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.delete_version(
-                version_loc_id='invalid-' + version_locator_id,
+                version_loc_id='invalid-'+version_locator_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -3594,7 +3605,7 @@ class TestCatalogManagementV1:
                 x_auth_refresh_token=self.refresh_token_authorized,
                 cluster_id=self.cluster_id,
                 region=region_us_south,
-                version_locator_id='invalid-' + version_locator_id,
+                version_locator_id='invalid-'+version_locator_id,
             )
         except ApiException as e:
             assert e.code == 404
@@ -3654,7 +3665,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.delete_offering_instance(
-                instance_identifier='invalid-' + offering_instance_id,
+                instance_identifier='invalid-'+offering_instance_id,
                 x_auth_refresh_token=self.refresh_token_authorized,
             )
         except ApiException as e:
@@ -3697,7 +3708,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.delete_object_access_list(
-                catalog_identifier='invalid-' + catalog_id,
+                catalog_identifier='invalid-'+catalog_id,
                 object_identifier=object_id,
                 accounts=[self.account_id],
             )
@@ -3744,7 +3755,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.delete_object_access(
-                catalog_identifier='invalid-' + catalog_id,
+                catalog_identifier='invalid-'+catalog_id,
                 object_identifier=object_id,
                 account_identifier=self.account_id,
             )
@@ -3788,7 +3799,7 @@ class TestCatalogManagementV1:
 
         delete_object_response = self.catalog_management_service_authorized.delete_object(
             catalog_identifier=catalog_id,
-            object_identifier='invalid-' + object_id,
+            object_identifier='invalid-'+object_id,
         )
 
         assert delete_object_response.get_status_code() == 200
@@ -3816,7 +3827,7 @@ class TestCatalogManagementV1:
 
         delete_offering_response = self.catalog_management_service_authorized.delete_offering(
             catalog_identifier=catalog_id,
-            offering_id='invalid-' + offering_id,
+            offering_id='invalid-'+offering_id,
         )
 
         assert delete_offering_response.get_status_code() == 200
@@ -3856,7 +3867,7 @@ class TestCatalogManagementV1:
 
         try:
             self.catalog_management_service_authorized.delete_catalog(
-                catalog_identifier='invalid-' + catalog_id,
+                catalog_identifier='invalid-'+catalog_id,
             )
         except ApiException as e:
             assert e.code == 404

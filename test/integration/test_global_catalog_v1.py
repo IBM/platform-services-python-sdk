@@ -30,13 +30,13 @@ class TestGlobalCatalogV1(unittest.TestCase):
     """
     Integration Test Class for GlobalCatalogV1
     """
-
     @classmethod
     def setUpClass(self):
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
         else:
-            raise unittest.SkipTest('External configuration not available, skipping...')
+            raise unittest.SkipTest(
+                'External configuration not available, skipping...')
 
         self.service = GlobalCatalogV1.new_instance()
 
@@ -49,13 +49,33 @@ class TestGlobalCatalogV1(unittest.TestCase):
             'kind': 'service',
             'disabled': False,
             'tags': ['a', 'b', 'c'],
-            'overview_ui': {'en': {'display_name': 'display', 'long_description': 'longDesc', 'description': 'desc'}},
-            'images': {'image': 'image', 'small_image': 'small', 'medium_image': 'medium', 'feature_image': 'feature'},
-            'provider': {'email': 'bogus@us.ibm.com', 'name': 'someName'},
+            'overview_ui': {
+                'en': {
+                    'display_name': 'display',
+                    'long_description': 'longDesc',
+                    'description': 'desc'
+                }
+            },
+            'images': {
+                'image': 'image',
+                'small_image': 'small',
+                'medium_image': 'medium',
+                'feature_image': 'feature'
+            },
+            'provider': {
+                'email': 'bogus@us.ibm.com',
+                'name': 'someName'
+            },
             'restrictions': 'private',
-            'metadata': {'pricing': {'origin': 'global_catalog'}},
+            'metadata': {
+                'pricing': {
+                    'origin': 'global_catalog'
+                }
+            },
             'artifactId': 'someArtifactId.json',
-            'artifact': {'someKey': 'someValue'},
+            'artifact': {
+                'someKey': 'someValue'
+            }
         }
 
         self.defaultChildEntry = {
@@ -66,9 +86,23 @@ class TestGlobalCatalogV1(unittest.TestCase):
             'kind': 'service',
             'disabled': False,
             'tags': ['a', 'b', 'c'],
-            'overview_ui': {'en': {'display_name': 'display', 'long_description': 'longDesc', 'description': 'desc'}},
-            'images': {'image': 'image', 'small_image': 'small', 'medium_image': 'medium', 'feature_image': 'feature'},
-            'provider': {'email': 'bogus@us.ibm.com', 'name': 'someName'},
+            'overview_ui': {
+                'en': {
+                    'display_name': 'display',
+                    'long_description': 'longDesc',
+                    'description': 'desc'
+                }
+            },
+            'images': {
+                'image': 'image',
+                'small_image': 'small',
+                'medium_image': 'medium',
+                'feature_image': 'feature'
+            },
+            'provider': {
+                'email': 'bogus@us.ibm.com',
+                'name': 'someName'
+            }
         }
 
         self.updatedEntry = {
@@ -82,23 +116,28 @@ class TestGlobalCatalogV1(unittest.TestCase):
                 'en': {
                     'display_name': 'displayUpdated',
                     'long_description': 'longDescUpdated',
-                    'description': 'descUpdated',
+                    'description': 'descUpdated'
                 }
             },
             'images': {
                 'image': 'imageUpdated',
                 'small_image': 'smallUpdated',
                 'medium_image': 'mediumUpdated',
-                'feature_image': 'featureUpdated',
+                'feature_image': 'featureUpdated'
             },
-            'provider': {'email': 'bogus@us.ibm.com', 'name': 'someNameUpdated'},
+            'provider': {
+                'email': 'bogus@us.ibm.com',
+                'name': 'someNameUpdated'
+            }
         }
 
     def setUp(self):
-        self.service.delete_catalog_entry(id=self.defaultEntry['id'], force=True)
+        self.service.delete_catalog_entry(id=self.defaultEntry['id'],
+                                          force=True)
 
     def tearDown(self):
-        self.service.delete_catalog_entry(id=self.defaultEntry['id'], force=True)
+        self.service.delete_catalog_entry(id=self.defaultEntry['id'],
+                                          force=True)
 
     def test_create_catalog_entry(self):
         env = self.service.create_catalog_entry(
@@ -109,8 +148,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
         assert env is not None
         assert env.get_status_code() == 201
 
@@ -135,8 +173,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
 
         env = self.service.get_catalog_entry(id=self.defaultEntry['id'])
         assert env is not None
@@ -163,8 +200,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
 
         env = self.service.update_catalog_entry(
             id=self.updatedEntry['id'],
@@ -174,8 +210,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.updatedEntry['images'],
             disabled=self.updatedEntry['disabled'],
             tags=self.updatedEntry['tags'],
-            provider=self.updatedEntry['provider'],
-        )
+            provider=self.updatedEntry['provider'])
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -198,10 +233,10 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
 
-        env = self.service.delete_catalog_entry(id=self.defaultEntry['id'], force=True)
+        env = self.service.delete_catalog_entry(id=self.defaultEntry['id'],
+                                                force=True)
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -217,8 +252,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
         self.service.delete_catalog_entry(id=self.defaultEntry['id'])
 
         with pytest.raises(ApiException) as e:
@@ -248,8 +282,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
                 images=self.updatedEntry['images'],
                 disabled=self.updatedEntry['disabled'],
                 tags=self.updatedEntry['tags'],
-                provider=self.updatedEntry['provider'],
-            )
+                provider=self.updatedEntry['provider'])
         assert e.value.code == 404
 
     def test_create_catalog_entry_failure(self):
@@ -261,8 +294,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
 
         with pytest.raises(ApiException) as e:
             self.service.create_catalog_entry(
@@ -273,8 +305,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
                 images=self.defaultEntry['images'],
                 disabled=self.defaultEntry['disabled'],
                 tags=self.defaultEntry['tags'],
-                provider=self.defaultEntry['provider'],
-            )
+                provider=self.defaultEntry['provider'])
         assert e.value.code == 409
 
     def test_list_catalog_entries(self):
@@ -300,8 +331,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
         self.service.create_catalog_entry(
             id=self.defaultChildEntry['id'],
             parent_id=self.defaultChildEntry['parent_id'],
@@ -311,10 +341,10 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultChildEntry['images'],
             disabled=self.defaultChildEntry['disabled'],
             tags=self.defaultChildEntry['tags'],
-            provider=self.defaultChildEntry['provider'],
-        )
+            provider=self.defaultChildEntry['provider'])
 
-        env = self.service.get_child_objects(id=self.defaultEntry['id'], kind=self.defaultEntry['kind'])
+        env = self.service.get_child_objects(id=self.defaultEntry['id'],
+                                             kind=self.defaultEntry['kind'])
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -329,10 +359,12 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert resources[0].get('id') == self.defaultChildEntry['id']
         assert resources[0].get('name') == self.defaultChildEntry['name']
         assert resources[0].get('active') == self.defaultChildEntry['active']
-        assert resources[0].get('disabled') == self.defaultChildEntry['disabled']
+        assert resources[0].get(
+            'disabled') == self.defaultChildEntry['disabled']
         assert resources[0].get('kind') == self.defaultChildEntry['kind']
         assert resources[0].get('images') == self.defaultChildEntry['images']
-        assert resources[0].get('provider') == self.defaultChildEntry['provider']
+        assert resources[0].get(
+            'provider') == self.defaultChildEntry['provider']
         assert resources[0].get('tags') == self.defaultChildEntry['tags']
         results_obj = EntrySearchResult.from_dict(results)
         print("get_child_objects() response: ", results_obj)
@@ -351,8 +383,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
         self.service.delete_catalog_entry(id=self.defaultEntry['id'])
 
         env = self.service.restore_catalog_entry(self.defaultEntry['id'])
@@ -388,8 +419,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
 
         env = self.service.get_visibility(self.defaultEntry['id'])
         assert env is not None
@@ -413,8 +443,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
 
         with pytest.raises(ApiException) as e:
             self.service.update_visibility(id=self.defaultEntry['id'])
@@ -434,8 +463,7 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
 
         with pytest.raises(ApiException) as e:
             self.service.get_pricing(self.defaultEntry['id'])
@@ -454,17 +482,15 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
         self.service.upload_artifact(
             object_id=self.defaultEntry['id'],
             artifact_id=self.defaultEntry['artifactId'],
-            artifact=self.defaultEntry['artifact'],
-        )
+            artifact=self.defaultEntry['artifact'])
 
         env = self.service.list_artifacts(
-            object_id=self.defaultEntry['id'], artifact_id=self.defaultEntry['artifactId']
-        )
+            object_id=self.defaultEntry['id'],
+            artifact_id=self.defaultEntry['artifactId'])
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -477,8 +503,8 @@ class TestGlobalCatalogV1(unittest.TestCase):
         assert len(resources) == 1
         assert resources[0].get('name') == self.defaultEntry['artifactId']
         assert resources[0].get('url') == '{}/{}/artifacts/{}'.format(
-            self.service.service_url, self.defaultEntry['id'], self.defaultEntry['artifactId']
-        )
+            self.service.service_url, self.defaultEntry['id'],
+            self.defaultEntry['artifactId'])
         assert resources[0].get('size') == 24
 
     def test_list_artifacts_failure(self):
@@ -499,15 +525,15 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
         self.service.upload_artifact(
             object_id=self.defaultEntry['id'],
             artifact_id=self.defaultEntry['artifactId'],
-            artifact=self.defaultEntry['artifact'],
-        )
+            artifact=self.defaultEntry['artifact'])
 
-        env = self.service.get_artifact(object_id=self.defaultEntry['id'], artifact_id=self.defaultEntry['artifactId'])
+        env = self.service.get_artifact(
+            object_id=self.defaultEntry['id'],
+            artifact_id=self.defaultEntry['artifactId'])
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -524,11 +550,11 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
 
         with pytest.raises(ApiException) as e:
-            self.service.get_artifact(object_id=self.defaultEntry['id'], artifact_id='bogus')
+            self.service.get_artifact(object_id=self.defaultEntry['id'],
+                                      artifact_id='bogus')
         assert e.value.code == 404
 
         with pytest.raises(ApiException) as e:
@@ -544,14 +570,12 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
 
         env = self.service.upload_artifact(
             object_id=self.defaultEntry['id'],
             artifact_id=self.defaultEntry['artifactId'],
-            artifact=self.defaultEntry['artifact'],
-        )
+            artifact=self.defaultEntry['artifact'])
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -572,10 +596,10 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
 
-        env = self.service.delete_artifact(object_id=self.defaultEntry['id'], artifact_id='bogus')
+        env = self.service.delete_artifact(object_id=self.defaultEntry['id'],
+                                           artifact_id='bogus')
         assert env is not None
         assert env.get_status_code() == 200
 
@@ -591,10 +615,10 @@ class TestGlobalCatalogV1(unittest.TestCase):
             images=self.defaultEntry['images'],
             disabled=self.defaultEntry['disabled'],
             tags=self.defaultEntry['tags'],
-            provider=self.defaultEntry['provider'],
-        )
+            provider=self.defaultEntry['provider'])
 
-        env = self.service.delete_artifact(object_id=self.defaultEntry['id'], artifact_id='bogus')
+        env = self.service.delete_artifact(object_id=self.defaultEntry['id'],
+                                           artifact_id='bogus')
         assert env is not None
         assert env.get_status_code() == 200
 

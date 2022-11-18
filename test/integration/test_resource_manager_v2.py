@@ -30,7 +30,6 @@ from ibm_platform_services.resource_manager_v2 import *
 # Location of our config file.
 config_file = 'resource_manager.env'
 
-
 class TestResourceManagerV2(unittest.TestCase):
     """
     Integration Test Class for ResourceManagerV2
@@ -41,7 +40,9 @@ class TestResourceManagerV2(unittest.TestCase):
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
-            cls.config = read_external_sources(ResourceManagerV2.DEFAULT_SERVICE_NAME)
+            cls.config = read_external_sources(
+                ResourceManagerV2.DEFAULT_SERVICE_NAME
+            )
             assert cls.config is not None
 
             # Construct the first service instance.
@@ -86,7 +87,8 @@ class TestResourceManagerV2(unittest.TestCase):
         assert result is not None
 
     def test_03_list_resource_groups_in_an_account(self):
-        response = self.service.list_resource_groups(account_id=self.test_user_account_id)
+        response = self.service.list_resource_groups(
+            account_id=self.test_user_account_id)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -108,7 +110,8 @@ class TestResourceManagerV2(unittest.TestCase):
         assert resources.get('updated_at') is not None
 
     def test_04_create_resource_group_in_an_account(self):
-        response = self.service.create_resource_group(name='TestGroup', account_id=self.test_user_account_id)
+        response = self.service.create_resource_group(
+            name='TestGroup', account_id=self.test_user_account_id)
         assert response is not None
         assert response.get_status_code() == 201
 
@@ -119,7 +122,8 @@ class TestResourceManagerV2(unittest.TestCase):
         self.__class__.new_resource_group_id = result.get('id')
 
     def test_05_get_resource_group_by_id(self):
-        response = self.service.get_resource_group(id=self.new_resource_group_id)
+        response = self.service.get_resource_group(
+            id=self.new_resource_group_id)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -127,7 +131,8 @@ class TestResourceManagerV2(unittest.TestCase):
         assert result is not None
 
     def test_06_update_resource_group_by_id(self):
-        response = self.service.update_resource_group(id=self.new_resource_group_id, name='TestGroup2', state='ACTIVE')
+        response = self.service.update_resource_group(
+            id=self.new_resource_group_id, name='TestGroup2', state='ACTIVE')
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -135,6 +140,7 @@ class TestResourceManagerV2(unittest.TestCase):
         assert result is not None
 
     def test_07_delete_resource_group_by_id(self):
-        response = self.alt_service.delete_resource_group(id=self.new_resource_group_id)
+        response = self.alt_service.delete_resource_group(
+            id=self.new_resource_group_id)
         assert response is not None
         assert response.get_status_code() == 204

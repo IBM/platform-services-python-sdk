@@ -57,7 +57,7 @@ rule_rev = None
 # Start of Examples for Service: ContextBasedRestrictionsV1
 ##############################################################################
 # region
-class TestContextBasedRestrictionsV1Examples:
+class TestContextBasedRestrictionsV1Examples():
     """
     Example Test Class for ContextBasedRestrictionsV1
     """
@@ -70,7 +70,8 @@ class TestContextBasedRestrictionsV1Examples:
 
             # begin-common
 
-            context_based_restrictions_service = ContextBasedRestrictionsV1.new_instance()
+            context_based_restrictions_service = ContextBasedRestrictionsV1.new_instance(
+            )
 
             # end-common
             assert context_based_restrictions_service is not None
@@ -124,7 +125,7 @@ class TestContextBasedRestrictionsV1Examples:
                 'ref': {
                     'account_id': account_id,
                     'service_name': 'cloud-object-storage',
-                },
+                }
             }
             excluded_ip_address_model = {
                 'type': 'ipAddress',
@@ -134,13 +135,7 @@ class TestContextBasedRestrictionsV1Examples:
             zone = context_based_restrictions_service.create_zone(
                 name='an example of zone',
                 account_id=account_id,
-                addresses=[
-                    ip_address_model,
-                    ip_range_address_model,
-                    subnet_address_model,
-                    vpc_address_model,
-                    service_ref_address_model,
-                ],
+                addresses=[ip_address_model, ip_range_address_model, subnet_address_model, vpc_address_model, service_ref_address_model],
                 excluded=[excluded_ip_address_model],
                 description='this is an example of zone',
             ).get_result()
@@ -163,7 +158,9 @@ class TestContextBasedRestrictionsV1Examples:
             print('\nlist_zones() result:')
             # begin-list_zones
 
-            zone_list = context_based_restrictions_service.list_zones(account_id=account_id).get_result()
+            zone_list = context_based_restrictions_service.list_zones(
+                account_id=account_id
+            ).get_result()
 
             print(json.dumps(zone_list, indent=2))
 
@@ -181,7 +178,9 @@ class TestContextBasedRestrictionsV1Examples:
             print('\nget_zone() result:')
             # begin-get_zone
 
-            get_zone_response = context_based_restrictions_service.get_zone(zone_id=zone_id)
+            get_zone_response = context_based_restrictions_service.get_zone(
+                zone_id=zone_id
+            )
             zone = get_zone_response.get_result()
 
             print(json.dumps(zone, indent=2))
@@ -232,9 +231,7 @@ class TestContextBasedRestrictionsV1Examples:
             print('\nlist_available_serviceref_targets() result:')
             # begin-list_available_serviceref_targets
 
-            service_ref_target_list = (
-                context_based_restrictions_service.list_available_serviceref_targets().get_result()
-            )
+            service_ref_target_list = context_based_restrictions_service.list_available_serviceref_targets().get_result()
 
             print(json.dumps(service_ref_target_list, indent=2))
 
@@ -279,7 +276,7 @@ class TestContextBasedRestrictionsV1Examples:
                 contexts=[rule_context_model],
                 resources=[resource_model],
                 description='this is an example of rule',
-                enforcement_mode='enabled',
+                enforcement_mode='enabled'
             ).get_result()
 
             print(json.dumps(rule, indent=2))
@@ -300,7 +297,9 @@ class TestContextBasedRestrictionsV1Examples:
             print('\nlist_rules() result:')
             # begin-list_rules
 
-            rule_list = context_based_restrictions_service.list_rules(account_id=account_id).get_result()
+            rule_list = context_based_restrictions_service.list_rules(
+                account_id=account_id
+            ).get_result()
 
             print(json.dumps(rule_list, indent=2))
 
@@ -318,7 +317,9 @@ class TestContextBasedRestrictionsV1Examples:
             print('\nget_rule() result:')
             # begin-get_rule
 
-            get_rule_response = context_based_restrictions_service.get_rule(rule_id=rule_id)
+            get_rule_response = context_based_restrictions_service.get_rule(
+                rule_id=rule_id
+            )
             rule = get_rule_response.get_result()
 
             print(json.dumps(rule, indent=2))
@@ -374,7 +375,7 @@ class TestContextBasedRestrictionsV1Examples:
                 contexts=[rule_context_model],
                 resources=[resource_model],
                 description='this is an example of updated rule',
-                enforcement_mode='disabled',
+                enforcement_mode='disabled'
             ).get_result()
 
             print(json.dumps(rule, indent=2))
@@ -432,7 +433,9 @@ class TestContextBasedRestrictionsV1Examples:
         try:
             # begin-delete_rule
 
-            response = context_based_restrictions_service.delete_rule(rule_id=rule_id)
+            response = context_based_restrictions_service.delete_rule(
+                rule_id=rule_id
+            )
 
             # end-delete_rule
             print('\ndelete_rule() response status code: ', response.get_status_code())
@@ -448,14 +451,15 @@ class TestContextBasedRestrictionsV1Examples:
         try:
             # begin-delete_zone
 
-            response = context_based_restrictions_service.delete_zone(zone_id=zone_id)
+            response = context_based_restrictions_service.delete_zone(
+                zone_id=zone_id
+            )
 
             # end-delete_zone
             print('\ndelete_zone() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
-
 
 # endregion
 ##############################################################################

@@ -45,11 +45,10 @@ global_search_service = None
 # Start of Examples for Service: GlobalSearchV2
 ##############################################################################
 # region
-class TestGlobalSearchV2Examples:
+class TestGlobalSearchV2Examples():
     """
     Example Test Class for GlobalSearchV2
     """
-
     @classmethod
     def setup_class(cls):
         global global_search_service
@@ -66,8 +65,8 @@ class TestGlobalSearchV2Examples:
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
-        not os.path.exists(config_file), reason="External configuration not available, skipping..."
-    )
+        not os.path.exists(config_file),
+        reason="External configuration not available, skipping...")
 
     @needscredentials
     def test_search_example(self):
@@ -78,7 +77,8 @@ class TestGlobalSearchV2Examples:
             print('\nsearch() result:')
             # begin-search
 
-            response = global_search_service.search(query='GST-sdk-*', fields=['*'])
+            response = global_search_service.search(query='GST-sdk-*',
+                                                    fields=['*'])
             scan_result = response.get_result()
 
             print(json.dumps(scan_result, indent=2))
@@ -97,7 +97,8 @@ class TestGlobalSearchV2Examples:
             print('\nget_supported_types() result:')
             # begin-get_supported_types
 
-            supported_types_list = global_search_service.get_supported_types().get_result()
+            supported_types_list = global_search_service.get_supported_types(
+            ).get_result()
 
             print(json.dumps(supported_types_list, indent=2))
 

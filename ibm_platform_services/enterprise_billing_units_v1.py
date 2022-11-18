@@ -36,7 +36,6 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
-
 class EnterpriseBillingUnitsV1(BaseService):
     """The Enterprise Billing Units V1 service."""
 
@@ -44,23 +43,23 @@ class EnterpriseBillingUnitsV1(BaseService):
     DEFAULT_SERVICE_NAME = 'enterprise_billing_units'
 
     @classmethod
-    def new_instance(
-        cls,
-        service_name: str = DEFAULT_SERVICE_NAME,
-    ) -> 'EnterpriseBillingUnitsV1':
+    def new_instance(cls,
+                     service_name: str = DEFAULT_SERVICE_NAME,
+                    ) -> 'EnterpriseBillingUnitsV1':
         """
         Return a new client for the Enterprise Billing Units service using the
                specified parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
-    def __init__(
-        self,
-        authenticator: Authenticator = None,
-    ) -> None:
+    def __init__(self,
+                 authenticator: Authenticator = None,
+                ) -> None:
         """
         Construct a new client for the Enterprise Billing Units service.
 
@@ -68,13 +67,20 @@ class EnterpriseBillingUnitsV1(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
+        BaseService.__init__(self,
+                             service_url=self.DEFAULT_SERVICE_URL,
+                             authenticator=authenticator)
+
 
     #########################
     # Billing Units
     #########################
 
-    def get_billing_unit(self, billing_unit_id: str, **kwargs) -> DetailedResponse:
+
+    def get_billing_unit(self,
+        billing_unit_id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Get billing unit by ID.
 
@@ -89,9 +95,9 @@ class EnterpriseBillingUnitsV1(BaseService):
         if billing_unit_id is None:
             raise ValueError('billing_unit_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_billing_unit'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_billing_unit')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -102,13 +108,20 @@ class EnterpriseBillingUnitsV1(BaseService):
         path_param_values = self.encode_path_vars(billing_unit_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/billing-units/{billing_unit_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request)
         return response
 
-    def list_billing_units(
-        self, *, account_id: str = None, enterprise_id: str = None, account_group_id: str = None, **kwargs
+
+    def list_billing_units(self,
+        *,
+        account_id: str = None,
+        enterprise_id: str = None,
+        account_group_id: str = None,
+        **kwargs
     ) -> DetailedResponse:
         """
         List billing units.
@@ -125,19 +138,26 @@ class EnterpriseBillingUnitsV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_billing_units'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_billing_units')
         headers.update(sdk_headers)
 
-        params = {'account_id': account_id, 'enterprise_id': enterprise_id, 'account_group_id': account_group_id}
+        params = {
+            'account_id': account_id,
+            'enterprise_id': enterprise_id,
+            'account_group_id': account_group_id
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
         url = '/v1/billing-units'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request)
         return response
@@ -146,7 +166,11 @@ class EnterpriseBillingUnitsV1(BaseService):
     # Billing Options
     #########################
 
-    def list_billing_options(self, billing_unit_id: str, **kwargs) -> DetailedResponse:
+
+    def list_billing_options(self,
+        billing_unit_id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         List billing options.
 
@@ -162,19 +186,24 @@ class EnterpriseBillingUnitsV1(BaseService):
         if billing_unit_id is None:
             raise ValueError('billing_unit_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_billing_options'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_billing_options')
         headers.update(sdk_headers)
 
-        params = {'billing_unit_id': billing_unit_id}
+        params = {
+            'billing_unit_id': billing_unit_id
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
         url = '/v1/billing-options'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request)
         return response
@@ -183,8 +212,13 @@ class EnterpriseBillingUnitsV1(BaseService):
     # Credit Pools
     #########################
 
-    def get_credit_pools(
-        self, billing_unit_id: str, *, date: str = None, type: str = None, **kwargs
+
+    def get_credit_pools(self,
+        billing_unit_id: str,
+        *,
+        date: str = None,
+        type: str = None,
+        **kwargs
     ) -> DetailedResponse:
         """
         Get credit pools.
@@ -206,19 +240,26 @@ class EnterpriseBillingUnitsV1(BaseService):
         if billing_unit_id is None:
             raise ValueError('billing_unit_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_credit_pools'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_credit_pools')
         headers.update(sdk_headers)
 
-        params = {'billing_unit_id': billing_unit_id, 'date': date, 'type': type}
+        params = {
+            'billing_unit_id': billing_unit_id,
+            'date': date,
+            'type': type
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
         headers['Accept'] = 'application/json'
 
         url = '/v1/credit-pools'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
         response = self.send(request)
         return response
@@ -229,7 +270,7 @@ class EnterpriseBillingUnitsV1(BaseService):
 ##############################################################################
 
 
-class BillingOption:
+class BillingOption():
     """
     Information about a billing option.
 
@@ -256,23 +297,21 @@ class BillingOption:
           updated.
     """
 
-    def __init__(
-        self,
-        *,
-        id: str = None,
-        billing_unit_id: str = None,
-        start_date: datetime = None,
-        end_date: datetime = None,
-        state: str = None,
-        type: str = None,
-        category: str = None,
-        payment_instrument: dict = None,
-        duration_in_months: int = None,
-        line_item_id: int = None,
-        billing_system: dict = None,
-        renewal_mode_code: str = None,
-        updated_at: datetime = None
-    ) -> None:
+    def __init__(self,
+                 *,
+                 id: str = None,
+                 billing_unit_id: str = None,
+                 start_date: datetime = None,
+                 end_date: datetime = None,
+                 state: str = None,
+                 type: str = None,
+                 category: str = None,
+                 payment_instrument: dict = None,
+                 duration_in_months: int = None,
+                 line_item_id: int = None,
+                 billing_system: dict = None,
+                 renewal_mode_code: str = None,
+                 updated_at: datetime = None) -> None:
         """
         Initialize a BillingOption object.
 
@@ -403,31 +442,30 @@ class BillingOption:
         The state of the billing option. The valid values include `ACTIVE, `SUSPENDED`,
         and `CANCELED`.
         """
-
         ACTIVE = 'ACTIVE'
         SUSPENDED = 'SUSPENDED'
         CANCELED = 'CANCELED'
+
 
     class TypeEnum(str, Enum):
         """
         The type of billing option. The valid values are `SUBSCRIPTION` and `OFFER`.
         """
-
         SUBSCRIPTION = 'SUBSCRIPTION'
         OFFER = 'OFFER'
+
 
     class CategoryEnum(str, Enum):
         """
         The category of the billing option. The valid values are `PLATFORM`, `SERVICE`,
         and `SUPPORT`.
         """
-
         PLATFORM = 'PLATFORM'
         SERVICE = 'SERVICE'
         SUPPORT = 'SUPPORT'
 
 
-class BillingOptionsList:
+class BillingOptionsList():
     """
     A search result containing zero or more billing options.
 
@@ -438,9 +476,11 @@ class BillingOptionsList:
     :attr List[BillingOption] resources: (optional) A list of billing units found.
     """
 
-    def __init__(
-        self, *, rows_count: int = None, next_url: str = None, resources: List['BillingOption'] = None
-    ) -> None:
+    def __init__(self,
+                 *,
+                 rows_count: int = None,
+                 next_url: str = None,
+                 resources: List['BillingOption'] = None) -> None:
         """
         Initialize a BillingOptionsList object.
 
@@ -501,8 +541,7 @@ class BillingOptionsList:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class BillingUnit:
+class BillingUnit():
     """
     Information about a billing unit.
 
@@ -520,18 +559,16 @@ class BillingUnit:
     :attr datetime created_at: (optional) The creation date of the billing unit.
     """
 
-    def __init__(
-        self,
-        *,
-        id: str = None,
-        crn: str = None,
-        name: str = None,
-        enterprise_id: str = None,
-        currency_code: str = None,
-        country_code: str = None,
-        master: bool = None,
-        created_at: datetime = None
-    ) -> None:
+    def __init__(self,
+                 *,
+                 id: str = None,
+                 crn: str = None,
+                 name: str = None,
+                 enterprise_id: str = None,
+                 currency_code: str = None,
+                 country_code: str = None,
+                 master: bool = None,
+                 created_at: datetime = None) -> None:
         """
         Initialize a BillingUnit object.
 
@@ -625,8 +662,7 @@ class BillingUnit:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class BillingUnitsList:
+class BillingUnitsList():
     """
     A search result contining zero or more billing units.
 
@@ -637,7 +673,11 @@ class BillingUnitsList:
     :attr List[BillingUnit] resources: (optional) A list of billing units found.
     """
 
-    def __init__(self, *, rows_count: int = None, next_url: str = None, resources: List['BillingUnit'] = None) -> None:
+    def __init__(self,
+                 *,
+                 rows_count: int = None,
+                 next_url: str = None,
+                 resources: List['BillingUnit'] = None) -> None:
         """
         Initialize a BillingUnitsList object.
 
@@ -698,8 +738,7 @@ class BillingUnitsList:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class CreditPool:
+class CreditPool():
     """
     The credit pool for a billing unit.
 
@@ -715,15 +754,13 @@ class CreditPool:
           credit pool.
     """
 
-    def __init__(
-        self,
-        *,
-        type: str = None,
-        currency_code: str = None,
-        billing_unit_id: str = None,
-        term_credits: List['TermCredits'] = None,
-        overage: 'CreditPoolOverage' = None
-    ) -> None:
+    def __init__(self,
+                 *,
+                 type: str = None,
+                 currency_code: str = None,
+                 billing_unit_id: str = None,
+                 term_credits: List['TermCredits'] = None,
+                 overage: 'CreditPoolOverage' = None) -> None:
         """
         Initialize a CreditPool object.
 
@@ -803,12 +840,11 @@ class CreditPool:
         """
         The type of credit, either `PLATFORM` or `SUPPORT`.
         """
-
         PLATFORM = 'PLATFORM'
         SUPPORT = 'SUPPORT'
 
 
-class CreditPoolOverage:
+class CreditPoolOverage():
     """
     Overage that was generated on the credit pool.
 
@@ -817,7 +853,10 @@ class CreditPoolOverage:
           overage.
     """
 
-    def __init__(self, *, cost: float = None, resources: List[dict] = None) -> None:
+    def __init__(self,
+                 *,
+                 cost: float = None,
+                 resources: List[dict] = None) -> None:
         """
         Initialize a CreditPoolOverage object.
 
@@ -870,8 +909,7 @@ class CreditPoolOverage:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class CreditPoolsList:
+class CreditPoolsList():
     """
     A search result containing zero or more credit pools.
 
@@ -883,7 +921,11 @@ class CreditPoolsList:
           query.
     """
 
-    def __init__(self, *, rows_count: int = None, next_url: str = None, resources: List['CreditPool'] = None) -> None:
+    def __init__(self,
+                 *,
+                 rows_count: int = None,
+                 next_url: str = None,
+                 resources: List['CreditPool'] = None) -> None:
         """
         Initialize a CreditPoolsList object.
 
@@ -945,8 +987,7 @@ class CreditPoolsList:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class TermCredits:
+class TermCredits():
     """
     The subscription term that is active in the current month.
 
@@ -968,19 +1009,17 @@ class TermCredits:
           during the month.
     """
 
-    def __init__(
-        self,
-        *,
-        billing_option_id: str = None,
-        category: str = None,
-        start_date: datetime = None,
-        end_date: datetime = None,
-        total_credits: float = None,
-        starting_balance: float = None,
-        used_credits: float = None,
-        current_balance: float = None,
-        resources: List[dict] = None
-    ) -> None:
+    def __init__(self,
+                 *,
+                 billing_option_id: str = None,
+                 category: str = None,
+                 start_date: datetime = None,
+                 end_date: datetime = None,
+                 total_credits: float = None,
+                 starting_balance: float = None,
+                 used_credits: float = None,
+                 current_balance: float = None,
+                 resources: List[dict] = None) -> None:
         """
         Initialize a TermCredits object.
 
@@ -1089,8 +1128,8 @@ class TermCredits:
         The category of the credit pool. The valid values are `PLATFORM`, `OFFER`, or
         `SERVICE` for platform credit and `SUPPORT` for support credit.
         """
-
         PLATFORM = 'PLATFORM'
         OFFER = 'OFFER'
         SERVICE = 'SERVICE'
         SUPPORT = 'SUPPORT'
+

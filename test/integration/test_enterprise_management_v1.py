@@ -36,8 +36,7 @@ example_account_id = None
 first_example_account_group_id = None
 second_example_account_group_id = None
 
-
-class TestEnterpriseManagementV1:
+class TestEnterpriseManagementV1():
     """
     Integration Test Class for EnterpriseManagementV1
     """
@@ -50,7 +49,8 @@ class TestEnterpriseManagementV1:
             cls.enterprise_management_service = EnterpriseManagementV1.new_instance()
             assert cls.enterprise_management_service is not None
 
-            cls.config = read_external_sources(EnterpriseManagementV1.DEFAULT_SERVICE_NAME)
+            cls.config = read_external_sources(
+                EnterpriseManagementV1.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
 
             cls.enterprise_id = cls.config['ENTERPRISE_ID']
@@ -182,12 +182,7 @@ class TestEnterpriseManagementV1:
 
         assert first_example_account_group_id is not None
 
-        parent = (
-            'crn:v1:bluemix:public:enterprise::a/'
-            + self.account_id
-            + '::account-group:'
-            + first_example_account_group_id
-        )
+        parent = 'crn:v1:bluemix:public:enterprise::a/' + self.account_id + '::account-group:' + first_example_account_group_id
 
         create_account_response = self.enterprise_management_service.create_account(
             parent=parent,
@@ -272,12 +267,7 @@ class TestEnterpriseManagementV1:
         assert example_account_id is not None
         assert second_example_account_group_id is not None
 
-        new_parent = (
-            'crn:v1:bluemix:public:enterprise::a/'
-            + self.account_id
-            + '::account-group:'
-            + second_example_account_group_id
-        )
+        new_parent = 'crn:v1:bluemix:public:enterprise::a/' + self.account_id + '::account-group:' + second_example_account_group_id
 
         update_account_response = self.enterprise_management_service.update_account(
             account_id=example_account_id,
@@ -359,3 +349,4 @@ class TestEnterpriseManagementV1:
         )
 
         assert update_enterprise_response.get_status_code() == 204
+

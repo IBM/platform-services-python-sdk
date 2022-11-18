@@ -60,27 +60,27 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         cls.testViewerRoleCrn = "crn:v1:bluemix:public:iam::::role:Viewer"
         cls.testEditorRoleCrn = "crn:v1:bluemix:public:iam::::role:Editor"
         cls.testServiceName = "iam-groups"
-        cls.testPolicySubject = PolicySubject(attributes=[SubjectAttribute(name='iam_id', value=cls.testUserId)])
+        cls.testPolicySubject = PolicySubject(attributes=
+            [SubjectAttribute(name='iam_id', value=cls.testUserId)])
         cls.testPolicyRole = PolicyRole(role_id=cls.testViewerRoleCrn)
-        resource_tag = ResourceTag(name='project', value='prototype', operator='stringEquals')
-        cls.testPolicyResources = PolicyResource(
-            attributes=[
-                ResourceAttribute(name='accountId', value=cls.testAccountId, operator='stringEquals'),
-                ResourceAttribute(name='serviceType', value='service', operator='stringEquals'),
-            ],
-            tags=[resource_tag],
-        )
+        resource_tag = ResourceTag(name='project', value='prototype',
+                                   operator='stringEquals')
+        cls.testPolicyResources = PolicyResource(attributes=
+            [ResourceAttribute(name='accountId', value=cls.testAccountId,
+                operator='stringEquals'),
+            ResourceAttribute(name='serviceType', value='service',
+                operator='stringEquals')], tags=[resource_tag])
 
         cls.testCustomRoleId = ""
         cls.testCustomRoleETag = ""
         cls.testCustomRoleName = 'TestPythonRole' + str(random.randint(0, 99999))
         cls.testCustomRole = CustomRole(
-            name=cls.testCustomRoleName,
-            display_name='SDK Test role',
-            description='SDK Test role description ',
-            account_id=cls.testAccountId,
-            service_name=cls.testServiceName,
-            actions=['iam-groups.groups.read'],
+            name = cls.testCustomRoleName,
+            display_name = 'SDK Test role',
+            description = 'SDK Test role description ',
+            account_id = cls.testAccountId,
+            service_name = cls.testServiceName,
+            actions = ['iam-groups.groups.read']
         )
 
         print('\nSetup complete.')
@@ -90,7 +90,8 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         # Delete all the access policies that we created during the test.
         #
         # List all policies in the account for the test user
-        response = cls.service.list_policies(account_id=cls.testAccountId, iam_id=cls.testUserId)
+        response = cls.service.list_policies(
+            account_id=cls.testAccountId, iam_id=cls.testUserId)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -106,7 +107,8 @@ class TestIamPolicyManagementV1(unittest.TestCase):
             minutesDifference = (now - policy.created_at).seconds / 60
 
             if policy.id == cls.testPolicyId or minutesDifference < 5:
-                response = cls.service.delete_policy(policy_id=policy.id)
+                response = cls.service.delete_policy(
+                     policy_id=policy.id)
                 assert response is not None
                 assert response.get_status_code() == 204
 
@@ -123,12 +125,10 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         print('\nTest account id: ', self.testAccountId)
 
     def test_01_create_access_policy(self):
-        response = self.service.create_policy(
-            type='access',
-            subjects=[self.testPolicySubject],
-            roles=[self.testPolicyRole],
-            resources=[self.testPolicyResources],
-        )
+        response = self.service.create_policy(type='access',
+                                              subjects=[self.testPolicySubject],
+                                              roles=[self.testPolicyRole],
+                                              resources=[self.testPolicyResources])
         assert response is not None
         assert response.get_status_code() == 201
 
@@ -173,13 +173,11 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         self.testPolicyRole.role_id = self.testEditorRoleCrn
 
         response = self.service.update_policy(
-            policy_id=self.testPolicyId,
-            if_match=self.testPolicyETag,
+            policy_id=self.testPolicyId, if_match=self.testPolicyETag,
             type='access',
             subjects=[self.testPolicySubject],
             roles=[self.testPolicyRole],
-            resources=[self.testPolicyResources],
-        )
+            resources=[self.testPolicyResources])
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -198,7 +196,8 @@ class TestIamPolicyManagementV1(unittest.TestCase):
     def test_04_list_access_policies(self):
         print("Policy ID: ", self.testPolicyId)
 
-        response = self.service.list_policies(account_id=self.testAccountId, iam_id=self.testUserId)
+        response = self.service.list_policies(
+            account_id=self.testAccountId, iam_id=self.testUserId)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -225,8 +224,8 @@ class TestIamPolicyManagementV1(unittest.TestCase):
             service_name=self.testCustomRole.service_name,
             display_name=self.testCustomRole.display_name,
             description=self.testCustomRole.description,
-            actions=self.testCustomRole.actions,
-        )
+            actions=self.testCustomRole.actions
+            )
         assert response is not None
         assert response.get_status_code() == 201
 
@@ -276,8 +275,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
             if_match=self.testCustomRoleETag,
             display_name='Updated ' + self.testCustomRole.display_name,
             description='Updated ' + self.testCustomRole.description,
-            actions=self.testCustomRole.actions,
-        )
+            actions=self.testCustomRole.actions)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -297,8 +295,8 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         print("Custom Role ID: ", self.testCustomRoleId)
 
         response = self.service.list_roles(
-            account_id=self.testCustomRole.account_id, service_name=self.testCustomRole.service_name
-        )
+            account_id=self.testCustomRole.account_id,
+            service_name=self.testCustomRole.service_name)
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -323,7 +321,9 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert self.testPolicyETag
         print("Policy ID: ", self.testPolicyId)
 
-        response = self.service.patch_policy(policy_id=self.testPolicyId, if_match=self.testPolicyETag, state='active')
+        response = self.service.patch_policy(
+            policy_id=self.testPolicyId, if_match=self.testPolicyETag,
+            state='active')
         assert response is not None
         assert response.get_status_code() == 200
 

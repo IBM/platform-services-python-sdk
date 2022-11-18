@@ -26,7 +26,7 @@ from ibm_platform_services.usage_reports_v4 import *
 config_file = 'usage_reports.env'
 
 
-class TestUsageReportsV4:
+class TestUsageReportsV4():
     """
     Integration Test Class for UsageReportsV4
     """
@@ -36,10 +36,12 @@ class TestUsageReportsV4:
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
-            cls.usage_reports_service = UsageReportsV4.new_instance()
+            cls.usage_reports_service = UsageReportsV4.new_instance(
+            )
             assert cls.usage_reports_service is not None
 
-            cls.config = read_external_sources(UsageReportsV4.DEFAULT_SERVICE_NAME)
+            cls.config = read_external_sources(
+                UsageReportsV4.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
 
             # Retrieve and verify some additional test-related config properties.
@@ -78,7 +80,10 @@ class TestUsageReportsV4:
     def test_get_account_usage(self):
 
         get_account_usage_response = self.usage_reports_service.get_account_usage(
-            account_id=self.ACCOUNT_ID, billingmonth=self.BILLING_MONTH, names=True, accept_language='English'
+            account_id=self.ACCOUNT_ID,
+            billingmonth=self.BILLING_MONTH,
+            names=True,
+            accept_language='English'
         )
 
         assert get_account_usage_response.get_status_code() == 200
@@ -151,7 +156,8 @@ class TestUsageReportsV4:
                 break
 
         numResources = len(resources)
-        print(f'get_resource_usage_account() response contained {numResources} total resources')
+        print(
+            f'get_resource_usage_account() response contained {numResources} total resources')
         assert numResources > 0
 
     @needscredentials
@@ -184,7 +190,8 @@ class TestUsageReportsV4:
                 break
 
         numResources = len(resources)
-        print(f'get_resource_usage_resource_group() response contained {numResources} total resources')
+        print(
+            f'get_resource_usage_resource_group() response contained {numResources} total resources')
         assert numResources > 0
 
     @needscredentials
@@ -217,5 +224,6 @@ class TestUsageReportsV4:
                 break
 
         numResources = len(resources)
-        print(f'get_resource_usage_org() response contained {numResources} total resources')
+        print(
+            f'get_resource_usage_org() response contained {numResources} total resources')
         assert numResources > 0

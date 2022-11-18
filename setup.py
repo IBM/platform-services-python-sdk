@@ -24,7 +24,9 @@ PACKAGE_NAME = 'ibm_platform_services'
 PACKAGE_DESC = 'Python client library for IBM Cloud Platform Services'
 
 with open('requirements.txt') as f:
-    install_requires = [str(req) for req in pkg_resources.parse_requirements(f)]
+    install_requires = [
+        str(req) for req in pkg_resources.parse_requirements(f)
+    ]
 with open('requirements-dev.txt') as f:
     tests_require = [str(req) for req in pkg_resources.parse_requirements(f)]
 
@@ -70,5 +72,4 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
     ],
-    zip_safe=True,
-)
+    zip_safe=True)
