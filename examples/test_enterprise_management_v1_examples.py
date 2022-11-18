@@ -59,7 +59,7 @@ new_parent_account_group_id = None
 # Start of Examples for Service: EnterpriseManagementV1
 ##############################################################################
 # region
-class TestEnterpriseManagementV1Examples():
+class TestEnterpriseManagementV1Examples:
     """
     Example Test Class for EnterpriseManagementV1
     """
@@ -79,8 +79,7 @@ class TestEnterpriseManagementV1Examples():
 
             # Load the configuration
             global config
-            config = read_external_sources(
-                EnterpriseManagementV1.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(EnterpriseManagementV1.DEFAULT_SERVICE_NAME)
 
             global enterprise_id
             enterprise_id = config['ENTERPRISE_ID']
@@ -107,8 +106,9 @@ class TestEnterpriseManagementV1Examples():
         assert enterprise_account_iam_id is not None
 
         try:
-            parent_crn = 'crn:v1:bluemix:public:enterprise::a/' + \
-                enterprise_account_id + '::enterprise:' + enterprise_id
+            parent_crn = (
+                'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::enterprise:' + enterprise_id
+            )
 
             print('\ncreate_account_group() result:')
             # begin-create_account_group
@@ -124,8 +124,7 @@ class TestEnterpriseManagementV1Examples():
             # end-create_account_group
 
             global account_group_id
-            account_group_id = create_account_group_response.get(
-                'account_group_id')
+            account_group_id = create_account_group_response.get('account_group_id')
 
             create_parent_account_group_response = enterprise_management_service.create_account_group(
                 parent=parent_crn,
@@ -134,8 +133,7 @@ class TestEnterpriseManagementV1Examples():
             ).get_result()
 
             global new_parent_account_group_id
-            new_parent_account_group_id = create_parent_account_group_response.get(
-                'account_group_id')
+            new_parent_account_group_id = create_parent_account_group_response.get('account_group_id')
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -208,8 +206,7 @@ class TestEnterpriseManagementV1Examples():
 
             # end-update_account_group
 
-            print('\nupdate_account_group() response status code: ',
-                  response.get_status_code())
+            print('\nupdate_account_group() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -222,8 +219,9 @@ class TestEnterpriseManagementV1Examples():
         assert account_group_id is not None
 
         try:
-            parent_crn = 'crn:v1:bluemix:public:enterprise::a/' + \
-                enterprise_account_id + '::account-group:' + account_group_id
+            parent_crn = (
+                'crn:v1:bluemix:public:enterprise::a/' + enterprise_account_id + '::account-group:' + account_group_id
+            )
 
             print('\ncreate_account() result:')
             # begin-create_account
@@ -263,8 +261,7 @@ class TestEnterpriseManagementV1Examples():
 
             # end-import_account_to_enterprise
 
-            print('\nimport_account_to_enterprise() response status code: ',
-                  response.get_status_code())
+            print('\nimport_account_to_enterprise() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -327,8 +324,12 @@ class TestEnterpriseManagementV1Examples():
         assert new_parent_account_group_id is not None
 
         try:
-            new_parent_crn = 'crn:v1:bluemix:public:enterprise::a/' + \
-                enterprise_account_id + '::account-group:' + new_parent_account_group_id
+            new_parent_crn = (
+                'crn:v1:bluemix:public:enterprise::a/'
+                + enterprise_account_id
+                + '::account-group:'
+                + new_parent_account_group_id
+            )
 
             # begin-update_account
 
@@ -339,8 +340,7 @@ class TestEnterpriseManagementV1Examples():
 
             # end-update_account
 
-            print('\nupdate_account() response status code: ',
-                  response.get_status_code())
+            print('\nupdate_account() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -410,9 +410,7 @@ class TestEnterpriseManagementV1Examples():
             print('\nget_enterprise() result:')
             # begin-get_enterprise
 
-            enterprise = enterprise_management_service.get_enterprise(
-                enterprise_id=enterprise_id
-            ).get_result()
+            enterprise = enterprise_management_service.get_enterprise(enterprise_id=enterprise_id).get_result()
 
             print(json.dumps(enterprise, indent=2))
 
@@ -440,11 +438,11 @@ class TestEnterpriseManagementV1Examples():
 
             # end-update_enterprise
 
-            print('\nupdate_enterprise() response status code: ',
-                  response.get_status_code())
+            print('\nupdate_enterprise() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
+
 
 # endregion
 ##############################################################################

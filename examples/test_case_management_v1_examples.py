@@ -51,7 +51,7 @@ resource_crn = None
 # Start of Examples for Service: CaseManagementV1
 ##############################################################################
 # region
-class TestCaseManagementV1Examples():
+class TestCaseManagementV1Examples:
     """
     Example Test Class for CaseManagementV1
     """
@@ -64,16 +64,14 @@ class TestCaseManagementV1Examples():
 
             # begin-common
 
-            case_management_service = CaseManagementV1.new_instance(
-            )
+            case_management_service = CaseManagementV1.new_instance()
 
             # end-common
             assert case_management_service is not None
 
             # Load the configuration
             global config
-            config = read_external_sources(
-                CaseManagementV1.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(CaseManagementV1.DEFAULT_SERVICE_NAME)
 
             global resource_crn
             resource_crn = config['RESOURCE_CRN']
@@ -93,14 +91,8 @@ class TestCaseManagementV1Examples():
             print('\ncreate_case() result:')
             # begin-createCase
 
-            offering_type = OfferingType(
-                group='crn_service_name',
-                key='cloud-object-storage'
-            )
-            offering_payload = Offering(
-                name='Cloud Object Storage',
-                type=offering_type
-            )
+            offering_type = OfferingType(group='crn_service_name', key='cloud-object-storage')
+            offering_payload = Offering(name='Cloud Object Storage', type=offering_type)
 
             case = case_management_service.create_case(
                 type='technical',
@@ -141,10 +133,7 @@ class TestCaseManagementV1Examples():
                 GetCaseEnums.Fields.CREATED_BY,
             ]
 
-            case = case_management_service.get_case(
-                case_number=case_number,
-                fields=fields_to_return
-            ).get_result()
+            case = case_management_service.get_case(case_number=case_number, fields=fields_to_return).get_result()
 
             print(json.dumps(case, indent=2))
 
@@ -187,8 +176,7 @@ class TestCaseManagementV1Examples():
             # begin-addComment
 
             comment = case_management_service.add_comment(
-                case_number=case_number,
-                comment='This is an example comment.'
+                case_number=case_number, comment='This is an example comment.'
             ).get_result()
 
             print(json.dumps(comment, indent=2))
@@ -209,9 +197,7 @@ class TestCaseManagementV1Examples():
             print('\nadd_watchlist() result:')
             # begin-addWatchlist
 
-            watchlist_users = [
-                User(realm='IBMid', user_id='abc@ibm.com')
-            ]
+            watchlist_users = [User(realm='IBMid', user_id='abc@ibm.com')]
 
             watchlist_add_response = case_management_service.add_watchlist(
                 case_number=case_number,
@@ -236,9 +222,7 @@ class TestCaseManagementV1Examples():
             print('\nremove_watchlist() result:')
             # begin-removeWatchlist
 
-            watchlist_users = [
-                User(realm='IBMid', user_id='abc@ibm.com')
-            ]
+            watchlist_users = [User(realm='IBMid', user_id='abc@ibm.com')]
 
             watchlist = case_management_service.remove_watchlist(
                 case_number=case_number,
@@ -355,8 +339,7 @@ class TestCaseManagementV1Examples():
             # begin-deleteFile
 
             attachment_list = case_management_service.delete_file(
-                case_number=case_number,
-                file_id=attachment_id
+                case_number=case_number, file_id=attachment_id
             ).get_result()
 
             print(json.dumps(attachment_list, indent=2))
@@ -384,8 +367,7 @@ class TestCaseManagementV1Examples():
             }
 
             case = case_management_service.update_case_status(
-                case_number=case_number,
-                status_payload=status_payload_model
+                case_number=case_number, status_payload=status_payload_model
             ).get_result()
 
             print(json.dumps(case, indent=2))
@@ -394,6 +376,7 @@ class TestCaseManagementV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
+
 
 # endregion
 ##############################################################################

@@ -66,7 +66,7 @@ operation = 'Provision_45'
 # Start of Examples for Service: OpenServiceBrokerV1
 ##############################################################################
 # region
-class TestOpenServiceBrokerV1Examples():
+class TestOpenServiceBrokerV1Examples:
     """
     Example Test Class for OpenServiceBrokerV1
     """
@@ -79,16 +79,14 @@ class TestOpenServiceBrokerV1Examples():
 
             # begin-common
 
-            open_service_broker_service = OpenServiceBrokerV1.new_instance(
-            )
+            open_service_broker_service = OpenServiceBrokerV1.new_instance()
 
             # end-common
             assert open_service_broker_service is not None
 
             # Load the configuration
             global config
-            config = read_external_sources(
-                OpenServiceBrokerV1.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(OpenServiceBrokerV1.DEFAULT_SERVICE_NAME)
 
             global instanceId
             instanceId = config['RESOURCE_INSTANCE_ID']
@@ -131,9 +129,7 @@ class TestOpenServiceBrokerV1Examples():
             print('\nget_service_instance_state() result:')
             # begin-get_service_instance_state
 
-            response = open_service_broker_service.get_service_instance_state(
-                instance_id=instanceId
-            ).get_result()
+            response = open_service_broker_service.get_service_instance_state(instance_id=instanceId).get_result()
 
             print(json.dumps(response, indent=2))
 
@@ -154,10 +150,7 @@ class TestOpenServiceBrokerV1Examples():
             # begin-replace_service_instance_state
 
             response = open_service_broker_service.replace_service_instance_state(
-                instance_id=instanceId,
-                enabled=False,
-                initiator_id=initiatorId,
-                reason_code=reasonCode
+                instance_id=instanceId, enabled=False, initiator_id=initiatorId, reason_code=reasonCode
             ).get_result()
 
             print(json.dumps(response, indent=2))
@@ -178,11 +171,7 @@ class TestOpenServiceBrokerV1Examples():
             print('\nreplace_service_instance() result:')
             # begin-replace_service_instance
 
-            context = Context(
-                account_id=accountId,
-                crn=instanceId,
-                platform='ibmcloud'
-            )
+            context = Context(account_id=accountId, crn=instanceId, platform='ibmcloud')
             pars = {}
             response = open_service_broker_service.replace_service_instance(
                 instance_id=instanceId,
@@ -192,7 +181,7 @@ class TestOpenServiceBrokerV1Examples():
                 space_guid=spaceGuid,
                 context=context,
                 parameters=pars,
-                accepts_incomplete=True
+                accepts_incomplete=True,
             ).get_result()
 
             print(json.dumps(response, indent=2))
@@ -213,11 +202,7 @@ class TestOpenServiceBrokerV1Examples():
             print('\nupdate_service_instance() result:')
             # begin-update_service_instance
 
-            context = Context(
-                account_id=accountId,
-                crn=instanceId,
-                platform='ibmcloud'
-            )
+            context = Context(account_id=accountId, crn=instanceId, platform='ibmcloud')
             pars = {}
             prevValues = {}
             response = open_service_broker_service.update_service_instance(
@@ -227,7 +212,7 @@ class TestOpenServiceBrokerV1Examples():
                 context=context,
                 parameters=pars,
                 previous_values=prevValues,
-                accepts_incomplete=True
+                accepts_incomplete=True,
             ).get_result()
 
             print(json.dumps(response, indent=2))
@@ -268,10 +253,7 @@ class TestOpenServiceBrokerV1Examples():
             # begin-get_last_operation
 
             response = open_service_broker_service.get_last_operation(
-                instance_id=instanceId,
-                operation = operation,
-                plan_id = planId,
-                service_id = serviceId
+                instance_id=instanceId, operation=operation, plan_id=planId, service_id=serviceId
             ).get_result()
 
             print(json.dumps(response, indent=2))
@@ -292,10 +274,7 @@ class TestOpenServiceBrokerV1Examples():
             print('\nreplace_service_binding() result:')
             # begin-replace_service_binding
 
-            bindResource = BindResource(
-                account_id=accountId,
-                serviceid_crn=appGuid
-            )
+            bindResource = BindResource(account_id=accountId, serviceid_crn=appGuid)
             pars = {}
             response = open_service_broker_service.replace_service_binding(
                 binding_id=bindingId,
@@ -303,7 +282,7 @@ class TestOpenServiceBrokerV1Examples():
                 plan_id=planId,
                 service_id=serviceId,
                 bind_resource=bindResource,
-                parameters=pars
+                parameters=pars,
             ).get_result()
 
             print(json.dumps(response, indent=2))
@@ -361,6 +340,7 @@ class TestOpenServiceBrokerV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
+
 
 # endregion
 ##############################################################################

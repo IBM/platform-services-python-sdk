@@ -26,7 +26,7 @@ from ibm_platform_services.enterprise_usage_reports_v1 import *
 config_file = 'enterprise_usage_reports.env'
 
 
-class TestEnterpriseUsageReportsV1():
+class TestEnterpriseUsageReportsV1:
     """
     Integration Test Class for EnterpriseUsageReportsV1
     """
@@ -36,12 +36,10 @@ class TestEnterpriseUsageReportsV1():
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
-            cls.enterprise_usage_reports_service = EnterpriseUsageReportsV1.new_instance(
-            )
+            cls.enterprise_usage_reports_service = EnterpriseUsageReportsV1.new_instance()
             assert cls.enterprise_usage_reports_service is not None
 
-            cls.config = read_external_sources(
-                EnterpriseUsageReportsV1.DEFAULT_SERVICE_NAME)
+            cls.config = read_external_sources(EnterpriseUsageReportsV1.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
 
             # Retrieve and verify some additional test-related config properties.
@@ -88,8 +86,7 @@ class TestEnterpriseUsageReportsV1():
                 break
 
         numReports = len(results)
-        print(
-            f'get_resource_usage_report()/enterprise response contained {numReports} total reports.')
+        print(f'get_resource_usage_report()/enterprise response contained {numReports} total reports.')
         assert numReports > 0
 
     @needscredentials
@@ -121,8 +118,7 @@ class TestEnterpriseUsageReportsV1():
                 break
 
         numReports = len(results)
-        print(
-            f'get_resource_usage_report()/account response contained {numReports} total reports.')
+        print(f'get_resource_usage_report()/account response contained {numReports} total reports.')
         assert numReports > 0
 
     @needscredentials
@@ -154,8 +150,7 @@ class TestEnterpriseUsageReportsV1():
                 break
 
         numReports = len(results)
-        print(
-            f'get_resource_usage_report()/account-group response contained {numReports} total reports.')
+        print(f'get_resource_usage_report()/account-group response contained {numReports} total reports.')
         assert numReports > 0
 
     @needscredentials
@@ -183,4 +178,6 @@ class TestEnterpriseUsageReportsV1():
         assert all_items is not None
 
         assert len(all_results) == len(all_items)
-        print(f'\nget_resource_usage_report() returned a total of {len(all_results)} items(s) using GetResourceUsageReportPager.')
+        print(
+            f'\nget_resource_usage_report() returned a total of {len(all_results)} items(s) using GetResourceUsageReportPager.'
+        )

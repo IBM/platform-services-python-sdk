@@ -31,9 +31,7 @@ import urllib
 from ibm_platform_services.iam_policy_management_v1 import *
 
 
-_service = IamPolicyManagementV1(
-    authenticator=NoAuthAuthenticator()
-)
+_service = IamPolicyManagementV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://iam.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -43,7 +41,8 @@ _service.set_service_url(_base_url)
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -66,10 +65,10 @@ class TestNewInstance():
         new_instance_without_authenticator()
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = IamPolicyManagementV1.new_instance(
-            )
+            service = IamPolicyManagementV1.new_instance()
 
-class TestListPolicies():
+
+class TestListPolicies:
     """
     Test Class for list_policies
     """
@@ -78,7 +77,7 @@ class TestListPolicies():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -93,11 +92,7 @@ class TestListPolicies():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/policies')
         mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -125,14 +120,14 @@ class TestListPolicies():
             sort=sort,
             format=format,
             state=state,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'iam_id={}'.format(iam_id) in query_string
@@ -146,13 +141,13 @@ class TestListPolicies():
         assert 'state={}'.format(state) in query_string
 
     def test_list_policies_all_params_with_retries(self):
-    	# Enable retries and run test_list_policies_all_params.
-    	_service.enable_retries()
-    	self.test_list_policies_all_params()
+        # Enable retries and run test_list_policies_all_params.
+        _service.enable_retries()
+        self.test_list_policies_all_params()
 
-    	# Disable retries and run test_list_policies_all_params.
-    	_service.disable_retries()
-    	self.test_list_policies_all_params()
+        # Disable retries and run test_list_policies_all_params.
+        _service.disable_retries()
+        self.test_list_policies_all_params()
 
     @responses.activate
     def test_list_policies_required_params(self):
@@ -162,37 +157,30 @@ class TestListPolicies():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/policies')
         mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.list_policies(
-            account_id,
-            headers={}
-        )
+        response = _service.list_policies(account_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
     def test_list_policies_required_params_with_retries(self):
-    	# Enable retries and run test_list_policies_required_params.
-    	_service.enable_retries()
-    	self.test_list_policies_required_params()
+        # Enable retries and run test_list_policies_required_params.
+        _service.enable_retries()
+        self.test_list_policies_required_params()
 
-    	# Disable retries and run test_list_policies_required_params.
-    	_service.disable_retries()
-    	self.test_list_policies_required_params()
+        # Disable retries and run test_list_policies_required_params.
+        _service.disable_retries()
+        self.test_list_policies_required_params()
 
     @responses.activate
     def test_list_policies_value_error(self):
@@ -202,11 +190,7 @@ class TestListPolicies():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/policies')
         mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -216,21 +200,21 @@ class TestListPolicies():
             "account_id": account_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_policies(**req_copy)
 
-
     def test_list_policies_value_error_with_retries(self):
-    	# Enable retries and run test_list_policies_value_error.
-    	_service.enable_retries()
-    	self.test_list_policies_value_error()
+        # Enable retries and run test_list_policies_value_error.
+        _service.enable_retries()
+        self.test_list_policies_value_error()
 
-    	# Disable retries and run test_list_policies_value_error.
-    	_service.disable_retries()
-    	self.test_list_policies_value_error()
+        # Disable retries and run test_list_policies_value_error.
+        _service.disable_retries()
+        self.test_list_policies_value_error()
 
-class TestCreatePolicy():
+
+class TestCreatePolicy:
     """
     Test Class for create_policy
     """
@@ -239,7 +223,7 @@ class TestCreatePolicy():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -254,11 +238,7 @@ class TestCreatePolicy():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/policies')
         mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Construct a dict representation of a SubjectAttribute model
         subject_attribute_model = {}
@@ -300,13 +280,7 @@ class TestCreatePolicy():
 
         # Invoke method
         response = _service.create_policy(
-            type,
-            subjects,
-            roles,
-            resources,
-            description=description,
-            accept_language=accept_language,
-            headers={}
+            type, subjects, roles, resources, description=description, accept_language=accept_language, headers={}
         )
 
         # Check for correct operation
@@ -321,13 +295,13 @@ class TestCreatePolicy():
         assert req_body['description'] == 'testString'
 
     def test_create_policy_all_params_with_retries(self):
-    	# Enable retries and run test_create_policy_all_params.
-    	_service.enable_retries()
-    	self.test_create_policy_all_params()
+        # Enable retries and run test_create_policy_all_params.
+        _service.enable_retries()
+        self.test_create_policy_all_params()
 
-    	# Disable retries and run test_create_policy_all_params.
-    	_service.disable_retries()
-    	self.test_create_policy_all_params()
+        # Disable retries and run test_create_policy_all_params.
+        _service.disable_retries()
+        self.test_create_policy_all_params()
 
     @responses.activate
     def test_create_policy_required_params(self):
@@ -337,11 +311,7 @@ class TestCreatePolicy():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/policies')
         mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Construct a dict representation of a SubjectAttribute model
         subject_attribute_model = {}
@@ -381,14 +351,7 @@ class TestCreatePolicy():
         description = 'testString'
 
         # Invoke method
-        response = _service.create_policy(
-            type,
-            subjects,
-            roles,
-            resources,
-            description=description,
-            headers={}
-        )
+        response = _service.create_policy(type, subjects, roles, resources, description=description, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -402,13 +365,13 @@ class TestCreatePolicy():
         assert req_body['description'] == 'testString'
 
     def test_create_policy_required_params_with_retries(self):
-    	# Enable retries and run test_create_policy_required_params.
-    	_service.enable_retries()
-    	self.test_create_policy_required_params()
+        # Enable retries and run test_create_policy_required_params.
+        _service.enable_retries()
+        self.test_create_policy_required_params()
 
-    	# Disable retries and run test_create_policy_required_params.
-    	_service.disable_retries()
-    	self.test_create_policy_required_params()
+        # Disable retries and run test_create_policy_required_params.
+        _service.disable_retries()
+        self.test_create_policy_required_params()
 
     @responses.activate
     def test_create_policy_value_error(self):
@@ -418,11 +381,7 @@ class TestCreatePolicy():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/policies')
         mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Construct a dict representation of a SubjectAttribute model
         subject_attribute_model = {}
@@ -469,21 +428,21 @@ class TestCreatePolicy():
             "resources": resources,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_policy(**req_copy)
 
-
     def test_create_policy_value_error_with_retries(self):
-    	# Enable retries and run test_create_policy_value_error.
-    	_service.enable_retries()
-    	self.test_create_policy_value_error()
+        # Enable retries and run test_create_policy_value_error.
+        _service.enable_retries()
+        self.test_create_policy_value_error()
 
-    	# Disable retries and run test_create_policy_value_error.
-    	_service.disable_retries()
-    	self.test_create_policy_value_error()
+        # Disable retries and run test_create_policy_value_error.
+        _service.disable_retries()
+        self.test_create_policy_value_error()
 
-class TestUpdatePolicy():
+
+class TestUpdatePolicy:
     """
     Test Class for update_policy
     """
@@ -492,7 +451,7 @@ class TestUpdatePolicy():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -507,11 +466,7 @@ class TestUpdatePolicy():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/policies/testString')
         mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
         # Construct a dict representation of a SubjectAttribute model
         subject_attribute_model = {}
@@ -554,14 +509,7 @@ class TestUpdatePolicy():
 
         # Invoke method
         response = _service.update_policy(
-            policy_id,
-            if_match,
-            type,
-            subjects,
-            roles,
-            resources,
-            description=description,
-            headers={}
+            policy_id, if_match, type, subjects, roles, resources, description=description, headers={}
         )
 
         # Check for correct operation
@@ -576,13 +524,13 @@ class TestUpdatePolicy():
         assert req_body['description'] == 'testString'
 
     def test_update_policy_all_params_with_retries(self):
-    	# Enable retries and run test_update_policy_all_params.
-    	_service.enable_retries()
-    	self.test_update_policy_all_params()
+        # Enable retries and run test_update_policy_all_params.
+        _service.enable_retries()
+        self.test_update_policy_all_params()
 
-    	# Disable retries and run test_update_policy_all_params.
-    	_service.disable_retries()
-    	self.test_update_policy_all_params()
+        # Disable retries and run test_update_policy_all_params.
+        _service.disable_retries()
+        self.test_update_policy_all_params()
 
     @responses.activate
     def test_update_policy_value_error(self):
@@ -592,11 +540,7 @@ class TestUpdatePolicy():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/policies/testString')
         mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
         # Construct a dict representation of a SubjectAttribute model
         subject_attribute_model = {}
@@ -647,21 +591,21 @@ class TestUpdatePolicy():
             "resources": resources,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_policy(**req_copy)
 
-
     def test_update_policy_value_error_with_retries(self):
-    	# Enable retries and run test_update_policy_value_error.
-    	_service.enable_retries()
-    	self.test_update_policy_value_error()
+        # Enable retries and run test_update_policy_value_error.
+        _service.enable_retries()
+        self.test_update_policy_value_error()
 
-    	# Disable retries and run test_update_policy_value_error.
-    	_service.disable_retries()
-    	self.test_update_policy_value_error()
+        # Disable retries and run test_update_policy_value_error.
+        _service.disable_retries()
+        self.test_update_policy_value_error()
 
-class TestGetPolicy():
+
+class TestGetPolicy:
     """
     Test Class for get_policy
     """
@@ -670,7 +614,7 @@ class TestGetPolicy():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -685,33 +629,26 @@ class TestGetPolicy():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/policies/testString')
         mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         policy_id = 'testString'
 
         # Invoke method
-        response = _service.get_policy(
-            policy_id,
-            headers={}
-        )
+        response = _service.get_policy(policy_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
     def test_get_policy_all_params_with_retries(self):
-    	# Enable retries and run test_get_policy_all_params.
-    	_service.enable_retries()
-    	self.test_get_policy_all_params()
+        # Enable retries and run test_get_policy_all_params.
+        _service.enable_retries()
+        self.test_get_policy_all_params()
 
-    	# Disable retries and run test_get_policy_all_params.
-    	_service.disable_retries()
-    	self.test_get_policy_all_params()
+        # Disable retries and run test_get_policy_all_params.
+        _service.disable_retries()
+        self.test_get_policy_all_params()
 
     @responses.activate
     def test_get_policy_value_error(self):
@@ -721,11 +658,7 @@ class TestGetPolicy():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/policies/testString')
         mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         policy_id = 'testString'
@@ -735,21 +668,21 @@ class TestGetPolicy():
             "policy_id": policy_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_policy(**req_copy)
 
-
     def test_get_policy_value_error_with_retries(self):
-    	# Enable retries and run test_get_policy_value_error.
-    	_service.enable_retries()
-    	self.test_get_policy_value_error()
+        # Enable retries and run test_get_policy_value_error.
+        _service.enable_retries()
+        self.test_get_policy_value_error()
 
-    	# Disable retries and run test_get_policy_value_error.
-    	_service.disable_retries()
-    	self.test_get_policy_value_error()
+        # Disable retries and run test_get_policy_value_error.
+        _service.disable_retries()
+        self.test_get_policy_value_error()
 
-class TestDeletePolicy():
+
+class TestDeletePolicy:
     """
     Test Class for delete_policy
     """
@@ -758,7 +691,7 @@ class TestDeletePolicy():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -772,31 +705,26 @@ class TestDeletePolicy():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/policies/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
         policy_id = 'testString'
 
         # Invoke method
-        response = _service.delete_policy(
-            policy_id,
-            headers={}
-        )
+        response = _service.delete_policy(policy_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
     def test_delete_policy_all_params_with_retries(self):
-    	# Enable retries and run test_delete_policy_all_params.
-    	_service.enable_retries()
-    	self.test_delete_policy_all_params()
+        # Enable retries and run test_delete_policy_all_params.
+        _service.enable_retries()
+        self.test_delete_policy_all_params()
 
-    	# Disable retries and run test_delete_policy_all_params.
-    	_service.disable_retries()
-    	self.test_delete_policy_all_params()
+        # Disable retries and run test_delete_policy_all_params.
+        _service.disable_retries()
+        self.test_delete_policy_all_params()
 
     @responses.activate
     def test_delete_policy_value_error(self):
@@ -805,9 +733,7 @@ class TestDeletePolicy():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/policies/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
         policy_id = 'testString'
@@ -817,21 +743,21 @@ class TestDeletePolicy():
             "policy_id": policy_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_policy(**req_copy)
 
-
     def test_delete_policy_value_error_with_retries(self):
-    	# Enable retries and run test_delete_policy_value_error.
-    	_service.enable_retries()
-    	self.test_delete_policy_value_error()
+        # Enable retries and run test_delete_policy_value_error.
+        _service.enable_retries()
+        self.test_delete_policy_value_error()
 
-    	# Disable retries and run test_delete_policy_value_error.
-    	_service.disable_retries()
-    	self.test_delete_policy_value_error()
+        # Disable retries and run test_delete_policy_value_error.
+        _service.disable_retries()
+        self.test_delete_policy_value_error()
 
-class TestPatchPolicy():
+
+class TestPatchPolicy:
     """
     Test Class for patch_policy
     """
@@ -840,7 +766,7 @@ class TestPatchPolicy():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -855,11 +781,7 @@ class TestPatchPolicy():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/policies/testString')
         mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         policy_id = 'testString'
@@ -867,12 +789,7 @@ class TestPatchPolicy():
         state = 'active'
 
         # Invoke method
-        response = _service.patch_policy(
-            policy_id,
-            if_match,
-            state=state,
-            headers={}
-        )
+        response = _service.patch_policy(policy_id, if_match, state=state, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -882,13 +799,13 @@ class TestPatchPolicy():
         assert req_body['state'] == 'active'
 
     def test_patch_policy_all_params_with_retries(self):
-    	# Enable retries and run test_patch_policy_all_params.
-    	_service.enable_retries()
-    	self.test_patch_policy_all_params()
+        # Enable retries and run test_patch_policy_all_params.
+        _service.enable_retries()
+        self.test_patch_policy_all_params()
 
-    	# Disable retries and run test_patch_policy_all_params.
-    	_service.disable_retries()
-    	self.test_patch_policy_all_params()
+        # Disable retries and run test_patch_policy_all_params.
+        _service.disable_retries()
+        self.test_patch_policy_all_params()
 
     @responses.activate
     def test_patch_policy_value_error(self):
@@ -898,11 +815,7 @@ class TestPatchPolicy():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/policies/testString')
         mock_response = '{"id": "id", "type": "type", "description": "description", "subjects": [{"attributes": [{"name": "name", "value": "value"}]}], "roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}], "resources": [{"attributes": [{"name": "name", "value": "value", "operator": "operator"}], "tags": [{"name": "name", "value": "value", "operator": "operator"}]}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         policy_id = 'testString'
@@ -915,19 +828,19 @@ class TestPatchPolicy():
             "if_match": if_match,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.patch_policy(**req_copy)
 
-
     def test_patch_policy_value_error_with_retries(self):
-    	# Enable retries and run test_patch_policy_value_error.
-    	_service.enable_retries()
-    	self.test_patch_policy_value_error()
+        # Enable retries and run test_patch_policy_value_error.
+        _service.enable_retries()
+        self.test_patch_policy_value_error()
 
-    	# Disable retries and run test_patch_policy_value_error.
-    	_service.disable_retries()
-    	self.test_patch_policy_value_error()
+        # Disable retries and run test_patch_policy_value_error.
+        _service.disable_retries()
+        self.test_patch_policy_value_error()
+
 
 # endregion
 ##############################################################################
@@ -939,7 +852,8 @@ class TestPatchPolicy():
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -962,10 +876,10 @@ class TestNewInstance():
         new_instance_without_authenticator()
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = IamPolicyManagementV1.new_instance(
-            )
+            service = IamPolicyManagementV1.new_instance()
 
-class TestListRoles():
+
+class TestListRoles:
     """
     Test Class for list_roles
     """
@@ -974,7 +888,7 @@ class TestListRoles():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -989,11 +903,7 @@ class TestListRoles():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/roles')
         mock_response = '{"custom_roles": [{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}], "service_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}], "system_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         accept_language = 'default'
@@ -1009,14 +919,14 @@ class TestListRoles():
             service_name=service_name,
             source_service_name=source_service_name,
             policy_type=policy_type,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'service_name={}'.format(service_name) in query_string
@@ -1024,13 +934,13 @@ class TestListRoles():
         assert 'policy_type={}'.format(policy_type) in query_string
 
     def test_list_roles_all_params_with_retries(self):
-    	# Enable retries and run test_list_roles_all_params.
-    	_service.enable_retries()
-    	self.test_list_roles_all_params()
+        # Enable retries and run test_list_roles_all_params.
+        _service.enable_retries()
+        self.test_list_roles_all_params()
 
-    	# Disable retries and run test_list_roles_all_params.
-    	_service.disable_retries()
-    	self.test_list_roles_all_params()
+        # Disable retries and run test_list_roles_all_params.
+        _service.disable_retries()
+        self.test_list_roles_all_params()
 
     @responses.activate
     def test_list_roles_required_params(self):
@@ -1040,30 +950,26 @@ class TestListRoles():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/roles')
         mock_response = '{"custom_roles": [{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}], "service_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}], "system_roles": [{"display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Invoke method
         response = _service.list_roles()
-
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
     def test_list_roles_required_params_with_retries(self):
-    	# Enable retries and run test_list_roles_required_params.
-    	_service.enable_retries()
-    	self.test_list_roles_required_params()
+        # Enable retries and run test_list_roles_required_params.
+        _service.enable_retries()
+        self.test_list_roles_required_params()
 
-    	# Disable retries and run test_list_roles_required_params.
-    	_service.disable_retries()
-    	self.test_list_roles_required_params()
+        # Disable retries and run test_list_roles_required_params.
+        _service.disable_retries()
+        self.test_list_roles_required_params()
 
-class TestCreateRole():
+
+class TestCreateRole:
     """
     Test Class for create_role
     """
@@ -1072,7 +978,7 @@ class TestCreateRole():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -1087,11 +993,7 @@ class TestCreateRole():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/roles')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Set up parameter values
         display_name = 'testString'
@@ -1111,7 +1013,7 @@ class TestCreateRole():
             service_name,
             description=description,
             accept_language=accept_language,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -1127,13 +1029,13 @@ class TestCreateRole():
         assert req_body['description'] == 'testString'
 
     def test_create_role_all_params_with_retries(self):
-    	# Enable retries and run test_create_role_all_params.
-    	_service.enable_retries()
-    	self.test_create_role_all_params()
+        # Enable retries and run test_create_role_all_params.
+        _service.enable_retries()
+        self.test_create_role_all_params()
 
-    	# Disable retries and run test_create_role_all_params.
-    	_service.disable_retries()
-    	self.test_create_role_all_params()
+        # Disable retries and run test_create_role_all_params.
+        _service.disable_retries()
+        self.test_create_role_all_params()
 
     @responses.activate
     def test_create_role_required_params(self):
@@ -1143,11 +1045,7 @@ class TestCreateRole():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/roles')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Set up parameter values
         display_name = 'testString'
@@ -1159,13 +1057,7 @@ class TestCreateRole():
 
         # Invoke method
         response = _service.create_role(
-            display_name,
-            actions,
-            name,
-            account_id,
-            service_name,
-            description=description,
-            headers={}
+            display_name, actions, name, account_id, service_name, description=description, headers={}
         )
 
         # Check for correct operation
@@ -1181,13 +1073,13 @@ class TestCreateRole():
         assert req_body['description'] == 'testString'
 
     def test_create_role_required_params_with_retries(self):
-    	# Enable retries and run test_create_role_required_params.
-    	_service.enable_retries()
-    	self.test_create_role_required_params()
+        # Enable retries and run test_create_role_required_params.
+        _service.enable_retries()
+        self.test_create_role_required_params()
 
-    	# Disable retries and run test_create_role_required_params.
-    	_service.disable_retries()
-    	self.test_create_role_required_params()
+        # Disable retries and run test_create_role_required_params.
+        _service.disable_retries()
+        self.test_create_role_required_params()
 
     @responses.activate
     def test_create_role_value_error(self):
@@ -1197,11 +1089,7 @@ class TestCreateRole():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/roles')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Set up parameter values
         display_name = 'testString'
@@ -1220,21 +1108,21 @@ class TestCreateRole():
             "service_name": service_name,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_role(**req_copy)
 
-
     def test_create_role_value_error_with_retries(self):
-    	# Enable retries and run test_create_role_value_error.
-    	_service.enable_retries()
-    	self.test_create_role_value_error()
+        # Enable retries and run test_create_role_value_error.
+        _service.enable_retries()
+        self.test_create_role_value_error()
 
-    	# Disable retries and run test_create_role_value_error.
-    	_service.disable_retries()
-    	self.test_create_role_value_error()
+        # Disable retries and run test_create_role_value_error.
+        _service.disable_retries()
+        self.test_create_role_value_error()
 
-class TestUpdateRole():
+
+class TestUpdateRole:
     """
     Test Class for update_role
     """
@@ -1243,7 +1131,7 @@ class TestUpdateRole():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -1258,11 +1146,7 @@ class TestUpdateRole():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/roles/testString')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         role_id = 'testString'
@@ -1273,12 +1157,7 @@ class TestUpdateRole():
 
         # Invoke method
         response = _service.update_role(
-            role_id,
-            if_match,
-            display_name=display_name,
-            description=description,
-            actions=actions,
-            headers={}
+            role_id, if_match, display_name=display_name, description=description, actions=actions, headers={}
         )
 
         # Check for correct operation
@@ -1291,13 +1170,13 @@ class TestUpdateRole():
         assert req_body['actions'] == ['testString']
 
     def test_update_role_all_params_with_retries(self):
-    	# Enable retries and run test_update_role_all_params.
-    	_service.enable_retries()
-    	self.test_update_role_all_params()
+        # Enable retries and run test_update_role_all_params.
+        _service.enable_retries()
+        self.test_update_role_all_params()
 
-    	# Disable retries and run test_update_role_all_params.
-    	_service.disable_retries()
-    	self.test_update_role_all_params()
+        # Disable retries and run test_update_role_all_params.
+        _service.disable_retries()
+        self.test_update_role_all_params()
 
     @responses.activate
     def test_update_role_value_error(self):
@@ -1307,11 +1186,7 @@ class TestUpdateRole():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/roles/testString')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         role_id = 'testString'
@@ -1326,21 +1201,21 @@ class TestUpdateRole():
             "if_match": if_match,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_role(**req_copy)
 
-
     def test_update_role_value_error_with_retries(self):
-    	# Enable retries and run test_update_role_value_error.
-    	_service.enable_retries()
-    	self.test_update_role_value_error()
+        # Enable retries and run test_update_role_value_error.
+        _service.enable_retries()
+        self.test_update_role_value_error()
 
-    	# Disable retries and run test_update_role_value_error.
-    	_service.disable_retries()
-    	self.test_update_role_value_error()
+        # Disable retries and run test_update_role_value_error.
+        _service.disable_retries()
+        self.test_update_role_value_error()
 
-class TestGetRole():
+
+class TestGetRole:
     """
     Test Class for get_role
     """
@@ -1349,7 +1224,7 @@ class TestGetRole():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -1364,33 +1239,26 @@ class TestGetRole():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/roles/testString')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         role_id = 'testString'
 
         # Invoke method
-        response = _service.get_role(
-            role_id,
-            headers={}
-        )
+        response = _service.get_role(role_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
     def test_get_role_all_params_with_retries(self):
-    	# Enable retries and run test_get_role_all_params.
-    	_service.enable_retries()
-    	self.test_get_role_all_params()
+        # Enable retries and run test_get_role_all_params.
+        _service.enable_retries()
+        self.test_get_role_all_params()
 
-    	# Disable retries and run test_get_role_all_params.
-    	_service.disable_retries()
-    	self.test_get_role_all_params()
+        # Disable retries and run test_get_role_all_params.
+        _service.disable_retries()
+        self.test_get_role_all_params()
 
     @responses.activate
     def test_get_role_value_error(self):
@@ -1400,11 +1268,7 @@ class TestGetRole():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/roles/testString')
         mock_response = '{"id": "id", "display_name": "display_name", "description": "description", "actions": ["actions"], "crn": "crn", "name": "Developer", "account_id": "account_id", "service_name": "iam-groups", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         role_id = 'testString'
@@ -1414,21 +1278,21 @@ class TestGetRole():
             "role_id": role_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_role(**req_copy)
 
-
     def test_get_role_value_error_with_retries(self):
-    	# Enable retries and run test_get_role_value_error.
-    	_service.enable_retries()
-    	self.test_get_role_value_error()
+        # Enable retries and run test_get_role_value_error.
+        _service.enable_retries()
+        self.test_get_role_value_error()
 
-    	# Disable retries and run test_get_role_value_error.
-    	_service.disable_retries()
-    	self.test_get_role_value_error()
+        # Disable retries and run test_get_role_value_error.
+        _service.disable_retries()
+        self.test_get_role_value_error()
 
-class TestDeleteRole():
+
+class TestDeleteRole:
     """
     Test Class for delete_role
     """
@@ -1437,7 +1301,7 @@ class TestDeleteRole():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -1451,31 +1315,26 @@ class TestDeleteRole():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/roles/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
         role_id = 'testString'
 
         # Invoke method
-        response = _service.delete_role(
-            role_id,
-            headers={}
-        )
+        response = _service.delete_role(role_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
     def test_delete_role_all_params_with_retries(self):
-    	# Enable retries and run test_delete_role_all_params.
-    	_service.enable_retries()
-    	self.test_delete_role_all_params()
+        # Enable retries and run test_delete_role_all_params.
+        _service.enable_retries()
+        self.test_delete_role_all_params()
 
-    	# Disable retries and run test_delete_role_all_params.
-    	_service.disable_retries()
-    	self.test_delete_role_all_params()
+        # Disable retries and run test_delete_role_all_params.
+        _service.disable_retries()
+        self.test_delete_role_all_params()
 
     @responses.activate
     def test_delete_role_value_error(self):
@@ -1484,9 +1343,7 @@ class TestDeleteRole():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v2/roles/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
         role_id = 'testString'
@@ -1496,19 +1353,19 @@ class TestDeleteRole():
             "role_id": role_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_role(**req_copy)
 
-
     def test_delete_role_value_error_with_retries(self):
-    	# Enable retries and run test_delete_role_value_error.
-    	_service.enable_retries()
-    	self.test_delete_role_value_error()
+        # Enable retries and run test_delete_role_value_error.
+        _service.enable_retries()
+        self.test_delete_role_value_error()
 
-    	# Disable retries and run test_delete_role_value_error.
-    	_service.disable_retries()
-    	self.test_delete_role_value_error()
+        # Disable retries and run test_delete_role_value_error.
+        _service.disable_retries()
+        self.test_delete_role_value_error()
+
 
 # endregion
 ##############################################################################
@@ -1520,7 +1377,7 @@ class TestDeleteRole():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestModel_CustomRole():
+class TestModel_CustomRole:
     """
     Test Class for CustomRole
     """
@@ -1561,7 +1418,8 @@ class TestModel_CustomRole():
         custom_role_model_json2 = custom_role_model.to_dict()
         assert custom_role_model_json2 == custom_role_model_json
 
-class TestModel_Policy():
+
+class TestModel_Policy:
     """
     Test Class for Policy
     """
@@ -1573,29 +1431,29 @@ class TestModel_Policy():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        subject_attribute_model = {} # SubjectAttribute
+        subject_attribute_model = {}  # SubjectAttribute
         subject_attribute_model['name'] = 'testString'
         subject_attribute_model['value'] = 'testString'
 
-        policy_subject_model = {} # PolicySubject
+        policy_subject_model = {}  # PolicySubject
         policy_subject_model['attributes'] = [subject_attribute_model]
 
-        policy_role_model = {} # PolicyRole
+        policy_role_model = {}  # PolicyRole
         policy_role_model['role_id'] = 'testString'
         policy_role_model['display_name'] = 'testString'
         policy_role_model['description'] = 'testString'
 
-        resource_attribute_model = {} # ResourceAttribute
+        resource_attribute_model = {}  # ResourceAttribute
         resource_attribute_model['name'] = 'testString'
         resource_attribute_model['value'] = 'testString'
         resource_attribute_model['operator'] = 'testString'
 
-        resource_tag_model = {} # ResourceTag
+        resource_tag_model = {}  # ResourceTag
         resource_tag_model['name'] = 'testString'
         resource_tag_model['value'] = 'testString'
         resource_tag_model['operator'] = 'testString'
 
-        policy_resource_model = {} # PolicyResource
+        policy_resource_model = {}  # PolicyResource
         policy_resource_model['attributes'] = [resource_attribute_model]
         policy_resource_model['tags'] = [resource_tag_model]
 
@@ -1629,7 +1487,8 @@ class TestModel_Policy():
         policy_model_json2 = policy_model.to_dict()
         assert policy_model_json2 == policy_model_json
 
-class TestModel_PolicyList():
+
+class TestModel_PolicyList:
     """
     Test Class for PolicyList
     """
@@ -1641,33 +1500,33 @@ class TestModel_PolicyList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        subject_attribute_model = {} # SubjectAttribute
+        subject_attribute_model = {}  # SubjectAttribute
         subject_attribute_model['name'] = 'testString'
         subject_attribute_model['value'] = 'testString'
 
-        policy_subject_model = {} # PolicySubject
+        policy_subject_model = {}  # PolicySubject
         policy_subject_model['attributes'] = [subject_attribute_model]
 
-        policy_role_model = {} # PolicyRole
+        policy_role_model = {}  # PolicyRole
         policy_role_model['role_id'] = 'testString'
         policy_role_model['display_name'] = 'testString'
         policy_role_model['description'] = 'testString'
 
-        resource_attribute_model = {} # ResourceAttribute
+        resource_attribute_model = {}  # ResourceAttribute
         resource_attribute_model['name'] = 'testString'
         resource_attribute_model['value'] = 'testString'
         resource_attribute_model['operator'] = 'testString'
 
-        resource_tag_model = {} # ResourceTag
+        resource_tag_model = {}  # ResourceTag
         resource_tag_model['name'] = 'testString'
         resource_tag_model['value'] = 'testString'
         resource_tag_model['operator'] = 'testString'
 
-        policy_resource_model = {} # PolicyResource
+        policy_resource_model = {}  # PolicyResource
         policy_resource_model['attributes'] = [resource_attribute_model]
         policy_resource_model['tags'] = [resource_tag_model]
 
-        policy_model = {} # Policy
+        policy_model = {}  # Policy
         policy_model['id'] = 'testString'
         policy_model['type'] = 'testString'
         policy_model['description'] = 'testString'
@@ -1700,7 +1559,8 @@ class TestModel_PolicyList():
         policy_list_model_json2 = policy_list_model.to_dict()
         assert policy_list_model_json2 == policy_list_model_json
 
-class TestModel_PolicyResource():
+
+class TestModel_PolicyResource:
     """
     Test Class for PolicyResource
     """
@@ -1712,12 +1572,12 @@ class TestModel_PolicyResource():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        resource_attribute_model = {} # ResourceAttribute
+        resource_attribute_model = {}  # ResourceAttribute
         resource_attribute_model['name'] = 'testString'
         resource_attribute_model['value'] = 'testString'
         resource_attribute_model['operator'] = 'testString'
 
-        resource_tag_model = {} # ResourceTag
+        resource_tag_model = {}  # ResourceTag
         resource_tag_model['name'] = 'testString'
         resource_tag_model['value'] = 'testString'
         resource_tag_model['operator'] = 'testString'
@@ -1742,7 +1602,8 @@ class TestModel_PolicyResource():
         policy_resource_model_json2 = policy_resource_model.to_dict()
         assert policy_resource_model_json2 == policy_resource_model_json
 
-class TestModel_PolicyRole():
+
+class TestModel_PolicyRole:
     """
     Test Class for PolicyRole
     """
@@ -1773,7 +1634,8 @@ class TestModel_PolicyRole():
         policy_role_model_json2 = policy_role_model.to_dict()
         assert policy_role_model_json2 == policy_role_model_json
 
-class TestModel_PolicySubject():
+
+class TestModel_PolicySubject:
     """
     Test Class for PolicySubject
     """
@@ -1785,7 +1647,7 @@ class TestModel_PolicySubject():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        subject_attribute_model = {} # SubjectAttribute
+        subject_attribute_model = {}  # SubjectAttribute
         subject_attribute_model['name'] = 'testString'
         subject_attribute_model['value'] = 'testString'
 
@@ -1808,7 +1670,8 @@ class TestModel_PolicySubject():
         policy_subject_model_json2 = policy_subject_model.to_dict()
         assert policy_subject_model_json2 == policy_subject_model_json
 
-class TestModel_ResourceAttribute():
+
+class TestModel_ResourceAttribute:
     """
     Test Class for ResourceAttribute
     """
@@ -1839,7 +1702,8 @@ class TestModel_ResourceAttribute():
         resource_attribute_model_json2 = resource_attribute_model.to_dict()
         assert resource_attribute_model_json2 == resource_attribute_model_json
 
-class TestModel_ResourceTag():
+
+class TestModel_ResourceTag:
     """
     Test Class for ResourceTag
     """
@@ -1870,7 +1734,8 @@ class TestModel_ResourceTag():
         resource_tag_model_json2 = resource_tag_model.to_dict()
         assert resource_tag_model_json2 == resource_tag_model_json
 
-class TestModel_Role():
+
+class TestModel_Role:
     """
     Test Class for Role
     """
@@ -1902,7 +1767,8 @@ class TestModel_Role():
         role_model_json2 = role_model.to_dict()
         assert role_model_json2 == role_model_json
 
-class TestModel_RoleList():
+
+class TestModel_RoleList:
     """
     Test Class for RoleList
     """
@@ -1914,7 +1780,7 @@ class TestModel_RoleList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        custom_role_model = {} # CustomRole
+        custom_role_model = {}  # CustomRole
         custom_role_model['id'] = 'testString'
         custom_role_model['display_name'] = 'testString'
         custom_role_model['description'] = 'testString'
@@ -1929,7 +1795,7 @@ class TestModel_RoleList():
         custom_role_model['last_modified_by_id'] = 'testString'
         custom_role_model['href'] = 'testString'
 
-        role_model = {} # Role
+        role_model = {}  # Role
         role_model['display_name'] = 'testString'
         role_model['description'] = 'testString'
         role_model['actions'] = ['testString']
@@ -1956,7 +1822,8 @@ class TestModel_RoleList():
         role_list_model_json2 = role_list_model.to_dict()
         assert role_list_model_json2 == role_list_model_json
 
-class TestModel_SubjectAttribute():
+
+class TestModel_SubjectAttribute:
     """
     Test Class for SubjectAttribute
     """

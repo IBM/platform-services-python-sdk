@@ -31,9 +31,7 @@ import urllib
 from ibm_platform_services.usage_reports_v4 import *
 
 
-_service = UsageReportsV4(
-    authenticator=NoAuthAuthenticator()
-    )
+_service = UsageReportsV4(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://billing.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -43,7 +41,8 @@ _service.set_service_url(_base_url)
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -66,10 +65,10 @@ class TestNewInstance():
         new_instance_without_authenticator()
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = UsageReportsV4.new_instance(
-            )
+            service = UsageReportsV4.new_instance()
 
-class TestGetAccountSummary():
+
+class TestGetAccountSummary:
     """
     Test Class for get_account_summary
     """
@@ -78,7 +77,7 @@ class TestGetAccountSummary():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -93,27 +92,18 @@ class TestGetAccountSummary():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v4/accounts/testString/summary/testString')
         mock_response = '{"account_id": "account_id", "billing_month": "billing_month", "billing_country_code": "billing_country_code", "billing_currency_code": "billing_currency_code", "resources": {"billable_cost": 13, "non_billable_cost": 17}, "offers": [{"offer_id": "offer_id", "credits_total": 13, "offer_template": "offer_template", "valid_from": "2019-01-01T12:00:00.000Z", "expires_on": "2019-01-01T12:00:00.000Z", "credits": {"starting_balance": 16, "used": 4, "balance": 7}}], "support": [{"cost": 4, "type": "type", "overage": 7}], "subscription": {"overage": 7, "subscriptions": [{"subscription_id": "subscription_id", "charge_agreement_number": "charge_agreement_number", "type": "type", "subscription_amount": 19, "start": "2019-01-01T12:00:00.000Z", "end": "2019-01-01T12:00:00.000Z", "credits_total": 13, "terms": [{"start": "2019-01-01T12:00:00.000Z", "end": "2019-01-01T12:00:00.000Z", "credits": {"total": 5, "starting_balance": 16, "used": 4, "balance": 7}}]}]}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
         billingmonth = 'testString'
 
         # Invoke method
-        response = _service.get_account_summary(
-            account_id,
-            billingmonth,
-            headers={}
-        )
+        response = _service.get_account_summary(account_id, billingmonth, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
-
 
     @responses.activate
     def test_get_account_summary_value_error(self):
@@ -123,11 +113,7 @@ class TestGetAccountSummary():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v4/accounts/testString/summary/testString')
         mock_response = '{"account_id": "account_id", "billing_month": "billing_month", "billing_country_code": "billing_country_code", "billing_currency_code": "billing_currency_code", "resources": {"billable_cost": 13, "non_billable_cost": 17}, "offers": [{"offer_id": "offer_id", "credits_total": 13, "offer_template": "offer_template", "valid_from": "2019-01-01T12:00:00.000Z", "expires_on": "2019-01-01T12:00:00.000Z", "credits": {"starting_balance": 16, "used": 4, "balance": 7}}], "support": [{"cost": 4, "type": "type", "overage": 7}], "subscription": {"overage": 7, "subscriptions": [{"subscription_id": "subscription_id", "charge_agreement_number": "charge_agreement_number", "type": "type", "subscription_amount": 19, "start": "2019-01-01T12:00:00.000Z", "end": "2019-01-01T12:00:00.000Z", "credits_total": 13, "terms": [{"start": "2019-01-01T12:00:00.000Z", "end": "2019-01-01T12:00:00.000Z", "credits": {"total": 5, "starting_balance": 16, "used": 4, "balance": 7}}]}]}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -139,13 +125,12 @@ class TestGetAccountSummary():
             "billingmonth": billingmonth,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_account_summary(**req_copy)
 
 
-
-class TestGetAccountUsage():
+class TestGetAccountUsage:
     """
     Test Class for get_account_usage
     """
@@ -154,7 +139,7 @@ class TestGetAccountUsage():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -169,11 +154,7 @@ class TestGetAccountUsage():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v4/accounts/testString/usage/testString')
         mock_response = '{"account_id": "account_id", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -183,21 +164,16 @@ class TestGetAccountUsage():
 
         # Invoke method
         response = _service.get_account_usage(
-            account_id,
-            billingmonth,
-            names=names,
-            accept_language=accept_language,
-            headers={}
+            account_id, billingmonth, names=names, accept_language=accept_language, headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert '_names={}'.format('true' if names else 'false') in query_string
-
 
     @responses.activate
     def test_get_account_usage_required_params(self):
@@ -207,27 +183,18 @@ class TestGetAccountUsage():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v4/accounts/testString/usage/testString')
         mock_response = '{"account_id": "account_id", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
         billingmonth = 'testString'
 
         # Invoke method
-        response = _service.get_account_usage(
-            account_id,
-            billingmonth,
-            headers={}
-        )
+        response = _service.get_account_usage(account_id, billingmonth, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
-
 
     @responses.activate
     def test_get_account_usage_value_error(self):
@@ -237,11 +204,7 @@ class TestGetAccountUsage():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v4/accounts/testString/usage/testString')
         mock_response = '{"account_id": "account_id", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -253,10 +216,9 @@ class TestGetAccountUsage():
             "billingmonth": billingmonth,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_account_usage(**req_copy)
-
 
 
 # endregion
@@ -269,7 +231,8 @@ class TestGetAccountUsage():
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -292,10 +255,10 @@ class TestNewInstance():
         new_instance_without_authenticator()
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = UsageReportsV4.new_instance(
-            )
+            service = UsageReportsV4.new_instance()
 
-class TestGetResourceGroupUsage():
+
+class TestGetResourceGroupUsage:
     """
     Test Class for get_resource_group_usage
     """
@@ -304,7 +267,7 @@ class TestGetResourceGroupUsage():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -319,11 +282,7 @@ class TestGetResourceGroupUsage():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v4/accounts/testString/resource_groups/testString/usage/testString')
         mock_response = '{"account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -334,22 +293,16 @@ class TestGetResourceGroupUsage():
 
         # Invoke method
         response = _service.get_resource_group_usage(
-            account_id,
-            resource_group_id,
-            billingmonth,
-            names=names,
-            accept_language=accept_language,
-            headers={}
+            account_id, resource_group_id, billingmonth, names=names, accept_language=accept_language, headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert '_names={}'.format('true' if names else 'false') in query_string
-
 
     @responses.activate
     def test_get_resource_group_usage_required_params(self):
@@ -359,11 +312,7 @@ class TestGetResourceGroupUsage():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v4/accounts/testString/resource_groups/testString/usage/testString')
         mock_response = '{"account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -371,17 +320,11 @@ class TestGetResourceGroupUsage():
         billingmonth = 'testString'
 
         # Invoke method
-        response = _service.get_resource_group_usage(
-            account_id,
-            resource_group_id,
-            billingmonth,
-            headers={}
-        )
+        response = _service.get_resource_group_usage(account_id, resource_group_id, billingmonth, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
-
 
     @responses.activate
     def test_get_resource_group_usage_value_error(self):
@@ -391,11 +334,7 @@ class TestGetResourceGroupUsage():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v4/accounts/testString/resource_groups/testString/usage/testString')
         mock_response = '{"account_id": "account_id", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -409,13 +348,12 @@ class TestGetResourceGroupUsage():
             "billingmonth": billingmonth,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_resource_group_usage(**req_copy)
 
 
-
-class TestGetResourceUsageAccount():
+class TestGetResourceUsageAccount:
     """
     Test Class for get_resource_usage_account
     """
@@ -424,7 +362,7 @@ class TestGetResourceUsageAccount():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -439,11 +377,7 @@ class TestGetResourceUsageAccount():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v4/accounts/testString/resource_instances/usage/testString')
         mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "plan_id": "plan_id", "plan_name": "plan_name", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -473,14 +407,14 @@ class TestGetResourceUsageAccount():
             resource_id=resource_id,
             plan_id=plan_id,
             region=region,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert '_names={}'.format('true' if names else 'false') in query_string
         assert '_limit={}'.format(limit) in query_string
@@ -492,7 +426,6 @@ class TestGetResourceUsageAccount():
         assert 'plan_id={}'.format(plan_id) in query_string
         assert 'region={}'.format(region) in query_string
 
-
     @responses.activate
     def test_get_resource_usage_account_required_params(self):
         """
@@ -501,27 +434,18 @@ class TestGetResourceUsageAccount():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v4/accounts/testString/resource_instances/usage/testString')
         mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "plan_id": "plan_id", "plan_name": "plan_name", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
         billingmonth = 'testString'
 
         # Invoke method
-        response = _service.get_resource_usage_account(
-            account_id,
-            billingmonth,
-            headers={}
-        )
+        response = _service.get_resource_usage_account(account_id, billingmonth, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
-
 
     @responses.activate
     def test_get_resource_usage_account_value_error(self):
@@ -531,11 +455,7 @@ class TestGetResourceUsageAccount():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v4/accounts/testString/resource_instances/usage/testString')
         mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "plan_id": "plan_id", "plan_name": "plan_name", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -547,13 +467,12 @@ class TestGetResourceUsageAccount():
             "billingmonth": billingmonth,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_resource_usage_account(**req_copy)
 
 
-
-class TestGetResourceUsageResourceGroup():
+class TestGetResourceUsageResourceGroup:
     """
     Test Class for get_resource_usage_resource_group
     """
@@ -562,7 +481,7 @@ class TestGetResourceUsageResourceGroup():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -575,13 +494,11 @@ class TestGetResourceUsageResourceGroup():
         get_resource_usage_resource_group()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v4/accounts/testString/resource_groups/testString/resource_instances/usage/testString')
+        url = self.preprocess_url(
+            _base_url + '/v4/accounts/testString/resource_groups/testString/resource_instances/usage/testString'
+        )
         mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "plan_id": "plan_id", "plan_name": "plan_name", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -609,14 +526,14 @@ class TestGetResourceUsageResourceGroup():
             resource_id=resource_id,
             plan_id=plan_id,
             region=region,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert '_names={}'.format('true' if names else 'false') in query_string
         assert '_limit={}'.format(limit) in query_string
@@ -626,20 +543,17 @@ class TestGetResourceUsageResourceGroup():
         assert 'plan_id={}'.format(plan_id) in query_string
         assert 'region={}'.format(region) in query_string
 
-
     @responses.activate
     def test_get_resource_usage_resource_group_required_params(self):
         """
         test_get_resource_usage_resource_group_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v4/accounts/testString/resource_groups/testString/resource_instances/usage/testString')
+        url = self.preprocess_url(
+            _base_url + '/v4/accounts/testString/resource_groups/testString/resource_instances/usage/testString'
+        )
         mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "plan_id": "plan_id", "plan_name": "plan_name", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -647,17 +561,11 @@ class TestGetResourceUsageResourceGroup():
         billingmonth = 'testString'
 
         # Invoke method
-        response = _service.get_resource_usage_resource_group(
-            account_id,
-            resource_group_id,
-            billingmonth,
-            headers={}
-        )
+        response = _service.get_resource_usage_resource_group(account_id, resource_group_id, billingmonth, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
-
 
     @responses.activate
     def test_get_resource_usage_resource_group_value_error(self):
@@ -665,13 +573,11 @@ class TestGetResourceUsageResourceGroup():
         test_get_resource_usage_resource_group_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v4/accounts/testString/resource_groups/testString/resource_instances/usage/testString')
+        url = self.preprocess_url(
+            _base_url + '/v4/accounts/testString/resource_groups/testString/resource_instances/usage/testString'
+        )
         mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "plan_id": "plan_id", "plan_name": "plan_name", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -685,13 +591,12 @@ class TestGetResourceUsageResourceGroup():
             "billingmonth": billingmonth,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_resource_usage_resource_group(**req_copy)
 
 
-
-class TestGetResourceUsageOrg():
+class TestGetResourceUsageOrg:
     """
     Test Class for get_resource_usage_org
     """
@@ -700,7 +605,7 @@ class TestGetResourceUsageOrg():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -713,13 +618,11 @@ class TestGetResourceUsageOrg():
         get_resource_usage_org()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v4/accounts/testString/organizations/testString/resource_instances/usage/testString')
+        url = self.preprocess_url(
+            _base_url + '/v4/accounts/testString/organizations/testString/resource_instances/usage/testString'
+        )
         mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "plan_id": "plan_id", "plan_name": "plan_name", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -747,14 +650,14 @@ class TestGetResourceUsageOrg():
             resource_id=resource_id,
             plan_id=plan_id,
             region=region,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert '_names={}'.format('true' if names else 'false') in query_string
         assert '_limit={}'.format(limit) in query_string
@@ -764,20 +667,17 @@ class TestGetResourceUsageOrg():
         assert 'plan_id={}'.format(plan_id) in query_string
         assert 'region={}'.format(region) in query_string
 
-
     @responses.activate
     def test_get_resource_usage_org_required_params(self):
         """
         test_get_resource_usage_org_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v4/accounts/testString/organizations/testString/resource_instances/usage/testString')
+        url = self.preprocess_url(
+            _base_url + '/v4/accounts/testString/organizations/testString/resource_instances/usage/testString'
+        )
         mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "plan_id": "plan_id", "plan_name": "plan_name", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -785,17 +685,11 @@ class TestGetResourceUsageOrg():
         billingmonth = 'testString'
 
         # Invoke method
-        response = _service.get_resource_usage_org(
-            account_id,
-            organization_id,
-            billingmonth,
-            headers={}
-        )
+        response = _service.get_resource_usage_org(account_id, organization_id, billingmonth, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
-
 
     @responses.activate
     def test_get_resource_usage_org_value_error(self):
@@ -803,13 +697,11 @@ class TestGetResourceUsageOrg():
         test_get_resource_usage_org_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v4/accounts/testString/organizations/testString/resource_instances/usage/testString')
+        url = self.preprocess_url(
+            _base_url + '/v4/accounts/testString/organizations/testString/resource_instances/usage/testString'
+        )
         mock_response = '{"limit": 5, "count": 5, "first": {"href": "href"}, "next": {"href": "href", "offset": "offset"}, "resources": [{"account_id": "account_id", "resource_instance_id": "resource_instance_id", "resource_instance_name": "resource_instance_name", "resource_id": "resource_id", "resource_name": "resource_name", "resource_group_id": "resource_group_id", "resource_group_name": "resource_group_name", "organization_id": "organization_id", "organization_name": "organization_name", "space_id": "space_id", "space_name": "space_name", "consumer_id": "consumer_id", "region": "region", "pricing_region": "pricing_region", "pricing_country": "USA", "currency_code": "USD", "billable": true, "plan_id": "plan_id", "plan_name": "plan_name", "month": "2017-08", "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -823,10 +715,9 @@ class TestGetResourceUsageOrg():
             "billingmonth": billingmonth,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_resource_usage_org(**req_copy)
-
 
 
 # endregion
@@ -839,7 +730,8 @@ class TestGetResourceUsageOrg():
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -862,10 +754,10 @@ class TestNewInstance():
         new_instance_without_authenticator()
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = UsageReportsV4.new_instance(
-            )
+            service = UsageReportsV4.new_instance()
 
-class TestGetOrgUsage():
+
+class TestGetOrgUsage:
     """
     Test Class for get_org_usage
     """
@@ -874,7 +766,7 @@ class TestGetOrgUsage():
         """
         Preprocess the request URL to ensure the mock response will be found.
         """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
+        request_url = urllib.parse.unquote(request_url)  # don't double-encode if already encoded
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
@@ -889,11 +781,7 @@ class TestGetOrgUsage():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v4/accounts/testString/organizations/testString/usage/testString')
         mock_response = '{"account_id": "account_id", "organization_id": "organization_id", "organization_name": "organization_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -904,22 +792,16 @@ class TestGetOrgUsage():
 
         # Invoke method
         response = _service.get_org_usage(
-            account_id,
-            organization_id,
-            billingmonth,
-            names=names,
-            accept_language=accept_language,
-            headers={}
+            account_id, organization_id, billingmonth, names=names, accept_language=accept_language, headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert '_names={}'.format('true' if names else 'false') in query_string
-
 
     @responses.activate
     def test_get_org_usage_required_params(self):
@@ -929,11 +811,7 @@ class TestGetOrgUsage():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v4/accounts/testString/organizations/testString/usage/testString')
         mock_response = '{"account_id": "account_id", "organization_id": "organization_id", "organization_name": "organization_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -941,17 +819,11 @@ class TestGetOrgUsage():
         billingmonth = 'testString'
 
         # Invoke method
-        response = _service.get_org_usage(
-            account_id,
-            organization_id,
-            billingmonth,
-            headers={}
-        )
+        response = _service.get_org_usage(account_id, organization_id, billingmonth, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
-
 
     @responses.activate
     def test_get_org_usage_value_error(self):
@@ -961,11 +833,7 @@ class TestGetOrgUsage():
         # Set up mock
         url = self.preprocess_url(_base_url + '/v4/accounts/testString/organizations/testString/usage/testString')
         mock_response = '{"account_id": "account_id", "organization_id": "organization_id", "organization_name": "organization_name", "pricing_country": "USA", "currency_code": "USD", "month": "2017-08", "resources": [{"resource_id": "resource_id", "resource_name": "resource_name", "billable_cost": 13, "billable_rated_cost": 19, "non_billable_cost": 17, "non_billable_rated_cost": 23, "plans": [{"plan_id": "plan_id", "plan_name": "plan_name", "pricing_region": "pricing_region", "billable": true, "cost": 4, "rated_cost": 10, "usage": [{"metric": "UP-TIME", "metric_name": "UP-TIME", "quantity": 711.11, "rateable_quantity": 700, "cost": 123.45, "rated_cost": 130.0, "price": ["anyValue"], "unit": "HOURS", "unit_name": "HOURS", "non_chargeable": true, "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}], "discounts": [{"ref": "Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9", "name": "platform-discount", "display_name": "Platform Service Discount", "discount": 5}]}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -979,10 +847,9 @@ class TestGetOrgUsage():
             "billingmonth": billingmonth,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_org_usage(**req_copy)
-
 
 
 # endregion
@@ -995,7 +862,7 @@ class TestGetOrgUsage():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestModel_AccountSummary():
+class TestModel_AccountSummary:
     """
     Test Class for AccountSummary
     """
@@ -1007,16 +874,16 @@ class TestModel_AccountSummary():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        resources_summary_model = {} # ResourcesSummary
+        resources_summary_model = {}  # ResourcesSummary
         resources_summary_model['billable_cost'] = 72.5
         resources_summary_model['non_billable_cost'] = 72.5
 
-        offer_credits_model = {} # OfferCredits
+        offer_credits_model = {}  # OfferCredits
         offer_credits_model['starting_balance'] = 72.5
         offer_credits_model['used'] = 72.5
         offer_credits_model['balance'] = 72.5
 
-        offer_model = {} # Offer
+        offer_model = {}  # Offer
         offer_model['offer_id'] = 'testString'
         offer_model['credits_total'] = 72.5
         offer_model['offer_template'] = 'testString'
@@ -1024,23 +891,23 @@ class TestModel_AccountSummary():
         offer_model['expires_on'] = "2019-01-01T12:00:00Z"
         offer_model['credits'] = offer_credits_model
 
-        support_summary_model = {} # SupportSummary
+        support_summary_model = {}  # SupportSummary
         support_summary_model['cost'] = 72.5
         support_summary_model['type'] = 'testString'
         support_summary_model['overage'] = 72.5
 
-        subscription_term_credits_model = {} # SubscriptionTermCredits
+        subscription_term_credits_model = {}  # SubscriptionTermCredits
         subscription_term_credits_model['total'] = 72.5
         subscription_term_credits_model['starting_balance'] = 72.5
         subscription_term_credits_model['used'] = 72.5
         subscription_term_credits_model['balance'] = 72.5
 
-        subscription_term_model = {} # SubscriptionTerm
+        subscription_term_model = {}  # SubscriptionTerm
         subscription_term_model['start'] = "2019-01-01T12:00:00Z"
         subscription_term_model['end'] = "2019-01-01T12:00:00Z"
         subscription_term_model['credits'] = subscription_term_credits_model
 
-        subscription_model = {} # Subscription
+        subscription_model = {}  # Subscription
         subscription_model['subscription_id'] = 'testString'
         subscription_model['charge_agreement_number'] = 'testString'
         subscription_model['type'] = 'testString'
@@ -1050,7 +917,7 @@ class TestModel_AccountSummary():
         subscription_model['credits_total'] = 72.5
         subscription_model['terms'] = [subscription_term_model]
 
-        subscription_summary_model = {} # SubscriptionSummary
+        subscription_summary_model = {}  # SubscriptionSummary
         subscription_summary_model['overage'] = 72.5
         subscription_summary_model['subscriptions'] = [subscription_model]
 
@@ -1080,7 +947,8 @@ class TestModel_AccountSummary():
         account_summary_model_json2 = account_summary_model.to_dict()
         assert account_summary_model_json2 == account_summary_model_json
 
-class TestModel_AccountUsage():
+
+class TestModel_AccountUsage:
     """
     Test Class for AccountUsage
     """
@@ -1092,13 +960,13 @@ class TestModel_AccountUsage():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        discount_model = {} # Discount
+        discount_model = {}  # Discount
         discount_model['ref'] = 'Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9'
         discount_model['name'] = 'platform-discount'
         discount_model['display_name'] = 'Platform Service Discount'
         discount_model['discount'] = 5
 
-        metric_model = {} # Metric
+        metric_model = {}  # Metric
         metric_model['metric'] = 'UP-TIME'
         metric_model['metric_name'] = 'UP-TIME'
         metric_model['quantity'] = 711.11
@@ -1111,7 +979,7 @@ class TestModel_AccountUsage():
         metric_model['non_chargeable'] = True
         metric_model['discounts'] = [discount_model]
 
-        plan_model = {} # Plan
+        plan_model = {}  # Plan
         plan_model['plan_id'] = 'testString'
         plan_model['plan_name'] = 'testString'
         plan_model['pricing_region'] = 'testString'
@@ -1121,7 +989,7 @@ class TestModel_AccountUsage():
         plan_model['usage'] = [metric_model]
         plan_model['discounts'] = [discount_model]
 
-        resource_model = {} # Resource
+        resource_model = {}  # Resource
         resource_model['resource_id'] = 'testString'
         resource_model['resource_name'] = 'testString'
         resource_model['billable_cost'] = 72.5
@@ -1154,7 +1022,8 @@ class TestModel_AccountUsage():
         account_usage_model_json2 = account_usage_model.to_dict()
         assert account_usage_model_json2 == account_usage_model_json
 
-class TestModel_Discount():
+
+class TestModel_Discount:
     """
     Test Class for Discount
     """
@@ -1186,7 +1055,8 @@ class TestModel_Discount():
         discount_model_json2 = discount_model.to_dict()
         assert discount_model_json2 == discount_model_json
 
-class TestModel_InstanceUsage():
+
+class TestModel_InstanceUsage:
     """
     Test Class for InstanceUsage
     """
@@ -1198,13 +1068,13 @@ class TestModel_InstanceUsage():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        discount_model = {} # Discount
+        discount_model = {}  # Discount
         discount_model['ref'] = 'Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9'
         discount_model['name'] = 'platform-discount'
         discount_model['display_name'] = 'Platform Service Discount'
         discount_model['discount'] = 5
 
-        metric_model = {} # Metric
+        metric_model = {}  # Metric
         metric_model['metric'] = 'UP-TIME'
         metric_model['metric_name'] = 'UP-TIME'
         metric_model['quantity'] = 711.11
@@ -1256,7 +1126,8 @@ class TestModel_InstanceUsage():
         instance_usage_model_json2 = instance_usage_model.to_dict()
         assert instance_usage_model_json2 == instance_usage_model_json
 
-class TestModel_InstancesUsageFirst():
+
+class TestModel_InstancesUsageFirst:
     """
     Test Class for InstancesUsageFirst
     """
@@ -1285,7 +1156,8 @@ class TestModel_InstancesUsageFirst():
         instances_usage_first_model_json2 = instances_usage_first_model.to_dict()
         assert instances_usage_first_model_json2 == instances_usage_first_model_json
 
-class TestModel_InstancesUsageNext():
+
+class TestModel_InstancesUsageNext:
     """
     Test Class for InstancesUsageNext
     """
@@ -1315,7 +1187,8 @@ class TestModel_InstancesUsageNext():
         instances_usage_next_model_json2 = instances_usage_next_model.to_dict()
         assert instances_usage_next_model_json2 == instances_usage_next_model_json
 
-class TestModel_InstancesUsage():
+
+class TestModel_InstancesUsage:
     """
     Test Class for InstancesUsage
     """
@@ -1327,20 +1200,20 @@ class TestModel_InstancesUsage():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        instances_usage_first_model = {} # InstancesUsageFirst
+        instances_usage_first_model = {}  # InstancesUsageFirst
         instances_usage_first_model['href'] = 'testString'
 
-        instances_usage_next_model = {} # InstancesUsageNext
+        instances_usage_next_model = {}  # InstancesUsageNext
         instances_usage_next_model['href'] = 'testString'
         instances_usage_next_model['offset'] = 'testString'
 
-        discount_model = {} # Discount
+        discount_model = {}  # Discount
         discount_model['ref'] = 'Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9'
         discount_model['name'] = 'platform-discount'
         discount_model['display_name'] = 'Platform Service Discount'
         discount_model['discount'] = 5
 
-        metric_model = {} # Metric
+        metric_model = {}  # Metric
         metric_model['metric'] = 'UP-TIME'
         metric_model['metric_name'] = 'UP-TIME'
         metric_model['quantity'] = 711.11
@@ -1353,7 +1226,7 @@ class TestModel_InstancesUsage():
         metric_model['non_chargeable'] = True
         metric_model['discounts'] = [discount_model]
 
-        instance_usage_model = {} # InstanceUsage
+        instance_usage_model = {}  # InstanceUsage
         instance_usage_model['account_id'] = 'testString'
         instance_usage_model['resource_instance_id'] = 'testString'
         instance_usage_model['resource_instance_name'] = 'testString'
@@ -1399,7 +1272,8 @@ class TestModel_InstancesUsage():
         instances_usage_model_json2 = instances_usage_model.to_dict()
         assert instances_usage_model_json2 == instances_usage_model_json
 
-class TestModel_Metric():
+
+class TestModel_Metric:
     """
     Test Class for Metric
     """
@@ -1411,7 +1285,7 @@ class TestModel_Metric():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        discount_model = {} # Discount
+        discount_model = {}  # Discount
         discount_model['ref'] = 'Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9'
         discount_model['name'] = 'platform-discount'
         discount_model['display_name'] = 'Platform Service Discount'
@@ -1446,7 +1320,8 @@ class TestModel_Metric():
         metric_model_json2 = metric_model.to_dict()
         assert metric_model_json2 == metric_model_json
 
-class TestModel_Offer():
+
+class TestModel_Offer:
     """
     Test Class for Offer
     """
@@ -1458,7 +1333,7 @@ class TestModel_Offer():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        offer_credits_model = {} # OfferCredits
+        offer_credits_model = {}  # OfferCredits
         offer_credits_model['starting_balance'] = 72.5
         offer_credits_model['used'] = 72.5
         offer_credits_model['balance'] = 72.5
@@ -1487,7 +1362,8 @@ class TestModel_Offer():
         offer_model_json2 = offer_model.to_dict()
         assert offer_model_json2 == offer_model_json
 
-class TestModel_OfferCredits():
+
+class TestModel_OfferCredits:
     """
     Test Class for OfferCredits
     """
@@ -1518,7 +1394,8 @@ class TestModel_OfferCredits():
         offer_credits_model_json2 = offer_credits_model.to_dict()
         assert offer_credits_model_json2 == offer_credits_model_json
 
-class TestModel_OrgUsage():
+
+class TestModel_OrgUsage:
     """
     Test Class for OrgUsage
     """
@@ -1530,13 +1407,13 @@ class TestModel_OrgUsage():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        discount_model = {} # Discount
+        discount_model = {}  # Discount
         discount_model['ref'] = 'Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9'
         discount_model['name'] = 'platform-discount'
         discount_model['display_name'] = 'Platform Service Discount'
         discount_model['discount'] = 5
 
-        metric_model = {} # Metric
+        metric_model = {}  # Metric
         metric_model['metric'] = 'UP-TIME'
         metric_model['metric_name'] = 'UP-TIME'
         metric_model['quantity'] = 711.11
@@ -1549,7 +1426,7 @@ class TestModel_OrgUsage():
         metric_model['non_chargeable'] = True
         metric_model['discounts'] = [discount_model]
 
-        plan_model = {} # Plan
+        plan_model = {}  # Plan
         plan_model['plan_id'] = 'testString'
         plan_model['plan_name'] = 'testString'
         plan_model['pricing_region'] = 'testString'
@@ -1559,7 +1436,7 @@ class TestModel_OrgUsage():
         plan_model['usage'] = [metric_model]
         plan_model['discounts'] = [discount_model]
 
-        resource_model = {} # Resource
+        resource_model = {}  # Resource
         resource_model['resource_id'] = 'testString'
         resource_model['resource_name'] = 'testString'
         resource_model['billable_cost'] = 72.5
@@ -1594,7 +1471,8 @@ class TestModel_OrgUsage():
         org_usage_model_json2 = org_usage_model.to_dict()
         assert org_usage_model_json2 == org_usage_model_json
 
-class TestModel_Plan():
+
+class TestModel_Plan:
     """
     Test Class for Plan
     """
@@ -1606,13 +1484,13 @@ class TestModel_Plan():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        discount_model = {} # Discount
+        discount_model = {}  # Discount
         discount_model['ref'] = 'Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9'
         discount_model['name'] = 'platform-discount'
         discount_model['display_name'] = 'Platform Service Discount'
         discount_model['discount'] = 5
 
-        metric_model = {} # Metric
+        metric_model = {}  # Metric
         metric_model['metric'] = 'UP-TIME'
         metric_model['metric_name'] = 'UP-TIME'
         metric_model['quantity'] = 711.11
@@ -1651,7 +1529,8 @@ class TestModel_Plan():
         plan_model_json2 = plan_model.to_dict()
         assert plan_model_json2 == plan_model_json
 
-class TestModel_Resource():
+
+class TestModel_Resource:
     """
     Test Class for Resource
     """
@@ -1663,13 +1542,13 @@ class TestModel_Resource():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        discount_model = {} # Discount
+        discount_model = {}  # Discount
         discount_model['ref'] = 'Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9'
         discount_model['name'] = 'platform-discount'
         discount_model['display_name'] = 'Platform Service Discount'
         discount_model['discount'] = 5
 
-        metric_model = {} # Metric
+        metric_model = {}  # Metric
         metric_model['metric'] = 'UP-TIME'
         metric_model['metric_name'] = 'UP-TIME'
         metric_model['quantity'] = 711.11
@@ -1682,7 +1561,7 @@ class TestModel_Resource():
         metric_model['non_chargeable'] = True
         metric_model['discounts'] = [discount_model]
 
-        plan_model = {} # Plan
+        plan_model = {}  # Plan
         plan_model['plan_id'] = 'testString'
         plan_model['plan_name'] = 'testString'
         plan_model['pricing_region'] = 'testString'
@@ -1718,7 +1597,8 @@ class TestModel_Resource():
         resource_model_json2 = resource_model.to_dict()
         assert resource_model_json2 == resource_model_json
 
-class TestModel_ResourceGroupUsage():
+
+class TestModel_ResourceGroupUsage:
     """
     Test Class for ResourceGroupUsage
     """
@@ -1730,13 +1610,13 @@ class TestModel_ResourceGroupUsage():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        discount_model = {} # Discount
+        discount_model = {}  # Discount
         discount_model['ref'] = 'Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9'
         discount_model['name'] = 'platform-discount'
         discount_model['display_name'] = 'Platform Service Discount'
         discount_model['discount'] = 5
 
-        metric_model = {} # Metric
+        metric_model = {}  # Metric
         metric_model['metric'] = 'UP-TIME'
         metric_model['metric_name'] = 'UP-TIME'
         metric_model['quantity'] = 711.11
@@ -1749,7 +1629,7 @@ class TestModel_ResourceGroupUsage():
         metric_model['non_chargeable'] = True
         metric_model['discounts'] = [discount_model]
 
-        plan_model = {} # Plan
+        plan_model = {}  # Plan
         plan_model['plan_id'] = 'testString'
         plan_model['plan_name'] = 'testString'
         plan_model['pricing_region'] = 'testString'
@@ -1759,7 +1639,7 @@ class TestModel_ResourceGroupUsage():
         plan_model['usage'] = [metric_model]
         plan_model['discounts'] = [discount_model]
 
-        resource_model = {} # Resource
+        resource_model = {}  # Resource
         resource_model['resource_id'] = 'testString'
         resource_model['resource_name'] = 'testString'
         resource_model['billable_cost'] = 72.5
@@ -1794,7 +1674,8 @@ class TestModel_ResourceGroupUsage():
         resource_group_usage_model_json2 = resource_group_usage_model.to_dict()
         assert resource_group_usage_model_json2 == resource_group_usage_model_json
 
-class TestModel_ResourcesSummary():
+
+class TestModel_ResourcesSummary:
     """
     Test Class for ResourcesSummary
     """
@@ -1824,7 +1705,8 @@ class TestModel_ResourcesSummary():
         resources_summary_model_json2 = resources_summary_model.to_dict()
         assert resources_summary_model_json2 == resources_summary_model_json
 
-class TestModel_Subscription():
+
+class TestModel_Subscription:
     """
     Test Class for Subscription
     """
@@ -1836,13 +1718,13 @@ class TestModel_Subscription():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        subscription_term_credits_model = {} # SubscriptionTermCredits
+        subscription_term_credits_model = {}  # SubscriptionTermCredits
         subscription_term_credits_model['total'] = 72.5
         subscription_term_credits_model['starting_balance'] = 72.5
         subscription_term_credits_model['used'] = 72.5
         subscription_term_credits_model['balance'] = 72.5
 
-        subscription_term_model = {} # SubscriptionTerm
+        subscription_term_model = {}  # SubscriptionTerm
         subscription_term_model['start'] = "2019-01-01T12:00:00Z"
         subscription_term_model['end'] = "2019-01-01T12:00:00Z"
         subscription_term_model['credits'] = subscription_term_credits_model
@@ -1873,7 +1755,8 @@ class TestModel_Subscription():
         subscription_model_json2 = subscription_model.to_dict()
         assert subscription_model_json2 == subscription_model_json
 
-class TestModel_SubscriptionSummary():
+
+class TestModel_SubscriptionSummary:
     """
     Test Class for SubscriptionSummary
     """
@@ -1885,18 +1768,18 @@ class TestModel_SubscriptionSummary():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        subscription_term_credits_model = {} # SubscriptionTermCredits
+        subscription_term_credits_model = {}  # SubscriptionTermCredits
         subscription_term_credits_model['total'] = 72.5
         subscription_term_credits_model['starting_balance'] = 72.5
         subscription_term_credits_model['used'] = 72.5
         subscription_term_credits_model['balance'] = 72.5
 
-        subscription_term_model = {} # SubscriptionTerm
+        subscription_term_model = {}  # SubscriptionTerm
         subscription_term_model['start'] = "2019-01-01T12:00:00Z"
         subscription_term_model['end'] = "2019-01-01T12:00:00Z"
         subscription_term_model['credits'] = subscription_term_credits_model
 
-        subscription_model = {} # Subscription
+        subscription_model = {}  # Subscription
         subscription_model['subscription_id'] = 'testString'
         subscription_model['charge_agreement_number'] = 'testString'
         subscription_model['type'] = 'testString'
@@ -1926,7 +1809,8 @@ class TestModel_SubscriptionSummary():
         subscription_summary_model_json2 = subscription_summary_model.to_dict()
         assert subscription_summary_model_json2 == subscription_summary_model_json
 
-class TestModel_SubscriptionTerm():
+
+class TestModel_SubscriptionTerm:
     """
     Test Class for SubscriptionTerm
     """
@@ -1938,7 +1822,7 @@ class TestModel_SubscriptionTerm():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        subscription_term_credits_model = {} # SubscriptionTermCredits
+        subscription_term_credits_model = {}  # SubscriptionTermCredits
         subscription_term_credits_model['total'] = 72.5
         subscription_term_credits_model['starting_balance'] = 72.5
         subscription_term_credits_model['used'] = 72.5
@@ -1965,7 +1849,8 @@ class TestModel_SubscriptionTerm():
         subscription_term_model_json2 = subscription_term_model.to_dict()
         assert subscription_term_model_json2 == subscription_term_model_json
 
-class TestModel_SubscriptionTermCredits():
+
+class TestModel_SubscriptionTermCredits:
     """
     Test Class for SubscriptionTermCredits
     """
@@ -1987,7 +1872,9 @@ class TestModel_SubscriptionTermCredits():
         assert subscription_term_credits_model != False
 
         # Construct a model instance of SubscriptionTermCredits by calling from_dict on the json representation
-        subscription_term_credits_model_dict = SubscriptionTermCredits.from_dict(subscription_term_credits_model_json).__dict__
+        subscription_term_credits_model_dict = SubscriptionTermCredits.from_dict(
+            subscription_term_credits_model_json
+        ).__dict__
         subscription_term_credits_model2 = SubscriptionTermCredits(**subscription_term_credits_model_dict)
 
         # Verify the model instances are equivalent
@@ -1997,7 +1884,8 @@ class TestModel_SubscriptionTermCredits():
         subscription_term_credits_model_json2 = subscription_term_credits_model.to_dict()
         assert subscription_term_credits_model_json2 == subscription_term_credits_model_json
 
-class TestModel_SupportSummary():
+
+class TestModel_SupportSummary:
     """
     Test Class for SupportSummary
     """

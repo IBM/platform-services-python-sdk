@@ -27,9 +27,7 @@ import urllib
 from ibm_platform_services.usage_metering_v4 import *
 
 
-service = UsageMeteringV4(
-    authenticator=NoAuthAuthenticator()
-    )
+service = UsageMeteringV4(authenticator=NoAuthAuthenticator())
 
 base_url = 'https://billing.cloud.ibm.com'
 service.set_service_url(base_url)
@@ -39,7 +37,8 @@ service.set_service_url(base_url)
 ##############################################################################
 # region
 
-class TestReportResourceUsage():
+
+class TestReportResourceUsage:
     """
     Test Class for report_resource_usage
     """
@@ -61,20 +60,18 @@ class TestReportResourceUsage():
         # Set up mock
         url = self.preprocess_url(base_url + '/v4/metering/resources/testString/usage')
         mock_response = '{"resources": [{"status": 6, "location": "location", "code": "code", "message": "message"}]}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=202)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
 
         # Construct a dict representation of a MeasureAndQuantity model
         measure_and_quantity_model = {}
         measure_and_quantity_model['measure'] = 'STORAGE'
-        measure_and_quantity_model['quantity'] = { 'foo': 'bar' }
+        measure_and_quantity_model['quantity'] = {'foo': 'bar'}
 
         # Construct a dict representation of a ResourceInstanceUsage model
         resource_instance_usage_model = {}
-        resource_instance_usage_model['resource_instance_id'] = 'crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::'
+        resource_instance_usage_model[
+            'resource_instance_id'
+        ] = 'crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::'
         resource_instance_usage_model['plan_id'] = 'database-lite'
         resource_instance_usage_model['region'] = 'us-south'
         resource_instance_usage_model['start'] = 1485907200000
@@ -87,11 +84,7 @@ class TestReportResourceUsage():
         resource_usage = [resource_instance_usage_model]
 
         # Invoke method
-        response = service.report_resource_usage(
-            resource_id,
-            resource_usage,
-            headers={}
-        )
+        response = service.report_resource_usage(resource_id, resource_usage, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -99,7 +92,6 @@ class TestReportResourceUsage():
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body == resource_usage
-
 
     @responses.activate
     def test_report_resource_usage_value_error(self):
@@ -109,20 +101,18 @@ class TestReportResourceUsage():
         # Set up mock
         url = self.preprocess_url(base_url + '/v4/metering/resources/testString/usage')
         mock_response = '{"resources": [{"status": 6, "location": "location", "code": "code", "message": "message"}]}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=202)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
 
         # Construct a dict representation of a MeasureAndQuantity model
         measure_and_quantity_model = {}
         measure_and_quantity_model['measure'] = 'STORAGE'
-        measure_and_quantity_model['quantity'] = { 'foo': 'bar' }
+        measure_and_quantity_model['quantity'] = {'foo': 'bar'}
 
         # Construct a dict representation of a ResourceInstanceUsage model
         resource_instance_usage_model = {}
-        resource_instance_usage_model['resource_instance_id'] = 'crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::'
+        resource_instance_usage_model[
+            'resource_instance_id'
+        ] = 'crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::'
         resource_instance_usage_model['plan_id'] = 'database-lite'
         resource_instance_usage_model['region'] = 'us-south'
         resource_instance_usage_model['start'] = 1485907200000
@@ -140,10 +130,9 @@ class TestReportResourceUsage():
             "resource_usage": resource_usage,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 service.report_resource_usage(**req_copy)
-
 
 
 # endregion
@@ -156,7 +145,7 @@ class TestReportResourceUsage():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestMeasureAndQuantity():
+class TestMeasureAndQuantity:
     """
     Test Class for MeasureAndQuantity
     """
@@ -169,7 +158,7 @@ class TestMeasureAndQuantity():
         # Construct a json representation of a MeasureAndQuantity model
         measure_and_quantity_model_json = {}
         measure_and_quantity_model_json['measure'] = 'STORAGE'
-        measure_and_quantity_model_json['quantity'] = { 'foo': 'bar' }
+        measure_and_quantity_model_json['quantity'] = {'foo': 'bar'}
 
         # Construct a model instance of MeasureAndQuantity by calling from_dict on the json representation
         measure_and_quantity_model = MeasureAndQuantity.from_dict(measure_and_quantity_model_json)
@@ -186,7 +175,8 @@ class TestMeasureAndQuantity():
         measure_and_quantity_model_json2 = measure_and_quantity_model.to_dict()
         assert measure_and_quantity_model_json2 == measure_and_quantity_model_json
 
-class TestResourceInstanceUsage():
+
+class TestResourceInstanceUsage:
     """
     Test Class for ResourceInstanceUsage
     """
@@ -198,13 +188,15 @@ class TestResourceInstanceUsage():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        measure_and_quantity_model = {} # MeasureAndQuantity
+        measure_and_quantity_model = {}  # MeasureAndQuantity
         measure_and_quantity_model['measure'] = 'STORAGE'
-        measure_and_quantity_model['quantity'] = { 'foo': 'bar' }
+        measure_and_quantity_model['quantity'] = {'foo': 'bar'}
 
         # Construct a json representation of a ResourceInstanceUsage model
         resource_instance_usage_model_json = {}
-        resource_instance_usage_model_json['resource_instance_id'] = 'crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::'
+        resource_instance_usage_model_json[
+            'resource_instance_id'
+        ] = 'crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::'
         resource_instance_usage_model_json['plan_id'] = 'database-lite'
         resource_instance_usage_model_json['region'] = 'us-south'
         resource_instance_usage_model_json['start'] = 1485907200000
@@ -217,7 +209,9 @@ class TestResourceInstanceUsage():
         assert resource_instance_usage_model != False
 
         # Construct a model instance of ResourceInstanceUsage by calling from_dict on the json representation
-        resource_instance_usage_model_dict = ResourceInstanceUsage.from_dict(resource_instance_usage_model_json).__dict__
+        resource_instance_usage_model_dict = ResourceInstanceUsage.from_dict(
+            resource_instance_usage_model_json
+        ).__dict__
         resource_instance_usage_model2 = ResourceInstanceUsage(**resource_instance_usage_model_dict)
 
         # Verify the model instances are equivalent
@@ -227,7 +221,8 @@ class TestResourceInstanceUsage():
         resource_instance_usage_model_json2 = resource_instance_usage_model.to_dict()
         assert resource_instance_usage_model_json2 == resource_instance_usage_model_json
 
-class TestResourceUsageDetails():
+
+class TestResourceUsageDetails:
     """
     Test Class for ResourceUsageDetails
     """
@@ -259,7 +254,8 @@ class TestResourceUsageDetails():
         resource_usage_details_model_json2 = resource_usage_details_model.to_dict()
         assert resource_usage_details_model_json2 == resource_usage_details_model_json
 
-class TestResponseAccepted():
+
+class TestResponseAccepted:
     """
     Test Class for ResponseAccepted
     """
@@ -271,7 +267,7 @@ class TestResponseAccepted():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        resource_usage_details_model = {} # ResourceUsageDetails
+        resource_usage_details_model = {}  # ResourceUsageDetails
         resource_usage_details_model['status'] = 38
         resource_usage_details_model['location'] = 'testString'
         resource_usage_details_model['code'] = 'testString'

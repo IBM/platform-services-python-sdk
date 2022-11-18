@@ -66,7 +66,7 @@ delete_user_id = None
 # Start of Examples for Service: UserManagementV1
 ##############################################################################
 # region
-class TestUserManagementV1Examples():
+class TestUserManagementV1Examples:
     """
     Example Test Class for UserManagementV1
     """
@@ -94,9 +94,7 @@ class TestUserManagementV1Examples():
 
             # Load the configuration
             global config
-            config = read_external_sources(
-                UserManagementV1.DEFAULT_SERVICE_NAME
-             )
+            config = read_external_sources(UserManagementV1.DEFAULT_SERVICE_NAME)
 
             global account_id
             account_id = config['ACCOUNT_ID']
@@ -134,10 +132,7 @@ class TestUserManagementV1Examples():
             print('\ninvite_users() result:')
             # begin-invite_users
 
-            invite_user_model = {
-                'email': member_email,
-                'account_role': 'Member'
-            }
+            invite_user_model = {'email': member_email, 'account_role': 'Member'}
 
             role_model = {'role_id': viewer_role_id}
 
@@ -147,17 +142,13 @@ class TestUserManagementV1Examples():
 
             resource_model = {'attributes': [attribute_model, attribute_model2]}
 
-            invite_user_iam_policy_model = {
-                'type': 'access',
-                'roles': [role_model],
-                'resources': [resource_model]
-            }
+            invite_user_iam_policy_model = {'type': 'access', 'roles': [role_model], 'resources': [resource_model]}
 
             invite_user_response = user_management_admin_service.invite_users(
                 account_id=account_id,
                 users=[invite_user_model],
                 iam_policy=[invite_user_iam_policy_model],
-                access_groups=[access_group_id]
+                access_groups=[access_group_id],
             ).get_result()
 
             print(json.dumps(invite_user_response, indent=2))
@@ -322,6 +313,7 @@ class TestUserManagementV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
+
 
 # endregion
 ##############################################################################

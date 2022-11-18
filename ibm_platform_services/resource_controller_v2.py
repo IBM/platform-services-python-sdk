@@ -40,6 +40,7 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
+
 class ResourceControllerV2(BaseService):
     """The resource_controller V2 service."""
 
@@ -47,23 +48,23 @@ class ResourceControllerV2(BaseService):
     DEFAULT_SERVICE_NAME = 'resource_controller'
 
     @classmethod
-    def new_instance(cls,
-                     service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'ResourceControllerV2':
+    def new_instance(
+        cls,
+        service_name: str = DEFAULT_SERVICE_NAME,
+    ) -> 'ResourceControllerV2':
         """
         Return a new client for the resource_controller service using the specified
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
-    def __init__(self,
-                 authenticator: Authenticator = None,
-                ) -> None:
+    def __init__(
+        self,
+        authenticator: Authenticator = None,
+    ) -> None:
         """
         Construct a new client for the resource_controller service.
 
@@ -71,17 +72,14 @@ class ResourceControllerV2(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self,
-                             service_url=self.DEFAULT_SERVICE_URL,
-                             authenticator=authenticator)
-
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
     # Resource Instances
     #########################
 
-
-    def list_resource_instances(self,
+    def list_resource_instances(
+        self,
         *,
         guid: str = None,
         name: str = None,
@@ -95,7 +93,7 @@ class ResourceControllerV2(BaseService):
         state: str = None,
         updated_from: str = None,
         updated_to: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get a list of all resource instances.
@@ -132,9 +130,9 @@ class ResourceControllerV2(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='list_resource_instances')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_resource_instances'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -149,7 +147,7 @@ class ResourceControllerV2(BaseService):
             'start': start,
             'state': state,
             'updated_from': updated_from,
-            'updated_to': updated_to
+            'updated_to': updated_to,
         }
 
         if 'headers' in kwargs:
@@ -158,16 +156,13 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_instances'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def create_resource_instance(self,
+    def create_resource_instance(
+        self,
         name: str,
         target: str,
         resource_group: str,
@@ -177,7 +172,7 @@ class ResourceControllerV2(BaseService):
         allow_cleanup: bool = None,
         parameters: dict = None,
         entity_lock: bool = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create (provision) a new resource instance.
@@ -218,12 +213,10 @@ class ResourceControllerV2(BaseService):
             raise ValueError('resource_group must be provided')
         if resource_plan_id is None:
             raise ValueError('resource_plan_id must be provided')
-        headers = {
-            'Entity-Lock': entity_lock
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='create_resource_instance')
+        headers = {'Entity-Lock': entity_lock}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='create_resource_instance'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -233,7 +226,7 @@ class ResourceControllerV2(BaseService):
             'resource_plan_id': resource_plan_id,
             'tags': tags,
             'allow_cleanup': allow_cleanup,
-            'parameters': parameters
+            'parameters': parameters,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -245,19 +238,12 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_instances'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_resource_instance(self,
-        id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_resource_instance(self, id: str, **kwargs) -> DetailedResponse:
         """
         Get a resource instance.
 
@@ -273,9 +259,9 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='get_resource_instance')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_resource_instance'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -287,20 +273,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_resource_instance(self,
-        id: str,
-        *,
-        recursive: bool = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_resource_instance(self, id: str, *, recursive: bool = None, **kwargs) -> DetailedResponse:
         """
         Delete a resource instance.
 
@@ -319,14 +297,12 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='delete_resource_instance')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='delete_resource_instance'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'recursive': recursive
-        }
+        params = {'recursive': recursive}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -336,23 +312,20 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_resource_instance(self,
+    def update_resource_instance(
+        self,
         id: str,
         *,
         name: str = None,
         parameters: dict = None,
         resource_plan_id: str = None,
         allow_cleanup: bool = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update a resource instance.
@@ -380,16 +353,16 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='update_resource_instance')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='update_resource_instance'
+        )
         headers.update(sdk_headers)
 
         data = {
             'name': name,
             'parameters': parameters,
             'resource_plan_id': resource_plan_id,
-            'allow_cleanup': allow_cleanup
+            'allow_cleanup': allow_cleanup,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -404,21 +377,13 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def list_resource_aliases_for_instance(self,
-        id: str,
-        *,
-        limit: int = None,
-        start: str = None,
-        **kwargs
+    def list_resource_aliases_for_instance(
+        self, id: str, *, limit: int = None, start: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Get a list of all resource aliases for the instance.
@@ -441,15 +406,14 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='list_resource_aliases_for_instance')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='list_resource_aliases_for_instance',
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'limit': limit,
-            'start': start
-        }
+        params = {'limit': limit, 'start': start}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -460,21 +424,13 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}/resource_aliases'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def list_resource_keys_for_instance(self,
-        id: str,
-        *,
-        limit: int = None,
-        start: str = None,
-        **kwargs
+    def list_resource_keys_for_instance(
+        self, id: str, *, limit: int = None, start: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Get a list of all the resource keys for the instance.
@@ -497,15 +453,12 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='list_resource_keys_for_instance')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_resource_keys_for_instance'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'limit': limit,
-            'start': start
-        }
+        params = {'limit': limit, 'start': start}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -516,19 +469,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}/resource_keys'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def lock_resource_instance(self,
-        id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def lock_resource_instance(self, id: str, **kwargs) -> DetailedResponse:
         """
         Lock a resource instance.
 
@@ -545,9 +491,9 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='lock_resource_instance')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='lock_resource_instance'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -559,18 +505,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}/lock'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='POST', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def unlock_resource_instance(self,
-        id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def unlock_resource_instance(self, id: str, **kwargs) -> DetailedResponse:
         """
         Unlock a resource instance.
 
@@ -586,9 +526,9 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='unlock_resource_instance')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='unlock_resource_instance'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -600,18 +540,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}/lock'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def cancel_lastop_resource_instance(self,
-        id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def cancel_lastop_resource_instance(self, id: str, **kwargs) -> DetailedResponse:
         """
         Cancel the in progress last operation of the resource instance.
 
@@ -627,9 +561,9 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='cancel_lastop_resource_instance')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='cancel_lastop_resource_instance'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -641,9 +575,7 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_instances/{id}/last_operation'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -652,8 +584,8 @@ class ResourceControllerV2(BaseService):
     # Resource Keys
     #########################
 
-
-    def list_resource_keys(self,
+    def list_resource_keys(
+        self,
         *,
         guid: str = None,
         name: str = None,
@@ -663,7 +595,7 @@ class ResourceControllerV2(BaseService):
         start: str = None,
         updated_from: str = None,
         updated_to: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get a list of all of the resource keys.
@@ -689,9 +621,9 @@ class ResourceControllerV2(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='list_resource_keys')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_resource_keys'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -702,7 +634,7 @@ class ResourceControllerV2(BaseService):
             'limit': limit,
             'start': start,
             'updated_from': updated_from,
-            'updated_to': updated_to
+            'updated_to': updated_to,
         }
 
         if 'headers' in kwargs:
@@ -711,22 +643,13 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_keys'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def create_resource_key(self,
-        name: str,
-        source: str,
-        *,
-        parameters: 'ResourceKeyPostParameters' = None,
-        role: str = None,
-        **kwargs
+    def create_resource_key(
+        self, name: str, source: str, *, parameters: 'ResourceKeyPostParameters' = None, role: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Create a new resource key.
@@ -755,17 +678,12 @@ class ResourceControllerV2(BaseService):
         if parameters is not None:
             parameters = convert_model(parameters)
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='create_resource_key')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='create_resource_key'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'name': name,
-            'source': source,
-            'parameters': parameters,
-            'role': role
-        }
+        data = {'name': name, 'source': source, 'parameters': parameters, 'role': role}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -776,19 +694,12 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_keys'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_resource_key(self,
-        id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_resource_key(self, id: str, **kwargs) -> DetailedResponse:
         """
         Get resource key.
 
@@ -804,9 +715,9 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='get_resource_key')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_resource_key'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -818,18 +729,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_keys/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_resource_key(self,
-        id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_resource_key(self, id: str, **kwargs) -> DetailedResponse:
         """
         Delete a resource key.
 
@@ -845,9 +750,9 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='delete_resource_key')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='delete_resource_key'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -858,19 +763,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_keys/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_resource_key(self,
-        id: str,
-        name: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def update_resource_key(self, id: str, name: str, **kwargs) -> DetailedResponse:
         """
         Update a resource key.
 
@@ -889,14 +787,12 @@ class ResourceControllerV2(BaseService):
         if name is None:
             raise ValueError('name must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='update_resource_key')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='update_resource_key'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'name': name
-        }
+        data = {'name': name}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -910,10 +806,7 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_keys/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
@@ -922,8 +815,8 @@ class ResourceControllerV2(BaseService):
     # Resource Bindings
     #########################
 
-
-    def list_resource_bindings(self,
+    def list_resource_bindings(
+        self,
         *,
         guid: str = None,
         name: str = None,
@@ -934,7 +827,7 @@ class ResourceControllerV2(BaseService):
         start: str = None,
         updated_from: str = None,
         updated_to: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get a list of all resource bindings.
@@ -963,9 +856,9 @@ class ResourceControllerV2(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='list_resource_bindings')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_resource_bindings'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -977,7 +870,7 @@ class ResourceControllerV2(BaseService):
             'limit': limit,
             'start': start,
             'updated_from': updated_from,
-            'updated_to': updated_to
+            'updated_to': updated_to,
         }
 
         if 'headers' in kwargs:
@@ -986,23 +879,20 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_bindings'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def create_resource_binding(self,
+    def create_resource_binding(
+        self,
         source: str,
         target: str,
         *,
         name: str = None,
         parameters: 'ResourceBindingPostParameters' = None,
         role: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create a new resource binding.
@@ -1035,18 +925,12 @@ class ResourceControllerV2(BaseService):
         if parameters is not None:
             parameters = convert_model(parameters)
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='create_resource_binding')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='create_resource_binding'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'source': source,
-            'target': target,
-            'name': name,
-            'parameters': parameters,
-            'role': role
-        }
+        data = {'source': source, 'target': target, 'name': name, 'parameters': parameters, 'role': role}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1057,19 +941,12 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_bindings'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_resource_binding(self,
-        id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_resource_binding(self, id: str, **kwargs) -> DetailedResponse:
         """
         Get a resource binding.
 
@@ -1085,9 +962,9 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='get_resource_binding')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_resource_binding'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1099,18 +976,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_bindings/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_resource_binding(self,
-        id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_resource_binding(self, id: str, **kwargs) -> DetailedResponse:
         """
         Delete a resource binding.
 
@@ -1126,9 +997,9 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='delete_resource_binding')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='delete_resource_binding'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1139,19 +1010,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_bindings/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_resource_binding(self,
-        id: str,
-        name: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def update_resource_binding(self, id: str, name: str, **kwargs) -> DetailedResponse:
         """
         Update a resource binding.
 
@@ -1171,14 +1035,12 @@ class ResourceControllerV2(BaseService):
         if name is None:
             raise ValueError('name must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='update_resource_binding')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='update_resource_binding'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'name': name
-        }
+        data = {'name': name}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1192,10 +1054,7 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_bindings/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
@@ -1204,8 +1063,8 @@ class ResourceControllerV2(BaseService):
     # Resource Aliases
     #########################
 
-
-    def list_resource_aliases(self,
+    def list_resource_aliases(
+        self,
         *,
         guid: str = None,
         name: str = None,
@@ -1217,7 +1076,7 @@ class ResourceControllerV2(BaseService):
         start: str = None,
         updated_from: str = None,
         updated_to: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get a list of all resource aliases.
@@ -1248,9 +1107,9 @@ class ResourceControllerV2(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='list_resource_aliases')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_resource_aliases'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -1263,7 +1122,7 @@ class ResourceControllerV2(BaseService):
             'limit': limit,
             'start': start,
             'updated_from': updated_from,
-            'updated_to': updated_to
+            'updated_to': updated_to,
         }
 
         if 'headers' in kwargs:
@@ -1272,21 +1131,12 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_aliases'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def create_resource_alias(self,
-        name: str,
-        source: str,
-        target: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def create_resource_alias(self, name: str, source: str, target: str, **kwargs) -> DetailedResponse:
         """
         Create a new resource alias.
 
@@ -1309,16 +1159,12 @@ class ResourceControllerV2(BaseService):
         if target is None:
             raise ValueError('target must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='create_resource_alias')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='create_resource_alias'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'name': name,
-            'source': source,
-            'target': target
-        }
+        data = {'name': name, 'source': source, 'target': target}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1329,19 +1175,12 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resource_aliases'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_resource_alias(self,
-        id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_resource_alias(self, id: str, **kwargs) -> DetailedResponse:
         """
         Get a resource alias.
 
@@ -1357,9 +1196,9 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='get_resource_alias')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_resource_alias'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1371,20 +1210,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_aliases/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_resource_alias(self,
-        id: str,
-        *,
-        recursive: bool = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_resource_alias(self, id: str, *, recursive: bool = None, **kwargs) -> DetailedResponse:
         """
         Delete a resource alias.
 
@@ -1403,14 +1234,12 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='delete_resource_alias')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='delete_resource_alias'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'recursive': recursive
-        }
+        params = {'recursive': recursive}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1420,20 +1249,12 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_aliases/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_resource_alias(self,
-        id: str,
-        name: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def update_resource_alias(self, id: str, name: str, **kwargs) -> DetailedResponse:
         """
         Update a resource alias.
 
@@ -1452,14 +1273,12 @@ class ResourceControllerV2(BaseService):
         if name is None:
             raise ValueError('name must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='update_resource_alias')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='update_resource_alias'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'name': name
-        }
+        data = {'name': name}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1473,21 +1292,13 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_aliases/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def list_resource_bindings_for_alias(self,
-        id: str,
-        *,
-        limit: int = None,
-        start: str = None,
-        **kwargs
+    def list_resource_bindings_for_alias(
+        self, id: str, *, limit: int = None, start: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Get a list of all resource bindings for the alias.
@@ -1509,15 +1320,14 @@ class ResourceControllerV2(BaseService):
         if not id:
             raise ValueError('id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='list_resource_bindings_for_alias')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='list_resource_bindings_for_alias',
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'limit': limit,
-            'start': start
-        }
+        params = {'limit': limit, 'start': start}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1528,10 +1338,7 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/resource_aliases/{id}/resource_bindings'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
@@ -1540,12 +1347,8 @@ class ResourceControllerV2(BaseService):
     # Resource Reclamations
     #########################
 
-
-    def list_reclamations(self,
-        *,
-        account_id: str = None,
-        resource_instance_id: str = None,
-        **kwargs
+    def list_reclamations(
+        self, *, account_id: str = None, resource_instance_id: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Get a list of all reclamations.
@@ -1562,15 +1365,12 @@ class ResourceControllerV2(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='list_reclamations')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_reclamations'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account_id': account_id,
-            'resource_instance_id': resource_instance_id
-        }
+        params = {'account_id': account_id, 'resource_instance_id': resource_instance_id}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1578,22 +1378,13 @@ class ResourceControllerV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/reclamations'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def run_reclamation_action(self,
-        id: str,
-        action_name: str,
-        *,
-        request_by: str = None,
-        comment: str = None,
-        **kwargs
+    def run_reclamation_action(
+        self, id: str, action_name: str, *, request_by: str = None, comment: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Perform a reclamation action.
@@ -1617,15 +1408,12 @@ class ResourceControllerV2(BaseService):
         if not action_name:
             raise ValueError('action_name must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V2',
-                                      operation_id='run_reclamation_action')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='run_reclamation_action'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'request_by': request_by,
-            'comment': comment
-        }
+        data = {'request_by': request_by, 'comment': comment}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1639,10 +1427,7 @@ class ResourceControllerV2(BaseService):
         path_param_values = self.encode_path_vars(id, action_name)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/reclamations/{id}/actions/{action_name}'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
@@ -1658,6 +1443,7 @@ class ListResourceInstancesEnums:
         The state of the instance. If not specified, instances in state `active` and
         `provisioning` are returned.
         """
+
         ACTIVE = 'active'
         INACTIVE = 'inactive'
         FAILED = 'failed'
@@ -1672,7 +1458,7 @@ class ListResourceInstancesEnums:
 ##############################################################################
 
 
-class Credentials():
+class Credentials:
     """
     The credentials for a resource.
 
@@ -1692,17 +1478,29 @@ class Credentials():
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(['redacted', 'REDACTED', 'apikey', 'iam_apikey_description', 'iam_apikey_name', 'iam_role_crn', 'iam_serviceid_crn'])
+    _properties = frozenset(
+        [
+            'redacted',
+            'REDACTED',
+            'apikey',
+            'iam_apikey_description',
+            'iam_apikey_name',
+            'iam_role_crn',
+            'iam_serviceid_crn',
+        ]
+    )
 
-    def __init__(self,
-                 *,
-                 redacted: str = None,
-                 apikey: str = None,
-                 iam_apikey_description: str = None,
-                 iam_apikey_name: str = None,
-                 iam_role_crn: str = None,
-                 iam_serviceid_crn: str = None,
-                 **kwargs) -> None:
+    def __init__(
+        self,
+        *,
+        redacted: str = None,
+        apikey: str = None,
+        iam_apikey_description: str = None,
+        iam_apikey_name: str = None,
+        iam_role_crn: str = None,
+        iam_serviceid_crn: str = None,
+        **kwargs,
+    ) -> None:
         """
         Initialize a Credentials object.
 
@@ -1746,7 +1544,7 @@ class Credentials():
             args['iam_role_crn'] = _dict.get('iam_role_crn')
         if 'iam_serviceid_crn' in _dict:
             args['iam_serviceid_crn'] = _dict.get('iam_serviceid_crn')
-        args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
+        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
     @classmethod
@@ -1815,11 +1613,12 @@ class Credentials():
         required to view the credential. For additional information, see [viewing a
         credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&interface=ui#viewing-credentials-ui).
         """
+
         REDACTED = 'REDACTED'
         REDACTED_EXPLICIT = 'REDACTED_EXPLICIT'
 
 
-class PlanHistoryItem():
+class PlanHistoryItem:
     """
     An element of the plan history of the instance.
 
@@ -1829,11 +1628,7 @@ class PlanHistoryItem():
     :attr str requestor_id: (optional) The subject who made the plan change.
     """
 
-    def __init__(self,
-                 resource_plan_id: str,
-                 start_date: datetime,
-                 *,
-                 requestor_id: str = None) -> None:
+    def __init__(self, resource_plan_id: str, start_date: datetime, *, requestor_id: str = None) -> None:
         """
         Initialize a PlanHistoryItem object.
 
@@ -1896,7 +1691,8 @@ class PlanHistoryItem():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Reclamation():
+
+class Reclamation:
     """
     A reclamation.
 
@@ -1924,23 +1720,25 @@ class Reclamation():
     :attr str updated_by: (optional) The subject who updated the reclamation.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 entity_id: str = None,
-                 entity_type_id: str = None,
-                 entity_crn: str = None,
-                 resource_instance_id: str = None,
-                 resource_group_id: str = None,
-                 account_id: str = None,
-                 policy_id: str = None,
-                 state: str = None,
-                 target_time: str = None,
-                 custom_properties: dict = None,
-                 created_at: datetime = None,
-                 created_by: str = None,
-                 updated_at: datetime = None,
-                 updated_by: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        entity_id: str = None,
+        entity_type_id: str = None,
+        entity_crn: str = None,
+        resource_instance_id: str = None,
+        resource_group_id: str = None,
+        account_id: str = None,
+        policy_id: str = None,
+        state: str = None,
+        target_time: str = None,
+        custom_properties: dict = None,
+        created_at: datetime = None,
+        created_by: str = None,
+        updated_at: datetime = None,
+        updated_by: str = None,
+    ) -> None:
         """
         Initialize a Reclamation object.
 
@@ -2080,16 +1878,15 @@ class Reclamation():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ReclamationsList():
+
+class ReclamationsList:
     """
     A list of reclamations.
 
     :attr List[Reclamation] resources: (optional) A list of reclamations.
     """
 
-    def __init__(self,
-                 *,
-                 resources: List['Reclamation'] = None) -> None:
+    def __init__(self, *, resources: List['Reclamation'] = None) -> None:
         """
         Initialize a ReclamationsList object.
 
@@ -2141,7 +1938,8 @@ class ReclamationsList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceAlias():
+
+class ResourceAlias:
     """
     A resource alias.
 
@@ -2184,31 +1982,33 @@ class ResourceAlias():
           for the alias.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 guid: str = None,
-                 url: str = None,
-                 created_at: datetime = None,
-                 updated_at: datetime = None,
-                 deleted_at: datetime = None,
-                 created_by: str = None,
-                 updated_by: str = None,
-                 deleted_by: str = None,
-                 name: str = None,
-                 resource_instance_id: str = None,
-                 target_crn: str = None,
-                 account_id: str = None,
-                 resource_id: str = None,
-                 resource_group_id: str = None,
-                 crn: str = None,
-                 region_instance_id: str = None,
-                 region_instance_crn: str = None,
-                 state: str = None,
-                 migrated: bool = None,
-                 resource_instance_url: str = None,
-                 resource_bindings_url: str = None,
-                 resource_keys_url: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        guid: str = None,
+        url: str = None,
+        created_at: datetime = None,
+        updated_at: datetime = None,
+        deleted_at: datetime = None,
+        created_by: str = None,
+        updated_by: str = None,
+        deleted_by: str = None,
+        name: str = None,
+        resource_instance_id: str = None,
+        target_crn: str = None,
+        account_id: str = None,
+        resource_id: str = None,
+        resource_group_id: str = None,
+        crn: str = None,
+        region_instance_id: str = None,
+        region_instance_crn: str = None,
+        state: str = None,
+        migrated: bool = None,
+        resource_instance_url: str = None,
+        resource_bindings_url: str = None,
+        resource_keys_url: str = None,
+    ) -> None:
         """
         Initialize a ResourceAlias object.
 
@@ -2401,7 +2201,8 @@ class ResourceAlias():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceAliasesList():
+
+class ResourceAliasesList:
     """
     A list of resource aliases.
 
@@ -2410,10 +2211,7 @@ class ResourceAliasesList():
     :attr List[ResourceAlias] resources: A list of resource aliases.
     """
 
-    def __init__(self,
-                 rows_count: int,
-                 next_url: str,
-                 resources: List['ResourceAlias']) -> None:
+    def __init__(self, rows_count: int, next_url: str, resources: List['ResourceAlias']) -> None:
         """
         Initialize a ResourceAliasesList object.
 
@@ -2483,7 +2281,8 @@ class ResourceAliasesList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceBinding():
+
+class ResourceBinding:
     """
     A resource binding.
 
@@ -2532,31 +2331,33 @@ class ResourceBinding():
           that this binding is associated with.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 guid: str = None,
-                 url: str = None,
-                 created_at: datetime = None,
-                 updated_at: datetime = None,
-                 deleted_at: datetime = None,
-                 created_by: str = None,
-                 updated_by: str = None,
-                 deleted_by: str = None,
-                 source_crn: str = None,
-                 target_crn: str = None,
-                 crn: str = None,
-                 region_binding_id: str = None,
-                 region_binding_crn: str = None,
-                 name: str = None,
-                 account_id: str = None,
-                 resource_group_id: str = None,
-                 state: str = None,
-                 credentials: 'Credentials' = None,
-                 iam_compatible: bool = None,
-                 resource_id: str = None,
-                 migrated: bool = None,
-                 resource_alias_url: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        guid: str = None,
+        url: str = None,
+        created_at: datetime = None,
+        updated_at: datetime = None,
+        deleted_at: datetime = None,
+        created_by: str = None,
+        updated_by: str = None,
+        deleted_by: str = None,
+        source_crn: str = None,
+        target_crn: str = None,
+        crn: str = None,
+        region_binding_id: str = None,
+        region_binding_crn: str = None,
+        name: str = None,
+        account_id: str = None,
+        resource_group_id: str = None,
+        state: str = None,
+        credentials: 'Credentials' = None,
+        iam_compatible: bool = None,
+        resource_id: str = None,
+        migrated: bool = None,
+        resource_alias_url: str = None,
+    ) -> None:
         """
         Initialize a ResourceBinding object.
 
@@ -2760,7 +2561,8 @@ class ResourceBinding():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceBindingPostParameters():
+
+class ResourceBindingPostParameters:
     """
     Configuration options represented as key-value pairs. Service defined options are
     passed through to the target resource brokers, whereas platform defined options are
@@ -2773,10 +2575,7 @@ class ResourceBindingPostParameters():
     # The set of defined properties for the class
     _properties = frozenset(['serviceid_crn'])
 
-    def __init__(self,
-                 *,
-                 serviceid_crn: str = None,
-                 **kwargs) -> None:
+    def __init__(self, *, serviceid_crn: str = None, **kwargs) -> None:
         """
         Initialize a ResourceBindingPostParameters object.
 
@@ -2794,7 +2593,7 @@ class ResourceBindingPostParameters():
         args = {}
         if 'serviceid_crn' in _dict:
             args['serviceid_crn'] = _dict.get('serviceid_crn')
-        args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
+        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
     @classmethod
@@ -2846,7 +2645,8 @@ class ResourceBindingPostParameters():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceBindingsList():
+
+class ResourceBindingsList:
     """
     A list of resource bindings.
 
@@ -2855,10 +2655,7 @@ class ResourceBindingsList():
     :attr List[ResourceBinding] resources: A list of resource bindings.
     """
 
-    def __init__(self,
-                 rows_count: int,
-                 next_url: str,
-                 resources: List['ResourceBinding']) -> None:
+    def __init__(self, rows_count: int, next_url: str, resources: List['ResourceBinding']) -> None:
         """
         Initialize a ResourceBindingsList object.
 
@@ -2928,7 +2725,8 @@ class ResourceBindingsList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceInstance():
+
+class ResourceInstance:
     """
     A resource instance.
 
@@ -3002,46 +2800,48 @@ class ResourceInstance():
           is locked or not.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 guid: str = None,
-                 url: str = None,
-                 created_at: datetime = None,
-                 updated_at: datetime = None,
-                 deleted_at: datetime = None,
-                 created_by: str = None,
-                 updated_by: str = None,
-                 deleted_by: str = None,
-                 scheduled_reclaim_at: datetime = None,
-                 restored_at: datetime = None,
-                 restored_by: str = None,
-                 scheduled_reclaim_by: str = None,
-                 name: str = None,
-                 region_id: str = None,
-                 account_id: str = None,
-                 reseller_channel_id: str = None,
-                 resource_plan_id: str = None,
-                 resource_group_id: str = None,
-                 resource_group_crn: str = None,
-                 target_crn: str = None,
-                 parameters: dict = None,
-                 allow_cleanup: bool = None,
-                 crn: str = None,
-                 state: str = None,
-                 type: str = None,
-                 sub_type: str = None,
-                 resource_id: str = None,
-                 dashboard_url: str = None,
-                 last_operation: 'ResourceInstanceLastOperation' = None,
-                 resource_aliases_url: str = None,
-                 resource_bindings_url: str = None,
-                 resource_keys_url: str = None,
-                 plan_history: List['PlanHistoryItem'] = None,
-                 migrated: bool = None,
-                 extensions: dict = None,
-                 controlled_by: str = None,
-                 locked: bool = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        guid: str = None,
+        url: str = None,
+        created_at: datetime = None,
+        updated_at: datetime = None,
+        deleted_at: datetime = None,
+        created_by: str = None,
+        updated_by: str = None,
+        deleted_by: str = None,
+        scheduled_reclaim_at: datetime = None,
+        restored_at: datetime = None,
+        restored_by: str = None,
+        scheduled_reclaim_by: str = None,
+        name: str = None,
+        region_id: str = None,
+        account_id: str = None,
+        reseller_channel_id: str = None,
+        resource_plan_id: str = None,
+        resource_group_id: str = None,
+        resource_group_crn: str = None,
+        target_crn: str = None,
+        parameters: dict = None,
+        allow_cleanup: bool = None,
+        crn: str = None,
+        state: str = None,
+        type: str = None,
+        sub_type: str = None,
+        resource_id: str = None,
+        dashboard_url: str = None,
+        last_operation: 'ResourceInstanceLastOperation' = None,
+        resource_aliases_url: str = None,
+        resource_bindings_url: str = None,
+        resource_keys_url: str = None,
+        plan_history: List['PlanHistoryItem'] = None,
+        migrated: bool = None,
+        extensions: dict = None,
+        controlled_by: str = None,
+        locked: bool = None,
+    ) -> None:
         """
         Initialize a ResourceInstance object.
 
@@ -3358,6 +3158,7 @@ class ResourceInstance():
         The current state of the instance. For example, if the instance is deleted, it
         will return removed.
         """
+
         ACTIVE = 'active'
         INACTIVE = 'inactive'
         REMOVED = 'removed'
@@ -3368,7 +3169,7 @@ class ResourceInstance():
         PRE_PROVISIONING = 'pre_provisioning'
 
 
-class ResourceInstanceLastOperation():
+class ResourceInstanceLastOperation:
     """
     The status of the last operation requested on the instance.
 
@@ -3391,20 +3192,35 @@ class ResourceInstanceLastOperation():
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(['type', 'state', 'sub_type', 'async_', 'async', 'description', 'reason_code', 'poll_after', 'cancelable', 'poll'])
+    _properties = frozenset(
+        [
+            'type',
+            'state',
+            'sub_type',
+            'async_',
+            'async',
+            'description',
+            'reason_code',
+            'poll_after',
+            'cancelable',
+            'poll',
+        ]
+    )
 
-    def __init__(self,
-                 type: str,
-                 state: str,
-                 async_: bool,
-                 description: str,
-                 cancelable: bool,
-                 poll: bool,
-                 *,
-                 sub_type: str = None,
-                 reason_code: str = None,
-                 poll_after: float = None,
-                 **kwargs) -> None:
+    def __init__(
+        self,
+        type: str,
+        state: str,
+        async_: bool,
+        description: str,
+        cancelable: bool,
+        poll: bool,
+        *,
+        sub_type: str = None,
+        reason_code: str = None,
+        poll_after: float = None,
+        **kwargs,
+    ) -> None:
         """
         Initialize a ResourceInstanceLastOperation object.
 
@@ -3473,7 +3289,7 @@ class ResourceInstanceLastOperation():
             args['poll'] = _dict.get('poll')
         else:
             raise ValueError('Required property \'poll\' not present in ResourceInstanceLastOperation JSON')
-        args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
+        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
     @classmethod
@@ -3546,12 +3362,13 @@ class ResourceInstanceLastOperation():
         The last operation state of the resoure instance. This indicates if the resource's
         last operation is in progress, succeeded or failed.
         """
+
         IN_PROGRESS = 'in progress'
         SUCCEEDED = 'succeeded'
         FAILED = 'failed'
 
 
-class ResourceInstancesList():
+class ResourceInstancesList:
     """
     A list of resource instances.
 
@@ -3560,10 +3377,7 @@ class ResourceInstancesList():
     :attr List[ResourceInstance] resources: A list of resource instances.
     """
 
-    def __init__(self,
-                 rows_count: int,
-                 next_url: str,
-                 resources: List['ResourceInstance']) -> None:
+    def __init__(self, rows_count: int, next_url: str, resources: List['ResourceInstance']) -> None:
         """
         Initialize a ResourceInstancesList object.
 
@@ -3633,7 +3447,8 @@ class ResourceInstancesList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceKey():
+
+class ResourceKey:
     """
     A resource key.
 
@@ -3676,29 +3491,31 @@ class ResourceKey():
           that this binding is associated with.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 guid: str = None,
-                 url: str = None,
-                 created_at: datetime = None,
-                 updated_at: datetime = None,
-                 deleted_at: datetime = None,
-                 created_by: str = None,
-                 updated_by: str = None,
-                 deleted_by: str = None,
-                 source_crn: str = None,
-                 name: str = None,
-                 crn: str = None,
-                 state: str = None,
-                 account_id: str = None,
-                 resource_group_id: str = None,
-                 resource_id: str = None,
-                 credentials: 'Credentials' = None,
-                 iam_compatible: bool = None,
-                 migrated: bool = None,
-                 resource_instance_url: str = None,
-                 resource_alias_url: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        guid: str = None,
+        url: str = None,
+        created_at: datetime = None,
+        updated_at: datetime = None,
+        deleted_at: datetime = None,
+        created_by: str = None,
+        updated_by: str = None,
+        deleted_by: str = None,
+        source_crn: str = None,
+        name: str = None,
+        crn: str = None,
+        state: str = None,
+        account_id: str = None,
+        resource_group_id: str = None,
+        resource_id: str = None,
+        credentials: 'Credentials' = None,
+        iam_compatible: bool = None,
+        migrated: bool = None,
+        resource_instance_url: str = None,
+        resource_alias_url: str = None,
+    ) -> None:
         """
         Initialize a ResourceKey object.
 
@@ -3885,7 +3702,8 @@ class ResourceKey():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceKeyPostParameters():
+
+class ResourceKeyPostParameters:
     """
     Configuration options represented as key-value pairs. Service defined options are
     passed through to the target resource brokers, whereas platform defined options are
@@ -3898,10 +3716,7 @@ class ResourceKeyPostParameters():
     # The set of defined properties for the class
     _properties = frozenset(['serviceid_crn'])
 
-    def __init__(self,
-                 *,
-                 serviceid_crn: str = None,
-                 **kwargs) -> None:
+    def __init__(self, *, serviceid_crn: str = None, **kwargs) -> None:
         """
         Initialize a ResourceKeyPostParameters object.
 
@@ -3919,7 +3734,7 @@ class ResourceKeyPostParameters():
         args = {}
         if 'serviceid_crn' in _dict:
             args['serviceid_crn'] = _dict.get('serviceid_crn')
-        args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
+        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
     @classmethod
@@ -3971,7 +3786,8 @@ class ResourceKeyPostParameters():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceKeysList():
+
+class ResourceKeysList:
     """
     A list of resource keys.
 
@@ -3980,10 +3796,7 @@ class ResourceKeysList():
     :attr List[ResourceKey] resources: A list of resource keys.
     """
 
-    def __init__(self,
-                 rows_count: int,
-                 next_url: str,
-                 resources: List['ResourceKey']) -> None:
+    def __init__(self, rows_count: int, next_url: str, resources: List['ResourceKey']) -> None:
         """
         Initialize a ResourceKeysList object.
 
@@ -4053,29 +3866,32 @@ class ResourceKeysList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+
 ##############################################################################
 # Pagers
 ##############################################################################
 
-class ResourceInstancesPager():
+
+class ResourceInstancesPager:
     """
     ResourceInstancesPager can be used to simplify the use of the "list_resource_instances" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: ResourceControllerV2,
-                 guid: str = None,
-                 name: str = None,
-                 resource_group_id: str = None,
-                 resource_id: str = None,
-                 resource_plan_id: str = None,
-                 type: str = None,
-                 sub_type: str = None,
-                 limit: int = None,
-                 state: str = None,
-                 updated_from: str = None,
-                 updated_to: str = None,
+    def __init__(
+        self,
+        *,
+        client: ResourceControllerV2,
+        guid: str = None,
+        name: str = None,
+        resource_group_id: str = None,
+        resource_id: str = None,
+        resource_plan_id: str = None,
+        type: str = None,
+        sub_type: str = None,
+        limit: int = None,
+        state: str = None,
+        updated_from: str = None,
+        updated_to: str = None,
     ) -> None:
         """
         Initialize a ResourceInstancesPager object.
@@ -4099,7 +3915,7 @@ class ResourceInstancesPager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._guid = guid
         self._name = name
         self._resource_group_id = resource_group_id
@@ -4165,16 +3981,18 @@ class ResourceInstancesPager():
             results.extend(next_page)
         return results
 
-class ResourceAliasesForInstancePager():
+
+class ResourceAliasesForInstancePager:
     """
     ResourceAliasesForInstancePager can be used to simplify the use of the "list_resource_aliases_for_instance" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: ResourceControllerV2,
-                 id: str,
-                 limit: int = None,
+    def __init__(
+        self,
+        *,
+        client: ResourceControllerV2,
+        id: str,
+        limit: int = None,
     ) -> None:
         """
         Initialize a ResourceAliasesForInstancePager object.
@@ -4183,7 +4001,7 @@ class ResourceAliasesForInstancePager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._id = id
         self._limit = limit
 
@@ -4231,16 +4049,18 @@ class ResourceAliasesForInstancePager():
             results.extend(next_page)
         return results
 
-class ResourceKeysForInstancePager():
+
+class ResourceKeysForInstancePager:
     """
     ResourceKeysForInstancePager can be used to simplify the use of the "list_resource_keys_for_instance" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: ResourceControllerV2,
-                 id: str,
-                 limit: int = None,
+    def __init__(
+        self,
+        *,
+        client: ResourceControllerV2,
+        id: str,
+        limit: int = None,
     ) -> None:
         """
         Initialize a ResourceKeysForInstancePager object.
@@ -4249,7 +4069,7 @@ class ResourceKeysForInstancePager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._id = id
         self._limit = limit
 
@@ -4297,21 +4117,23 @@ class ResourceKeysForInstancePager():
             results.extend(next_page)
         return results
 
-class ResourceKeysPager():
+
+class ResourceKeysPager:
     """
     ResourceKeysPager can be used to simplify the use of the "list_resource_keys" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: ResourceControllerV2,
-                 guid: str = None,
-                 name: str = None,
-                 resource_group_id: str = None,
-                 resource_id: str = None,
-                 limit: int = None,
-                 updated_from: str = None,
-                 updated_to: str = None,
+    def __init__(
+        self,
+        *,
+        client: ResourceControllerV2,
+        guid: str = None,
+        name: str = None,
+        resource_group_id: str = None,
+        resource_id: str = None,
+        limit: int = None,
+        updated_from: str = None,
+        updated_to: str = None,
     ) -> None:
         """
         Initialize a ResourceKeysPager object.
@@ -4326,7 +4148,7 @@ class ResourceKeysPager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._guid = guid
         self._name = name
         self._resource_group_id = resource_group_id
@@ -4384,22 +4206,24 @@ class ResourceKeysPager():
             results.extend(next_page)
         return results
 
-class ResourceBindingsPager():
+
+class ResourceBindingsPager:
     """
     ResourceBindingsPager can be used to simplify the use of the "list_resource_bindings" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: ResourceControllerV2,
-                 guid: str = None,
-                 name: str = None,
-                 resource_group_id: str = None,
-                 resource_id: str = None,
-                 region_binding_id: str = None,
-                 limit: int = None,
-                 updated_from: str = None,
-                 updated_to: str = None,
+    def __init__(
+        self,
+        *,
+        client: ResourceControllerV2,
+        guid: str = None,
+        name: str = None,
+        resource_group_id: str = None,
+        resource_id: str = None,
+        region_binding_id: str = None,
+        limit: int = None,
+        updated_from: str = None,
+        updated_to: str = None,
     ) -> None:
         """
         Initialize a ResourceBindingsPager object.
@@ -4417,7 +4241,7 @@ class ResourceBindingsPager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._guid = guid
         self._name = name
         self._resource_group_id = resource_group_id
@@ -4477,23 +4301,25 @@ class ResourceBindingsPager():
             results.extend(next_page)
         return results
 
-class ResourceAliasesPager():
+
+class ResourceAliasesPager:
     """
     ResourceAliasesPager can be used to simplify the use of the "list_resource_aliases" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: ResourceControllerV2,
-                 guid: str = None,
-                 name: str = None,
-                 resource_instance_id: str = None,
-                 region_instance_id: str = None,
-                 resource_id: str = None,
-                 resource_group_id: str = None,
-                 limit: int = None,
-                 updated_from: str = None,
-                 updated_to: str = None,
+    def __init__(
+        self,
+        *,
+        client: ResourceControllerV2,
+        guid: str = None,
+        name: str = None,
+        resource_instance_id: str = None,
+        region_instance_id: str = None,
+        resource_id: str = None,
+        resource_group_id: str = None,
+        limit: int = None,
+        updated_from: str = None,
+        updated_to: str = None,
     ) -> None:
         """
         Initialize a ResourceAliasesPager object.
@@ -4513,7 +4339,7 @@ class ResourceAliasesPager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._guid = guid
         self._name = name
         self._resource_instance_id = resource_instance_id
@@ -4575,16 +4401,18 @@ class ResourceAliasesPager():
             results.extend(next_page)
         return results
 
-class ResourceBindingsForAliasPager():
+
+class ResourceBindingsForAliasPager:
     """
     ResourceBindingsForAliasPager can be used to simplify the use of the "list_resource_bindings_for_alias" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: ResourceControllerV2,
-                 id: str,
-                 limit: int = None,
+    def __init__(
+        self,
+        *,
+        client: ResourceControllerV2,
+        id: str,
+        limit: int = None,
     ) -> None:
         """
         Initialize a ResourceBindingsForAliasPager object.
@@ -4593,7 +4421,7 @@ class ResourceBindingsForAliasPager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._id = id
         self._limit = limit
 

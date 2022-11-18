@@ -47,10 +47,11 @@ config = None
 # Start of Examples for Service: UsageMeteringV4
 ##############################################################################
 # region
-class TestUsageMeteringV4Examples():
+class TestUsageMeteringV4Examples:
     """
     Example Test Class for UsageMeteringV4
     """
+
     @classmethod
     def setup_class(cls):
         global usage_metering_service
@@ -67,8 +68,8 @@ class TestUsageMeteringV4Examples():
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
-        not os.path.exists(config_file),
-        reason="External configuration not available, skipping...")
+        not os.path.exists(config_file), reason="External configuration not available, skipping..."
+    )
 
     @needscredentials
     def test_report_resource_usage_example(self):
@@ -119,8 +120,8 @@ class TestUsageMeteringV4Examples():
             }
 
             response_accepted = usage_metering_service.report_resource_usage(
-                resource_id=resource_id,
-                resource_usage=[resource_instance_usage_model]).get_result()
+                resource_id=resource_id, resource_usage=[resource_instance_usage_model]
+            ).get_result()
 
             print(json.dumps(response_accepted, indent=2))
 

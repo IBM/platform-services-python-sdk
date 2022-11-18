@@ -28,10 +28,11 @@ config_file = 'global_search.env'
 transaction_id = str(uuid.uuid4())
 
 
-class TestGlobalSearchV2():
+class TestGlobalSearchV2:
     """
     Integration Test Class for GlobalSearchV2
     """
+
     @classmethod
     def setup_class(cls):
         if os.path.exists(config_file):
@@ -43,8 +44,8 @@ class TestGlobalSearchV2():
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
-        not os.path.exists(config_file),
-        reason="External configuration not available, skipping...")
+        not os.path.exists(config_file), reason="External configuration not available, skipping..."
+    )
 
     @needscredentials
     def test_search(self):
@@ -55,11 +56,8 @@ class TestGlobalSearchV2():
 
         while more_results:
             search_response = self.global_search_service.search(
-                query='GST-sdk-*',
-                fields=['*'],
-                search_cursor=search_cursor,
-                transaction_id=transaction_id,
-                limit=1)
+                query='GST-sdk-*', fields=['*'], search_cursor=search_cursor, transaction_id=transaction_id, limit=1
+            )
 
             assert search_response.get_status_code() == 200
             scan_result = search_response.get_result()
@@ -78,12 +76,10 @@ class TestGlobalSearchV2():
     @needscredentials
     def test_get_supported_types(self):
 
-        get_supported_types_response = self.global_search_service.get_supported_types(
-        )
+        get_supported_types_response = self.global_search_service.get_supported_types()
 
         assert get_supported_types_response.get_status_code() == 200
         supported_types_list = get_supported_types_response.get_result()
         assert supported_types_list is not None
 
-        print('get_supported_types() result: ',
-              json.dumps(supported_types_list, indent=2))
+        print('get_supported_types() result: ', json.dumps(supported_types_list, indent=2))

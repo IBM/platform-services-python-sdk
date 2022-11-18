@@ -39,6 +39,7 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
+
 class UsageMeteringV4(BaseService):
     """The usage_metering V4 service."""
 
@@ -46,23 +47,23 @@ class UsageMeteringV4(BaseService):
     DEFAULT_SERVICE_NAME = 'usage_metering'
 
     @classmethod
-    def new_instance(cls,
-                     service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'UsageMeteringV4':
+    def new_instance(
+        cls,
+        service_name: str = DEFAULT_SERVICE_NAME,
+    ) -> 'UsageMeteringV4':
         """
         Return a new client for the usage_metering service using the specified
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
-    def __init__(self,
-                 authenticator: Authenticator = None,
-                ) -> None:
+    def __init__(
+        self,
+        authenticator: Authenticator = None,
+    ) -> None:
         """
         Construct a new client for the usage_metering service.
 
@@ -70,20 +71,14 @@ class UsageMeteringV4(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self,
-                             service_url=self.DEFAULT_SERVICE_URL,
-                             authenticator=authenticator)
-
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
     # Resource Usage
     #########################
 
-
-    def report_resource_usage(self,
-        resource_id: str,
-        resource_usage: List['ResourceInstanceUsage'],
-        **kwargs
+    def report_resource_usage(
+        self, resource_id: str, resource_usage: List['ResourceInstanceUsage'], **kwargs
     ) -> DetailedResponse:
         """
         Report Resource Controller resource usage.
@@ -104,9 +99,9 @@ class UsageMeteringV4(BaseService):
             raise ValueError('resource_usage must be provided')
         resource_usage = [convert_model(x) for x in resource_usage]
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V4',
-                                      operation_id='report_resource_usage')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='report_resource_usage'
+        )
         headers.update(sdk_headers)
 
         data = json.dumps(resource_usage)
@@ -120,10 +115,7 @@ class UsageMeteringV4(BaseService):
         path_param_values = self.encode_path_vars(resource_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v4/metering/resources/{resource_id}/usage'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request)
         return response
@@ -134,7 +126,7 @@ class UsageMeteringV4(BaseService):
 ##############################################################################
 
 
-class MeasureAndQuantity():
+class MeasureAndQuantity:
     """
     A usage measurement.
 
@@ -145,9 +137,7 @@ class MeasureAndQuantity():
           "current": 2 }`.
     """
 
-    def __init__(self,
-                 measure: str,
-                 quantity: object) -> None:
+    def __init__(self, measure: str, quantity: object) -> None:
         """
         Initialize a MeasureAndQuantity object.
 
@@ -206,7 +196,8 @@ class MeasureAndQuantity():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceInstanceUsage():
+
+class ResourceInstanceUsage:
     """
     Usage information for a resource instance.
 
@@ -228,15 +219,17 @@ class ResourceInstanceUsage():
           instance-consumer combination.
     """
 
-    def __init__(self,
-                 resource_instance_id: str,
-                 plan_id: str,
-                 start: int,
-                 end: int,
-                 measured_usage: List['MeasureAndQuantity'],
-                 *,
-                 region: str = None,
-                 consumer_id: str = None) -> None:
+    def __init__(
+        self,
+        resource_instance_id: str,
+        plan_id: str,
+        start: int,
+        end: int,
+        measured_usage: List['MeasureAndQuantity'],
+        *,
+        region: str = None,
+        consumer_id: str = None
+    ) -> None:
         """
         Initialize a ResourceInstanceUsage object.
 
@@ -339,7 +332,8 @@ class ResourceInstanceUsage():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceUsageDetails():
+
+class ResourceUsageDetails:
     """
     Resource usage details.
 
@@ -349,12 +343,7 @@ class ResourceUsageDetails():
     :attr str message: (optional) A description of the error.
     """
 
-    def __init__(self,
-                 status: int,
-                 location: str,
-                 *,
-                 code: str = None,
-                 message: str = None) -> None:
+    def __init__(self, status: int, location: str, *, code: str = None, message: str = None) -> None:
         """
         Initialize a ResourceUsageDetails object.
 
@@ -422,7 +411,8 @@ class ResourceUsageDetails():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResponseAccepted():
+
+class ResponseAccepted:
     """
     Response when usage submitted is accepted.
 
@@ -430,8 +420,7 @@ class ResponseAccepted():
           status of each submitted usage record.
     """
 
-    def __init__(self,
-                 resources: List['ResourceUsageDetails']) -> None:
+    def __init__(self, resources: List['ResourceUsageDetails']) -> None:
         """
         Initialize a ResponseAccepted object.
 

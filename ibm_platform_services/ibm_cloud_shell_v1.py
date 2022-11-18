@@ -34,6 +34,7 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
+
 class IbmCloudShellV1(BaseService):
     """The IBM Cloud Shell V1 service."""
 
@@ -41,23 +42,23 @@ class IbmCloudShellV1(BaseService):
     DEFAULT_SERVICE_NAME = 'ibm_cloud_shell'
 
     @classmethod
-    def new_instance(cls,
-                     service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'IbmCloudShellV1':
+    def new_instance(
+        cls,
+        service_name: str = DEFAULT_SERVICE_NAME,
+    ) -> 'IbmCloudShellV1':
         """
         Return a new client for the IBM Cloud Shell service using the specified
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
-    def __init__(self,
-                 authenticator: Authenticator = None,
-                ) -> None:
+    def __init__(
+        self,
+        authenticator: Authenticator = None,
+    ) -> None:
         """
         Construct a new client for the IBM Cloud Shell service.
 
@@ -65,20 +66,13 @@ class IbmCloudShellV1(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self,
-                             service_url=self.DEFAULT_SERVICE_URL,
-                             authenticator=authenticator)
-
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
     # account_settings
     #########################
 
-
-    def get_account_settings(self,
-        account_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_account_settings(self, account_id: str, **kwargs) -> DetailedResponse:
         """
         Get account settings.
 
@@ -98,9 +92,9 @@ class IbmCloudShellV1(BaseService):
         if account_id is None:
             raise ValueError('account_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_account_settings')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_account_settings'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -111,15 +105,13 @@ class IbmCloudShellV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/api/v1/user/accounts/{account_id}/settings'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request)
         return response
 
-
-    def update_account_settings(self,
+    def update_account_settings(
+        self,
         account_id: str,
         *,
         rev: str = None,
@@ -167,9 +159,9 @@ class IbmCloudShellV1(BaseService):
         if regions is not None:
             regions = [convert_model(x) for x in regions]
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_account_settings')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_account_settings'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -178,7 +170,7 @@ class IbmCloudShellV1(BaseService):
             'default_enable_new_regions': default_enable_new_regions,
             'enabled': enabled,
             'features': features,
-            'regions': regions
+            'regions': regions,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -192,10 +184,7 @@ class IbmCloudShellV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/api/v1/user/accounts/{account_id}/settings'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request)
         return response
@@ -206,7 +195,7 @@ class IbmCloudShellV1(BaseService):
 ##############################################################################
 
 
-class AccountSettings():
+class AccountSettings:
     """
     Definition of Cloud Shell account settings.
 
@@ -233,21 +222,23 @@ class AccountSettings():
     :attr str updated_by: (optional) IAM ID of last updater.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 rev: str = None,
-                 account_id: str = None,
-                 created_at: int = None,
-                 created_by: str = None,
-                 default_enable_new_features: bool = None,
-                 default_enable_new_regions: bool = None,
-                 enabled: bool = None,
-                 features: List['Feature'] = None,
-                 regions: List['RegionSetting'] = None,
-                 type: str = None,
-                 updated_at: int = None,
-                 updated_by: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        rev: str = None,
+        account_id: str = None,
+        created_at: int = None,
+        created_by: str = None,
+        default_enable_new_features: bool = None,
+        default_enable_new_regions: bool = None,
+        enabled: bool = None,
+        features: List['Feature'] = None,
+        regions: List['RegionSetting'] = None,
+        type: str = None,
+        updated_at: int = None,
+        updated_by: str = None
+    ) -> None:
         """
         Initialize a AccountSettings object.
 
@@ -366,7 +357,8 @@ class AccountSettings():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Feature():
+
+class Feature:
     """
     Describes a Cloud Shell feature.
 
@@ -374,10 +366,7 @@ class Feature():
     :attr str key: (optional) Name of the feature.
     """
 
-    def __init__(self,
-                 *,
-                 enabled: bool = None,
-                 key: str = None) -> None:
+    def __init__(self, *, enabled: bool = None, key: str = None) -> None:
         """
         Initialize a Feature object.
 
@@ -429,7 +418,8 @@ class Feature():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class RegionSetting():
+
+class RegionSetting:
     """
     Describes a Cloud Shell region setting.
 
@@ -437,10 +427,7 @@ class RegionSetting():
     :attr str key: (optional) Name of the region.
     """
 
-    def __init__(self,
-                 *,
-                 enabled: bool = None,
-                 key: str = None) -> None:
+    def __init__(self, *, enabled: bool = None, key: str = None) -> None:
         """
         Initialize a RegionSetting object.
 
