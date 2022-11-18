@@ -36,6 +36,7 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
+
 class UserManagementV1(BaseService):
     """The User Management V1 service."""
 
@@ -43,23 +44,23 @@ class UserManagementV1(BaseService):
     DEFAULT_SERVICE_NAME = 'user_management'
 
     @classmethod
-    def new_instance(cls,
-                     service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'UserManagementV1':
+    def new_instance(
+        cls,
+        service_name: str = DEFAULT_SERVICE_NAME,
+    ) -> 'UserManagementV1':
         """
         Return a new client for the User Management service using the specified
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
-    def __init__(self,
-                 authenticator: Authenticator = None,
-                ) -> None:
+    def __init__(
+        self,
+        authenticator: Authenticator = None,
+    ) -> None:
         """
         Construct a new client for the User Management service.
 
@@ -67,23 +68,14 @@ class UserManagementV1(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self,
-                             service_url=self.DEFAULT_SERVICE_URL,
-                             authenticator=authenticator)
-
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
     # Users
     #########################
 
-
-    def list_users(self,
-        account_id: str,
-        *,
-        limit: int = None,
-        start: str = None,
-        user_id: str = None,
-        **kwargs
+    def list_users(
+        self, account_id: str, *, limit: int = None, start: str = None, user_id: str = None, **kwargs
     ) -> DetailedResponse:
         """
         List users.
@@ -114,16 +106,12 @@ class UserManagementV1(BaseService):
         if not account_id:
             raise ValueError('account_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_users')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_users'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'limit': limit,
-            '_start': start,
-            'user_id': user_id
-        }
+        params = {'limit': limit, '_start': start, 'user_id': user_id}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -134,22 +122,19 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/accounts/{account_id}/users'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def invite_users(self,
+    def invite_users(
+        self,
         account_id: str,
         *,
         users: List['InviteUser'] = None,
         iam_policy: List['InviteUserIamPolicy'] = None,
         access_groups: List[str] = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Invite users to an account.
@@ -185,16 +170,12 @@ class UserManagementV1(BaseService):
         if iam_policy is not None:
             iam_policy = [convert_model(x) for x in iam_policy]
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='invite_users')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='invite_users'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'users': users,
-            'iam_policy': iam_policy,
-            'access_groups': access_groups
-        }
+        data = {'users': users, 'iam_policy': iam_policy, 'access_groups': access_groups}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -208,21 +189,13 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/accounts/{account_id}/users'.format(**path_param_dict)
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_user_profile(self,
-        account_id: str,
-        iam_id: str,
-        *,
-        include_activity: str = None,
-        **kwargs
+    def get_user_profile(
+        self, account_id: str, iam_id: str, *, include_activity: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Get user profile.
@@ -246,14 +219,12 @@ class UserManagementV1(BaseService):
         if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_user_profile')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_user_profile'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'include_activity': include_activity
-        }
+        params = {'include_activity': include_activity}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -264,16 +235,13 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/accounts/{account_id}/users/{iam_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_user_profile(self,
+    def update_user_profile(
+        self,
         account_id: str,
         iam_id: str,
         *,
@@ -285,7 +253,7 @@ class UserManagementV1(BaseService):
         altphonenumber: str = None,
         photo: str = None,
         include_activity: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Partially update user profile.
@@ -323,14 +291,12 @@ class UserManagementV1(BaseService):
         if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_user_profile')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_user_profile'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'include_activity': include_activity
-        }
+        params = {'include_activity': include_activity}
 
         data = {
             'firstname': firstname,
@@ -339,7 +305,7 @@ class UserManagementV1(BaseService):
             'email': email,
             'phonenumber': phonenumber,
             'altphonenumber': altphonenumber,
-            'photo': photo
+            'photo': photo,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -353,23 +319,12 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/accounts/{account_id}/users/{iam_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       params=params,
-                                       data=data)
+        request = self.prepare_request(method='PATCH', url=url, headers=headers, params=params, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def remove_user(self,
-        account_id: str,
-        iam_id: str,
-        *,
-        include_activity: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def remove_user(self, account_id: str, iam_id: str, *, include_activity: str = None, **kwargs) -> DetailedResponse:
         """
         Remove user from account.
 
@@ -393,14 +348,12 @@ class UserManagementV1(BaseService):
         if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='remove_user')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='remove_user'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'include_activity': include_activity
-        }
+        params = {'include_activity': include_activity}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -410,20 +363,12 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/accounts/{account_id}/users/{iam_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def accept(self,
-        *,
-        account_id: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def accept(self, *, account_id: str = None, **kwargs) -> DetailedResponse:
         """
         Accept an invitation.
 
@@ -439,14 +384,12 @@ class UserManagementV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='accept')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='accept'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'account_id': account_id
-        }
+        data = {'account_id': account_id}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -456,20 +399,12 @@ class UserManagementV1(BaseService):
             del kwargs['headers']
 
         url = '/v2/users/accept'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def v3_remove_user(self,
-        account_id: str,
-        iam_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def v3_remove_user(self, account_id: str, iam_id: str, **kwargs) -> DetailedResponse:
         """
         Remove user from account (Asynchronous).
 
@@ -492,9 +427,9 @@ class UserManagementV1(BaseService):
         if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='v3_remove_user')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='v3_remove_user'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -505,9 +440,7 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v3/accounts/{account_id}/users/{iam_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -516,12 +449,7 @@ class UserManagementV1(BaseService):
     # User Settings
     #########################
 
-
-    def get_user_settings(self,
-        account_id: str,
-        iam_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_user_settings(self, account_id: str, iam_id: str, **kwargs) -> DetailedResponse:
         """
         Get user settings.
 
@@ -550,9 +478,9 @@ class UserManagementV1(BaseService):
         if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_user_settings')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_user_settings'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -564,15 +492,13 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/accounts/{account_id}/users/{iam_id}/settings'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_user_settings(self,
+    def update_user_settings(
+        self,
         account_id: str,
         iam_id: str,
         *,
@@ -580,7 +506,7 @@ class UserManagementV1(BaseService):
         notification_language: str = None,
         allowed_ip_addresses: str = None,
         self_manage: bool = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Partially update user settings.
@@ -612,16 +538,16 @@ class UserManagementV1(BaseService):
         if not iam_id:
             raise ValueError('iam_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_user_settings')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_user_settings'
+        )
         headers.update(sdk_headers)
 
         data = {
             'language': language,
             'notification_language': notification_language,
             'allowed_ip_addresses': allowed_ip_addresses,
-            'self_manage': self_manage
+            'self_manage': self_manage,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -635,10 +561,7 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/accounts/{account_id}/users/{iam_id}/settings'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
@@ -649,7 +572,7 @@ class UserManagementV1(BaseService):
 ##############################################################################
 
 
-class InvitedUser():
+class InvitedUser:
     """
     Information about a user that has been invited to join an account.
 
@@ -658,11 +581,7 @@ class InvitedUser():
     :attr str state: (optional) The state of the invitation for the user.
     """
 
-    def __init__(self,
-                 *,
-                 email: str = None,
-                 id: str = None,
-                 state: str = None) -> None:
+    def __init__(self, *, email: str = None, id: str = None, state: str = None) -> None:
         """
         Initialize a InvitedUser object.
 
@@ -721,7 +640,8 @@ class InvitedUser():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class InvitedUserList():
+
+class InvitedUserList:
     """
     A collection of invited users.  This is the response returned by the invite_users
     operation.
@@ -730,9 +650,7 @@ class InvitedUserList():
           invited to join the account.
     """
 
-    def __init__(self,
-                 *,
-                 resources: List['InvitedUser'] = None) -> None:
+    def __init__(self, *, resources: List['InvitedUser'] = None) -> None:
         """
         Initialize a InvitedUserList object.
 
@@ -785,7 +703,8 @@ class InvitedUserList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class UserList():
+
+class UserList:
     """
     The users returned.
 
@@ -796,13 +715,15 @@ class UserList():
     :attr List[UserProfile] resources: (optional) A list of users in the account.
     """
 
-    def __init__(self,
-                 total_results: int,
-                 limit: int,
-                 *,
-                 first_url: str = None,
-                 next_url: str = None,
-                 resources: List['UserProfile'] = None) -> None:
+    def __init__(
+        self,
+        total_results: int,
+        limit: int,
+        *,
+        first_url: str = None,
+        next_url: str = None,
+        resources: List['UserProfile'] = None,
+    ) -> None:
         """
         Initialize a UserList object.
 
@@ -883,7 +804,8 @@ class UserList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class UserProfile():
+
+class UserProfile:
     """
     Returned the user profile.
 
@@ -908,21 +830,23 @@ class UserProfile():
           account.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 iam_id: str = None,
-                 realm: str = None,
-                 user_id: str = None,
-                 firstname: str = None,
-                 lastname: str = None,
-                 state: str = None,
-                 email: str = None,
-                 phonenumber: str = None,
-                 altphonenumber: str = None,
-                 photo: str = None,
-                 account_id: str = None,
-                 added_on: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        iam_id: str = None,
+        realm: str = None,
+        user_id: str = None,
+        firstname: str = None,
+        lastname: str = None,
+        state: str = None,
+        email: str = None,
+        phonenumber: str = None,
+        altphonenumber: str = None,
+        photo: str = None,
+        account_id: str = None,
+        added_on: str = None,
+    ) -> None:
         """
         Initialize a UserProfile object.
 
@@ -1048,7 +972,8 @@ class UserProfile():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class UserSettings():
+
+class UserSettings:
     """
     The user settings returned.
 
@@ -1062,12 +987,14 @@ class UserSettings():
           default value is `false`.
     """
 
-    def __init__(self,
-                 *,
-                 language: str = None,
-                 notification_language: str = None,
-                 allowed_ip_addresses: str = None,
-                 self_manage: bool = None) -> None:
+    def __init__(
+        self,
+        *,
+        language: str = None,
+        notification_language: str = None,
+        allowed_ip_addresses: str = None,
+        self_manage: bool = None,
+    ) -> None:
         """
         Initialize a UserSettings object.
 
@@ -1135,7 +1062,8 @@ class UserSettings():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Attribute():
+
+class Attribute:
     """
     An attribute/value pair.
 
@@ -1143,10 +1071,7 @@ class Attribute():
     :attr str value: (optional) The value of the attribute.
     """
 
-    def __init__(self,
-                 *,
-                 name: str = None,
-                 value: str = None) -> None:
+    def __init__(self, *, name: str = None, value: str = None) -> None:
         """
         Initialize a Attribute object.
 
@@ -1198,7 +1123,8 @@ class Attribute():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class InviteUser():
+
+class InviteUser:
     """
     Invite a user.
 
@@ -1206,10 +1132,7 @@ class InviteUser():
     :attr str account_role: (optional) The account role of the user to be invited.
     """
 
-    def __init__(self,
-                 *,
-                 email: str = None,
-                 account_role: str = None) -> None:
+    def __init__(self, *, email: str = None, account_role: str = None) -> None:
         """
         Initialize a InviteUser object.
 
@@ -1262,7 +1185,8 @@ class InviteUser():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class InviteUserIamPolicy():
+
+class InviteUserIamPolicy:
     """
     Invite a user to an IAM policy.
 
@@ -1271,11 +1195,7 @@ class InviteUserIamPolicy():
     :attr List[Resource] resources: (optional) A list of resources.
     """
 
-    def __init__(self,
-                 type: str,
-                 *,
-                 roles: List['Role'] = None,
-                 resources: List['Resource'] = None) -> None:
+    def __init__(self, type: str, *, roles: List['Role'] = None, resources: List['Resource'] = None) -> None:
         """
         Initialize a InviteUserIamPolicy object.
 
@@ -1348,16 +1268,15 @@ class InviteUserIamPolicy():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Resource():
+
+class Resource:
     """
     A collection of attribute value pairs.
 
     :attr List[Attribute] attributes: (optional) A list of IAM attributes.
     """
 
-    def __init__(self,
-                 *,
-                 attributes: List['Attribute'] = None) -> None:
+    def __init__(self, *, attributes: List['Attribute'] = None) -> None:
         """
         Initialize a Resource object.
 
@@ -1409,16 +1328,15 @@ class Resource():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Role():
+
+class Role:
     """
     The role of an IAM policy.
 
     :attr str role_id: (optional) An alphanumeric value identifying the origin.
     """
 
-    def __init__(self,
-                 *,
-                 role_id: str = None) -> None:
+    def __init__(self, *, role_id: str = None) -> None:
         """
         Initialize a Role object.
 
@@ -1465,21 +1383,24 @@ class Role():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+
 ##############################################################################
 # Pagers
 ##############################################################################
 
-class UsersPager():
+
+class UsersPager:
     """
     UsersPager can be used to simplify the use of the "list_users" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: UserManagementV1,
-                 account_id: str,
-                 limit: int = None,
-                 user_id: str = None,
+    def __init__(
+        self,
+        *,
+        client: UserManagementV1,
+        account_id: str,
+        limit: int = None,
+        user_id: str = None,
     ) -> None:
         """
         Initialize a UsersPager object.
@@ -1489,7 +1410,7 @@ class UsersPager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._account_id = account_id
         self._limit = limit
         self._user_id = user_id

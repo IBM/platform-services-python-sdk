@@ -36,6 +36,7 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
+
 class EnterpriseUsageReportsV1(BaseService):
     """The Enterprise Usage Reports V1 service."""
 
@@ -43,23 +44,23 @@ class EnterpriseUsageReportsV1(BaseService):
     DEFAULT_SERVICE_NAME = 'enterprise_usage_reports'
 
     @classmethod
-    def new_instance(cls,
-                     service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'EnterpriseUsageReportsV1':
+    def new_instance(
+        cls,
+        service_name: str = DEFAULT_SERVICE_NAME,
+    ) -> 'EnterpriseUsageReportsV1':
         """
         Return a new client for the Enterprise Usage Reports service using the
                specified parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
-    def __init__(self,
-                 authenticator: Authenticator = None,
-                ) -> None:
+    def __init__(
+        self,
+        authenticator: Authenticator = None,
+    ) -> None:
         """
         Construct a new client for the Enterprise Usage Reports service.
 
@@ -67,17 +68,14 @@ class EnterpriseUsageReportsV1(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self,
-                             service_url=self.DEFAULT_SERVICE_URL,
-                             authenticator=authenticator)
-
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
     # Enterprise Usage Reports
     #########################
 
-
-    def get_resource_usage_report(self,
+    def get_resource_usage_report(
+        self,
         *,
         enterprise_id: str = None,
         account_group_id: str = None,
@@ -87,7 +85,7 @@ class EnterpriseUsageReportsV1(BaseService):
         billing_unit_id: str = None,
         limit: int = None,
         offset: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get usage reports for enterprise entities.
@@ -125,9 +123,9 @@ class EnterpriseUsageReportsV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_resource_usage_report')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_resource_usage_report'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -138,7 +136,7 @@ class EnterpriseUsageReportsV1(BaseService):
             'month': month,
             'billing_unit_id': billing_unit_id,
             'limit': limit,
-            'offset': offset
+            'offset': offset,
         }
 
         if 'headers' in kwargs:
@@ -147,10 +145,7 @@ class EnterpriseUsageReportsV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/resource-usage-reports'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
@@ -161,16 +156,14 @@ class EnterpriseUsageReportsV1(BaseService):
 ##############################################################################
 
 
-class Link():
+class Link:
     """
     An object that contains a link to a page of search results.
 
     :attr str href: (optional) A link to a page of search results.
     """
 
-    def __init__(self,
-                 *,
-                 href: str = None) -> None:
+    def __init__(self, *, href: str = None) -> None:
         """
         Initialize a Link object.
 
@@ -216,7 +209,8 @@ class Link():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class MetricUsage():
+
+class MetricUsage:
     """
     An object that represents a metric.
 
@@ -230,15 +224,17 @@ class MetricUsage():
     :attr List[dict] price: (optional) The price with which cost was calculated.
     """
 
-    def __init__(self,
-                 metric: str,
-                 unit: str,
-                 quantity: float,
-                 rateable_quantity: float,
-                 cost: float,
-                 rated_cost: float,
-                 *,
-                 price: List[dict] = None) -> None:
+    def __init__(
+        self,
+        metric: str,
+        unit: str,
+        quantity: float,
+        rateable_quantity: float,
+        cost: float,
+        rated_cost: float,
+        *,
+        price: List[dict] = None,
+    ) -> None:
         """
         Initialize a MetricUsage object.
 
@@ -335,7 +331,8 @@ class MetricUsage():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class PlanUsage():
+
+class PlanUsage:
     """
     Aggregated values for the plan.
 
@@ -350,15 +347,17 @@ class PlanUsage():
     :attr List[MetricUsage] usage: All of the metrics in the plan.
     """
 
-    def __init__(self,
-                 plan_id: str,
-                 billable: bool,
-                 cost: float,
-                 rated_cost: float,
-                 usage: List['MetricUsage'],
-                 *,
-                 pricing_region: str = None,
-                 pricing_plan_id: str = None) -> None:
+    def __init__(
+        self,
+        plan_id: str,
+        billable: bool,
+        cost: float,
+        rated_cost: float,
+        usage: List['MetricUsage'],
+        *,
+        pricing_region: str = None,
+        pricing_plan_id: str = None,
+    ) -> None:
         """
         Initialize a PlanUsage object.
 
@@ -452,7 +451,8 @@ class PlanUsage():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Reports():
+
+class Reports:
     """
     Resource Usage Reports API response.
 
@@ -464,12 +464,14 @@ class Reports():
     :attr List[ResourceUsageReport] reports: (optional) The list of usage reports.
     """
 
-    def __init__(self,
-                 *,
-                 limit: int = None,
-                 first: 'Link' = None,
-                 next: 'Link' = None,
-                 reports: List['ResourceUsageReport'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        limit: int = None,
+        first: 'Link' = None,
+        next: 'Link' = None,
+        reports: List['ResourceUsageReport'] = None,
+    ) -> None:
         """
         Initialize a Reports object.
 
@@ -536,7 +538,8 @@ class Reports():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceUsage():
+
+class ResourceUsage:
     """
     A container for all the plans in the resource.
 
@@ -550,13 +553,15 @@ class ResourceUsage():
     :attr List[PlanUsage] plans: All of the plans in the resource.
     """
 
-    def __init__(self,
-                 resource_id: str,
-                 billable_cost: float,
-                 billable_rated_cost: float,
-                 non_billable_cost: float,
-                 non_billable_rated_cost: float,
-                 plans: List['PlanUsage']) -> None:
+    def __init__(
+        self,
+        resource_id: str,
+        billable_cost: float,
+        billable_rated_cost: float,
+        non_billable_cost: float,
+        non_billable_rated_cost: float,
+        plans: List['PlanUsage'],
+    ) -> None:
         """
         Initialize a ResourceUsage object.
 
@@ -646,7 +651,8 @@ class ResourceUsage():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceUsageReport():
+
+class ResourceUsageReport:
     """
     An object that represents a usage report.
 
@@ -673,22 +679,24 @@ class ResourceUsageReport():
           included in the aggregated charges.
     """
 
-    def __init__(self,
-                 entity_id: str,
-                 entity_type: str,
-                 entity_crn: str,
-                 entity_name: str,
-                 billing_unit_id: str,
-                 billing_unit_crn: str,
-                 billing_unit_name: str,
-                 country_code: str,
-                 currency_code: str,
-                 month: str,
-                 billable_cost: float,
-                 non_billable_cost: float,
-                 billable_rated_cost: float,
-                 non_billable_rated_cost: float,
-                 resources: List['ResourceUsage']) -> None:
+    def __init__(
+        self,
+        entity_id: str,
+        entity_type: str,
+        entity_crn: str,
+        entity_name: str,
+        billing_unit_id: str,
+        billing_unit_crn: str,
+        billing_unit_name: str,
+        country_code: str,
+        currency_code: str,
+        month: str,
+        billable_cost: float,
+        non_billable_cost: float,
+        billable_rated_cost: float,
+        non_billable_rated_cost: float,
+        resources: List['ResourceUsage'],
+    ) -> None:
         """
         Initialize a ResourceUsageReport object.
 
@@ -859,6 +867,7 @@ class ResourceUsageReport():
         """
         The entity type.
         """
+
         ENTERPRISE = 'enterprise'
         ACCOUNT_GROUP = 'account-group'
         ACCOUNT = 'account'
@@ -868,21 +877,23 @@ class ResourceUsageReport():
 # Pagers
 ##############################################################################
 
-class GetResourceUsageReportPager():
+
+class GetResourceUsageReportPager:
     """
     GetResourceUsageReportPager can be used to simplify the use of the "get_resource_usage_report" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: EnterpriseUsageReportsV1,
-                 enterprise_id: str = None,
-                 account_group_id: str = None,
-                 account_id: str = None,
-                 children: bool = None,
-                 month: str = None,
-                 billing_unit_id: str = None,
-                 limit: int = None,
+    def __init__(
+        self,
+        *,
+        client: EnterpriseUsageReportsV1,
+        enterprise_id: str = None,
+        account_group_id: str = None,
+        account_id: str = None,
+        children: bool = None,
+        month: str = None,
+        billing_unit_id: str = None,
+        limit: int = None,
     ) -> None:
         """
         Initialize a GetResourceUsageReportPager object.
@@ -908,7 +919,7 @@ class GetResourceUsageReportPager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._enterprise_id = enterprise_id
         self._account_group_id = account_group_id
         self._account_id = account_id

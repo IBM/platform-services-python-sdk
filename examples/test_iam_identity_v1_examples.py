@@ -72,7 +72,7 @@ account_settings_etag = None
 # Start of Examples for Service: IamIdentityV1
 ##############################################################################
 # region
-class TestIamIdentityV1Examples():
+class TestIamIdentityV1Examples:
     """
     Example Test Class for IamIdentityV1
     """
@@ -120,10 +120,7 @@ class TestIamIdentityV1Examples():
             print('\ncreate_api_key() result:')
             # begin-create_api_key
 
-            api_key = iam_identity_service.create_api_key(
-                name=apikey_name,
-                iam_id=iam_id
-            ).get_result()
+            api_key = iam_identity_service.create_api_key(name=apikey_name, iam_id=iam_id).get_result()
 
             apikey_id = api_key['id']
 
@@ -146,9 +143,7 @@ class TestIamIdentityV1Examples():
             # begin-list_api_keys
 
             api_key_list = iam_identity_service.list_api_keys(
-                account_id=account_id,
-                iam_id=iam_id,
-                include_history=True
+                account_id=account_id, iam_id=iam_id, include_history=True
             ).get_result()
 
             print(json.dumps(api_key_list, indent=2))
@@ -169,9 +164,7 @@ class TestIamIdentityV1Examples():
             print('\nget_api_keys_details() result:')
             # begin-get_api_keys_details
 
-            api_key = iam_identity_service.get_api_keys_details(
-                iam_api_key=apikey
-            ).get_result()
+            api_key = iam_identity_service.get_api_keys_details(iam_api_key=apikey).get_result()
 
             print(json.dumps(api_key, indent=2))
 
@@ -218,9 +211,7 @@ class TestIamIdentityV1Examples():
             # begin-update_api_key
 
             api_key = iam_identity_service.update_api_key(
-                id=apikey_id,
-                if_match=apikey_etag,
-                description='This is an updated description'
+                id=apikey_id, if_match=apikey_etag, description='This is an updated description'
             ).get_result()
 
             print(json.dumps(api_key, indent=2))
@@ -263,7 +254,6 @@ class TestIamIdentityV1Examples():
             # end-unlock_api_key
             print('\nunlock_api_key() response status code: ', response.get_status_code())
 
-
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -297,9 +287,7 @@ class TestIamIdentityV1Examples():
             # begin-create_service_id
 
             service_id = iam_identity_service.create_service_id(
-                account_id=account_id,
-                name=serviceid_name,
-                description='Example ServiceId'
+                account_id=account_id, name=serviceid_name, description='Example ServiceId'
             ).get_result()
 
             svc_id = service_id['id']
@@ -352,8 +340,7 @@ class TestIamIdentityV1Examples():
             # begin-list_service_ids
 
             service_id_list = iam_identity_service.list_service_ids(
-                account_id=account_id,
-                name=serviceid_name
+                account_id=account_id, name=serviceid_name
             ).get_result()
 
             print(json.dumps(service_id_list, indent=2))
@@ -375,9 +362,7 @@ class TestIamIdentityV1Examples():
             # begin-update_service_id
 
             service_id = iam_identity_service.update_service_id(
-                id=svc_id,
-                if_match=svc_id_etag,
-                description='This is an updated description'
+                id=svc_id, if_match=svc_id_etag, description='This is an updated description'
             ).get_result()
 
             print(json.dumps(service_id, indent=2))
@@ -452,9 +437,7 @@ class TestIamIdentityV1Examples():
             # begin-create_profile
 
             profile = iam_identity_service.create_profile(
-                name="example profile",
-                description="example profile",
-                account_id=account_id
+                name="example profile", description="example profile", account_id=account_id
             ).get_result()
 
             profile_id = profile['id']
@@ -503,10 +486,7 @@ class TestIamIdentityV1Examples():
             print('\nlist_profiles() result:')
             # begin-list_profiles
 
-            profile_list = iam_identity_service.list_profiles(
-                account_id=account_id,
-                include_history=True
-            ).get_result()
+            profile_list = iam_identity_service.list_profiles(account_id=account_id, include_history=True).get_result()
 
             print(json.dumps(profile_list, indent=2))
 
@@ -527,9 +507,7 @@ class TestIamIdentityV1Examples():
             # begin-update_profile
 
             profile = iam_identity_service.update_profile(
-                profile_id=profile_id,
-                if_match=profile_etag,
-                description='This is an updated description'
+                profile_id=profile_id, if_match=profile_etag, description='This is an updated description'
             ).get_result()
 
             print(json.dumps(profile, indent=2))
@@ -555,12 +533,12 @@ class TestIamIdentityV1Examples():
             profile_claim_rule_conditions_model['value'] = '\"cloud-docs-dev\"'
 
             claimRule = iam_identity_service.create_claim_rule(
-                profile_id = profile_id,
-                type = 'Profile-SAML',
-                realm_name = 'https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20',
-                expiration = 43200,
-                conditions = [profile_claim_rule_conditions_model]
-           ).get_result()
+                profile_id=profile_id,
+                type='Profile-SAML',
+                realm_name='https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20',
+                expiration=43200,
+                conditions=[profile_claim_rule_conditions_model],
+            ).get_result()
 
             claimRule_id = claimRule['id']
 
@@ -582,10 +560,7 @@ class TestIamIdentityV1Examples():
             print('\nget_claim_rule() result:')
             # begin-get_claim_rule
 
-            response = iam_identity_service.get_claim_rule(
-                profile_id= profile_id,
-                rule_id= claimRule_id
-            )
+            response = iam_identity_service.get_claim_rule(profile_id=profile_id, rule_id=claimRule_id)
 
             claimRule_etag = response.get_headers()['Etag']
             claimRule = response.get_result()
@@ -636,13 +611,13 @@ class TestIamIdentityV1Examples():
             profile_claim_rule_conditions_model['value'] = '\"Europe_Group\"'
 
             claimRule = iam_identity_service.update_claim_rule(
-                profile_id = profile_id,
-                rule_id = claimRule_id,
-                if_match = claimRule_etag,
-                expiration = 33200,
-                conditions = [profile_claim_rule_conditions_model],
-                type = 'Profile-SAML',
-                realm_name = 'https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20',
+                profile_id=profile_id,
+                rule_id=claimRule_id,
+                if_match=claimRule_etag,
+                expiration=33200,
+                conditions=[profile_claim_rule_conditions_model],
+                type='Profile-SAML',
+                realm_name='https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20',
             ).get_result()
 
             print(json.dumps(claimRule, indent=2))
@@ -681,15 +656,14 @@ class TestIamIdentityV1Examples():
             # begin-create_link
 
             CreateProfileLinkRequestLink = {}
-            CreateProfileLinkRequestLink['crn'] = 'crn:v1:staging:public:iam-identity::a/18e3020749ce4744b0b472466d61fdb4::computeresource:Fake-Compute-Resource'
+            CreateProfileLinkRequestLink[
+                'crn'
+            ] = 'crn:v1:staging:public:iam-identity::a/18e3020749ce4744b0b472466d61fdb4::computeresource:Fake-Compute-Resource'
             CreateProfileLinkRequestLink['namespace'] = 'default'
             CreateProfileLinkRequestLink['name'] = 'nice name'
 
             link = iam_identity_service.create_link(
-                profile_id = profile_id,
-                name = 'nice link',
-                cr_type = 'ROKS_SA',
-                link = CreateProfileLinkRequestLink
+                profile_id=profile_id, name='nice link', cr_type='ROKS_SA', link=CreateProfileLinkRequestLink
             ).get_result()
 
             link_id = link['id']
@@ -712,10 +686,7 @@ class TestIamIdentityV1Examples():
             print('\nget_link() result:')
             # begin-get_link
 
-            response = iam_identity_service.get_link(
-                profile_id= profile_id,
-                link_id= link_id
-            )
+            response = iam_identity_service.get_link(profile_id=profile_id, link_id=link_id)
 
             link = response.get_result()
 
@@ -795,9 +766,7 @@ class TestIamIdentityV1Examples():
             print('\nget_account_settings() result:')
             # begin-getAccountSettings
 
-            response = iam_identity_service.get_account_settings(
-                account_id=account_id
-            )
+            response = iam_identity_service.get_account_settings(account_id=account_id)
             settings = response.get_result()
             account_settings_etag = response.get_headers()['Etag']
 
@@ -835,6 +804,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
+
     @needscredentials
     def test_create_report(self):
         """
@@ -856,6 +826,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
+
     @needscredentials
     def test_get_report(self):
         """
@@ -876,6 +847,7 @@ class TestIamIdentityV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
+
 
 # endregion
 ##############################################################################

@@ -48,10 +48,11 @@ catalog_entry_id = None
 # Start of Examples for Service: GlobalCatalogV1
 ##############################################################################
 # region
-class TestGlobalCatalogV1Examples():
+class TestGlobalCatalogV1Examples:
     """
     Example Test Class for GlobalCatalogV1
     """
+
     @classmethod
     def setup_class(cls):
         global global_catalog_service
@@ -68,8 +69,8 @@ class TestGlobalCatalogV1Examples():
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
-        not os.path.exists(config_file),
-        reason="External configuration not available, skipping...")
+        not os.path.exists(config_file), reason="External configuration not available, skipping..."
+    )
 
     @needscredentials
     def test_create_catalog_entry_example(self):
@@ -108,9 +109,7 @@ class TestGlobalCatalogV1Examples():
             catalog_entry = global_catalog_service.create_catalog_entry(
                 name='exampleWebStarter123',
                 kind=CatalogEntry.KindEnum.TEMPLATE,
-                overview_ui={
-                    'en': overview_model_EN
-                },
+                overview_ui={'en': overview_model_EN},
                 images=image_model,
                 disabled=False,
                 tags=['example-tag-1', 'example-tag-2'],
@@ -274,8 +273,7 @@ class TestGlobalCatalogV1Examples():
 
             # end-restore_catalog_entry
 
-            print('\nrestore_catalog_entry() response status code: ',
-                  response.get_status_code())
+            print('\nrestore_catalog_entry() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -321,12 +319,10 @@ class TestGlobalCatalogV1Examples():
 
             # end-update_visibility
 
-            print('\nupdate_visibility() response status code: ',
-                  response.get_status_code())
+            print('\nupdate_visibility() response status code: ', response.get_status_code())
 
         except ApiException as e:
-            print(
-                'update_visibility() returned the following error: {0}'.format(str(e.message)))
+            print('update_visibility() returned the following error: {0}'.format(str(e.message)))
 
     @needscredentials
     def test_get_pricing_example(self):
@@ -387,8 +383,7 @@ class TestGlobalCatalogV1Examples():
         try:
             # begin-upload_artifact
 
-            artifact_contents = io.BytesIO(
-                b'This is an example artifact associated with a catalog entry.')
+            artifact_contents = io.BytesIO(b'This is an example artifact associated with a catalog entry.')
 
             response = global_catalog_service.upload_artifact(
                 object_id=catalog_entry_id,
@@ -399,8 +394,7 @@ class TestGlobalCatalogV1Examples():
 
             # end-upload_artifact
 
-            print('\nupload_artifact() response status code: ',
-                  response.get_status_code())
+            print('\nupload_artifact() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -443,8 +437,7 @@ class TestGlobalCatalogV1Examples():
             print('\nlist_artifacts() result:')
             # begin-list_artifacts
 
-            artifacts = global_catalog_service.list_artifacts(
-                object_id=catalog_entry_id).get_result()
+            artifacts = global_catalog_service.list_artifacts(object_id=catalog_entry_id).get_result()
 
             print(json.dumps(artifacts, indent=2))
 
@@ -471,8 +464,7 @@ class TestGlobalCatalogV1Examples():
 
             # end-delete_artifact
 
-            print('\ndelete_artifact() response status code: ',
-                  response.get_status_code())
+            print('\ndelete_artifact() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -488,13 +480,11 @@ class TestGlobalCatalogV1Examples():
         try:
             # begin-delete_catalog_entry
 
-            response = global_catalog_service.delete_catalog_entry(
-                id=catalog_entry_id).get_result()
+            response = global_catalog_service.delete_catalog_entry(id=catalog_entry_id).get_result()
 
             # end-delete_catalog_entry
 
-            print('\ndelete_catalog_entry() response status code: ',
-                  response.get_status_code())
+            print('\ndelete_catalog_entry() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))

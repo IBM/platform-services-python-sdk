@@ -42,6 +42,7 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
+
 class ContextBasedRestrictionsV1(BaseService):
     """The Context Based Restrictions V1 service."""
 
@@ -49,23 +50,23 @@ class ContextBasedRestrictionsV1(BaseService):
     DEFAULT_SERVICE_NAME = 'context_based_restrictions'
 
     @classmethod
-    def new_instance(cls,
-                     service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'ContextBasedRestrictionsV1':
+    def new_instance(
+        cls,
+        service_name: str = DEFAULT_SERVICE_NAME,
+    ) -> 'ContextBasedRestrictionsV1':
         """
         Return a new client for the Context Based Restrictions service using the
                specified parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
-    def __init__(self,
-                 authenticator: Authenticator = None,
-                ) -> None:
+    def __init__(
+        self,
+        authenticator: Authenticator = None,
+    ) -> None:
         """
         Construct a new client for the Context Based Restrictions service.
 
@@ -73,17 +74,14 @@ class ContextBasedRestrictionsV1(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self,
-                             service_url=self.DEFAULT_SERVICE_URL,
-                             authenticator=authenticator)
-
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
     # Zones
     #########################
 
-
-    def create_zone(self,
+    def create_zone(
+        self,
         *,
         name: str = None,
         account_id: str = None,
@@ -127,13 +125,10 @@ class ContextBasedRestrictionsV1(BaseService):
             addresses = [convert_model(x) for x in addresses]
         if excluded is not None:
             excluded = [convert_model(x) for x in excluded]
-        headers = {
-            'X-Correlation-Id': x_correlation_id,
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='create_zone')
+        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_zone'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -141,7 +136,7 @@ class ContextBasedRestrictionsV1(BaseService):
             'account_id': account_id,
             'addresses': addresses,
             'description': description,
-            'excluded': excluded
+            'excluded': excluded,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -153,16 +148,13 @@ class ContextBasedRestrictionsV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/zones'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def list_zones(self,
+    def list_zones(
+        self,
         account_id: str,
         *,
         x_correlation_id: str = None,
@@ -199,20 +191,13 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if account_id is None:
             raise ValueError('account_id must be provided')
-        headers = {
-            'X-Correlation-Id': x_correlation_id,
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_zones')
+        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_zones'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'account_id': account_id,
-            'name': name,
-            'sort': sort
-        }
+        params = {'account_id': account_id, 'name': name, 'sort': sort}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -220,21 +205,13 @@ class ContextBasedRestrictionsV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/zones'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_zone(self,
-        zone_id: str,
-        *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        **kwargs
+    def get_zone(
+        self, zone_id: str, *, x_correlation_id: str = None, transaction_id: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Get a network zone.
@@ -260,13 +237,10 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if zone_id is None:
             raise ValueError('zone_id must be provided')
-        headers = {
-            'X-Correlation-Id': x_correlation_id,
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_zone')
+        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_zone'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -278,15 +252,13 @@ class ContextBasedRestrictionsV1(BaseService):
         path_param_values = self.encode_path_vars(zone_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/zones/{zone_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def replace_zone(self,
+    def replace_zone(
+        self,
         zone_id: str,
         if_match: str,
         *,
@@ -341,14 +313,10 @@ class ContextBasedRestrictionsV1(BaseService):
             addresses = [convert_model(x) for x in addresses]
         if excluded is not None:
             excluded = [convert_model(x) for x in excluded]
-        headers = {
-            'If-Match': if_match,
-            'X-Correlation-Id': x_correlation_id,
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='replace_zone')
+        headers = {'If-Match': if_match, 'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='replace_zone'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -356,7 +324,7 @@ class ContextBasedRestrictionsV1(BaseService):
             'account_id': account_id,
             'addresses': addresses,
             'description': description,
-            'excluded': excluded
+            'excluded': excluded,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -371,21 +339,13 @@ class ContextBasedRestrictionsV1(BaseService):
         path_param_values = self.encode_path_vars(zone_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/zones/{zone_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_zone(self,
-        zone_id: str,
-        *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        **kwargs
+    def delete_zone(
+        self, zone_id: str, *, x_correlation_id: str = None, transaction_id: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Delete a network zone.
@@ -411,13 +371,10 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if zone_id is None:
             raise ValueError('zone_id must be provided')
-        headers = {
-            'X-Correlation-Id': x_correlation_id,
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_zone')
+        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_zone'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -428,20 +385,13 @@ class ContextBasedRestrictionsV1(BaseService):
         path_param_values = self.encode_path_vars(zone_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/zones/{zone_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def list_available_serviceref_targets(self,
-        *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        type: str = None,
-        **kwargs
+    def list_available_serviceref_targets(
+        self, *, x_correlation_id: str = None, transaction_id: str = None, type: str = None, **kwargs
     ) -> DetailedResponse:
         """
         List available service reference targets.
@@ -465,18 +415,15 @@ class ContextBasedRestrictionsV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `ServiceRefTargetList` object
         """
 
-        headers = {
-            'X-Correlation-Id': x_correlation_id,
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_available_serviceref_targets')
+        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_available_serviceref_targets',
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'type': type
-        }
+        params = {'type': type}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -484,10 +431,7 @@ class ContextBasedRestrictionsV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/zones/serviceref_targets'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
@@ -496,8 +440,8 @@ class ContextBasedRestrictionsV1(BaseService):
     # Rules
     #########################
 
-
-    def create_rule(self,
+    def create_rule(
+        self,
         *,
         contexts: List['RuleContext'] = None,
         resources: List['Resource'] = None,
@@ -549,13 +493,10 @@ class ContextBasedRestrictionsV1(BaseService):
             resources = [convert_model(x) for x in resources]
         if operations is not None:
             operations = convert_model(operations)
-        headers = {
-            'X-Correlation-Id': x_correlation_id,
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='create_rule')
+        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_rule'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -563,7 +504,7 @@ class ContextBasedRestrictionsV1(BaseService):
             'resources': resources,
             'description': description,
             'operations': operations,
-            'enforcement_mode': enforcement_mode
+            'enforcement_mode': enforcement_mode,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -575,16 +516,13 @@ class ContextBasedRestrictionsV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/rules'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def list_rules(self,
+    def list_rules(
+        self,
         account_id: str,
         *,
         x_correlation_id: str = None,
@@ -641,13 +579,10 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if account_id is None:
             raise ValueError('account_id must be provided')
-        headers = {
-            'X-Correlation-Id': x_correlation_id,
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_rules')
+        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_rules'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -661,7 +596,7 @@ class ContextBasedRestrictionsV1(BaseService):
             'service_group_id': service_group_id,
             'zone_id': zone_id,
             'sort': sort,
-            'enforcement_mode': enforcement_mode
+            'enforcement_mode': enforcement_mode,
         }
 
         if 'headers' in kwargs:
@@ -670,21 +605,13 @@ class ContextBasedRestrictionsV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/rules'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_rule(self,
-        rule_id: str,
-        *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        **kwargs
+    def get_rule(
+        self, rule_id: str, *, x_correlation_id: str = None, transaction_id: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Get a rule.
@@ -710,13 +637,10 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if rule_id is None:
             raise ValueError('rule_id must be provided')
-        headers = {
-            'X-Correlation-Id': x_correlation_id,
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_rule')
+        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_rule'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -728,15 +652,13 @@ class ContextBasedRestrictionsV1(BaseService):
         path_param_values = self.encode_path_vars(rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/rules/{rule_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def replace_rule(self,
+    def replace_rule(
+        self,
         rule_id: str,
         if_match: str,
         *,
@@ -798,14 +720,10 @@ class ContextBasedRestrictionsV1(BaseService):
             resources = [convert_model(x) for x in resources]
         if operations is not None:
             operations = convert_model(operations)
-        headers = {
-            'If-Match': if_match,
-            'X-Correlation-Id': x_correlation_id,
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='replace_rule')
+        headers = {'If-Match': if_match, 'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='replace_rule'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -813,7 +731,7 @@ class ContextBasedRestrictionsV1(BaseService):
             'resources': resources,
             'description': description,
             'operations': operations,
-            'enforcement_mode': enforcement_mode
+            'enforcement_mode': enforcement_mode,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -828,21 +746,13 @@ class ContextBasedRestrictionsV1(BaseService):
         path_param_values = self.encode_path_vars(rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/rules/{rule_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_rule(self,
-        rule_id: str,
-        *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        **kwargs
+    def delete_rule(
+        self, rule_id: str, *, x_correlation_id: str = None, transaction_id: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Delete a rule.
@@ -868,13 +778,10 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if rule_id is None:
             raise ValueError('rule_id must be provided')
-        headers = {
-            'X-Correlation-Id': x_correlation_id,
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_rule')
+        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_rule'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -885,9 +792,7 @@ class ContextBasedRestrictionsV1(BaseService):
         path_param_values = self.encode_path_vars(rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/rules/{rule_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -896,13 +801,8 @@ class ContextBasedRestrictionsV1(BaseService):
     # Account settings
     #########################
 
-
-    def get_account_settings(self,
-        account_id: str,
-        *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        **kwargs
+    def get_account_settings(
+        self, account_id: str, *, x_correlation_id: str = None, transaction_id: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Get account settings.
@@ -928,13 +828,10 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if account_id is None:
             raise ValueError('account_id must be provided')
-        headers = {
-            'X-Correlation-Id': x_correlation_id,
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_account_settings')
+        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_account_settings'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -946,9 +843,7 @@ class ContextBasedRestrictionsV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/account_settings/{account_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -957,13 +852,8 @@ class ContextBasedRestrictionsV1(BaseService):
     # operations
     #########################
 
-
-    def list_available_service_operations(self,
-        service_name: str,
-        *,
-        x_correlation_id: str = None,
-        transaction_id: str = None,
-        **kwargs
+    def list_available_service_operations(
+        self, service_name: str, *, x_correlation_id: str = None, transaction_id: str = None, **kwargs
     ) -> DetailedResponse:
         """
         List available service operations.
@@ -989,18 +879,15 @@ class ContextBasedRestrictionsV1(BaseService):
 
         if service_name is None:
             raise ValueError('service_name must be provided')
-        headers = {
-            'X-Correlation-Id': x_correlation_id,
-            'Transaction-Id': transaction_id
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_available_service_operations')
+        headers = {'X-Correlation-Id': x_correlation_id, 'Transaction-Id': transaction_id}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_available_service_operations',
+        )
         headers.update(sdk_headers)
 
-        params = {
-            'service_name': service_name
-        }
+        params = {'service_name': service_name}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1008,10 +895,7 @@ class ContextBasedRestrictionsV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/operations'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
@@ -1026,6 +910,7 @@ class ListAvailableServicerefTargetsEnums:
         """
         Specifies the types of services to retrieve.
         """
+
         ALL = 'all'
         PLATFORM_SERVICE = 'platform_service'
 
@@ -1039,6 +924,7 @@ class ListRulesEnums:
         """
         The rule's `enforcement_mode` attribute.
         """
+
         ENABLED = 'enabled'
         DISABLED = 'disabled'
         REPORT = 'report'
@@ -1049,7 +935,7 @@ class ListRulesEnums:
 ##############################################################################
 
 
-class APIType():
+class APIType:
     """
     Service API Type details.
 
@@ -1059,11 +945,7 @@ class APIType():
     :attr List[Action] actions: The actions available for the API type.
     """
 
-    def __init__(self,
-                 api_type_id: str,
-                 display_name: str,
-                 description: str,
-                 actions: List['Action']) -> None:
+    def __init__(self, api_type_id: str, display_name: str, description: str, actions: List['Action']) -> None:
         """
         Initialize a APIType object.
 
@@ -1135,7 +1017,8 @@ class APIType():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class AccountSettings():
+
+class AccountSettings:
     """
     An output account settings.
 
@@ -1154,18 +1037,20 @@ class AccountSettings():
           resource.
     """
 
-    def __init__(self,
-                 id: str,
-                 crn: str,
-                 rule_count_limit: int,
-                 zone_count_limit: int,
-                 current_rule_count: int,
-                 current_zone_count: int,
-                 href: str,
-                 created_at: datetime,
-                 created_by_id: str,
-                 last_modified_at: datetime,
-                 last_modified_by_id: str) -> None:
+    def __init__(
+        self,
+        id: str,
+        crn: str,
+        rule_count_limit: int,
+        zone_count_limit: int,
+        current_rule_count: int,
+        current_zone_count: int,
+        href: str,
+        created_at: datetime,
+        created_by_id: str,
+        last_modified_at: datetime,
+        last_modified_by_id: str,
+    ) -> None:
         """
         Initialize a AccountSettings object.
 
@@ -1299,7 +1184,8 @@ class AccountSettings():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Action():
+
+class Action:
     """
     Service API Type actions.
 
@@ -1307,9 +1193,7 @@ class Action():
     :attr str description: The description of the action.
     """
 
-    def __init__(self,
-                 action_id: str,
-                 description: str) -> None:
+    def __init__(self, action_id: str, description: str) -> None:
         """
         Initialize a Action object.
 
@@ -1365,23 +1249,23 @@ class Action():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Address():
+
+class Address:
     """
     A zone address.
 
     :attr str type: (optional) The type of address.
     """
 
-    def __init__(self,
-                 *,
-                 type: str = None) -> None:
+    def __init__(self, *, type: str = None) -> None:
         """
         Initialize a Address object.
 
         :param str type: (optional) The type of address.
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef']))
+            ", ".join(['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef'])
+        )
         raise Exception(msg)
 
     @classmethod
@@ -1390,9 +1274,12 @@ class Address():
         disc_class = cls._get_class_by_discriminator(_dict)
         if disc_class != cls:
             return disc_class.from_dict(_dict)
-        msg = ("Cannot convert dictionary into an instance of base class 'Address'. " +
-                "The discriminator value should map to a valid subclass: {1}").format(
-                  ", ".join(['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef']))
+        msg = (
+            "Cannot convert dictionary into an instance of base class 'Address'. "
+            + "The discriminator value should map to a valid subclass: {1}"
+        ).format(
+            ", ".join(['AddressIPAddress', 'AddressIPAddressRange', 'AddressSubnet', 'AddressVPC', 'AddressServiceRef'])
+        )
         raise Exception(msg)
 
     @classmethod
@@ -1424,6 +1311,7 @@ class Address():
         """
         The type of address.
         """
+
         IPADDRESS = 'ipAddress'
         IPRANGE = 'ipRange'
         SUBNET = 'subnet'
@@ -1431,7 +1319,7 @@ class Address():
         SERVICEREF = 'serviceRef'
 
 
-class NewRuleOperations():
+class NewRuleOperations:
     """
     The operations this rule applies to.
 
@@ -1439,8 +1327,7 @@ class NewRuleOperations():
           applies to.
     """
 
-    def __init__(self,
-                 api_types: List['NewRuleOperationsApiTypesItem']) -> None:
+    def __init__(self, api_types: List['NewRuleOperationsApiTypesItem']) -> None:
         """
         Initialize a NewRuleOperations object.
 
@@ -1489,15 +1376,15 @@ class NewRuleOperations():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class NewRuleOperationsApiTypesItem():
+
+class NewRuleOperationsApiTypesItem:
     """
     NewRuleOperationsApiTypesItem.
 
     :attr str api_type_id:
     """
 
-    def __init__(self,
-                 api_type_id: str) -> None:
+    def __init__(self, api_type_id: str) -> None:
         """
         Initialize a NewRuleOperationsApiTypesItem object.
 
@@ -1545,15 +1432,15 @@ class NewRuleOperationsApiTypesItem():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class OperationsList():
+
+class OperationsList:
     """
     The response object of the `list_available_service_operations` operation.
 
     :attr List[APIType] api_types: The returned API types.
     """
 
-    def __init__(self,
-                 api_types: List['APIType']) -> None:
+    def __init__(self, api_types: List['APIType']) -> None:
         """
         Initialize a OperationsList object.
 
@@ -1601,7 +1488,8 @@ class OperationsList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Resource():
+
+class Resource:
     """
     An rule resource.
 
@@ -1609,10 +1497,7 @@ class Resource():
     :attr List[ResourceTagAttribute] tags: (optional) The optional resource tags.
     """
 
-    def __init__(self,
-                 attributes: List['ResourceAttribute'],
-                 *,
-                 tags: List['ResourceTagAttribute'] = None) -> None:
+    def __init__(self, attributes: List['ResourceAttribute'], *, tags: List['ResourceTagAttribute'] = None) -> None:
         """
         Initialize a Resource object.
 
@@ -1667,7 +1552,8 @@ class Resource():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceAttribute():
+
+class ResourceAttribute:
     """
     A rule resource attribute.
 
@@ -1676,11 +1562,7 @@ class ResourceAttribute():
     :attr str operator: (optional) The attribute operator.
     """
 
-    def __init__(self,
-                 name: str,
-                 value: str,
-                 *,
-                 operator: str = None) -> None:
+    def __init__(self, name: str, value: str, *, operator: str = None) -> None:
         """
         Initialize a ResourceAttribute object.
 
@@ -1742,7 +1624,8 @@ class ResourceAttribute():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceTagAttribute():
+
+class ResourceTagAttribute:
     """
     A rule resource tag attribute.
 
@@ -1751,11 +1634,7 @@ class ResourceTagAttribute():
     :attr str operator: (optional) The attribute operator.
     """
 
-    def __init__(self,
-                 name: str,
-                 value: str,
-                 *,
-                 operator: str = None) -> None:
+    def __init__(self, name: str, value: str, *, operator: str = None) -> None:
         """
         Initialize a ResourceTagAttribute object.
 
@@ -1817,7 +1696,8 @@ class ResourceTagAttribute():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Rule():
+
+class Rule:
     """
     An output rule.
 
@@ -1841,20 +1721,22 @@ class Rule():
           resource.
     """
 
-    def __init__(self,
-                 id: str,
-                 crn: str,
-                 description: str,
-                 contexts: List['RuleContext'],
-                 resources: List['Resource'],
-                 href: str,
-                 created_at: datetime,
-                 created_by_id: str,
-                 last_modified_at: datetime,
-                 last_modified_by_id: str,
-                 *,
-                 operations: 'NewRuleOperations' = None,
-                 enforcement_mode: str = None) -> None:
+    def __init__(
+        self,
+        id: str,
+        crn: str,
+        description: str,
+        contexts: List['RuleContext'],
+        resources: List['Resource'],
+        href: str,
+        created_at: datetime,
+        created_by_id: str,
+        last_modified_at: datetime,
+        last_modified_by_id: str,
+        *,
+        operations: 'NewRuleOperations' = None,
+        enforcement_mode: str = None
+    ) -> None:
         """
         Initialize a Rule object.
 
@@ -2002,20 +1884,20 @@ class Rule():
          * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
          * `report` - The restrictions are evaluated and reported, but not enforced.
         """
+
         ENABLED = 'enabled'
         DISABLED = 'disabled'
         REPORT = 'report'
 
 
-class RuleContext():
+class RuleContext:
     """
     A rule context.
 
     :attr List[RuleContextAttribute] attributes: The attributes.
     """
 
-    def __init__(self,
-                 attributes: List['RuleContextAttribute']) -> None:
+    def __init__(self, attributes: List['RuleContextAttribute']) -> None:
         """
         Initialize a RuleContext object.
 
@@ -2063,7 +1945,8 @@ class RuleContext():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class RuleContextAttribute():
+
+class RuleContextAttribute:
     """
     An rule context attribute.
 
@@ -2071,9 +1954,7 @@ class RuleContextAttribute():
     :attr str value: The attribute value.
     """
 
-    def __init__(self,
-                 name: str,
-                 value: str) -> None:
+    def __init__(self, name: str, value: str) -> None:
         """
         Initialize a RuleContextAttribute object.
 
@@ -2129,7 +2010,8 @@ class RuleContextAttribute():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class RuleList():
+
+class RuleList:
     """
     The response object of the ListRules operation.
 
@@ -2137,9 +2019,7 @@ class RuleList():
     :attr List[Rule] rules: The returned rules.
     """
 
-    def __init__(self,
-                 count: int,
-                 rules: List['Rule']) -> None:
+    def __init__(self, count: int, rules: List['Rule']) -> None:
         """
         Initialize a RuleList object.
 
@@ -2195,7 +2075,8 @@ class RuleList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ServiceRefTarget():
+
+class ServiceRefTarget:
     """
     Summary information about a service reference target.
 
@@ -2205,11 +2086,9 @@ class ServiceRefTarget():
           the service is available.
     """
 
-    def __init__(self,
-                 service_name: str,
-                 *,
-                 service_type: str = None,
-                 locations: List['ServiceRefTargetLocationsItem'] = None) -> None:
+    def __init__(
+        self, service_name: str, *, service_type: str = None, locations: List['ServiceRefTargetLocationsItem'] = None
+    ) -> None:
         """
         Initialize a ServiceRefTarget object.
 
@@ -2270,7 +2149,8 @@ class ServiceRefTarget():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ServiceRefTargetList():
+
+class ServiceRefTargetList:
     """
     A list of service reference targets.
 
@@ -2278,9 +2158,7 @@ class ServiceRefTargetList():
     :attr List[ServiceRefTarget] targets: The list of service reference targets.
     """
 
-    def __init__(self,
-                 count: int,
-                 targets: List['ServiceRefTarget']) -> None:
+    def __init__(self, count: int, targets: List['ServiceRefTarget']) -> None:
         """
         Initialize a ServiceRefTargetList object.
 
@@ -2337,15 +2215,15 @@ class ServiceRefTargetList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ServiceRefTargetLocationsItem():
+
+class ServiceRefTargetLocationsItem:
     """
     ServiceRefTargetLocationsItem.
 
     :attr str name: The location name.
     """
 
-    def __init__(self,
-                 name: str) -> None:
+    def __init__(self, name: str) -> None:
         """
         Initialize a ServiceRefTargetLocationsItem object.
 
@@ -2393,7 +2271,8 @@ class ServiceRefTargetLocationsItem():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ServiceRefValue():
+
+class ServiceRefValue:
     """
     A service reference value.
 
@@ -2404,13 +2283,15 @@ class ServiceRefValue():
     :attr str location: (optional) The location.
     """
 
-    def __init__(self,
-                 account_id: str,
-                 *,
-                 service_type: str = None,
-                 service_name: str = None,
-                 service_instance: str = None,
-                 location: str = None) -> None:
+    def __init__(
+        self,
+        account_id: str,
+        *,
+        service_type: str = None,
+        service_name: str = None,
+        service_instance: str = None,
+        location: str = None
+    ) -> None:
         """
         Initialize a ServiceRefValue object.
 
@@ -2482,7 +2363,8 @@ class ServiceRefValue():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Zone():
+
+class Zone:
     """
     An output zone.
 
@@ -2505,21 +2387,23 @@ class Zone():
           resource.
     """
 
-    def __init__(self,
-                 id: str,
-                 crn: str,
-                 address_count: int,
-                 excluded_count: int,
-                 name: str,
-                 account_id: str,
-                 description: str,
-                 addresses: List['Address'],
-                 excluded: List['Address'],
-                 href: str,
-                 created_at: datetime,
-                 created_by_id: str,
-                 last_modified_at: datetime,
-                 last_modified_by_id: str) -> None:
+    def __init__(
+        self,
+        id: str,
+        crn: str,
+        address_count: int,
+        excluded_count: int,
+        name: str,
+        account_id: str,
+        description: str,
+        addresses: List['Address'],
+        excluded: List['Address'],
+        href: str,
+        created_at: datetime,
+        created_by_id: str,
+        last_modified_at: datetime,
+        last_modified_by_id: str,
+    ) -> None:
         """
         Initialize a Zone object.
 
@@ -2675,7 +2559,8 @@ class Zone():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ZoneList():
+
+class ZoneList:
     """
     The response object of the ListZones operation.
 
@@ -2683,9 +2568,7 @@ class ZoneList():
     :attr List[ZoneSummary] zones: The returned zones.
     """
 
-    def __init__(self,
-                 count: int,
-                 zones: List['ZoneSummary']) -> None:
+    def __init__(self, count: int, zones: List['ZoneSummary']) -> None:
         """
         Initialize a ZoneList object.
 
@@ -2741,7 +2624,8 @@ class ZoneList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ZoneSummary():
+
+class ZoneSummary:
     """
     An output zone summary.
 
@@ -2762,20 +2646,22 @@ class ZoneSummary():
           resource.
     """
 
-    def __init__(self,
-                 id: str,
-                 crn: str,
-                 name: str,
-                 addresses_preview: List['Address'],
-                 address_count: int,
-                 excluded_count: int,
-                 href: str,
-                 created_at: datetime,
-                 created_by_id: str,
-                 last_modified_at: datetime,
-                 last_modified_by_id: str,
-                 *,
-                 description: str = None) -> None:
+    def __init__(
+        self,
+        id: str,
+        crn: str,
+        name: str,
+        addresses_preview: List['Address'],
+        address_count: int,
+        excluded_count: int,
+        href: str,
+        created_at: datetime,
+        created_by_id: str,
+        last_modified_at: datetime,
+        last_modified_by_id: str,
+        *,
+        description: str = None
+    ) -> None:
         """
         Initialize a ZoneSummary object.
 
@@ -2912,6 +2798,7 @@ class ZoneSummary():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+
 class AddressIPAddress(Address):
     """
     A single IP address.
@@ -2920,9 +2807,7 @@ class AddressIPAddress(Address):
     :attr str value: The IP address.
     """
 
-    def __init__(self,
-                 type: str,
-                 value: str) -> None:
+    def __init__(self, type: str, value: str) -> None:
         """
         Initialize a AddressIPAddress object.
 
@@ -2983,6 +2868,7 @@ class AddressIPAddress(Address):
         """
         The type of address.
         """
+
         IPADDRESS = 'ipAddress'
 
 
@@ -2994,9 +2880,7 @@ class AddressIPAddressRange(Address):
     :attr str value: The ip range in <first-ip>-<last-ip> format.
     """
 
-    def __init__(self,
-                 type: str,
-                 value: str) -> None:
+    def __init__(self, type: str, value: str) -> None:
         """
         Initialize a AddressIPAddressRange object.
 
@@ -3057,6 +2941,7 @@ class AddressIPAddressRange(Address):
         """
         The type of address.
         """
+
         IPRANGE = 'ipRange'
 
 
@@ -3068,9 +2953,7 @@ class AddressServiceRef(Address):
     :attr ServiceRefValue ref: A service reference value.
     """
 
-    def __init__(self,
-                 type: str,
-                 ref: 'ServiceRefValue') -> None:
+    def __init__(self, type: str, ref: 'ServiceRefValue') -> None:
         """
         Initialize a AddressServiceRef object.
 
@@ -3131,6 +3014,7 @@ class AddressServiceRef(Address):
         """
         The type of address.
         """
+
         SERVICEREF = 'serviceRef'
 
 
@@ -3142,9 +3026,7 @@ class AddressSubnet(Address):
     :attr str value: The subnet in CIDR format.
     """
 
-    def __init__(self,
-                 type: str,
-                 value: str) -> None:
+    def __init__(self, type: str, value: str) -> None:
         """
         Initialize a AddressSubnet object.
 
@@ -3205,6 +3087,7 @@ class AddressSubnet(Address):
         """
         The type of address.
         """
+
         SUBNET = 'subnet'
 
 
@@ -3216,9 +3099,7 @@ class AddressVPC(Address):
     :attr str value: The VPC CRN.
     """
 
-    def __init__(self,
-                 type: str,
-                 value: str) -> None:
+    def __init__(self, type: str, value: str) -> None:
         """
         Initialize a AddressVPC object.
 
@@ -3279,5 +3160,5 @@ class AddressVPC(Address):
         """
         The type of address.
         """
-        VPC = 'vpc'
 
+        VPC = 'vpc'

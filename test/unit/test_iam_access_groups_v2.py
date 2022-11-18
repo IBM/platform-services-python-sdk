@@ -31,9 +31,7 @@ import urllib
 from ibm_platform_services.iam_access_groups_v2 import *
 
 
-_service = IamAccessGroupsV2(
-    authenticator=NoAuthAuthenticator()
-)
+_service = IamAccessGroupsV2(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://iam.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -70,7 +68,8 @@ def preprocess_url(operation_path: str):
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -97,7 +96,8 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestCreateAccessGroup():
+
+class TestCreateAccessGroup:
     """
     Test Class for create_access_group
     """
@@ -110,11 +110,7 @@ class TestCreateAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Set up parameter values
         account_id = 'testString'
@@ -124,18 +120,14 @@ class TestCreateAccessGroup():
 
         # Invoke method
         response = _service.create_access_group(
-            account_id,
-            name,
-            description=description,
-            transaction_id=transaction_id,
-            headers={}
+            account_id, name, description=description, transaction_id=transaction_id, headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 201
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
@@ -160,11 +152,7 @@ class TestCreateAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Set up parameter values
         account_id = 'testString'
@@ -172,18 +160,13 @@ class TestCreateAccessGroup():
         description = 'Group for managers'
 
         # Invoke method
-        response = _service.create_access_group(
-            account_id,
-            name,
-            description=description,
-            headers={}
-        )
+        response = _service.create_access_group(account_id, name, description=description, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 201
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
@@ -208,11 +191,7 @@ class TestCreateAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Set up parameter values
         account_id = 'testString'
@@ -225,7 +204,7 @@ class TestCreateAccessGroup():
             "name": name,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_access_group(**req_copy)
 
@@ -238,7 +217,8 @@ class TestCreateAccessGroup():
         _service.disable_retries()
         self.test_create_access_group_value_error()
 
-class TestListAccessGroups():
+
+class TestListAccessGroups:
     """
     Test Class for list_access_groups
     """
@@ -251,11 +231,7 @@ class TestListAccessGroups():
         # Set up mock
         url = preprocess_url('/v2/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -279,14 +255,14 @@ class TestListAccessGroups():
             sort=sort,
             show_federated=show_federated,
             hide_public_access=hide_public_access,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'iam_id={}'.format(iam_id) in query_string
@@ -314,26 +290,19 @@ class TestListAccessGroups():
         # Set up mock
         url = preprocess_url('/v2/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.list_access_groups(
-            account_id,
-            headers={}
-        )
+        response = _service.list_access_groups(account_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
@@ -354,11 +323,7 @@ class TestListAccessGroups():
         # Set up mock
         url = preprocess_url('/v2/groups')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "groups": [{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -368,7 +333,7 @@ class TestListAccessGroups():
             "account_id": account_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_access_groups(**req_copy)
 
@@ -390,16 +355,8 @@ class TestListAccessGroups():
         url = preprocess_url('/v2/groups')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"groups":[{"id":"id","name":"name","description":"description","account_id":"account_id","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","href":"href","is_federated":true}]}'
         mock_response2 = '{"total_count":2,"limit":1,"groups":[{"id":"id","name":"name","description":"description","account_id":"account_id","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","href":"href","is_federated":true}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
+        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
 
         # Exercise the pager class for this operation
         all_results = []
@@ -429,16 +386,8 @@ class TestListAccessGroups():
         url = preprocess_url('/v2/groups')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"groups":[{"id":"id","name":"name","description":"description","account_id":"account_id","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","href":"href","is_federated":true}]}'
         mock_response2 = '{"total_count":2,"limit":1,"groups":[{"id":"id","name":"name","description":"description","account_id":"account_id","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id","href":"href","is_federated":true}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
+        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
 
         # Exercise the pager class for this operation
         pager = AccessGroupsPager(
@@ -456,7 +405,8 @@ class TestListAccessGroups():
         assert all_results is not None
         assert len(all_results) == 2
 
-class TestGetAccessGroup():
+
+class TestGetAccessGroup:
     """
     Test Class for get_access_group
     """
@@ -469,11 +419,7 @@ class TestGetAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -482,17 +428,14 @@ class TestGetAccessGroup():
 
         # Invoke method
         response = _service.get_access_group(
-            access_group_id,
-            transaction_id=transaction_id,
-            show_federated=show_federated,
-            headers={}
+            access_group_id, transaction_id=transaction_id, show_federated=show_federated, headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'show_federated={}'.format('true' if show_federated else 'false') in query_string
 
@@ -513,20 +456,13 @@ class TestGetAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
 
         # Invoke method
-        response = _service.get_access_group(
-            access_group_id,
-            headers={}
-        )
+        response = _service.get_access_group(access_group_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -549,11 +485,7 @@ class TestGetAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -563,7 +495,7 @@ class TestGetAccessGroup():
             "access_group_id": access_group_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_access_group(**req_copy)
 
@@ -576,7 +508,8 @@ class TestGetAccessGroup():
         _service.disable_retries()
         self.test_get_access_group_value_error()
 
-class TestUpdateAccessGroup():
+
+class TestUpdateAccessGroup:
     """
     Test Class for update_access_group
     """
@@ -589,11 +522,7 @@ class TestUpdateAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -604,12 +533,7 @@ class TestUpdateAccessGroup():
 
         # Invoke method
         response = _service.update_access_group(
-            access_group_id,
-            if_match,
-            name=name,
-            description=description,
-            transaction_id=transaction_id,
-            headers={}
+            access_group_id, if_match, name=name, description=description, transaction_id=transaction_id, headers={}
         )
 
         # Check for correct operation
@@ -637,11 +561,7 @@ class TestUpdateAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -651,11 +571,7 @@ class TestUpdateAccessGroup():
 
         # Invoke method
         response = _service.update_access_group(
-            access_group_id,
-            if_match,
-            name=name,
-            description=description,
-            headers={}
+            access_group_id, if_match, name=name, description=description, headers={}
         )
 
         # Check for correct operation
@@ -683,11 +599,7 @@ class TestUpdateAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "href": "href", "is_federated": true}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -701,7 +613,7 @@ class TestUpdateAccessGroup():
             "if_match": if_match,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_access_group(**req_copy)
 
@@ -714,7 +626,8 @@ class TestUpdateAccessGroup():
         _service.disable_retries()
         self.test_update_access_group_value_error()
 
-class TestDeleteAccessGroup():
+
+class TestDeleteAccessGroup:
     """
     Test Class for delete_access_group
     """
@@ -726,9 +639,7 @@ class TestDeleteAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -736,18 +647,13 @@ class TestDeleteAccessGroup():
         force = False
 
         # Invoke method
-        response = _service.delete_access_group(
-            access_group_id,
-            transaction_id=transaction_id,
-            force=force,
-            headers={}
-        )
+        response = _service.delete_access_group(access_group_id, transaction_id=transaction_id, force=force, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 204
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'force={}'.format('true' if force else 'false') in query_string
 
@@ -767,18 +673,13 @@ class TestDeleteAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
         access_group_id = 'testString'
 
         # Invoke method
-        response = _service.delete_access_group(
-            access_group_id,
-            headers={}
-        )
+        response = _service.delete_access_group(access_group_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -800,9 +701,7 @@ class TestDeleteAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -812,7 +711,7 @@ class TestDeleteAccessGroup():
             "access_group_id": access_group_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_access_group(**req_copy)
 
@@ -825,6 +724,7 @@ class TestDeleteAccessGroup():
         _service.disable_retries()
         self.test_delete_access_group_value_error()
 
+
 # endregion
 ##############################################################################
 # End of Service: AccessGroupOperations
@@ -835,7 +735,8 @@ class TestDeleteAccessGroup():
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -862,7 +763,8 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestIsMemberOfAccessGroup():
+
+class TestIsMemberOfAccessGroup:
     """
     Test Class for is_member_of_access_group
     """
@@ -874,9 +776,7 @@ class TestIsMemberOfAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members/testString')
-        responses.add(responses.HEAD,
-                      url,
-                      status=204)
+        responses.add(responses.HEAD, url, status=204)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -885,10 +785,7 @@ class TestIsMemberOfAccessGroup():
 
         # Invoke method
         response = _service.is_member_of_access_group(
-            access_group_id,
-            iam_id,
-            transaction_id=transaction_id,
-            headers={}
+            access_group_id, iam_id, transaction_id=transaction_id, headers={}
         )
 
         # Check for correct operation
@@ -911,20 +808,14 @@ class TestIsMemberOfAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members/testString')
-        responses.add(responses.HEAD,
-                      url,
-                      status=204)
+        responses.add(responses.HEAD, url, status=204)
 
         # Set up parameter values
         access_group_id = 'testString'
         iam_id = 'testString'
 
         # Invoke method
-        response = _service.is_member_of_access_group(
-            access_group_id,
-            iam_id,
-            headers={}
-        )
+        response = _service.is_member_of_access_group(access_group_id, iam_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -946,9 +837,7 @@ class TestIsMemberOfAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members/testString')
-        responses.add(responses.HEAD,
-                      url,
-                      status=204)
+        responses.add(responses.HEAD, url, status=204)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -960,7 +849,7 @@ class TestIsMemberOfAccessGroup():
             "iam_id": iam_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.is_member_of_access_group(**req_copy)
 
@@ -973,7 +862,8 @@ class TestIsMemberOfAccessGroup():
         _service.disable_retries()
         self.test_is_member_of_access_group_value_error()
 
-class TestAddMembersToAccessGroup():
+
+class TestAddMembersToAccessGroup:
     """
     Test Class for add_members_to_access_group
     """
@@ -986,11 +876,7 @@ class TestAddMembersToAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=207)
+        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=207)
 
         # Construct a dict representation of a AddGroupMembersRequestMembersItem model
         add_group_members_request_members_item_model = {}
@@ -1004,10 +890,7 @@ class TestAddMembersToAccessGroup():
 
         # Invoke method
         response = _service.add_members_to_access_group(
-            access_group_id,
-            members=members,
-            transaction_id=transaction_id,
-            headers={}
+            access_group_id, members=members, transaction_id=transaction_id, headers={}
         )
 
         # Check for correct operation
@@ -1034,11 +917,7 @@ class TestAddMembersToAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=207)
+        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=207)
 
         # Construct a dict representation of a AddGroupMembersRequestMembersItem model
         add_group_members_request_members_item_model = {}
@@ -1050,11 +929,7 @@ class TestAddMembersToAccessGroup():
         members = [add_group_members_request_members_item_model]
 
         # Invoke method
-        response = _service.add_members_to_access_group(
-            access_group_id,
-            members=members,
-            headers={}
-        )
+        response = _service.add_members_to_access_group(access_group_id, members=members, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1080,11 +955,7 @@ class TestAddMembersToAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members')
         mock_response = '{"members": [{"iam_id": "iam_id", "type": "type", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=207)
+        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=207)
 
         # Construct a dict representation of a AddGroupMembersRequestMembersItem model
         add_group_members_request_members_item_model = {}
@@ -1100,7 +971,7 @@ class TestAddMembersToAccessGroup():
             "access_group_id": access_group_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.add_members_to_access_group(**req_copy)
 
@@ -1113,7 +984,8 @@ class TestAddMembersToAccessGroup():
         _service.disable_retries()
         self.test_add_members_to_access_group_value_error()
 
-class TestListAccessGroupMembers():
+
+class TestListAccessGroupMembers:
     """
     Test Class for list_access_group_members
     """
@@ -1126,11 +998,7 @@ class TestListAccessGroupMembers():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "membership_type": "membership_type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -1152,14 +1020,14 @@ class TestListAccessGroupMembers():
             type=type,
             verbose=verbose,
             sort=sort,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'membership_type={}'.format(membership_type) in query_string
         assert 'limit={}'.format(limit) in query_string
@@ -1185,20 +1053,13 @@ class TestListAccessGroupMembers():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "membership_type": "membership_type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
 
         # Invoke method
-        response = _service.list_access_group_members(
-            access_group_id,
-            headers={}
-        )
+        response = _service.list_access_group_members(access_group_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1221,11 +1082,7 @@ class TestListAccessGroupMembers():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members')
         mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "members": [{"iam_id": "iam_id", "type": "type", "membership_type": "membership_type", "name": "name", "email": "email", "description": "description", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -1235,7 +1092,7 @@ class TestListAccessGroupMembers():
             "access_group_id": access_group_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_access_group_members(**req_copy)
 
@@ -1257,16 +1114,8 @@ class TestListAccessGroupMembers():
         url = preprocess_url('/v2/groups/testString/members')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"members":[{"iam_id":"iam_id","type":"type","membership_type":"membership_type","name":"name","email":"email","description":"description","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id"}],"limit":1}'
         mock_response2 = '{"total_count":2,"members":[{"iam_id":"iam_id","type":"type","membership_type":"membership_type","name":"name","email":"email","description":"description","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id"}],"limit":1}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
+        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
 
         # Exercise the pager class for this operation
         all_results = []
@@ -1295,16 +1144,8 @@ class TestListAccessGroupMembers():
         url = preprocess_url('/v2/groups/testString/members')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"members":[{"iam_id":"iam_id","type":"type","membership_type":"membership_type","name":"name","email":"email","description":"description","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id"}],"limit":1}'
         mock_response2 = '{"total_count":2,"members":[{"iam_id":"iam_id","type":"type","membership_type":"membership_type","name":"name","email":"email","description":"description","href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id"}],"limit":1}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
+        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
 
         # Exercise the pager class for this operation
         pager = AccessGroupMembersPager(
@@ -1321,7 +1162,8 @@ class TestListAccessGroupMembers():
         assert all_results is not None
         assert len(all_results) == 2
 
-class TestRemoveMemberFromAccessGroup():
+
+class TestRemoveMemberFromAccessGroup:
     """
     Test Class for remove_member_from_access_group
     """
@@ -1333,9 +1175,7 @@ class TestRemoveMemberFromAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -1344,10 +1184,7 @@ class TestRemoveMemberFromAccessGroup():
 
         # Invoke method
         response = _service.remove_member_from_access_group(
-            access_group_id,
-            iam_id,
-            transaction_id=transaction_id,
-            headers={}
+            access_group_id, iam_id, transaction_id=transaction_id, headers={}
         )
 
         # Check for correct operation
@@ -1370,20 +1207,14 @@ class TestRemoveMemberFromAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
         access_group_id = 'testString'
         iam_id = 'testString'
 
         # Invoke method
-        response = _service.remove_member_from_access_group(
-            access_group_id,
-            iam_id,
-            headers={}
-        )
+        response = _service.remove_member_from_access_group(access_group_id, iam_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1405,9 +1236,7 @@ class TestRemoveMemberFromAccessGroup():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -1419,7 +1248,7 @@ class TestRemoveMemberFromAccessGroup():
             "iam_id": iam_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.remove_member_from_access_group(**req_copy)
 
@@ -1432,7 +1261,8 @@ class TestRemoveMemberFromAccessGroup():
         _service.disable_retries()
         self.test_remove_member_from_access_group_value_error()
 
-class TestRemoveMembersFromAccessGroup():
+
+class TestRemoveMembersFromAccessGroup:
     """
     Test Class for remove_members_from_access_group
     """
@@ -1445,11 +1275,7 @@ class TestRemoveMembersFromAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=207)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=207)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -1458,10 +1284,7 @@ class TestRemoveMembersFromAccessGroup():
 
         # Invoke method
         response = _service.remove_members_from_access_group(
-            access_group_id,
-            members=members,
-            transaction_id=transaction_id,
-            headers={}
+            access_group_id, members=members, transaction_id=transaction_id, headers={}
         )
 
         # Check for correct operation
@@ -1488,22 +1311,14 @@ class TestRemoveMembersFromAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=207)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=207)
 
         # Set up parameter values
         access_group_id = 'testString'
         members = ['IBMId-user1', 'iam-ServiceId-123', 'iam-Profile-123']
 
         # Invoke method
-        response = _service.remove_members_from_access_group(
-            access_group_id,
-            members=members,
-            headers={}
-        )
+        response = _service.remove_members_from_access_group(access_group_id, members=members, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1529,11 +1344,7 @@ class TestRemoveMembersFromAccessGroup():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/members/delete')
         mock_response = '{"access_group_id": "access_group_id", "members": [{"iam_id": "iam_id", "trace": "trace", "status_code": 11, "errors": [{"code": "code", "message": "message"}]}]}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=207)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=207)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -1544,7 +1355,7 @@ class TestRemoveMembersFromAccessGroup():
             "access_group_id": access_group_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.remove_members_from_access_group(**req_copy)
 
@@ -1557,7 +1368,8 @@ class TestRemoveMembersFromAccessGroup():
         _service.disable_retries()
         self.test_remove_members_from_access_group_value_error()
 
-class TestRemoveMemberFromAllAccessGroups():
+
+class TestRemoveMemberFromAllAccessGroups:
     """
     Test Class for remove_member_from_all_access_groups
     """
@@ -1570,11 +1382,7 @@ class TestRemoveMemberFromAllAccessGroups():
         # Set up mock
         url = preprocess_url('/v2/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
-        responses.add(responses.DELETE,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=207)
+        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=207)
 
         # Set up parameter values
         account_id = 'testString'
@@ -1583,17 +1391,14 @@ class TestRemoveMemberFromAllAccessGroups():
 
         # Invoke method
         response = _service.remove_member_from_all_access_groups(
-            account_id,
-            iam_id,
-            transaction_id=transaction_id,
-            headers={}
+            account_id, iam_id, transaction_id=transaction_id, headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 207
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
@@ -1614,28 +1419,20 @@ class TestRemoveMemberFromAllAccessGroups():
         # Set up mock
         url = preprocess_url('/v2/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
-        responses.add(responses.DELETE,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=207)
+        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=207)
 
         # Set up parameter values
         account_id = 'testString'
         iam_id = 'testString'
 
         # Invoke method
-        response = _service.remove_member_from_all_access_groups(
-            account_id,
-            iam_id,
-            headers={}
-        )
+        response = _service.remove_member_from_all_access_groups(account_id, iam_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 207
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
@@ -1656,11 +1453,7 @@ class TestRemoveMemberFromAllAccessGroups():
         # Set up mock
         url = preprocess_url('/v2/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
-        responses.add(responses.DELETE,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=207)
+        responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=207)
 
         # Set up parameter values
         account_id = 'testString'
@@ -1672,7 +1465,7 @@ class TestRemoveMemberFromAllAccessGroups():
             "iam_id": iam_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.remove_member_from_all_access_groups(**req_copy)
 
@@ -1685,7 +1478,8 @@ class TestRemoveMemberFromAllAccessGroups():
         _service.disable_retries()
         self.test_remove_member_from_all_access_groups_value_error()
 
-class TestAddMemberToMultipleAccessGroups():
+
+class TestAddMemberToMultipleAccessGroups:
     """
     Test Class for add_member_to_multiple_access_groups
     """
@@ -1698,11 +1492,7 @@ class TestAddMemberToMultipleAccessGroups():
         # Set up mock
         url = preprocess_url('/v2/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=207)
+        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=207)
 
         # Set up parameter values
         account_id = 'testString'
@@ -1713,19 +1503,14 @@ class TestAddMemberToMultipleAccessGroups():
 
         # Invoke method
         response = _service.add_member_to_multiple_access_groups(
-            account_id,
-            iam_id,
-            type=type,
-            groups=groups,
-            transaction_id=transaction_id,
-            headers={}
+            account_id, iam_id, type=type, groups=groups, transaction_id=transaction_id, headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 207
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
@@ -1750,11 +1535,7 @@ class TestAddMemberToMultipleAccessGroups():
         # Set up mock
         url = preprocess_url('/v2/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=207)
+        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=207)
 
         # Set up parameter values
         account_id = 'testString'
@@ -1764,18 +1545,14 @@ class TestAddMemberToMultipleAccessGroups():
 
         # Invoke method
         response = _service.add_member_to_multiple_access_groups(
-            account_id,
-            iam_id,
-            type=type,
-            groups=groups,
-            headers={}
+            account_id, iam_id, type=type, groups=groups, headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 207
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
@@ -1800,11 +1577,7 @@ class TestAddMemberToMultipleAccessGroups():
         # Set up mock
         url = preprocess_url('/v2/groups/_allgroups/members/testString')
         mock_response = '{"iam_id": "iam_id", "groups": [{"access_group_id": "access_group_id", "status_code": 11, "trace": "trace", "errors": [{"code": "code", "message": "message"}]}]}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=207)
+        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=207)
 
         # Set up parameter values
         account_id = 'testString'
@@ -1818,7 +1591,7 @@ class TestAddMemberToMultipleAccessGroups():
             "iam_id": iam_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.add_member_to_multiple_access_groups(**req_copy)
 
@@ -1831,6 +1604,7 @@ class TestAddMemberToMultipleAccessGroups():
         _service.disable_retries()
         self.test_add_member_to_multiple_access_groups_value_error()
 
+
 # endregion
 ##############################################################################
 # End of Service: MembershipOperations
@@ -1841,7 +1615,8 @@ class TestAddMemberToMultipleAccessGroups():
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -1868,7 +1643,8 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestAddAccessGroupRule():
+
+class TestAddAccessGroupRule:
     """
     Test Class for add_access_group_rule
     """
@@ -1881,11 +1657,7 @@ class TestAddAccessGroupRule():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Construct a dict representation of a RuleConditions model
         rule_conditions_model = {}
@@ -1903,13 +1675,7 @@ class TestAddAccessGroupRule():
 
         # Invoke method
         response = _service.add_access_group_rule(
-            access_group_id,
-            expiration,
-            realm_name,
-            conditions,
-            name=name,
-            transaction_id=transaction_id,
-            headers={}
+            access_group_id, expiration, realm_name, conditions, name=name, transaction_id=transaction_id, headers={}
         )
 
         # Check for correct operation
@@ -1939,11 +1705,7 @@ class TestAddAccessGroupRule():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Construct a dict representation of a RuleConditions model
         rule_conditions_model = {}
@@ -1960,12 +1722,7 @@ class TestAddAccessGroupRule():
 
         # Invoke method
         response = _service.add_access_group_rule(
-            access_group_id,
-            expiration,
-            realm_name,
-            conditions,
-            name=name,
-            headers={}
+            access_group_id, expiration, realm_name, conditions, name=name, headers={}
         )
 
         # Check for correct operation
@@ -1995,11 +1752,7 @@ class TestAddAccessGroupRule():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Construct a dict representation of a RuleConditions model
         rule_conditions_model = {}
@@ -2022,7 +1775,7 @@ class TestAddAccessGroupRule():
             "conditions": conditions,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.add_access_group_rule(**req_copy)
 
@@ -2035,7 +1788,8 @@ class TestAddAccessGroupRule():
         _service.disable_retries()
         self.test_add_access_group_rule_value_error()
 
-class TestListAccessGroupRules():
+
+class TestListAccessGroupRules:
     """
     Test Class for list_access_group_rules
     """
@@ -2048,22 +1802,14 @@ class TestListAccessGroupRules():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
         transaction_id = 'testString'
 
         # Invoke method
-        response = _service.list_access_group_rules(
-            access_group_id,
-            transaction_id=transaction_id,
-            headers={}
-        )
+        response = _service.list_access_group_rules(access_group_id, transaction_id=transaction_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2086,20 +1832,13 @@ class TestListAccessGroupRules():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
 
         # Invoke method
-        response = _service.list_access_group_rules(
-            access_group_id,
-            headers={}
-        )
+        response = _service.list_access_group_rules(access_group_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2122,11 +1861,7 @@ class TestListAccessGroupRules():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules')
         mock_response = '{"rules": [{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -2136,7 +1871,7 @@ class TestListAccessGroupRules():
             "access_group_id": access_group_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_access_group_rules(**req_copy)
 
@@ -2149,7 +1884,8 @@ class TestListAccessGroupRules():
         _service.disable_retries()
         self.test_list_access_group_rules_value_error()
 
-class TestGetAccessGroupRule():
+
+class TestGetAccessGroupRule:
     """
     Test Class for get_access_group_rule
     """
@@ -2162,11 +1898,7 @@ class TestGetAccessGroupRule():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -2174,12 +1906,7 @@ class TestGetAccessGroupRule():
         transaction_id = 'testString'
 
         # Invoke method
-        response = _service.get_access_group_rule(
-            access_group_id,
-            rule_id,
-            transaction_id=transaction_id,
-            headers={}
-        )
+        response = _service.get_access_group_rule(access_group_id, rule_id, transaction_id=transaction_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2202,22 +1929,14 @@ class TestGetAccessGroupRule():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
         rule_id = 'testString'
 
         # Invoke method
-        response = _service.get_access_group_rule(
-            access_group_id,
-            rule_id,
-            headers={}
-        )
+        response = _service.get_access_group_rule(access_group_id, rule_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2240,11 +1959,7 @@ class TestGetAccessGroupRule():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -2256,7 +1971,7 @@ class TestGetAccessGroupRule():
             "rule_id": rule_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_access_group_rule(**req_copy)
 
@@ -2269,7 +1984,8 @@ class TestGetAccessGroupRule():
         _service.disable_retries()
         self.test_get_access_group_rule_value_error()
 
-class TestReplaceAccessGroupRule():
+
+class TestReplaceAccessGroupRule:
     """
     Test Class for replace_access_group_rule
     """
@@ -2282,11 +1998,7 @@ class TestReplaceAccessGroupRule():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
         # Construct a dict representation of a RuleConditions model
         rule_conditions_model = {}
@@ -2314,7 +2026,7 @@ class TestReplaceAccessGroupRule():
             conditions,
             name=name,
             transaction_id=transaction_id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -2344,11 +2056,7 @@ class TestReplaceAccessGroupRule():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
         # Construct a dict representation of a RuleConditions model
         rule_conditions_model = {}
@@ -2367,14 +2075,7 @@ class TestReplaceAccessGroupRule():
 
         # Invoke method
         response = _service.replace_access_group_rule(
-            access_group_id,
-            rule_id,
-            if_match,
-            expiration,
-            realm_name,
-            conditions,
-            name=name,
-            headers={}
+            access_group_id, rule_id, if_match, expiration, realm_name, conditions, name=name, headers={}
         )
 
         # Check for correct operation
@@ -2404,11 +2105,7 @@ class TestReplaceAccessGroupRule():
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules/testString')
         mock_response = '{"id": "id", "name": "name", "expiration": 10, "realm_name": "realm_name", "access_group_id": "access_group_id", "account_id": "account_id", "conditions": [{"claim": "claim", "operator": "EQUALS", "value": "value"}], "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
         # Construct a dict representation of a RuleConditions model
         rule_conditions_model = {}
@@ -2435,7 +2132,7 @@ class TestReplaceAccessGroupRule():
             "conditions": conditions,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.replace_access_group_rule(**req_copy)
 
@@ -2448,7 +2145,8 @@ class TestReplaceAccessGroupRule():
         _service.disable_retries()
         self.test_replace_access_group_rule_value_error()
 
-class TestRemoveAccessGroupRule():
+
+class TestRemoveAccessGroupRule:
     """
     Test Class for remove_access_group_rule
     """
@@ -2460,9 +2158,7 @@ class TestRemoveAccessGroupRule():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -2471,10 +2167,7 @@ class TestRemoveAccessGroupRule():
 
         # Invoke method
         response = _service.remove_access_group_rule(
-            access_group_id,
-            rule_id,
-            transaction_id=transaction_id,
-            headers={}
+            access_group_id, rule_id, transaction_id=transaction_id, headers={}
         )
 
         # Check for correct operation
@@ -2497,20 +2190,14 @@ class TestRemoveAccessGroupRule():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
         access_group_id = 'testString'
         rule_id = 'testString'
 
         # Invoke method
-        response = _service.remove_access_group_rule(
-            access_group_id,
-            rule_id,
-            headers={}
-        )
+        response = _service.remove_access_group_rule(access_group_id, rule_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2532,9 +2219,7 @@ class TestRemoveAccessGroupRule():
         """
         # Set up mock
         url = preprocess_url('/v2/groups/testString/rules/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
         access_group_id = 'testString'
@@ -2546,7 +2231,7 @@ class TestRemoveAccessGroupRule():
             "rule_id": rule_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.remove_access_group_rule(**req_copy)
 
@@ -2559,6 +2244,7 @@ class TestRemoveAccessGroupRule():
         _service.disable_retries()
         self.test_remove_access_group_rule_value_error()
 
+
 # endregion
 ##############################################################################
 # End of Service: RuleOperations
@@ -2569,7 +2255,8 @@ class TestRemoveAccessGroupRule():
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -2596,7 +2283,8 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestGetAccountSettings():
+
+class TestGetAccountSettings:
     """
     Test Class for get_account_settings
     """
@@ -2609,28 +2297,20 @@ class TestGetAccountSettings():
         # Set up mock
         url = preprocess_url('/v2/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
         transaction_id = 'testString'
 
         # Invoke method
-        response = _service.get_account_settings(
-            account_id,
-            transaction_id=transaction_id,
-            headers={}
-        )
+        response = _service.get_account_settings(account_id, transaction_id=transaction_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
@@ -2651,26 +2331,19 @@ class TestGetAccountSettings():
         # Set up mock
         url = preprocess_url('/v2/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.get_account_settings(
-            account_id,
-            headers={}
-        )
+        response = _service.get_account_settings(account_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
@@ -2691,11 +2364,7 @@ class TestGetAccountSettings():
         # Set up mock
         url = preprocess_url('/v2/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -2705,7 +2374,7 @@ class TestGetAccountSettings():
             "account_id": account_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_account_settings(**req_copy)
 
@@ -2718,7 +2387,8 @@ class TestGetAccountSettings():
         _service.disable_retries()
         self.test_get_account_settings_value_error()
 
-class TestUpdateAccountSettings():
+
+class TestUpdateAccountSettings:
     """
     Test Class for update_account_settings
     """
@@ -2731,11 +2401,7 @@ class TestUpdateAccountSettings():
         # Set up mock
         url = preprocess_url('/v2/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -2744,17 +2410,14 @@ class TestUpdateAccountSettings():
 
         # Invoke method
         response = _service.update_account_settings(
-            account_id,
-            public_access_enabled=public_access_enabled,
-            transaction_id=transaction_id,
-            headers={}
+            account_id, public_access_enabled=public_access_enabled, transaction_id=transaction_id, headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
@@ -2778,28 +2441,20 @@ class TestUpdateAccountSettings():
         # Set up mock
         url = preprocess_url('/v2/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
         public_access_enabled = True
 
         # Invoke method
-        response = _service.update_account_settings(
-            account_id,
-            public_access_enabled=public_access_enabled,
-            headers={}
-        )
+        response = _service.update_account_settings(account_id, public_access_enabled=public_access_enabled, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         # Validate body params
@@ -2823,11 +2478,7 @@ class TestUpdateAccountSettings():
         # Set up mock
         url = preprocess_url('/v2/groups/settings')
         mock_response = '{"account_id": "account_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "public_access_enabled": false}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.PATCH, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -2838,7 +2489,7 @@ class TestUpdateAccountSettings():
             "account_id": account_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_account_settings(**req_copy)
 
@@ -2851,6 +2502,7 @@ class TestUpdateAccountSettings():
         _service.disable_retries()
         self.test_update_account_settings_value_error()
 
+
 # endregion
 ##############################################################################
 # End of Service: AccountSettings
@@ -2861,7 +2513,7 @@ class TestUpdateAccountSettings():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestModel_AccountSettings():
+class TestModel_AccountSettings:
     """
     Test Class for AccountSettings
     """
@@ -2893,7 +2545,8 @@ class TestModel_AccountSettings():
         account_settings_model_json2 = account_settings_model.to_dict()
         assert account_settings_model_json2 == account_settings_model_json
 
-class TestModel_AddGroupMembersRequestMembersItem():
+
+class TestModel_AddGroupMembersRequestMembersItem:
     """
     Test Class for AddGroupMembersRequestMembersItem
     """
@@ -2909,12 +2562,18 @@ class TestModel_AddGroupMembersRequestMembersItem():
         add_group_members_request_members_item_model_json['type'] = 'testString'
 
         # Construct a model instance of AddGroupMembersRequestMembersItem by calling from_dict on the json representation
-        add_group_members_request_members_item_model = AddGroupMembersRequestMembersItem.from_dict(add_group_members_request_members_item_model_json)
+        add_group_members_request_members_item_model = AddGroupMembersRequestMembersItem.from_dict(
+            add_group_members_request_members_item_model_json
+        )
         assert add_group_members_request_members_item_model != False
 
         # Construct a model instance of AddGroupMembersRequestMembersItem by calling from_dict on the json representation
-        add_group_members_request_members_item_model_dict = AddGroupMembersRequestMembersItem.from_dict(add_group_members_request_members_item_model_json).__dict__
-        add_group_members_request_members_item_model2 = AddGroupMembersRequestMembersItem(**add_group_members_request_members_item_model_dict)
+        add_group_members_request_members_item_model_dict = AddGroupMembersRequestMembersItem.from_dict(
+            add_group_members_request_members_item_model_json
+        ).__dict__
+        add_group_members_request_members_item_model2 = AddGroupMembersRequestMembersItem(
+            **add_group_members_request_members_item_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert add_group_members_request_members_item_model == add_group_members_request_members_item_model2
@@ -2923,7 +2582,8 @@ class TestModel_AddGroupMembersRequestMembersItem():
         add_group_members_request_members_item_model_json2 = add_group_members_request_members_item_model.to_dict()
         assert add_group_members_request_members_item_model_json2 == add_group_members_request_members_item_model_json
 
-class TestModel_AddGroupMembersResponse():
+
+class TestModel_AddGroupMembersResponse:
     """
     Test Class for AddGroupMembersResponse
     """
@@ -2935,11 +2595,11 @@ class TestModel_AddGroupMembersResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        error_model = {} # Error
+        error_model = {}  # Error
         error_model['code'] = 'testString'
         error_model['message'] = 'testString'
 
-        add_group_members_response_members_item_model = {} # AddGroupMembersResponseMembersItem
+        add_group_members_response_members_item_model = {}  # AddGroupMembersResponseMembersItem
         add_group_members_response_members_item_model['iam_id'] = 'testString'
         add_group_members_response_members_item_model['type'] = 'testString'
         add_group_members_response_members_item_model['created_at'] = '2019-01-01T12:00:00Z'
@@ -2957,7 +2617,9 @@ class TestModel_AddGroupMembersResponse():
         assert add_group_members_response_model != False
 
         # Construct a model instance of AddGroupMembersResponse by calling from_dict on the json representation
-        add_group_members_response_model_dict = AddGroupMembersResponse.from_dict(add_group_members_response_model_json).__dict__
+        add_group_members_response_model_dict = AddGroupMembersResponse.from_dict(
+            add_group_members_response_model_json
+        ).__dict__
         add_group_members_response_model2 = AddGroupMembersResponse(**add_group_members_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -2967,7 +2629,8 @@ class TestModel_AddGroupMembersResponse():
         add_group_members_response_model_json2 = add_group_members_response_model.to_dict()
         assert add_group_members_response_model_json2 == add_group_members_response_model_json
 
-class TestModel_AddGroupMembersResponseMembersItem():
+
+class TestModel_AddGroupMembersResponseMembersItem:
     """
     Test Class for AddGroupMembersResponseMembersItem
     """
@@ -2979,7 +2642,7 @@ class TestModel_AddGroupMembersResponseMembersItem():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        error_model = {} # Error
+        error_model = {}  # Error
         error_model['code'] = 'testString'
         error_model['message'] = 'testString'
 
@@ -2994,12 +2657,18 @@ class TestModel_AddGroupMembersResponseMembersItem():
         add_group_members_response_members_item_model_json['errors'] = [error_model]
 
         # Construct a model instance of AddGroupMembersResponseMembersItem by calling from_dict on the json representation
-        add_group_members_response_members_item_model = AddGroupMembersResponseMembersItem.from_dict(add_group_members_response_members_item_model_json)
+        add_group_members_response_members_item_model = AddGroupMembersResponseMembersItem.from_dict(
+            add_group_members_response_members_item_model_json
+        )
         assert add_group_members_response_members_item_model != False
 
         # Construct a model instance of AddGroupMembersResponseMembersItem by calling from_dict on the json representation
-        add_group_members_response_members_item_model_dict = AddGroupMembersResponseMembersItem.from_dict(add_group_members_response_members_item_model_json).__dict__
-        add_group_members_response_members_item_model2 = AddGroupMembersResponseMembersItem(**add_group_members_response_members_item_model_dict)
+        add_group_members_response_members_item_model_dict = AddGroupMembersResponseMembersItem.from_dict(
+            add_group_members_response_members_item_model_json
+        ).__dict__
+        add_group_members_response_members_item_model2 = AddGroupMembersResponseMembersItem(
+            **add_group_members_response_members_item_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert add_group_members_response_members_item_model == add_group_members_response_members_item_model2
@@ -3008,7 +2677,8 @@ class TestModel_AddGroupMembersResponseMembersItem():
         add_group_members_response_members_item_model_json2 = add_group_members_response_members_item_model.to_dict()
         assert add_group_members_response_members_item_model_json2 == add_group_members_response_members_item_model_json
 
-class TestModel_AddMembershipMultipleGroupsResponse():
+
+class TestModel_AddMembershipMultipleGroupsResponse:
     """
     Test Class for AddMembershipMultipleGroupsResponse
     """
@@ -3020,11 +2690,11 @@ class TestModel_AddMembershipMultipleGroupsResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        error_model = {} # Error
+        error_model = {}  # Error
         error_model['code'] = 'testString'
         error_model['message'] = 'testString'
 
-        add_membership_multiple_groups_response_groups_item_model = {} # AddMembershipMultipleGroupsResponseGroupsItem
+        add_membership_multiple_groups_response_groups_item_model = {}  # AddMembershipMultipleGroupsResponseGroupsItem
         add_membership_multiple_groups_response_groups_item_model['access_group_id'] = 'testString'
         add_membership_multiple_groups_response_groups_item_model['status_code'] = 38
         add_membership_multiple_groups_response_groups_item_model['trace'] = 'testString'
@@ -3033,15 +2703,23 @@ class TestModel_AddMembershipMultipleGroupsResponse():
         # Construct a json representation of a AddMembershipMultipleGroupsResponse model
         add_membership_multiple_groups_response_model_json = {}
         add_membership_multiple_groups_response_model_json['iam_id'] = 'testString'
-        add_membership_multiple_groups_response_model_json['groups'] = [add_membership_multiple_groups_response_groups_item_model]
+        add_membership_multiple_groups_response_model_json['groups'] = [
+            add_membership_multiple_groups_response_groups_item_model
+        ]
 
         # Construct a model instance of AddMembershipMultipleGroupsResponse by calling from_dict on the json representation
-        add_membership_multiple_groups_response_model = AddMembershipMultipleGroupsResponse.from_dict(add_membership_multiple_groups_response_model_json)
+        add_membership_multiple_groups_response_model = AddMembershipMultipleGroupsResponse.from_dict(
+            add_membership_multiple_groups_response_model_json
+        )
         assert add_membership_multiple_groups_response_model != False
 
         # Construct a model instance of AddMembershipMultipleGroupsResponse by calling from_dict on the json representation
-        add_membership_multiple_groups_response_model_dict = AddMembershipMultipleGroupsResponse.from_dict(add_membership_multiple_groups_response_model_json).__dict__
-        add_membership_multiple_groups_response_model2 = AddMembershipMultipleGroupsResponse(**add_membership_multiple_groups_response_model_dict)
+        add_membership_multiple_groups_response_model_dict = AddMembershipMultipleGroupsResponse.from_dict(
+            add_membership_multiple_groups_response_model_json
+        ).__dict__
+        add_membership_multiple_groups_response_model2 = AddMembershipMultipleGroupsResponse(
+            **add_membership_multiple_groups_response_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert add_membership_multiple_groups_response_model == add_membership_multiple_groups_response_model2
@@ -3050,7 +2728,8 @@ class TestModel_AddMembershipMultipleGroupsResponse():
         add_membership_multiple_groups_response_model_json2 = add_membership_multiple_groups_response_model.to_dict()
         assert add_membership_multiple_groups_response_model_json2 == add_membership_multiple_groups_response_model_json
 
-class TestModel_AddMembershipMultipleGroupsResponseGroupsItem():
+
+class TestModel_AddMembershipMultipleGroupsResponseGroupsItem:
     """
     Test Class for AddMembershipMultipleGroupsResponseGroupsItem
     """
@@ -3062,7 +2741,7 @@ class TestModel_AddMembershipMultipleGroupsResponseGroupsItem():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        error_model = {} # Error
+        error_model = {}  # Error
         error_model['code'] = 'testString'
         error_model['message'] = 'testString'
 
@@ -3074,21 +2753,40 @@ class TestModel_AddMembershipMultipleGroupsResponseGroupsItem():
         add_membership_multiple_groups_response_groups_item_model_json['errors'] = [error_model]
 
         # Construct a model instance of AddMembershipMultipleGroupsResponseGroupsItem by calling from_dict on the json representation
-        add_membership_multiple_groups_response_groups_item_model = AddMembershipMultipleGroupsResponseGroupsItem.from_dict(add_membership_multiple_groups_response_groups_item_model_json)
+        add_membership_multiple_groups_response_groups_item_model = (
+            AddMembershipMultipleGroupsResponseGroupsItem.from_dict(
+                add_membership_multiple_groups_response_groups_item_model_json
+            )
+        )
         assert add_membership_multiple_groups_response_groups_item_model != False
 
         # Construct a model instance of AddMembershipMultipleGroupsResponseGroupsItem by calling from_dict on the json representation
-        add_membership_multiple_groups_response_groups_item_model_dict = AddMembershipMultipleGroupsResponseGroupsItem.from_dict(add_membership_multiple_groups_response_groups_item_model_json).__dict__
-        add_membership_multiple_groups_response_groups_item_model2 = AddMembershipMultipleGroupsResponseGroupsItem(**add_membership_multiple_groups_response_groups_item_model_dict)
+        add_membership_multiple_groups_response_groups_item_model_dict = (
+            AddMembershipMultipleGroupsResponseGroupsItem.from_dict(
+                add_membership_multiple_groups_response_groups_item_model_json
+            ).__dict__
+        )
+        add_membership_multiple_groups_response_groups_item_model2 = AddMembershipMultipleGroupsResponseGroupsItem(
+            **add_membership_multiple_groups_response_groups_item_model_dict
+        )
 
         # Verify the model instances are equivalent
-        assert add_membership_multiple_groups_response_groups_item_model == add_membership_multiple_groups_response_groups_item_model2
+        assert (
+            add_membership_multiple_groups_response_groups_item_model
+            == add_membership_multiple_groups_response_groups_item_model2
+        )
 
         # Convert model instance back to dict and verify no loss of data
-        add_membership_multiple_groups_response_groups_item_model_json2 = add_membership_multiple_groups_response_groups_item_model.to_dict()
-        assert add_membership_multiple_groups_response_groups_item_model_json2 == add_membership_multiple_groups_response_groups_item_model_json
+        add_membership_multiple_groups_response_groups_item_model_json2 = (
+            add_membership_multiple_groups_response_groups_item_model.to_dict()
+        )
+        assert (
+            add_membership_multiple_groups_response_groups_item_model_json2
+            == add_membership_multiple_groups_response_groups_item_model_json
+        )
 
-class TestModel_DeleteFromAllGroupsResponse():
+
+class TestModel_DeleteFromAllGroupsResponse:
     """
     Test Class for DeleteFromAllGroupsResponse
     """
@@ -3100,11 +2798,11 @@ class TestModel_DeleteFromAllGroupsResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        error_model = {} # Error
+        error_model = {}  # Error
         error_model['code'] = 'testString'
         error_model['message'] = 'testString'
 
-        delete_from_all_groups_response_groups_item_model = {} # DeleteFromAllGroupsResponseGroupsItem
+        delete_from_all_groups_response_groups_item_model = {}  # DeleteFromAllGroupsResponseGroupsItem
         delete_from_all_groups_response_groups_item_model['access_group_id'] = 'testString'
         delete_from_all_groups_response_groups_item_model['status_code'] = 38
         delete_from_all_groups_response_groups_item_model['trace'] = 'testString'
@@ -3116,12 +2814,18 @@ class TestModel_DeleteFromAllGroupsResponse():
         delete_from_all_groups_response_model_json['groups'] = [delete_from_all_groups_response_groups_item_model]
 
         # Construct a model instance of DeleteFromAllGroupsResponse by calling from_dict on the json representation
-        delete_from_all_groups_response_model = DeleteFromAllGroupsResponse.from_dict(delete_from_all_groups_response_model_json)
+        delete_from_all_groups_response_model = DeleteFromAllGroupsResponse.from_dict(
+            delete_from_all_groups_response_model_json
+        )
         assert delete_from_all_groups_response_model != False
 
         # Construct a model instance of DeleteFromAllGroupsResponse by calling from_dict on the json representation
-        delete_from_all_groups_response_model_dict = DeleteFromAllGroupsResponse.from_dict(delete_from_all_groups_response_model_json).__dict__
-        delete_from_all_groups_response_model2 = DeleteFromAllGroupsResponse(**delete_from_all_groups_response_model_dict)
+        delete_from_all_groups_response_model_dict = DeleteFromAllGroupsResponse.from_dict(
+            delete_from_all_groups_response_model_json
+        ).__dict__
+        delete_from_all_groups_response_model2 = DeleteFromAllGroupsResponse(
+            **delete_from_all_groups_response_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert delete_from_all_groups_response_model == delete_from_all_groups_response_model2
@@ -3130,7 +2834,8 @@ class TestModel_DeleteFromAllGroupsResponse():
         delete_from_all_groups_response_model_json2 = delete_from_all_groups_response_model.to_dict()
         assert delete_from_all_groups_response_model_json2 == delete_from_all_groups_response_model_json
 
-class TestModel_DeleteFromAllGroupsResponseGroupsItem():
+
+class TestModel_DeleteFromAllGroupsResponseGroupsItem:
     """
     Test Class for DeleteFromAllGroupsResponseGroupsItem
     """
@@ -3142,7 +2847,7 @@ class TestModel_DeleteFromAllGroupsResponseGroupsItem():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        error_model = {} # Error
+        error_model = {}  # Error
         error_model['code'] = 'testString'
         error_model['message'] = 'testString'
 
@@ -3154,21 +2859,33 @@ class TestModel_DeleteFromAllGroupsResponseGroupsItem():
         delete_from_all_groups_response_groups_item_model_json['errors'] = [error_model]
 
         # Construct a model instance of DeleteFromAllGroupsResponseGroupsItem by calling from_dict on the json representation
-        delete_from_all_groups_response_groups_item_model = DeleteFromAllGroupsResponseGroupsItem.from_dict(delete_from_all_groups_response_groups_item_model_json)
+        delete_from_all_groups_response_groups_item_model = DeleteFromAllGroupsResponseGroupsItem.from_dict(
+            delete_from_all_groups_response_groups_item_model_json
+        )
         assert delete_from_all_groups_response_groups_item_model != False
 
         # Construct a model instance of DeleteFromAllGroupsResponseGroupsItem by calling from_dict on the json representation
-        delete_from_all_groups_response_groups_item_model_dict = DeleteFromAllGroupsResponseGroupsItem.from_dict(delete_from_all_groups_response_groups_item_model_json).__dict__
-        delete_from_all_groups_response_groups_item_model2 = DeleteFromAllGroupsResponseGroupsItem(**delete_from_all_groups_response_groups_item_model_dict)
+        delete_from_all_groups_response_groups_item_model_dict = DeleteFromAllGroupsResponseGroupsItem.from_dict(
+            delete_from_all_groups_response_groups_item_model_json
+        ).__dict__
+        delete_from_all_groups_response_groups_item_model2 = DeleteFromAllGroupsResponseGroupsItem(
+            **delete_from_all_groups_response_groups_item_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert delete_from_all_groups_response_groups_item_model == delete_from_all_groups_response_groups_item_model2
 
         # Convert model instance back to dict and verify no loss of data
-        delete_from_all_groups_response_groups_item_model_json2 = delete_from_all_groups_response_groups_item_model.to_dict()
-        assert delete_from_all_groups_response_groups_item_model_json2 == delete_from_all_groups_response_groups_item_model_json
+        delete_from_all_groups_response_groups_item_model_json2 = (
+            delete_from_all_groups_response_groups_item_model.to_dict()
+        )
+        assert (
+            delete_from_all_groups_response_groups_item_model_json2
+            == delete_from_all_groups_response_groups_item_model_json
+        )
 
-class TestModel_DeleteGroupBulkMembersResponse():
+
+class TestModel_DeleteGroupBulkMembersResponse:
     """
     Test Class for DeleteGroupBulkMembersResponse
     """
@@ -3180,11 +2897,11 @@ class TestModel_DeleteGroupBulkMembersResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        error_model = {} # Error
+        error_model = {}  # Error
         error_model['code'] = 'testString'
         error_model['message'] = 'testString'
 
-        delete_group_bulk_members_response_members_item_model = {} # DeleteGroupBulkMembersResponseMembersItem
+        delete_group_bulk_members_response_members_item_model = {}  # DeleteGroupBulkMembersResponseMembersItem
         delete_group_bulk_members_response_members_item_model['iam_id'] = 'testString'
         delete_group_bulk_members_response_members_item_model['trace'] = 'testString'
         delete_group_bulk_members_response_members_item_model['status_code'] = 38
@@ -3193,15 +2910,23 @@ class TestModel_DeleteGroupBulkMembersResponse():
         # Construct a json representation of a DeleteGroupBulkMembersResponse model
         delete_group_bulk_members_response_model_json = {}
         delete_group_bulk_members_response_model_json['access_group_id'] = 'testString'
-        delete_group_bulk_members_response_model_json['members'] = [delete_group_bulk_members_response_members_item_model]
+        delete_group_bulk_members_response_model_json['members'] = [
+            delete_group_bulk_members_response_members_item_model
+        ]
 
         # Construct a model instance of DeleteGroupBulkMembersResponse by calling from_dict on the json representation
-        delete_group_bulk_members_response_model = DeleteGroupBulkMembersResponse.from_dict(delete_group_bulk_members_response_model_json)
+        delete_group_bulk_members_response_model = DeleteGroupBulkMembersResponse.from_dict(
+            delete_group_bulk_members_response_model_json
+        )
         assert delete_group_bulk_members_response_model != False
 
         # Construct a model instance of DeleteGroupBulkMembersResponse by calling from_dict on the json representation
-        delete_group_bulk_members_response_model_dict = DeleteGroupBulkMembersResponse.from_dict(delete_group_bulk_members_response_model_json).__dict__
-        delete_group_bulk_members_response_model2 = DeleteGroupBulkMembersResponse(**delete_group_bulk_members_response_model_dict)
+        delete_group_bulk_members_response_model_dict = DeleteGroupBulkMembersResponse.from_dict(
+            delete_group_bulk_members_response_model_json
+        ).__dict__
+        delete_group_bulk_members_response_model2 = DeleteGroupBulkMembersResponse(
+            **delete_group_bulk_members_response_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert delete_group_bulk_members_response_model == delete_group_bulk_members_response_model2
@@ -3210,7 +2935,8 @@ class TestModel_DeleteGroupBulkMembersResponse():
         delete_group_bulk_members_response_model_json2 = delete_group_bulk_members_response_model.to_dict()
         assert delete_group_bulk_members_response_model_json2 == delete_group_bulk_members_response_model_json
 
-class TestModel_DeleteGroupBulkMembersResponseMembersItem():
+
+class TestModel_DeleteGroupBulkMembersResponseMembersItem:
     """
     Test Class for DeleteGroupBulkMembersResponseMembersItem
     """
@@ -3222,7 +2948,7 @@ class TestModel_DeleteGroupBulkMembersResponseMembersItem():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        error_model = {} # Error
+        error_model = {}  # Error
         error_model['code'] = 'testString'
         error_model['message'] = 'testString'
 
@@ -3234,21 +2960,38 @@ class TestModel_DeleteGroupBulkMembersResponseMembersItem():
         delete_group_bulk_members_response_members_item_model_json['errors'] = [error_model]
 
         # Construct a model instance of DeleteGroupBulkMembersResponseMembersItem by calling from_dict on the json representation
-        delete_group_bulk_members_response_members_item_model = DeleteGroupBulkMembersResponseMembersItem.from_dict(delete_group_bulk_members_response_members_item_model_json)
+        delete_group_bulk_members_response_members_item_model = DeleteGroupBulkMembersResponseMembersItem.from_dict(
+            delete_group_bulk_members_response_members_item_model_json
+        )
         assert delete_group_bulk_members_response_members_item_model != False
 
         # Construct a model instance of DeleteGroupBulkMembersResponseMembersItem by calling from_dict on the json representation
-        delete_group_bulk_members_response_members_item_model_dict = DeleteGroupBulkMembersResponseMembersItem.from_dict(delete_group_bulk_members_response_members_item_model_json).__dict__
-        delete_group_bulk_members_response_members_item_model2 = DeleteGroupBulkMembersResponseMembersItem(**delete_group_bulk_members_response_members_item_model_dict)
+        delete_group_bulk_members_response_members_item_model_dict = (
+            DeleteGroupBulkMembersResponseMembersItem.from_dict(
+                delete_group_bulk_members_response_members_item_model_json
+            ).__dict__
+        )
+        delete_group_bulk_members_response_members_item_model2 = DeleteGroupBulkMembersResponseMembersItem(
+            **delete_group_bulk_members_response_members_item_model_dict
+        )
 
         # Verify the model instances are equivalent
-        assert delete_group_bulk_members_response_members_item_model == delete_group_bulk_members_response_members_item_model2
+        assert (
+            delete_group_bulk_members_response_members_item_model
+            == delete_group_bulk_members_response_members_item_model2
+        )
 
         # Convert model instance back to dict and verify no loss of data
-        delete_group_bulk_members_response_members_item_model_json2 = delete_group_bulk_members_response_members_item_model.to_dict()
-        assert delete_group_bulk_members_response_members_item_model_json2 == delete_group_bulk_members_response_members_item_model_json
+        delete_group_bulk_members_response_members_item_model_json2 = (
+            delete_group_bulk_members_response_members_item_model.to_dict()
+        )
+        assert (
+            delete_group_bulk_members_response_members_item_model_json2
+            == delete_group_bulk_members_response_members_item_model_json
+        )
 
-class TestModel_Error():
+
+class TestModel_Error:
     """
     Test Class for Error
     """
@@ -3278,7 +3021,8 @@ class TestModel_Error():
         error_model_json2 = error_model.to_dict()
         assert error_model_json2 == error_model_json
 
-class TestModel_Group():
+
+class TestModel_Group:
     """
     Test Class for Group
     """
@@ -3312,7 +3056,8 @@ class TestModel_Group():
         group_model_json2 = group_model.to_dict()
         assert group_model_json2 == group_model_json
 
-class TestModel_GroupMembersList():
+
+class TestModel_GroupMembersList:
     """
     Test Class for GroupMembersList
     """
@@ -3324,10 +3069,10 @@ class TestModel_GroupMembersList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        href_struct_model = {} # HrefStruct
+        href_struct_model = {}  # HrefStruct
         href_struct_model['href'] = 'testString'
 
-        list_group_members_response_member_model = {} # ListGroupMembersResponseMember
+        list_group_members_response_member_model = {}  # ListGroupMembersResponseMember
         list_group_members_response_member_model['iam_id'] = 'testString'
         list_group_members_response_member_model['type'] = 'testString'
         list_group_members_response_member_model['membership_type'] = 'testString'
@@ -3364,7 +3109,8 @@ class TestModel_GroupMembersList():
         group_members_list_model_json2 = group_members_list_model.to_dict()
         assert group_members_list_model_json2 == group_members_list_model_json
 
-class TestModel_GroupsList():
+
+class TestModel_GroupsList:
     """
     Test Class for GroupsList
     """
@@ -3376,10 +3122,10 @@ class TestModel_GroupsList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        href_struct_model = {} # HrefStruct
+        href_struct_model = {}  # HrefStruct
         href_struct_model['href'] = 'testString'
 
-        group_model = {} # Group
+        group_model = {}  # Group
         group_model['id'] = 'testString'
         group_model['name'] = 'testString'
         group_model['description'] = 'testString'
@@ -3413,7 +3159,8 @@ class TestModel_GroupsList():
         groups_list_model_json2 = groups_list_model.to_dict()
         assert groups_list_model_json2 == groups_list_model_json
 
-class TestModel_HrefStruct():
+
+class TestModel_HrefStruct:
     """
     Test Class for HrefStruct
     """
@@ -3442,7 +3189,8 @@ class TestModel_HrefStruct():
         href_struct_model_json2 = href_struct_model.to_dict()
         assert href_struct_model_json2 == href_struct_model_json
 
-class TestModel_ListGroupMembersResponseMember():
+
+class TestModel_ListGroupMembersResponseMember:
     """
     Test Class for ListGroupMembersResponseMember
     """
@@ -3465,12 +3213,18 @@ class TestModel_ListGroupMembersResponseMember():
         list_group_members_response_member_model_json['created_by_id'] = 'testString'
 
         # Construct a model instance of ListGroupMembersResponseMember by calling from_dict on the json representation
-        list_group_members_response_member_model = ListGroupMembersResponseMember.from_dict(list_group_members_response_member_model_json)
+        list_group_members_response_member_model = ListGroupMembersResponseMember.from_dict(
+            list_group_members_response_member_model_json
+        )
         assert list_group_members_response_member_model != False
 
         # Construct a model instance of ListGroupMembersResponseMember by calling from_dict on the json representation
-        list_group_members_response_member_model_dict = ListGroupMembersResponseMember.from_dict(list_group_members_response_member_model_json).__dict__
-        list_group_members_response_member_model2 = ListGroupMembersResponseMember(**list_group_members_response_member_model_dict)
+        list_group_members_response_member_model_dict = ListGroupMembersResponseMember.from_dict(
+            list_group_members_response_member_model_json
+        ).__dict__
+        list_group_members_response_member_model2 = ListGroupMembersResponseMember(
+            **list_group_members_response_member_model_dict
+        )
 
         # Verify the model instances are equivalent
         assert list_group_members_response_member_model == list_group_members_response_member_model2
@@ -3479,7 +3233,8 @@ class TestModel_ListGroupMembersResponseMember():
         list_group_members_response_member_model_json2 = list_group_members_response_member_model.to_dict()
         assert list_group_members_response_member_model_json2 == list_group_members_response_member_model_json
 
-class TestModel_Rule():
+
+class TestModel_Rule:
     """
     Test Class for Rule
     """
@@ -3491,7 +3246,7 @@ class TestModel_Rule():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        rule_conditions_model = {} # RuleConditions
+        rule_conditions_model = {}  # RuleConditions
         rule_conditions_model['claim'] = 'testString'
         rule_conditions_model['operator'] = 'EQUALS'
         rule_conditions_model['value'] = 'testString'
@@ -3525,7 +3280,8 @@ class TestModel_Rule():
         rule_model_json2 = rule_model.to_dict()
         assert rule_model_json2 == rule_model_json
 
-class TestModel_RuleConditions():
+
+class TestModel_RuleConditions:
     """
     Test Class for RuleConditions
     """
@@ -3556,7 +3312,8 @@ class TestModel_RuleConditions():
         rule_conditions_model_json2 = rule_conditions_model.to_dict()
         assert rule_conditions_model_json2 == rule_conditions_model_json
 
-class TestModel_RulesList():
+
+class TestModel_RulesList:
     """
     Test Class for RulesList
     """
@@ -3568,12 +3325,12 @@ class TestModel_RulesList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        rule_conditions_model = {} # RuleConditions
+        rule_conditions_model = {}  # RuleConditions
         rule_conditions_model['claim'] = 'testString'
         rule_conditions_model['operator'] = 'EQUALS'
         rule_conditions_model['value'] = 'testString'
 
-        rule_model = {} # Rule
+        rule_model = {}  # Rule
         rule_model['id'] = 'testString'
         rule_model['name'] = 'testString'
         rule_model['expiration'] = 38

@@ -27,9 +27,7 @@ import urllib
 from ibm_platform_services.ibm_cloud_shell_v1 import *
 
 
-_service = IbmCloudShellV1(
-    authenticator=NoAuthAuthenticator()
-    )
+_service = IbmCloudShellV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://api.shell.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -39,7 +37,8 @@ _service.set_service_url(_base_url)
 ##############################################################################
 # region
 
-class TestGetAccountSettings():
+
+class TestGetAccountSettings:
     """
     Test Class for get_account_settings
     """
@@ -61,25 +60,17 @@ class TestGetAccountSettings():
         # Set up mock
         url = self.preprocess_url(_base_url + '/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
         mock_response = '{"_id": "id", "_rev": "rev", "account_id": "account_id", "created_at": 10, "created_by": "created_by", "default_enable_new_features": false, "default_enable_new_regions": true, "enabled": false, "features": [{"enabled": false, "key": "key"}], "regions": [{"enabled": false, "key": "key"}], "type": "type", "updated_at": 10, "updated_by": "updated_by"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = '12345678-abcd-1a2b-a1b2-1234567890ab'
 
         # Invoke method
-        response = _service.get_account_settings(
-            account_id,
-            headers={}
-        )
+        response = _service.get_account_settings(account_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
-
 
     @responses.activate
     def test_get_account_settings_value_error(self):
@@ -89,11 +80,7 @@ class TestGetAccountSettings():
         # Set up mock
         url = self.preprocess_url(_base_url + '/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
         mock_response = '{"_id": "id", "_rev": "rev", "account_id": "account_id", "created_at": 10, "created_by": "created_by", "default_enable_new_features": false, "default_enable_new_regions": true, "enabled": false, "features": [{"enabled": false, "key": "key"}], "regions": [{"enabled": false, "key": "key"}], "type": "type", "updated_at": 10, "updated_by": "updated_by"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = '12345678-abcd-1a2b-a1b2-1234567890ab'
@@ -103,13 +90,12 @@ class TestGetAccountSettings():
             "account_id": account_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_account_settings(**req_copy)
 
 
-
-class TestUpdateAccountSettings():
+class TestUpdateAccountSettings:
     """
     Test Class for update_account_settings
     """
@@ -131,35 +117,35 @@ class TestUpdateAccountSettings():
         # Set up mock
         url = self.preprocess_url(_base_url + '/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
         mock_response = '{"_id": "id", "_rev": "rev", "account_id": "account_id", "created_at": 10, "created_by": "created_by", "default_enable_new_features": false, "default_enable_new_regions": true, "enabled": false, "features": [{"enabled": false, "key": "key"}], "regions": [{"enabled": false, "key": "key"}], "type": "type", "updated_at": 10, "updated_by": "updated_by"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
         # Construct a dict representation of a Feature model
-        feature_model = [{
-            'enabled': True,
-            'key': 'server.file_manager',
-        },
-        {
-            'enabled': True,
-            'key': 'server.web_preview',
-        }]
+        feature_model = [
+            {
+                'enabled': True,
+                'key': 'server.file_manager',
+            },
+            {
+                'enabled': True,
+                'key': 'server.web_preview',
+            },
+        ]
 
         # Construct a dict representation of a RegionSetting model
-        region_setting_model = [{
-            'enabled': True,
-            'key': 'eu-de',
-        },
-        {
-            'enabled': True,
-            'key': 'jp-tok',
-        },
-        {
-            'enabled': True,
-            'key': 'us-south',
-        }]
+        region_setting_model = [
+            {
+                'enabled': True,
+                'key': 'eu-de',
+            },
+            {
+                'enabled': True,
+                'key': 'jp-tok',
+            },
+            {
+                'enabled': True,
+                'key': 'us-south',
+            },
+        ]
 
         # Set up parameter values
         account_id = '12345678-abcd-1a2b-a1b2-1234567890ab'
@@ -179,7 +165,7 @@ class TestUpdateAccountSettings():
             enabled=enabled,
             features=features,
             regions=regions,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -194,7 +180,6 @@ class TestUpdateAccountSettings():
         assert req_body['features'] == feature_model
         assert req_body['regions'] == region_setting_model
 
-
     @responses.activate
     def test_update_account_settings_value_error(self):
         """
@@ -203,35 +188,35 @@ class TestUpdateAccountSettings():
         # Set up mock
         url = self.preprocess_url(_base_url + '/api/v1/user/accounts/12345678-abcd-1a2b-a1b2-1234567890ab/settings')
         mock_response = '{"_id": "id", "_rev": "rev", "account_id": "account_id", "created_at": 10, "created_by": "created_by", "default_enable_new_features": false, "default_enable_new_regions": true, "enabled": false, "features": [{"enabled": false, "key": "key"}], "regions": [{"enabled": false, "key": "key"}], "type": "type", "updated_at": 10, "updated_by": "updated_by"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
         # Construct a dict representation of a Feature model
-        feature_model = [{
-            'enabled': True,
-            'key': 'server.file_manager',
-        },
-        {
-            'enabled': True,
-            'key': 'server.web_preview',
-        }]
+        feature_model = [
+            {
+                'enabled': True,
+                'key': 'server.file_manager',
+            },
+            {
+                'enabled': True,
+                'key': 'server.web_preview',
+            },
+        ]
 
         # Construct a dict representation of a RegionSetting model
-        region_setting_model = [{
-            'enabled': True,
-            'key': 'eu-de',
-        },
-        {
-            'enabled': True,
-            'key': 'jp-tok',
-        },
-        {
-            'enabled': True,
-            'key': 'us-south',
-        }]
+        region_setting_model = [
+            {
+                'enabled': True,
+                'key': 'eu-de',
+            },
+            {
+                'enabled': True,
+                'key': 'jp-tok',
+            },
+            {
+                'enabled': True,
+                'key': 'us-south',
+            },
+        ]
 
         # Set up parameter values
         account_id = '12345678-abcd-1a2b-a1b2-1234567890ab'
@@ -247,10 +232,9 @@ class TestUpdateAccountSettings():
             "account_id": account_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_account_settings(**req_copy)
-
 
 
 # endregion
@@ -263,7 +247,7 @@ class TestUpdateAccountSettings():
 # Start of Model Tests
 ##############################################################################
 # region
-class AccountSettingsUnitTests():
+class AccountSettingsUnitTests:
     """
     Test Class for AccountSettings
     """
@@ -274,27 +258,31 @@ class AccountSettingsUnitTests():
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
-        feature_model = [{
-            'enabled': True,
-            'key': 'server.file_manager',
-        },
-        {
-            'enabled': True,
-            'key': 'server.web_preview',
-        }]
+        feature_model = [
+            {
+                'enabled': True,
+                'key': 'server.file_manager',
+            },
+            {
+                'enabled': True,
+                'key': 'server.web_preview',
+            },
+        ]
 
-        region_setting_model = [{
-            'enabled': True,
-            'key': 'eu-de',
-        },
-        {
-            'enabled': True,
-            'key': 'jp-tok',
-        },
-        {
-            'enabled': True,
-            'key': 'us-south',
-        }]
+        region_setting_model = [
+            {
+                'enabled': True,
+                'key': 'eu-de',
+            },
+            {
+                'enabled': True,
+                'key': 'jp-tok',
+            },
+            {
+                'enabled': True,
+                'key': 'us-south',
+            },
+        ]
 
         # Construct a json representation of a AccountSettings model
         account_settings_model_json = {}
@@ -327,7 +315,8 @@ class AccountSettingsUnitTests():
         account_settings_model_json2 = account_settings_model.to_dict()
         assert account_settings_model_json2 == account_settings_model_json
 
-class FeatureUnitTests():
+
+class FeatureUnitTests:
     """
     Test Class for Feature
     """
@@ -357,7 +346,8 @@ class FeatureUnitTests():
         feature_model_json2 = feature_model.to_dict()
         assert feature_model_json2 == feature_model_json
 
-class RegionSettingUnitTests():
+
+class RegionSettingUnitTests:
     """
     Test Class for RegionSetting
     """

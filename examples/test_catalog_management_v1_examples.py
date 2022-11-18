@@ -57,7 +57,7 @@ offering_instance_id = None
 # Start of Examples for Service: CatalogManagementV1
 ##############################################################################
 # region
-class TestCatalogManagementV1Examples():
+class TestCatalogManagementV1Examples:
     """
     Example Test Class for CatalogManagementV1
     """
@@ -116,10 +116,7 @@ class TestCatalogManagementV1Examples():
             # begin-create_catalog
 
             catalog = self.catalog_management_service.create_catalog(
-                label='Catalog Management Service',
-                tags=['python', 'sdk'],
-                kind='vpe',
-                owning_account=account_id
+                label='Catalog Management Service', tags=['python', 'sdk'], kind='vpe', owning_account=account_id
             ).get_result()
 
             print(json.dumps(catalog, indent=2))
@@ -141,9 +138,7 @@ class TestCatalogManagementV1Examples():
             print('\nget_catalog() result:')
             # begin-get_catalog
 
-            catalog = self.catalog_management_service.get_catalog(
-                catalog_identifier=catalog_id
-            ).get_result()
+            catalog = self.catalog_management_service.get_catalog(catalog_identifier=catalog_id).get_result()
 
             print(json.dumps(catalog, indent=2))
 
@@ -205,8 +200,7 @@ class TestCatalogManagementV1Examples():
             # begin-create_offering
 
             offering = self.catalog_management_service.create_offering(
-                catalog_identifier=catalog_id,
-                name='offering-name'
+                catalog_identifier=catalog_id, name='offering-name'
             ).get_result()
 
             print(json.dumps(offering, indent=2))
@@ -229,8 +223,7 @@ class TestCatalogManagementV1Examples():
             # begin-get_offering
 
             offering = self.catalog_management_service.get_offering(
-                catalog_identifier=catalog_id,
-                offering_id=offering_id
+                catalog_identifier=catalog_id, offering_id=offering_id
             ).get_result()
 
             print(json.dumps(offering, indent=2))
@@ -251,10 +244,7 @@ class TestCatalogManagementV1Examples():
             # begin-replace_offering
 
             offering = self.catalog_management_service.replace_offering(
-                catalog_identifier=catalog_id,
-                offering_id=offering_id,
-                id=offering_id,
-                name='updated-offering-name'
+                catalog_identifier=catalog_id, offering_id=offering_id, id=offering_id, name='updated-offering-name'
             ).get_result()
 
             print(json.dumps(offering, indent=2))
@@ -275,9 +265,7 @@ class TestCatalogManagementV1Examples():
             # pager
 
             offering_search_result = self.catalog_management_service.list_offerings(
-                catalog_identifier=catalog_id,
-                limit=100,
-                offset=0
+                catalog_identifier=catalog_id, limit=100, offset=0
             ).get_result()
 
             print(json.dumps(offering_search_result, indent=2))
@@ -305,7 +293,7 @@ class TestCatalogManagementV1Examples():
                 offering_id=offering_id,
                 target_version='0.0.2',
                 repo_type='git_public',
-                x_auth_token=git_auth_token_for_public_repo
+                x_auth_token=git_auth_token_for_public_repo,
             ).get_result()
 
             print(json.dumps(offering, indent=2))
@@ -373,7 +361,7 @@ class TestCatalogManagementV1Examples():
                 parent_id='us-south',
                 kind='vpe',
                 publish=publish_object_model,
-                state=state_model
+                state=state_model,
             ).get_result()
 
             print(json.dumps(catalog_object, indent=2))
@@ -396,8 +384,7 @@ class TestCatalogManagementV1Examples():
             # begin-get_offering_audit
 
             audit_log = self.catalog_management_service.get_offering_audit(
-                catalog_identifier=catalog_id,
-                offering_id=offering_id
+                catalog_identifier=catalog_id, offering_id=offering_id
             ).get_result()
 
             print(json.dumps(audit_log, indent=2))
@@ -434,13 +421,10 @@ class TestCatalogManagementV1Examples():
         try:
             # begin-update_catalog_account
 
-            include_all_account_filter = {
-                'include_all': True
-            }
+            include_all_account_filter = {'include_all': True}
 
             response = self.catalog_management_service.update_catalog_account(
-                account_id=account_id,
-                account_filters=[include_all_account_filter]
+                account_id=account_id, account_filters=[include_all_account_filter]
             )
 
             # end-update_catalog_account
@@ -496,9 +480,7 @@ class TestCatalogManagementV1Examples():
             print('\nget_catalog_audit() result:')
             # begin-get_catalog_audit
 
-            audit_log = self.catalog_management_service.get_catalog_audit(
-                catalog_identifier=catalog_id
-            ).get_result()
+            audit_log = self.catalog_management_service.get_catalog_audit(catalog_identifier=catalog_id).get_result()
 
             print(json.dumps(audit_log, indent=2))
 
@@ -540,7 +522,7 @@ class TestCatalogManagementV1Examples():
                 target_kinds=['roks'],
                 zipurl='https://github.com/rhm-samples/node-red-operator/blob/master/node-red-operator/bundle/0.0.2/node-red-operator.v0.0.2.clusterserviceversion.yaml',
                 target_version='0.0.3',
-                repo_type='git_public'
+                repo_type='git_public',
             ).get_result()
 
             print(json.dumps(offering, indent=2))
@@ -561,9 +543,7 @@ class TestCatalogManagementV1Examples():
             # begin-replace_offering_icon
 
             offering = self.catalog_management_service.replace_offering_icon(
-                catalog_identifier=catalog_id,
-                offering_id=offering_id,
-                file_name='offering_icon.png'
+                catalog_identifier=catalog_id, offering_id=offering_id, file_name='offering_icon.png'
             ).get_result()
 
             print(json.dumps(offering, indent=2))
@@ -584,10 +564,7 @@ class TestCatalogManagementV1Examples():
             # begin-update_offering_ibm
 
             approval_result = self.catalog_management_service.update_offering_ibm(
-                catalog_identifier=catalog_id,
-                offering_id=offering_id,
-                approval_type='allow_request',
-                approved='true'
+                catalog_identifier=catalog_id, offering_id=offering_id, approval_type='allow_request', approved='true'
             ).get_result()
 
             print(json.dumps(approval_result, indent=2))
@@ -614,7 +591,7 @@ class TestCatalogManagementV1Examples():
                 version='0.0.2',
                 cluster_id=cluster_id,
                 region='us-south',
-                namespace='application-development-namespace'
+                namespace='application-development-namespace',
             ).get_result()
 
             print(json.dumps(list_version_update_descriptor, indent=2))
@@ -634,9 +611,7 @@ class TestCatalogManagementV1Examples():
             print('\nget_offering_about() result:')
             # begin-get_offering_about
 
-            result = self.catalog_management_service.get_offering_about(
-                version_loc_id=version_locator_id
-            ).get_result()
+            result = self.catalog_management_service.get_offering_about(version_loc_id=version_locator_id).get_result()
 
             print(json.dumps(result, indent=2))
 
@@ -656,8 +631,7 @@ class TestCatalogManagementV1Examples():
             # begin-get_offering_license
 
             result = self.catalog_management_service.get_offering_license(
-                version_loc_id=version_locator_id,
-                license_id='license-id'
+                version_loc_id=version_locator_id, license_id='license-id'
             ).get_result()
 
             print(json.dumps(result, indent=2))
@@ -696,9 +670,7 @@ class TestCatalogManagementV1Examples():
         try:
             # begin-deprecate_version
 
-            response = self.catalog_management_service.deprecate_version(
-                version_loc_id=version_locator_id
-            )
+            response = self.catalog_management_service.deprecate_version(version_loc_id=version_locator_id)
 
             # end-deprecate_version
             print('\ndeprecate_version() response status code: ', response.get_status_code())
@@ -715,9 +687,7 @@ class TestCatalogManagementV1Examples():
         try:
             # begin-account_publish_version
 
-            response = self.catalog_management_service.account_publish_version(
-                version_loc_id=version_locator_id
-            )
+            response = self.catalog_management_service.account_publish_version(version_loc_id=version_locator_id)
 
             # end-account_publish_version
             print('\naccount_publish_version() response status code: ', response.get_status_code())
@@ -734,9 +704,7 @@ class TestCatalogManagementV1Examples():
         try:
             # begin-ibm_publish_version
 
-            response = self.catalog_management_service.ibm_publish_version(
-                version_loc_id=version_locator_id
-            )
+            response = self.catalog_management_service.ibm_publish_version(version_loc_id=version_locator_id)
 
             # end-ibm_publish_version
             print('\nibm_publish_version() response status code: ', response.get_status_code())
@@ -753,9 +721,7 @@ class TestCatalogManagementV1Examples():
         try:
             # begin-public_publish_version
 
-            response = self.catalog_management_service.public_publish_version(
-                version_loc_id=version_locator_id
-            )
+            response = self.catalog_management_service.public_publish_version(version_loc_id=version_locator_id)
 
             # end-public_publish_version
             print('\npublic_publish_version() response status code: ', response.get_status_code())
@@ -772,9 +738,7 @@ class TestCatalogManagementV1Examples():
         try:
             # begin-commit_version
 
-            response = self.catalog_management_service.commit_version(
-                version_loc_id=version_locator_id
-            )
+            response = self.catalog_management_service.commit_version(version_loc_id=version_locator_id)
 
             # end-commit_version
             print('\ncommit_version() response status code: ', response.get_status_code())
@@ -792,8 +756,7 @@ class TestCatalogManagementV1Examples():
             # begin-copy_version
 
             response = self.catalog_management_service.copy_version(
-                version_loc_id=version_locator_id,
-                target_kinds=['roks']
+                version_loc_id=version_locator_id, target_kinds=['roks']
             )
 
             # end-copy_version
@@ -832,9 +795,7 @@ class TestCatalogManagementV1Examples():
             print('\nget_version() result:')
             # begin-get_version
 
-            offering = self.catalog_management_service.get_version(
-                version_loc_id=version_locator_id
-            ).get_result()
+            offering = self.catalog_management_service.get_version(version_loc_id=version_locator_id).get_result()
 
             print(json.dumps(offering, indent=2))
 
@@ -854,9 +815,7 @@ class TestCatalogManagementV1Examples():
             # begin-get_cluster
 
             cluster_info = self.catalog_management_service.get_cluster(
-                cluster_id=cluster_id,
-                region='us-south',
-                x_auth_refresh_token=bearer_token
+                cluster_id=cluster_id, region='us-south', x_auth_refresh_token=bearer_token
             ).get_result()
 
             print(json.dumps(cluster_info, indent=2))
@@ -877,9 +836,7 @@ class TestCatalogManagementV1Examples():
             # begin-get_namespaces
 
             namespace_search_result = self.catalog_management_service.get_namespaces(
-                cluster_id=cluster_id,
-                region='us-south',
-                x_auth_refresh_token=bearer_token
+                cluster_id=cluster_id, region='us-south', x_auth_refresh_token=bearer_token
             ).get_result()
 
             print(json.dumps(namespace_search_result, indent=2))
@@ -904,7 +861,7 @@ class TestCatalogManagementV1Examples():
                 cluster_id=cluster_id,
                 region='us-south',
                 all_namespaces=True,
-                version_locator_id=version_locator_id
+                version_locator_id=version_locator_id,
             ).get_result()
 
             print(json.dumps(list_operator_deploy_result, indent=2))
@@ -928,7 +885,7 @@ class TestCatalogManagementV1Examples():
                 x_auth_refresh_token=bearer_token,
                 cluster_id=cluster_id,
                 region='us-south',
-                version_locator_id=version_locator_id
+                version_locator_id=version_locator_id,
             ).get_result()
 
             print(json.dumps(list_operator_deploy_result, indent=2))
@@ -953,7 +910,7 @@ class TestCatalogManagementV1Examples():
                 cluster_id=cluster_id,
                 region='us-south',
                 all_namespaces=True,
-                version_locator_id=version_locator_id
+                version_locator_id=version_locator_id,
             ).get_result()
 
             print(json.dumps(list_operator_deploy_result, indent=2))
@@ -977,7 +934,7 @@ class TestCatalogManagementV1Examples():
                 x_auth_refresh_token=bearer_token,
                 cluster_id=cluster_id,
                 region='us-south',
-                version_locator_id=version_locator_id
+                version_locator_id=version_locator_id,
             )
 
             # end-install_version
@@ -1000,7 +957,7 @@ class TestCatalogManagementV1Examples():
                 x_auth_refresh_token=bearer_token,
                 cluster_id=cluster_id,
                 region='us-south',
-                version_locator_id=version_locator_id
+                version_locator_id=version_locator_id,
             )
 
             # end-preinstall_version
@@ -1023,7 +980,7 @@ class TestCatalogManagementV1Examples():
                 version_loc_id=version_locator_id,
                 x_auth_refresh_token=bearer_token,
                 cluster_id=cluster_id,
-                region='us-south'
+                region='us-south',
             ).get_result()
 
             print(json.dumps(install_status, indent=2))
@@ -1047,7 +1004,7 @@ class TestCatalogManagementV1Examples():
                 x_auth_refresh_token=bearer_token,
                 cluster_id=cluster_id,
                 region='us-south',
-                version_locator_id=version_locator_id
+                version_locator_id=version_locator_id,
             )
 
             # end-validate_install
@@ -1066,8 +1023,7 @@ class TestCatalogManagementV1Examples():
             # begin-get_validation_status
 
             validation = self.catalog_management_service.get_validation_status(
-                version_loc_id=version_locator_id,
-                x_auth_refresh_token=bearer_token
+                version_loc_id=version_locator_id, x_auth_refresh_token=bearer_token
             ).get_result()
 
             print(json.dumps(validation, indent=2))
@@ -1108,11 +1064,7 @@ class TestCatalogManagementV1Examples():
             # begin-search_objects
 
             object_search_result = self.catalog_management_service.search_objects(
-                query='name: object*',
-                collapse=True,
-                digest=True,
-                limit=100,
-                offset=0
+                query='name: object*', collapse=True, digest=True, limit=100, offset=0
             ).get_result()
 
             print(json.dumps(object_search_result, indent=2))
@@ -1132,9 +1084,7 @@ class TestCatalogManagementV1Examples():
             # begin-list_objects
 
             object_list_result = self.catalog_management_service.list_objects(
-                catalog_identifier=catalog_id,
-                limit=100,
-                offset=0
+                catalog_identifier=catalog_id, limit=100, offset=0
             ).get_result()
 
             print(json.dumps(object_list_result, indent=2))
@@ -1161,7 +1111,7 @@ class TestCatalogManagementV1Examples():
                 name='updated-object-name',
                 parent_id='us-south',
                 kind='vpe',
-                catalog_id=catalog_id
+                catalog_id=catalog_id,
             ).get_result()
 
             print(json.dumps(catalog_object, indent=2))
@@ -1181,8 +1131,7 @@ class TestCatalogManagementV1Examples():
             # begin-get_object
 
             catalog_object = self.catalog_management_service.get_object(
-                catalog_identifier=catalog_id,
-                object_identifier=object_id
+                catalog_identifier=catalog_id, object_identifier=object_id
             ).get_result()
 
             print(json.dumps(catalog_object, indent=2))
@@ -1202,8 +1151,7 @@ class TestCatalogManagementV1Examples():
             # begin-get_object_audit
 
             audit_log = self.catalog_management_service.get_object_audit(
-                catalog_identifier=catalog_id,
-                object_identifier=object_id
+                catalog_identifier=catalog_id, object_identifier=object_id
             ).get_result()
 
             print(json.dumps(audit_log, indent=2))
@@ -1222,8 +1170,7 @@ class TestCatalogManagementV1Examples():
             # begin-account_publish_object
 
             response = self.catalog_management_service.account_publish_object(
-                catalog_identifier=catalog_id,
-                object_identifier=object_id
+                catalog_identifier=catalog_id, object_identifier=object_id
             )
 
             # end-account_publish_object
@@ -1242,8 +1189,7 @@ class TestCatalogManagementV1Examples():
             # begin-shared_publish_object
 
             response = self.catalog_management_service.shared_publish_object(
-                catalog_identifier=catalog_id,
-                object_identifier=object_id
+                catalog_identifier=catalog_id, object_identifier=object_id
             )
 
             # end-shared_publish_object
@@ -1262,8 +1208,7 @@ class TestCatalogManagementV1Examples():
             # begin-ibm_publish_object
 
             response = self.catalog_management_service.ibm_publish_object(
-                catalog_identifier=catalog_id,
-                object_identifier=object_id
+                catalog_identifier=catalog_id, object_identifier=object_id
             )
 
             # end-ibm_publish_object
@@ -1282,8 +1227,7 @@ class TestCatalogManagementV1Examples():
             # begin-public_publish_object
 
             response = self.catalog_management_service.public_publish_object(
-                catalog_identifier=catalog_id,
-                object_identifier=object_id
+                catalog_identifier=catalog_id, object_identifier=object_id
             )
 
             # end-public_publish_object
@@ -1301,9 +1245,7 @@ class TestCatalogManagementV1Examples():
             # begin-create_object_access
 
             response = self.catalog_management_service.create_object_access(
-                catalog_identifier=catalog_id,
-                object_identifier=object_id,
-                account_identifier=account_id
+                catalog_identifier=catalog_id, object_identifier=object_id, account_identifier=account_id
             )
 
             # end-create_object_access
@@ -1322,9 +1264,7 @@ class TestCatalogManagementV1Examples():
             # begin-get_object_access
 
             object_access = self.catalog_management_service.get_object_access(
-                catalog_identifier=catalog_id,
-                object_identifier=object_id,
-                account_identifier=account_id
+                catalog_identifier=catalog_id, object_identifier=object_id, account_identifier=account_id
             ).get_result()
 
             print(json.dumps(object_access, indent=2))
@@ -1344,9 +1284,7 @@ class TestCatalogManagementV1Examples():
             # begin-add_object_access_list
 
             access_list_bulk_response = self.catalog_management_service.add_object_access_list(
-                catalog_identifier=catalog_id,
-                object_identifier=object_id,
-                accounts=[account_id]
+                catalog_identifier=catalog_id, object_identifier=object_id, accounts=[account_id]
             ).get_result()
 
             print(json.dumps(access_list_bulk_response, indent=2))
@@ -1366,8 +1304,7 @@ class TestCatalogManagementV1Examples():
             # begin-get_object_access_list
 
             object_access_list_result = self.catalog_management_service.get_object_access_list(
-                catalog_identifier=catalog_id,
-                object_identifier=object_id
+                catalog_identifier=catalog_id, object_identifier=object_id
             ).get_result()
 
             print(json.dumps(object_access_list_result, indent=2))
@@ -1397,7 +1334,7 @@ class TestCatalogManagementV1Examples():
                 version='0.0.2',
                 cluster_id=cluster_id,
                 cluster_region='us-south',
-                cluster_all_namespaces=True
+                cluster_all_namespaces=True,
             ).get_result()
 
             print(json.dumps(offering_instance, indent=2))
@@ -1451,7 +1388,7 @@ class TestCatalogManagementV1Examples():
                 version='0.0.2',
                 cluster_id=cluster_id,
                 cluster_region='us-south',
-                cluster_all_namespaces=True
+                cluster_all_namespaces=True,
             ).get_result()
 
             print(json.dumps(offering_instance, indent=2))
@@ -1469,9 +1406,7 @@ class TestCatalogManagementV1Examples():
         try:
             # begin-delete_version
 
-            response = self.catalog_management_service.delete_version(
-                version_loc_id=version_locator_id
-            )
+            response = self.catalog_management_service.delete_version(version_loc_id=version_locator_id)
 
             # end-delete_version
             print('\ndelete_version() response status code: ', response.get_status_code())
@@ -1492,7 +1427,7 @@ class TestCatalogManagementV1Examples():
                 x_auth_refresh_token=bearer_token,
                 cluster_id=cluster_id,
                 region='us-south',
-                version_locator_id=version_locator_id
+                version_locator_id=version_locator_id,
             )
 
             # end-delete_operators
@@ -1511,8 +1446,7 @@ class TestCatalogManagementV1Examples():
             # begin-delete_offering_instance
 
             response = self.catalog_management_service.delete_offering_instance(
-                instance_identifier=offering_instance_id,
-                x_auth_refresh_token=bearer_token
+                instance_identifier=offering_instance_id, x_auth_refresh_token=bearer_token
             )
 
             # end-delete_offering_instance
@@ -1531,9 +1465,7 @@ class TestCatalogManagementV1Examples():
             # begin-delete_object_access_list
 
             access_list_bulk_response = self.catalog_management_service.delete_object_access_list(
-                catalog_identifier=catalog_id,
-                object_identifier=object_id,
-                accounts=[account_id]
+                catalog_identifier=catalog_id, object_identifier=object_id, accounts=[account_id]
             ).get_result()
 
             print(json.dumps(access_list_bulk_response, indent=2))
@@ -1552,9 +1484,7 @@ class TestCatalogManagementV1Examples():
             # begin-delete_object_access
 
             response = self.catalog_management_service.delete_object_access(
-                catalog_identifier=catalog_id,
-                object_identifier=object_id,
-                account_identifier=account_id
+                catalog_identifier=catalog_id, object_identifier=object_id, account_identifier=account_id
             )
 
             # end-delete_object_access
@@ -1572,8 +1502,7 @@ class TestCatalogManagementV1Examples():
             # begin-delete_object
 
             response = self.catalog_management_service.delete_object(
-                catalog_identifier=catalog_id,
-                object_identifier=object_id
+                catalog_identifier=catalog_id, object_identifier=object_id
             )
 
             # end-delete_object
@@ -1591,8 +1520,7 @@ class TestCatalogManagementV1Examples():
             # begin-delete_offering
 
             response = self.catalog_management_service.delete_offering(
-                catalog_identifier=catalog_id,
-                offering_id=offering_id
+                catalog_identifier=catalog_id, offering_id=offering_id
             )
 
             # end-delete_offering
@@ -1609,15 +1537,14 @@ class TestCatalogManagementV1Examples():
         try:
             # begin-delete_catalog
 
-            response = self.catalog_management_service.delete_catalog(
-                catalog_identifier=catalog_id
-            )
+            response = self.catalog_management_service.delete_catalog(catalog_identifier=catalog_id)
 
             # end-delete_catalog
             print('\ndelete_catalog() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
+
 
 # endregion
 ##############################################################################

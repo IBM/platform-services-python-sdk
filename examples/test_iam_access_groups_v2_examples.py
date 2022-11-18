@@ -56,7 +56,7 @@ test_claim_rule_etag = None
 # region
 
 
-class TestIamAccessGroupsV2Examples():
+class TestIamAccessGroupsV2Examples:
     """
     Example Test Class for IamAccessGroupsV2
     """
@@ -76,8 +76,7 @@ class TestIamAccessGroupsV2Examples():
 
             # Load the configuration
             global config, test_account_id, test_profile_id
-            config = read_external_sources(
-                IamAccessGroupsV2.DEFAULT_SERVICE_NAME)
+            config = read_external_sources(IamAccessGroupsV2.DEFAULT_SERVICE_NAME)
             test_account_id = config['TEST_ACCOUNT_ID']
             test_profile_id = config['TEST_PROFILE_ID']
 
@@ -97,9 +96,7 @@ class TestIamAccessGroupsV2Examples():
             # begin-create_access_group
 
             group = iam_access_groups_service.create_access_group(
-                account_id=test_account_id,
-                name='Managers',
-                description='Group for managers'
+                account_id=test_account_id, name='Managers', description='Group for managers'
             ).get_result()
 
             print(json.dumps(group, indent=2))
@@ -121,9 +118,7 @@ class TestIamAccessGroupsV2Examples():
             print('\nget_access_group() result:')
             # begin-get_access_group
 
-            response = iam_access_groups_service.get_access_group(
-                access_group_id=test_group_id
-            )
+            response = iam_access_groups_service.get_access_group(access_group_id=test_group_id)
             group = response.get_result()
 
             print(json.dumps(group, indent=2))
@@ -148,7 +143,7 @@ class TestIamAccessGroupsV2Examples():
                 access_group_id=test_group_id,
                 if_match=test_group_etag,
                 name='Awesome Managers',
-                description='Group for awesome managers'
+                description='Group for awesome managers',
             ).get_result()
 
             print(json.dumps(group, indent=2))
@@ -191,17 +186,13 @@ class TestIamAccessGroupsV2Examples():
         try:
             print('\nadd_members_to_access_group() result:')
             # begin-add_members_to_access_group
-            member1 = AddGroupMembersRequestMembersItem(
-                iam_id='IBMid-user1', type='user')
-            member2 = AddGroupMembersRequestMembersItem(
-                iam_id='iam-ServiceId-123', type='service')
-            member3 = AddGroupMembersRequestMembersItem(
-                iam_id=test_profile_id, type='profile')
+            member1 = AddGroupMembersRequestMembersItem(iam_id='IBMid-user1', type='user')
+            member2 = AddGroupMembersRequestMembersItem(iam_id='iam-ServiceId-123', type='service')
+            member3 = AddGroupMembersRequestMembersItem(iam_id=test_profile_id, type='profile')
             members = [member1, member2, member3]
 
             add_group_members_response = iam_access_groups_service.add_members_to_access_group(
-                access_group_id=test_group_id,
-                members=members
+                access_group_id=test_group_id, members=members
             ).get_result()
 
             print(json.dumps(add_group_members_response, indent=2))
@@ -220,8 +211,7 @@ class TestIamAccessGroupsV2Examples():
             # begin-is_member_of_access_group
 
             response = iam_access_groups_service.is_member_of_access_group(
-                access_group_id=test_group_id,
-                iam_id='IBMid-user1'
+                access_group_id=test_group_id, iam_id='IBMid-user1'
             )
 
             # end-is_member_of_access_group
@@ -264,8 +254,7 @@ class TestIamAccessGroupsV2Examples():
             # begin-remove_member_from_access_group
 
             response = iam_access_groups_service.remove_member_from_access_group(
-                access_group_id=test_group_id,
-                iam_id='IBMid-user1'
+                access_group_id=test_group_id, iam_id='IBMid-user1'
             )
 
             # end-remove_member_from_access_group
@@ -284,8 +273,7 @@ class TestIamAccessGroupsV2Examples():
             # begin-remove_members_from_access_group
 
             delete_group_bulk_members_response = iam_access_groups_service.remove_members_from_access_group(
-                access_group_id=test_group_id,
-                members=['iam-ServiceId-123']
+                access_group_id=test_group_id, members=['iam-ServiceId-123']
             ).get_result()
 
             print(json.dumps(delete_group_bulk_members_response, indent=2))
@@ -305,8 +293,7 @@ class TestIamAccessGroupsV2Examples():
             # begin-remove_members_from_access_group
 
             delete_group_bulk_members_response = iam_access_groups_service.remove_members_from_access_group(
-                access_group_id=test_group_id,
-                members=[test_profile_id]
+                access_group_id=test_group_id, members=[test_profile_id]
             ).get_result()
 
             print(json.dumps(delete_group_bulk_members_response, indent=2))
@@ -326,10 +313,7 @@ class TestIamAccessGroupsV2Examples():
             # begin-add_member_to_multiple_access_groups
 
             add_membership_multiple_groups_response = iam_access_groups_service.add_member_to_multiple_access_groups(
-                account_id=test_account_id,
-                iam_id='IBMid-user1',
-                type='user',
-                groups=[test_group_id]
+                account_id=test_account_id, iam_id='IBMid-user1', type='user', groups=[test_group_id]
             ).get_result()
 
             print(json.dumps(add_membership_multiple_groups_response, indent=2))
@@ -349,8 +333,7 @@ class TestIamAccessGroupsV2Examples():
             # begin-remove_member_from_all_access_groups
 
             delete_from_all_groups_response = iam_access_groups_service.remove_member_from_all_access_groups(
-                account_id=test_account_id,
-                iam_id='IBMid-user1'
+                account_id=test_account_id, iam_id='IBMid-user1'
             ).get_result()
 
             print(json.dumps(delete_from_all_groups_response, indent=2))
@@ -369,18 +352,14 @@ class TestIamAccessGroupsV2Examples():
             print('\nadd_access_group_rule() result:')
             # begin-add_access_group_rule
 
-            rule_conditions_model = {
-                'claim': 'isManager',
-                'operator': 'EQUALS',
-                'value': 'true'
-            }
+            rule_conditions_model = {'claim': 'isManager', 'operator': 'EQUALS', 'value': 'true'}
 
             rule = iam_access_groups_service.add_access_group_rule(
                 access_group_id=test_group_id,
                 name='Manager group rule',
                 expiration=12,
                 realm_name='https://idp.example.org/SAML2"',
-                conditions=[rule_conditions_model]
+                conditions=[rule_conditions_model],
             ).get_result()
 
             print(json.dumps(rule, indent=2))
@@ -402,8 +381,7 @@ class TestIamAccessGroupsV2Examples():
             # begin-get_access_group_rule
 
             response = iam_access_groups_service.get_access_group_rule(
-                access_group_id=test_group_id,
-                rule_id=test_claim_rule_id
+                access_group_id=test_group_id, rule_id=test_claim_rule_id
             )
             rule = response.get_result()
 
@@ -425,11 +403,7 @@ class TestIamAccessGroupsV2Examples():
             print('\nreplace_access_group_rule() result:')
             # begin-replace_access_group_rule
 
-            rule_conditions_model = {
-                'claim': 'isManager',
-                'operator': 'EQUALS',
-                'value': 'true'
-            }
+            rule_conditions_model = {'claim': 'isManager', 'operator': 'EQUALS', 'value': 'true'}
 
             rule = iam_access_groups_service.replace_access_group_rule(
                 access_group_id=test_group_id,
@@ -438,7 +412,7 @@ class TestIamAccessGroupsV2Examples():
                 name='Manager group rule',
                 expiration=24,
                 realm_name='https://idp.example.org/SAML2a',
-                conditions=[rule_conditions_model]
+                conditions=[rule_conditions_model],
             ).get_result()
 
             print(json.dumps(rule, indent=2))
@@ -457,9 +431,7 @@ class TestIamAccessGroupsV2Examples():
             print('\nlist_access_group_rules() result:')
             # begin-list_access_group_rules
 
-            rules_list = iam_access_groups_service.list_access_group_rules(
-                access_group_id=test_group_id
-            ).get_result()
+            rules_list = iam_access_groups_service.list_access_group_rules(access_group_id=test_group_id).get_result()
 
             print(json.dumps(rules_list, indent=2))
 
@@ -477,8 +449,7 @@ class TestIamAccessGroupsV2Examples():
             # begin-remove_access_group_rule
 
             response = iam_access_groups_service.remove_access_group_rule(
-                access_group_id=test_group_id,
-                rule_id=test_claim_rule_id
+                access_group_id=test_group_id, rule_id=test_claim_rule_id
             )
 
             # end-remove_access_group_rule
@@ -496,9 +467,7 @@ class TestIamAccessGroupsV2Examples():
             print('\nget_account_settings() result:')
             # begin-get_account_settings
 
-            account_settings = iam_access_groups_service.get_account_settings(
-                account_id=test_account_id
-            ).get_result()
+            account_settings = iam_access_groups_service.get_account_settings(account_id=test_account_id).get_result()
 
             print(json.dumps(account_settings, indent=2))
 
@@ -517,8 +486,7 @@ class TestIamAccessGroupsV2Examples():
             # begin-update_account_settings
 
             account_settings = iam_access_groups_service.update_account_settings(
-                account_id=test_account_id,
-                public_access_enabled=True
+                account_id=test_account_id, public_access_enabled=True
             ).get_result()
 
             print(json.dumps(account_settings, indent=2))
@@ -536,15 +504,14 @@ class TestIamAccessGroupsV2Examples():
         try:
             # begin-delete_access_group
 
-            response = iam_access_groups_service.delete_access_group(
-                access_group_id=test_group_id
-            )
+            response = iam_access_groups_service.delete_access_group(access_group_id=test_group_id)
 
             # end-delete_access_group
             print('\ndelete_access_group() response status code:' + str(response.get_status_code()))
 
         except ApiException as e:
             pytest.fail(str(e))
+
 
 # endregion
 ##############################################################################

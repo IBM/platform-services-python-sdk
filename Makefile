@@ -32,4 +32,7 @@ test-examples:
 	python -m pytest examples
 
 lint:
-	./pylint.sh
+	./pylint.sh && black --check .
+
+lint-fix:
+	black .
