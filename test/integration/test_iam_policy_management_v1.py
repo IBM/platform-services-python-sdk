@@ -72,27 +72,32 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         )
 
         cls.testV2PolicySubject = V2PolicyBaseSubject(
-            attributes=[
-                V2PolicyAttribute(key='iam_id', value=cls.testUserId, operator='stringEquals')
-            ])
+            attributes=[V2PolicyAttribute(key='iam_id', value=cls.testUserId, operator='stringEquals')]
+        )
         cls.testV2PolicyResource = V2PolicyBaseResource(
             attributes=[
                 V2PolicyAttribute(key='accountId', value=cls.testAccountId, operator='stringEquals'),
                 V2PolicyAttribute(key='serviceType', value='service', operator='stringEquals'),
             ],
         )
-        cls.testV2PolicyControl = V2PolicyBaseControl(
-            grant=V2PolicyBaseControlGrant(
-                roles=[cls.testPolicyRole]
-            )
-        )
+        cls.testV2PolicyControl = V2PolicyBaseControl(grant=V2PolicyBaseControlGrant(roles=[cls.testPolicyRole]))
         cls.testV2PolicyRule = V2PolicyBaseRuleV2RuleWithConditions(
             operator='and',
             conditions=[
-                V2PolicyAttribute(key='{{environment.attributes.day_of_week}}', operator='dayOfWeekAnyOf', value=[1, 2, 3, 4, 5]),
-                V2PolicyAttribute(key='{{environment.attributes.current_time}}', operator='timeGreaterThanOrEquals', value='09:00:00+00:00'),
-                V2PolicyAttribute(key='{{environment.attributes.current_time}}', operator='timeLessThanOrEquals', value='17:00:00+00:00'),
-            ]
+                V2PolicyAttribute(
+                    key='{{environment.attributes.day_of_week}}', operator='dayOfWeekAnyOf', value=[1, 2, 3, 4, 5]
+                ),
+                V2PolicyAttribute(
+                    key='{{environment.attributes.current_time}}',
+                    operator='timeGreaterThanOrEquals',
+                    value='09:00:00+00:00',
+                ),
+                V2PolicyAttribute(
+                    key='{{environment.attributes.current_time}}',
+                    operator='timeLessThanOrEquals',
+                    value='17:00:00+00:00',
+                ),
+            ],
         )
 
         cls.testCustomRoleId = ""
@@ -463,4 +468,3 @@ class TestIamPolicyManagementV1(unittest.TestCase):
                 foundTestPolicy = True
                 break
         assert foundTestPolicy
-

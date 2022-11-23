@@ -38,6 +38,7 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
+
 class IamPolicyManagementV1(BaseService):
     """The iam_policy_management V1 service."""
 
@@ -45,23 +46,23 @@ class IamPolicyManagementV1(BaseService):
     DEFAULT_SERVICE_NAME = 'iam_policy_management'
 
     @classmethod
-    def new_instance(cls,
-                     service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'IamPolicyManagementV1':
+    def new_instance(
+        cls,
+        service_name: str = DEFAULT_SERVICE_NAME,
+    ) -> 'IamPolicyManagementV1':
         """
         Return a new client for the iam_policy_management service using the
                specified parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
-    def __init__(self,
-                 authenticator: Authenticator = None,
-                ) -> None:
+    def __init__(
+        self,
+        authenticator: Authenticator = None,
+    ) -> None:
         """
         Construct a new client for the iam_policy_management service.
 
@@ -69,17 +70,14 @@ class IamPolicyManagementV1(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self,
-                             service_url=self.DEFAULT_SERVICE_URL,
-                             authenticator=authenticator)
-
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
     # Policies
     #########################
 
-
-    def list_policies(self,
+    def list_policies(
+        self,
         account_id: str,
         *,
         accept_language: str = None,
@@ -144,12 +142,10 @@ class IamPolicyManagementV1(BaseService):
 
         if not account_id:
             raise ValueError('account_id must be provided')
-        headers = {
-            'Accept-Language': accept_language
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_policies')
+        headers = {'Accept-Language': accept_language}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_policies'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -162,7 +158,7 @@ class IamPolicyManagementV1(BaseService):
             'tag_value': tag_value,
             'sort': sort,
             'format': format,
-            'state': state
+            'state': state,
         }
 
         if 'headers' in kwargs:
@@ -171,16 +167,13 @@ class IamPolicyManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/policies'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def create_policy(self,
+    def create_policy(
+        self,
         type: str,
         subjects: List['PolicySubject'],
         roles: List['PolicyRole'],
@@ -272,21 +265,13 @@ class IamPolicyManagementV1(BaseService):
         subjects = [convert_model(x) for x in subjects]
         roles = [convert_model(x) for x in roles]
         resources = [convert_model(x) for x in resources]
-        headers = {
-            'Accept-Language': accept_language
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='create_policy')
+        headers = {'Accept-Language': accept_language}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_policy'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'type': type,
-            'subjects': subjects,
-            'roles': roles,
-            'resources': resources,
-            'description': description
-        }
+        data = {'type': type, 'subjects': subjects, 'roles': roles, 'resources': resources, 'description': description}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -297,16 +282,13 @@ class IamPolicyManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v1/policies'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_policy(self,
+    def update_policy(
+        self,
         policy_id: str,
         if_match: str,
         type: str,
@@ -389,21 +371,13 @@ class IamPolicyManagementV1(BaseService):
         subjects = [convert_model(x) for x in subjects]
         roles = [convert_model(x) for x in roles]
         resources = [convert_model(x) for x in resources]
-        headers = {
-            'If-Match': if_match
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_policy')
+        headers = {'If-Match': if_match}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_policy'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'type': type,
-            'subjects': subjects,
-            'roles': roles,
-            'resources': resources,
-            'description': description
-        }
+        data = {'type': type, 'subjects': subjects, 'roles': roles, 'resources': resources, 'description': description}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -417,19 +391,12 @@ class IamPolicyManagementV1(BaseService):
         path_param_values = self.encode_path_vars(policy_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/policies/{policy_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_policy(self,
-        policy_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_policy(self, policy_id: str, **kwargs) -> DetailedResponse:
         """
         Retrieve a policy by ID.
 
@@ -444,9 +411,9 @@ class IamPolicyManagementV1(BaseService):
         if not policy_id:
             raise ValueError('policy_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_policy')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_policy'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -458,18 +425,12 @@ class IamPolicyManagementV1(BaseService):
         path_param_values = self.encode_path_vars(policy_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/policies/{policy_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_policy(self,
-        policy_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_policy(self, policy_id: str, **kwargs) -> DetailedResponse:
         """
         Delete a policy by ID.
 
@@ -486,9 +447,9 @@ class IamPolicyManagementV1(BaseService):
         if not policy_id:
             raise ValueError('policy_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_policy')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_policy'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -499,21 +460,12 @@ class IamPolicyManagementV1(BaseService):
         path_param_values = self.encode_path_vars(policy_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/policies/{policy_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def patch_policy(self,
-        policy_id: str,
-        if_match: str,
-        *,
-        state: str = None,
-        **kwargs
-    ) -> DetailedResponse:
+    def patch_policy(self, policy_id: str, if_match: str, *, state: str = None, **kwargs) -> DetailedResponse:
         """
         Restore a deleted policy by ID.
 
@@ -536,17 +488,13 @@ class IamPolicyManagementV1(BaseService):
             raise ValueError('policy_id must be provided')
         if not if_match:
             raise ValueError('if_match must be provided')
-        headers = {
-            'If-Match': if_match
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='patch_policy')
+        headers = {'If-Match': if_match}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='patch_policy'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'state': state
-        }
+        data = {'state': state}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -560,10 +508,7 @@ class IamPolicyManagementV1(BaseService):
         path_param_values = self.encode_path_vars(policy_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/policies/{policy_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
@@ -572,8 +517,8 @@ class IamPolicyManagementV1(BaseService):
     # Roles
     #########################
 
-
-    def list_roles(self,
+    def list_roles(
+        self,
         *,
         accept_language: str = None,
         account_id: str = None,
@@ -615,19 +560,17 @@ class IamPolicyManagementV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `RoleList` object
         """
 
-        headers = {
-            'Accept-Language': accept_language
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_roles')
+        headers = {'Accept-Language': accept_language}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_roles'
+        )
         headers.update(sdk_headers)
 
         params = {
             'account_id': account_id,
             'service_name': service_name,
             'source_service_name': source_service_name,
-            'policy_type': policy_type
+            'policy_type': policy_type,
         }
 
         if 'headers' in kwargs:
@@ -636,16 +579,13 @@ class IamPolicyManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/roles'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def create_role(self,
+    def create_role(
+        self,
         display_name: str,
         actions: List[str],
         name: str,
@@ -702,12 +642,10 @@ class IamPolicyManagementV1(BaseService):
             raise ValueError('account_id must be provided')
         if service_name is None:
             raise ValueError('service_name must be provided')
-        headers = {
-            'Accept-Language': accept_language
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='create_role')
+        headers = {'Accept-Language': accept_language}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_role'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -716,7 +654,7 @@ class IamPolicyManagementV1(BaseService):
             'name': name,
             'account_id': account_id,
             'service_name': service_name,
-            'description': description
+            'description': description,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -728,16 +666,13 @@ class IamPolicyManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/roles'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def update_role(self,
+    def update_role(
+        self,
         role_id: str,
         if_match: str,
         *,
@@ -772,19 +707,13 @@ class IamPolicyManagementV1(BaseService):
             raise ValueError('role_id must be provided')
         if not if_match:
             raise ValueError('if_match must be provided')
-        headers = {
-            'If-Match': if_match
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_role')
+        headers = {'If-Match': if_match}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_role'
+        )
         headers.update(sdk_headers)
 
-        data = {
-            'display_name': display_name,
-            'description': description,
-            'actions': actions
-        }
+        data = {'display_name': display_name, 'description': description, 'actions': actions}
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -798,19 +727,12 @@ class IamPolicyManagementV1(BaseService):
         path_param_values = self.encode_path_vars(role_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/roles/{role_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_role(self,
-        role_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_role(self, role_id: str, **kwargs) -> DetailedResponse:
         """
         Retrieve a role by ID.
 
@@ -825,9 +747,9 @@ class IamPolicyManagementV1(BaseService):
         if not role_id:
             raise ValueError('role_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_role')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_role'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -839,18 +761,12 @@ class IamPolicyManagementV1(BaseService):
         path_param_values = self.encode_path_vars(role_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/roles/{role_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def delete_role(self,
-        role_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def delete_role(self, role_id: str, **kwargs) -> DetailedResponse:
         """
         Delete a role by ID.
 
@@ -865,9 +781,9 @@ class IamPolicyManagementV1(BaseService):
         if not role_id:
             raise ValueError('role_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='delete_role')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_role'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -878,9 +794,7 @@ class IamPolicyManagementV1(BaseService):
         path_param_values = self.encode_path_vars(role_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/roles/{role_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -889,8 +803,8 @@ class IamPolicyManagementV1(BaseService):
     # v2Policies
     #########################
 
-
-    def v2_list_policies(self,
+    def v2_list_policies(
+        self,
         account_id: str,
         *,
         accept_language: str = None,
@@ -949,12 +863,10 @@ class IamPolicyManagementV1(BaseService):
 
         if not account_id:
             raise ValueError('account_id must be provided')
-        headers = {
-            'Accept-Language': accept_language
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='v2_list_policies')
+        headers = {'Accept-Language': accept_language}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='v2_list_policies'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -966,7 +878,7 @@ class IamPolicyManagementV1(BaseService):
             'service_name': service_name,
             'service_group_id': service_group_id,
             'format': format,
-            'state': state
+            'state': state,
         }
 
         if 'headers' in kwargs:
@@ -975,16 +887,13 @@ class IamPolicyManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/policies'
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def v2_create_policy(self,
+    def v2_create_policy(
+        self,
         type: str,
         control: 'V2PolicyBaseControl',
         *,
@@ -1104,12 +1013,10 @@ class IamPolicyManagementV1(BaseService):
             resource = convert_model(resource)
         if rule is not None:
             rule = convert_model(rule)
-        headers = {
-            'Accept-Language': accept_language
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='v2_create_policy')
+        headers = {'Accept-Language': accept_language}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='v2_create_policy'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -1119,7 +1026,7 @@ class IamPolicyManagementV1(BaseService):
             'subject': subject,
             'resource': resource,
             'pattern': pattern,
-            'rule': rule
+            'rule': rule,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -1131,16 +1038,13 @@ class IamPolicyManagementV1(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/policies'
-        request = self.prepare_request(method='POST',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def v2_update_policy(self,
+    def v2_update_policy(
+        self,
         policy_id: str,
         if_match: str,
         type: str,
@@ -1253,12 +1157,10 @@ class IamPolicyManagementV1(BaseService):
             resource = convert_model(resource)
         if rule is not None:
             rule = convert_model(rule)
-        headers = {
-            'If-Match': if_match
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='v2_update_policy')
+        headers = {'If-Match': if_match}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='v2_update_policy'
+        )
         headers.update(sdk_headers)
 
         data = {
@@ -1268,7 +1170,7 @@ class IamPolicyManagementV1(BaseService):
             'subject': subject,
             'resource': resource,
             'pattern': pattern,
-            'rule': rule
+            'rule': rule,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -1283,19 +1185,12 @@ class IamPolicyManagementV1(BaseService):
         path_param_values = self.encode_path_vars(policy_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/policies/{policy_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def v2_get_policy(self,
-        policy_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def v2_get_policy(self, policy_id: str, **kwargs) -> DetailedResponse:
         """
         Retrieve a policy by ID.
 
@@ -1310,9 +1205,9 @@ class IamPolicyManagementV1(BaseService):
         if not policy_id:
             raise ValueError('policy_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='v2_get_policy')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='v2_get_policy'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1324,18 +1219,12 @@ class IamPolicyManagementV1(BaseService):
         path_param_values = self.encode_path_vars(policy_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/policies/{policy_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def v2_delete_policy(self,
-        policy_id: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def v2_delete_policy(self, policy_id: str, **kwargs) -> DetailedResponse:
         """
         Delete a policy by ID.
 
@@ -1352,9 +1241,9 @@ class IamPolicyManagementV1(BaseService):
         if not policy_id:
             raise ValueError('policy_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='v2_delete_policy')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='v2_delete_policy'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -1365,9 +1254,7 @@ class IamPolicyManagementV1(BaseService):
         path_param_values = self.encode_path_vars(policy_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/policies/{policy_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -1382,19 +1269,24 @@ class ListPoliciesEnums:
         """
         Optional type of policy.
         """
+
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
+
     class ServiceType(str, Enum):
         """
         Optional type of service.
         """
+
         SERVICE = 'service'
         PLATFORM_SERVICE = 'platform_service'
+
     class Sort(str, Enum):
         """
         Optional top level policy field to sort results. Ascending sort is default.
         Descending sort available by prepending '-' to field. Example '-last_modified_at'.
         """
+
         ID = 'id'
         TYPE = 'type'
         HREF = 'href'
@@ -1403,6 +1295,7 @@ class ListPoliciesEnums:
         LAST_MODIFIED_AT = 'last_modified_at'
         LAST_MODIFIED_BY_ID = 'last_modified_by_id'
         STATE = 'state'
+
     class Format(str, Enum):
         """
         Include additional data per policy returned
@@ -1411,14 +1304,17 @@ class ListPoliciesEnums:
         * `display` - returns the list of all actions included in each of the policy
         roles.
         """
+
         INCLUDE_LAST_PERMIT = 'include_last_permit'
         DISPLAY = 'display'
+
     class State(str, Enum):
         """
         The state of the policy.
         * `active` - returns active policies
         * `deleted` - returns non-active policies.
         """
+
         ACTIVE = 'active'
         DELETED = 'deleted'
 
@@ -1432,14 +1328,18 @@ class V2ListPoliciesEnums:
         """
         Optional type of policy.
         """
+
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
+
     class ServiceType(str, Enum):
         """
         Optional type of service.
         """
+
         SERVICE = 'service'
         PLATFORM_SERVICE = 'platform_service'
+
     class Format(str, Enum):
         """
         Include additional data per policy returned
@@ -1448,14 +1348,17 @@ class V2ListPoliciesEnums:
         * `display` - returns the list of all actions included in each of the policy roles
         and translations for all relevant fields.
         """
+
         INCLUDE_LAST_PERMIT = 'include_last_permit'
         DISPLAY = 'display'
+
     class State(str, Enum):
         """
         The state of the policy.
         * `active` - returns active policies
         * `deleted` - returns non-active policies.
         """
+
         ACTIVE = 'active'
         DELETED = 'deleted'
 
@@ -1465,15 +1368,14 @@ class V2ListPoliciesEnums:
 ##############################################################################
 
 
-class V2PolicyBaseControl():
+class V2PolicyBaseControl:
     """
     Specifies the type of access granted by the policy.
 
     :attr V2PolicyBaseControlGrant grant: Permission granted by the policy.
     """
 
-    def __init__(self,
-                 grant: 'V2PolicyBaseControlGrant') -> None:
+    def __init__(self, grant: 'V2PolicyBaseControlGrant') -> None:
         """
         Initialize a V2PolicyBaseControl object.
 
@@ -1524,7 +1426,8 @@ class V2PolicyBaseControl():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class V2PolicyBaseControlGrant():
+
+class V2PolicyBaseControlGrant:
     """
     Permission granted by the policy.
 
@@ -1532,8 +1435,7 @@ class V2PolicyBaseControlGrant():
           by the policy.
     """
 
-    def __init__(self,
-                 roles: List['PolicyRole']) -> None:
+    def __init__(self, roles: List['PolicyRole']) -> None:
         """
         Initialize a V2PolicyBaseControlGrant object.
 
@@ -1588,7 +1490,8 @@ class V2PolicyBaseControlGrant():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class V2PolicyBaseResource():
+
+class V2PolicyBaseResource:
     """
     The resource attributes associated with a policy.
 
@@ -1596,9 +1499,7 @@ class V2PolicyBaseResource():
           associated with policy/.
     """
 
-    def __init__(self,
-                 *,
-                 attributes: List['V2PolicyAttribute'] = None) -> None:
+    def __init__(self, *, attributes: List['V2PolicyAttribute'] = None) -> None:
         """
         Initialize a V2PolicyBaseResource object.
 
@@ -1651,7 +1552,8 @@ class V2PolicyBaseResource():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class V2PolicyBaseRule():
+
+class V2PolicyBaseRule:
     """
     Additional access conditions associated with a policy.
 
@@ -1663,10 +1565,12 @@ class V2PolicyBaseRule():
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['V2PolicyBaseRuleV2PolicyAttribute', 'V2PolicyBaseRuleV2RuleWithConditions']))
+            ", ".join(['V2PolicyBaseRuleV2PolicyAttribute', 'V2PolicyBaseRuleV2RuleWithConditions'])
+        )
         raise Exception(msg)
 
-class V2PolicyBaseSubject():
+
+class V2PolicyBaseSubject:
     """
     The subject attributes associated with a policy.
 
@@ -1674,9 +1578,7 @@ class V2PolicyBaseSubject():
           associated with policy/.
     """
 
-    def __init__(self,
-                 *,
-                 attributes: List['V2PolicyAttribute'] = None) -> None:
+    def __init__(self, *, attributes: List['V2PolicyAttribute'] = None) -> None:
         """
         Initialize a V2PolicyBaseSubject object.
 
@@ -1729,7 +1631,8 @@ class V2PolicyBaseSubject():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CustomRole():
+
+class CustomRole:
     """
     An additional set of properties associated with a role.
 
@@ -1757,21 +1660,23 @@ class CustomRole():
     :attr str href: (optional) The href link back to the role.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 display_name: str = None,
-                 description: str = None,
-                 actions: List[str] = None,
-                 crn: str = None,
-                 name: str = None,
-                 account_id: str = None,
-                 service_name: str = None,
-                 created_at: datetime = None,
-                 created_by_id: str = None,
-                 last_modified_at: datetime = None,
-                 last_modified_by_id: str = None,
-                 href: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        display_name: str = None,
+        description: str = None,
+        actions: List[str] = None,
+        crn: str = None,
+        name: str = None,
+        account_id: str = None,
+        service_name: str = None,
+        created_at: datetime = None,
+        created_by_id: str = None,
+        last_modified_at: datetime = None,
+        last_modified_by_id: str = None,
+        href: str = None
+    ) -> None:
         """
         Initialize a CustomRole object.
 
@@ -1886,7 +1791,8 @@ class CustomRole():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Policy():
+
+class Policy:
     """
     The core set of properties associated with a policy.
 
@@ -1911,20 +1817,22 @@ class Policy():
     :attr str state: (optional) The policy state.
     """
 
-    def __init__(self,
-                 *,
-                 id: str = None,
-                 type: str = None,
-                 description: str = None,
-                 subjects: List['PolicySubject'] = None,
-                 roles: List['PolicyRole'] = None,
-                 resources: List['PolicyResource'] = None,
-                 href: str = None,
-                 created_at: datetime = None,
-                 created_by_id: str = None,
-                 last_modified_at: datetime = None,
-                 last_modified_by_id: str = None,
-                 state: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        id: str = None,
+        type: str = None,
+        description: str = None,
+        subjects: List['PolicySubject'] = None,
+        roles: List['PolicyRole'] = None,
+        resources: List['PolicyResource'] = None,
+        href: str = None,
+        created_at: datetime = None,
+        created_by_id: str = None,
+        last_modified_at: datetime = None,
+        last_modified_by_id: str = None,
+        state: str = None
+    ) -> None:
         """
         Initialize a Policy object.
 
@@ -2056,20 +1964,19 @@ class Policy():
         """
         The policy state.
         """
+
         ACTIVE = 'active'
         DELETED = 'deleted'
 
 
-class PolicyList():
+class PolicyList:
     """
     A collection of policies.
 
     :attr List[Policy] policies: (optional) List of policies.
     """
 
-    def __init__(self,
-                 *,
-                 policies: List['Policy'] = None) -> None:
+    def __init__(self, *, policies: List['Policy'] = None) -> None:
         """
         Initialize a PolicyList object.
 
@@ -2121,7 +2028,8 @@ class PolicyList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class PolicyResource():
+
+class PolicyResource:
     """
     The attributes of the resource. Note that only one resource is allowed in a policy.
 
@@ -2130,10 +2038,7 @@ class PolicyResource():
     :attr List[ResourceTag] tags: (optional) List of access management tags.
     """
 
-    def __init__(self,
-                 *,
-                 attributes: List['ResourceAttribute'] = None,
-                 tags: List['ResourceTag'] = None) -> None:
+    def __init__(self, *, attributes: List['ResourceAttribute'] = None, tags: List['ResourceTag'] = None) -> None:
         """
         Initialize a PolicyResource object.
 
@@ -2198,7 +2103,8 @@ class PolicyResource():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class PolicyRole():
+
+class PolicyRole:
     """
     A role associated with a policy.
 
@@ -2208,11 +2114,7 @@ class PolicyRole():
     :attr str description: (optional) The description of the role.
     """
 
-    def __init__(self,
-                 role_id: str,
-                 *,
-                 display_name: str = None,
-                 description: str = None) -> None:
+    def __init__(self, role_id: str, *, display_name: str = None, description: str = None) -> None:
         """
         Initialize a PolicyRole object.
 
@@ -2271,7 +2173,8 @@ class PolicyRole():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class PolicySubject():
+
+class PolicySubject:
     """
     The subject attribute values that must match in order for this policy to apply in a
     permission decision.
@@ -2279,9 +2182,7 @@ class PolicySubject():
     :attr List[SubjectAttribute] attributes: (optional) List of subject attributes.
     """
 
-    def __init__(self,
-                 *,
-                 attributes: List['SubjectAttribute'] = None) -> None:
+    def __init__(self, *, attributes: List['SubjectAttribute'] = None) -> None:
         """
         Initialize a PolicySubject object.
 
@@ -2334,7 +2235,8 @@ class PolicySubject():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceAttribute():
+
+class ResourceAttribute:
     """
     An attribute associated with a resource.
 
@@ -2343,11 +2245,7 @@ class ResourceAttribute():
     :attr str operator: (optional) The operator of an attribute.
     """
 
-    def __init__(self,
-                 name: str,
-                 value: str,
-                 *,
-                 operator: str = None) -> None:
+    def __init__(self, name: str, value: str, *, operator: str = None) -> None:
         """
         Initialize a ResourceAttribute object.
 
@@ -2409,7 +2307,8 @@ class ResourceAttribute():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceTag():
+
+class ResourceTag:
     """
     A tag associated with a resource.
 
@@ -2418,11 +2317,7 @@ class ResourceTag():
     :attr str operator: (optional) The operator of an access management tag.
     """
 
-    def __init__(self,
-                 name: str,
-                 value: str,
-                 *,
-                 operator: str = None) -> None:
+    def __init__(self, name: str, value: str, *, operator: str = None) -> None:
         """
         Initialize a ResourceTag object.
 
@@ -2484,7 +2379,8 @@ class ResourceTag():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Role():
+
+class Role:
     """
     A role resource.
 
@@ -2498,12 +2394,9 @@ class Role():
           'crn:v1:ibmcloud:public:iam-access-management::a/exampleAccountId::customRole:ExampleRoleName'.
     """
 
-    def __init__(self,
-                 *,
-                 display_name: str = None,
-                 description: str = None,
-                 actions: List[str] = None,
-                 crn: str = None) -> None:
+    def __init__(
+        self, *, display_name: str = None, description: str = None, actions: List[str] = None, crn: str = None
+    ) -> None:
         """
         Initialize a Role object.
 
@@ -2569,7 +2462,8 @@ class Role():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class RoleList():
+
+class RoleList:
     """
     A collection of roles returned by the 'list roles' operation.
 
@@ -2578,11 +2472,13 @@ class RoleList():
     :attr List[Role] system_roles: (optional) List of system roles.
     """
 
-    def __init__(self,
-                 *,
-                 custom_roles: List['CustomRole'] = None,
-                 service_roles: List['Role'] = None,
-                 system_roles: List['Role'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        custom_roles: List['CustomRole'] = None,
+        service_roles: List['Role'] = None,
+        system_roles: List['Role'] = None
+    ) -> None:
         """
         Initialize a RoleList object.
 
@@ -2658,7 +2554,8 @@ class RoleList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SubjectAttribute():
+
+class SubjectAttribute:
     """
     An attribute associated with a subject.
 
@@ -2666,9 +2563,7 @@ class SubjectAttribute():
     :attr str value: The value of an attribute.
     """
 
-    def __init__(self,
-                 name: str,
-                 value: str) -> None:
+    def __init__(self, name: str, value: str) -> None:
         """
         Initialize a SubjectAttribute object.
 
@@ -2724,7 +2619,8 @@ class SubjectAttribute():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class V2Policy():
+
+class V2Policy:
     """
     The core set of properties associated with a policy.
 
@@ -2752,22 +2648,24 @@ class V2Policy():
     :attr str state: (optional) The policy state.
     """
 
-    def __init__(self,
-                 type: str,
-                 control: 'V2PolicyBaseControl',
-                 *,
-                 id: str = None,
-                 description: str = None,
-                 subject: 'V2PolicyBaseSubject' = None,
-                 resource: 'V2PolicyBaseResource' = None,
-                 pattern: str = None,
-                 rule: 'V2PolicyBaseRule' = None,
-                 href: str = None,
-                 created_at: datetime = None,
-                 created_by_id: str = None,
-                 last_modified_at: datetime = None,
-                 last_modified_by_id: str = None,
-                 state: str = None) -> None:
+    def __init__(
+        self,
+        type: str,
+        control: 'V2PolicyBaseControl',
+        *,
+        id: str = None,
+        description: str = None,
+        subject: 'V2PolicyBaseSubject' = None,
+        resource: 'V2PolicyBaseResource' = None,
+        pattern: str = None,
+        rule: 'V2PolicyBaseRule' = None,
+        href: str = None,
+        created_at: datetime = None,
+        created_by_id: str = None,
+        last_modified_at: datetime = None,
+        last_modified_by_id: str = None,
+        state: str = None
+    ) -> None:
         """
         Initialize a V2Policy object.
 
@@ -2909,11 +2807,12 @@ class V2Policy():
         """
         The policy state.
         """
+
         ACTIVE = 'active'
         DELETED = 'deleted'
 
 
-class V2PolicyAttribute():
+class V2PolicyAttribute:
     """
     Resource/subject attribute associated with policy attributes.
 
@@ -2923,10 +2822,7 @@ class V2PolicyAttribute():
           integer.
     """
 
-    def __init__(self,
-                 key: str,
-                 operator: str,
-                 value: object) -> None:
+    def __init__(self, key: str, operator: str, value: object) -> None:
         """
         Initialize a V2PolicyAttribute object.
 
@@ -2991,16 +2887,15 @@ class V2PolicyAttribute():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class V2PolicyList():
+
+class V2PolicyList:
     """
     A collection of policies.
 
     :attr List[V2Policy] policies: (optional) List of policies.
     """
 
-    def __init__(self,
-                 *,
-                 policies: List['V2Policy'] = None) -> None:
+    def __init__(self, *, policies: List['V2Policy'] = None) -> None:
         """
         Initialize a V2PolicyList object.
 
@@ -3052,6 +2947,7 @@ class V2PolicyList():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+
 class V2PolicyBaseRuleV2PolicyAttribute(V2PolicyBaseRule):
     """
     Resource/subject attribute associated with policy attributes.
@@ -3062,10 +2958,7 @@ class V2PolicyBaseRuleV2PolicyAttribute(V2PolicyBaseRule):
           integer.
     """
 
-    def __init__(self,
-                 key: str,
-                 operator: str,
-                 value: object) -> None:
+    def __init__(self, key: str, operator: str, value: object) -> None:
         """
         Initialize a V2PolicyBaseRuleV2PolicyAttribute object.
 
@@ -3131,6 +3024,7 @@ class V2PolicyBaseRuleV2PolicyAttribute(V2PolicyBaseRule):
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+
 class V2PolicyBaseRuleV2RuleWithConditions(V2PolicyBaseRule):
     """
     Policy rule that has 2 to 10 conditions.
@@ -3140,9 +3034,7 @@ class V2PolicyBaseRuleV2RuleWithConditions(V2PolicyBaseRule):
           a policy. Note that conditions can be nested up to 2 levels.
     """
 
-    def __init__(self,
-                 operator: str,
-                 conditions: List['V2PolicyAttribute']) -> None:
+    def __init__(self, operator: str, conditions: List['V2PolicyAttribute']) -> None:
         """
         Initialize a V2PolicyBaseRuleV2RuleWithConditions object.
 
@@ -3165,7 +3057,9 @@ class V2PolicyBaseRuleV2RuleWithConditions(V2PolicyBaseRule):
         if 'conditions' in _dict:
             args['conditions'] = [V2PolicyAttribute.from_dict(v) for v in _dict.get('conditions')]
         else:
-            raise ValueError('Required property \'conditions\' not present in V2PolicyBaseRuleV2RuleWithConditions JSON')
+            raise ValueError(
+                'Required property \'conditions\' not present in V2PolicyBaseRuleV2RuleWithConditions JSON'
+            )
         return cls(**args)
 
     @classmethod
@@ -3210,6 +3104,6 @@ class V2PolicyBaseRuleV2RuleWithConditions(V2PolicyBaseRule):
         """
         Operator to evalute conditions.
         """
+
         AND = 'and'
         OR = 'or'
-

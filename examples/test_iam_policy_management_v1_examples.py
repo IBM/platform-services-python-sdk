@@ -255,33 +255,46 @@ class TestIamPolicyManagementV1Examples:
             # begin-v2_create_policy
 
             policy_subject = V2PolicyBaseSubject(
-                attributes=[
-                    V2PolicyAttribute(key='iam_id', value=example_user_id, operator='stringEquals')
-                ]
+                attributes=[V2PolicyAttribute(key='iam_id', value=example_user_id, operator='stringEquals')]
             )
             policy_role = PolicyRole(role_id='crn:v1:bluemix:public:iam::::role:Viewer')
-            account_id_resource_attribute = V2PolicyAttribute(key='accountId', value=example_account_id, operator='stringEquals')
-            service_name_resource_attribute = V2PolicyAttribute(key='serviceType', value='service', operator='stringEquals')
+            account_id_resource_attribute = V2PolicyAttribute(
+                key='accountId', value=example_account_id, operator='stringEquals'
+            )
+            service_name_resource_attribute = V2PolicyAttribute(
+                key='serviceType', value='service', operator='stringEquals'
+            )
             policy_resource = PolicyResource(
                 attributes=[account_id_resource_attribute, service_name_resource_attribute],
             )
-            policy_control = V2PolicyBaseControl(
-                grant=V2PolicyBaseControlGrant(
-                    roles=[policy_role]
-                )
-            )
+            policy_control = V2PolicyBaseControl(grant=V2PolicyBaseControlGrant(roles=[policy_role]))
             policy_rule = V2PolicyBaseRuleV2RuleWithConditions(
                 operator='and',
                 conditions=[
-                    V2PolicyAttribute(key='{{environment.attributes.day_of_week}}', operator='dayOfWeekAnyOf', value=[1, 2, 3, 4, 5]),
-                    V2PolicyAttribute(key='{{environment.attributes.current_time}}', operator='timeGreaterThanOrEquals', value='09:00:00+00:00'),
-                    V2PolicyAttribute(key='{{environment.attributes.current_time}}', operator='timeLessThanOrEquals', value='17:00:00+00:00'),
-                ]
+                    V2PolicyAttribute(
+                        key='{{environment.attributes.day_of_week}}', operator='dayOfWeekAnyOf', value=[1, 2, 3, 4, 5]
+                    ),
+                    V2PolicyAttribute(
+                        key='{{environment.attributes.current_time}}',
+                        operator='timeGreaterThanOrEquals',
+                        value='09:00:00+00:00',
+                    ),
+                    V2PolicyAttribute(
+                        key='{{environment.attributes.current_time}}',
+                        operator='timeLessThanOrEquals',
+                        value='17:00:00+00:00',
+                    ),
+                ],
             )
-            policy_pattern='time-based-restrictions:weekly'
+            policy_pattern = 'time-based-restrictions:weekly'
 
             policy = iam_policy_management_service.v2_create_policy(
-                type='access', subject=policy_subject, control=policy_control, resource=policy_resource, rule=policy_rule, pattern=policy_pattern
+                type='access',
+                subject=policy_subject,
+                control=policy_control,
+                resource=policy_resource,
+                rule=policy_rule,
+                pattern=policy_pattern,
             ).get_result()
 
             print(json.dumps(policy, indent=2))
@@ -327,30 +340,38 @@ class TestIamPolicyManagementV1Examples:
             # begin-v2_update_policy
 
             policy_subject = V2PolicyBaseSubject(
-                attributes=[
-                    V2PolicyAttribute(key='iam_id', value=example_user_id, operator='stringEquals')
-                ]
+                attributes=[V2PolicyAttribute(key='iam_id', value=example_user_id, operator='stringEquals')]
             )
             updated_policy_role = PolicyRole(role_id='crn:v1:bluemix:public:iam::::role:Editor')
-            account_id_resource_attribute = V2PolicyAttribute(key='accountId', value=example_account_id, operator='stringEquals')
-            service_name_resource_attribute = V2PolicyAttribute(key='serviceType', value='service', operator='stringEquals')
+            account_id_resource_attribute = V2PolicyAttribute(
+                key='accountId', value=example_account_id, operator='stringEquals'
+            )
+            service_name_resource_attribute = V2PolicyAttribute(
+                key='serviceType', value='service', operator='stringEquals'
+            )
             policy_resource = PolicyResource(
                 attributes=[account_id_resource_attribute, service_name_resource_attribute],
             )
-            policy_control = V2PolicyBaseControl(
-                grant=V2PolicyBaseControlGrant(
-                    roles=[updated_policy_role]
-                )
-            )
+            policy_control = V2PolicyBaseControl(grant=V2PolicyBaseControlGrant(roles=[updated_policy_role]))
             policy_rule = V2PolicyBaseRuleV2RuleWithConditions(
                 operator='and',
                 conditions=[
-                    V2PolicyAttribute(key='{{environment.attributes.day_of_week}}', operator='dayOfWeekAnyOf', value=[1, 2, 3, 4, 5]),
-                    V2PolicyAttribute(key='{{environment.attributes.current_time}}', operator='timeGreaterThanOrEquals', value='09:00:00+00:00'),
-                    V2PolicyAttribute(key='{{environment.attributes.current_time}}', operator='timeLessThanOrEquals', value='17:00:00+00:00'),
-                ]
+                    V2PolicyAttribute(
+                        key='{{environment.attributes.day_of_week}}', operator='dayOfWeekAnyOf', value=[1, 2, 3, 4, 5]
+                    ),
+                    V2PolicyAttribute(
+                        key='{{environment.attributes.current_time}}',
+                        operator='timeGreaterThanOrEquals',
+                        value='09:00:00+00:00',
+                    ),
+                    V2PolicyAttribute(
+                        key='{{environment.attributes.current_time}}',
+                        operator='timeLessThanOrEquals',
+                        value='17:00:00+00:00',
+                    ),
+                ],
             )
-            policy_pattern='time-based-restrictions:weekly'
+            policy_pattern = 'time-based-restrictions:weekly'
 
             response = iam_policy_management_service.v2_update_policy(
                 type='access',
