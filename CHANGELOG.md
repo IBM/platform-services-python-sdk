@@ -1,3 +1,10 @@
+# [0.29.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.28.4...v0.29.0) (2022-11-23)
+
+
+### Features
+
+* **IAM Identity:** adding userExpm list and token lifetime ([#180](https://github.com/IBM/platform-services-python-sdk/issues/180)) ([745d27c](https://github.com/IBM/platform-services-python-sdk/commit/745d27ca50a9635ebd779ad6e7d7b40c4cc462fe))
+
 ## [0.28.4](https://github.com/IBM/platform-services-python-sdk/compare/v0.28.3...v0.28.4) (2022-11-07)
 
 
