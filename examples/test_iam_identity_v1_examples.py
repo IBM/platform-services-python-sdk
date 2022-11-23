@@ -788,14 +788,22 @@ class TestIamIdentityV1Examples:
             print('\nupdate_account_settings() result:')
             # begin-updateAccountSettings
 
+            account_settings_user_mfa = {}
+            account_settings_user_mfa['iam_id'] = self.iam_id_member
+            account_settings_user_mfa['mfa'] = 'NONE'
+
             account_settings_response = iam_identity_service.update_account_settings(
                 account_id=account_id,
                 if_match=account_settings_etag,
                 restrict_create_service_id="NOT_RESTRICTED",
                 restrict_create_platform_apikey="NOT_RESTRICTED",
                 mfa="NONE",
+                user_mfa=[account_settings_user_mfa],
                 session_expiration_in_seconds="86400",
                 session_invalidation_in_seconds="7200",
+                max_sessions_per_identity='10',
+                system_access_token_expiration_in_seconds='3600',
+                system_refresh_token_expiration_in_seconds='2592000',
             ).get_result()
 
             print(json.dumps(account_settings_response, indent=2))

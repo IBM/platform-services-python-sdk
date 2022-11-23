@@ -2751,7 +2751,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "2592000"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -2785,7 +2785,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "2592000"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -2814,7 +2814,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "2592000"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -2851,8 +2851,13 @@ class TestUpdateAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "2592000"}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+
+        # Construct a dict representation of a AccountSettingsUserMFA model
+        account_settings_user_mfa_model = {}
+        account_settings_user_mfa_model['iam_id'] = 'testString'
+        account_settings_user_mfa_model['mfa'] = 'NONE'
 
         # Set up parameter values
         if_match = 'testString'
@@ -2861,9 +2866,12 @@ class TestUpdateAccountSettings:
         restrict_create_platform_apikey = 'RESTRICTED'
         allowed_ip_addresses = 'testString'
         mfa = 'NONE'
+        user_mfa = [account_settings_user_mfa_model]
         session_expiration_in_seconds = '86400'
         session_invalidation_in_seconds = '7200'
         max_sessions_per_identity = 'testString'
+        system_access_token_expiration_in_seconds = '3600'
+        system_refresh_token_expiration_in_seconds = '2592000'
 
         # Invoke method
         response = _service.update_account_settings(
@@ -2873,9 +2881,12 @@ class TestUpdateAccountSettings:
             restrict_create_platform_apikey=restrict_create_platform_apikey,
             allowed_ip_addresses=allowed_ip_addresses,
             mfa=mfa,
+            user_mfa=user_mfa,
             session_expiration_in_seconds=session_expiration_in_seconds,
             session_invalidation_in_seconds=session_invalidation_in_seconds,
             max_sessions_per_identity=max_sessions_per_identity,
+            system_access_token_expiration_in_seconds=system_access_token_expiration_in_seconds,
+            system_refresh_token_expiration_in_seconds=system_refresh_token_expiration_in_seconds,
             headers={},
         )
 
@@ -2888,9 +2899,12 @@ class TestUpdateAccountSettings:
         assert req_body['restrict_create_platform_apikey'] == 'RESTRICTED'
         assert req_body['allowed_ip_addresses'] == 'testString'
         assert req_body['mfa'] == 'NONE'
+        assert req_body['user_mfa'] == [account_settings_user_mfa_model]
         assert req_body['session_expiration_in_seconds'] == '86400'
         assert req_body['session_invalidation_in_seconds'] == '7200'
         assert req_body['max_sessions_per_identity'] == 'testString'
+        assert req_body['system_access_token_expiration_in_seconds'] == '3600'
+        assert req_body['system_refresh_token_expiration_in_seconds'] == '2592000'
 
     def test_update_account_settings_all_params_with_retries(self):
         # Enable retries and run test_update_account_settings_all_params.
@@ -2908,8 +2922,13 @@ class TestUpdateAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "2592000"}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+
+        # Construct a dict representation of a AccountSettingsUserMFA model
+        account_settings_user_mfa_model = {}
+        account_settings_user_mfa_model['iam_id'] = 'testString'
+        account_settings_user_mfa_model['mfa'] = 'NONE'
 
         # Set up parameter values
         if_match = 'testString'
@@ -2918,9 +2937,12 @@ class TestUpdateAccountSettings:
         restrict_create_platform_apikey = 'RESTRICTED'
         allowed_ip_addresses = 'testString'
         mfa = 'NONE'
+        user_mfa = [account_settings_user_mfa_model]
         session_expiration_in_seconds = '86400'
         session_invalidation_in_seconds = '7200'
         max_sessions_per_identity = 'testString'
+        system_access_token_expiration_in_seconds = '3600'
+        system_refresh_token_expiration_in_seconds = '2592000'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -3187,6 +3209,10 @@ class TestModel_AccountSettingsResponse:
         response_context_model['elapsed_time'] = 'testString'
         response_context_model['cluster_name'] = 'testString'
 
+        account_settings_user_mfa_model = {}  # AccountSettingsUserMFA
+        account_settings_user_mfa_model['iam_id'] = 'testString'
+        account_settings_user_mfa_model['mfa'] = 'NONE'
+
         enity_history_record_model = {}  # EnityHistoryRecord
         enity_history_record_model['timestamp'] = 'testString'
         enity_history_record_model['iam_id'] = 'testString'
@@ -3204,10 +3230,13 @@ class TestModel_AccountSettingsResponse:
         account_settings_response_model_json['allowed_ip_addresses'] = 'testString'
         account_settings_response_model_json['entity_tag'] = 'testString'
         account_settings_response_model_json['mfa'] = 'NONE'
+        account_settings_response_model_json['user_mfa'] = [account_settings_user_mfa_model]
         account_settings_response_model_json['history'] = [enity_history_record_model]
         account_settings_response_model_json['session_expiration_in_seconds'] = '86400'
         account_settings_response_model_json['session_invalidation_in_seconds'] = '7200'
         account_settings_response_model_json['max_sessions_per_identity'] = 'testString'
+        account_settings_response_model_json['system_access_token_expiration_in_seconds'] = '3600'
+        account_settings_response_model_json['system_refresh_token_expiration_in_seconds'] = '2592000'
 
         # Construct a model instance of AccountSettingsResponse by calling from_dict on the json representation
         account_settings_response_model = AccountSettingsResponse.from_dict(account_settings_response_model_json)
@@ -3225,6 +3254,39 @@ class TestModel_AccountSettingsResponse:
         # Convert model instance back to dict and verify no loss of data
         account_settings_response_model_json2 = account_settings_response_model.to_dict()
         assert account_settings_response_model_json2 == account_settings_response_model_json
+
+
+class TestModel_AccountSettingsUserMFA:
+    """
+    Test Class for AccountSettingsUserMFA
+    """
+
+    def test_account_settings_user_mfa_serialization(self):
+        """
+        Test serialization/deserialization for AccountSettingsUserMFA
+        """
+
+        # Construct a json representation of a AccountSettingsUserMFA model
+        account_settings_user_mfa_model_json = {}
+        account_settings_user_mfa_model_json['iam_id'] = 'testString'
+        account_settings_user_mfa_model_json['mfa'] = 'NONE'
+
+        # Construct a model instance of AccountSettingsUserMFA by calling from_dict on the json representation
+        account_settings_user_mfa_model = AccountSettingsUserMFA.from_dict(account_settings_user_mfa_model_json)
+        assert account_settings_user_mfa_model != False
+
+        # Construct a model instance of AccountSettingsUserMFA by calling from_dict on the json representation
+        account_settings_user_mfa_model_dict = AccountSettingsUserMFA.from_dict(
+            account_settings_user_mfa_model_json
+        ).__dict__
+        account_settings_user_mfa_model2 = AccountSettingsUserMFA(**account_settings_user_mfa_model_dict)
+
+        # Verify the model instances are equivalent
+        assert account_settings_user_mfa_model == account_settings_user_mfa_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        account_settings_user_mfa_model_json2 = account_settings_user_mfa_model.to_dict()
+        assert account_settings_user_mfa_model_json2 == account_settings_user_mfa_model_json
 
 
 class TestModel_Activity:
