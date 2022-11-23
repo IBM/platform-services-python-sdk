@@ -73,10 +73,12 @@ class TestIamIdentityV1:
 
             cls.account_id = cls.config['ACCOUNT_ID']
             cls.iam_id = cls.config['IAM_ID']
+            cls.iam_id_member = cls.config['IAM_ID_MEMBER']
             cls.apikey = cls.config['APIKEY']
 
             assert cls.account_id is not None
             assert cls.iam_id is not None
+            assert cls.iam_id_member is not None
             assert cls.apikey is not None
 
             cls.apikey_name = 'Python-SDK-IT-ApiKey'
@@ -921,9 +923,12 @@ class TestIamIdentityV1:
         assert settings["restrict_create_platform_apikey"] is not None
         assert settings["entity_tag"] is not None
         assert settings["mfa"] is not None
+        assert settings["user_mfa"] is not None
         assert settings["history"] is not None
         assert settings["session_expiration_in_seconds"] is not None
         assert settings["session_invalidation_in_seconds"] is not None
+        assert settings["system_access_token_expiration_in_seconds"] is not None
+        assert settings["system_refresh_token_expiration_in_seconds"] is not None
 
         account_setting_etag = get_account_settings_response.get_headers()['Etag']
         assert account_setting_etag is not None
@@ -933,6 +938,10 @@ class TestIamIdentityV1:
         global account_setting_etag
         assert account_setting_etag is not None
 
+        account_settings_user_mfa = {}
+        account_settings_user_mfa['iam_id'] = self.iam_id_member
+        account_settings_user_mfa['mfa'] = 'NONE'
+
         update_account_settings_response = self.iam_identity_service.update_account_settings(
             if_match=account_setting_etag,
             account_id=self.account_id,
@@ -940,9 +949,12 @@ class TestIamIdentityV1:
             restrict_create_platform_apikey="NOT_RESTRICTED",
             # allowed_ip_addresses='testString',
             mfa='NONE',
+            user_mfa=[account_settings_user_mfa],
             session_expiration_in_seconds="86400",
             session_invalidation_in_seconds="7200",
             max_sessions_per_identity='10',
+            system_access_token_expiration_in_seconds='3600',
+            system_refresh_token_expiration_in_seconds='2592000',
         )
 
         assert update_account_settings_response.get_status_code() == 200
@@ -955,9 +967,13 @@ class TestIamIdentityV1:
         assert settings["restrict_create_platform_apikey"] == "NOT_RESTRICTED"
         assert settings["entity_tag"] != account_setting_etag
         assert settings["mfa"] == "NONE"
+        assert settings["user_mfa"] is not None
         assert settings["history"] is not None
         assert settings["session_expiration_in_seconds"] == "86400"
         assert settings["session_invalidation_in_seconds"] == "7200"
+        assert settings["max_sessions_per_identity"] == "10"
+        assert settings["system_access_token_expiration_in_seconds"] == "3600"
+        assert settings["system_refresh_token_expiration_in_seconds"] == "2592000"
 
     @needscredentials
     def test_create_report(self):
