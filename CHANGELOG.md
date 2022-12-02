@@ -1,3 +1,10 @@
+# [0.30.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.29.0...v0.30.0) (2022-12-02)
+
+
+### Features
+
+* **IAM Policy Management:** add support for v2/policies ([#181](https://github.com/IBM/platform-services-python-sdk/issues/181)) ([20464c5](https://github.com/IBM/platform-services-python-sdk/commit/20464c52ba23529d8637be0baa9cefabf52c35e8))
+
 # [0.29.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.28.4...v0.29.0) (2022-11-23)
 
 
