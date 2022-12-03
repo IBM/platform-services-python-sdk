@@ -37,6 +37,7 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
+
 class UsageReportsV4(BaseService):
     """The Usage Reports V4 service."""
 
@@ -44,23 +45,23 @@ class UsageReportsV4(BaseService):
     DEFAULT_SERVICE_NAME = 'usage_reports'
 
     @classmethod
-    def new_instance(cls,
-                     service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'UsageReportsV4':
+    def new_instance(
+        cls,
+        service_name: str = DEFAULT_SERVICE_NAME,
+    ) -> 'UsageReportsV4':
         """
         Return a new client for the Usage Reports service using the specified
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
-    def __init__(self,
-                 authenticator: Authenticator = None,
-                ) -> None:
+    def __init__(
+        self,
+        authenticator: Authenticator = None,
+    ) -> None:
         """
         Construct a new client for the Usage Reports service.
 
@@ -68,21 +69,13 @@ class UsageReportsV4(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self,
-                             service_url=self.DEFAULT_SERVICE_URL,
-                             authenticator=authenticator)
-
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
     # Account operations
     #########################
 
-
-    def get_account_summary(self,
-        account_id: str,
-        billingmonth: str,
-        **kwargs
-    ) -> DetailedResponse:
+    def get_account_summary(self, account_id: str, billingmonth: str, **kwargs) -> DetailedResponse:
         """
         Get account summary.
 
@@ -102,9 +95,9 @@ class UsageReportsV4(BaseService):
         if not billingmonth:
             raise ValueError('billingmonth must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V4',
-                                      operation_id='get_account_summary')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_account_summary'
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -116,21 +109,13 @@ class UsageReportsV4(BaseService):
         path_param_values = self.encode_path_vars(account_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v4/accounts/{account_id}/summary/{billingmonth}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_account_usage(self,
-        account_id: str,
-        billingmonth: str,
-        *,
-        names: bool = None,
-        accept_language: str = None,
-        **kwargs
+    def get_account_usage(
+        self, account_id: str, billingmonth: str, *, names: bool = None, accept_language: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Get account usage.
@@ -154,17 +139,13 @@ class UsageReportsV4(BaseService):
             raise ValueError('account_id must be provided')
         if not billingmonth:
             raise ValueError('billingmonth must be provided')
-        headers = {
-            'Accept-Language': accept_language
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V4',
-                                      operation_id='get_account_usage')
+        headers = {'Accept-Language': accept_language}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_account_usage'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            '_names': names
-        }
+        params = {'_names': names}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -175,10 +156,7 @@ class UsageReportsV4(BaseService):
         path_param_values = self.encode_path_vars(account_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v4/accounts/{account_id}/usage/{billingmonth}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
@@ -187,15 +165,15 @@ class UsageReportsV4(BaseService):
     # Resource operations
     #########################
 
-
-    def get_resource_group_usage(self,
+    def get_resource_group_usage(
+        self,
         account_id: str,
         resource_group_id: str,
         billingmonth: str,
         *,
         names: bool = None,
         accept_language: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get resource group usage.
@@ -224,17 +202,13 @@ class UsageReportsV4(BaseService):
             raise ValueError('resource_group_id must be provided')
         if not billingmonth:
             raise ValueError('billingmonth must be provided')
-        headers = {
-            'Accept-Language': accept_language
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V4',
-                                      operation_id='get_resource_group_usage')
+        headers = {'Accept-Language': accept_language}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_resource_group_usage'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            '_names': names
-        }
+        params = {'_names': names}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -244,17 +218,16 @@ class UsageReportsV4(BaseService):
         path_param_keys = ['account_id', 'resource_group_id', 'billingmonth']
         path_param_values = self.encode_path_vars(account_id, resource_group_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/usage/{billingmonth}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        url = '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/usage/{billingmonth}'.format(
+            **path_param_dict
+        )
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_resource_usage_account(self,
+    def get_resource_usage_account(
+        self,
         account_id: str,
         billingmonth: str,
         *,
@@ -268,7 +241,7 @@ class UsageReportsV4(BaseService):
         resource_id: str = None,
         plan_id: str = None,
         region: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get resource instance usage in an account.
@@ -303,12 +276,10 @@ class UsageReportsV4(BaseService):
             raise ValueError('account_id must be provided')
         if not billingmonth:
             raise ValueError('billingmonth must be provided')
-        headers = {
-            'Accept-Language': accept_language
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V4',
-                                      operation_id='get_resource_usage_account')
+        headers = {'Accept-Language': accept_language}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_resource_usage_account'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -320,7 +291,7 @@ class UsageReportsV4(BaseService):
             'resource_instance_id': resource_instance_id,
             'resource_id': resource_id,
             'plan_id': plan_id,
-            'region': region
+            'region': region,
         }
 
         if 'headers' in kwargs:
@@ -332,16 +303,13 @@ class UsageReportsV4(BaseService):
         path_param_values = self.encode_path_vars(account_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v4/accounts/{account_id}/resource_instances/usage/{billingmonth}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_resource_usage_resource_group(self,
+    def get_resource_usage_resource_group(
+        self,
         account_id: str,
         resource_group_id: str,
         billingmonth: str,
@@ -354,7 +322,7 @@ class UsageReportsV4(BaseService):
         resource_id: str = None,
         plan_id: str = None,
         region: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get resource instance usage in a resource group.
@@ -392,12 +360,12 @@ class UsageReportsV4(BaseService):
             raise ValueError('resource_group_id must be provided')
         if not billingmonth:
             raise ValueError('billingmonth must be provided')
-        headers = {
-            'Accept-Language': accept_language
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V4',
-                                      operation_id='get_resource_usage_resource_group')
+        headers = {'Accept-Language': accept_language}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V4',
+            operation_id='get_resource_usage_resource_group',
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -407,7 +375,7 @@ class UsageReportsV4(BaseService):
             'resource_instance_id': resource_instance_id,
             'resource_id': resource_id,
             'plan_id': plan_id,
-            'region': region
+            'region': region,
         }
 
         if 'headers' in kwargs:
@@ -418,17 +386,16 @@ class UsageReportsV4(BaseService):
         path_param_keys = ['account_id', 'resource_group_id', 'billingmonth']
         path_param_values = self.encode_path_vars(account_id, resource_group_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/resource_instances/usage/{billingmonth}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        url = '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/resource_instances/usage/{billingmonth}'.format(
+            **path_param_dict
+        )
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
 
-
-    def get_resource_usage_org(self,
+    def get_resource_usage_org(
+        self,
         account_id: str,
         organization_id: str,
         billingmonth: str,
@@ -441,7 +408,7 @@ class UsageReportsV4(BaseService):
         resource_id: str = None,
         plan_id: str = None,
         region: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get resource instance usage in an organization.
@@ -478,12 +445,10 @@ class UsageReportsV4(BaseService):
             raise ValueError('organization_id must be provided')
         if not billingmonth:
             raise ValueError('billingmonth must be provided')
-        headers = {
-            'Accept-Language': accept_language
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V4',
-                                      operation_id='get_resource_usage_org')
+        headers = {'Accept-Language': accept_language}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_resource_usage_org'
+        )
         headers.update(sdk_headers)
 
         params = {
@@ -493,7 +458,7 @@ class UsageReportsV4(BaseService):
             'resource_instance_id': resource_instance_id,
             'resource_id': resource_id,
             'plan_id': plan_id,
-            'region': region
+            'region': region,
         }
 
         if 'headers' in kwargs:
@@ -504,11 +469,12 @@ class UsageReportsV4(BaseService):
         path_param_keys = ['account_id', 'organization_id', 'billingmonth']
         path_param_values = self.encode_path_vars(account_id, organization_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v4/accounts/{account_id}/organizations/{organization_id}/resource_instances/usage/{billingmonth}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        url = (
+            '/v4/accounts/{account_id}/organizations/{organization_id}/resource_instances/usage/{billingmonth}'.format(
+                **path_param_dict
+            )
+        )
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
@@ -517,15 +483,15 @@ class UsageReportsV4(BaseService):
     # Organization operations
     #########################
 
-
-    def get_org_usage(self,
+    def get_org_usage(
+        self,
         account_id: str,
         organization_id: str,
         billingmonth: str,
         *,
         names: bool = None,
         accept_language: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get organization usage.
@@ -553,17 +519,13 @@ class UsageReportsV4(BaseService):
             raise ValueError('organization_id must be provided')
         if not billingmonth:
             raise ValueError('billingmonth must be provided')
-        headers = {
-            'Accept-Language': accept_language
-        }
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V4',
-                                      operation_id='get_org_usage')
+        headers = {'Accept-Language': accept_language}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_org_usage'
+        )
         headers.update(sdk_headers)
 
-        params = {
-            '_names': names
-        }
+        params = {'_names': names}
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -574,10 +536,7 @@ class UsageReportsV4(BaseService):
         path_param_values = self.encode_path_vars(account_id, organization_id, billingmonth)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v4/accounts/{account_id}/organizations/{organization_id}/usage/{billingmonth}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
@@ -588,7 +547,7 @@ class UsageReportsV4(BaseService):
 ##############################################################################
 
 
-class AccountSummary():
+class AccountSummary:
     """
     A summary of charges and credits for an account.
 
@@ -605,15 +564,17 @@ class AccountSummary():
           to a subscription.
     """
 
-    def __init__(self,
-                 account_id: str,
-                 month: str,
-                 billing_country_code: str,
-                 billing_currency_code: str,
-                 resources: 'ResourcesSummary',
-                 offers: List['Offer'],
-                 support: List['SupportSummary'],
-                 subscription: 'SubscriptionSummary') -> None:
+    def __init__(
+        self,
+        account_id: str,
+        month: str,
+        billing_country_code: str,
+        billing_currency_code: str,
+        resources: 'ResourcesSummary',
+        offers: List['Offer'],
+        support: List['SupportSummary'],
+        subscription: 'SubscriptionSummary',
+    ) -> None:
         """
         Initialize a AccountSummary object.
 
@@ -739,7 +700,8 @@ class AccountSummary():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class AccountUsage():
+
+class AccountUsage:
     """
     The aggregated usage and charges for all the plans in the account.
 
@@ -751,12 +713,9 @@ class AccountUsage():
     :attr List[Resource] resources: All the resource used in the account.
     """
 
-    def __init__(self,
-                 account_id: str,
-                 pricing_country: str,
-                 currency_code: str,
-                 month: str,
-                 resources: List['Resource']) -> None:
+    def __init__(
+        self, account_id: str, pricing_country: str, currency_code: str, month: str, resources: List['Resource']
+    ) -> None:
         """
         Initialize a AccountUsage object.
 
@@ -843,7 +802,8 @@ class AccountUsage():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Discount():
+
+class Discount:
     """
     Information about a discount that is associated with a metric.
 
@@ -853,12 +813,7 @@ class Discount():
     :attr float discount: The discount percentage.
     """
 
-    def __init__(self,
-                 ref: str,
-                 discount: float,
-                 *,
-                 name: str = None,
-                 display_name: str = None) -> None:
+    def __init__(self, ref: str, discount: float, *, name: str = None, display_name: str = None) -> None:
         """
         Initialize a Discount object.
 
@@ -926,7 +881,8 @@ class Discount():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class InstanceUsage():
+
+class InstanceUsage:
     """
     The aggregated usage and charges for an instance.
 
@@ -957,29 +913,31 @@ class InstanceUsage():
     :attr List[Metric] usage: All the resource used in the account.
     """
 
-    def __init__(self,
-                 account_id: str,
-                 resource_instance_id: str,
-                 resource_id: str,
-                 pricing_country: str,
-                 currency_code: str,
-                 billable: bool,
-                 plan_id: str,
-                 month: str,
-                 usage: List['Metric'],
-                 *,
-                 resource_instance_name: str = None,
-                 resource_name: str = None,
-                 resource_group_id: str = None,
-                 resource_group_name: str = None,
-                 organization_id: str = None,
-                 organization_name: str = None,
-                 space_id: str = None,
-                 space_name: str = None,
-                 consumer_id: str = None,
-                 region: str = None,
-                 pricing_region: str = None,
-                 plan_name: str = None) -> None:
+    def __init__(
+        self,
+        account_id: str,
+        resource_instance_id: str,
+        resource_id: str,
+        pricing_country: str,
+        currency_code: str,
+        billable: bool,
+        plan_id: str,
+        month: str,
+        usage: List['Metric'],
+        *,
+        resource_instance_name: str = None,
+        resource_name: str = None,
+        resource_group_id: str = None,
+        resource_group_name: str = None,
+        organization_id: str = None,
+        organization_name: str = None,
+        space_id: str = None,
+        space_name: str = None,
+        consumer_id: str = None,
+        region: str = None,
+        pricing_region: str = None,
+        plan_name: str = None,
+    ) -> None:
         """
         Initialize a InstanceUsage object.
 
@@ -1174,16 +1132,15 @@ class InstanceUsage():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class InstancesUsageFirst():
+
+class InstancesUsageFirst:
     """
     The link to the first page of the search query.
 
     :attr str href: (optional) A link to a page of query results.
     """
 
-    def __init__(self,
-                 *,
-                 href: str = None) -> None:
+    def __init__(self, *, href: str = None) -> None:
         """
         Initialize a InstancesUsageFirst object.
 
@@ -1229,7 +1186,8 @@ class InstancesUsageFirst():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class InstancesUsageNext():
+
+class InstancesUsageNext:
     """
     The link to the next page of the search query.
 
@@ -1238,10 +1196,7 @@ class InstancesUsageNext():
           the next page.
     """
 
-    def __init__(self,
-                 *,
-                 href: str = None,
-                 offset: str = None) -> None:
+    def __init__(self, *, href: str = None, offset: str = None) -> None:
         """
         Initialize a InstancesUsageNext object.
 
@@ -1294,7 +1249,8 @@ class InstancesUsageNext():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class InstancesUsage():
+
+class InstancesUsage:
     """
     The list of instance usage reports.
 
@@ -1308,13 +1264,15 @@ class InstancesUsage():
           reports.
     """
 
-    def __init__(self,
-                 *,
-                 limit: int = None,
-                 count: int = None,
-                 first: 'InstancesUsageFirst' = None,
-                 next: 'InstancesUsageNext' = None,
-                 resources: List['InstanceUsage'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        limit: int = None,
+        count: int = None,
+        first: 'InstancesUsageFirst' = None,
+        next: 'InstancesUsageNext' = None,
+        resources: List['InstanceUsage'] = None,
+    ) -> None:
         """
         Initialize a InstancesUsage object.
 
@@ -1399,7 +1357,8 @@ class InstancesUsage():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Metric():
+
+class Metric:
     """
     Information about a metric.
 
@@ -1419,19 +1378,21 @@ class Metric():
     :attr List[Discount] discounts: All the discounts applicable to the metric.
     """
 
-    def __init__(self,
-                 metric: str,
-                 quantity: float,
-                 cost: float,
-                 rated_cost: float,
-                 discounts: List['Discount'],
-                 *,
-                 metric_name: str = None,
-                 rateable_quantity: float = None,
-                 price: List[object] = None,
-                 unit: str = None,
-                 unit_name: str = None,
-                 non_chargeable: bool = None) -> None:
+    def __init__(
+        self,
+        metric: str,
+        quantity: float,
+        cost: float,
+        rated_cost: float,
+        discounts: List['Discount'],
+        *,
+        metric_name: str = None,
+        rateable_quantity: float = None,
+        price: List[object] = None,
+        unit: str = None,
+        unit_name: str = None,
+        non_chargeable: bool = None,
+    ) -> None:
         """
         Initialize a Metric object.
 
@@ -1558,7 +1519,8 @@ class Metric():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Offer():
+
+class Offer:
     """
     Information about an individual offer.
 
@@ -1570,13 +1532,15 @@ class Offer():
     :attr OfferCredits credits: Credit information related to an offer.
     """
 
-    def __init__(self,
-                 offer_id: str,
-                 credits_total: float,
-                 offer_template: str,
-                 valid_from: datetime,
-                 expires_on: datetime,
-                 credits: 'OfferCredits') -> None:
+    def __init__(
+        self,
+        offer_id: str,
+        credits_total: float,
+        offer_template: str,
+        valid_from: datetime,
+        expires_on: datetime,
+        credits: 'OfferCredits',
+    ) -> None:
         """
         Initialize a Offer object.
 
@@ -1667,7 +1631,8 @@ class Offer():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class OfferCredits():
+
+class OfferCredits:
     """
     Credit information related to an offer.
 
@@ -1677,10 +1642,7 @@ class OfferCredits():
     :attr float balance: The remaining credits in the offer.
     """
 
-    def __init__(self,
-                 starting_balance: float,
-                 used: float,
-                 balance: float) -> None:
+    def __init__(self, starting_balance: float, used: float, balance: float) -> None:
         """
         Initialize a OfferCredits object.
 
@@ -1745,7 +1707,8 @@ class OfferCredits():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class OrgUsage():
+
+class OrgUsage:
     """
     The aggregated usage and charges for all the plans in the org.
 
@@ -1759,15 +1722,17 @@ class OrgUsage():
     :attr List[Resource] resources: All the resource used in the account.
     """
 
-    def __init__(self,
-                 account_id: str,
-                 organization_id: str,
-                 pricing_country: str,
-                 currency_code: str,
-                 month: str,
-                 resources: List['Resource'],
-                 *,
-                 organization_name: str = None) -> None:
+    def __init__(
+        self,
+        account_id: str,
+        organization_id: str,
+        pricing_country: str,
+        currency_code: str,
+        month: str,
+        resources: List['Resource'],
+        *,
+        organization_name: str = None,
+    ) -> None:
         """
         Initialize a OrgUsage object.
 
@@ -1868,7 +1833,8 @@ class OrgUsage():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Plan():
+
+class Plan:
     """
     The aggregated values for the plan.
 
@@ -1882,16 +1848,18 @@ class Plan():
     :attr List[Discount] discounts: All the discounts applicable to the plan.
     """
 
-    def __init__(self,
-                 plan_id: str,
-                 billable: bool,
-                 cost: float,
-                 rated_cost: float,
-                 usage: List['Metric'],
-                 discounts: List['Discount'],
-                 *,
-                 plan_name: str = None,
-                 pricing_region: str = None) -> None:
+    def __init__(
+        self,
+        plan_id: str,
+        billable: bool,
+        cost: float,
+        rated_cost: float,
+        usage: List['Metric'],
+        discounts: List['Discount'],
+        *,
+        plan_name: str = None,
+        pricing_region: str = None,
+    ) -> None:
         """
         Initialize a Plan object.
 
@@ -2004,7 +1972,8 @@ class Plan():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Resource():
+
+class Resource:
     """
     The container for all the plans in the resource.
 
@@ -2020,16 +1989,18 @@ class Resource():
     :attr List[Discount] discounts: All the discounts applicable to the resource.
     """
 
-    def __init__(self,
-                 resource_id: str,
-                 billable_cost: float,
-                 billable_rated_cost: float,
-                 non_billable_cost: float,
-                 non_billable_rated_cost: float,
-                 plans: List['Plan'],
-                 discounts: List['Discount'],
-                 *,
-                 resource_name: str = None) -> None:
+    def __init__(
+        self,
+        resource_id: str,
+        billable_cost: float,
+        billable_rated_cost: float,
+        non_billable_cost: float,
+        non_billable_rated_cost: float,
+        plans: List['Plan'],
+        discounts: List['Discount'],
+        *,
+        resource_name: str = None,
+    ) -> None:
         """
         Initialize a Resource object.
 
@@ -2146,7 +2117,8 @@ class Resource():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourceGroupUsage():
+
+class ResourceGroupUsage:
     """
     The aggregated usage and charges for all the plans in the resource group.
 
@@ -2160,15 +2132,17 @@ class ResourceGroupUsage():
     :attr List[Resource] resources: All the resource used in the account.
     """
 
-    def __init__(self,
-                 account_id: str,
-                 resource_group_id: str,
-                 pricing_country: str,
-                 currency_code: str,
-                 month: str,
-                 resources: List['Resource'],
-                 *,
-                 resource_group_name: str = None) -> None:
+    def __init__(
+        self,
+        account_id: str,
+        resource_group_id: str,
+        pricing_country: str,
+        currency_code: str,
+        month: str,
+        resources: List['Resource'],
+        *,
+        resource_group_name: str = None,
+    ) -> None:
         """
         Initialize a ResourceGroupUsage object.
 
@@ -2269,7 +2243,8 @@ class ResourceGroupUsage():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ResourcesSummary():
+
+class ResourcesSummary:
     """
     Charges related to cloud resources.
 
@@ -2279,9 +2254,7 @@ class ResourcesSummary():
           in the account.
     """
 
-    def __init__(self,
-                 billable_cost: float,
-                 non_billable_cost: float) -> None:
+    def __init__(self, billable_cost: float, non_billable_cost: float) -> None:
         """
         Initialize a ResourcesSummary object.
 
@@ -2339,7 +2312,8 @@ class ResourcesSummary():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class Subscription():
+
+class Subscription:
     """
     Subscription.
 
@@ -2357,16 +2331,18 @@ class Subscription():
           split into.
     """
 
-    def __init__(self,
-                 subscription_id: str,
-                 charge_agreement_number: str,
-                 type: str,
-                 subscription_amount: float,
-                 start: datetime,
-                 credits_total: float,
-                 terms: List['SubscriptionTerm'],
-                 *,
-                 end: datetime = None) -> None:
+    def __init__(
+        self,
+        subscription_id: str,
+        charge_agreement_number: str,
+        type: str,
+        subscription_amount: float,
+        start: datetime,
+        credits_total: float,
+        terms: List['SubscriptionTerm'],
+        *,
+        end: datetime = None,
+    ) -> None:
         """
         Initialize a Subscription object.
 
@@ -2479,7 +2455,8 @@ class Subscription():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SubscriptionSummary():
+
+class SubscriptionSummary:
     """
     A summary of charges and credits related to a subscription.
 
@@ -2489,10 +2466,7 @@ class SubscriptionSummary():
           applicable for the month.
     """
 
-    def __init__(self,
-                 *,
-                 overage: float = None,
-                 subscriptions: List['Subscription'] = None) -> None:
+    def __init__(self, *, overage: float = None, subscriptions: List['Subscription'] = None) -> None:
         """
         Initialize a SubscriptionSummary object.
 
@@ -2552,7 +2526,8 @@ class SubscriptionSummary():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SubscriptionTerm():
+
+class SubscriptionTerm:
     """
     SubscriptionTerm.
 
@@ -2562,10 +2537,7 @@ class SubscriptionTerm():
           subscription.
     """
 
-    def __init__(self,
-                 start: datetime,
-                 end: datetime,
-                 credits: 'SubscriptionTermCredits') -> None:
+    def __init__(self, start: datetime, end: datetime, credits: 'SubscriptionTermCredits') -> None:
         """
         Initialize a SubscriptionTerm object.
 
@@ -2633,7 +2605,8 @@ class SubscriptionTerm():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SubscriptionTermCredits():
+
+class SubscriptionTermCredits:
     """
     Information about credits related to a subscription.
 
@@ -2644,11 +2617,7 @@ class SubscriptionTermCredits():
     :attr float balance: The remaining credits in this term.
     """
 
-    def __init__(self,
-                 total: float,
-                 starting_balance: float,
-                 used: float,
-                 balance: float) -> None:
+    def __init__(self, total: float, starting_balance: float, used: float, balance: float) -> None:
         """
         Initialize a SubscriptionTermCredits object.
 
@@ -2721,7 +2690,8 @@ class SubscriptionTermCredits():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SupportSummary():
+
+class SupportSummary:
     """
     SupportSummary.
 
@@ -2730,10 +2700,7 @@ class SupportSummary():
     :attr float overage: Additional support cost for the month.
     """
 
-    def __init__(self,
-                 cost: float,
-                 type: str,
-                 overage: float) -> None:
+    def __init__(self, cost: float, type: str, overage: float) -> None:
         """
         Initialize a SupportSummary object.
 
@@ -2797,29 +2764,32 @@ class SupportSummary():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+
 ##############################################################################
 # Pagers
 ##############################################################################
 
-class GetResourceUsageAccountPager():
+
+class GetResourceUsageAccountPager:
     """
     GetResourceUsageAccountPager can be used to simplify the use of the "get_resource_usage_account" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: UsageReportsV4,
-                 account_id: str,
-                 billingmonth: str,
-                 names: bool = None,
-                 accept_language: str = None,
-                 limit: int = None,
-                 resource_group_id: str = None,
-                 organization_id: str = None,
-                 resource_instance_id: str = None,
-                 resource_id: str = None,
-                 plan_id: str = None,
-                 region: str = None,
+    def __init__(
+        self,
+        *,
+        client: UsageReportsV4,
+        account_id: str,
+        billingmonth: str,
+        names: bool = None,
+        accept_language: str = None,
+        limit: int = None,
+        resource_group_id: str = None,
+        organization_id: str = None,
+        resource_instance_id: str = None,
+        resource_id: str = None,
+        plan_id: str = None,
+        region: str = None,
     ) -> None:
         """
         Initialize a GetResourceUsageAccountPager object.
@@ -2842,7 +2812,7 @@ class GetResourceUsageAccountPager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._account_id = account_id
         self._billingmonth = billingmonth
         self._names = names
@@ -2908,24 +2878,26 @@ class GetResourceUsageAccountPager():
             results.extend(next_page)
         return results
 
-class GetResourceUsageResourceGroupPager():
+
+class GetResourceUsageResourceGroupPager:
     """
     GetResourceUsageResourceGroupPager can be used to simplify the use of the "get_resource_usage_resource_group" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: UsageReportsV4,
-                 account_id: str,
-                 resource_group_id: str,
-                 billingmonth: str,
-                 names: bool = None,
-                 accept_language: str = None,
-                 limit: int = None,
-                 resource_instance_id: str = None,
-                 resource_id: str = None,
-                 plan_id: str = None,
-                 region: str = None,
+    def __init__(
+        self,
+        *,
+        client: UsageReportsV4,
+        account_id: str,
+        resource_group_id: str,
+        billingmonth: str,
+        names: bool = None,
+        accept_language: str = None,
+        limit: int = None,
+        resource_instance_id: str = None,
+        resource_id: str = None,
+        plan_id: str = None,
+        region: str = None,
     ) -> None:
         """
         Initialize a GetResourceUsageResourceGroupPager object.
@@ -2948,7 +2920,7 @@ class GetResourceUsageResourceGroupPager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._account_id = account_id
         self._resource_group_id = resource_group_id
         self._billingmonth = billingmonth
@@ -3012,24 +2984,26 @@ class GetResourceUsageResourceGroupPager():
             results.extend(next_page)
         return results
 
-class GetResourceUsageOrgPager():
+
+class GetResourceUsageOrgPager:
     """
     GetResourceUsageOrgPager can be used to simplify the use of the "get_resource_usage_org" method.
     """
 
-    def __init__(self,
-                 *,
-                 client: UsageReportsV4,
-                 account_id: str,
-                 organization_id: str,
-                 billingmonth: str,
-                 names: bool = None,
-                 accept_language: str = None,
-                 limit: int = None,
-                 resource_instance_id: str = None,
-                 resource_id: str = None,
-                 plan_id: str = None,
-                 region: str = None,
+    def __init__(
+        self,
+        *,
+        client: UsageReportsV4,
+        account_id: str,
+        organization_id: str,
+        billingmonth: str,
+        names: bool = None,
+        accept_language: str = None,
+        limit: int = None,
+        resource_instance_id: str = None,
+        resource_id: str = None,
+        plan_id: str = None,
+        region: str = None,
     ) -> None:
         """
         Initialize a GetResourceUsageOrgPager object.
@@ -3051,7 +3025,7 @@ class GetResourceUsageOrgPager():
         """
         self._has_next = True
         self._client = client
-        self._page_context = { 'next': None }
+        self._page_context = {'next': None}
         self._account_id = account_id
         self._organization_id = organization_id
         self._billingmonth = billingmonth
