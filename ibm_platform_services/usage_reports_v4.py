@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,17 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.36.0-6f5b0381-20210716-180747
+# IBM OpenAPI SDK Code Generator Version: 3.62.0-a2a22f95-20221115-162524
 
 """
 Usage reports for IBM Cloud accounts
+
+API Version: 4.0.6
 """
 
 from datetime import datetime
 from typing import Dict, List
 import json
 
-from ibm_cloud_sdk_core import BaseService, DetailedResponse
+from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
 from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
@@ -64,7 +66,7 @@ class UsageReportsV4(BaseService):
         Construct a new client for the Usage Reports service.
 
         :param Authenticator authenticator: The authenticator specifies the authentication mechanism.
-               Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
+               Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
         BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
@@ -88,9 +90,9 @@ class UsageReportsV4(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `AccountSummary` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        if billingmonth is None:
+        if not billingmonth:
             raise ValueError('billingmonth must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
@@ -100,6 +102,7 @@ class UsageReportsV4(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id', 'billingmonth']
@@ -132,9 +135,9 @@ class UsageReportsV4(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `AccountUsage` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        if billingmonth is None:
+        if not billingmonth:
             raise ValueError('billingmonth must be provided')
         headers = {'Accept-Language': accept_language}
         sdk_headers = get_sdk_headers(
@@ -146,6 +149,7 @@ class UsageReportsV4(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id', 'billingmonth']
@@ -169,7 +173,7 @@ class UsageReportsV4(BaseService):
         *,
         names: bool = None,
         accept_language: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get resource group usage.
@@ -192,11 +196,11 @@ class UsageReportsV4(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `ResourceGroupUsage` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        if resource_group_id is None:
+        if not resource_group_id:
             raise ValueError('resource_group_id must be provided')
-        if billingmonth is None:
+        if not billingmonth:
             raise ValueError('billingmonth must be provided')
         headers = {'Accept-Language': accept_language}
         sdk_headers = get_sdk_headers(
@@ -208,6 +212,7 @@ class UsageReportsV4(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id', 'resource_group_id', 'billingmonth']
@@ -236,7 +241,7 @@ class UsageReportsV4(BaseService):
         resource_id: str = None,
         plan_id: str = None,
         region: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get resource instance usage in an account.
@@ -252,7 +257,7 @@ class UsageReportsV4(BaseService):
         :param str accept_language: (optional) Prioritize the names returned in the
                order of the specified languages. Language will default to English.
         :param int limit: (optional) Number of usage records returned. The default
-               value is 10. Maximum value is 20.
+               value is 30. Maximum value is 200.
         :param str start: (optional) The offset from which the records must be
                fetched. Offset information is included in the response.
         :param str resource_group_id: (optional) Filter by resource group.
@@ -267,9 +272,9 @@ class UsageReportsV4(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `InstancesUsage` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        if billingmonth is None:
+        if not billingmonth:
             raise ValueError('billingmonth must be provided')
         headers = {'Accept-Language': accept_language}
         sdk_headers = get_sdk_headers(
@@ -291,6 +296,7 @@ class UsageReportsV4(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id', 'billingmonth']
@@ -316,7 +322,7 @@ class UsageReportsV4(BaseService):
         resource_id: str = None,
         plan_id: str = None,
         region: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get resource instance usage in a resource group.
@@ -335,7 +341,7 @@ class UsageReportsV4(BaseService):
         :param str accept_language: (optional) Prioritize the names returned in the
                order of the specified languages. Language will default to English.
         :param int limit: (optional) Number of usage records returned. The default
-               value is 10. Maximum value is 20.
+               value is 30. Maximum value is 200.
         :param str start: (optional) The offset from which the records must be
                fetched. Offset information is included in the response.
         :param str resource_instance_id: (optional) Filter by resource instance id.
@@ -348,11 +354,11 @@ class UsageReportsV4(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `InstancesUsage` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        if resource_group_id is None:
+        if not resource_group_id:
             raise ValueError('resource_group_id must be provided')
-        if billingmonth is None:
+        if not billingmonth:
             raise ValueError('billingmonth must be provided')
         headers = {'Accept-Language': accept_language}
         sdk_headers = get_sdk_headers(
@@ -374,6 +380,7 @@ class UsageReportsV4(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id', 'resource_group_id', 'billingmonth']
@@ -401,7 +408,7 @@ class UsageReportsV4(BaseService):
         resource_id: str = None,
         plan_id: str = None,
         region: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get resource instance usage in an organization.
@@ -419,7 +426,7 @@ class UsageReportsV4(BaseService):
         :param str accept_language: (optional) Prioritize the names returned in the
                order of the specified languages. Language will default to English.
         :param int limit: (optional) Number of usage records returned. The default
-               value is 10. Maximum value is 20.
+               value is 30. Maximum value is 200.
         :param str start: (optional) The offset from which the records must be
                fetched. Offset information is included in the response.
         :param str resource_instance_id: (optional) Filter by resource instance id.
@@ -432,11 +439,11 @@ class UsageReportsV4(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `InstancesUsage` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        if organization_id is None:
+        if not organization_id:
             raise ValueError('organization_id must be provided')
-        if billingmonth is None:
+        if not billingmonth:
             raise ValueError('billingmonth must be provided')
         headers = {'Accept-Language': accept_language}
         sdk_headers = get_sdk_headers(
@@ -456,6 +463,7 @@ class UsageReportsV4(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id', 'organization_id', 'billingmonth']
@@ -483,7 +491,7 @@ class UsageReportsV4(BaseService):
         *,
         names: bool = None,
         accept_language: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get organization usage.
@@ -505,11 +513,11 @@ class UsageReportsV4(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `OrgUsage` object
         """
 
-        if account_id is None:
+        if not account_id:
             raise ValueError('account_id must be provided')
-        if organization_id is None:
+        if not organization_id:
             raise ValueError('organization_id must be provided')
-        if billingmonth is None:
+        if not billingmonth:
             raise ValueError('billingmonth must be provided')
         headers = {'Accept-Language': accept_language}
         sdk_headers = get_sdk_headers(
@@ -521,6 +529,7 @@ class UsageReportsV4(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['account_id', 'organization_id', 'billingmonth']
@@ -543,8 +552,8 @@ class AccountSummary:
     A summary of charges and credits for an account.
 
     :attr str account_id: The ID of the account.
-    :attr str billing_month: The month in which usages were incurred. Represented in
-          yyyy-mm format.
+    :attr str month: The month in which usages were incurred. Represented in yyyy-mm
+          format.
     :attr str billing_country_code: Country.
     :attr str billing_currency_code: The currency in which the account is billed.
     :attr ResourcesSummary resources: Charges related to cloud resources.
@@ -558,7 +567,7 @@ class AccountSummary:
     def __init__(
         self,
         account_id: str,
-        billing_month: str,
+        month: str,
         billing_country_code: str,
         billing_currency_code: str,
         resources: 'ResourcesSummary',
@@ -570,8 +579,8 @@ class AccountSummary:
         Initialize a AccountSummary object.
 
         :param str account_id: The ID of the account.
-        :param str billing_month: The month in which usages were incurred.
-               Represented in yyyy-mm format.
+        :param str month: The month in which usages were incurred. Represented in
+               yyyy-mm format.
         :param str billing_country_code: Country.
         :param str billing_currency_code: The currency in which the account is
                billed.
@@ -583,7 +592,7 @@ class AccountSummary:
                related to a subscription.
         """
         self.account_id = account_id
-        self.billing_month = billing_month
+        self.month = month
         self.billing_country_code = billing_country_code
         self.billing_currency_code = billing_currency_code
         self.resources = resources
@@ -599,10 +608,10 @@ class AccountSummary:
             args['account_id'] = _dict.get('account_id')
         else:
             raise ValueError('Required property \'account_id\' not present in AccountSummary JSON')
-        if 'billing_month' in _dict:
-            args['billing_month'] = _dict.get('billing_month')
+        if 'month' in _dict:
+            args['month'] = _dict.get('month')
         else:
-            raise ValueError('Required property \'billing_month\' not present in AccountSummary JSON')
+            raise ValueError('Required property \'month\' not present in AccountSummary JSON')
         if 'billing_country_code' in _dict:
             args['billing_country_code'] = _dict.get('billing_country_code')
         else:
@@ -616,11 +625,11 @@ class AccountSummary:
         else:
             raise ValueError('Required property \'resources\' not present in AccountSummary JSON')
         if 'offers' in _dict:
-            args['offers'] = [Offer.from_dict(x) for x in _dict.get('offers')]
+            args['offers'] = [Offer.from_dict(v) for v in _dict.get('offers')]
         else:
             raise ValueError('Required property \'offers\' not present in AccountSummary JSON')
         if 'support' in _dict:
-            args['support'] = [SupportSummary.from_dict(x) for x in _dict.get('support')]
+            args['support'] = [SupportSummary.from_dict(v) for v in _dict.get('support')]
         else:
             raise ValueError('Required property \'support\' not present in AccountSummary JSON')
         if 'subscription' in _dict:
@@ -639,20 +648,38 @@ class AccountSummary:
         _dict = {}
         if hasattr(self, 'account_id') and self.account_id is not None:
             _dict['account_id'] = self.account_id
-        if hasattr(self, 'billing_month') and self.billing_month is not None:
-            _dict['billing_month'] = self.billing_month
+        if hasattr(self, 'month') and self.month is not None:
+            _dict['month'] = self.month
         if hasattr(self, 'billing_country_code') and self.billing_country_code is not None:
             _dict['billing_country_code'] = self.billing_country_code
         if hasattr(self, 'billing_currency_code') and self.billing_currency_code is not None:
             _dict['billing_currency_code'] = self.billing_currency_code
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = self.resources.to_dict()
+            if isinstance(self.resources, dict):
+                _dict['resources'] = self.resources
+            else:
+                _dict['resources'] = self.resources.to_dict()
         if hasattr(self, 'offers') and self.offers is not None:
-            _dict['offers'] = [x.to_dict() for x in self.offers]
+            offers_list = []
+            for v in self.offers:
+                if isinstance(v, dict):
+                    offers_list.append(v)
+                else:
+                    offers_list.append(v.to_dict())
+            _dict['offers'] = offers_list
         if hasattr(self, 'support') and self.support is not None:
-            _dict['support'] = [x.to_dict() for x in self.support]
+            support_list = []
+            for v in self.support:
+                if isinstance(v, dict):
+                    support_list.append(v)
+                else:
+                    support_list.append(v.to_dict())
+            _dict['support'] = support_list
         if hasattr(self, 'subscription') and self.subscription is not None:
-            _dict['subscription'] = self.subscription.to_dict()
+            if isinstance(self.subscription, dict):
+                _dict['subscription'] = self.subscription
+            else:
+                _dict['subscription'] = self.subscription.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -726,7 +753,7 @@ class AccountUsage:
         else:
             raise ValueError('Required property \'month\' not present in AccountUsage JSON')
         if 'resources' in _dict:
-            args['resources'] = [Resource.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [Resource.from_dict(v) for v in _dict.get('resources')]
         else:
             raise ValueError('Required property \'resources\' not present in AccountUsage JSON')
         return cls(**args)
@@ -748,7 +775,13 @@ class AccountUsage:
         if hasattr(self, 'month') and self.month is not None:
             _dict['month'] = self.month
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -903,7 +936,7 @@ class InstanceUsage:
         consumer_id: str = None,
         region: str = None,
         pricing_region: str = None,
-        plan_name: str = None
+        plan_name: str = None,
     ) -> None:
         """
         Initialize a InstanceUsage object.
@@ -1018,7 +1051,7 @@ class InstanceUsage:
         else:
             raise ValueError('Required property \'month\' not present in InstanceUsage JSON')
         if 'usage' in _dict:
-            args['usage'] = [Metric.from_dict(x) for x in _dict.get('usage')]
+            args['usage'] = [Metric.from_dict(v) for v in _dict.get('usage')]
         else:
             raise ValueError('Required property \'usage\' not present in InstanceUsage JSON')
         return cls(**args)
@@ -1072,7 +1105,13 @@ class InstanceUsage:
         if hasattr(self, 'month') and self.month is not None:
             _dict['month'] = self.month
         if hasattr(self, 'usage') and self.usage is not None:
-            _dict['usage'] = [x.to_dict() for x in self.usage]
+            usage_list = []
+            for v in self.usage:
+                if isinstance(v, dict):
+                    usage_list.append(v)
+                else:
+                    usage_list.append(v.to_dict())
+            _dict['usage'] = usage_list
         return _dict
 
     def _to_dict(self):
@@ -1232,7 +1271,7 @@ class InstancesUsage:
         count: int = None,
         first: 'InstancesUsageFirst' = None,
         next: 'InstancesUsageNext' = None,
-        resources: List['InstanceUsage'] = None
+        resources: List['InstanceUsage'] = None,
     ) -> None:
         """
         Initialize a InstancesUsage object.
@@ -1265,7 +1304,7 @@ class InstancesUsage:
         if 'next' in _dict:
             args['next'] = InstancesUsageNext.from_dict(_dict.get('next'))
         if 'resources' in _dict:
-            args['resources'] = [InstanceUsage.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [InstanceUsage.from_dict(v) for v in _dict.get('resources')]
         return cls(**args)
 
     @classmethod
@@ -1281,11 +1320,23 @@ class InstancesUsage:
         if hasattr(self, 'count') and self.count is not None:
             _dict['count'] = self.count
         if hasattr(self, 'first') and self.first is not None:
-            _dict['first'] = self.first.to_dict()
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
         if hasattr(self, 'next') and self.next is not None:
-            _dict['next'] = self.next.to_dict()
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -1340,7 +1391,7 @@ class Metric:
         price: List[object] = None,
         unit: str = None,
         unit_name: str = None,
-        non_chargeable: bool = None
+        non_chargeable: bool = None,
     ) -> None:
         """
         Initialize a Metric object.
@@ -1407,7 +1458,7 @@ class Metric:
         if 'non_chargeable' in _dict:
             args['non_chargeable'] = _dict.get('non_chargeable')
         if 'discounts' in _dict:
-            args['discounts'] = [Discount.from_dict(x) for x in _dict.get('discounts')]
+            args['discounts'] = [Discount.from_dict(v) for v in _dict.get('discounts')]
         else:
             raise ValueError('Required property \'discounts\' not present in Metric JSON')
         return cls(**args)
@@ -1441,7 +1492,13 @@ class Metric:
         if hasattr(self, 'non_chargeable') and self.non_chargeable is not None:
             _dict['non_chargeable'] = self.non_chargeable
         if hasattr(self, 'discounts') and self.discounts is not None:
-            _dict['discounts'] = [x.to_dict() for x in self.discounts]
+            discounts_list = []
+            for v in self.discounts:
+                if isinstance(v, dict):
+                    discounts_list.append(v)
+                else:
+                    discounts_list.append(v.to_dict())
+            _dict['discounts'] = discounts_list
         return _dict
 
     def _to_dict(self):
@@ -1550,7 +1607,10 @@ class Offer:
         if hasattr(self, 'expires_on') and self.expires_on is not None:
             _dict['expires_on'] = datetime_to_string(self.expires_on)
         if hasattr(self, 'credits') and self.credits is not None:
-            _dict['credits'] = self.credits.to_dict()
+            if isinstance(self.credits, dict):
+                _dict['credits'] = self.credits
+            else:
+                _dict['credits'] = self.credits.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -1671,7 +1731,7 @@ class OrgUsage:
         month: str,
         resources: List['Resource'],
         *,
-        organization_name: str = None
+        organization_name: str = None,
     ) -> None:
         """
         Initialize a OrgUsage object.
@@ -1720,7 +1780,7 @@ class OrgUsage:
         else:
             raise ValueError('Required property \'month\' not present in OrgUsage JSON')
         if 'resources' in _dict:
-            args['resources'] = [Resource.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [Resource.from_dict(v) for v in _dict.get('resources')]
         else:
             raise ValueError('Required property \'resources\' not present in OrgUsage JSON')
         return cls(**args)
@@ -1746,7 +1806,13 @@ class OrgUsage:
         if hasattr(self, 'month') and self.month is not None:
             _dict['month'] = self.month
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -1792,7 +1858,7 @@ class Plan:
         discounts: List['Discount'],
         *,
         plan_name: str = None,
-        pricing_region: str = None
+        pricing_region: str = None,
     ) -> None:
         """
         Initialize a Plan object.
@@ -1841,11 +1907,11 @@ class Plan:
         else:
             raise ValueError('Required property \'rated_cost\' not present in Plan JSON')
         if 'usage' in _dict:
-            args['usage'] = [Metric.from_dict(x) for x in _dict.get('usage')]
+            args['usage'] = [Metric.from_dict(v) for v in _dict.get('usage')]
         else:
             raise ValueError('Required property \'usage\' not present in Plan JSON')
         if 'discounts' in _dict:
-            args['discounts'] = [Discount.from_dict(x) for x in _dict.get('discounts')]
+            args['discounts'] = [Discount.from_dict(v) for v in _dict.get('discounts')]
         else:
             raise ValueError('Required property \'discounts\' not present in Plan JSON')
         return cls(**args)
@@ -1871,9 +1937,21 @@ class Plan:
         if hasattr(self, 'rated_cost') and self.rated_cost is not None:
             _dict['rated_cost'] = self.rated_cost
         if hasattr(self, 'usage') and self.usage is not None:
-            _dict['usage'] = [x.to_dict() for x in self.usage]
+            usage_list = []
+            for v in self.usage:
+                if isinstance(v, dict):
+                    usage_list.append(v)
+                else:
+                    usage_list.append(v.to_dict())
+            _dict['usage'] = usage_list
         if hasattr(self, 'discounts') and self.discounts is not None:
-            _dict['discounts'] = [x.to_dict() for x in self.discounts]
+            discounts_list = []
+            for v in self.discounts:
+                if isinstance(v, dict):
+                    discounts_list.append(v)
+                else:
+                    discounts_list.append(v.to_dict())
+            _dict['discounts'] = discounts_list
         return _dict
 
     def _to_dict(self):
@@ -1921,7 +1999,7 @@ class Resource:
         plans: List['Plan'],
         discounts: List['Discount'],
         *,
-        resource_name: str = None
+        resource_name: str = None,
     ) -> None:
         """
         Initialize a Resource object.
@@ -1974,11 +2052,11 @@ class Resource:
         else:
             raise ValueError('Required property \'non_billable_rated_cost\' not present in Resource JSON')
         if 'plans' in _dict:
-            args['plans'] = [Plan.from_dict(x) for x in _dict.get('plans')]
+            args['plans'] = [Plan.from_dict(v) for v in _dict.get('plans')]
         else:
             raise ValueError('Required property \'plans\' not present in Resource JSON')
         if 'discounts' in _dict:
-            args['discounts'] = [Discount.from_dict(x) for x in _dict.get('discounts')]
+            args['discounts'] = [Discount.from_dict(v) for v in _dict.get('discounts')]
         else:
             raise ValueError('Required property \'discounts\' not present in Resource JSON')
         return cls(**args)
@@ -2004,9 +2082,21 @@ class Resource:
         if hasattr(self, 'non_billable_rated_cost') and self.non_billable_rated_cost is not None:
             _dict['non_billable_rated_cost'] = self.non_billable_rated_cost
         if hasattr(self, 'plans') and self.plans is not None:
-            _dict['plans'] = [x.to_dict() for x in self.plans]
+            plans_list = []
+            for v in self.plans:
+                if isinstance(v, dict):
+                    plans_list.append(v)
+                else:
+                    plans_list.append(v.to_dict())
+            _dict['plans'] = plans_list
         if hasattr(self, 'discounts') and self.discounts is not None:
-            _dict['discounts'] = [x.to_dict() for x in self.discounts]
+            discounts_list = []
+            for v in self.discounts:
+                if isinstance(v, dict):
+                    discounts_list.append(v)
+                else:
+                    discounts_list.append(v.to_dict())
+            _dict['discounts'] = discounts_list
         return _dict
 
     def _to_dict(self):
@@ -2051,7 +2141,7 @@ class ResourceGroupUsage:
         month: str,
         resources: List['Resource'],
         *,
-        resource_group_name: str = None
+        resource_group_name: str = None,
     ) -> None:
         """
         Initialize a ResourceGroupUsage object.
@@ -2100,7 +2190,7 @@ class ResourceGroupUsage:
         else:
             raise ValueError('Required property \'month\' not present in ResourceGroupUsage JSON')
         if 'resources' in _dict:
-            args['resources'] = [Resource.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [Resource.from_dict(v) for v in _dict.get('resources')]
         else:
             raise ValueError('Required property \'resources\' not present in ResourceGroupUsage JSON')
         return cls(**args)
@@ -2126,7 +2216,13 @@ class ResourceGroupUsage:
         if hasattr(self, 'month') and self.month is not None:
             _dict['month'] = self.month
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -2245,7 +2341,7 @@ class Subscription:
         credits_total: float,
         terms: List['SubscriptionTerm'],
         *,
-        end: datetime = None
+        end: datetime = None,
     ) -> None:
         """
         Initialize a Subscription object.
@@ -2304,7 +2400,7 @@ class Subscription:
         else:
             raise ValueError('Required property \'credits_total\' not present in Subscription JSON')
         if 'terms' in _dict:
-            args['terms'] = [SubscriptionTerm.from_dict(x) for x in _dict.get('terms')]
+            args['terms'] = [SubscriptionTerm.from_dict(v) for v in _dict.get('terms')]
         else:
             raise ValueError('Required property \'terms\' not present in Subscription JSON')
         return cls(**args)
@@ -2332,7 +2428,13 @@ class Subscription:
         if hasattr(self, 'credits_total') and self.credits_total is not None:
             _dict['credits_total'] = self.credits_total
         if hasattr(self, 'terms') and self.terms is not None:
-            _dict['terms'] = [x.to_dict() for x in self.terms]
+            terms_list = []
+            for v in self.terms:
+                if isinstance(v, dict):
+                    terms_list.append(v)
+                else:
+                    terms_list.append(v.to_dict())
+            _dict['terms'] = terms_list
         return _dict
 
     def _to_dict(self):
@@ -2383,7 +2485,7 @@ class SubscriptionSummary:
         if 'overage' in _dict:
             args['overage'] = _dict.get('overage')
         if 'subscriptions' in _dict:
-            args['subscriptions'] = [Subscription.from_dict(x) for x in _dict.get('subscriptions')]
+            args['subscriptions'] = [Subscription.from_dict(v) for v in _dict.get('subscriptions')]
         return cls(**args)
 
     @classmethod
@@ -2397,7 +2499,13 @@ class SubscriptionSummary:
         if hasattr(self, 'overage') and self.overage is not None:
             _dict['overage'] = self.overage
         if hasattr(self, 'subscriptions') and self.subscriptions is not None:
-            _dict['subscriptions'] = [x.to_dict() for x in self.subscriptions]
+            subscriptions_list = []
+            for v in self.subscriptions:
+                if isinstance(v, dict):
+                    subscriptions_list.append(v)
+                else:
+                    subscriptions_list.append(v.to_dict())
+            _dict['subscriptions'] = subscriptions_list
         return _dict
 
     def _to_dict(self):
@@ -2473,7 +2581,10 @@ class SubscriptionTerm:
         if hasattr(self, 'end') and self.end is not None:
             _dict['end'] = datetime_to_string(self.end)
         if hasattr(self, 'credits') and self.credits is not None:
-            _dict['credits'] = self.credits.to_dict()
+            if isinstance(self.credits, dict):
+                _dict['credits'] = self.credits
+            else:
+                _dict['credits'] = self.credits.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -2652,3 +2763,328 @@ class SupportSummary:
     def __ne__(self, other: 'SupportSummary') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+
+##############################################################################
+# Pagers
+##############################################################################
+
+
+class GetResourceUsageAccountPager:
+    """
+    GetResourceUsageAccountPager can be used to simplify the use of the "get_resource_usage_account" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: UsageReportsV4,
+        account_id: str,
+        billingmonth: str,
+        names: bool = None,
+        accept_language: str = None,
+        limit: int = None,
+        resource_group_id: str = None,
+        organization_id: str = None,
+        resource_instance_id: str = None,
+        resource_id: str = None,
+        plan_id: str = None,
+        region: str = None,
+    ) -> None:
+        """
+        Initialize a GetResourceUsageAccountPager object.
+        :param str account_id: Account ID for which the usage report is requested.
+        :param str billingmonth: The billing month for which the usage report is
+               requested.  Format is yyyy-mm.
+        :param bool names: (optional) Include the name of every resource, plan,
+               resource instance, organization, and resource group.
+        :param str accept_language: (optional) Prioritize the names returned in the
+               order of the specified languages. Language will default to English.
+        :param int limit: (optional) Number of usage records returned. The default
+               value is 30. Maximum value is 200.
+        :param str resource_group_id: (optional) Filter by resource group.
+        :param str organization_id: (optional) Filter by organization_id.
+        :param str resource_instance_id: (optional) Filter by resource instance_id.
+        :param str resource_id: (optional) Filter by resource_id.
+        :param str plan_id: (optional) Filter by plan_id.
+        :param str region: (optional) Region in which the resource instance is
+               provisioned.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._account_id = account_id
+        self._billingmonth = billingmonth
+        self._names = names
+        self._accept_language = accept_language
+        self._limit = limit
+        self._resource_group_id = resource_group_id
+        self._organization_id = organization_id
+        self._resource_instance_id = resource_instance_id
+        self._resource_id = resource_id
+        self._plan_id = plan_id
+        self._region = region
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of InstanceUsage.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.get_resource_usage_account(
+            account_id=self._account_id,
+            billingmonth=self._billingmonth,
+            names=self._names,
+            accept_language=self._accept_language,
+            limit=self._limit,
+            resource_group_id=self._resource_group_id,
+            organization_id=self._organization_id,
+            resource_instance_id=self._resource_instance_id,
+            resource_id=self._resource_id,
+            plan_id=self._plan_id,
+            region=self._region,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), '_start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of InstanceUsage.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class GetResourceUsageResourceGroupPager:
+    """
+    GetResourceUsageResourceGroupPager can be used to simplify the use of the "get_resource_usage_resource_group" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: UsageReportsV4,
+        account_id: str,
+        resource_group_id: str,
+        billingmonth: str,
+        names: bool = None,
+        accept_language: str = None,
+        limit: int = None,
+        resource_instance_id: str = None,
+        resource_id: str = None,
+        plan_id: str = None,
+        region: str = None,
+    ) -> None:
+        """
+        Initialize a GetResourceUsageResourceGroupPager object.
+        :param str account_id: Account ID for which the usage report is requested.
+        :param str resource_group_id: Resource group for which the usage report is
+               requested.
+        :param str billingmonth: The billing month for which the usage report is
+               requested.  Format is yyyy-mm.
+        :param bool names: (optional) Include the name of every resource, plan,
+               resource instance, organization, and resource group.
+        :param str accept_language: (optional) Prioritize the names returned in the
+               order of the specified languages. Language will default to English.
+        :param int limit: (optional) Number of usage records returned. The default
+               value is 30. Maximum value is 200.
+        :param str resource_instance_id: (optional) Filter by resource instance id.
+        :param str resource_id: (optional) Filter by resource_id.
+        :param str plan_id: (optional) Filter by plan_id.
+        :param str region: (optional) Region in which the resource instance is
+               provisioned.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._account_id = account_id
+        self._resource_group_id = resource_group_id
+        self._billingmonth = billingmonth
+        self._names = names
+        self._accept_language = accept_language
+        self._limit = limit
+        self._resource_instance_id = resource_instance_id
+        self._resource_id = resource_id
+        self._plan_id = plan_id
+        self._region = region
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of InstanceUsage.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.get_resource_usage_resource_group(
+            account_id=self._account_id,
+            resource_group_id=self._resource_group_id,
+            billingmonth=self._billingmonth,
+            names=self._names,
+            accept_language=self._accept_language,
+            limit=self._limit,
+            resource_instance_id=self._resource_instance_id,
+            resource_id=self._resource_id,
+            plan_id=self._plan_id,
+            region=self._region,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), '_start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of InstanceUsage.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class GetResourceUsageOrgPager:
+    """
+    GetResourceUsageOrgPager can be used to simplify the use of the "get_resource_usage_org" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: UsageReportsV4,
+        account_id: str,
+        organization_id: str,
+        billingmonth: str,
+        names: bool = None,
+        accept_language: str = None,
+        limit: int = None,
+        resource_instance_id: str = None,
+        resource_id: str = None,
+        plan_id: str = None,
+        region: str = None,
+    ) -> None:
+        """
+        Initialize a GetResourceUsageOrgPager object.
+        :param str account_id: Account ID for which the usage report is requested.
+        :param str organization_id: ID of the organization.
+        :param str billingmonth: The billing month for which the usage report is
+               requested.  Format is yyyy-mm.
+        :param bool names: (optional) Include the name of every resource, plan,
+               resource instance, organization, and resource group.
+        :param str accept_language: (optional) Prioritize the names returned in the
+               order of the specified languages. Language will default to English.
+        :param int limit: (optional) Number of usage records returned. The default
+               value is 30. Maximum value is 200.
+        :param str resource_instance_id: (optional) Filter by resource instance id.
+        :param str resource_id: (optional) Filter by resource_id.
+        :param str plan_id: (optional) Filter by plan_id.
+        :param str region: (optional) Region in which the resource instance is
+               provisioned.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._account_id = account_id
+        self._organization_id = organization_id
+        self._billingmonth = billingmonth
+        self._names = names
+        self._accept_language = accept_language
+        self._limit = limit
+        self._resource_instance_id = resource_instance_id
+        self._resource_id = resource_id
+        self._plan_id = plan_id
+        self._region = region
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of InstanceUsage.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.get_resource_usage_org(
+            account_id=self._account_id,
+            organization_id=self._organization_id,
+            billingmonth=self._billingmonth,
+            names=self._names,
+            accept_language=self._accept_language,
+            limit=self._limit,
+            resource_instance_id=self._resource_instance_id,
+            resource_id=self._resource_id,
+            plan_id=self._plan_id,
+            region=self._region,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), '_start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of InstanceUsage.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
