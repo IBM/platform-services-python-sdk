@@ -1,3 +1,10 @@
+## [0.30.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.30.0...v0.30.1) (2022-12-05)
+
+
+### Bug Fixes
+
+* **Usage Reports:** rename Account_Summary billing_month property ([#182](https://github.com/IBM/platform-services-python-sdk/issues/182)) ([b189a87](https://github.com/IBM/platform-services-python-sdk/commit/b189a8726a82074a2dd55b6e51aba9627719a954))
+
 # [0.30.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.29.0...v0.30.0) (2022-12-02)
 
 
