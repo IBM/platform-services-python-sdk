@@ -1,3 +1,10 @@
+## [0.30.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.30.1...v0.30.2) (2022-12-07)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** remove support for v2/polices until GA ([#183](https://github.com/IBM/platform-services-python-sdk/issues/183)) ([f1ccda4](https://github.com/IBM/platform-services-python-sdk/commit/f1ccda41d09a01c839b34c78bb1c79cc31c7f7d5))
+
 ## [0.30.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.30.0...v0.30.1) (2022-12-05)
 
 
