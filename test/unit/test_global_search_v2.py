@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ Unit Tests for GlobalSearchV2
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 import inspect
 import json
+import os
 import pytest
 import re
 import requests
@@ -28,30 +29,76 @@ import urllib
 from ibm_platform_services.global_search_v2 import *
 
 
-_service = GlobalSearchV2(authenticator=NoAuthAuthenticator())
+_service = GlobalSearchV2(
+    authenticator=NoAuthAuthenticator()
+)
 
-_base_url = 'https://api.global-search-tagging.cloud.ibm.com'
+_base_url = 'https://fake'
 _service.set_service_url(_base_url)
+
+
+def preprocess_url(operation_path: str):
+    """
+    Returns the request url associated with the specified operation path.
+    This will be base_url concatenated with a quoted version of operation_path.
+    The returned request URL is used to register the mock response so it needs
+    to match the request URL that is formed by the requests library.
+    """
+    # First, unquote the path since it might have some quoted/escaped characters in it
+    # due to how the generator inserts the operation paths into the unit test code.
+    operation_path = urllib.parse.unquote(operation_path)
+
+    # Next, quote the path using urllib so that we approximate what will
+    # happen during request processing.
+    operation_path = urllib.parse.quote(operation_path, safe='/')
+
+    # Finally, form the request URL from the base URL and operation path.
+    request_url = _base_url + operation_path
+
+    # If the request url does NOT end with a /, then just return it as-is.
+    # Otherwise, return a regular expression that matches one or more trailing /.
+    if re.fullmatch('.*/+', request_url) is None:
+        return request_url
+    else:
+        return re.compile(request_url.rstrip('/') + '/+')
+
 
 ##############################################################################
 # Start of Service: Search
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
 
-class TestSearch:
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = GlobalSearchV2.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, GlobalSearchV2)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = GlobalSearchV2.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+class TestSearch():
     """
     Test Class for search
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_search_all_params(self):
@@ -59,9 +106,13 @@ class TestSearch:
         search()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/resources/search')
+        url = preprocess_url('/v3/resources/search')
         mock_response = '{"search_cursor": "search_cursor", "limit": 5, "items": [{"crn": "crn"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         query = 'testString'
@@ -69,9 +120,16 @@ class TestSearch:
         search_cursor = 'testString'
         transaction_id = 'testString'
         account_id = 'testString'
+        boundary = 'global'
         limit = 1
         timeout = 0
         sort = ['testString']
+        is_deleted = 'false'
+        is_reclaimed = 'false'
+        is_public = 'false'
+        impersonate_user = 'testString'
+        can_tag = 'false'
+        is_hidden = 'false'
 
         # Invoke method
         response = _service.search(
@@ -80,27 +138,50 @@ class TestSearch:
             search_cursor=search_cursor,
             transaction_id=transaction_id,
             account_id=account_id,
+            boundary=boundary,
             limit=limit,
             timeout=timeout,
             sort=sort,
-            headers={},
+            is_deleted=is_deleted,
+            is_reclaimed=is_reclaimed,
+            is_public=is_public,
+            impersonate_user=impersonate_user,
+            can_tag=can_tag,
+            is_hidden=is_hidden,
+            headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = responses.calls[0].request.url.split('?',1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
+        assert 'boundary={}'.format(boundary) in query_string
         assert 'limit={}'.format(limit) in query_string
         assert 'timeout={}'.format(timeout) in query_string
         assert 'sort={}'.format(','.join(sort)) in query_string
+        assert 'is_deleted={}'.format(is_deleted) in query_string
+        assert 'is_reclaimed={}'.format(is_reclaimed) in query_string
+        assert 'is_public={}'.format(is_public) in query_string
+        assert 'impersonate_user={}'.format(impersonate_user) in query_string
+        assert 'can_tag={}'.format(can_tag) in query_string
+        assert 'is_hidden={}'.format(is_hidden) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['query'] == 'testString'
         assert req_body['fields'] == ['testString']
         assert req_body['search_cursor'] == 'testString'
+
+    def test_search_all_params_with_retries(self):
+        # Enable retries and run test_search_all_params.
+        _service.enable_retries()
+        self.test_search_all_params()
+
+        # Disable retries and run test_search_all_params.
+        _service.disable_retries()
+        self.test_search_all_params()
 
     @responses.activate
     def test_search_required_params(self):
@@ -108,9 +189,13 @@ class TestSearch:
         test_search_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/resources/search')
+        url = preprocess_url('/v3/resources/search')
         mock_response = '{"search_cursor": "search_cursor", "limit": 5, "items": [{"crn": "crn"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         query = 'testString'
@@ -118,7 +203,12 @@ class TestSearch:
         search_cursor = 'testString'
 
         # Invoke method
-        response = _service.search(query=query, fields=fields, search_cursor=search_cursor, headers={})
+        response = _service.search(
+            query=query,
+            fields=fields,
+            search_cursor=search_cursor,
+            headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -129,6 +219,14 @@ class TestSearch:
         assert req_body['fields'] == ['testString']
         assert req_body['search_cursor'] == 'testString'
 
+    def test_search_required_params_with_retries(self):
+        # Enable retries and run test_search_required_params.
+        _service.enable_retries()
+        self.test_search_required_params()
+
+        # Disable retries and run test_search_required_params.
+        _service.disable_retries()
+        self.test_search_required_params()
 
 # endregion
 ##############################################################################
@@ -140,20 +238,37 @@ class TestSearch:
 ##############################################################################
 # region
 
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
 
-class TestGetSupportedTypes:
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = GlobalSearchV2.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, GlobalSearchV2)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = GlobalSearchV2.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+class TestGetSupportedTypes():
     """
     Test Class for get_supported_types
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_supported_types_all_params(self):
@@ -161,17 +276,30 @@ class TestGetSupportedTypes:
         get_supported_types()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v2/resources/supported_types')
+        url = preprocess_url('/v2/resources/supported_types')
         mock_response = '{"supported_types": ["supported_types"]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Invoke method
         response = _service.get_supported_types()
+
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_get_supported_types_all_params_with_retries(self):
+        # Enable retries and run test_get_supported_types_all_params.
+        _service.enable_retries()
+        self.test_get_supported_types_all_params()
+
+        # Disable retries and run test_get_supported_types_all_params.
+        _service.disable_retries()
+        self.test_get_supported_types_all_params()
 
 # endregion
 ##############################################################################
@@ -183,7 +311,7 @@ class TestGetSupportedTypes:
 # Start of Model Tests
 ##############################################################################
 # region
-class TestModel_ResultItem:
+class TestModel_ResultItem():
     """
     Test Class for ResultItem
     """
@@ -196,7 +324,7 @@ class TestModel_ResultItem:
         # Construct a json representation of a ResultItem model
         result_item_model_json = {}
         result_item_model_json['crn'] = 'testString'
-        result_item_model_json['foo'] = {'foo': 'bar'}
+        result_item_model_json['foo'] = 'testString'
 
         # Construct a model instance of ResultItem by calling from_dict on the json representation
         result_item_model = ResultItem.from_dict(result_item_model_json)
@@ -213,8 +341,17 @@ class TestModel_ResultItem:
         result_item_model_json2 = result_item_model.to_dict()
         assert result_item_model_json2 == result_item_model_json
 
+        # Test get_properties and set_properties methods.
+        result_item_model.set_properties({})
+        actual_dict = result_item_model.get_properties()
+        assert actual_dict == {}
 
-class TestModel_ScanResult:
+        expected_dict = {'foo': 'testString'}
+        result_item_model.set_properties(expected_dict)
+        actual_dict = result_item_model.get_properties()
+        assert actual_dict == expected_dict
+
+class TestModel_ScanResult():
     """
     Test Class for ScanResult
     """
@@ -226,14 +363,14 @@ class TestModel_ScanResult:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        result_item_model = {}  # ResultItem
+        result_item_model = {} # ResultItem
         result_item_model['crn'] = 'testString'
-        result_item_model['foo'] = {'foo': 'bar'}
+        result_item_model['foo'] = 'testString'
 
         # Construct a json representation of a ScanResult model
         scan_result_model_json = {}
         scan_result_model_json['search_cursor'] = 'testString'
-        scan_result_model_json['limit'] = 38
+        scan_result_model_json['limit'] = 72.5
         scan_result_model_json['items'] = [result_item_model]
 
         # Construct a model instance of ScanResult by calling from_dict on the json representation
@@ -251,8 +388,7 @@ class TestModel_ScanResult:
         scan_result_model_json2 = scan_result_model.to_dict()
         assert scan_result_model_json2 == scan_result_model_json
 
-
-class TestModel_SupportedTypesList:
+class TestModel_SupportedTypesList():
     """
     Test Class for SupportedTypesList
     """
