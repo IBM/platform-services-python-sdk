@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.62.2-e5d4c32b-20221214-193750
+# IBM OpenAPI SDK Code Generator Version: 3.63.0-5dae26c1-20230111-193039
 
 """
 Search for resources with the global and shared resource properties repository that is
@@ -46,31 +46,30 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
-
 class GlobalSearchV2(BaseService):
     """The global_search V2 service."""
 
-    DEFAULT_SERVICE_URL = None
+    DEFAULT_SERVICE_URL = 'https://api.global-search-tagging.cloud.ibm.com'
     DEFAULT_SERVICE_NAME = 'global_search'
 
     @classmethod
-    def new_instance(
-        cls,
-        service_name: str = DEFAULT_SERVICE_NAME,
-    ) -> 'GlobalSearchV2':
+    def new_instance(cls,
+                     service_name: str = DEFAULT_SERVICE_NAME,
+                    ) -> 'GlobalSearchV2':
         """
         Return a new client for the global_search service using the specified
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
-    def __init__(
-        self,
-        authenticator: Authenticator = None,
-    ) -> None:
+    def __init__(self,
+                 authenticator: Authenticator = None,
+                ) -> None:
         """
         Construct a new client for the global_search service.
 
@@ -78,14 +77,17 @@ class GlobalSearchV2(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
+        BaseService.__init__(self,
+                             service_url=self.DEFAULT_SERVICE_URL,
+                             authenticator=authenticator)
+
 
     #########################
     # Search
     #########################
 
-    def search(
-        self,
+
+    def search(self,
         *,
         query: str = None,
         fields: List[str] = None,
@@ -178,10 +180,12 @@ class GlobalSearchV2(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `ScanResult` object
         """
 
-        headers = {'transaction-id': transaction_id}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='search'
-        )
+        headers = {
+            'transaction-id': transaction_id,
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V2',
+                                      operation_id='search')
         headers.update(sdk_headers)
 
         params = {
@@ -198,7 +202,11 @@ class GlobalSearchV2(BaseService):
             'is_hidden': is_hidden,
         }
 
-        data = {'query': query, 'fields': fields, 'search_cursor': search_cursor}
+        data = {
+            'query': query,
+            'fields': fields,
+            'search_cursor': search_cursor,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -209,7 +217,11 @@ class GlobalSearchV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v3/resources/search'
-        request = self.prepare_request(method='POST', url=url, headers=headers, params=params, data=data)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       params=params,
+                                       data=data)
 
         response = self.send(request, **kwargs)
         return response
@@ -218,7 +230,10 @@ class GlobalSearchV2(BaseService):
     # resourceTypes
     #########################
 
-    def get_supported_types(self, **kwargs) -> DetailedResponse:
+
+    def get_supported_types(self,
+        **kwargs
+    ) -> DetailedResponse:
         """
         DEPRECATED. Get all GhoST indexes.
 
@@ -234,9 +249,9 @@ class GlobalSearchV2(BaseService):
         logging.warning('A deprecated operation has been invoked: get_supported_types')
 
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_supported_types'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V2',
+                                      operation_id='get_supported_types')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
@@ -245,7 +260,9 @@ class GlobalSearchV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/resources/supported_types'
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -261,10 +278,8 @@ class SearchEnums:
         The boundary where the search performs. This parameter must be set only for the
         cross-account searches.
         """
-
         GLOBAL = 'global'
         US_REGULATED = 'us-regulated'
-
     class IsDeleted(str, Enum):
         """
         Determines if deleted documents should be included in result set or not. Possible
@@ -272,11 +287,9 @@ class SearchEnums:
         returned; if true, only deleted documents are returned; If any, both existing and
         deleted documents are returned. (_for administrators only_).
         """
-
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
-
     class IsReclaimed(str, Enum):
         """
         Determines if reclaimed documents should be included in result set or not.
@@ -284,22 +297,18 @@ class SearchEnums:
         documents are returned; if true, only reclaimed documents are returned; If any,
         both reclaimed and not reclaimed documents are returned.
         """
-
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
-
     class IsPublic(str, Enum):
         """
         Determines if public resources should be included in result set or not. Possible
         values are false (default), true or any. If false, do not search public resources;
         if true, search only public resources; If any, search also public resources.
         """
-
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
-
     class CanTag(str, Enum):
         """
         Determines if the result set must return the resources that the user can tag or
@@ -308,17 +317,14 @@ class SearchEnums:
         resources that user has permissions for tagging are returned (_for administrators
         only_).
         """
-
         TRUE = 'true'
         FALSE = 'false'
-
     class IsHidden(str, Enum):
         """
         Determines if the result set must return only the visible resources or not. If
         false (default), only visible resources are returned; if true, only hidden
         resources are returned; if any, all resources are returned.
         """
-
         TRUE = 'true'
         FALSE = 'false'
         ANY = 'any'
@@ -329,7 +335,7 @@ class SearchEnums:
 ##############################################################################
 
 
-class ResultItem:
+class ResultItem():
     """
     A resource returned in a search result, which is identified by its `crn`. It contains
     other properties that depend on the resource type.
@@ -340,7 +346,9 @@ class ResultItem:
     # The set of defined properties for the class
     _properties = frozenset(['crn'])
 
-    def __init__(self, crn: str, **kwargs) -> None:
+    def __init__(self,
+                 crn: str,
+                 **kwargs) -> None:
         """
         Initialize a ResultItem object.
 
@@ -359,7 +367,7 @@ class ResultItem:
             args['crn'] = _dict.get('crn')
         else:
             raise ValueError('Required property \'crn\' not present in ResultItem JSON')
-        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
+        args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
     @classmethod
@@ -411,24 +419,27 @@ class ResultItem:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class ScanResult:
+class ScanResult():
     """
     The search scan response.
 
     :attr str search_cursor: (optional) The search cursor to use on all calls after
           the first one.
-    :attr float limit: Value of the limit parameter specified by the user.
+    :attr int limit: Value of the limit parameter specified by the user.
     :attr List[ResultItem] items: The array of results. Each item represents a
           resource. An empty array signals the end of the result set, which means there
           are no more results to fetch.
     """
 
-    def __init__(self, limit: float, items: List['ResultItem'], *, search_cursor: str = None) -> None:
+    def __init__(self,
+                 limit: int,
+                 items: List['ResultItem'],
+                 *,
+                 search_cursor: str = None) -> None:
         """
         Initialize a ScanResult object.
 
-        :param float limit: Value of the limit parameter specified by the user.
+        :param int limit: Value of the limit parameter specified by the user.
         :param List[ResultItem] items: The array of results. Each item represents a
                resource. An empty array signals the end of the result set, which means
                there are no more results to fetch.
@@ -495,15 +506,16 @@ class ScanResult:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class SupportedTypesList:
+class SupportedTypesList():
     """
     A list of all GhoST indexes.
 
     :attr List[str] supported_types: (optional) A list of all GhoST indexes.
     """
 
-    def __init__(self, *, supported_types: List[str] = None) -> None:
+    def __init__(self,
+                 *,
+                 supported_types: List[str] = None) -> None:
         """
         Initialize a SupportedTypesList object.
 
