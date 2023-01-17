@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ Unit Tests for GlobalTaggingV1
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 import inspect
 import json
+import os
 import pytest
 import re
 import requests
@@ -33,10 +34,65 @@ _service = GlobalTaggingV1(authenticator=NoAuthAuthenticator())
 _base_url = 'https://tags.global-search-tagging.cloud.ibm.com'
 _service.set_service_url(_base_url)
 
+
+def preprocess_url(operation_path: str):
+    """
+    Returns the request url associated with the specified operation path.
+    This will be base_url concatenated with a quoted version of operation_path.
+    The returned request URL is used to register the mock response so it needs
+    to match the request URL that is formed by the requests library.
+    """
+    # First, unquote the path since it might have some quoted/escaped characters in it
+    # due to how the generator inserts the operation paths into the unit test code.
+    operation_path = urllib.parse.unquote(operation_path)
+
+    # Next, quote the path using urllib so that we approximate what will
+    # happen during request processing.
+    operation_path = urllib.parse.quote(operation_path, safe='/')
+
+    # Finally, form the request URL from the base URL and operation path.
+    request_url = _base_url + operation_path
+
+    # If the request url does NOT end with a /, then just return it as-is.
+    # Otherwise, return a regular expression that matches one or more trailing /.
+    if re.fullmatch('.*/+', request_url) is None:
+        return request_url
+    else:
+        return re.compile(request_url.rstrip('/') + '/+')
+
+
 ##############################################################################
 # Start of Service: Tags
 ##############################################################################
 # region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = GlobalTaggingV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, GlobalTaggingV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = GlobalTaggingV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
 
 
 class TestListTags:
@@ -44,40 +100,33 @@ class TestListTags:
     Test Class for list_tags
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_list_tags_all_params(self):
         """
         list_tags()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags')
+        url = preprocess_url('/v3/tags')
         mock_response = '{"total_count": 0, "offset": 0, "limit": 1, "items": [{"name": "name"}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
+        transaction_id = 'testString'
         impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
-        full_data = True
+        full_data = False
         providers = ['ghost']
         attached_to = 'testString'
         offset = 0
         limit = 1
         timeout = 0
         order_by_name = 'asc'
-        attached_only = True
+        attached_only = False
 
         # Invoke method
         response = _service.list_tags(
+            transaction_id=transaction_id,
             impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
@@ -110,13 +159,22 @@ class TestListTags:
         assert 'order_by_name={}'.format(order_by_name) in query_string
         assert 'attached_only={}'.format('true' if attached_only else 'false') in query_string
 
+    def test_list_tags_all_params_with_retries(self):
+        # Enable retries and run test_list_tags_all_params.
+        _service.enable_retries()
+        self.test_list_tags_all_params()
+
+        # Disable retries and run test_list_tags_all_params.
+        _service.disable_retries()
+        self.test_list_tags_all_params()
+
     @responses.activate
     def test_list_tags_required_params(self):
         """
         test_list_tags_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags')
+        url = preprocess_url('/v3/tags')
         mock_response = '{"total_count": 0, "offset": 0, "limit": 1, "items": [{"name": "name"}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
@@ -127,20 +185,20 @@ class TestListTags:
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_list_tags_required_params_with_retries(self):
+        # Enable retries and run test_list_tags_required_params.
+        _service.enable_retries()
+        self.test_list_tags_required_params()
+
+        # Disable retries and run test_list_tags_required_params.
+        _service.disable_retries()
+        self.test_list_tags_required_params()
+
 
 class TestCreateTag:
     """
     Test Class for create_tag
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_create_tag_all_params(self):
@@ -148,19 +206,25 @@ class TestCreateTag:
         create_tag()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags')
+        url = preprocess_url('/v3/tags')
         mock_response = '{"results": [{"tag_name": "tag_name", "is_error": true}]}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         tag_names = ['testString']
         impersonate_user = 'testString'
+        transaction_id = 'testString'
         account_id = 'testString'
         tag_type = 'access'
 
         # Invoke method
         response = _service.create_tag(
-            tag_names, impersonate_user=impersonate_user, account_id=account_id, tag_type=tag_type, headers={}
+            tag_names,
+            impersonate_user=impersonate_user,
+            transaction_id=transaction_id,
+            account_id=account_id,
+            tag_type=tag_type,
+            headers={},
         )
 
         # Check for correct operation
@@ -176,13 +240,22 @@ class TestCreateTag:
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['tag_names'] == ['testString']
 
+    def test_create_tag_all_params_with_retries(self):
+        # Enable retries and run test_create_tag_all_params.
+        _service.enable_retries()
+        self.test_create_tag_all_params()
+
+        # Disable retries and run test_create_tag_all_params.
+        _service.disable_retries()
+        self.test_create_tag_all_params()
+
     @responses.activate
     def test_create_tag_required_params(self):
         """
         test_create_tag_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags')
+        url = preprocess_url('/v3/tags')
         mock_response = '{"results": [{"tag_name": "tag_name", "is_error": true}]}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
@@ -199,13 +272,22 @@ class TestCreateTag:
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['tag_names'] == ['testString']
 
+    def test_create_tag_required_params_with_retries(self):
+        # Enable retries and run test_create_tag_required_params.
+        _service.enable_retries()
+        self.test_create_tag_required_params()
+
+        # Disable retries and run test_create_tag_required_params.
+        _service.disable_retries()
+        self.test_create_tag_required_params()
+
     @responses.activate
     def test_create_tag_value_error(self):
         """
         test_create_tag_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags')
+        url = preprocess_url('/v3/tags')
         mock_response = '{"results": [{"tag_name": "tag_name", "is_error": true}]}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
@@ -221,20 +303,20 @@ class TestCreateTag:
             with pytest.raises(ValueError):
                 _service.create_tag(**req_copy)
 
+    def test_create_tag_value_error_with_retries(self):
+        # Enable retries and run test_create_tag_value_error.
+        _service.enable_retries()
+        self.test_create_tag_value_error()
+
+        # Disable retries and run test_create_tag_value_error.
+        _service.disable_retries()
+        self.test_create_tag_value_error()
+
 
 class TestDeleteTagAll:
     """
     Test Class for delete_tag_all
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_delete_tag_all_all_params(self):
@@ -242,11 +324,12 @@ class TestDeleteTagAll:
         delete_tag_all()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags')
+        url = preprocess_url('/v3/tags')
         mock_response = '{"total_count": 11, "errors": true, "items": [{"tag_name": "tag_name", "is_error": true}]}'
         responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
+        transaction_id = 'testString'
         providers = 'ghost'
         impersonate_user = 'testString'
         account_id = 'testString'
@@ -254,7 +337,12 @@ class TestDeleteTagAll:
 
         # Invoke method
         response = _service.delete_tag_all(
-            providers=providers, impersonate_user=impersonate_user, account_id=account_id, tag_type=tag_type, headers={}
+            transaction_id=transaction_id,
+            providers=providers,
+            impersonate_user=impersonate_user,
+            account_id=account_id,
+            tag_type=tag_type,
+            headers={},
         )
 
         # Check for correct operation
@@ -268,13 +356,22 @@ class TestDeleteTagAll:
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
 
+    def test_delete_tag_all_all_params_with_retries(self):
+        # Enable retries and run test_delete_tag_all_all_params.
+        _service.enable_retries()
+        self.test_delete_tag_all_all_params()
+
+        # Disable retries and run test_delete_tag_all_all_params.
+        _service.disable_retries()
+        self.test_delete_tag_all_all_params()
+
     @responses.activate
     def test_delete_tag_all_required_params(self):
         """
         test_delete_tag_all_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags')
+        url = preprocess_url('/v3/tags')
         mock_response = '{"total_count": 11, "errors": true, "items": [{"tag_name": "tag_name", "is_error": true}]}'
         responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
 
@@ -285,20 +382,20 @@ class TestDeleteTagAll:
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_delete_tag_all_required_params_with_retries(self):
+        # Enable retries and run test_delete_tag_all_required_params.
+        _service.enable_retries()
+        self.test_delete_tag_all_required_params()
+
+        # Disable retries and run test_delete_tag_all_required_params.
+        _service.disable_retries()
+        self.test_delete_tag_all_required_params()
+
 
 class TestDeleteTag:
     """
     Test Class for delete_tag
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_delete_tag_all_params(self):
@@ -306,12 +403,13 @@ class TestDeleteTag:
         delete_tag()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags/testString')
+        url = preprocess_url('/v3/tags/testString')
         mock_response = '{"results": [{"provider": "ghost", "is_error": true}]}'
         responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         tag_name = 'testString'
+        transaction_id = 'testString'
         providers = ['ghost']
         impersonate_user = 'testString'
         account_id = 'testString'
@@ -320,6 +418,7 @@ class TestDeleteTag:
         # Invoke method
         response = _service.delete_tag(
             tag_name,
+            transaction_id=transaction_id,
             providers=providers,
             impersonate_user=impersonate_user,
             account_id=account_id,
@@ -338,13 +437,22 @@ class TestDeleteTag:
         assert 'account_id={}'.format(account_id) in query_string
         assert 'tag_type={}'.format(tag_type) in query_string
 
+    def test_delete_tag_all_params_with_retries(self):
+        # Enable retries and run test_delete_tag_all_params.
+        _service.enable_retries()
+        self.test_delete_tag_all_params()
+
+        # Disable retries and run test_delete_tag_all_params.
+        _service.disable_retries()
+        self.test_delete_tag_all_params()
+
     @responses.activate
     def test_delete_tag_required_params(self):
         """
         test_delete_tag_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags/testString')
+        url = preprocess_url('/v3/tags/testString')
         mock_response = '{"results": [{"provider": "ghost", "is_error": true}]}'
         responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
 
@@ -358,13 +466,22 @@ class TestDeleteTag:
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
+    def test_delete_tag_required_params_with_retries(self):
+        # Enable retries and run test_delete_tag_required_params.
+        _service.enable_retries()
+        self.test_delete_tag_required_params()
+
+        # Disable retries and run test_delete_tag_required_params.
+        _service.disable_retries()
+        self.test_delete_tag_required_params()
+
     @responses.activate
     def test_delete_tag_value_error(self):
         """
         test_delete_tag_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags/testString')
+        url = preprocess_url('/v3/tags/testString')
         mock_response = '{"results": [{"provider": "ghost", "is_error": true}]}'
         responses.add(responses.DELETE, url, body=mock_response, content_type='application/json', status=200)
 
@@ -380,20 +497,20 @@ class TestDeleteTag:
             with pytest.raises(ValueError):
                 _service.delete_tag(**req_copy)
 
+    def test_delete_tag_value_error_with_retries(self):
+        # Enable retries and run test_delete_tag_value_error.
+        _service.enable_retries()
+        self.test_delete_tag_value_error()
+
+        # Disable retries and run test_delete_tag_value_error.
+        _service.disable_retries()
+        self.test_delete_tag_value_error()
+
 
 class TestAttachTag:
     """
     Test Class for attach_tag
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_attach_tag_all_params(self):
@@ -401,7 +518,7 @@ class TestAttachTag:
         attach_tag()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags/attach')
+        url = preprocess_url('/v3/tags/attach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
@@ -414,6 +531,7 @@ class TestAttachTag:
         resources = [resource_model]
         tag_name = 'testString'
         tag_names = ['testString']
+        transaction_id = 'testString'
         impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
@@ -423,6 +541,7 @@ class TestAttachTag:
             resources,
             tag_name=tag_name,
             tag_names=tag_names,
+            transaction_id=transaction_id,
             impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
@@ -444,13 +563,22 @@ class TestAttachTag:
         assert req_body['tag_name'] == 'testString'
         assert req_body['tag_names'] == ['testString']
 
+    def test_attach_tag_all_params_with_retries(self):
+        # Enable retries and run test_attach_tag_all_params.
+        _service.enable_retries()
+        self.test_attach_tag_all_params()
+
+        # Disable retries and run test_attach_tag_all_params.
+        _service.disable_retries()
+        self.test_attach_tag_all_params()
+
     @responses.activate
     def test_attach_tag_required_params(self):
         """
         test_attach_tag_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags/attach')
+        url = preprocess_url('/v3/tags/attach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
@@ -476,13 +604,22 @@ class TestAttachTag:
         assert req_body['tag_name'] == 'testString'
         assert req_body['tag_names'] == ['testString']
 
+    def test_attach_tag_required_params_with_retries(self):
+        # Enable retries and run test_attach_tag_required_params.
+        _service.enable_retries()
+        self.test_attach_tag_required_params()
+
+        # Disable retries and run test_attach_tag_required_params.
+        _service.disable_retries()
+        self.test_attach_tag_required_params()
+
     @responses.activate
     def test_attach_tag_value_error(self):
         """
         test_attach_tag_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags/attach')
+        url = preprocess_url('/v3/tags/attach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
@@ -505,20 +642,20 @@ class TestAttachTag:
             with pytest.raises(ValueError):
                 _service.attach_tag(**req_copy)
 
+    def test_attach_tag_value_error_with_retries(self):
+        # Enable retries and run test_attach_tag_value_error.
+        _service.enable_retries()
+        self.test_attach_tag_value_error()
+
+        # Disable retries and run test_attach_tag_value_error.
+        _service.disable_retries()
+        self.test_attach_tag_value_error()
+
 
 class TestDetachTag:
     """
     Test Class for detach_tag
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_detach_tag_all_params(self):
@@ -526,7 +663,7 @@ class TestDetachTag:
         detach_tag()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags/detach')
+        url = preprocess_url('/v3/tags/detach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
@@ -539,6 +676,7 @@ class TestDetachTag:
         resources = [resource_model]
         tag_name = 'testString'
         tag_names = ['testString']
+        transaction_id = 'testString'
         impersonate_user = 'testString'
         account_id = 'testString'
         tag_type = 'user'
@@ -548,6 +686,7 @@ class TestDetachTag:
             resources,
             tag_name=tag_name,
             tag_names=tag_names,
+            transaction_id=transaction_id,
             impersonate_user=impersonate_user,
             account_id=account_id,
             tag_type=tag_type,
@@ -569,13 +708,22 @@ class TestDetachTag:
         assert req_body['tag_name'] == 'testString'
         assert req_body['tag_names'] == ['testString']
 
+    def test_detach_tag_all_params_with_retries(self):
+        # Enable retries and run test_detach_tag_all_params.
+        _service.enable_retries()
+        self.test_detach_tag_all_params()
+
+        # Disable retries and run test_detach_tag_all_params.
+        _service.disable_retries()
+        self.test_detach_tag_all_params()
+
     @responses.activate
     def test_detach_tag_required_params(self):
         """
         test_detach_tag_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags/detach')
+        url = preprocess_url('/v3/tags/detach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
@@ -601,13 +749,22 @@ class TestDetachTag:
         assert req_body['tag_name'] == 'testString'
         assert req_body['tag_names'] == ['testString']
 
+    def test_detach_tag_required_params_with_retries(self):
+        # Enable retries and run test_detach_tag_required_params.
+        _service.enable_retries()
+        self.test_detach_tag_required_params()
+
+        # Disable retries and run test_detach_tag_required_params.
+        _service.disable_retries()
+        self.test_detach_tag_required_params()
+
     @responses.activate
     def test_detach_tag_value_error(self):
         """
         test_detach_tag_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v3/tags/detach')
+        url = preprocess_url('/v3/tags/detach')
         mock_response = '{"results": [{"resource_id": "resource_id", "is_error": true}]}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=200)
 
@@ -629,6 +786,15 @@ class TestDetachTag:
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.detach_tag(**req_copy)
+
+    def test_detach_tag_value_error_with_retries(self):
+        # Enable retries and run test_detach_tag_value_error.
+        _service.enable_retries()
+        self.test_detach_tag_value_error()
+
+        # Disable retries and run test_detach_tag_value_error.
+        _service.disable_retries()
+        self.test_detach_tag_value_error()
 
 
 # endregion
@@ -729,7 +895,7 @@ class TestModel_DeleteTagResults:
         delete_tag_results_item_model = {}  # DeleteTagResultsItem
         delete_tag_results_item_model['provider'] = 'ghost'
         delete_tag_results_item_model['is_error'] = True
-        delete_tag_results_item_model['foo'] = {'foo': 'bar'}
+        delete_tag_results_item_model['foo'] = 'testString'
 
         # Construct a json representation of a DeleteTagResults model
         delete_tag_results_model_json = {}
@@ -765,7 +931,7 @@ class TestModel_DeleteTagResultsItem:
         delete_tag_results_item_model_json = {}
         delete_tag_results_item_model_json['provider'] = 'ghost'
         delete_tag_results_item_model_json['is_error'] = True
-        delete_tag_results_item_model_json['foo'] = {'foo': 'bar'}
+        delete_tag_results_item_model_json['foo'] = 'testString'
 
         # Construct a model instance of DeleteTagResultsItem by calling from_dict on the json representation
         delete_tag_results_item_model = DeleteTagResultsItem.from_dict(delete_tag_results_item_model_json)
@@ -781,6 +947,16 @@ class TestModel_DeleteTagResultsItem:
         # Convert model instance back to dict and verify no loss of data
         delete_tag_results_item_model_json2 = delete_tag_results_item_model.to_dict()
         assert delete_tag_results_item_model_json2 == delete_tag_results_item_model_json
+
+        # Test get_properties and set_properties methods.
+        delete_tag_results_item_model.set_properties({})
+        actual_dict = delete_tag_results_item_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        delete_tag_results_item_model.set_properties(expected_dict)
+        actual_dict = delete_tag_results_item_model.get_properties()
+        assert actual_dict == expected_dict
 
 
 class TestModel_DeleteTagsResult:
