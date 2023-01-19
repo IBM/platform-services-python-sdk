@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,10 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
+# IBM OpenAPI SDK Code Generator Version: 3.62.0-a2a22f95-20221115-162524
 
 """
 Billing units for IBM Cloud enterprises
+
+API Version: 1.0.0
 """
 
 from datetime import datetime
@@ -25,7 +27,7 @@ from enum import Enum
 from typing import Dict, List
 import json
 
-from ibm_cloud_sdk_core import BaseService, DetailedResponse
+from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
 from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
@@ -36,7 +38,6 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
-
 class EnterpriseBillingUnitsV1(BaseService):
     """The Enterprise Billing Units V1 service."""
 
@@ -44,37 +45,44 @@ class EnterpriseBillingUnitsV1(BaseService):
     DEFAULT_SERVICE_NAME = 'enterprise_billing_units'
 
     @classmethod
-    def new_instance(
-        cls,
-        service_name: str = DEFAULT_SERVICE_NAME,
-    ) -> 'EnterpriseBillingUnitsV1':
+    def new_instance(cls,
+                     service_name: str = DEFAULT_SERVICE_NAME,
+                    ) -> 'EnterpriseBillingUnitsV1':
         """
         Return a new client for the Enterprise Billing Units service using the
                specified parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
-    def __init__(
-        self,
-        authenticator: Authenticator = None,
-    ) -> None:
+    def __init__(self,
+                 authenticator: Authenticator = None,
+                ) -> None:
         """
         Construct a new client for the Enterprise Billing Units service.
 
         :param Authenticator authenticator: The authenticator specifies the authentication mechanism.
-               Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
+               Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
+        BaseService.__init__(self,
+                             service_url=self.DEFAULT_SERVICE_URL,
+                             authenticator=authenticator)
+
 
     #########################
     # Billing Units
     #########################
 
-    def get_billing_unit(self, billing_unit_id: str, **kwargs) -> DetailedResponse:
+
+    def get_billing_unit(self,
+        billing_unit_id: str,
+        **kwargs
+    ) -> DetailedResponse:
         """
         Get billing unit by ID.
 
@@ -86,29 +94,39 @@ class EnterpriseBillingUnitsV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `BillingUnit` object
         """
 
-        if billing_unit_id is None:
+        if not billing_unit_id:
             raise ValueError('billing_unit_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_billing_unit'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_billing_unit')
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         path_param_keys = ['billing_unit_id']
         path_param_values = self.encode_path_vars(billing_unit_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/billing-units/{billing_unit_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
-    def list_billing_units(
-        self, *, account_id: str = None, enterprise_id: str = None, account_group_id: str = None, **kwargs
+
+    def list_billing_units(self,
+        *,
+        account_id: str = None,
+        enterprise_id: str = None,
+        account_group_id: str = None,
+        limit: int = None,
+        start: int = None,
+        **kwargs
     ) -> DetailedResponse:
         """
         List billing units.
@@ -119,34 +137,55 @@ class EnterpriseBillingUnitsV1(BaseService):
         :param str account_id: (optional) The enterprise account ID.
         :param str enterprise_id: (optional) The enterprise ID.
         :param str account_group_id: (optional) The account group ID.
+        :param int limit: (optional) Return results up to this limit. Valid values
+               are between 0 and 100.
+        :param int start: (optional) The pagination offset. This will be the index
+               of the first returned result.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `BillingUnitsList` object
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_billing_units'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_billing_units')
         headers.update(sdk_headers)
 
-        params = {'account_id': account_id, 'enterprise_id': enterprise_id, 'account_group_id': account_group_id}
+        params = {
+            'account_id': account_id,
+            'enterprise_id': enterprise_id,
+            'account_group_id': account_group_id,
+            'limit': limit,
+            'start': start
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v1/billing-units'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
     # Billing Options
     #########################
 
-    def list_billing_options(self, billing_unit_id: str, **kwargs) -> DetailedResponse:
+
+    def list_billing_options(self,
+        billing_unit_id: str,
+        *,
+        limit: int = None,
+        start: int = None,
+        **kwargs
+    ) -> DetailedResponse:
         """
         List billing options.
 
@@ -154,37 +193,56 @@ class EnterpriseBillingUnitsV1(BaseService):
         offers that are available to a billing unit.
 
         :param str billing_unit_id: The billing unit ID.
+        :param int limit: (optional) Return results up to this limit. Valid values
+               are between 0 and 100.
+        :param int start: (optional) The pagination offset. This will be the index
+               of the first returned result.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `BillingOptionsList` object
         """
 
-        if billing_unit_id is None:
+        if not billing_unit_id:
             raise ValueError('billing_unit_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_billing_options'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_billing_options')
         headers.update(sdk_headers)
 
-        params = {'billing_unit_id': billing_unit_id}
+        params = {
+            'billing_unit_id': billing_unit_id,
+            'limit': limit,
+            'start': start
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v1/billing-options'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
     # Credit Pools
     #########################
 
-    def get_credit_pools(
-        self, billing_unit_id: str, *, date: str = None, type: str = None, **kwargs
+
+    def get_credit_pools(self,
+        billing_unit_id: str,
+        *,
+        date: str = None,
+        type: str = None,
+        limit: int = None,
+        start: int = None,
+        **kwargs
     ) -> DetailedResponse:
         """
         Get credit pools.
@@ -198,29 +256,43 @@ class EnterpriseBillingUnitsV1(BaseService):
         :param str date: (optional) The date in the format of YYYY-MM.
         :param str type: (optional) Filters the credit pool by type, either
                `PLATFORM` or `SUPPORT`.
+        :param int limit: (optional) Return results up to this limit. Valid values
+               are between 0 and 100.
+        :param int start: (optional) The pagination offset. This will be the index
+               of the first returned result.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `CreditPoolsList` object
         """
 
-        if billing_unit_id is None:
+        if not billing_unit_id:
             raise ValueError('billing_unit_id must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_credit_pools'
-        )
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_credit_pools')
         headers.update(sdk_headers)
 
-        params = {'billing_unit_id': billing_unit_id, 'date': date, 'type': type}
+        params = {
+            'billing_unit_id': billing_unit_id,
+            'date': date,
+            'type': type,
+            'limit': limit,
+            'start': start
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v1/credit-pools'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -229,7 +301,7 @@ class EnterpriseBillingUnitsV1(BaseService):
 ##############################################################################
 
 
-class BillingOption:
+class BillingOption():
     """
     Information about a billing option.
 
@@ -256,23 +328,21 @@ class BillingOption:
           updated.
     """
 
-    def __init__(
-        self,
-        *,
-        id: str = None,
-        billing_unit_id: str = None,
-        start_date: datetime = None,
-        end_date: datetime = None,
-        state: str = None,
-        type: str = None,
-        category: str = None,
-        payment_instrument: dict = None,
-        duration_in_months: int = None,
-        line_item_id: int = None,
-        billing_system: dict = None,
-        renewal_mode_code: str = None,
-        updated_at: datetime = None
-    ) -> None:
+    def __init__(self,
+                 *,
+                 id: str = None,
+                 billing_unit_id: str = None,
+                 start_date: datetime = None,
+                 end_date: datetime = None,
+                 state: str = None,
+                 type: str = None,
+                 category: str = None,
+                 payment_instrument: dict = None,
+                 duration_in_months: int = None,
+                 line_item_id: int = None,
+                 billing_system: dict = None,
+                 renewal_mode_code: str = None,
+                 updated_at: datetime = None) -> None:
         """
         Initialize a BillingOption object.
 
@@ -403,31 +473,30 @@ class BillingOption:
         The state of the billing option. The valid values include `ACTIVE, `SUSPENDED`,
         and `CANCELED`.
         """
-
         ACTIVE = 'ACTIVE'
         SUSPENDED = 'SUSPENDED'
         CANCELED = 'CANCELED'
+
 
     class TypeEnum(str, Enum):
         """
         The type of billing option. The valid values are `SUBSCRIPTION` and `OFFER`.
         """
-
         SUBSCRIPTION = 'SUBSCRIPTION'
         OFFER = 'OFFER'
+
 
     class CategoryEnum(str, Enum):
         """
         The category of the billing option. The valid values are `PLATFORM`, `SERVICE`,
         and `SUPPORT`.
         """
-
         PLATFORM = 'PLATFORM'
         SERVICE = 'SERVICE'
         SUPPORT = 'SUPPORT'
 
 
-class BillingOptionsList:
+class BillingOptionsList():
     """
     A search result containing zero or more billing options.
 
@@ -438,9 +507,11 @@ class BillingOptionsList:
     :attr List[BillingOption] resources: (optional) A list of billing units found.
     """
 
-    def __init__(
-        self, *, rows_count: int = None, next_url: str = None, resources: List['BillingOption'] = None
-    ) -> None:
+    def __init__(self,
+                 *,
+                 rows_count: int = None,
+                 next_url: str = None,
+                 resources: List['BillingOption'] = None) -> None:
         """
         Initialize a BillingOptionsList object.
 
@@ -464,7 +535,7 @@ class BillingOptionsList:
         if 'next_url' in _dict:
             args['next_url'] = _dict.get('next_url')
         if 'resources' in _dict:
-            args['resources'] = [BillingOption.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [BillingOption.from_dict(v) for v in _dict.get('resources')]
         return cls(**args)
 
     @classmethod
@@ -480,7 +551,13 @@ class BillingOptionsList:
         if hasattr(self, 'next_url') and self.next_url is not None:
             _dict['next_url'] = self.next_url
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -501,8 +578,7 @@ class BillingOptionsList:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class BillingUnit:
+class BillingUnit():
     """
     Information about a billing unit.
 
@@ -520,18 +596,16 @@ class BillingUnit:
     :attr datetime created_at: (optional) The creation date of the billing unit.
     """
 
-    def __init__(
-        self,
-        *,
-        id: str = None,
-        crn: str = None,
-        name: str = None,
-        enterprise_id: str = None,
-        currency_code: str = None,
-        country_code: str = None,
-        master: bool = None,
-        created_at: datetime = None
-    ) -> None:
+    def __init__(self,
+                 *,
+                 id: str = None,
+                 crn: str = None,
+                 name: str = None,
+                 enterprise_id: str = None,
+                 currency_code: str = None,
+                 country_code: str = None,
+                 master: bool = None,
+                 created_at: datetime = None) -> None:
         """
         Initialize a BillingUnit object.
 
@@ -625,8 +699,7 @@ class BillingUnit:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class BillingUnitsList:
+class BillingUnitsList():
     """
     A search result contining zero or more billing units.
 
@@ -637,7 +710,11 @@ class BillingUnitsList:
     :attr List[BillingUnit] resources: (optional) A list of billing units found.
     """
 
-    def __init__(self, *, rows_count: int = None, next_url: str = None, resources: List['BillingUnit'] = None) -> None:
+    def __init__(self,
+                 *,
+                 rows_count: int = None,
+                 next_url: str = None,
+                 resources: List['BillingUnit'] = None) -> None:
         """
         Initialize a BillingUnitsList object.
 
@@ -661,7 +738,7 @@ class BillingUnitsList:
         if 'next_url' in _dict:
             args['next_url'] = _dict.get('next_url')
         if 'resources' in _dict:
-            args['resources'] = [BillingUnit.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [BillingUnit.from_dict(v) for v in _dict.get('resources')]
         return cls(**args)
 
     @classmethod
@@ -677,7 +754,13 @@ class BillingUnitsList:
         if hasattr(self, 'next_url') and self.next_url is not None:
             _dict['next_url'] = self.next_url
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -698,8 +781,7 @@ class BillingUnitsList:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class CreditPool:
+class CreditPool():
     """
     The credit pool for a billing unit.
 
@@ -715,15 +797,13 @@ class CreditPool:
           credit pool.
     """
 
-    def __init__(
-        self,
-        *,
-        type: str = None,
-        currency_code: str = None,
-        billing_unit_id: str = None,
-        term_credits: List['TermCredits'] = None,
-        overage: 'CreditPoolOverage' = None
-    ) -> None:
+    def __init__(self,
+                 *,
+                 type: str = None,
+                 currency_code: str = None,
+                 billing_unit_id: str = None,
+                 term_credits: List['TermCredits'] = None,
+                 overage: 'CreditPoolOverage' = None) -> None:
         """
         Initialize a CreditPool object.
 
@@ -756,7 +836,7 @@ class CreditPool:
         if 'billing_unit_id' in _dict:
             args['billing_unit_id'] = _dict.get('billing_unit_id')
         if 'term_credits' in _dict:
-            args['term_credits'] = [TermCredits.from_dict(x) for x in _dict.get('term_credits')]
+            args['term_credits'] = [TermCredits.from_dict(v) for v in _dict.get('term_credits')]
         if 'overage' in _dict:
             args['overage'] = CreditPoolOverage.from_dict(_dict.get('overage'))
         return cls(**args)
@@ -776,9 +856,18 @@ class CreditPool:
         if hasattr(self, 'billing_unit_id') and self.billing_unit_id is not None:
             _dict['billing_unit_id'] = self.billing_unit_id
         if hasattr(self, 'term_credits') and self.term_credits is not None:
-            _dict['term_credits'] = [x.to_dict() for x in self.term_credits]
+            term_credits_list = []
+            for v in self.term_credits:
+                if isinstance(v, dict):
+                    term_credits_list.append(v)
+                else:
+                    term_credits_list.append(v.to_dict())
+            _dict['term_credits'] = term_credits_list
         if hasattr(self, 'overage') and self.overage is not None:
-            _dict['overage'] = self.overage.to_dict()
+            if isinstance(self.overage, dict):
+                _dict['overage'] = self.overage
+            else:
+                _dict['overage'] = self.overage.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -803,12 +892,11 @@ class CreditPool:
         """
         The type of credit, either `PLATFORM` or `SUPPORT`.
         """
-
         PLATFORM = 'PLATFORM'
         SUPPORT = 'SUPPORT'
 
 
-class CreditPoolOverage:
+class CreditPoolOverage():
     """
     Overage that was generated on the credit pool.
 
@@ -817,7 +905,10 @@ class CreditPoolOverage:
           overage.
     """
 
-    def __init__(self, *, cost: float = None, resources: List[dict] = None) -> None:
+    def __init__(self,
+                 *,
+                 cost: float = None,
+                 resources: List[dict] = None) -> None:
         """
         Initialize a CreditPoolOverage object.
 
@@ -870,8 +961,7 @@ class CreditPoolOverage:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class CreditPoolsList:
+class CreditPoolsList():
     """
     A search result containing zero or more credit pools.
 
@@ -883,7 +973,11 @@ class CreditPoolsList:
           query.
     """
 
-    def __init__(self, *, rows_count: int = None, next_url: str = None, resources: List['CreditPool'] = None) -> None:
+    def __init__(self,
+                 *,
+                 rows_count: int = None,
+                 next_url: str = None,
+                 resources: List['CreditPool'] = None) -> None:
         """
         Initialize a CreditPoolsList object.
 
@@ -908,7 +1002,7 @@ class CreditPoolsList:
         if 'next_url' in _dict:
             args['next_url'] = _dict.get('next_url')
         if 'resources' in _dict:
-            args['resources'] = [CreditPool.from_dict(x) for x in _dict.get('resources')]
+            args['resources'] = [CreditPool.from_dict(v) for v in _dict.get('resources')]
         return cls(**args)
 
     @classmethod
@@ -924,7 +1018,13 @@ class CreditPoolsList:
         if hasattr(self, 'next_url') and self.next_url is not None:
             _dict['next_url'] = self.next_url
         if hasattr(self, 'resources') and self.resources is not None:
-            _dict['resources'] = [x.to_dict() for x in self.resources]
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
         return _dict
 
     def _to_dict(self):
@@ -945,8 +1045,7 @@ class CreditPoolsList:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-
-class TermCredits:
+class TermCredits():
     """
     The subscription term that is active in the current month.
 
@@ -968,19 +1067,17 @@ class TermCredits:
           during the month.
     """
 
-    def __init__(
-        self,
-        *,
-        billing_option_id: str = None,
-        category: str = None,
-        start_date: datetime = None,
-        end_date: datetime = None,
-        total_credits: float = None,
-        starting_balance: float = None,
-        used_credits: float = None,
-        current_balance: float = None,
-        resources: List[dict] = None
-    ) -> None:
+    def __init__(self,
+                 *,
+                 billing_option_id: str = None,
+                 category: str = None,
+                 start_date: datetime = None,
+                 end_date: datetime = None,
+                 total_credits: float = None,
+                 starting_balance: float = None,
+                 used_credits: float = None,
+                 current_balance: float = None,
+                 resources: List[dict] = None) -> None:
         """
         Initialize a TermCredits object.
 
@@ -1089,8 +1186,230 @@ class TermCredits:
         The category of the credit pool. The valid values are `PLATFORM`, `OFFER`, or
         `SERVICE` for platform credit and `SUPPORT` for support credit.
         """
-
         PLATFORM = 'PLATFORM'
         OFFER = 'OFFER'
         SERVICE = 'SERVICE'
         SUPPORT = 'SUPPORT'
+
+
+##############################################################################
+# Pagers
+##############################################################################
+
+class BillingUnitsPager():
+    """
+    BillingUnitsPager can be used to simplify the use of the "list_billing_units" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: EnterpriseBillingUnitsV1,
+                 account_id: str = None,
+                 enterprise_id: str = None,
+                 account_group_id: str = None,
+                 limit: int = None,
+    ) -> None:
+        """
+        Initialize a BillingUnitsPager object.
+        :param str account_id: (optional) The enterprise account ID.
+        :param str enterprise_id: (optional) The enterprise ID.
+        :param str account_group_id: (optional) The account group ID.
+        :param int limit: (optional) Return results up to this limit. Valid values
+               are between 0 and 100.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._account_id = account_id
+        self._enterprise_id = enterprise_id
+        self._account_group_id = account_group_id
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of BillingUnit.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_billing_units(
+            account_id=self._account_id,
+            enterprise_id=self._enterprise_id,
+            account_group_id=self._account_group_id,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next_url')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link, 'start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of BillingUnit.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class BillingOptionsPager():
+    """
+    BillingOptionsPager can be used to simplify the use of the "list_billing_options" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: EnterpriseBillingUnitsV1,
+                 billing_unit_id: str,
+                 limit: int = None,
+    ) -> None:
+        """
+        Initialize a BillingOptionsPager object.
+        :param str billing_unit_id: The billing unit ID.
+        :param int limit: (optional) Return results up to this limit. Valid values
+               are between 0 and 100.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._billing_unit_id = billing_unit_id
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of BillingOption.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_billing_options(
+            billing_unit_id=self._billing_unit_id,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next_url')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link, 'start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of BillingOption.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class GetCreditPoolsPager():
+    """
+    GetCreditPoolsPager can be used to simplify the use of the "get_credit_pools" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: EnterpriseBillingUnitsV1,
+                 billing_unit_id: str,
+                 date: str = None,
+                 type: str = None,
+                 limit: int = None,
+    ) -> None:
+        """
+        Initialize a GetCreditPoolsPager object.
+        :param str billing_unit_id: The ID of the billing unit.
+        :param str date: (optional) The date in the format of YYYY-MM.
+        :param str type: (optional) Filters the credit pool by type, either
+               `PLATFORM` or `SUPPORT`.
+        :param int limit: (optional) Return results up to this limit. Valid values
+               are between 0 and 100.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._billing_unit_id = billing_unit_id
+        self._date = date
+        self._type = type
+        self._limit = limit
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of CreditPool.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.get_credit_pools(
+            billing_unit_id=self._billing_unit_id,
+            date=self._date,
+            type=self._type,
+            limit=self._limit,
+            start=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next_url')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link, 'start')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('resources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of CreditPool.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
