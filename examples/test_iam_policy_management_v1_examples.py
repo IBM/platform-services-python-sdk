@@ -144,15 +144,15 @@ class TestIamPolicyManagementV1Examples:
             pytest.fail(str(e))
 
     @needscredentials
-    def test_update_policy_example(self):
+    def test_replace_policy_example(self):
         """
-        update_policy request example
+        replace_policy request example
         """
         try:
             global example_updated_policy_etag
 
-            print('\nupdate_policy() result:')
-            # begin-update_policy
+            print('\nreplace_policy() result:')
+            # begin-replace_policy
 
             policy_subjects = PolicySubject(attributes=[SubjectAttribute(name='iam_id', value=example_user_id)])
             account_id_resource_attribute = ResourceAttribute(name='accountId', value=example_account_id)
@@ -163,7 +163,7 @@ class TestIamPolicyManagementV1Examples:
             )
             updated_policy_roles = PolicyRole(role_id='crn:v1:bluemix:public:iam::::role:Editor')
 
-            response = iam_policy_management_service.update_policy(
+            response = iam_policy_management_service.replace_policy(
                 type='access',
                 policy_id=example_policy_id,
                 if_match=example_policy_etag,
@@ -175,7 +175,7 @@ class TestIamPolicyManagementV1Examples:
 
             print(json.dumps(policy, indent=2))
 
-            # end-update_policy
+            # end-replace_policy
 
             example_updated_policy_etag = response.get_headers().get("Etag")
 
@@ -183,22 +183,22 @@ class TestIamPolicyManagementV1Examples:
             pytest.fail(str(e))
 
     @needscredentials
-    def test_patch_policy_example(self):
+    def test_update_policy_state_example(self):
         """
-        patch_policy request example
+        update_policy_state request example
         """
         try:
 
-            print('\npatch_policy() result:')
-            # begin-patch_policy
+            print('\nupdate_policy_state() result:')
+            # begin-update_policy_state
 
-            policy = iam_policy_management_service.patch_policy(
+            policy = iam_policy_management_service.update_policy_state(
                 policy_id=example_policy_id, if_match=example_updated_policy_etag, state='active'
             ).get_result()
 
             print(json.dumps(policy, indent=2))
 
-            # end-patch_policy
+            # end-update_policy_state
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -244,51 +244,54 @@ class TestIamPolicyManagementV1Examples:
             pytest.fail(str(e))
 
     @needscredentials
-    def test_v2_create_policy_example(self):
+    def test_create_v2_policy_example(self):
         """
-        v2_create_policy request example
+        create_v2_policy request example
         """
         try:
             global example_policy_id
 
-            print('\nv2_create_policy() result:')
-            # begin-v2_create_policy
+            print('\ncreate_v2_policy() result:')
+            # begin-create_v2_policy
 
-            policy_subject = V2PolicyBaseSubject(
-                attributes=[V2PolicyAttribute(key='iam_id', value=example_user_id, operator='stringEquals')]
+            policy_subject = V2PolicySubject(
+                attributes=[V2PolicySubjectAttribute(key='iam_id', value=example_user_id, operator='stringEquals')]
             )
             policy_role = PolicyRole(role_id='crn:v1:bluemix:public:iam::::role:Viewer')
-            account_id_resource_attribute = V2PolicyAttribute(
+            account_id_resource_attribute = V2PolicyResourceAttribute(
                 key='accountId', value=example_account_id, operator='stringEquals'
             )
-            service_name_resource_attribute = V2PolicyAttribute(
+            service_name_resource_attribute = V2PolicyResourceAttribute(
                 key='serviceType', value='service', operator='stringEquals'
             )
-            policy_resource = PolicyResource(
-                attributes=[account_id_resource_attribute, service_name_resource_attribute],
+            policy_resource_tag = V2PolicyResourceTag(key='project', value='prototype', operator='stringEquals')
+            policy_resource = V2PolicyResource(
+                attributes=[account_id_resource_attribute, service_name_resource_attribute], tags=[policy_resource_tag]
             )
-            policy_control = V2PolicyBaseControl(grant=V2PolicyBaseControlGrant(roles=[policy_role]))
-            policy_rule = V2PolicyBaseRuleV2RuleWithConditions(
+            policy_control = Control(grant=V2PolicyGrant(roles=[policy_role]))
+            policy_rule = V2PolicyRuleRuleWithConditions(
                 operator='and',
                 conditions=[
-                    V2PolicyAttribute(
-                        key='{{environment.attributes.day_of_week}}', operator='dayOfWeekAnyOf', value=[1, 2, 3, 4, 5]
+                    RuleAttribute(
+                        key='{{environment.attributes.day_of_week}}',
+                        operator='dayOfWeekAnyOf',
+                        value=['1+00:00', '2+00:00', '3+00:00', '4+00:00', '5+00:00'],
                     ),
-                    V2PolicyAttribute(
+                    RuleAttribute(
                         key='{{environment.attributes.current_time}}',
                         operator='timeGreaterThanOrEquals',
                         value='09:00:00+00:00',
                     ),
-                    V2PolicyAttribute(
+                    RuleAttribute(
                         key='{{environment.attributes.current_time}}',
                         operator='timeLessThanOrEquals',
                         value='17:00:00+00:00',
                     ),
                 ],
             )
-            policy_pattern = 'time-based-restrictions:weekly'
+            policy_pattern = 'time-based-conditions:weekly:custom-hours'
 
-            policy = iam_policy_management_service.v2_create_policy(
+            policy = iam_policy_management_service.create_v2_policy(
                 type='access',
                 subject=policy_subject,
                 control=policy_control,
@@ -299,7 +302,7 @@ class TestIamPolicyManagementV1Examples:
 
             print(json.dumps(policy, indent=2))
 
-            # end-v2_create_policy
+            # end-create_v2_policy
 
             example_policy_id = policy['id']
 
@@ -307,22 +310,22 @@ class TestIamPolicyManagementV1Examples:
             pytest.fail(str(e))
 
     @needscredentials
-    def test_v2_get_policy_example(self):
+    def test_get_v2_policy_example(self):
         """
-        v2_get_policy request example
+        get_v2_policy request example
         """
         try:
             global example_policy_etag
 
-            print('\nv2_get_policy() result:')
-            # begin-v2_get_policy
+            print('\nget_v2_policy() result:')
+            # begin-get_v2_policy
 
-            response = iam_policy_management_service.v2_get_policy(policy_id=example_policy_id)
+            response = iam_policy_management_service.get_v2_policy(id=example_policy_id)
             policy = response.get_result()
 
             print(json.dumps(policy, indent=2))
 
-            # end-v2_get_policy
+            # end-get_v2_policy
 
             example_policy_etag = response.get_headers().get("Etag")
 
@@ -330,52 +333,55 @@ class TestIamPolicyManagementV1Examples:
             pytest.fail(str(e))
 
     @needscredentials
-    def test_v2_update_policy_example(self):
+    def test_replace_v2_policy_example(self):
         """
-        v2_update_policy request example
+        replace_v2_policy request example
         """
         try:
 
-            print('\nupdate_policy() result:')
-            # begin-v2_update_policy
+            print('\nreplace_v2_policy() result:')
+            # begin-replace_v2_policy
 
-            policy_subject = V2PolicyBaseSubject(
-                attributes=[V2PolicyAttribute(key='iam_id', value=example_user_id, operator='stringEquals')]
+            policy_subject = V2PolicySubject(
+                attributes=[V2PolicySubjectAttribute(key='iam_id', value=example_user_id, operator='stringEquals')]
             )
             updated_policy_role = PolicyRole(role_id='crn:v1:bluemix:public:iam::::role:Editor')
-            account_id_resource_attribute = V2PolicyAttribute(
+            account_id_resource_attribute = V2PolicyResourceAttribute(
                 key='accountId', value=example_account_id, operator='stringEquals'
             )
-            service_name_resource_attribute = V2PolicyAttribute(
+            service_name_resource_attribute = V2PolicyResourceAttribute(
                 key='serviceType', value='service', operator='stringEquals'
             )
+            policy_resource_tag = V2PolicyResourceTag(key='project', value='prototype', operator='stringEquals')
             policy_resource = PolicyResource(
-                attributes=[account_id_resource_attribute, service_name_resource_attribute],
+                attributes=[account_id_resource_attribute, service_name_resource_attribute], tags=[policy_resource_tag]
             )
-            policy_control = V2PolicyBaseControl(grant=V2PolicyBaseControlGrant(roles=[updated_policy_role]))
-            policy_rule = V2PolicyBaseRuleV2RuleWithConditions(
+            policy_control = Control(grant=V2PolicyGrant(roles=[updated_policy_role]))
+            policy_rule = V2PolicyRuleRuleWithConditions(
                 operator='and',
                 conditions=[
-                    V2PolicyAttribute(
-                        key='{{environment.attributes.day_of_week}}', operator='dayOfWeekAnyOf', value=[1, 2, 3, 4, 5]
+                    RuleAttribute(
+                        key='{{environment.attributes.day_of_week}}',
+                        operator='dayOfWeekAnyOf',
+                        value=['1+00:00', '2+00:00', '3+00:00', '4+00:00', '5+00:00'],
                     ),
-                    V2PolicyAttribute(
+                    RuleAttribute(
                         key='{{environment.attributes.current_time}}',
                         operator='timeGreaterThanOrEquals',
                         value='09:00:00+00:00',
                     ),
-                    V2PolicyAttribute(
+                    RuleAttribute(
                         key='{{environment.attributes.current_time}}',
                         operator='timeLessThanOrEquals',
                         value='17:00:00+00:00',
                     ),
                 ],
             )
-            policy_pattern = 'time-based-restrictions:weekly'
+            policy_pattern = 'time-based-conditions:weekly:custom-hours'
 
-            response = iam_policy_management_service.v2_update_policy(
+            response = iam_policy_management_service.replace_v2_policy(
                 type='access',
-                policy_id=example_policy_id,
+                id=example_policy_id,
                 if_match=example_policy_etag,
                 subject=policy_subject,
                 control=policy_control,
@@ -387,47 +393,47 @@ class TestIamPolicyManagementV1Examples:
 
             print(json.dumps(policy, indent=2))
 
-            # end-v2_update_policy
+            # end-replace_v2_policy
 
         except ApiException as e:
             pytest.fail(str(e))
 
     @needscredentials
-    def test_v2_list_policies_example(self):
+    def test_list_v2_policies_example(self):
         """
-        v2_list_policies request example
+        list_v2_policies request example
         """
         try:
 
-            print('\nlist_policies() result:')
-            # begin-v2_list_policies
+            print('\nlist_v2_policies() result:')
+            # begin-list_v2_policies
 
-            policy_list = iam_policy_management_service.v2_list_policies(
+            policy_list = iam_policy_management_service.list_v2_policies(
                 account_id=example_account_id, iam_id=example_user_id, format='include_last_permit'
             ).get_result()
 
             print(json.dumps(policy_list, indent=2))
 
-            # end-v2_list_policies
+            # end-list_v2_policies
 
         except ApiException as e:
             pytest.fail(str(e))
 
     @needscredentials
-    def test_v2_delete_policy_example(self):
+    def test_delete_v2_policy_example(self):
         """
-        v2_delete_policy request example
+        delete_v2_policy request example
         """
         try:
 
-            print('\nv2_delete_policy() result:')
-            # begin-v2_delete_policy
+            print('\ndelete_v2_policy() result:')
+            # begin-delete_v2_policy
 
-            response = iam_policy_management_service.v2_delete_policy(policy_id=example_policy_id).get_result()
+            response = iam_policy_management_service.delete_v2_policy(id=example_policy_id).get_result()
 
             print(json.dumps(response, indent=2))
 
-            # end-v2_delete_policy
+            # end-delete_v2_policy
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -484,23 +490,26 @@ class TestIamPolicyManagementV1Examples:
             pytest.fail(str(e))
 
     @needscredentials
-    def test_update_role_example(self):
+    def test_replace_role_example(self):
         """
-        update_role request example
+        replace_role request example
         """
         try:
 
-            print('\nupdate_role() result:')
-            # begin-update_role
+            print('\nreplace_role() result:')
+            # begin-replace_role
 
             updated_role_actions = ['iam-groups.groups.read', 'iam-groups.groups.list']
-            custom_role = iam_policy_management_service.update_role(
-                role_id=example_custom_role_id, if_match=example_custom_role_etag, actions=updated_role_actions
+            custom_role = iam_policy_management_service.replace_role(
+                role_id=example_custom_role_id,
+                if_match=example_custom_role_etag,
+                actions=updated_role_actions,
+                display_name='IAM Groups read access',
             ).get_result()
 
             print(json.dumps(custom_role, indent=2))
 
-            # end-update_role
+            # end-replace_role
 
         except ApiException as e:
             pytest.fail(str(e))

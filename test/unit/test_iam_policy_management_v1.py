@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -449,15 +449,15 @@ class TestCreatePolicy:
         self.test_create_policy_value_error()
 
 
-class TestUpdatePolicy:
+class TestReplacePolicy:
     """
-    Test Class for update_policy
+    Test Class for replace_policy
     """
 
     @responses.activate
-    def test_update_policy_all_params(self):
+    def test_replace_policy_all_params(self):
         """
-        update_policy()
+        replace_policy()
         """
         # Set up mock
         url = preprocess_url('/v1/policies/testString')
@@ -504,7 +504,7 @@ class TestUpdatePolicy:
         description = 'testString'
 
         # Invoke method
-        response = _service.update_policy(
+        response = _service.replace_policy(
             policy_id, if_match, type, subjects, roles, resources, description=description, headers={}
         )
 
@@ -519,19 +519,19 @@ class TestUpdatePolicy:
         assert req_body['resources'] == [policy_resource_model]
         assert req_body['description'] == 'testString'
 
-    def test_update_policy_all_params_with_retries(self):
-        # Enable retries and run test_update_policy_all_params.
+    def test_replace_policy_all_params_with_retries(self):
+        # Enable retries and run test_replace_policy_all_params.
         _service.enable_retries()
-        self.test_update_policy_all_params()
+        self.test_replace_policy_all_params()
 
-        # Disable retries and run test_update_policy_all_params.
+        # Disable retries and run test_replace_policy_all_params.
         _service.disable_retries()
-        self.test_update_policy_all_params()
+        self.test_replace_policy_all_params()
 
     @responses.activate
-    def test_update_policy_value_error(self):
+    def test_replace_policy_value_error(self):
         """
-        test_update_policy_value_error()
+        test_replace_policy_value_error()
         """
         # Set up mock
         url = preprocess_url('/v1/policies/testString')
@@ -589,16 +589,16 @@ class TestUpdatePolicy:
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.update_policy(**req_copy)
+                _service.replace_policy(**req_copy)
 
-    def test_update_policy_value_error_with_retries(self):
-        # Enable retries and run test_update_policy_value_error.
+    def test_replace_policy_value_error_with_retries(self):
+        # Enable retries and run test_replace_policy_value_error.
         _service.enable_retries()
-        self.test_update_policy_value_error()
+        self.test_replace_policy_value_error()
 
-        # Disable retries and run test_update_policy_value_error.
+        # Disable retries and run test_replace_policy_value_error.
         _service.disable_retries()
-        self.test_update_policy_value_error()
+        self.test_replace_policy_value_error()
 
 
 class TestGetPolicy:
@@ -731,15 +731,15 @@ class TestDeletePolicy:
         self.test_delete_policy_value_error()
 
 
-class TestPatchPolicy:
+class TestUpdatePolicyState:
     """
-    Test Class for patch_policy
+    Test Class for update_policy_state
     """
 
     @responses.activate
-    def test_patch_policy_all_params(self):
+    def test_update_policy_state_all_params(self):
         """
-        patch_policy()
+        update_policy_state()
         """
         # Set up mock
         url = preprocess_url('/v1/policies/testString')
@@ -752,7 +752,7 @@ class TestPatchPolicy:
         state = 'active'
 
         # Invoke method
-        response = _service.patch_policy(policy_id, if_match, state=state, headers={})
+        response = _service.update_policy_state(policy_id, if_match, state=state, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -761,19 +761,19 @@ class TestPatchPolicy:
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['state'] == 'active'
 
-    def test_patch_policy_all_params_with_retries(self):
-        # Enable retries and run test_patch_policy_all_params.
+    def test_update_policy_state_all_params_with_retries(self):
+        # Enable retries and run test_update_policy_state_all_params.
         _service.enable_retries()
-        self.test_patch_policy_all_params()
+        self.test_update_policy_state_all_params()
 
-        # Disable retries and run test_patch_policy_all_params.
+        # Disable retries and run test_update_policy_state_all_params.
         _service.disable_retries()
-        self.test_patch_policy_all_params()
+        self.test_update_policy_state_all_params()
 
     @responses.activate
-    def test_patch_policy_value_error(self):
+    def test_update_policy_state_value_error(self):
         """
-        test_patch_policy_value_error()
+        test_update_policy_state_value_error()
         """
         # Set up mock
         url = preprocess_url('/v1/policies/testString')
@@ -793,16 +793,16 @@ class TestPatchPolicy:
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.patch_policy(**req_copy)
+                _service.update_policy_state(**req_copy)
 
-    def test_patch_policy_value_error_with_retries(self):
-        # Enable retries and run test_patch_policy_value_error.
+    def test_update_policy_state_value_error_with_retries(self):
+        # Enable retries and run test_update_policy_state_value_error.
         _service.enable_retries()
-        self.test_patch_policy_value_error()
+        self.test_update_policy_state_value_error()
 
-        # Disable retries and run test_patch_policy_value_error.
+        # Disable retries and run test_update_policy_state_value_error.
         _service.disable_retries()
-        self.test_patch_policy_value_error()
+        self.test_update_policy_state_value_error()
 
 
 # endregion
@@ -1065,15 +1065,15 @@ class TestCreateRole:
         self.test_create_role_value_error()
 
 
-class TestUpdateRole:
+class TestReplaceRole:
     """
-    Test Class for update_role
+    Test Class for replace_role
     """
 
     @responses.activate
-    def test_update_role_all_params(self):
+    def test_replace_role_all_params(self):
         """
-        update_role()
+        replace_role()
         """
         # Set up mock
         url = preprocess_url('/v2/roles/testString')
@@ -1084,13 +1084,11 @@ class TestUpdateRole:
         role_id = 'testString'
         if_match = 'testString'
         display_name = 'testString'
-        description = 'testString'
         actions = ['testString']
+        description = 'testString'
 
         # Invoke method
-        response = _service.update_role(
-            role_id, if_match, display_name=display_name, description=description, actions=actions, headers={}
-        )
+        response = _service.replace_role(role_id, if_match, display_name, actions, description=description, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1098,22 +1096,22 @@ class TestUpdateRole:
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['display_name'] == 'testString'
-        assert req_body['description'] == 'testString'
         assert req_body['actions'] == ['testString']
+        assert req_body['description'] == 'testString'
 
-    def test_update_role_all_params_with_retries(self):
-        # Enable retries and run test_update_role_all_params.
+    def test_replace_role_all_params_with_retries(self):
+        # Enable retries and run test_replace_role_all_params.
         _service.enable_retries()
-        self.test_update_role_all_params()
+        self.test_replace_role_all_params()
 
-        # Disable retries and run test_update_role_all_params.
+        # Disable retries and run test_replace_role_all_params.
         _service.disable_retries()
-        self.test_update_role_all_params()
+        self.test_replace_role_all_params()
 
     @responses.activate
-    def test_update_role_value_error(self):
+    def test_replace_role_value_error(self):
         """
-        test_update_role_value_error()
+        test_replace_role_value_error()
         """
         # Set up mock
         url = preprocess_url('/v2/roles/testString')
@@ -1124,27 +1122,29 @@ class TestUpdateRole:
         role_id = 'testString'
         if_match = 'testString'
         display_name = 'testString'
-        description = 'testString'
         actions = ['testString']
+        description = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
             "role_id": role_id,
             "if_match": if_match,
+            "display_name": display_name,
+            "actions": actions,
         }
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.update_role(**req_copy)
+                _service.replace_role(**req_copy)
 
-    def test_update_role_value_error_with_retries(self):
-        # Enable retries and run test_update_role_value_error.
+    def test_replace_role_value_error_with_retries(self):
+        # Enable retries and run test_replace_role_value_error.
         _service.enable_retries()
-        self.test_update_role_value_error()
+        self.test_replace_role_value_error()
 
-        # Disable retries and run test_update_role_value_error.
+        # Disable retries and run test_replace_role_value_error.
         _service.disable_retries()
-        self.test_update_role_value_error()
+        self.test_replace_role_value_error()
 
 
 class TestGetRole:
@@ -1316,19 +1316,19 @@ class TestNewInstance:
             )
 
 
-class TestV2ListPolicies:
+class TestListV2Policies:
     """
-    Test Class for v2_list_policies
+    Test Class for list_v2_policies
     """
 
     @responses.activate
-    def test_v2_list_policies_all_params(self):
+    def test_list_v2_policies_all_params(self):
         """
-        v2_list_policies()
+        list_v2_policies()
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "resource": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "operator", "value": "anyValue"}, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}]}'
+        mock_response = '{"policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -1344,7 +1344,7 @@ class TestV2ListPolicies:
         state = 'active'
 
         # Invoke method
-        response = _service.v2_list_policies(
+        response = _service.list_v2_policies(
             account_id,
             accept_language=accept_language,
             iam_id=iam_id,
@@ -1374,30 +1374,30 @@ class TestV2ListPolicies:
         assert 'format={}'.format(format) in query_string
         assert 'state={}'.format(state) in query_string
 
-    def test_v2_list_policies_all_params_with_retries(self):
-        # Enable retries and run test_v2_list_policies_all_params.
+    def test_list_v2_policies_all_params_with_retries(self):
+        # Enable retries and run test_list_v2_policies_all_params.
         _service.enable_retries()
-        self.test_v2_list_policies_all_params()
+        self.test_list_v2_policies_all_params()
 
-        # Disable retries and run test_v2_list_policies_all_params.
+        # Disable retries and run test_list_v2_policies_all_params.
         _service.disable_retries()
-        self.test_v2_list_policies_all_params()
+        self.test_list_v2_policies_all_params()
 
     @responses.activate
-    def test_v2_list_policies_required_params(self):
+    def test_list_v2_policies_required_params(self):
         """
-        test_v2_list_policies_required_params()
+        test_list_v2_policies_required_params()
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "resource": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "operator", "value": "anyValue"}, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}]}'
+        mock_response = '{"policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.v2_list_policies(account_id, headers={})
+        response = _service.list_v2_policies(account_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1407,23 +1407,23 @@ class TestV2ListPolicies:
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
 
-    def test_v2_list_policies_required_params_with_retries(self):
-        # Enable retries and run test_v2_list_policies_required_params.
+    def test_list_v2_policies_required_params_with_retries(self):
+        # Enable retries and run test_list_v2_policies_required_params.
         _service.enable_retries()
-        self.test_v2_list_policies_required_params()
+        self.test_list_v2_policies_required_params()
 
-        # Disable retries and run test_v2_list_policies_required_params.
+        # Disable retries and run test_list_v2_policies_required_params.
         _service.disable_retries()
-        self.test_v2_list_policies_required_params()
+        self.test_list_v2_policies_required_params()
 
     @responses.activate
-    def test_v2_list_policies_value_error(self):
+    def test_list_v2_policies_value_error(self):
         """
-        test_v2_list_policies_value_error()
+        test_list_v2_policies_value_error()
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"policies": [{"id": "id", "type": "type", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "resource": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "operator", "value": "anyValue"}, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}]}'
+        mock_response = '{"policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -1436,79 +1436,92 @@ class TestV2ListPolicies:
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.v2_list_policies(**req_copy)
+                _service.list_v2_policies(**req_copy)
 
-    def test_v2_list_policies_value_error_with_retries(self):
-        # Enable retries and run test_v2_list_policies_value_error.
+    def test_list_v2_policies_value_error_with_retries(self):
+        # Enable retries and run test_list_v2_policies_value_error.
         _service.enable_retries()
-        self.test_v2_list_policies_value_error()
+        self.test_list_v2_policies_value_error()
 
-        # Disable retries and run test_v2_list_policies_value_error.
+        # Disable retries and run test_list_v2_policies_value_error.
         _service.disable_retries()
-        self.test_v2_list_policies_value_error()
+        self.test_list_v2_policies_value_error()
 
 
-class TestV2CreatePolicy:
+class TestCreateV2Policy:
     """
-    Test Class for v2_create_policy
+    Test Class for create_v2_policy
     """
 
     @responses.activate
-    def test_v2_create_policy_all_params(self):
+    def test_create_v2_policy_all_params(self):
         """
-        v2_create_policy()
+        create_v2_policy()
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "resource": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "operator", "value": "anyValue"}, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Construct a dict representation of a PolicyRole model
         policy_role_model = {}
         policy_role_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseControlGrant model
-        v2_policy_base_control_grant_model = {}
-        v2_policy_base_control_grant_model['roles'] = [policy_role_model]
+        # Construct a dict representation of a V2PolicyGrant model
+        v2_policy_grant_model = {}
+        v2_policy_grant_model['roles'] = [policy_role_model]
 
-        # Construct a dict representation of a V2PolicyBaseControl model
-        v2_policy_base_control_model = {}
-        v2_policy_base_control_model['grant'] = v2_policy_base_control_grant_model
+        # Construct a dict representation of a Control model
+        control_model = {}
+        control_model['grant'] = v2_policy_grant_model
 
-        # Construct a dict representation of a V2PolicyAttribute model
-        v2_policy_attribute_model = {}
-        v2_policy_attribute_model['key'] = 'testString'
-        v2_policy_attribute_model['operator'] = 'testString'
-        v2_policy_attribute_model['value'] = 'testString'
+        # Construct a dict representation of a V2PolicySubjectAttribute model
+        v2_policy_subject_attribute_model = {}
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseSubject model
-        v2_policy_base_subject_model = {}
-        v2_policy_base_subject_model['attributes'] = [v2_policy_attribute_model]
+        # Construct a dict representation of a V2PolicySubject model
+        v2_policy_subject_model = {}
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
 
-        # Construct a dict representation of a V2PolicyBaseResource model
-        v2_policy_base_resource_model = {}
-        v2_policy_base_resource_model['attributes'] = [v2_policy_attribute_model]
+        # Construct a dict representation of a V2PolicyResourceAttribute model
+        v2_policy_resource_attribute_model = {}
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseRuleV2PolicyAttribute model
-        v2_policy_base_rule_model = {}
-        v2_policy_base_rule_model['key'] = 'testString'
-        v2_policy_base_rule_model['operator'] = 'testString'
-        v2_policy_base_rule_model['value'] = 'testString'
+        # Construct a dict representation of a V2PolicyResourceTag model
+        v2_policy_resource_tag_model = {}
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        # Construct a dict representation of a V2PolicyResource model
+        v2_policy_resource_model = {}
+        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
+
+        # Construct a dict representation of a V2PolicyRuleRuleAttribute model
+        v2_policy_rule_model = {}
+        v2_policy_rule_model['key'] = 'testString'
+        v2_policy_rule_model['operator'] = 'timeLessThan'
+        v2_policy_rule_model['value'] = 'testString'
 
         # Set up parameter values
-        type = 'testString'
-        control = v2_policy_base_control_model
+        control = control_model
+        type = 'access'
         description = 'testString'
-        subject = v2_policy_base_subject_model
-        resource = v2_policy_base_resource_model
+        subject = v2_policy_subject_model
+        resource = v2_policy_resource_model
         pattern = 'testString'
-        rule = v2_policy_base_rule_model
+        rule = v2_policy_rule_model
         accept_language = 'default'
 
         # Invoke method
-        response = _service.v2_create_policy(
-            type,
+        response = _service.create_v2_policy(
             control,
+            type,
             description=description,
             subject=subject,
             resource=resource,
@@ -1523,78 +1536,91 @@ class TestV2CreatePolicy:
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['type'] == 'testString'
-        assert req_body['control'] == v2_policy_base_control_model
+        assert req_body['control'] == control_model
+        assert req_body['type'] == 'access'
         assert req_body['description'] == 'testString'
-        assert req_body['subject'] == v2_policy_base_subject_model
-        assert req_body['resource'] == v2_policy_base_resource_model
+        assert req_body['subject'] == v2_policy_subject_model
+        assert req_body['resource'] == v2_policy_resource_model
         assert req_body['pattern'] == 'testString'
-        assert req_body['rule'] == v2_policy_base_rule_model
+        assert req_body['rule'] == v2_policy_rule_model
 
-    def test_v2_create_policy_all_params_with_retries(self):
-        # Enable retries and run test_v2_create_policy_all_params.
+    def test_create_v2_policy_all_params_with_retries(self):
+        # Enable retries and run test_create_v2_policy_all_params.
         _service.enable_retries()
-        self.test_v2_create_policy_all_params()
+        self.test_create_v2_policy_all_params()
 
-        # Disable retries and run test_v2_create_policy_all_params.
+        # Disable retries and run test_create_v2_policy_all_params.
         _service.disable_retries()
-        self.test_v2_create_policy_all_params()
+        self.test_create_v2_policy_all_params()
 
     @responses.activate
-    def test_v2_create_policy_required_params(self):
+    def test_create_v2_policy_required_params(self):
         """
-        test_v2_create_policy_required_params()
+        test_create_v2_policy_required_params()
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "resource": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "operator", "value": "anyValue"}, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Construct a dict representation of a PolicyRole model
         policy_role_model = {}
         policy_role_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseControlGrant model
-        v2_policy_base_control_grant_model = {}
-        v2_policy_base_control_grant_model['roles'] = [policy_role_model]
+        # Construct a dict representation of a V2PolicyGrant model
+        v2_policy_grant_model = {}
+        v2_policy_grant_model['roles'] = [policy_role_model]
 
-        # Construct a dict representation of a V2PolicyBaseControl model
-        v2_policy_base_control_model = {}
-        v2_policy_base_control_model['grant'] = v2_policy_base_control_grant_model
+        # Construct a dict representation of a Control model
+        control_model = {}
+        control_model['grant'] = v2_policy_grant_model
 
-        # Construct a dict representation of a V2PolicyAttribute model
-        v2_policy_attribute_model = {}
-        v2_policy_attribute_model['key'] = 'testString'
-        v2_policy_attribute_model['operator'] = 'testString'
-        v2_policy_attribute_model['value'] = 'testString'
+        # Construct a dict representation of a V2PolicySubjectAttribute model
+        v2_policy_subject_attribute_model = {}
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseSubject model
-        v2_policy_base_subject_model = {}
-        v2_policy_base_subject_model['attributes'] = [v2_policy_attribute_model]
+        # Construct a dict representation of a V2PolicySubject model
+        v2_policy_subject_model = {}
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
 
-        # Construct a dict representation of a V2PolicyBaseResource model
-        v2_policy_base_resource_model = {}
-        v2_policy_base_resource_model['attributes'] = [v2_policy_attribute_model]
+        # Construct a dict representation of a V2PolicyResourceAttribute model
+        v2_policy_resource_attribute_model = {}
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseRuleV2PolicyAttribute model
-        v2_policy_base_rule_model = {}
-        v2_policy_base_rule_model['key'] = 'testString'
-        v2_policy_base_rule_model['operator'] = 'testString'
-        v2_policy_base_rule_model['value'] = 'testString'
+        # Construct a dict representation of a V2PolicyResourceTag model
+        v2_policy_resource_tag_model = {}
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        # Construct a dict representation of a V2PolicyResource model
+        v2_policy_resource_model = {}
+        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
+
+        # Construct a dict representation of a V2PolicyRuleRuleAttribute model
+        v2_policy_rule_model = {}
+        v2_policy_rule_model['key'] = 'testString'
+        v2_policy_rule_model['operator'] = 'timeLessThan'
+        v2_policy_rule_model['value'] = 'testString'
 
         # Set up parameter values
-        type = 'testString'
-        control = v2_policy_base_control_model
+        control = control_model
+        type = 'access'
         description = 'testString'
-        subject = v2_policy_base_subject_model
-        resource = v2_policy_base_resource_model
+        subject = v2_policy_subject_model
+        resource = v2_policy_resource_model
         pattern = 'testString'
-        rule = v2_policy_base_rule_model
+        rule = v2_policy_rule_model
 
         # Invoke method
-        response = _service.v2_create_policy(
-            type,
+        response = _service.create_v2_policy(
             control,
+            type,
             description=description,
             subject=subject,
             resource=resource,
@@ -1608,158 +1634,184 @@ class TestV2CreatePolicy:
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['type'] == 'testString'
-        assert req_body['control'] == v2_policy_base_control_model
+        assert req_body['control'] == control_model
+        assert req_body['type'] == 'access'
         assert req_body['description'] == 'testString'
-        assert req_body['subject'] == v2_policy_base_subject_model
-        assert req_body['resource'] == v2_policy_base_resource_model
+        assert req_body['subject'] == v2_policy_subject_model
+        assert req_body['resource'] == v2_policy_resource_model
         assert req_body['pattern'] == 'testString'
-        assert req_body['rule'] == v2_policy_base_rule_model
+        assert req_body['rule'] == v2_policy_rule_model
 
-    def test_v2_create_policy_required_params_with_retries(self):
-        # Enable retries and run test_v2_create_policy_required_params.
+    def test_create_v2_policy_required_params_with_retries(self):
+        # Enable retries and run test_create_v2_policy_required_params.
         _service.enable_retries()
-        self.test_v2_create_policy_required_params()
+        self.test_create_v2_policy_required_params()
 
-        # Disable retries and run test_v2_create_policy_required_params.
+        # Disable retries and run test_create_v2_policy_required_params.
         _service.disable_retries()
-        self.test_v2_create_policy_required_params()
+        self.test_create_v2_policy_required_params()
 
     @responses.activate
-    def test_v2_create_policy_value_error(self):
+    def test_create_v2_policy_value_error(self):
         """
-        test_v2_create_policy_value_error()
+        test_create_v2_policy_value_error()
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "resource": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "operator", "value": "anyValue"}, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
         # Construct a dict representation of a PolicyRole model
         policy_role_model = {}
         policy_role_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseControlGrant model
-        v2_policy_base_control_grant_model = {}
-        v2_policy_base_control_grant_model['roles'] = [policy_role_model]
+        # Construct a dict representation of a V2PolicyGrant model
+        v2_policy_grant_model = {}
+        v2_policy_grant_model['roles'] = [policy_role_model]
 
-        # Construct a dict representation of a V2PolicyBaseControl model
-        v2_policy_base_control_model = {}
-        v2_policy_base_control_model['grant'] = v2_policy_base_control_grant_model
+        # Construct a dict representation of a Control model
+        control_model = {}
+        control_model['grant'] = v2_policy_grant_model
 
-        # Construct a dict representation of a V2PolicyAttribute model
-        v2_policy_attribute_model = {}
-        v2_policy_attribute_model['key'] = 'testString'
-        v2_policy_attribute_model['operator'] = 'testString'
-        v2_policy_attribute_model['value'] = 'testString'
+        # Construct a dict representation of a V2PolicySubjectAttribute model
+        v2_policy_subject_attribute_model = {}
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseSubject model
-        v2_policy_base_subject_model = {}
-        v2_policy_base_subject_model['attributes'] = [v2_policy_attribute_model]
+        # Construct a dict representation of a V2PolicySubject model
+        v2_policy_subject_model = {}
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
 
-        # Construct a dict representation of a V2PolicyBaseResource model
-        v2_policy_base_resource_model = {}
-        v2_policy_base_resource_model['attributes'] = [v2_policy_attribute_model]
+        # Construct a dict representation of a V2PolicyResourceAttribute model
+        v2_policy_resource_attribute_model = {}
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseRuleV2PolicyAttribute model
-        v2_policy_base_rule_model = {}
-        v2_policy_base_rule_model['key'] = 'testString'
-        v2_policy_base_rule_model['operator'] = 'testString'
-        v2_policy_base_rule_model['value'] = 'testString'
+        # Construct a dict representation of a V2PolicyResourceTag model
+        v2_policy_resource_tag_model = {}
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        # Construct a dict representation of a V2PolicyResource model
+        v2_policy_resource_model = {}
+        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
+
+        # Construct a dict representation of a V2PolicyRuleRuleAttribute model
+        v2_policy_rule_model = {}
+        v2_policy_rule_model['key'] = 'testString'
+        v2_policy_rule_model['operator'] = 'timeLessThan'
+        v2_policy_rule_model['value'] = 'testString'
 
         # Set up parameter values
-        type = 'testString'
-        control = v2_policy_base_control_model
+        control = control_model
+        type = 'access'
         description = 'testString'
-        subject = v2_policy_base_subject_model
-        resource = v2_policy_base_resource_model
+        subject = v2_policy_subject_model
+        resource = v2_policy_resource_model
         pattern = 'testString'
-        rule = v2_policy_base_rule_model
+        rule = v2_policy_rule_model
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
-            "type": type,
             "control": control,
+            "type": type,
         }
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.v2_create_policy(**req_copy)
+                _service.create_v2_policy(**req_copy)
 
-    def test_v2_create_policy_value_error_with_retries(self):
-        # Enable retries and run test_v2_create_policy_value_error.
+    def test_create_v2_policy_value_error_with_retries(self):
+        # Enable retries and run test_create_v2_policy_value_error.
         _service.enable_retries()
-        self.test_v2_create_policy_value_error()
+        self.test_create_v2_policy_value_error()
 
-        # Disable retries and run test_v2_create_policy_value_error.
+        # Disable retries and run test_create_v2_policy_value_error.
         _service.disable_retries()
-        self.test_v2_create_policy_value_error()
+        self.test_create_v2_policy_value_error()
 
 
-class TestV2UpdatePolicy:
+class TestReplaceV2Policy:
     """
-    Test Class for v2_update_policy
+    Test Class for replace_v2_policy
     """
 
     @responses.activate
-    def test_v2_update_policy_all_params(self):
+    def test_replace_v2_policy_all_params(self):
         """
-        v2_update_policy()
+        replace_v2_policy()
         """
         # Set up mock
         url = preprocess_url('/v2/policies/testString')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "resource": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "operator", "value": "anyValue"}, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
         # Construct a dict representation of a PolicyRole model
         policy_role_model = {}
         policy_role_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseControlGrant model
-        v2_policy_base_control_grant_model = {}
-        v2_policy_base_control_grant_model['roles'] = [policy_role_model]
+        # Construct a dict representation of a V2PolicyGrant model
+        v2_policy_grant_model = {}
+        v2_policy_grant_model['roles'] = [policy_role_model]
 
-        # Construct a dict representation of a V2PolicyBaseControl model
-        v2_policy_base_control_model = {}
-        v2_policy_base_control_model['grant'] = v2_policy_base_control_grant_model
+        # Construct a dict representation of a Control model
+        control_model = {}
+        control_model['grant'] = v2_policy_grant_model
 
-        # Construct a dict representation of a V2PolicyAttribute model
-        v2_policy_attribute_model = {}
-        v2_policy_attribute_model['key'] = 'testString'
-        v2_policy_attribute_model['operator'] = 'testString'
-        v2_policy_attribute_model['value'] = 'testString'
+        # Construct a dict representation of a V2PolicySubjectAttribute model
+        v2_policy_subject_attribute_model = {}
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseSubject model
-        v2_policy_base_subject_model = {}
-        v2_policy_base_subject_model['attributes'] = [v2_policy_attribute_model]
+        # Construct a dict representation of a V2PolicySubject model
+        v2_policy_subject_model = {}
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
 
-        # Construct a dict representation of a V2PolicyBaseResource model
-        v2_policy_base_resource_model = {}
-        v2_policy_base_resource_model['attributes'] = [v2_policy_attribute_model]
+        # Construct a dict representation of a V2PolicyResourceAttribute model
+        v2_policy_resource_attribute_model = {}
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseRuleV2PolicyAttribute model
-        v2_policy_base_rule_model = {}
-        v2_policy_base_rule_model['key'] = 'testString'
-        v2_policy_base_rule_model['operator'] = 'testString'
-        v2_policy_base_rule_model['value'] = 'testString'
+        # Construct a dict representation of a V2PolicyResourceTag model
+        v2_policy_resource_tag_model = {}
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        # Construct a dict representation of a V2PolicyResource model
+        v2_policy_resource_model = {}
+        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
+
+        # Construct a dict representation of a V2PolicyRuleRuleAttribute model
+        v2_policy_rule_model = {}
+        v2_policy_rule_model['key'] = 'testString'
+        v2_policy_rule_model['operator'] = 'timeLessThan'
+        v2_policy_rule_model['value'] = 'testString'
 
         # Set up parameter values
-        policy_id = 'testString'
+        id = 'testString'
         if_match = 'testString'
-        type = 'testString'
-        control = v2_policy_base_control_model
+        control = control_model
+        type = 'access'
         description = 'testString'
-        subject = v2_policy_base_subject_model
-        resource = v2_policy_base_resource_model
+        subject = v2_policy_subject_model
+        resource = v2_policy_resource_model
         pattern = 'testString'
-        rule = v2_policy_base_rule_model
+        rule = v2_policy_rule_model
 
         # Invoke method
-        response = _service.v2_update_policy(
-            policy_id,
+        response = _service.replace_v2_policy(
+            id,
             if_match,
-            type,
             control,
+            type,
             description=description,
             subject=subject,
             resource=resource,
@@ -1773,226 +1825,239 @@ class TestV2UpdatePolicy:
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['type'] == 'testString'
-        assert req_body['control'] == v2_policy_base_control_model
+        assert req_body['control'] == control_model
+        assert req_body['type'] == 'access'
         assert req_body['description'] == 'testString'
-        assert req_body['subject'] == v2_policy_base_subject_model
-        assert req_body['resource'] == v2_policy_base_resource_model
+        assert req_body['subject'] == v2_policy_subject_model
+        assert req_body['resource'] == v2_policy_resource_model
         assert req_body['pattern'] == 'testString'
-        assert req_body['rule'] == v2_policy_base_rule_model
+        assert req_body['rule'] == v2_policy_rule_model
 
-    def test_v2_update_policy_all_params_with_retries(self):
-        # Enable retries and run test_v2_update_policy_all_params.
+    def test_replace_v2_policy_all_params_with_retries(self):
+        # Enable retries and run test_replace_v2_policy_all_params.
         _service.enable_retries()
-        self.test_v2_update_policy_all_params()
+        self.test_replace_v2_policy_all_params()
 
-        # Disable retries and run test_v2_update_policy_all_params.
+        # Disable retries and run test_replace_v2_policy_all_params.
         _service.disable_retries()
-        self.test_v2_update_policy_all_params()
+        self.test_replace_v2_policy_all_params()
 
     @responses.activate
-    def test_v2_update_policy_value_error(self):
+    def test_replace_v2_policy_value_error(self):
         """
-        test_v2_update_policy_value_error()
+        test_replace_v2_policy_value_error()
         """
         # Set up mock
         url = preprocess_url('/v2/policies/testString')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "resource": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "operator", "value": "anyValue"}, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
         # Construct a dict representation of a PolicyRole model
         policy_role_model = {}
         policy_role_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseControlGrant model
-        v2_policy_base_control_grant_model = {}
-        v2_policy_base_control_grant_model['roles'] = [policy_role_model]
+        # Construct a dict representation of a V2PolicyGrant model
+        v2_policy_grant_model = {}
+        v2_policy_grant_model['roles'] = [policy_role_model]
 
-        # Construct a dict representation of a V2PolicyBaseControl model
-        v2_policy_base_control_model = {}
-        v2_policy_base_control_model['grant'] = v2_policy_base_control_grant_model
+        # Construct a dict representation of a Control model
+        control_model = {}
+        control_model['grant'] = v2_policy_grant_model
 
-        # Construct a dict representation of a V2PolicyAttribute model
-        v2_policy_attribute_model = {}
-        v2_policy_attribute_model['key'] = 'testString'
-        v2_policy_attribute_model['operator'] = 'testString'
-        v2_policy_attribute_model['value'] = 'testString'
+        # Construct a dict representation of a V2PolicySubjectAttribute model
+        v2_policy_subject_attribute_model = {}
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseSubject model
-        v2_policy_base_subject_model = {}
-        v2_policy_base_subject_model['attributes'] = [v2_policy_attribute_model]
+        # Construct a dict representation of a V2PolicySubject model
+        v2_policy_subject_model = {}
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
 
-        # Construct a dict representation of a V2PolicyBaseResource model
-        v2_policy_base_resource_model = {}
-        v2_policy_base_resource_model['attributes'] = [v2_policy_attribute_model]
+        # Construct a dict representation of a V2PolicyResourceAttribute model
+        v2_policy_resource_attribute_model = {}
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyBaseRuleV2PolicyAttribute model
-        v2_policy_base_rule_model = {}
-        v2_policy_base_rule_model['key'] = 'testString'
-        v2_policy_base_rule_model['operator'] = 'testString'
-        v2_policy_base_rule_model['value'] = 'testString'
+        # Construct a dict representation of a V2PolicyResourceTag model
+        v2_policy_resource_tag_model = {}
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        # Construct a dict representation of a V2PolicyResource model
+        v2_policy_resource_model = {}
+        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
+
+        # Construct a dict representation of a V2PolicyRuleRuleAttribute model
+        v2_policy_rule_model = {}
+        v2_policy_rule_model['key'] = 'testString'
+        v2_policy_rule_model['operator'] = 'timeLessThan'
+        v2_policy_rule_model['value'] = 'testString'
 
         # Set up parameter values
-        policy_id = 'testString'
+        id = 'testString'
         if_match = 'testString'
-        type = 'testString'
-        control = v2_policy_base_control_model
+        control = control_model
+        type = 'access'
         description = 'testString'
-        subject = v2_policy_base_subject_model
-        resource = v2_policy_base_resource_model
+        subject = v2_policy_subject_model
+        resource = v2_policy_resource_model
         pattern = 'testString'
-        rule = v2_policy_base_rule_model
+        rule = v2_policy_rule_model
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
-            "policy_id": policy_id,
+            "id": id,
             "if_match": if_match,
-            "type": type,
             "control": control,
+            "type": type,
         }
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.v2_update_policy(**req_copy)
+                _service.replace_v2_policy(**req_copy)
 
-    def test_v2_update_policy_value_error_with_retries(self):
-        # Enable retries and run test_v2_update_policy_value_error.
+    def test_replace_v2_policy_value_error_with_retries(self):
+        # Enable retries and run test_replace_v2_policy_value_error.
         _service.enable_retries()
-        self.test_v2_update_policy_value_error()
+        self.test_replace_v2_policy_value_error()
 
-        # Disable retries and run test_v2_update_policy_value_error.
+        # Disable retries and run test_replace_v2_policy_value_error.
         _service.disable_retries()
-        self.test_v2_update_policy_value_error()
+        self.test_replace_v2_policy_value_error()
 
 
-class TestV2GetPolicy:
+class TestGetV2Policy:
     """
-    Test Class for v2_get_policy
+    Test Class for get_v2_policy
     """
 
     @responses.activate
-    def test_v2_get_policy_all_params(self):
+    def test_get_v2_policy_all_params(self):
         """
-        v2_get_policy()
+        get_v2_policy()
         """
         # Set up mock
         url = preprocess_url('/v2/policies/testString')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "resource": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "operator", "value": "anyValue"}, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
-        policy_id = 'testString'
+        id = 'testString'
 
         # Invoke method
-        response = _service.v2_get_policy(policy_id, headers={})
+        response = _service.get_v2_policy(id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
-    def test_v2_get_policy_all_params_with_retries(self):
-        # Enable retries and run test_v2_get_policy_all_params.
+    def test_get_v2_policy_all_params_with_retries(self):
+        # Enable retries and run test_get_v2_policy_all_params.
         _service.enable_retries()
-        self.test_v2_get_policy_all_params()
+        self.test_get_v2_policy_all_params()
 
-        # Disable retries and run test_v2_get_policy_all_params.
+        # Disable retries and run test_get_v2_policy_all_params.
         _service.disable_retries()
-        self.test_v2_get_policy_all_params()
+        self.test_get_v2_policy_all_params()
 
     @responses.activate
-    def test_v2_get_policy_value_error(self):
+    def test_get_v2_policy_value_error(self):
         """
-        test_v2_get_policy_value_error()
+        test_get_v2_policy_value_error()
         """
         # Set up mock
         url = preprocess_url('/v2/policies/testString')
-        mock_response = '{"id": "id", "type": "type", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "resource": {"attributes": [{"key": "key", "operator": "operator", "value": "anyValue"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "operator", "value": "anyValue"}, "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active"}'
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
-        policy_id = 'testString'
+        id = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
-            "policy_id": policy_id,
+            "id": id,
         }
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.v2_get_policy(**req_copy)
+                _service.get_v2_policy(**req_copy)
 
-    def test_v2_get_policy_value_error_with_retries(self):
-        # Enable retries and run test_v2_get_policy_value_error.
+    def test_get_v2_policy_value_error_with_retries(self):
+        # Enable retries and run test_get_v2_policy_value_error.
         _service.enable_retries()
-        self.test_v2_get_policy_value_error()
+        self.test_get_v2_policy_value_error()
 
-        # Disable retries and run test_v2_get_policy_value_error.
+        # Disable retries and run test_get_v2_policy_value_error.
         _service.disable_retries()
-        self.test_v2_get_policy_value_error()
+        self.test_get_v2_policy_value_error()
 
 
-class TestV2DeletePolicy:
+class TestDeleteV2Policy:
     """
-    Test Class for v2_delete_policy
+    Test Class for delete_v2_policy
     """
 
     @responses.activate
-    def test_v2_delete_policy_all_params(self):
+    def test_delete_v2_policy_all_params(self):
         """
-        v2_delete_policy()
+        delete_v2_policy()
         """
         # Set up mock
         url = preprocess_url('/v2/policies/testString')
         responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
-        policy_id = 'testString'
+        id = 'testString'
 
         # Invoke method
-        response = _service.v2_delete_policy(policy_id, headers={})
+        response = _service.delete_v2_policy(id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 204
 
-    def test_v2_delete_policy_all_params_with_retries(self):
-        # Enable retries and run test_v2_delete_policy_all_params.
+    def test_delete_v2_policy_all_params_with_retries(self):
+        # Enable retries and run test_delete_v2_policy_all_params.
         _service.enable_retries()
-        self.test_v2_delete_policy_all_params()
+        self.test_delete_v2_policy_all_params()
 
-        # Disable retries and run test_v2_delete_policy_all_params.
+        # Disable retries and run test_delete_v2_policy_all_params.
         _service.disable_retries()
-        self.test_v2_delete_policy_all_params()
+        self.test_delete_v2_policy_all_params()
 
     @responses.activate
-    def test_v2_delete_policy_value_error(self):
+    def test_delete_v2_policy_value_error(self):
         """
-        test_v2_delete_policy_value_error()
+        test_delete_v2_policy_value_error()
         """
         # Set up mock
         url = preprocess_url('/v2/policies/testString')
         responses.add(responses.DELETE, url, status=204)
 
         # Set up parameter values
-        policy_id = 'testString'
+        id = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
-            "policy_id": policy_id,
+            "id": id,
         }
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.v2_delete_policy(**req_copy)
+                _service.delete_v2_policy(**req_copy)
 
-    def test_v2_delete_policy_value_error_with_retries(self):
-        # Enable retries and run test_v2_delete_policy_value_error.
+    def test_delete_v2_policy_value_error_with_retries(self):
+        # Enable retries and run test_delete_v2_policy_value_error.
         _service.enable_retries()
-        self.test_v2_delete_policy_value_error()
+        self.test_delete_v2_policy_value_error()
 
-        # Disable retries and run test_v2_delete_policy_value_error.
+        # Disable retries and run test_delete_v2_policy_value_error.
         _service.disable_retries()
-        self.test_v2_delete_policy_value_error()
+        self.test_delete_v2_policy_value_error()
 
 
 # endregion
@@ -2005,14 +2070,14 @@ class TestV2DeletePolicy:
 # Start of Model Tests
 ##############################################################################
 # region
-class TestModel_V2PolicyBaseControl:
+class TestModel_Control:
     """
-    Test Class for V2PolicyBaseControl
+    Test Class for Control
     """
 
-    def test_v2_policy_base_control_serialization(self):
+    def test_control_serialization(self):
         """
-        Test serialization/deserialization for V2PolicyBaseControl
+        Test serialization/deserialization for Control
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
@@ -2020,138 +2085,576 @@ class TestModel_V2PolicyBaseControl:
         policy_role_model = {}  # PolicyRole
         policy_role_model['role_id'] = 'testString'
 
-        v2_policy_base_control_grant_model = {}  # V2PolicyBaseControlGrant
-        v2_policy_base_control_grant_model['roles'] = [policy_role_model]
+        v2_policy_grant_model = {}  # V2PolicyGrant
+        v2_policy_grant_model['roles'] = [policy_role_model]
 
-        # Construct a json representation of a V2PolicyBaseControl model
-        v2_policy_base_control_model_json = {}
-        v2_policy_base_control_model_json['grant'] = v2_policy_base_control_grant_model
+        # Construct a json representation of a Control model
+        control_model_json = {}
+        control_model_json['grant'] = v2_policy_grant_model
 
-        # Construct a model instance of V2PolicyBaseControl by calling from_dict on the json representation
-        v2_policy_base_control_model = V2PolicyBaseControl.from_dict(v2_policy_base_control_model_json)
-        assert v2_policy_base_control_model != False
+        # Construct a model instance of Control by calling from_dict on the json representation
+        control_model = Control.from_dict(control_model_json)
+        assert control_model != False
 
-        # Construct a model instance of V2PolicyBaseControl by calling from_dict on the json representation
-        v2_policy_base_control_model_dict = V2PolicyBaseControl.from_dict(v2_policy_base_control_model_json).__dict__
-        v2_policy_base_control_model2 = V2PolicyBaseControl(**v2_policy_base_control_model_dict)
+        # Construct a model instance of Control by calling from_dict on the json representation
+        control_model_dict = Control.from_dict(control_model_json).__dict__
+        control_model2 = Control(**control_model_dict)
 
         # Verify the model instances are equivalent
-        assert v2_policy_base_control_model == v2_policy_base_control_model2
+        assert control_model == control_model2
 
         # Convert model instance back to dict and verify no loss of data
-        v2_policy_base_control_model_json2 = v2_policy_base_control_model.to_dict()
-        assert v2_policy_base_control_model_json2 == v2_policy_base_control_model_json
+        control_model_json2 = control_model.to_dict()
+        assert control_model_json2 == control_model_json
 
 
-class TestModel_V2PolicyBaseControlGrant:
+class TestModel_GrantWithTranslatedRoles:
     """
-    Test Class for V2PolicyBaseControlGrant
+    Test Class for GrantWithTranslatedRoles
     """
 
-    def test_v2_policy_base_control_grant_serialization(self):
+    def test_grant_with_translated_roles_serialization(self):
         """
-        Test serialization/deserialization for V2PolicyBaseControlGrant
+        Test serialization/deserialization for GrantWithTranslatedRoles
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        policy_role_model = {}  # PolicyRole
-        policy_role_model['role_id'] = 'testString'
+        role_action_model = {}  # RoleAction
+        role_action_model['id'] = 'testString'
+        role_action_model['display_name'] = 'testString'
+        role_action_model['description'] = 'testString'
 
-        # Construct a json representation of a V2PolicyBaseControlGrant model
-        v2_policy_base_control_grant_model_json = {}
-        v2_policy_base_control_grant_model_json['roles'] = [policy_role_model]
+        role_in_display_format_model = {}  # RoleInDisplayFormat
+        role_in_display_format_model['role_id'] = 'testString'
+        role_in_display_format_model['actions'] = [role_action_model]
 
-        # Construct a model instance of V2PolicyBaseControlGrant by calling from_dict on the json representation
-        v2_policy_base_control_grant_model = V2PolicyBaseControlGrant.from_dict(v2_policy_base_control_grant_model_json)
-        assert v2_policy_base_control_grant_model != False
+        # Construct a json representation of a GrantWithTranslatedRoles model
+        grant_with_translated_roles_model_json = {}
+        grant_with_translated_roles_model_json['roles'] = [role_in_display_format_model]
 
-        # Construct a model instance of V2PolicyBaseControlGrant by calling from_dict on the json representation
-        v2_policy_base_control_grant_model_dict = V2PolicyBaseControlGrant.from_dict(
-            v2_policy_base_control_grant_model_json
+        # Construct a model instance of GrantWithTranslatedRoles by calling from_dict on the json representation
+        grant_with_translated_roles_model = GrantWithTranslatedRoles.from_dict(grant_with_translated_roles_model_json)
+        assert grant_with_translated_roles_model != False
+
+        # Construct a model instance of GrantWithTranslatedRoles by calling from_dict on the json representation
+        grant_with_translated_roles_model_dict = GrantWithTranslatedRoles.from_dict(
+            grant_with_translated_roles_model_json
         ).__dict__
-        v2_policy_base_control_grant_model2 = V2PolicyBaseControlGrant(**v2_policy_base_control_grant_model_dict)
+        grant_with_translated_roles_model2 = GrantWithTranslatedRoles(**grant_with_translated_roles_model_dict)
 
         # Verify the model instances are equivalent
-        assert v2_policy_base_control_grant_model == v2_policy_base_control_grant_model2
+        assert grant_with_translated_roles_model == grant_with_translated_roles_model2
 
         # Convert model instance back to dict and verify no loss of data
-        v2_policy_base_control_grant_model_json2 = v2_policy_base_control_grant_model.to_dict()
-        assert v2_policy_base_control_grant_model_json2 == v2_policy_base_control_grant_model_json
+        grant_with_translated_roles_model_json2 = grant_with_translated_roles_model.to_dict()
+        assert grant_with_translated_roles_model_json2 == grant_with_translated_roles_model_json
 
 
-class TestModel_V2PolicyBaseResource:
+class TestModel_PolicyRole:
     """
-    Test Class for V2PolicyBaseResource
+    Test Class for PolicyRole
     """
 
-    def test_v2_policy_base_resource_serialization(self):
+    def test_policy_role_serialization(self):
         """
-        Test serialization/deserialization for V2PolicyBaseResource
+        Test serialization/deserialization for PolicyRole
+        """
+
+        # Construct a json representation of a PolicyRole model
+        policy_role_model_json = {}
+        policy_role_model_json['role_id'] = 'testString'
+
+        # Construct a model instance of PolicyRole by calling from_dict on the json representation
+        policy_role_model = PolicyRole.from_dict(policy_role_model_json)
+        assert policy_role_model != False
+
+        # Construct a model instance of PolicyRole by calling from_dict on the json representation
+        policy_role_model_dict = PolicyRole.from_dict(policy_role_model_json).__dict__
+        policy_role_model2 = PolicyRole(**policy_role_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_role_model == policy_role_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_role_model_json2 = policy_role_model.to_dict()
+        assert policy_role_model_json2 == policy_role_model_json
+
+
+class TestModel_RoleAction:
+    """
+    Test Class for RoleAction
+    """
+
+    def test_role_action_serialization(self):
+        """
+        Test serialization/deserialization for RoleAction
+        """
+
+        # Construct a json representation of a RoleAction model
+        role_action_model_json = {}
+        role_action_model_json['id'] = 'testString'
+        role_action_model_json['display_name'] = 'testString'
+        role_action_model_json['description'] = 'testString'
+
+        # Construct a model instance of RoleAction by calling from_dict on the json representation
+        role_action_model = RoleAction.from_dict(role_action_model_json)
+        assert role_action_model != False
+
+        # Construct a model instance of RoleAction by calling from_dict on the json representation
+        role_action_model_dict = RoleAction.from_dict(role_action_model_json).__dict__
+        role_action_model2 = RoleAction(**role_action_model_dict)
+
+        # Verify the model instances are equivalent
+        assert role_action_model == role_action_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        role_action_model_json2 = role_action_model.to_dict()
+        assert role_action_model_json2 == role_action_model_json
+
+
+class TestModel_RoleInDisplayFormat:
+    """
+    Test Class for RoleInDisplayFormat
+    """
+
+    def test_role_in_display_format_serialization(self):
+        """
+        Test serialization/deserialization for RoleInDisplayFormat
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        v2_policy_attribute_model = {}  # V2PolicyAttribute
-        v2_policy_attribute_model['key'] = 'testString'
-        v2_policy_attribute_model['operator'] = 'testString'
-        v2_policy_attribute_model['value'] = 'testString'
+        role_action_model = {}  # RoleAction
+        role_action_model['id'] = 'testString'
+        role_action_model['display_name'] = 'testString'
+        role_action_model['description'] = 'testString'
 
-        # Construct a json representation of a V2PolicyBaseResource model
-        v2_policy_base_resource_model_json = {}
-        v2_policy_base_resource_model_json['attributes'] = [v2_policy_attribute_model]
+        # Construct a json representation of a RoleInDisplayFormat model
+        role_in_display_format_model_json = {}
+        role_in_display_format_model_json['role_id'] = 'testString'
+        role_in_display_format_model_json['actions'] = [role_action_model]
 
-        # Construct a model instance of V2PolicyBaseResource by calling from_dict on the json representation
-        v2_policy_base_resource_model = V2PolicyBaseResource.from_dict(v2_policy_base_resource_model_json)
-        assert v2_policy_base_resource_model != False
+        # Construct a model instance of RoleInDisplayFormat by calling from_dict on the json representation
+        role_in_display_format_model = RoleInDisplayFormat.from_dict(role_in_display_format_model_json)
+        assert role_in_display_format_model != False
 
-        # Construct a model instance of V2PolicyBaseResource by calling from_dict on the json representation
-        v2_policy_base_resource_model_dict = V2PolicyBaseResource.from_dict(v2_policy_base_resource_model_json).__dict__
-        v2_policy_base_resource_model2 = V2PolicyBaseResource(**v2_policy_base_resource_model_dict)
+        # Construct a model instance of RoleInDisplayFormat by calling from_dict on the json representation
+        role_in_display_format_model_dict = RoleInDisplayFormat.from_dict(role_in_display_format_model_json).__dict__
+        role_in_display_format_model2 = RoleInDisplayFormat(**role_in_display_format_model_dict)
 
         # Verify the model instances are equivalent
-        assert v2_policy_base_resource_model == v2_policy_base_resource_model2
+        assert role_in_display_format_model == role_in_display_format_model2
 
         # Convert model instance back to dict and verify no loss of data
-        v2_policy_base_resource_model_json2 = v2_policy_base_resource_model.to_dict()
-        assert v2_policy_base_resource_model_json2 == v2_policy_base_resource_model_json
+        role_in_display_format_model_json2 = role_in_display_format_model.to_dict()
+        assert role_in_display_format_model_json2 == role_in_display_format_model_json
 
 
-class TestModel_V2PolicyBaseSubject:
+class TestModel_RuleAttribute:
     """
-    Test Class for V2PolicyBaseSubject
+    Test Class for RuleAttribute
     """
 
-    def test_v2_policy_base_subject_serialization(self):
+    def test_rule_attribute_serialization(self):
         """
-        Test serialization/deserialization for V2PolicyBaseSubject
+        Test serialization/deserialization for RuleAttribute
+        """
+
+        # Construct a json representation of a RuleAttribute model
+        rule_attribute_model_json = {}
+        rule_attribute_model_json['key'] = 'testString'
+        rule_attribute_model_json['operator'] = 'timeLessThan'
+        rule_attribute_model_json['value'] = 'testString'
+
+        # Construct a model instance of RuleAttribute by calling from_dict on the json representation
+        rule_attribute_model = RuleAttribute.from_dict(rule_attribute_model_json)
+        assert rule_attribute_model != False
+
+        # Construct a model instance of RuleAttribute by calling from_dict on the json representation
+        rule_attribute_model_dict = RuleAttribute.from_dict(rule_attribute_model_json).__dict__
+        rule_attribute_model2 = RuleAttribute(**rule_attribute_model_dict)
+
+        # Verify the model instances are equivalent
+        assert rule_attribute_model == rule_attribute_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        rule_attribute_model_json2 = rule_attribute_model.to_dict()
+        assert rule_attribute_model_json2 == rule_attribute_model_json
+
+
+class TestModel_V2Policy:
+    """
+    Test Class for V2Policy
+    """
+
+    def test_v2_policy_serialization(self):
+        """
+        Test serialization/deserialization for V2Policy
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        v2_policy_attribute_model = {}  # V2PolicyAttribute
-        v2_policy_attribute_model['key'] = 'testString'
-        v2_policy_attribute_model['operator'] = 'testString'
-        v2_policy_attribute_model['value'] = 'testString'
+        v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
 
-        # Construct a json representation of a V2PolicyBaseSubject model
-        v2_policy_base_subject_model_json = {}
-        v2_policy_base_subject_model_json['attributes'] = [v2_policy_attribute_model]
+        v2_policy_subject_model = {}  # V2PolicySubject
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
 
-        # Construct a model instance of V2PolicyBaseSubject by calling from_dict on the json representation
-        v2_policy_base_subject_model = V2PolicyBaseSubject.from_dict(v2_policy_base_subject_model_json)
-        assert v2_policy_base_subject_model != False
+        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
 
-        # Construct a model instance of V2PolicyBaseSubject by calling from_dict on the json representation
-        v2_policy_base_subject_model_dict = V2PolicyBaseSubject.from_dict(v2_policy_base_subject_model_json).__dict__
-        v2_policy_base_subject_model2 = V2PolicyBaseSubject(**v2_policy_base_subject_model_dict)
+        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        v2_policy_resource_model = {}  # V2PolicyResource
+        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
+
+        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
+        v2_policy_rule_model['key'] = 'testString'
+        v2_policy_rule_model['operator'] = 'timeLessThan'
+        v2_policy_rule_model['value'] = 'testString'
+
+        policy_role_model = {}  # PolicyRole
+        policy_role_model['role_id'] = 'testString'
+
+        v2_policy_grant_model = {}  # V2PolicyGrant
+        v2_policy_grant_model['roles'] = [policy_role_model]
+
+        control_response_model = {}  # ControlResponseControl
+        control_response_model['grant'] = v2_policy_grant_model
+
+        # Construct a json representation of a V2Policy model
+        v2_policy_model_json = {}
+        v2_policy_model_json['type'] = 'access'
+        v2_policy_model_json['description'] = 'testString'
+        v2_policy_model_json['subject'] = v2_policy_subject_model
+        v2_policy_model_json['resource'] = v2_policy_resource_model
+        v2_policy_model_json['pattern'] = 'testString'
+        v2_policy_model_json['rule'] = v2_policy_rule_model
+        v2_policy_model_json['control'] = control_response_model
+        v2_policy_model_json['state'] = 'active'
+        v2_policy_model_json['last_permit_at'] = 'testString'
+        v2_policy_model_json['last_permit_frequency'] = 38
+
+        # Construct a model instance of V2Policy by calling from_dict on the json representation
+        v2_policy_model = V2Policy.from_dict(v2_policy_model_json)
+        assert v2_policy_model != False
+
+        # Construct a model instance of V2Policy by calling from_dict on the json representation
+        v2_policy_model_dict = V2Policy.from_dict(v2_policy_model_json).__dict__
+        v2_policy_model2 = V2Policy(**v2_policy_model_dict)
 
         # Verify the model instances are equivalent
-        assert v2_policy_base_subject_model == v2_policy_base_subject_model2
+        assert v2_policy_model == v2_policy_model2
 
         # Convert model instance back to dict and verify no loss of data
-        v2_policy_base_subject_model_json2 = v2_policy_base_subject_model.to_dict()
-        assert v2_policy_base_subject_model_json2 == v2_policy_base_subject_model_json
+        v2_policy_model_json2 = v2_policy_model.to_dict()
+        assert v2_policy_model_json2 == v2_policy_model_json
+
+
+class TestModel_V2PolicyCollection:
+    """
+    Test Class for V2PolicyCollection
+    """
+
+    def test_v2_policy_collection_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicyCollection
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        v2_policy_subject_model = {}  # V2PolicySubject
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
+        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
+
+        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        v2_policy_resource_model = {}  # V2PolicyResource
+        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
+
+        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
+        v2_policy_rule_model['key'] = 'testString'
+        v2_policy_rule_model['operator'] = 'timeLessThan'
+        v2_policy_rule_model['value'] = 'testString'
+
+        policy_role_model = {}  # PolicyRole
+        policy_role_model['role_id'] = 'testString'
+
+        v2_policy_grant_model = {}  # V2PolicyGrant
+        v2_policy_grant_model['roles'] = [policy_role_model]
+
+        control_response_model = {}  # ControlResponseControl
+        control_response_model['grant'] = v2_policy_grant_model
+
+        v2_policy_model = {}  # V2Policy
+        v2_policy_model['type'] = 'access'
+        v2_policy_model['description'] = 'testString'
+        v2_policy_model['subject'] = v2_policy_subject_model
+        v2_policy_model['resource'] = v2_policy_resource_model
+        v2_policy_model['pattern'] = 'testString'
+        v2_policy_model['rule'] = v2_policy_rule_model
+        v2_policy_model['control'] = control_response_model
+        v2_policy_model['state'] = 'active'
+        v2_policy_model['last_permit_at'] = 'testString'
+        v2_policy_model['last_permit_frequency'] = 38
+
+        # Construct a json representation of a V2PolicyCollection model
+        v2_policy_collection_model_json = {}
+        v2_policy_collection_model_json['policies'] = [v2_policy_model]
+
+        # Construct a model instance of V2PolicyCollection by calling from_dict on the json representation
+        v2_policy_collection_model = V2PolicyCollection.from_dict(v2_policy_collection_model_json)
+        assert v2_policy_collection_model != False
+
+        # Construct a model instance of V2PolicyCollection by calling from_dict on the json representation
+        v2_policy_collection_model_dict = V2PolicyCollection.from_dict(v2_policy_collection_model_json).__dict__
+        v2_policy_collection_model2 = V2PolicyCollection(**v2_policy_collection_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_collection_model == v2_policy_collection_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_collection_model_json2 = v2_policy_collection_model.to_dict()
+        assert v2_policy_collection_model_json2 == v2_policy_collection_model_json
+
+
+class TestModel_V2PolicyGrant:
+    """
+    Test Class for V2PolicyGrant
+    """
+
+    def test_v2_policy_grant_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicyGrant
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        policy_role_model = {}  # PolicyRole
+        policy_role_model['role_id'] = 'testString'
+
+        # Construct a json representation of a V2PolicyGrant model
+        v2_policy_grant_model_json = {}
+        v2_policy_grant_model_json['roles'] = [policy_role_model]
+
+        # Construct a model instance of V2PolicyGrant by calling from_dict on the json representation
+        v2_policy_grant_model = V2PolicyGrant.from_dict(v2_policy_grant_model_json)
+        assert v2_policy_grant_model != False
+
+        # Construct a model instance of V2PolicyGrant by calling from_dict on the json representation
+        v2_policy_grant_model_dict = V2PolicyGrant.from_dict(v2_policy_grant_model_json).__dict__
+        v2_policy_grant_model2 = V2PolicyGrant(**v2_policy_grant_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_grant_model == v2_policy_grant_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_grant_model_json2 = v2_policy_grant_model.to_dict()
+        assert v2_policy_grant_model_json2 == v2_policy_grant_model_json
+
+
+class TestModel_V2PolicyResource:
+    """
+    Test Class for V2PolicyResource
+    """
+
+    def test_v2_policy_resource_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicyResource
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
+
+        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        # Construct a json representation of a V2PolicyResource model
+        v2_policy_resource_model_json = {}
+        v2_policy_resource_model_json['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model_json['tags'] = [v2_policy_resource_tag_model]
+
+        # Construct a model instance of V2PolicyResource by calling from_dict on the json representation
+        v2_policy_resource_model = V2PolicyResource.from_dict(v2_policy_resource_model_json)
+        assert v2_policy_resource_model != False
+
+        # Construct a model instance of V2PolicyResource by calling from_dict on the json representation
+        v2_policy_resource_model_dict = V2PolicyResource.from_dict(v2_policy_resource_model_json).__dict__
+        v2_policy_resource_model2 = V2PolicyResource(**v2_policy_resource_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_resource_model == v2_policy_resource_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_resource_model_json2 = v2_policy_resource_model.to_dict()
+        assert v2_policy_resource_model_json2 == v2_policy_resource_model_json
+
+
+class TestModel_V2PolicyResourceAttribute:
+    """
+    Test Class for V2PolicyResourceAttribute
+    """
+
+    def test_v2_policy_resource_attribute_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicyResourceAttribute
+        """
+
+        # Construct a json representation of a V2PolicyResourceAttribute model
+        v2_policy_resource_attribute_model_json = {}
+        v2_policy_resource_attribute_model_json['key'] = 'testString'
+        v2_policy_resource_attribute_model_json['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model_json['value'] = 'testString'
+
+        # Construct a model instance of V2PolicyResourceAttribute by calling from_dict on the json representation
+        v2_policy_resource_attribute_model = V2PolicyResourceAttribute.from_dict(
+            v2_policy_resource_attribute_model_json
+        )
+        assert v2_policy_resource_attribute_model != False
+
+        # Construct a model instance of V2PolicyResourceAttribute by calling from_dict on the json representation
+        v2_policy_resource_attribute_model_dict = V2PolicyResourceAttribute.from_dict(
+            v2_policy_resource_attribute_model_json
+        ).__dict__
+        v2_policy_resource_attribute_model2 = V2PolicyResourceAttribute(**v2_policy_resource_attribute_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_resource_attribute_model == v2_policy_resource_attribute_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_resource_attribute_model_json2 = v2_policy_resource_attribute_model.to_dict()
+        assert v2_policy_resource_attribute_model_json2 == v2_policy_resource_attribute_model_json
+
+
+class TestModel_V2PolicyResourceTag:
+    """
+    Test Class for V2PolicyResourceTag
+    """
+
+    def test_v2_policy_resource_tag_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicyResourceTag
+        """
+
+        # Construct a json representation of a V2PolicyResourceTag model
+        v2_policy_resource_tag_model_json = {}
+        v2_policy_resource_tag_model_json['key'] = 'testString'
+        v2_policy_resource_tag_model_json['value'] = 'testString'
+        v2_policy_resource_tag_model_json['operator'] = 'stringEquals'
+
+        # Construct a model instance of V2PolicyResourceTag by calling from_dict on the json representation
+        v2_policy_resource_tag_model = V2PolicyResourceTag.from_dict(v2_policy_resource_tag_model_json)
+        assert v2_policy_resource_tag_model != False
+
+        # Construct a model instance of V2PolicyResourceTag by calling from_dict on the json representation
+        v2_policy_resource_tag_model_dict = V2PolicyResourceTag.from_dict(v2_policy_resource_tag_model_json).__dict__
+        v2_policy_resource_tag_model2 = V2PolicyResourceTag(**v2_policy_resource_tag_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_resource_tag_model == v2_policy_resource_tag_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_resource_tag_model_json2 = v2_policy_resource_tag_model.to_dict()
+        assert v2_policy_resource_tag_model_json2 == v2_policy_resource_tag_model_json
+
+
+class TestModel_V2PolicySubject:
+    """
+    Test Class for V2PolicySubject
+    """
+
+    def test_v2_policy_subject_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicySubject
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        # Construct a json representation of a V2PolicySubject model
+        v2_policy_subject_model_json = {}
+        v2_policy_subject_model_json['attributes'] = [v2_policy_subject_attribute_model]
+
+        # Construct a model instance of V2PolicySubject by calling from_dict on the json representation
+        v2_policy_subject_model = V2PolicySubject.from_dict(v2_policy_subject_model_json)
+        assert v2_policy_subject_model != False
+
+        # Construct a model instance of V2PolicySubject by calling from_dict on the json representation
+        v2_policy_subject_model_dict = V2PolicySubject.from_dict(v2_policy_subject_model_json).__dict__
+        v2_policy_subject_model2 = V2PolicySubject(**v2_policy_subject_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_subject_model == v2_policy_subject_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_subject_model_json2 = v2_policy_subject_model.to_dict()
+        assert v2_policy_subject_model_json2 == v2_policy_subject_model_json
+
+
+class TestModel_V2PolicySubjectAttribute:
+    """
+    Test Class for V2PolicySubjectAttribute
+    """
+
+    def test_v2_policy_subject_attribute_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicySubjectAttribute
+        """
+
+        # Construct a json representation of a V2PolicySubjectAttribute model
+        v2_policy_subject_attribute_model_json = {}
+        v2_policy_subject_attribute_model_json['key'] = 'testString'
+        v2_policy_subject_attribute_model_json['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model_json['value'] = 'testString'
+
+        # Construct a model instance of V2PolicySubjectAttribute by calling from_dict on the json representation
+        v2_policy_subject_attribute_model = V2PolicySubjectAttribute.from_dict(v2_policy_subject_attribute_model_json)
+        assert v2_policy_subject_attribute_model != False
+
+        # Construct a model instance of V2PolicySubjectAttribute by calling from_dict on the json representation
+        v2_policy_subject_attribute_model_dict = V2PolicySubjectAttribute.from_dict(
+            v2_policy_subject_attribute_model_json
+        ).__dict__
+        v2_policy_subject_attribute_model2 = V2PolicySubjectAttribute(**v2_policy_subject_attribute_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_subject_attribute_model == v2_policy_subject_attribute_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_subject_attribute_model_json2 = v2_policy_subject_attribute_model.to_dict()
+        assert v2_policy_subject_attribute_model_json2 == v2_policy_subject_attribute_model_json
 
 
 class TestModel_CustomRole:
@@ -2355,36 +2858,6 @@ class TestModel_PolicyResource:
         # Convert model instance back to dict and verify no loss of data
         policy_resource_model_json2 = policy_resource_model.to_dict()
         assert policy_resource_model_json2 == policy_resource_model_json
-
-
-class TestModel_PolicyRole:
-    """
-    Test Class for PolicyRole
-    """
-
-    def test_policy_role_serialization(self):
-        """
-        Test serialization/deserialization for PolicyRole
-        """
-
-        # Construct a json representation of a PolicyRole model
-        policy_role_model_json = {}
-        policy_role_model_json['role_id'] = 'testString'
-
-        # Construct a model instance of PolicyRole by calling from_dict on the json representation
-        policy_role_model = PolicyRole.from_dict(policy_role_model_json)
-        assert policy_role_model != False
-
-        # Construct a model instance of PolicyRole by calling from_dict on the json representation
-        policy_role_model_dict = PolicyRole.from_dict(policy_role_model_json).__dict__
-        policy_role_model2 = PolicyRole(**policy_role_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_role_model == policy_role_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_role_model_json2 = policy_role_model.to_dict()
-        assert policy_role_model_json2 == policy_role_model_json
 
 
 class TestModel_PolicySubject:
@@ -2597,254 +3070,182 @@ class TestModel_SubjectAttribute:
         assert subject_attribute_model_json2 == subject_attribute_model_json
 
 
-class TestModel_V2Policy:
+class TestModel_ControlResponseControl:
     """
-    Test Class for V2Policy
+    Test Class for ControlResponseControl
     """
 
-    def test_v2_policy_serialization(self):
+    def test_control_response_control_serialization(self):
         """
-        Test serialization/deserialization for V2Policy
+        Test serialization/deserialization for ControlResponseControl
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
-
-        v2_policy_attribute_model = {}  # V2PolicyAttribute
-        v2_policy_attribute_model['key'] = 'testString'
-        v2_policy_attribute_model['operator'] = 'testString'
-        v2_policy_attribute_model['value'] = 'testString'
-
-        v2_policy_base_subject_model = {}  # V2PolicyBaseSubject
-        v2_policy_base_subject_model['attributes'] = [v2_policy_attribute_model]
 
         policy_role_model = {}  # PolicyRole
         policy_role_model['role_id'] = 'testString'
 
-        v2_policy_base_control_grant_model = {}  # V2PolicyBaseControlGrant
-        v2_policy_base_control_grant_model['roles'] = [policy_role_model]
+        v2_policy_grant_model = {}  # V2PolicyGrant
+        v2_policy_grant_model['roles'] = [policy_role_model]
 
-        v2_policy_base_control_model = {}  # V2PolicyBaseControl
-        v2_policy_base_control_model['grant'] = v2_policy_base_control_grant_model
+        # Construct a json representation of a ControlResponseControl model
+        control_response_control_model_json = {}
+        control_response_control_model_json['grant'] = v2_policy_grant_model
 
-        v2_policy_base_resource_model = {}  # V2PolicyBaseResource
-        v2_policy_base_resource_model['attributes'] = [v2_policy_attribute_model]
+        # Construct a model instance of ControlResponseControl by calling from_dict on the json representation
+        control_response_control_model = ControlResponseControl.from_dict(control_response_control_model_json)
+        assert control_response_control_model != False
 
-        v2_policy_base_rule_model = {}  # V2PolicyBaseRuleV2PolicyAttribute
-        v2_policy_base_rule_model['key'] = 'testString'
-        v2_policy_base_rule_model['operator'] = 'testString'
-        v2_policy_base_rule_model['value'] = 'testString'
-
-        # Construct a json representation of a V2Policy model
-        v2_policy_model_json = {}
-        v2_policy_model_json['type'] = 'testString'
-        v2_policy_model_json['description'] = 'testString'
-        v2_policy_model_json['subject'] = v2_policy_base_subject_model
-        v2_policy_model_json['control'] = v2_policy_base_control_model
-        v2_policy_model_json['resource'] = v2_policy_base_resource_model
-        v2_policy_model_json['pattern'] = 'testString'
-        v2_policy_model_json['rule'] = v2_policy_base_rule_model
-        v2_policy_model_json['state'] = 'active'
-
-        # Construct a model instance of V2Policy by calling from_dict on the json representation
-        v2_policy_model = V2Policy.from_dict(v2_policy_model_json)
-        assert v2_policy_model != False
-
-        # Construct a model instance of V2Policy by calling from_dict on the json representation
-        v2_policy_model_dict = V2Policy.from_dict(v2_policy_model_json).__dict__
-        v2_policy_model2 = V2Policy(**v2_policy_model_dict)
+        # Construct a model instance of ControlResponseControl by calling from_dict on the json representation
+        control_response_control_model_dict = ControlResponseControl.from_dict(
+            control_response_control_model_json
+        ).__dict__
+        control_response_control_model2 = ControlResponseControl(**control_response_control_model_dict)
 
         # Verify the model instances are equivalent
-        assert v2_policy_model == v2_policy_model2
+        assert control_response_control_model == control_response_control_model2
 
         # Convert model instance back to dict and verify no loss of data
-        v2_policy_model_json2 = v2_policy_model.to_dict()
-        assert v2_policy_model_json2 == v2_policy_model_json
+        control_response_control_model_json2 = control_response_control_model.to_dict()
+        assert control_response_control_model_json2 == control_response_control_model_json
 
 
-class TestModel_V2PolicyAttribute:
+class TestModel_ControlResponseControlWithTranslatedRoles:
     """
-    Test Class for V2PolicyAttribute
+    Test Class for ControlResponseControlWithTranslatedRoles
     """
 
-    def test_v2_policy_attribute_serialization(self):
+    def test_control_response_control_with_translated_roles_serialization(self):
         """
-        Test serialization/deserialization for V2PolicyAttribute
-        """
-
-        # Construct a json representation of a V2PolicyAttribute model
-        v2_policy_attribute_model_json = {}
-        v2_policy_attribute_model_json['key'] = 'testString'
-        v2_policy_attribute_model_json['operator'] = 'testString'
-        v2_policy_attribute_model_json['value'] = 'testString'
-
-        # Construct a model instance of V2PolicyAttribute by calling from_dict on the json representation
-        v2_policy_attribute_model = V2PolicyAttribute.from_dict(v2_policy_attribute_model_json)
-        assert v2_policy_attribute_model != False
-
-        # Construct a model instance of V2PolicyAttribute by calling from_dict on the json representation
-        v2_policy_attribute_model_dict = V2PolicyAttribute.from_dict(v2_policy_attribute_model_json).__dict__
-        v2_policy_attribute_model2 = V2PolicyAttribute(**v2_policy_attribute_model_dict)
-
-        # Verify the model instances are equivalent
-        assert v2_policy_attribute_model == v2_policy_attribute_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        v2_policy_attribute_model_json2 = v2_policy_attribute_model.to_dict()
-        assert v2_policy_attribute_model_json2 == v2_policy_attribute_model_json
-
-
-class TestModel_V2PolicyList:
-    """
-    Test Class for V2PolicyList
-    """
-
-    def test_v2_policy_list_serialization(self):
-        """
-        Test serialization/deserialization for V2PolicyList
+        Test serialization/deserialization for ControlResponseControlWithTranslatedRoles
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        v2_policy_attribute_model = {}  # V2PolicyAttribute
-        v2_policy_attribute_model['key'] = 'testString'
-        v2_policy_attribute_model['operator'] = 'testString'
-        v2_policy_attribute_model['value'] = 'testString'
+        role_action_model = {}  # RoleAction
+        role_action_model['id'] = 'testString'
+        role_action_model['display_name'] = 'testString'
+        role_action_model['description'] = 'testString'
 
-        v2_policy_base_subject_model = {}  # V2PolicyBaseSubject
-        v2_policy_base_subject_model['attributes'] = [v2_policy_attribute_model]
+        role_in_display_format_model = {}  # RoleInDisplayFormat
+        role_in_display_format_model['role_id'] = 'testString'
+        role_in_display_format_model['actions'] = [role_action_model]
 
-        policy_role_model = {}  # PolicyRole
-        policy_role_model['role_id'] = 'testString'
+        grant_with_translated_roles_model = {}  # GrantWithTranslatedRoles
+        grant_with_translated_roles_model['roles'] = [role_in_display_format_model]
 
-        v2_policy_base_control_grant_model = {}  # V2PolicyBaseControlGrant
-        v2_policy_base_control_grant_model['roles'] = [policy_role_model]
+        # Construct a json representation of a ControlResponseControlWithTranslatedRoles model
+        control_response_control_with_translated_roles_model_json = {}
+        control_response_control_with_translated_roles_model_json['grant'] = grant_with_translated_roles_model
 
-        v2_policy_base_control_model = {}  # V2PolicyBaseControl
-        v2_policy_base_control_model['grant'] = v2_policy_base_control_grant_model
-
-        v2_policy_base_resource_model = {}  # V2PolicyBaseResource
-        v2_policy_base_resource_model['attributes'] = [v2_policy_attribute_model]
-
-        v2_policy_base_rule_model = {}  # V2PolicyBaseRuleV2PolicyAttribute
-        v2_policy_base_rule_model['key'] = 'testString'
-        v2_policy_base_rule_model['operator'] = 'testString'
-        v2_policy_base_rule_model['value'] = 'testString'
-
-        v2_policy_model = {}  # V2Policy
-        v2_policy_model['type'] = 'testString'
-        v2_policy_model['description'] = 'testString'
-        v2_policy_model['subject'] = v2_policy_base_subject_model
-        v2_policy_model['control'] = v2_policy_base_control_model
-        v2_policy_model['resource'] = v2_policy_base_resource_model
-        v2_policy_model['pattern'] = 'testString'
-        v2_policy_model['rule'] = v2_policy_base_rule_model
-        v2_policy_model['state'] = 'active'
-
-        # Construct a json representation of a V2PolicyList model
-        v2_policy_list_model_json = {}
-        v2_policy_list_model_json['policies'] = [v2_policy_model]
-
-        # Construct a model instance of V2PolicyList by calling from_dict on the json representation
-        v2_policy_list_model = V2PolicyList.from_dict(v2_policy_list_model_json)
-        assert v2_policy_list_model != False
-
-        # Construct a model instance of V2PolicyList by calling from_dict on the json representation
-        v2_policy_list_model_dict = V2PolicyList.from_dict(v2_policy_list_model_json).__dict__
-        v2_policy_list_model2 = V2PolicyList(**v2_policy_list_model_dict)
-
-        # Verify the model instances are equivalent
-        assert v2_policy_list_model == v2_policy_list_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        v2_policy_list_model_json2 = v2_policy_list_model.to_dict()
-        assert v2_policy_list_model_json2 == v2_policy_list_model_json
-
-
-class TestModel_V2PolicyBaseRuleV2PolicyAttribute:
-    """
-    Test Class for V2PolicyBaseRuleV2PolicyAttribute
-    """
-
-    def test_v2_policy_base_rule_v2_policy_attribute_serialization(self):
-        """
-        Test serialization/deserialization for V2PolicyBaseRuleV2PolicyAttribute
-        """
-
-        # Construct a json representation of a V2PolicyBaseRuleV2PolicyAttribute model
-        v2_policy_base_rule_v2_policy_attribute_model_json = {}
-        v2_policy_base_rule_v2_policy_attribute_model_json['key'] = 'testString'
-        v2_policy_base_rule_v2_policy_attribute_model_json['operator'] = 'testString'
-        v2_policy_base_rule_v2_policy_attribute_model_json['value'] = 'testString'
-
-        # Construct a model instance of V2PolicyBaseRuleV2PolicyAttribute by calling from_dict on the json representation
-        v2_policy_base_rule_v2_policy_attribute_model = V2PolicyBaseRuleV2PolicyAttribute.from_dict(
-            v2_policy_base_rule_v2_policy_attribute_model_json
+        # Construct a model instance of ControlResponseControlWithTranslatedRoles by calling from_dict on the json representation
+        control_response_control_with_translated_roles_model = ControlResponseControlWithTranslatedRoles.from_dict(
+            control_response_control_with_translated_roles_model_json
         )
-        assert v2_policy_base_rule_v2_policy_attribute_model != False
+        assert control_response_control_with_translated_roles_model != False
 
-        # Construct a model instance of V2PolicyBaseRuleV2PolicyAttribute by calling from_dict on the json representation
-        v2_policy_base_rule_v2_policy_attribute_model_dict = V2PolicyBaseRuleV2PolicyAttribute.from_dict(
-            v2_policy_base_rule_v2_policy_attribute_model_json
+        # Construct a model instance of ControlResponseControlWithTranslatedRoles by calling from_dict on the json representation
+        control_response_control_with_translated_roles_model_dict = ControlResponseControlWithTranslatedRoles.from_dict(
+            control_response_control_with_translated_roles_model_json
         ).__dict__
-        v2_policy_base_rule_v2_policy_attribute_model2 = V2PolicyBaseRuleV2PolicyAttribute(
-            **v2_policy_base_rule_v2_policy_attribute_model_dict
+        control_response_control_with_translated_roles_model2 = ControlResponseControlWithTranslatedRoles(
+            **control_response_control_with_translated_roles_model_dict
         )
 
         # Verify the model instances are equivalent
-        assert v2_policy_base_rule_v2_policy_attribute_model == v2_policy_base_rule_v2_policy_attribute_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        v2_policy_base_rule_v2_policy_attribute_model_json2 = v2_policy_base_rule_v2_policy_attribute_model.to_dict()
-        assert v2_policy_base_rule_v2_policy_attribute_model_json2 == v2_policy_base_rule_v2_policy_attribute_model_json
-
-
-class TestModel_V2PolicyBaseRuleV2RuleWithConditions:
-    """
-    Test Class for V2PolicyBaseRuleV2RuleWithConditions
-    """
-
-    def test_v2_policy_base_rule_v2_rule_with_conditions_serialization(self):
-        """
-        Test serialization/deserialization for V2PolicyBaseRuleV2RuleWithConditions
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        v2_policy_attribute_model = {}  # V2PolicyAttribute
-        v2_policy_attribute_model['key'] = 'testString'
-        v2_policy_attribute_model['operator'] = 'testString'
-        v2_policy_attribute_model['value'] = 'testString'
-
-        # Construct a json representation of a V2PolicyBaseRuleV2RuleWithConditions model
-        v2_policy_base_rule_v2_rule_with_conditions_model_json = {}
-        v2_policy_base_rule_v2_rule_with_conditions_model_json['operator'] = 'and'
-        v2_policy_base_rule_v2_rule_with_conditions_model_json['conditions'] = [v2_policy_attribute_model]
-
-        # Construct a model instance of V2PolicyBaseRuleV2RuleWithConditions by calling from_dict on the json representation
-        v2_policy_base_rule_v2_rule_with_conditions_model = V2PolicyBaseRuleV2RuleWithConditions.from_dict(
-            v2_policy_base_rule_v2_rule_with_conditions_model_json
-        )
-        assert v2_policy_base_rule_v2_rule_with_conditions_model != False
-
-        # Construct a model instance of V2PolicyBaseRuleV2RuleWithConditions by calling from_dict on the json representation
-        v2_policy_base_rule_v2_rule_with_conditions_model_dict = V2PolicyBaseRuleV2RuleWithConditions.from_dict(
-            v2_policy_base_rule_v2_rule_with_conditions_model_json
-        ).__dict__
-        v2_policy_base_rule_v2_rule_with_conditions_model2 = V2PolicyBaseRuleV2RuleWithConditions(
-            **v2_policy_base_rule_v2_rule_with_conditions_model_dict
+        assert (
+            control_response_control_with_translated_roles_model
+            == control_response_control_with_translated_roles_model2
         )
 
-        # Verify the model instances are equivalent
-        assert v2_policy_base_rule_v2_rule_with_conditions_model == v2_policy_base_rule_v2_rule_with_conditions_model2
-
         # Convert model instance back to dict and verify no loss of data
-        v2_policy_base_rule_v2_rule_with_conditions_model_json2 = (
-            v2_policy_base_rule_v2_rule_with_conditions_model.to_dict()
+        control_response_control_with_translated_roles_model_json2 = (
+            control_response_control_with_translated_roles_model.to_dict()
         )
         assert (
-            v2_policy_base_rule_v2_rule_with_conditions_model_json2
-            == v2_policy_base_rule_v2_rule_with_conditions_model_json
+            control_response_control_with_translated_roles_model_json2
+            == control_response_control_with_translated_roles_model_json
         )
+
+
+class TestModel_V2PolicyRuleRuleAttribute:
+    """
+    Test Class for V2PolicyRuleRuleAttribute
+    """
+
+    def test_v2_policy_rule_rule_attribute_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicyRuleRuleAttribute
+        """
+
+        # Construct a json representation of a V2PolicyRuleRuleAttribute model
+        v2_policy_rule_rule_attribute_model_json = {}
+        v2_policy_rule_rule_attribute_model_json['key'] = 'testString'
+        v2_policy_rule_rule_attribute_model_json['operator'] = 'timeLessThan'
+        v2_policy_rule_rule_attribute_model_json['value'] = 'testString'
+
+        # Construct a model instance of V2PolicyRuleRuleAttribute by calling from_dict on the json representation
+        v2_policy_rule_rule_attribute_model = V2PolicyRuleRuleAttribute.from_dict(
+            v2_policy_rule_rule_attribute_model_json
+        )
+        assert v2_policy_rule_rule_attribute_model != False
+
+        # Construct a model instance of V2PolicyRuleRuleAttribute by calling from_dict on the json representation
+        v2_policy_rule_rule_attribute_model_dict = V2PolicyRuleRuleAttribute.from_dict(
+            v2_policy_rule_rule_attribute_model_json
+        ).__dict__
+        v2_policy_rule_rule_attribute_model2 = V2PolicyRuleRuleAttribute(**v2_policy_rule_rule_attribute_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_rule_rule_attribute_model == v2_policy_rule_rule_attribute_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_rule_rule_attribute_model_json2 = v2_policy_rule_rule_attribute_model.to_dict()
+        assert v2_policy_rule_rule_attribute_model_json2 == v2_policy_rule_rule_attribute_model_json
+
+
+class TestModel_V2PolicyRuleRuleWithConditions:
+    """
+    Test Class for V2PolicyRuleRuleWithConditions
+    """
+
+    def test_v2_policy_rule_rule_with_conditions_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicyRuleRuleWithConditions
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        rule_attribute_model = {}  # RuleAttribute
+        rule_attribute_model['key'] = 'testString'
+        rule_attribute_model['operator'] = 'timeLessThan'
+        rule_attribute_model['value'] = 'testString'
+
+        # Construct a json representation of a V2PolicyRuleRuleWithConditions model
+        v2_policy_rule_rule_with_conditions_model_json = {}
+        v2_policy_rule_rule_with_conditions_model_json['operator'] = 'and'
+        v2_policy_rule_rule_with_conditions_model_json['conditions'] = [rule_attribute_model]
+
+        # Construct a model instance of V2PolicyRuleRuleWithConditions by calling from_dict on the json representation
+        v2_policy_rule_rule_with_conditions_model = V2PolicyRuleRuleWithConditions.from_dict(
+            v2_policy_rule_rule_with_conditions_model_json
+        )
+        assert v2_policy_rule_rule_with_conditions_model != False
+
+        # Construct a model instance of V2PolicyRuleRuleWithConditions by calling from_dict on the json representation
+        v2_policy_rule_rule_with_conditions_model_dict = V2PolicyRuleRuleWithConditions.from_dict(
+            v2_policy_rule_rule_with_conditions_model_json
+        ).__dict__
+        v2_policy_rule_rule_with_conditions_model2 = V2PolicyRuleRuleWithConditions(
+            **v2_policy_rule_rule_with_conditions_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert v2_policy_rule_rule_with_conditions_model == v2_policy_rule_rule_with_conditions_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_rule_rule_with_conditions_model_json2 = v2_policy_rule_rule_with_conditions_model.to_dict()
+        assert v2_policy_rule_rule_with_conditions_model_json2 == v2_policy_rule_rule_with_conditions_model_json
 
 
 # endregion

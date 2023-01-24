@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.62.0-a2a22f95-20221115-162524
+# IBM OpenAPI SDK Code Generator Version: 3.64.0-959a5845-20230112-195144
 
 """
 IAM Policy Management API
@@ -101,7 +101,10 @@ class IamPolicyManagementV1(BaseService):
         account_id, iam_id, access_group_id, type, service_type, sort, format and state.
         account_id is a required query parameter. Only policies that have the specified
         attributes and that the caller has read access to are returned. If the caller does
-        not have read access to any policies an empty array is returned.
+        not have read access to any policies an empty array is returned. If a policy was
+        created using the new beta v2/policies API, then the caller will see placeholder
+        information, e.g., "unsupported version" for iam_id, and a valid v2/policies href.
+        The caller should use this href to view the policy.
 
         :param str account_id: The account GUID in which the policies belong to.
         :param str accept_language: (optional) Language code for translations
@@ -142,7 +145,9 @@ class IamPolicyManagementV1(BaseService):
 
         if not account_id:
             raise ValueError('account_id must be provided')
-        headers = {'Accept-Language': accept_language}
+        headers = {
+            'Accept-Language': accept_language,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_policies'
         )
@@ -265,13 +270,21 @@ class IamPolicyManagementV1(BaseService):
         subjects = [convert_model(x) for x in subjects]
         roles = [convert_model(x) for x in roles]
         resources = [convert_model(x) for x in resources]
-        headers = {'Accept-Language': accept_language}
+        headers = {
+            'Accept-Language': accept_language,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_policy'
         )
         headers.update(sdk_headers)
 
-        data = {'type': type, 'subjects': subjects, 'roles': roles, 'resources': resources, 'description': description}
+        data = {
+            'type': type,
+            'subjects': subjects,
+            'roles': roles,
+            'resources': resources,
+            'description': description,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -287,7 +300,7 @@ class IamPolicyManagementV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def update_policy(
+    def replace_policy(
         self,
         policy_id: str,
         if_match: str,
@@ -371,13 +384,21 @@ class IamPolicyManagementV1(BaseService):
         subjects = [convert_model(x) for x in subjects]
         roles = [convert_model(x) for x in roles]
         resources = [convert_model(x) for x in resources]
-        headers = {'If-Match': if_match}
+        headers = {
+            'If-Match': if_match,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_policy'
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='replace_policy'
         )
         headers.update(sdk_headers)
 
-        data = {'type': type, 'subjects': subjects, 'roles': roles, 'resources': resources, 'description': description}
+        data = {
+            'type': type,
+            'subjects': subjects,
+            'roles': roles,
+            'resources': resources,
+            'description': description,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -465,7 +486,7 @@ class IamPolicyManagementV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def patch_policy(self, policy_id: str, if_match: str, *, state: str = None, **kwargs) -> DetailedResponse:
+    def update_policy_state(self, policy_id: str, if_match: str, *, state: str = None, **kwargs) -> DetailedResponse:
         """
         Restore a deleted policy by ID.
 
@@ -488,13 +509,17 @@ class IamPolicyManagementV1(BaseService):
             raise ValueError('policy_id must be provided')
         if not if_match:
             raise ValueError('if_match must be provided')
-        headers = {'If-Match': if_match}
+        headers = {
+            'If-Match': if_match,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='patch_policy'
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_policy_state'
         )
         headers.update(sdk_headers)
 
-        data = {'state': state}
+        data = {
+            'state': state,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -560,7 +585,9 @@ class IamPolicyManagementV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `RoleList` object
         """
 
-        headers = {'Accept-Language': accept_language}
+        headers = {
+            'Accept-Language': accept_language,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_roles'
         )
@@ -642,7 +669,9 @@ class IamPolicyManagementV1(BaseService):
             raise ValueError('account_id must be provided')
         if service_name is None:
             raise ValueError('service_name must be provided')
-        headers = {'Accept-Language': accept_language}
+        headers = {
+            'Accept-Language': accept_language,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_role'
         )
@@ -671,15 +700,8 @@ class IamPolicyManagementV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def update_role(
-        self,
-        role_id: str,
-        if_match: str,
-        *,
-        display_name: str = None,
-        description: str = None,
-        actions: List[str] = None,
-        **kwargs
+    def replace_role(
+        self, role_id: str, if_match: str, display_name: str, actions: List[str], *, description: str = None, **kwargs
     ) -> DetailedResponse:
         """
         Update a role.
@@ -692,12 +714,12 @@ class IamPolicyManagementV1(BaseService):
         :param str if_match: The revision number for updating a role and must match
                the ETag value of the existing role. The Etag can be retrieved using the
                GET /v2/roles/{role_id} API and looking at the ETag response header.
-        :param str display_name: (optional) The display name of the role that is
-               shown in the console.
-        :param str description: (optional) The description of the role.
-        :param List[str] actions: (optional) The actions of the role. Please refer
-               to [IAM roles and
+        :param str display_name: The display name of the role that is shown in the
+               console.
+        :param List[str] actions: The actions of the role. Please refer to [IAM
+               roles and
                actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
+        :param str description: (optional) The description of the role.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `CustomRole` object
@@ -707,13 +729,23 @@ class IamPolicyManagementV1(BaseService):
             raise ValueError('role_id must be provided')
         if not if_match:
             raise ValueError('if_match must be provided')
-        headers = {'If-Match': if_match}
+        if display_name is None:
+            raise ValueError('display_name must be provided')
+        if actions is None:
+            raise ValueError('actions must be provided')
+        headers = {
+            'If-Match': if_match,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_role'
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='replace_role'
         )
         headers.update(sdk_headers)
 
-        data = {'display_name': display_name, 'description': description, 'actions': actions}
+        data = {
+            'display_name': display_name,
+            'actions': actions,
+            'description': description,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -800,10 +832,10 @@ class IamPolicyManagementV1(BaseService):
         return response
 
     #########################
-    # v2Policies
+    # v2/Policies
     #########################
 
-    def v2_list_policies(
+    def list_v2_policies(
         self,
         account_id: str,
         *,
@@ -858,14 +890,16 @@ class IamPolicyManagementV1(BaseService):
                * `deleted` - returns non-active policies.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `V2PolicyList` object
+        :rtype: DetailedResponse with `dict` result representing a `V2PolicyCollection` object
         """
 
         if not account_id:
             raise ValueError('account_id must be provided')
-        headers = {'Accept-Language': accept_language}
+        headers = {
+            'Accept-Language': accept_language,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='v2_list_policies'
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_v2_policies'
         )
         headers.update(sdk_headers)
 
@@ -892,16 +926,16 @@ class IamPolicyManagementV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def v2_create_policy(
+    def create_v2_policy(
         self,
+        control: 'Control',
         type: str,
-        control: 'V2PolicyBaseControl',
         *,
         description: str = None,
-        subject: 'V2PolicyBaseSubject' = None,
-        resource: 'V2PolicyBaseResource' = None,
+        subject: 'V2PolicySubject' = None,
+        resource: 'V2PolicyResource' = None,
         pattern: str = None,
-        rule: 'V2PolicyBaseRule' = None,
+        rule: 'V2PolicyRule' = None,
         accept_language: str = None,
         **kwargs
     ) -> DetailedResponse:
@@ -918,24 +952,27 @@ class IamPolicyManagementV1(BaseService):
         **`iam_id`** subject attribute for assigning access for a user or service-id. Use
         the **`access_group_id`** subject attribute for assigning access for an access
         group. The roles must be a subset of a service's or the platform's supported
-        roles. The resource attributes must be a subset of a service's or the platform's
+        roles. For more information, see [IAM roles and
+        actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
+        The resource attributes must be a subset of a service's or the platform's
+        supported attributes. Caller should check with service, e.g.,
+        [VPC](https://cloud.ibm.com/docs/vpc?topic=vpc-resource-attributes), to view
         supported attributes. The policy resource must include either the
         **`serviceType`**, **`serviceName`**, **`resourceGroupId`** or
         **`service_group_id`** attribute and the **`accountId`** attribute.` The rule
         field can either specify single **`key`**, **`value`**, and **`operator`** or be
         set of **`conditions`** with a combination **`operator`**.  The possible
-        combination operator are **`and`** and **`or`**. The rule field has a maximum of 2
-        levels of nested **`conditions`**. The operator for a rule can be used to specify
-        a time based restriction (e.g., access only during business hours, during the
-        Monday-Friday work week). For example, a policy can grant access Monday-Friday,
-        9:00am-5:00pm using the following rule:
+        combination operator are **`and`** and **`or`**. The operator for a rule can be
+        used to specify a time-based condition (e.g., access only during business hours,
+        during the Monday-Friday work week). For example, a policy can grant access
+        Monday-Friday, 9:00am-5:00pm using the following rule:
         ```json
           "rule": {
             "operator": "and",
             "conditions": [{
               "key": "{{environment.attributes.day_of_week}}",
               "operator": "dayOfWeekAnyOf",
-              "value": [1, 2, 3, 4, 5]
+              "value": ["1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00"]
             },
               "key": "{{environment.attributes.current_time}}",
               "operator": "timeGreaterThanOrEquals",
@@ -951,19 +988,22 @@ class IamPolicyManagementV1(BaseService):
         ```
           'timeLessThan', 'timeLessThanOrEquals', 'timeGreaterThan',
         'timeGreaterThanOrEquals',
-          'dateLessThan', 'dateLessThanOrEquals', 'dateGreaterThan',
-        'dateGreaterThanOrEquals',
           'dateTimeLessThan', 'dateTimeLessThanOrEquals', 'dateTimeGreaterThan',
         'dateTimeGreaterThanOrEquals',
           'dayOfWeekEquals', 'dayOfWeekAnyOf',
-          'monthEquals', 'monthAnyOf',
-          'dayOfMonthEquals', 'dayOfMonthAnyOf'
-        ``` The pattern field can be coupled with a rule that matches the pattern. For the
+        ```
+        The pattern field that matches the rule is required when rule is provided. For the
         business hour rule example above, the **`pattern`** is
-        **`"time-based-restrictions:weekly"`**. The IAM Services group (`IAM`) is a subset
-        of account management services that includes the IAM platform services IAM
-        Identity, IAM Access Management, IAM Users Management, IAM Groups, and future IAM
-        services. If the subject is a locked service-id, the request will fail.
+        **`"time-based-conditions:weekly"`**. For more information, see [Time-based
+        conditions
+        operators](https://cloud.ibm.com/docs/account?topic=account-iam-condition-properties&interface=ui#policy-condition-properties)
+        and
+        [Limiting access with time-based
+        conditions](https://cloud.ibm.com/docs/account?topic=account-iam-time-based&interface=ui).
+        The IAM Services group (`IAM`) is a subset of account management services that
+        includes the IAM platform services IAM Identity, IAM Access Management, IAM Users
+        Management, IAM Groups, and future IAM services. If the subject is a locked
+        service-id, the request will fail.
         ### Attribute Operators
         Currently, only the `stringEquals`, `stringMatch`, and `stringEquals` operators
         are available. For more information, see [how to assign access by using wildcards
@@ -974,17 +1014,19 @@ class IamPolicyManagementV1(BaseService):
         locationvalues are supported by the service, they are validated against Global
         Catalog locations.
 
+        :param Control control: Specifies the type of access granted by the policy.
         :param str type: The policy type; either 'access' or 'authorization'.
-        :param V2PolicyBaseControl control: Specifies the type of access granted by
-               the policy.
-        :param str description: (optional) Customer-defined description.
-        :param V2PolicyBaseSubject subject: (optional) The subject attributes
-               associated with a policy.
-        :param V2PolicyBaseResource resource: (optional) The resource attributes
-               associated with a policy.
-        :param str pattern: (optional) Indicates pattern of rule.
-        :param V2PolicyBaseRule rule: (optional) Additional access conditions
-               associated with a policy.
+        :param str description: (optional) Allows the customer to use their own
+               words to record the purpose/context related to a policy.
+        :param V2PolicySubject subject: (optional) The subject attributes for whom
+               the policy grants access.
+        :param V2PolicyResource resource: (optional) The resource attributes to
+               which the policy grants access.
+        :param str pattern: (optional) Indicates pattern of rule, either
+               'time-based-conditions:once', 'time-based-conditions:weekly:all-day', or
+               'time-based-conditions:weekly:custom-hours'.
+        :param V2PolicyRule rule: (optional) Additional access conditions
+               associated with the policy.
         :param str accept_language: (optional) Language code for translations
                * `default` - English
                * `de` -  German (Standard)
@@ -1002,10 +1044,10 @@ class IamPolicyManagementV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `V2Policy` object
         """
 
-        if type is None:
-            raise ValueError('type must be provided')
         if control is None:
             raise ValueError('control must be provided')
+        if type is None:
+            raise ValueError('type must be provided')
         control = convert_model(control)
         if subject is not None:
             subject = convert_model(subject)
@@ -1013,15 +1055,17 @@ class IamPolicyManagementV1(BaseService):
             resource = convert_model(resource)
         if rule is not None:
             rule = convert_model(rule)
-        headers = {'Accept-Language': accept_language}
+        headers = {
+            'Accept-Language': accept_language,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='v2_create_policy'
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_v2_policy'
         )
         headers.update(sdk_headers)
 
         data = {
-            'type': type,
             'control': control,
+            'type': type,
             'description': description,
             'subject': subject,
             'resource': resource,
@@ -1043,18 +1087,18 @@ class IamPolicyManagementV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def v2_update_policy(
+    def replace_v2_policy(
         self,
-        policy_id: str,
+        id: str,
         if_match: str,
+        control: 'Control',
         type: str,
-        control: 'V2PolicyBaseControl',
         *,
         description: str = None,
-        subject: 'V2PolicyBaseSubject' = None,
-        resource: 'V2PolicyBaseResource' = None,
+        subject: 'V2PolicySubject' = None,
+        resource: 'V2PolicyResource' = None,
         pattern: str = None,
-        rule: 'V2PolicyBaseRule' = None,
+        rule: 'V2PolicyRule' = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -1068,23 +1112,26 @@ class IamPolicyManagementV1(BaseService):
         **`iam_id`** subject attribute for assigning access for a user or service-id. Use
         the **`access_group_id`** subject attribute for assigning access for an access
         group. The roles must be a subset of a service's or the platform's supported
-        roles. The resource attributes must be a subset of a service's or the platform's
+        roles. For more information, see [IAM roles and
+        actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
+        The resource attributes must be a subset of a service's or the platform's
+        supported attributes. Caller should check with service, e.g.,
+        [VPC](https://cloud.ibm.com/docs/vpc?topic=vpc-resource-attributes), to view
         supported attributes. The policy resource must include either the
         **`serviceType`**, **`serviceName`**,  or **`resourceGroupId`** attribute and the
         **`accountId`** attribute.` The rule field can either specify single **`key`**,
         **`value`**, and **`operator`** or be set of **`conditions`** with a combination
         **`operator`**.  The possible combination operator are **`and`** and **`or`**. The
-        rule field has a maximum of 2 levels of nested **`conditions`**. The operator for
-        a rule can be used to specify a time based restriction (e.g., access only during
-        business hours, during the Monday-Friday work week). For example, a policy can
-        grant access Monday-Friday, 9:00am-5:00pm using the following rule:
+        operator for a rule can be used to specify a time-based condition (e.g., access
+        only during business hours, during the Monday-Friday work week). For example, a
+        policy can grant access Monday-Friday, 9:00am-5:00pm using the following rule:
         ```json
           "rule": {
             "operator": "and",
             "conditions": [{
               "key": "{{environment.attributes.day_of_week}}",
               "operator": "dayOfWeekAnyOf",
-              "value": [1, 2, 3, 4, 5]
+              "value": ["1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00"]
             },
               "key": "{{environment.attributes.current_time}}",
               "operator": "timeGreaterThanOrEquals",
@@ -1100,17 +1147,17 @@ class IamPolicyManagementV1(BaseService):
         ```
           'timeLessThan', 'timeLessThanOrEquals', 'timeGreaterThan',
         'timeGreaterThanOrEquals',
-          'dateLessThan', 'dateLessThanOrEquals', 'dateGreaterThan',
-        'dateGreaterThanOrEquals',
           'dateTimeLessThan', 'dateTimeLessThanOrEquals', 'dateTimeGreaterThan',
         'dateTimeGreaterThanOrEquals',
           'dayOfWeekEquals', 'dayOfWeekAnyOf',
-          'monthEquals', 'monthAnyOf',
-          'dayOfMonthEquals', 'dayOfMonthAnyOf'
-        ``` The pattern field can be coupled with a rule that matches the pattern. For the
-        business hour rule example above, the **`pattern`** is
-        **`"time-based-restrictions:weekly"`**. If the subject is a locked service-id, the
-        request will fail.
+        ``` The pattern field that matches the rule is required when rule is provided. For
+        the business hour rule example above, the **`pattern`** is
+        **`"time-based-conditions:weekly"`**. For more information, see [Time-based
+        conditions
+        operators](https://cloud.ibm.com/docs/account?topic=account-iam-condition-properties&interface=ui#policy-condition-properties)
+        and
+        [Limiting access with time-based
+        conditions](https://cloud.ibm.com/docs/account?topic=account-iam-time-based&interface=ui).
         ### Attribute Operators
         Currently, only the `stringEquals`, `stringMatch`, and `stringEquals` operators
         are available. For more information, see [how to assign access by using wildcards
@@ -1121,35 +1168,37 @@ class IamPolicyManagementV1(BaseService):
         locationvalues are supported by the service, they are validated against Global
         Catalog locations.
 
-        :param str policy_id: The policy ID.
+        :param str id: The policy ID.
         :param str if_match: The revision number for updating a policy and must
                match the ETag value of the existing policy. The Etag can be retrieved
-               using the GET /v1/policies/{policy_id} API and looking at the ETag response
+               using the GET /v2/policies/{id} API and looking at the ETag response
                header.
+        :param Control control: Specifies the type of access granted by the policy.
         :param str type: The policy type; either 'access' or 'authorization'.
-        :param V2PolicyBaseControl control: Specifies the type of access granted by
-               the policy.
-        :param str description: (optional) Customer-defined description.
-        :param V2PolicyBaseSubject subject: (optional) The subject attributes
-               associated with a policy.
-        :param V2PolicyBaseResource resource: (optional) The resource attributes
-               associated with a policy.
-        :param str pattern: (optional) Indicates pattern of rule.
-        :param V2PolicyBaseRule rule: (optional) Additional access conditions
-               associated with a policy.
+        :param str description: (optional) Allows the customer to use their own
+               words to record the purpose/context related to a policy.
+        :param V2PolicySubject subject: (optional) The subject attributes for whom
+               the policy grants access.
+        :param V2PolicyResource resource: (optional) The resource attributes to
+               which the policy grants access.
+        :param str pattern: (optional) Indicates pattern of rule, either
+               'time-based-conditions:once', 'time-based-conditions:weekly:all-day', or
+               'time-based-conditions:weekly:custom-hours'.
+        :param V2PolicyRule rule: (optional) Additional access conditions
+               associated with the policy.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `V2Policy` object
         """
 
-        if not policy_id:
-            raise ValueError('policy_id must be provided')
+        if not id:
+            raise ValueError('id must be provided')
         if not if_match:
             raise ValueError('if_match must be provided')
-        if type is None:
-            raise ValueError('type must be provided')
         if control is None:
             raise ValueError('control must be provided')
+        if type is None:
+            raise ValueError('type must be provided')
         control = convert_model(control)
         if subject is not None:
             subject = convert_model(subject)
@@ -1157,15 +1206,17 @@ class IamPolicyManagementV1(BaseService):
             resource = convert_model(resource)
         if rule is not None:
             rule = convert_model(rule)
-        headers = {'If-Match': if_match}
+        headers = {
+            'If-Match': if_match,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='v2_update_policy'
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='replace_v2_policy'
         )
         headers.update(sdk_headers)
 
         data = {
-            'type': type,
             'control': control,
+            'type': type,
             'description': description,
             'subject': subject,
             'resource': resource,
@@ -1181,32 +1232,32 @@ class IamPolicyManagementV1(BaseService):
             del kwargs['headers']
         headers['Accept'] = 'application/json'
 
-        path_param_keys = ['policy_id']
-        path_param_values = self.encode_path_vars(policy_id)
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v2/policies/{policy_id}'.format(**path_param_dict)
+        url = '/v2/policies/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
 
         response = self.send(request, **kwargs)
         return response
 
-    def v2_get_policy(self, policy_id: str, **kwargs) -> DetailedResponse:
+    def get_v2_policy(self, id: str, **kwargs) -> DetailedResponse:
         """
         Retrieve a policy by ID.
 
         Retrieve a policy by providing a policy ID.
 
-        :param str policy_id: The policy ID.
+        :param str id: The policy ID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `V2Policy` object
         """
 
-        if not policy_id:
-            raise ValueError('policy_id must be provided')
+        if not id:
+            raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='v2_get_policy'
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_v2_policy'
         )
         headers.update(sdk_headers)
 
@@ -1215,16 +1266,16 @@ class IamPolicyManagementV1(BaseService):
             del kwargs['headers']
         headers['Accept'] = 'application/json'
 
-        path_param_keys = ['policy_id']
-        path_param_values = self.encode_path_vars(policy_id)
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v2/policies/{policy_id}'.format(**path_param_dict)
+        url = '/v2/policies/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
 
-    def v2_delete_policy(self, policy_id: str, **kwargs) -> DetailedResponse:
+    def delete_v2_policy(self, id: str, **kwargs) -> DetailedResponse:
         """
         Delete a policy by ID.
 
@@ -1232,17 +1283,17 @@ class IamPolicyManagementV1(BaseService):
         subject ID contains a locked service ID. If the subject of the policy is a locked
         service-id, the request will fail.
 
-        :param str policy_id: The policy ID.
+        :param str id: The policy ID.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse
         """
 
-        if not policy_id:
-            raise ValueError('policy_id must be provided')
+        if not id:
+            raise ValueError('id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='v2_delete_policy'
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_v2_policy'
         )
         headers.update(sdk_headers)
 
@@ -1250,10 +1301,10 @@ class IamPolicyManagementV1(BaseService):
             headers.update(kwargs.get('headers'))
             del kwargs['headers']
 
-        path_param_keys = ['policy_id']
-        path_param_values = self.encode_path_vars(policy_id)
+        path_param_keys = ['id']
+        path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v2/policies/{policy_id}'.format(**path_param_dict)
+        url = '/v2/policies/{id}'.format(**path_param_dict)
         request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
@@ -1319,9 +1370,9 @@ class ListPoliciesEnums:
         DELETED = 'deleted'
 
 
-class V2ListPoliciesEnums:
+class ListV2PoliciesEnums:
     """
-    Enums for v2_list_policies parameters.
+    Enums for list_v2_policies parameters.
     """
 
     class Type(str, Enum):
@@ -1368,34 +1419,34 @@ class V2ListPoliciesEnums:
 ##############################################################################
 
 
-class V2PolicyBaseControl:
+class Control:
     """
     Specifies the type of access granted by the policy.
 
-    :attr V2PolicyBaseControlGrant grant: Permission granted by the policy.
+    :attr V2PolicyGrant grant: Permission granted by the policy.
     """
 
-    def __init__(self, grant: 'V2PolicyBaseControlGrant') -> None:
+    def __init__(self, grant: 'V2PolicyGrant') -> None:
         """
-        Initialize a V2PolicyBaseControl object.
+        Initialize a Control object.
 
-        :param V2PolicyBaseControlGrant grant: Permission granted by the policy.
+        :param V2PolicyGrant grant: Permission granted by the policy.
         """
         self.grant = grant
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'V2PolicyBaseControl':
-        """Initialize a V2PolicyBaseControl object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'Control':
+        """Initialize a Control object from a json dictionary."""
         args = {}
         if 'grant' in _dict:
-            args['grant'] = V2PolicyBaseControlGrant.from_dict(_dict.get('grant'))
+            args['grant'] = V2PolicyGrant.from_dict(_dict.get('grant'))
         else:
-            raise ValueError('Required property \'grant\' not present in V2PolicyBaseControl JSON')
+            raise ValueError('Required property \'grant\' not present in Control JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a V2PolicyBaseControl object from a json dictionary."""
+        """Initialize a Control object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -1413,50 +1464,67 @@ class V2PolicyBaseControl:
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this V2PolicyBaseControl object."""
+        """Return a `str` version of this Control object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'V2PolicyBaseControl') -> bool:
+    def __eq__(self, other: 'Control') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'V2PolicyBaseControl') -> bool:
+    def __ne__(self, other: 'Control') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
 
-class V2PolicyBaseControlGrant:
+class ControlResponse:
     """
-    Permission granted by the policy.
+    ControlResponse.
 
-    :attr List[PolicyRole] roles: A set of role cloud resource names (CRNs) granted
-          by the policy.
     """
 
-    def __init__(self, roles: List['PolicyRole']) -> None:
+    def __init__(self) -> None:
         """
-        Initialize a V2PolicyBaseControlGrant object.
+        Initialize a ControlResponse object.
 
-        :param List[PolicyRole] roles: A set of role cloud resource names (CRNs)
-               granted by the policy.
+        """
+        msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
+            ", ".join(['ControlResponseControl', 'ControlResponseControlWithTranslatedRoles'])
+        )
+        raise Exception(msg)
+
+
+class GrantWithTranslatedRoles:
+    """
+    Permission granted by the policy with translated roles and additional role
+    information.
+
+    :attr List[RoleInDisplayFormat] roles: A set of roles granted by the policy.
+    """
+
+    def __init__(self, roles: List['RoleInDisplayFormat']) -> None:
+        """
+        Initialize a GrantWithTranslatedRoles object.
+
+        :param List[RoleInDisplayFormat] roles: A set of roles granted by the
+               policy.
         """
         self.roles = roles
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'V2PolicyBaseControlGrant':
-        """Initialize a V2PolicyBaseControlGrant object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'GrantWithTranslatedRoles':
+        """Initialize a GrantWithTranslatedRoles object from a json dictionary."""
         args = {}
         if 'roles' in _dict:
-            args['roles'] = [PolicyRole.from_dict(v) for v in _dict.get('roles')]
+            args['roles'] = [RoleInDisplayFormat.from_dict(v) for v in _dict.get('roles')]
         else:
-            raise ValueError('Required property \'roles\' not present in V2PolicyBaseControlGrant JSON')
+            raise ValueError('Required property \'roles\' not present in GrantWithTranslatedRoles JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a V2PolicyBaseControlGrant object from a json dictionary."""
+        """Initialize a GrantWithTranslatedRoles object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -1477,48 +1545,746 @@ class V2PolicyBaseControlGrant:
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this V2PolicyBaseControlGrant object."""
+        """Return a `str` version of this GrantWithTranslatedRoles object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'V2PolicyBaseControlGrant') -> bool:
+    def __eq__(self, other: 'GrantWithTranslatedRoles') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'V2PolicyBaseControlGrant') -> bool:
+    def __ne__(self, other: 'GrantWithTranslatedRoles') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
 
-class V2PolicyBaseResource:
+class PolicyRole:
     """
-    The resource attributes associated with a policy.
+    A role associated with a policy.
 
-    :attr List[V2PolicyAttribute] attributes: (optional) List of resource attributes
-          associated with policy/.
+    :attr str role_id: The role Cloud Resource Name (CRN) granted by the policy.
+          Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
+    :attr str display_name: (optional) The display name of the role.
+    :attr str description: (optional) The description of the role.
     """
 
-    def __init__(self, *, attributes: List['V2PolicyAttribute'] = None) -> None:
+    def __init__(self, role_id: str, *, display_name: str = None, description: str = None) -> None:
         """
-        Initialize a V2PolicyBaseResource object.
+        Initialize a PolicyRole object.
 
-        :param List[V2PolicyAttribute] attributes: (optional) List of resource
-               attributes associated with policy/.
+        :param str role_id: The role Cloud Resource Name (CRN) granted by the
+               policy. Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
         """
-        self.attributes = attributes
+        self.role_id = role_id
+        self.display_name = display_name
+        self.description = description
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'V2PolicyBaseResource':
-        """Initialize a V2PolicyBaseResource object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'PolicyRole':
+        """Initialize a PolicyRole object from a json dictionary."""
         args = {}
-        if 'attributes' in _dict:
-            args['attributes'] = [V2PolicyAttribute.from_dict(v) for v in _dict.get('attributes')]
+        if 'role_id' in _dict:
+            args['role_id'] = _dict.get('role_id')
+        else:
+            raise ValueError('Required property \'role_id\' not present in PolicyRole JSON')
+        if 'display_name' in _dict:
+            args['display_name'] = _dict.get('display_name')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a V2PolicyBaseResource object from a json dictionary."""
+        """Initialize a PolicyRole object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'role_id') and self.role_id is not None:
+            _dict['role_id'] = self.role_id
+        if hasattr(self, 'display_name') and getattr(self, 'display_name') is not None:
+            _dict['display_name'] = getattr(self, 'display_name')
+        if hasattr(self, 'description') and getattr(self, 'description') is not None:
+            _dict['description'] = getattr(self, 'description')
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this PolicyRole object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'PolicyRole') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'PolicyRole') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class RoleAction:
+    """
+    An action that can be performed by the policy subject when assigned role.
+
+    :attr str id: Unique identifier for action with structure
+          service.resource.action e.g., cbr.rule.read.
+    :attr str display_name: Service defined display name for action.
+    :attr str description: Service defined description for action.
+    """
+
+    def __init__(self, id: str, display_name: str, description: str) -> None:
+        """
+        Initialize a RoleAction object.
+
+        :param str id: Unique identifier for action with structure
+               service.resource.action e.g., cbr.rule.read.
+        :param str display_name: Service defined display name for action.
+        :param str description: Service defined description for action.
+        """
+        self.id = id
+        self.display_name = display_name
+        self.description = description
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RoleAction':
+        """Initialize a RoleAction object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in RoleAction JSON')
+        if 'display_name' in _dict:
+            args['display_name'] = _dict.get('display_name')
+        else:
+            raise ValueError('Required property \'display_name\' not present in RoleAction JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        else:
+            raise ValueError('Required property \'description\' not present in RoleAction JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RoleAction object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'display_name') and self.display_name is not None:
+            _dict['display_name'] = self.display_name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RoleAction object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RoleAction') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RoleAction') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class RoleInDisplayFormat:
+    """
+    A role associated with a policy with additional information (display_name,
+    description, actions) when `format=display`.
+
+    :attr str role_id: The role Cloud Resource Name (CRN) granted by the policy.
+          Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
+    :attr str display_name: (optional) The service defined (or user defined if a
+          custom role) display name of the role.
+    :attr str description: (optional) The service defined (or user defined if a
+          custom role) description of the role.
+    :attr List[RoleAction] actions: The actions of the role. Please refer to [IAM
+          roles and
+          actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
+    """
+
+    def __init__(
+        self, role_id: str, actions: List['RoleAction'], *, display_name: str = None, description: str = None
+    ) -> None:
+        """
+        Initialize a RoleInDisplayFormat object.
+
+        :param str role_id: The role Cloud Resource Name (CRN) granted by the
+               policy. Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
+        :param List[RoleAction] actions: The actions of the role. Please refer to
+               [IAM roles and
+               actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
+        """
+        self.role_id = role_id
+        self.display_name = display_name
+        self.description = description
+        self.actions = actions
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RoleInDisplayFormat':
+        """Initialize a RoleInDisplayFormat object from a json dictionary."""
+        args = {}
+        if 'role_id' in _dict:
+            args['role_id'] = _dict.get('role_id')
+        else:
+            raise ValueError('Required property \'role_id\' not present in RoleInDisplayFormat JSON')
+        if 'display_name' in _dict:
+            args['display_name'] = _dict.get('display_name')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'actions' in _dict:
+            args['actions'] = [RoleAction.from_dict(v) for v in _dict.get('actions')]
+        else:
+            raise ValueError('Required property \'actions\' not present in RoleInDisplayFormat JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RoleInDisplayFormat object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'role_id') and self.role_id is not None:
+            _dict['role_id'] = self.role_id
+        if hasattr(self, 'display_name') and getattr(self, 'display_name') is not None:
+            _dict['display_name'] = getattr(self, 'display_name')
+        if hasattr(self, 'description') and getattr(self, 'description') is not None:
+            _dict['description'] = getattr(self, 'description')
+        if hasattr(self, 'actions') and self.actions is not None:
+            actions_list = []
+            for v in self.actions:
+                if isinstance(v, dict):
+                    actions_list.append(v)
+                else:
+                    actions_list.append(v.to_dict())
+            _dict['actions'] = actions_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RoleInDisplayFormat object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RoleInDisplayFormat') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RoleInDisplayFormat') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class RuleAttribute:
+    """
+    Rule that specifies additional access granted (e.g., time-based condition).
+
+    :attr str key: The name of an attribute.
+    :attr str operator: The operator of an attribute.
+    :attr object value: The value of an rule or resource attribute; can be boolean
+          or string for resource attribute. Can be a string or an array of strings (e.g.,
+          array of days to permit access) for rule attribute.
+    """
+
+    def __init__(self, key: str, operator: str, value: object) -> None:
+        """
+        Initialize a RuleAttribute object.
+
+        :param str key: The name of an attribute.
+        :param str operator: The operator of an attribute.
+        :param object value: The value of an rule or resource attribute; can be
+               boolean or string for resource attribute. Can be a string or an array of
+               strings (e.g., array of days to permit access) for rule attribute.
+        """
+        self.key = key
+        self.operator = operator
+        self.value = value
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'RuleAttribute':
+        """Initialize a RuleAttribute object from a json dictionary."""
+        args = {}
+        if 'key' in _dict:
+            args['key'] = _dict.get('key')
+        else:
+            raise ValueError('Required property \'key\' not present in RuleAttribute JSON')
+        if 'operator' in _dict:
+            args['operator'] = _dict.get('operator')
+        else:
+            raise ValueError('Required property \'operator\' not present in RuleAttribute JSON')
+        if 'value' in _dict:
+            args['value'] = _dict.get('value')
+        else:
+            raise ValueError('Required property \'value\' not present in RuleAttribute JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a RuleAttribute object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'key') and self.key is not None:
+            _dict['key'] = self.key
+        if hasattr(self, 'operator') and self.operator is not None:
+            _dict['operator'] = self.operator
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this RuleAttribute object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'RuleAttribute') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'RuleAttribute') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class OperatorEnum(str, Enum):
+        """
+        The operator of an attribute.
+        """
+
+        TIMELESSTHAN = 'timeLessThan'
+        TIMELESSTHANOREQUALS = 'timeLessThanOrEquals'
+        TIMEGREATERTHAN = 'timeGreaterThan'
+        TIMEGREATERTHANOREQUALS = 'timeGreaterThanOrEquals'
+        DATETIMELESSTHAN = 'dateTimeLessThan'
+        DATETIMELESSTHANOREQUALS = 'dateTimeLessThanOrEquals'
+        DATETIMEGREATERTHAN = 'dateTimeGreaterThan'
+        DATETIMEGREATERTHANOREQUALS = 'dateTimeGreaterThanOrEquals'
+        DAYOFWEEKEQUALS = 'dayOfWeekEquals'
+        DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
+
+
+class V2Policy:
+    """
+    The core set of properties associated with the policy.
+
+    :attr str type: The policy type; either 'access' or 'authorization'.
+    :attr str description: (optional) Allows the customer to use their own words to
+          record the purpose/context related to a policy.
+    :attr V2PolicySubject subject: (optional) The subject attributes for whom the
+          policy grants access.
+    :attr V2PolicyResource resource: (optional) The resource attributes to which the
+          policy grants access.
+    :attr str pattern: (optional) Indicates pattern of rule, either
+          'time-based-conditions:once', 'time-based-conditions:weekly:all-day', or
+          'time-based-conditions:weekly:custom-hours'.
+    :attr V2PolicyRule rule: (optional) Additional access conditions associated with
+          the policy.
+    :attr str id: (optional) The policy ID.
+    :attr str href: (optional) The href URL that links to the policies API by policy
+          ID.
+    :attr ControlResponse control:
+    :attr datetime created_at: (optional) The UTC timestamp when the policy was
+          created.
+    :attr str created_by_id: (optional) The iam ID of the entity that created the
+          policy.
+    :attr datetime last_modified_at: (optional) The UTC timestamp when the policy
+          was last modified.
+    :attr str last_modified_by_id: (optional) The iam ID of the entity that last
+          modified the policy.
+    :attr str state: The policy state, either 'deleted' or 'active'.
+    :attr str last_permit_at: (optional) The optional last permit time of policy,
+          when passing query parameter format=include_last_permit.
+    :attr int last_permit_frequency: (optional) The optional count of times that
+          policy has provided a permit, when passing query parameter
+          format=include_last_permit.
+    """
+
+    def __init__(
+        self,
+        type: str,
+        control: 'ControlResponse',
+        state: str,
+        *,
+        description: str = None,
+        subject: 'V2PolicySubject' = None,
+        resource: 'V2PolicyResource' = None,
+        pattern: str = None,
+        rule: 'V2PolicyRule' = None,
+        id: str = None,
+        href: str = None,
+        created_at: datetime = None,
+        created_by_id: str = None,
+        last_modified_at: datetime = None,
+        last_modified_by_id: str = None,
+        last_permit_at: str = None,
+        last_permit_frequency: int = None
+    ) -> None:
+        """
+        Initialize a V2Policy object.
+
+        :param str type: The policy type; either 'access' or 'authorization'.
+        :param ControlResponse control:
+        :param str state: The policy state, either 'deleted' or 'active'.
+        :param str description: (optional) Allows the customer to use their own
+               words to record the purpose/context related to a policy.
+        :param V2PolicySubject subject: (optional) The subject attributes for whom
+               the policy grants access.
+        :param V2PolicyResource resource: (optional) The resource attributes to
+               which the policy grants access.
+        :param str pattern: (optional) Indicates pattern of rule, either
+               'time-based-conditions:once', 'time-based-conditions:weekly:all-day', or
+               'time-based-conditions:weekly:custom-hours'.
+        :param V2PolicyRule rule: (optional) Additional access conditions
+               associated with the policy.
+        :param str last_permit_at: (optional) The optional last permit time of
+               policy, when passing query parameter format=include_last_permit.
+        :param int last_permit_frequency: (optional) The optional count of times
+               that policy has provided a permit, when passing query parameter
+               format=include_last_permit.
+        """
+        self.type = type
+        self.description = description
+        self.subject = subject
+        self.resource = resource
+        self.pattern = pattern
+        self.rule = rule
+        self.id = id
+        self.href = href
+        self.control = control
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+        self.state = state
+        self.last_permit_at = last_permit_at
+        self.last_permit_frequency = last_permit_frequency
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'V2Policy':
+        """Initialize a V2Policy object from a json dictionary."""
+        args = {}
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in V2Policy JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'subject' in _dict:
+            args['subject'] = V2PolicySubject.from_dict(_dict.get('subject'))
+        if 'resource' in _dict:
+            args['resource'] = V2PolicyResource.from_dict(_dict.get('resource'))
+        if 'pattern' in _dict:
+            args['pattern'] = _dict.get('pattern')
+        if 'rule' in _dict:
+            args['rule'] = _dict.get('rule')
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        if 'control' in _dict:
+            args['control'] = _dict.get('control')
+        else:
+            raise ValueError('Required property \'control\' not present in V2Policy JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if 'state' in _dict:
+            args['state'] = _dict.get('state')
+        else:
+            raise ValueError('Required property \'state\' not present in V2Policy JSON')
+        if 'last_permit_at' in _dict:
+            args['last_permit_at'] = _dict.get('last_permit_at')
+        if 'last_permit_frequency' in _dict:
+            args['last_permit_frequency'] = _dict.get('last_permit_frequency')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a V2Policy object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'subject') and self.subject is not None:
+            if isinstance(self.subject, dict):
+                _dict['subject'] = self.subject
+            else:
+                _dict['subject'] = self.subject.to_dict()
+        if hasattr(self, 'resource') and self.resource is not None:
+            if isinstance(self.resource, dict):
+                _dict['resource'] = self.resource
+            else:
+                _dict['resource'] = self.resource.to_dict()
+        if hasattr(self, 'pattern') and self.pattern is not None:
+            _dict['pattern'] = self.pattern
+        if hasattr(self, 'rule') and self.rule is not None:
+            if isinstance(self.rule, dict):
+                _dict['rule'] = self.rule
+            else:
+                _dict['rule'] = self.rule.to_dict()
+        if hasattr(self, 'id') and getattr(self, 'id') is not None:
+            _dict['id'] = getattr(self, 'id')
+        if hasattr(self, 'href') and getattr(self, 'href') is not None:
+            _dict['href'] = getattr(self, 'href')
+        if hasattr(self, 'control') and self.control is not None:
+            if isinstance(self.control, dict):
+                _dict['control'] = self.control
+            else:
+                _dict['control'] = self.control.to_dict()
+        if hasattr(self, 'created_at') and getattr(self, 'created_at') is not None:
+            _dict['created_at'] = datetime_to_string(getattr(self, 'created_at'))
+        if hasattr(self, 'created_by_id') and getattr(self, 'created_by_id') is not None:
+            _dict['created_by_id'] = getattr(self, 'created_by_id')
+        if hasattr(self, 'last_modified_at') and getattr(self, 'last_modified_at') is not None:
+            _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
+        if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
+            _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
+        if hasattr(self, 'state') and self.state is not None:
+            _dict['state'] = self.state
+        if hasattr(self, 'last_permit_at') and self.last_permit_at is not None:
+            _dict['last_permit_at'] = self.last_permit_at
+        if hasattr(self, 'last_permit_frequency') and self.last_permit_frequency is not None:
+            _dict['last_permit_frequency'] = self.last_permit_frequency
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this V2Policy object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'V2Policy') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'V2Policy') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        The policy type; either 'access' or 'authorization'.
+        """
+
+        ACCESS = 'access'
+        AUTHORIZATION = 'authorization'
+
+    class StateEnum(str, Enum):
+        """
+        The policy state, either 'deleted' or 'active'.
+        """
+
+        ACTIVE = 'active'
+        DELETED = 'deleted'
+
+
+class V2PolicyCollection:
+    """
+    A collection of policies.
+
+    :attr List[V2Policy] policies: (optional) List of policies.
+    """
+
+    def __init__(self, *, policies: List['V2Policy'] = None) -> None:
+        """
+        Initialize a V2PolicyCollection object.
+
+        :param List[V2Policy] policies: (optional) List of policies.
+        """
+        self.policies = policies
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'V2PolicyCollection':
+        """Initialize a V2PolicyCollection object from a json dictionary."""
+        args = {}
+        if 'policies' in _dict:
+            args['policies'] = [V2Policy.from_dict(v) for v in _dict.get('policies')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a V2PolicyCollection object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'policies') and self.policies is not None:
+            policies_list = []
+            for v in self.policies:
+                if isinstance(v, dict):
+                    policies_list.append(v)
+                else:
+                    policies_list.append(v.to_dict())
+            _dict['policies'] = policies_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this V2PolicyCollection object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'V2PolicyCollection') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'V2PolicyCollection') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class V2PolicyGrant:
+    """
+    Permission granted by the policy.
+
+    :attr List[PolicyRole] roles: A set of role cloud resource names (CRNs) granted
+          by the policy.
+    """
+
+    def __init__(self, roles: List['PolicyRole']) -> None:
+        """
+        Initialize a V2PolicyGrant object.
+
+        :param List[PolicyRole] roles: A set of role cloud resource names (CRNs)
+               granted by the policy.
+        """
+        self.roles = roles
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'V2PolicyGrant':
+        """Initialize a V2PolicyGrant object from a json dictionary."""
+        args = {}
+        if 'roles' in _dict:
+            args['roles'] = [PolicyRole.from_dict(v) for v in _dict.get('roles')]
+        else:
+            raise ValueError('Required property \'roles\' not present in V2PolicyGrant JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a V2PolicyGrant object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'roles') and self.roles is not None:
+            roles_list = []
+            for v in self.roles:
+                if isinstance(v, dict):
+                    roles_list.append(v)
+                else:
+                    roles_list.append(v.to_dict())
+            _dict['roles'] = roles_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this V2PolicyGrant object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'V2PolicyGrant') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'V2PolicyGrant') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class V2PolicyResource:
+    """
+    The resource attributes to which the policy grants access.
+
+    :attr List[V2PolicyResourceAttribute] attributes: List of resource attributes to
+          which the policy grants access.
+    :attr List[V2PolicyResourceTag] tags: (optional) Optional list of resource tags
+          to which the policy grants access.
+    """
+
+    def __init__(
+        self, attributes: List['V2PolicyResourceAttribute'], *, tags: List['V2PolicyResourceTag'] = None
+    ) -> None:
+        """
+        Initialize a V2PolicyResource object.
+
+        :param List[V2PolicyResourceAttribute] attributes: List of resource
+               attributes to which the policy grants access.
+        :param List[V2PolicyResourceTag] tags: (optional) Optional list of resource
+               tags to which the policy grants access.
+        """
+        self.attributes = attributes
+        self.tags = tags
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'V2PolicyResource':
+        """Initialize a V2PolicyResource object from a json dictionary."""
+        args = {}
+        if 'attributes' in _dict:
+            args['attributes'] = [V2PolicyResourceAttribute.from_dict(v) for v in _dict.get('attributes')]
+        else:
+            raise ValueError('Required property \'attributes\' not present in V2PolicyResource JSON')
+        if 'tags' in _dict:
+            args['tags'] = [V2PolicyResourceTag.from_dict(v) for v in _dict.get('tags')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a V2PolicyResource object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -1532,6 +2298,14 @@ class V2PolicyBaseResource:
                 else:
                     attributes_list.append(v.to_dict())
             _dict['attributes'] = attributes_list
+        if hasattr(self, 'tags') and self.tags is not None:
+            tags_list = []
+            for v in self.tags:
+                if isinstance(v, dict):
+                    tags_list.append(v)
+                else:
+                    tags_list.append(v.to_dict())
+            _dict['tags'] = tags_list
         return _dict
 
     def _to_dict(self):
@@ -1539,65 +2313,236 @@ class V2PolicyBaseResource:
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this V2PolicyBaseResource object."""
+        """Return a `str` version of this V2PolicyResource object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'V2PolicyBaseResource') -> bool:
+    def __eq__(self, other: 'V2PolicyResource') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'V2PolicyBaseResource') -> bool:
+    def __ne__(self, other: 'V2PolicyResource') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
 
-class V2PolicyBaseRule:
+class V2PolicyResourceAttribute:
     """
-    Additional access conditions associated with a policy.
+    Resource attribute to which the policy grants access.
+
+    :attr str key: The name of a resource attribute.
+    :attr str operator: The operator of an attribute.
+    :attr object value: The value of an rule or resource attribute; can be boolean
+          or string for resource attribute. Can be a string or an array of strings (e.g.,
+          array of days to permit access) for rule attribute.
+    """
+
+    def __init__(self, key: str, operator: str, value: object) -> None:
+        """
+        Initialize a V2PolicyResourceAttribute object.
+
+        :param str key: The name of a resource attribute.
+        :param str operator: The operator of an attribute.
+        :param object value: The value of an rule or resource attribute; can be
+               boolean or string for resource attribute. Can be a string or an array of
+               strings (e.g., array of days to permit access) for rule attribute.
+        """
+        self.key = key
+        self.operator = operator
+        self.value = value
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'V2PolicyResourceAttribute':
+        """Initialize a V2PolicyResourceAttribute object from a json dictionary."""
+        args = {}
+        if 'key' in _dict:
+            args['key'] = _dict.get('key')
+        else:
+            raise ValueError('Required property \'key\' not present in V2PolicyResourceAttribute JSON')
+        if 'operator' in _dict:
+            args['operator'] = _dict.get('operator')
+        else:
+            raise ValueError('Required property \'operator\' not present in V2PolicyResourceAttribute JSON')
+        if 'value' in _dict:
+            args['value'] = _dict.get('value')
+        else:
+            raise ValueError('Required property \'value\' not present in V2PolicyResourceAttribute JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a V2PolicyResourceAttribute object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'key') and self.key is not None:
+            _dict['key'] = self.key
+        if hasattr(self, 'operator') and self.operator is not None:
+            _dict['operator'] = self.operator
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this V2PolicyResourceAttribute object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'V2PolicyResourceAttribute') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'V2PolicyResourceAttribute') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class OperatorEnum(str, Enum):
+        """
+        The operator of an attribute.
+        """
+
+        STRINGEQUALS = 'stringEquals'
+        STRINGEXISTS = 'stringExists'
+        STRINGMATCH = 'stringMatch'
+
+
+class V2PolicyResourceTag:
+    """
+    A tag associated with a resource.
+
+    :attr str key: The name of an access management tag.
+    :attr str value: The value of an access management tag.
+    :attr str operator: The operator of an access management tag.
+    """
+
+    def __init__(self, key: str, value: str, operator: str) -> None:
+        """
+        Initialize a V2PolicyResourceTag object.
+
+        :param str key: The name of an access management tag.
+        :param str value: The value of an access management tag.
+        :param str operator: The operator of an access management tag.
+        """
+        self.key = key
+        self.value = value
+        self.operator = operator
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'V2PolicyResourceTag':
+        """Initialize a V2PolicyResourceTag object from a json dictionary."""
+        args = {}
+        if 'key' in _dict:
+            args['key'] = _dict.get('key')
+        else:
+            raise ValueError('Required property \'key\' not present in V2PolicyResourceTag JSON')
+        if 'value' in _dict:
+            args['value'] = _dict.get('value')
+        else:
+            raise ValueError('Required property \'value\' not present in V2PolicyResourceTag JSON')
+        if 'operator' in _dict:
+            args['operator'] = _dict.get('operator')
+        else:
+            raise ValueError('Required property \'operator\' not present in V2PolicyResourceTag JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a V2PolicyResourceTag object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'key') and self.key is not None:
+            _dict['key'] = self.key
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        if hasattr(self, 'operator') and self.operator is not None:
+            _dict['operator'] = self.operator
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this V2PolicyResourceTag object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'V2PolicyResourceTag') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'V2PolicyResourceTag') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class OperatorEnum(str, Enum):
+        """
+        The operator of an access management tag.
+        """
+
+        STRINGEQUALS = 'stringEquals'
+        STRINGMATCH = 'stringMatch'
+
+
+class V2PolicyRule:
+    """
+    Additional access conditions associated with the policy.
 
     """
 
     def __init__(self) -> None:
         """
-        Initialize a V2PolicyBaseRule object.
+        Initialize a V2PolicyRule object.
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-            ", ".join(['V2PolicyBaseRuleV2PolicyAttribute', 'V2PolicyBaseRuleV2RuleWithConditions'])
+            ", ".join(['V2PolicyRuleRuleAttribute', 'V2PolicyRuleRuleWithConditions'])
         )
         raise Exception(msg)
 
 
-class V2PolicyBaseSubject:
+class V2PolicySubject:
     """
-    The subject attributes associated with a policy.
+    The subject attributes for whom the policy grants access.
 
-    :attr List[V2PolicyAttribute] attributes: (optional) List of subject attributes
+    :attr List[V2PolicySubjectAttribute] attributes: List of subject attributes
           associated with policy/.
     """
 
-    def __init__(self, *, attributes: List['V2PolicyAttribute'] = None) -> None:
+    def __init__(self, attributes: List['V2PolicySubjectAttribute']) -> None:
         """
-        Initialize a V2PolicyBaseSubject object.
+        Initialize a V2PolicySubject object.
 
-        :param List[V2PolicyAttribute] attributes: (optional) List of subject
+        :param List[V2PolicySubjectAttribute] attributes: List of subject
                attributes associated with policy/.
         """
         self.attributes = attributes
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'V2PolicyBaseSubject':
-        """Initialize a V2PolicyBaseSubject object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'V2PolicySubject':
+        """Initialize a V2PolicySubject object from a json dictionary."""
         args = {}
         if 'attributes' in _dict:
-            args['attributes'] = [V2PolicyAttribute.from_dict(v) for v in _dict.get('attributes')]
+            args['attributes'] = [V2PolicySubjectAttribute.from_dict(v) for v in _dict.get('attributes')]
+        else:
+            raise ValueError('Required property \'attributes\' not present in V2PolicySubject JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a V2PolicyBaseSubject object from a json dictionary."""
+        """Initialize a V2PolicySubject object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -1618,18 +2563,102 @@ class V2PolicyBaseSubject:
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this V2PolicyBaseSubject object."""
+        """Return a `str` version of this V2PolicySubject object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'V2PolicyBaseSubject') -> bool:
+    def __eq__(self, other: 'V2PolicySubject') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'V2PolicyBaseSubject') -> bool:
+    def __ne__(self, other: 'V2PolicySubject') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+
+class V2PolicySubjectAttribute:
+    """
+    Subject attribute for whom the policy grants access.
+
+    :attr str key: The name of a subject attribute, e.g., iam_id, access_group_id.
+    :attr str operator: The operator of an attribute.
+    :attr str value: The value of the ID of the subject, e.g., service ID, access
+          group ID, IAM ID.
+    """
+
+    def __init__(self, key: str, operator: str, value: str) -> None:
+        """
+        Initialize a V2PolicySubjectAttribute object.
+
+        :param str key: The name of a subject attribute, e.g., iam_id,
+               access_group_id.
+        :param str operator: The operator of an attribute.
+        :param str value: The value of the ID of the subject, e.g., service ID,
+               access group ID, IAM ID.
+        """
+        self.key = key
+        self.operator = operator
+        self.value = value
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'V2PolicySubjectAttribute':
+        """Initialize a V2PolicySubjectAttribute object from a json dictionary."""
+        args = {}
+        if 'key' in _dict:
+            args['key'] = _dict.get('key')
+        else:
+            raise ValueError('Required property \'key\' not present in V2PolicySubjectAttribute JSON')
+        if 'operator' in _dict:
+            args['operator'] = _dict.get('operator')
+        else:
+            raise ValueError('Required property \'operator\' not present in V2PolicySubjectAttribute JSON')
+        if 'value' in _dict:
+            args['value'] = _dict.get('value')
+        else:
+            raise ValueError('Required property \'value\' not present in V2PolicySubjectAttribute JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a V2PolicySubjectAttribute object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'key') and self.key is not None:
+            _dict['key'] = self.key
+        if hasattr(self, 'operator') and self.operator is not None:
+            _dict['operator'] = self.operator
+        if hasattr(self, 'value') and self.value is not None:
+            _dict['value'] = self.value
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this V2PolicySubjectAttribute object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'V2PolicySubjectAttribute') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'V2PolicySubjectAttribute') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class OperatorEnum(str, Enum):
+        """
+        The operator of an attribute.
+        """
+
+        STRINGEQUALS = 'stringEquals'
 
 
 class CustomRole:
@@ -1637,18 +2666,17 @@ class CustomRole:
     An additional set of properties associated with a role.
 
     :attr str id: (optional) The role ID. Composed of hexadecimal characters.
-    :attr str display_name: (optional) The display name of the role that is shown in
-          the console.
+    :attr str display_name: The display name of the role that is shown in the
+          console.
     :attr str description: (optional) The description of the role.
-    :attr List[str] actions: (optional) The actions of the role. Please refer to
-          [IAM roles and
+    :attr List[str] actions: The actions of the role. Please refer to [IAM roles and
           actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
     :attr str crn: (optional) The role Cloud Resource Name (CRN). Example CRN:
           'crn:v1:ibmcloud:public:iam-access-management::a/exampleAccountId::customRole:ExampleRoleName'.
-    :attr str name: (optional) The name of the role that is used in the CRN. Can
-          only be alphanumeric and has to be capitalized.
-    :attr str account_id: (optional) The account GUID.
-    :attr str service_name: (optional) The service name.
+    :attr str name: The name of the role that is used in the CRN. Can only be
+          alphanumeric and has to be capitalized.
+    :attr str account_id: The account GUID.
+    :attr str service_name: The service name.
     :attr datetime created_at: (optional) The UTC timestamp when the role was
           created.
     :attr str created_by_id: (optional) The iam ID of the entity that created the
@@ -1662,15 +2690,15 @@ class CustomRole:
 
     def __init__(
         self,
+        display_name: str,
+        actions: List[str],
+        name: str,
+        account_id: str,
+        service_name: str,
         *,
         id: str = None,
-        display_name: str = None,
         description: str = None,
-        actions: List[str] = None,
         crn: str = None,
-        name: str = None,
-        account_id: str = None,
-        service_name: str = None,
         created_at: datetime = None,
         created_by_id: str = None,
         last_modified_at: datetime = None,
@@ -1680,16 +2708,16 @@ class CustomRole:
         """
         Initialize a CustomRole object.
 
-        :param str display_name: (optional) The display name of the role that is
-               shown in the console.
-        :param str description: (optional) The description of the role.
-        :param List[str] actions: (optional) The actions of the role. Please refer
-               to [IAM roles and
+        :param str display_name: The display name of the role that is shown in the
+               console.
+        :param List[str] actions: The actions of the role. Please refer to [IAM
+               roles and
                actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
-        :param str name: (optional) The name of the role that is used in the CRN.
-               Can only be alphanumeric and has to be capitalized.
-        :param str account_id: (optional) The account GUID.
-        :param str service_name: (optional) The service name.
+        :param str name: The name of the role that is used in the CRN. Can only be
+               alphanumeric and has to be capitalized.
+        :param str account_id: The account GUID.
+        :param str service_name: The service name.
+        :param str description: (optional) The description of the role.
         """
         self.id = id
         self.display_name = display_name
@@ -1713,18 +2741,28 @@ class CustomRole:
             args['id'] = _dict.get('id')
         if 'display_name' in _dict:
             args['display_name'] = _dict.get('display_name')
+        else:
+            raise ValueError('Required property \'display_name\' not present in CustomRole JSON')
         if 'description' in _dict:
             args['description'] = _dict.get('description')
         if 'actions' in _dict:
             args['actions'] = _dict.get('actions')
+        else:
+            raise ValueError('Required property \'actions\' not present in CustomRole JSON')
         if 'crn' in _dict:
             args['crn'] = _dict.get('crn')
         if 'name' in _dict:
             args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in CustomRole JSON')
         if 'account_id' in _dict:
             args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in CustomRole JSON')
         if 'service_name' in _dict:
             args['service_name'] = _dict.get('service_name')
+        else:
+            raise ValueError('Required property \'service_name\' not present in CustomRole JSON')
         if 'created_at' in _dict:
             args['created_at'] = string_to_datetime(_dict.get('created_at'))
         if 'created_by_id' in _dict:
@@ -1797,14 +2835,12 @@ class Policy:
     The core set of properties associated with a policy.
 
     :attr str id: (optional) The policy ID.
-    :attr str type: (optional) The policy type; either 'access' or 'authorization'.
+    :attr str type: The policy type; either 'access' or 'authorization'.
     :attr str description: (optional) Customer-defined description.
-    :attr List[PolicySubject] subjects: (optional) The subjects associated with a
-          policy.
-    :attr List[PolicyRole] roles: (optional) A set of role cloud resource names
-          (CRNs) granted by the policy.
-    :attr List[PolicyResource] resources: (optional) The resources associated with a
-          policy.
+    :attr List[PolicySubject] subjects: The subjects associated with a policy.
+    :attr List[PolicyRole] roles: A set of role cloud resource names (CRNs) granted
+          by the policy.
+    :attr List[PolicyResource] resources: The resources associated with a policy.
     :attr str href: (optional) The href link back to the policy.
     :attr datetime created_at: (optional) The UTC timestamp when the policy was
           created.
@@ -1819,13 +2855,13 @@ class Policy:
 
     def __init__(
         self,
+        type: str,
+        subjects: List['PolicySubject'],
+        roles: List['PolicyRole'],
+        resources: List['PolicyResource'],
         *,
         id: str = None,
-        type: str = None,
         description: str = None,
-        subjects: List['PolicySubject'] = None,
-        roles: List['PolicyRole'] = None,
-        resources: List['PolicyResource'] = None,
         href: str = None,
         created_at: datetime = None,
         created_by_id: str = None,
@@ -1836,15 +2872,13 @@ class Policy:
         """
         Initialize a Policy object.
 
-        :param str type: (optional) The policy type; either 'access' or
-               'authorization'.
+        :param str type: The policy type; either 'access' or 'authorization'.
+        :param List[PolicySubject] subjects: The subjects associated with a policy.
+        :param List[PolicyRole] roles: A set of role cloud resource names (CRNs)
+               granted by the policy.
+        :param List[PolicyResource] resources: The resources associated with a
+               policy.
         :param str description: (optional) Customer-defined description.
-        :param List[PolicySubject] subjects: (optional) The subjects associated
-               with a policy.
-        :param List[PolicyRole] roles: (optional) A set of role cloud resource
-               names (CRNs) granted by the policy.
-        :param List[PolicyResource] resources: (optional) The resources associated
-               with a policy.
         :param str state: (optional) The policy state.
         """
         self.id = id
@@ -1868,14 +2902,22 @@ class Policy:
             args['id'] = _dict.get('id')
         if 'type' in _dict:
             args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in Policy JSON')
         if 'description' in _dict:
             args['description'] = _dict.get('description')
         if 'subjects' in _dict:
             args['subjects'] = [PolicySubject.from_dict(v) for v in _dict.get('subjects')]
+        else:
+            raise ValueError('Required property \'subjects\' not present in Policy JSON')
         if 'roles' in _dict:
             args['roles'] = [PolicyRole.from_dict(v) for v in _dict.get('roles')]
+        else:
+            raise ValueError('Required property \'roles\' not present in Policy JSON')
         if 'resources' in _dict:
             args['resources'] = [PolicyResource.from_dict(v) for v in _dict.get('resources')]
+        else:
+            raise ValueError('Required property \'resources\' not present in Policy JSON')
         if 'href' in _dict:
             args['href'] = _dict.get('href')
         if 'created_at' in _dict:
@@ -2104,76 +3146,6 @@ class PolicyResource:
         return not self == other
 
 
-class PolicyRole:
-    """
-    A role associated with a policy.
-
-    :attr str role_id: The role Cloud Resource Name (CRN) granted by the policy.
-          Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
-    :attr str display_name: (optional) The display name of the role.
-    :attr str description: (optional) The description of the role.
-    """
-
-    def __init__(self, role_id: str, *, display_name: str = None, description: str = None) -> None:
-        """
-        Initialize a PolicyRole object.
-
-        :param str role_id: The role Cloud Resource Name (CRN) granted by the
-               policy. Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
-        """
-        self.role_id = role_id
-        self.display_name = display_name
-        self.description = description
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'PolicyRole':
-        """Initialize a PolicyRole object from a json dictionary."""
-        args = {}
-        if 'role_id' in _dict:
-            args['role_id'] = _dict.get('role_id')
-        else:
-            raise ValueError('Required property \'role_id\' not present in PolicyRole JSON')
-        if 'display_name' in _dict:
-            args['display_name'] = _dict.get('display_name')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a PolicyRole object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'role_id') and self.role_id is not None:
-            _dict['role_id'] = self.role_id
-        if hasattr(self, 'display_name') and getattr(self, 'display_name') is not None:
-            _dict['display_name'] = getattr(self, 'display_name')
-        if hasattr(self, 'description') and getattr(self, 'description') is not None:
-            _dict['description'] = getattr(self, 'description')
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this PolicyRole object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'PolicyRole') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'PolicyRole') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
 class PolicySubject:
     """
     The subject attribute values that must match in order for this policy to apply in a
@@ -2384,28 +3356,25 @@ class Role:
     """
     A role resource.
 
-    :attr str display_name: (optional) The display name of the role that is shown in
-          the console.
+    :attr str display_name: The display name of the role that is shown in the
+          console.
     :attr str description: (optional) The description of the role.
-    :attr List[str] actions: (optional) The actions of the role. Please refer to
-          [IAM roles and
+    :attr List[str] actions: The actions of the role. Please refer to [IAM roles and
           actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
     :attr str crn: (optional) The role Cloud Resource Name (CRN). Example CRN:
           'crn:v1:ibmcloud:public:iam-access-management::a/exampleAccountId::customRole:ExampleRoleName'.
     """
 
-    def __init__(
-        self, *, display_name: str = None, description: str = None, actions: List[str] = None, crn: str = None
-    ) -> None:
+    def __init__(self, display_name: str, actions: List[str], *, description: str = None, crn: str = None) -> None:
         """
         Initialize a Role object.
 
-        :param str display_name: (optional) The display name of the role that is
-               shown in the console.
-        :param str description: (optional) The description of the role.
-        :param List[str] actions: (optional) The actions of the role. Please refer
-               to [IAM roles and
+        :param str display_name: The display name of the role that is shown in the
+               console.
+        :param List[str] actions: The actions of the role. Please refer to [IAM
+               roles and
                actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
+        :param str description: (optional) The description of the role.
         """
         self.display_name = display_name
         self.description = description
@@ -2418,10 +3387,14 @@ class Role:
         args = {}
         if 'display_name' in _dict:
             args['display_name'] = _dict.get('display_name')
+        else:
+            raise ValueError('Required property \'display_name\' not present in Role JSON')
         if 'description' in _dict:
             args['description'] = _dict.get('description')
         if 'actions' in _dict:
             args['actions'] = _dict.get('actions')
+        else:
+            raise ValueError('Required property \'actions\' not present in Role JSON')
         if 'crn' in _dict:
             args['crn'] = _dict.get('crn')
         return cls(**args)
@@ -2620,169 +3593,45 @@ class SubjectAttribute:
         return not self == other
 
 
-class V2Policy:
+class ControlResponseControl(ControlResponse):
     """
-    The core set of properties associated with a policy.
+    Specifies the type of access granted by the policy.
 
-    :attr str id: (optional) The policy ID.
-    :attr str type: The policy type; either 'access' or 'authorization'.
-    :attr str description: (optional) Customer-defined description.
-    :attr V2PolicyBaseSubject subject: (optional) The subject attributes associated
-          with a policy.
-    :attr V2PolicyBaseControl control: Specifies the type of access granted by the
-          policy.
-    :attr V2PolicyBaseResource resource: (optional) The resource attributes
-          associated with a policy.
-    :attr str pattern: (optional) Indicates pattern of rule.
-    :attr V2PolicyBaseRule rule: (optional) Additional access conditions associated
-          with a policy.
-    :attr str href: (optional) The href link back to the policy.
-    :attr datetime created_at: (optional) The UTC timestamp when the policy was
-          created.
-    :attr str created_by_id: (optional) The iam ID of the entity that created the
-          policy.
-    :attr datetime last_modified_at: (optional) The UTC timestamp when the policy
-          was last modified.
-    :attr str last_modified_by_id: (optional) The iam ID of the entity that last
-          modified the policy.
-    :attr str state: (optional) The policy state.
+    :attr V2PolicyGrant grant: Permission granted by the policy.
     """
 
-    def __init__(
-        self,
-        type: str,
-        control: 'V2PolicyBaseControl',
-        *,
-        id: str = None,
-        description: str = None,
-        subject: 'V2PolicyBaseSubject' = None,
-        resource: 'V2PolicyBaseResource' = None,
-        pattern: str = None,
-        rule: 'V2PolicyBaseRule' = None,
-        href: str = None,
-        created_at: datetime = None,
-        created_by_id: str = None,
-        last_modified_at: datetime = None,
-        last_modified_by_id: str = None,
-        state: str = None
-    ) -> None:
+    def __init__(self, grant: 'V2PolicyGrant') -> None:
         """
-        Initialize a V2Policy object.
+        Initialize a ControlResponseControl object.
 
-        :param str type: The policy type; either 'access' or 'authorization'.
-        :param V2PolicyBaseControl control: Specifies the type of access granted by
-               the policy.
-        :param str description: (optional) Customer-defined description.
-        :param V2PolicyBaseSubject subject: (optional) The subject attributes
-               associated with a policy.
-        :param V2PolicyBaseResource resource: (optional) The resource attributes
-               associated with a policy.
-        :param str pattern: (optional) Indicates pattern of rule.
-        :param V2PolicyBaseRule rule: (optional) Additional access conditions
-               associated with a policy.
-        :param str state: (optional) The policy state.
+        :param V2PolicyGrant grant: Permission granted by the policy.
         """
-        self.id = id
-        self.type = type
-        self.description = description
-        self.subject = subject
-        self.control = control
-        self.resource = resource
-        self.pattern = pattern
-        self.rule = rule
-        self.href = href
-        self.created_at = created_at
-        self.created_by_id = created_by_id
-        self.last_modified_at = last_modified_at
-        self.last_modified_by_id = last_modified_by_id
-        self.state = state
+        # pylint: disable=super-init-not-called
+        self.grant = grant
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'V2Policy':
-        """Initialize a V2Policy object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'ControlResponseControl':
+        """Initialize a ControlResponseControl object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        if 'type' in _dict:
-            args['type'] = _dict.get('type')
+        if 'grant' in _dict:
+            args['grant'] = V2PolicyGrant.from_dict(_dict.get('grant'))
         else:
-            raise ValueError('Required property \'type\' not present in V2Policy JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'subject' in _dict:
-            args['subject'] = V2PolicyBaseSubject.from_dict(_dict.get('subject'))
-        if 'control' in _dict:
-            args['control'] = V2PolicyBaseControl.from_dict(_dict.get('control'))
-        else:
-            raise ValueError('Required property \'control\' not present in V2Policy JSON')
-        if 'resource' in _dict:
-            args['resource'] = V2PolicyBaseResource.from_dict(_dict.get('resource'))
-        if 'pattern' in _dict:
-            args['pattern'] = _dict.get('pattern')
-        if 'rule' in _dict:
-            args['rule'] = _dict.get('rule')
-        if 'href' in _dict:
-            args['href'] = _dict.get('href')
-        if 'created_at' in _dict:
-            args['created_at'] = string_to_datetime(_dict.get('created_at'))
-        if 'created_by_id' in _dict:
-            args['created_by_id'] = _dict.get('created_by_id')
-        if 'last_modified_at' in _dict:
-            args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
-        if 'last_modified_by_id' in _dict:
-            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
+            raise ValueError('Required property \'grant\' not present in ControlResponseControl JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a V2Policy object from a json dictionary."""
+        """Initialize a ControlResponseControl object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'id') and getattr(self, 'id') is not None:
-            _dict['id'] = getattr(self, 'id')
-        if hasattr(self, 'type') and self.type is not None:
-            _dict['type'] = self.type
-        if hasattr(self, 'description') and self.description is not None:
-            _dict['description'] = self.description
-        if hasattr(self, 'subject') and self.subject is not None:
-            if isinstance(self.subject, dict):
-                _dict['subject'] = self.subject
+        if hasattr(self, 'grant') and self.grant is not None:
+            if isinstance(self.grant, dict):
+                _dict['grant'] = self.grant
             else:
-                _dict['subject'] = self.subject.to_dict()
-        if hasattr(self, 'control') and self.control is not None:
-            if isinstance(self.control, dict):
-                _dict['control'] = self.control
-            else:
-                _dict['control'] = self.control.to_dict()
-        if hasattr(self, 'resource') and self.resource is not None:
-            if isinstance(self.resource, dict):
-                _dict['resource'] = self.resource
-            else:
-                _dict['resource'] = self.resource.to_dict()
-        if hasattr(self, 'pattern') and self.pattern is not None:
-            _dict['pattern'] = self.pattern
-        if hasattr(self, 'rule') and self.rule is not None:
-            if isinstance(self.rule, dict):
-                _dict['rule'] = self.rule
-            else:
-                _dict['rule'] = self.rule.to_dict()
-        if hasattr(self, 'href') and getattr(self, 'href') is not None:
-            _dict['href'] = getattr(self, 'href')
-        if hasattr(self, 'created_at') and getattr(self, 'created_at') is not None:
-            _dict['created_at'] = datetime_to_string(getattr(self, 'created_at'))
-        if hasattr(self, 'created_by_id') and getattr(self, 'created_by_id') is not None:
-            _dict['created_by_id'] = getattr(self, 'created_by_id')
-        if hasattr(self, 'last_modified_at') and getattr(self, 'last_modified_at') is not None:
-            _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
-        if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
-            _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
-        if hasattr(self, 'state') and self.state is not None:
-            _dict['state'] = self.state
+                _dict['grant'] = self.grant.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -2790,182 +3639,104 @@ class V2Policy:
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this V2Policy object."""
+        """Return a `str` version of this ControlResponseControl object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'V2Policy') -> bool:
+    def __eq__(self, other: 'ControlResponseControl') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'V2Policy') -> bool:
+    def __ne__(self, other: 'ControlResponseControl') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-    class StateEnum(str, Enum):
-        """
-        The policy state.
-        """
 
-        ACTIVE = 'active'
-        DELETED = 'deleted'
-
-
-class V2PolicyAttribute:
+class ControlResponseControlWithTranslatedRoles(ControlResponse):
     """
-    Resource/subject attribute associated with policy attributes.
+    Specifies the type of access granted by the policy with additional role information.
+
+    :attr GrantWithTranslatedRoles grant: Permission granted by the policy with
+          translated roles and additional role information.
+    """
+
+    def __init__(self, grant: 'GrantWithTranslatedRoles') -> None:
+        """
+        Initialize a ControlResponseControlWithTranslatedRoles object.
+
+        :param GrantWithTranslatedRoles grant: Permission granted by the policy
+               with translated roles and additional role information.
+        """
+        # pylint: disable=super-init-not-called
+        self.grant = grant
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ControlResponseControlWithTranslatedRoles':
+        """Initialize a ControlResponseControlWithTranslatedRoles object from a json dictionary."""
+        args = {}
+        if 'grant' in _dict:
+            args['grant'] = GrantWithTranslatedRoles.from_dict(_dict.get('grant'))
+        else:
+            raise ValueError(
+                'Required property \'grant\' not present in ControlResponseControlWithTranslatedRoles JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ControlResponseControlWithTranslatedRoles object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'grant') and self.grant is not None:
+            if isinstance(self.grant, dict):
+                _dict['grant'] = self.grant
+            else:
+                _dict['grant'] = self.grant.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ControlResponseControlWithTranslatedRoles object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ControlResponseControlWithTranslatedRoles') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ControlResponseControlWithTranslatedRoles') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class V2PolicyRuleRuleAttribute(V2PolicyRule):
+    """
+    Rule that specifies additional access granted (e.g., time-based condition).
 
     :attr str key: The name of an attribute.
     :attr str operator: The operator of an attribute.
-    :attr object value: The value of an attribute; can be array, boolean, string, or
-          integer.
+    :attr object value: The value of an rule or resource attribute; can be boolean
+          or string for resource attribute. Can be a string or an array of strings (e.g.,
+          array of days to permit access) for rule attribute.
     """
 
     def __init__(self, key: str, operator: str, value: object) -> None:
         """
-        Initialize a V2PolicyAttribute object.
+        Initialize a V2PolicyRuleRuleAttribute object.
 
         :param str key: The name of an attribute.
         :param str operator: The operator of an attribute.
-        :param object value: The value of an attribute; can be array, boolean,
-               string, or integer.
-        """
-        self.key = key
-        self.operator = operator
-        self.value = value
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'V2PolicyAttribute':
-        """Initialize a V2PolicyAttribute object from a json dictionary."""
-        args = {}
-        if 'key' in _dict:
-            args['key'] = _dict.get('key')
-        else:
-            raise ValueError('Required property \'key\' not present in V2PolicyAttribute JSON')
-        if 'operator' in _dict:
-            args['operator'] = _dict.get('operator')
-        else:
-            raise ValueError('Required property \'operator\' not present in V2PolicyAttribute JSON')
-        if 'value' in _dict:
-            args['value'] = _dict.get('value')
-        else:
-            raise ValueError('Required property \'value\' not present in V2PolicyAttribute JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a V2PolicyAttribute object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'key') and self.key is not None:
-            _dict['key'] = self.key
-        if hasattr(self, 'operator') and self.operator is not None:
-            _dict['operator'] = self.operator
-        if hasattr(self, 'value') and self.value is not None:
-            _dict['value'] = self.value
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this V2PolicyAttribute object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'V2PolicyAttribute') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'V2PolicyAttribute') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
-class V2PolicyList:
-    """
-    A collection of policies.
-
-    :attr List[V2Policy] policies: (optional) List of policies.
-    """
-
-    def __init__(self, *, policies: List['V2Policy'] = None) -> None:
-        """
-        Initialize a V2PolicyList object.
-
-        :param List[V2Policy] policies: (optional) List of policies.
-        """
-        self.policies = policies
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'V2PolicyList':
-        """Initialize a V2PolicyList object from a json dictionary."""
-        args = {}
-        if 'policies' in _dict:
-            args['policies'] = [V2Policy.from_dict(v) for v in _dict.get('policies')]
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a V2PolicyList object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'policies') and self.policies is not None:
-            policies_list = []
-            for v in self.policies:
-                if isinstance(v, dict):
-                    policies_list.append(v)
-                else:
-                    policies_list.append(v.to_dict())
-            _dict['policies'] = policies_list
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this V2PolicyList object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'V2PolicyList') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'V2PolicyList') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
-class V2PolicyBaseRuleV2PolicyAttribute(V2PolicyBaseRule):
-    """
-    Resource/subject attribute associated with policy attributes.
-
-    :attr str key: The name of an attribute.
-    :attr str operator: The operator of an attribute.
-    :attr object value: The value of an attribute; can be array, boolean, string, or
-          integer.
-    """
-
-    def __init__(self, key: str, operator: str, value: object) -> None:
-        """
-        Initialize a V2PolicyBaseRuleV2PolicyAttribute object.
-
-        :param str key: The name of an attribute.
-        :param str operator: The operator of an attribute.
-        :param object value: The value of an attribute; can be array, boolean,
-               string, or integer.
+        :param object value: The value of an rule or resource attribute; can be
+               boolean or string for resource attribute. Can be a string or an array of
+               strings (e.g., array of days to permit access) for rule attribute.
         """
         # pylint: disable=super-init-not-called
         self.key = key
@@ -2973,26 +3744,26 @@ class V2PolicyBaseRuleV2PolicyAttribute(V2PolicyBaseRule):
         self.value = value
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'V2PolicyBaseRuleV2PolicyAttribute':
-        """Initialize a V2PolicyBaseRuleV2PolicyAttribute object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'V2PolicyRuleRuleAttribute':
+        """Initialize a V2PolicyRuleRuleAttribute object from a json dictionary."""
         args = {}
         if 'key' in _dict:
             args['key'] = _dict.get('key')
         else:
-            raise ValueError('Required property \'key\' not present in V2PolicyBaseRuleV2PolicyAttribute JSON')
+            raise ValueError('Required property \'key\' not present in V2PolicyRuleRuleAttribute JSON')
         if 'operator' in _dict:
             args['operator'] = _dict.get('operator')
         else:
-            raise ValueError('Required property \'operator\' not present in V2PolicyBaseRuleV2PolicyAttribute JSON')
+            raise ValueError('Required property \'operator\' not present in V2PolicyRuleRuleAttribute JSON')
         if 'value' in _dict:
             args['value'] = _dict.get('value')
         else:
-            raise ValueError('Required property \'value\' not present in V2PolicyBaseRuleV2PolicyAttribute JSON')
+            raise ValueError('Required property \'value\' not present in V2PolicyRuleRuleAttribute JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a V2PolicyBaseRuleV2PolicyAttribute object from a json dictionary."""
+        """Initialize a V2PolicyRuleRuleAttribute object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -3011,60 +3782,77 @@ class V2PolicyBaseRuleV2PolicyAttribute(V2PolicyBaseRule):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this V2PolicyBaseRuleV2PolicyAttribute object."""
+        """Return a `str` version of this V2PolicyRuleRuleAttribute object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'V2PolicyBaseRuleV2PolicyAttribute') -> bool:
+    def __eq__(self, other: 'V2PolicyRuleRuleAttribute') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'V2PolicyBaseRuleV2PolicyAttribute') -> bool:
+    def __ne__(self, other: 'V2PolicyRuleRuleAttribute') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+    class OperatorEnum(str, Enum):
+        """
+        The operator of an attribute.
+        """
 
-class V2PolicyBaseRuleV2RuleWithConditions(V2PolicyBaseRule):
+        TIMELESSTHAN = 'timeLessThan'
+        TIMELESSTHANOREQUALS = 'timeLessThanOrEquals'
+        TIMEGREATERTHAN = 'timeGreaterThan'
+        TIMEGREATERTHANOREQUALS = 'timeGreaterThanOrEquals'
+        DATETIMELESSTHAN = 'dateTimeLessThan'
+        DATETIMELESSTHANOREQUALS = 'dateTimeLessThanOrEquals'
+        DATETIMEGREATERTHAN = 'dateTimeGreaterThan'
+        DATETIMEGREATERTHANOREQUALS = 'dateTimeGreaterThanOrEquals'
+        DAYOFWEEKEQUALS = 'dayOfWeekEquals'
+        DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
+
+
+class V2PolicyRuleRuleWithConditions(V2PolicyRule):
     """
-    Policy rule that has 2 to 10 conditions.
+    Rule that specifies additional access granted (e.g., time-based condition) accross
+    multiple conditions.
 
     :attr str operator: Operator to evalute conditions.
-    :attr List[V2PolicyAttribute] conditions: List of conditions to associated with
-          a policy. Note that conditions can be nested up to 2 levels.
+    :attr List[RuleAttribute] conditions: List of conditions associated with a
+          policy, e.g., time-based-conditions that grant access over a certain time
+          period.
     """
 
-    def __init__(self, operator: str, conditions: List['V2PolicyAttribute']) -> None:
+    def __init__(self, operator: str, conditions: List['RuleAttribute']) -> None:
         """
-        Initialize a V2PolicyBaseRuleV2RuleWithConditions object.
+        Initialize a V2PolicyRuleRuleWithConditions object.
 
         :param str operator: Operator to evalute conditions.
-        :param List[V2PolicyAttribute] conditions: List of conditions to associated
-               with a policy. Note that conditions can be nested up to 2 levels.
+        :param List[RuleAttribute] conditions: List of conditions associated with a
+               policy, e.g., time-based-conditions that grant access over a certain time
+               period.
         """
         # pylint: disable=super-init-not-called
         self.operator = operator
         self.conditions = conditions
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'V2PolicyBaseRuleV2RuleWithConditions':
-        """Initialize a V2PolicyBaseRuleV2RuleWithConditions object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'V2PolicyRuleRuleWithConditions':
+        """Initialize a V2PolicyRuleRuleWithConditions object from a json dictionary."""
         args = {}
         if 'operator' in _dict:
             args['operator'] = _dict.get('operator')
         else:
-            raise ValueError('Required property \'operator\' not present in V2PolicyBaseRuleV2RuleWithConditions JSON')
+            raise ValueError('Required property \'operator\' not present in V2PolicyRuleRuleWithConditions JSON')
         if 'conditions' in _dict:
-            args['conditions'] = [V2PolicyAttribute.from_dict(v) for v in _dict.get('conditions')]
+            args['conditions'] = [RuleAttribute.from_dict(v) for v in _dict.get('conditions')]
         else:
-            raise ValueError(
-                'Required property \'conditions\' not present in V2PolicyBaseRuleV2RuleWithConditions JSON'
-            )
+            raise ValueError('Required property \'conditions\' not present in V2PolicyRuleRuleWithConditions JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a V2PolicyBaseRuleV2RuleWithConditions object from a json dictionary."""
+        """Initialize a V2PolicyRuleRuleWithConditions object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -3087,16 +3875,16 @@ class V2PolicyBaseRuleV2RuleWithConditions(V2PolicyBaseRule):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this V2PolicyBaseRuleV2RuleWithConditions object."""
+        """Return a `str` version of this V2PolicyRuleRuleWithConditions object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'V2PolicyBaseRuleV2RuleWithConditions') -> bool:
+    def __eq__(self, other: 'V2PolicyRuleRuleWithConditions') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'V2PolicyBaseRuleV2RuleWithConditions') -> bool:
+    def __ne__(self, other: 'V2PolicyRuleRuleWithConditions') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
