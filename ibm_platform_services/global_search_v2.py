@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,21 +14,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
+# IBM OpenAPI SDK Code Generator Version: 3.63.0-5dae26c1-20230111-193039
 
 """
-Search for resources with the global and shared resource properties repository integrated
-in the IBM Cloud platform. The search repository stores and searches cloud resources
-attributes, which categorize or classify resources. A resource is a physical or logical
-component that can be created or reserved for an application or service instance and is
-owned by resource providers, such as Cloud Foundry, IBM Kubernetes Service, or resource
-controller in IBM Cloud. Resources are uniquely identified by a Cloud Resource Name (CRN)
-or by an IMS ID. The properties of a resource include tags and system properties. Both
-properties are defined in an IBM Cloud billing account, and span across many regions.
+Search for resources with the global and shared resource properties repository that is
+integrated in the IBM Cloud platform. The search repository stores and searches cloud
+resources attributes, which categorize or classify resources. A resource is a physical or
+logical component that can be created or reserved for an application or service instance.
+They are owned by resource providers, such as Cloud Foundry, IBM Kubernetes Service, or
+resource controller in IBM Cloud. Resources are uniquely identified by a Cloud Resource
+Name (CRN)  or by an IMS ID. The properties of a resource include tags and system
+properties. Both properties are defined in an IBM Cloud billing account, and span across
+many regions.
+
+API Version: 2.0.1
 """
 
+from enum import Enum
 from typing import Dict, List
 import json
+import logging
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
@@ -70,7 +75,7 @@ class GlobalSearchV2(BaseService):
         Construct a new client for the global_search service.
 
         :param Authenticator authenticator: The authenticator specifies the authentication mechanism.
-               Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
+               Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
         BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
@@ -87,91 +92,152 @@ class GlobalSearchV2(BaseService):
         search_cursor: str = None,
         transaction_id: str = None,
         account_id: str = None,
+        boundary: str = None,
         limit: int = None,
         timeout: int = None,
         sort: List[str] = None,
+        is_deleted: str = None,
+        is_reclaimed: str = None,
+        is_public: str = None,
+        impersonate_user: str = None,
+        can_tag: str = None,
+        is_hidden: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
         Find instances of resources (v3).
 
-        Find Cloud Foundry resources, IAM-enabled resources, or  storage and network
-        resources running on classic infrastructure in a  specific account ID. You can
+        Find Cloud Foundry resources, IAM-enabled resources, or storage and network
+        resources that run on classic infrastructure in a specific account ID. You can
         apply query strings if necessary.
-        To filter results, you can insert a string using the Lucene syntax and the  query
-        string is parsed into a series of terms and operators. A term can be  a single
-        word or a phrase, in which case the search is performed for all  the words, in the
-        same order. To filter for a specific value regardless of  the property that
-        contains it, type the search term without specifying a  field. Only resources that
-        belong to the account ID and that are accessible  by the client are returned.
+        To filter results, you can insert a string by using the Lucene syntax and the
+        query string is parsed into a series of terms and operators. A term can be a
+        single word or a phrase, in which case the search is performed for all the words,
+        in the same order. To filter for a specific value regardless of the property that
+        contains it, type the search term without specifying a field. Only resources that
+        belong to the account ID and that are accessible by the client are returned.
         You must use `/v3/resources/search` when you need to fetch more than `10000`
-        resource items. The `/v2/resources/search` prohibits paginating through such  a
-        big number. On the first call, the operation returns a live cursor on the  data
-        that you must use on all the subsequent calls to get the next batch of  results
-        until you get the empty result set. By default, the fields returned  for every
-        resource are "crn", "name", "family", "type", and "account_id". You  can specify
-        the subset of the fields you want in your request.
+        resource items. On the first call, the operation returns a live cursor on the data
+        that you must use on all the subsequent calls to get the next batch of results
+        until you get the empty result set. By default, the fields that are returned for
+        every resource are "crn", "name", "family", "type", and "account_id". You can
+        specify the subset of the fields you want in your request.
 
         :param str query: (optional) The Lucene-formatted query string. Default to
                '*' if not set.
         :param List[str] fields: (optional) The list of the fields returned by the
-               search. Defaults to all. `crn` is always returned.
-        :param str search_cursor: (optional) An opaque search cursor that is
-               returned on each operation call and that must be set on next call.
-        :param str transaction_id: (optional) An aplhanumeric string that can be
-               used to trace a request across services. If not specified it will be
-               automatically generated with the prefix "gst-".
+               search. By default, the returned fields are the `account_id`, `name`,
+               `type`, `family`, and `crn`. For all queries, `crn` is always returned.
+        :param str search_cursor: (optional) An opaque cursor that is returned on
+               each call and that must be set on the subsequent call to get the next batch
+               of items. If the search returns no items, then the search_cursor is not
+               present in the response.
+        :param str transaction_id: (optional) An alphanumeric string that can be
+               used to trace a request across services. If not specified, it automatically
+               generated with the prefix "gst-".
         :param str account_id: (optional) The account ID to filter resources.
+        :param str boundary: (optional) The boundary where the search performs.
+               This parameter must be set only for the cross-account searches.
         :param int limit: (optional) The maximum number of hits to return. Defaults
                to 10.
-        :param int timeout: (optional) A search timeout, bounding the search
-               request to be executed within the specified time value and bail with the
+        :param int timeout: (optional) A search timeout in milliseconds, bounding
+               the search request to run within the specified time value and bail with the
                hits accumulated up to that point when expired. Defaults to the system
                defined timeout.
-        :param List[str] sort: (optional) Comma separated properties names used for
-               sorting.
+        :param List[str] sort: (optional) Comma separated properties names that are
+               used for sorting.
+        :param str is_deleted: (optional) Determines if deleted documents should be
+               included in result set or not. Possible values are false (default), true or
+               any. If false, only existing documents are returned; if true, only deleted
+               documents are returned; If any, both existing and deleted documents are
+               returned. (_for administrators only_).
+        :param str is_reclaimed: (optional) Determines if reclaimed documents
+               should be included in result set or not. Possible values are false
+               (default), true or any. If false, only not reclaimed documents are
+               returned; if true, only reclaimed documents are returned; If any, both
+               reclaimed and not reclaimed documents are returned.
+        :param str is_public: (optional) Determines if public resources should be
+               included in result set or not. Possible values are false (default), true or
+               any. If false, do not search public resources; if true, search only public
+               resources; If any, search also public resources.
+        :param str impersonate_user: (optional) The user on whose behalf the search
+               must be performed. Only a GhoST admin can impersonate a user, so be sure
+               you set a GhoST admin IAM token in the Authorization header if you set this
+               parameter. (_for administrators only_).
+        :param str can_tag: (optional) Determines if the result set must return the
+               resources that the user can tag or the resources that the user can view
+               (only a GhoST admin can use this parameter). If false (default), only
+               resources user can view are returned; if true, only resources that user has
+               permissions for tagging are returned (_for administrators only_).
+        :param str is_hidden: (optional) Determines if the result set must return
+               only the visible resources or not. If false (default), only visible
+               resources are returned; if true, only hidden resources are returned; if
+               any, all resources are returned.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ScanResult` object
         """
 
-        headers = {'transaction-id': transaction_id}
+        headers = {
+            'transaction-id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='search'
         )
         headers.update(sdk_headers)
 
-        params = {'account_id': account_id, 'limit': limit, 'timeout': timeout, 'sort': convert_list(sort)}
+        params = {
+            'account_id': account_id,
+            'boundary': boundary,
+            'limit': limit,
+            'timeout': timeout,
+            'sort': convert_list(sort),
+            'is_deleted': is_deleted,
+            'is_reclaimed': is_reclaimed,
+            'is_public': is_public,
+            'impersonate_user': impersonate_user,
+            'can_tag': can_tag,
+            'is_hidden': is_hidden,
+        }
 
-        data = {'query': query, 'fields': fields, 'search_cursor': search_cursor}
+        data = {
+            'query': query,
+            'fields': fields,
+            'search_cursor': search_cursor,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v3/resources/search'
         request = self.prepare_request(method='POST', url=url, headers=headers, params=params, data=data)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
     #########################
-    # Resource Types
+    # resourceTypes
     #########################
 
     def get_supported_types(self, **kwargs) -> DetailedResponse:
         """
-        DEPRECATED. Get all GhoST indices.
+        DEPRECATED. Get all GhoST indexes.
 
-        Retrieves a list of all GhoST indices.
+        Retrieves a list of all GhoST indexes.
 
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `SupportedTypesList` object
+
+        Deprecated: this method is deprecated and may be removed in a future release.
         """
+
+        logging.warning('A deprecated operation has been invoked: get_supported_types')
 
         headers = {}
         sdk_headers = get_sdk_headers(
@@ -181,13 +247,87 @@ class GlobalSearchV2(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
         headers['Accept'] = 'application/json'
 
         url = '/v2/resources/supported_types'
         request = self.prepare_request(method='GET', url=url, headers=headers)
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
+
+
+class SearchEnums:
+    """
+    Enums for search parameters.
+    """
+
+    class Boundary(str, Enum):
+        """
+        The boundary where the search performs. This parameter must be set only for the
+        cross-account searches.
+        """
+
+        GLOBAL = 'global'
+        US_REGULATED = 'us-regulated'
+
+    class IsDeleted(str, Enum):
+        """
+        Determines if deleted documents should be included in result set or not. Possible
+        values are false (default), true or any. If false, only existing documents are
+        returned; if true, only deleted documents are returned; If any, both existing and
+        deleted documents are returned. (_for administrators only_).
+        """
+
+        TRUE = 'true'
+        FALSE = 'false'
+        ANY = 'any'
+
+    class IsReclaimed(str, Enum):
+        """
+        Determines if reclaimed documents should be included in result set or not.
+        Possible values are false (default), true or any. If false, only not reclaimed
+        documents are returned; if true, only reclaimed documents are returned; If any,
+        both reclaimed and not reclaimed documents are returned.
+        """
+
+        TRUE = 'true'
+        FALSE = 'false'
+        ANY = 'any'
+
+    class IsPublic(str, Enum):
+        """
+        Determines if public resources should be included in result set or not. Possible
+        values are false (default), true or any. If false, do not search public resources;
+        if true, search only public resources; If any, search also public resources.
+        """
+
+        TRUE = 'true'
+        FALSE = 'false'
+        ANY = 'any'
+
+    class CanTag(str, Enum):
+        """
+        Determines if the result set must return the resources that the user can tag or
+        the resources that the user can view (only a GhoST admin can use this parameter).
+        If false (default), only resources user can view are returned; if true, only
+        resources that user has permissions for tagging are returned (_for administrators
+        only_).
+        """
+
+        TRUE = 'true'
+        FALSE = 'false'
+
+    class IsHidden(str, Enum):
+        """
+        Determines if the result set must return only the visible resources or not. If
+        false (default), only visible resources are returned; if true, only hidden
+        resources are returned; if any, all resources are returned.
+        """
+
+        TRUE = 'true'
+        FALSE = 'false'
+        ANY = 'any'
 
 
 ##############################################################################
@@ -197,19 +337,20 @@ class GlobalSearchV2(BaseService):
 
 class ResultItem:
     """
-    A resource returned in a search result.
+    A resource returned in a search result, which is identified by its `crn`. It contains
+    other properties that depend on the resource type.
 
-    :attr str crn: (optional) Resource identifier in CRN format.
+    :attr str crn: Resource identifier in CRN format.
     """
 
     # The set of defined properties for the class
     _properties = frozenset(['crn'])
 
-    def __init__(self, *, crn: str = None, **kwargs) -> None:
+    def __init__(self, crn: str, **kwargs) -> None:
         """
         Initialize a ResultItem object.
 
-        :param str crn: (optional) Resource identifier in CRN format.
+        :param str crn: Resource identifier in CRN format.
         :param **kwargs: (optional) Any additional properties.
         """
         self.crn = crn
@@ -222,6 +363,8 @@ class ResultItem:
         args = {}
         if 'crn' in _dict:
             args['crn'] = _dict.get('crn')
+        else:
+            raise ValueError('Required property \'crn\' not present in ResultItem JSON')
         args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
@@ -236,13 +379,29 @@ class ResultItem:
         if hasattr(self, 'crn') and self.crn is not None:
             _dict['crn'] = self.crn
         for _key in [k for k in vars(self).keys() if k not in ResultItem._properties]:
-            if getattr(self, _key, None) is not None:
-                _dict[_key] = getattr(self, _key)
+            _dict[_key] = getattr(self, _key)
         return _dict
 
     def _to_dict(self):
         """Return a json dictionary representing this model."""
         return self.to_dict()
+
+    def get_properties(self) -> Dict:
+        """Return a dictionary of arbitrary properties from this instance of ResultItem"""
+        _dict = {}
+
+        for _key in [k for k in vars(self).keys() if k not in ResultItem._properties]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def set_properties(self, _dict: dict):
+        """Set a dictionary of arbitrary properties to this instance of ResultItem"""
+        for _key in [k for k in vars(self).keys() if k not in ResultItem._properties]:
+            delattr(self, _key)
+
+        for _key, _value in _dict.items():
+            if _key not in ResultItem._properties:
+                setattr(self, _key, _value)
 
     def __str__(self) -> str:
         """Return a `str` version of this ResultItem object."""
@@ -263,25 +422,24 @@ class ScanResult:
     """
     The search scan response.
 
-    :attr str search_cursor: The search cursor to use on all calls after the first
-          one.
-    :attr int limit: (optional) Value of the limit parameter specified by the user.
+    :attr str search_cursor: (optional) The search cursor to use on all calls after
+          the first one.
+    :attr int limit: Value of the limit parameter specified by the user.
     :attr List[ResultItem] items: The array of results. Each item represents a
-          resource. An empty array signals the end of the result set, there are no more
-          hits to fetch.
+          resource. An empty array signals the end of the result set, which means there
+          are no more results to fetch.
     """
 
-    def __init__(self, search_cursor: str, items: List['ResultItem'], *, limit: int = None) -> None:
+    def __init__(self, limit: int, items: List['ResultItem'], *, search_cursor: str = None) -> None:
         """
         Initialize a ScanResult object.
 
-        :param str search_cursor: The search cursor to use on all calls after the
-               first one.
+        :param int limit: Value of the limit parameter specified by the user.
         :param List[ResultItem] items: The array of results. Each item represents a
-               resource. An empty array signals the end of the result set, there are no
-               more hits to fetch.
-        :param int limit: (optional) Value of the limit parameter specified by the
-               user.
+               resource. An empty array signals the end of the result set, which means
+               there are no more results to fetch.
+        :param str search_cursor: (optional) The search cursor to use on all calls
+               after the first one.
         """
         self.search_cursor = search_cursor
         self.limit = limit
@@ -293,12 +451,12 @@ class ScanResult:
         args = {}
         if 'search_cursor' in _dict:
             args['search_cursor'] = _dict.get('search_cursor')
-        else:
-            raise ValueError('Required property \'search_cursor\' not present in ScanResult JSON')
         if 'limit' in _dict:
             args['limit'] = _dict.get('limit')
+        else:
+            raise ValueError('Required property \'limit\' not present in ScanResult JSON')
         if 'items' in _dict:
-            args['items'] = [ResultItem.from_dict(x) for x in _dict.get('items')]
+            args['items'] = [ResultItem.from_dict(v) for v in _dict.get('items')]
         else:
             raise ValueError('Required property \'items\' not present in ScanResult JSON')
         return cls(**args)
@@ -316,7 +474,13 @@ class ScanResult:
         if hasattr(self, 'limit') and self.limit is not None:
             _dict['limit'] = self.limit
         if hasattr(self, 'items') and self.items is not None:
-            _dict['items'] = [x.to_dict() for x in self.items]
+            items_list = []
+            for v in self.items:
+                if isinstance(v, dict):
+                    items_list.append(v)
+                else:
+                    items_list.append(v.to_dict())
+            _dict['items'] = items_list
         return _dict
 
     def _to_dict(self):
@@ -340,16 +504,16 @@ class ScanResult:
 
 class SupportedTypesList:
     """
-    A list of all GhoST indices.
+    A list of all GhoST indexes.
 
-    :attr List[str] supported_types: (optional) A list of all GhoST indices.
+    :attr List[str] supported_types: (optional) A list of all GhoST indexes.
     """
 
     def __init__(self, *, supported_types: List[str] = None) -> None:
         """
         Initialize a SupportedTypesList object.
 
-        :param List[str] supported_types: (optional) A list of all GhoST indices.
+        :param List[str] supported_types: (optional) A list of all GhoST indexes.
         """
         self.supported_types = supported_types
 
