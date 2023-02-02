@@ -71,6 +71,38 @@ class TestIamPolicyManagementV1(unittest.TestCase):
             tags=[resource_tag],
         )
 
+        cls.testV2PolicySubject = V2PolicySubject(
+            attributes=[V2PolicySubjectAttribute(key='iam_id', value=cls.testUserId + '2', operator='stringEquals')]
+        )
+        cls.testV2PolicyResource = V2PolicyResource(
+            attributes=[
+                V2PolicyResourceAttribute(key='accountId', value=cls.testAccountId, operator='stringEquals'),
+                V2PolicyResourceAttribute(key='serviceType', value='service', operator='stringEquals'),
+            ],
+            tags=[V2PolicyResourceTag(key='project', value='prototype', operator='stringEquals')],
+        )
+        cls.testV2PolicyControl = Control(grant=V2PolicyGrant(roles=[cls.testPolicyRole]))
+        cls.testV2PolicyRule = V2PolicyRuleRuleWithConditions(
+            operator='and',
+            conditions=[
+                RuleAttribute(
+                    key='{{environment.attributes.day_of_week}}',
+                    operator='dayOfWeekAnyOf',
+                    value=['1+00:00', '2+00:00', '3+00:00', '4+00:00', '5+00:00'],
+                ),
+                RuleAttribute(
+                    key='{{environment.attributes.current_time}}',
+                    operator='timeGreaterThanOrEquals',
+                    value='09:00:00+00:00',
+                ),
+                RuleAttribute(
+                    key='{{environment.attributes.current_time}}',
+                    operator='timeLessThanOrEquals',
+                    value='17:00:00+00:00',
+                ),
+            ],
+        )
+
         cls.testCustomRoleId = ""
         cls.testCustomRoleETag = ""
         cls.testCustomRoleName = 'TestPythonRole' + str(random.randint(0, 99999))
@@ -104,10 +136,17 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         for policy in result.policies:
             now = datetime.now(timezone.utc)
             minutesDifference = (now - policy.created_at).seconds / 60
-            if policy.id == cls.testPolicyId or minutesDifference < 5:
-                response = cls.service.delete_policy(policy_id=policy.id)
-                assert response is not None
-                assert response.get_status_code() == 204
+
+            if "v2/policies" in policy.href:
+                if policy.id == cls.testPolicyId or minutesDifference < 5:
+                    response = cls.service.delete_v2_policy(id=policy.id)
+                    assert response is not None
+                    assert response.get_status_code() == 204
+            else:
+                if policy.id == cls.testPolicyId or minutesDifference < 5:
+                    response = cls.service.delete_policy(policy_id=policy.id)
+                    assert response is not None
+                    assert response.get_status_code() == 204
 
         # cleanup custon role
         assert cls.testCustomRoleId is not None
@@ -171,7 +210,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
 
         self.testPolicyRole.role_id = self.testEditorRoleCrn
 
-        response = self.service.update_policy(
+        response = self.service.replace_policy(
             policy_id=self.testPolicyId,
             if_match=self.testPolicyETag,
             type='access',
@@ -270,7 +309,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert self.testCustomRoleETag
         print("Custom Role ID: ", self.testCustomRoleId)
 
-        response = self.service.update_role(
+        response = self.service.replace_role(
             role_id=self.testCustomRoleId,
             if_match=self.testCustomRoleETag,
             display_name='Updated ' + self.testCustomRole.display_name,
@@ -322,7 +361,9 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert self.testPolicyETag
         print("Policy ID: ", self.testPolicyId)
 
-        response = self.service.patch_policy(policy_id=self.testPolicyId, if_match=self.testPolicyETag, state='active')
+        response = self.service.update_policy_state(
+            policy_id=self.testPolicyId, if_match=self.testPolicyETag, state='active'
+        )
         assert response is not None
         assert response.get_status_code() == 200
 
@@ -333,3 +374,109 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result is not None
         assert result.id == self.testPolicyId
         assert result.state == 'active'
+
+    def test_10_create_v2_access_policy(self):
+        self.testV2PolicyControl.grant.roles[0].role_id = self.testViewerRoleCrn
+        response = self.service.create_v2_policy(
+            type='access',
+            subject=self.testV2PolicySubject,
+            control=self.testV2PolicyControl,
+            resource=self.testV2PolicyResource,
+            pattern='time-based-conditions:weekly:custom-hours',
+            rule=self.testV2PolicyRule,
+        )
+        assert response is not None
+        assert response.get_status_code() == 201
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = V2Policy.from_dict(result_dict)
+        assert result is not None
+        assert result.subject == self.testV2PolicySubject
+        assert result.resource == self.testV2PolicyResource
+        assert result.control is not None
+        control = Control.from_dict(result.control)
+        assert control == self.testV2PolicyControl
+
+        print('\nTest policy: ', result)
+
+        self.__class__.testPolicyId = result.id
+
+    def test_11_get_v2_access_policy(self):
+        assert self.testPolicyId
+        print("Policy ID: ", self.testPolicyId)
+
+        response = self.service.get_v2_policy(id=self.testPolicyId)
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = V2Policy.from_dict(result_dict)
+        assert result is not None
+        assert result.subject == self.testV2PolicySubject
+        assert result.resource == self.testV2PolicyResource
+        assert result.control is not None
+        control = Control.from_dict(result.control)
+        assert control.grant.roles[0].role_id == self.testViewerRoleCrn
+        assert result.state == 'active'
+
+        self.__class__.testPolicyETag = response.get_headers().get(self.etagHeader)
+
+    def test_12_update_v2_access_policy(self):
+        assert self.testPolicyId
+        assert self.testPolicyETag
+        print("Policy ID: ", self.testPolicyId)
+
+        self.testV2PolicyControl.grant.roles[0].role_id = self.testEditorRoleCrn
+
+        response = self.service.replace_v2_policy(
+            id=self.testPolicyId,
+            if_match=self.testPolicyETag,
+            type='access',
+            subject=self.testV2PolicySubject,
+            control=self.testV2PolicyControl,
+            resource=self.testV2PolicyResource,
+        )
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = V2Policy.from_dict(result_dict)
+        assert result is not None
+        assert result.id == self.testPolicyId
+        assert result.subject == self.testV2PolicySubject
+        assert result.resource == self.testV2PolicyResource
+
+        assert result.control is not None
+        control = Control.from_dict(result.control)
+        assert control.grant.roles[0].role_id == self.testEditorRoleCrn
+
+        self.__class__.testPolicyETag = response.get_headers().get(self.etagHeader)
+
+    def test_13_list_v2_access_policies(self):
+        print("Policy ID: ", self.testPolicyId)
+
+        response = self.service.list_v2_policies(account_id=self.testAccountId, iam_id=self.testUserId + '2')
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = V2PolicyCollection.from_dict(result_dict)
+        assert result is not None
+
+        print("Policy list: ", result)
+
+        # Confirm the test policy is present
+        foundTestPolicy = False
+        for policy in result.policies:
+            if policy.id == self.testPolicyId:
+                foundTestPolicy = True
+                break
+        assert foundTestPolicy
