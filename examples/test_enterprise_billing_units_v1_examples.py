@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@
 Examples for EnterpriseBillingUnitsV1
 """
 
+from ibm_cloud_sdk_core import ApiException, read_external_sources
 import os
 import pytest
 import json
-from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.enterprise_billing_units_v1 import *
 
 #
@@ -43,9 +43,6 @@ config_file = 'enterprise_billing_units.env'
 enterprise_billing_units_service = None
 
 config = None
-
-enterprise_id = None
-billing_unit_id = None
 
 
 ##############################################################################
@@ -116,11 +113,18 @@ class TestEnterpriseBillingUnitsV1Examples:
             print('\nlist_billing_units() result:')
             # begin-list_billing_units
 
-            billing_units_list = enterprise_billing_units_service.list_billing_units(
-                enterprise_id=enterprise_id
-            ).get_result()
+            all_results = []
+            pager = BillingUnitsPager(
+                client=enterprise_billing_units_service,
+                enterprise_id=enterprise_id,
+                limit=10,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(billing_units_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_billing_units
 
@@ -137,11 +141,18 @@ class TestEnterpriseBillingUnitsV1Examples:
             print('\nlist_billing_options() result:')
             # begin-list_billing_options
 
-            billing_options_list = enterprise_billing_units_service.list_billing_options(
-                billing_unit_id=billing_unit_id
-            ).get_result()
+            all_results = []
+            pager = BillingOptionsPager(
+                client=enterprise_billing_units_service,
+                billing_unit_id=billing_unit_id,
+                limit=10,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(billing_options_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-list_billing_options
 
@@ -159,14 +170,21 @@ class TestEnterpriseBillingUnitsV1Examples:
 
             # begin-get_credit_pools
 
-            credit_pools_list = enterprise_billing_units_service.get_credit_pools(
-                billing_unit_id=billing_unit_id, type='PLATFORM'
-            ).get_result()
+            all_results = []
+            pager = GetCreditPoolsPager(
+                client=enterprise_billing_units_service,
+                billing_unit_id=billing_unit_id,
+                type='PLATFORM',
+                limit=10,
+            )
+            while pager.has_next():
+                next_page = pager.get_next()
+                assert next_page is not None
+                all_results.extend(next_page)
 
-            print(json.dumps(credit_pools_list, indent=2))
+            print(json.dumps(all_results, indent=2))
 
             # end-get_credit_pools
-
         except ApiException as e:
             pytest.fail(str(e))
 
