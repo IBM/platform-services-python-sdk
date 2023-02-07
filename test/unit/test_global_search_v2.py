@@ -329,7 +329,7 @@ class TestModel_ResultItem:
         # Test get_properties and set_properties methods.
         result_item_model.set_properties({})
         actual_dict = result_item_model.get_properties()
-        assert actual_dict == {}
+        assert not actual_dict
 
         expected_dict = {'foo': 'testString'}
         result_item_model.set_properties(expected_dict)
