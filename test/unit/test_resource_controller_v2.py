@@ -59,8 +59,7 @@ def preprocess_url(operation_path: str):
     # Otherwise, return a regular expression that matches one or more trailing /.
     if re.fullmatch('.*/+', request_url) is None:
         return request_url
-    else:
-        return re.compile(request_url.rstrip('/') + '/+')
+    return re.compile(request_url.rstrip('/') + '/+')
 
 
 ##############################################################################
@@ -3056,7 +3055,7 @@ class TestModel_Credentials:
         # Test get_properties and set_properties methods.
         credentials_model.set_properties({})
         actual_dict = credentials_model.get_properties()
-        assert actual_dict == {}
+        assert not actual_dict
 
         expected_dict = {'foo': 'testString'}
         credentials_model.set_properties(expected_dict)
@@ -3404,7 +3403,7 @@ class TestModel_ResourceBindingPostParameters:
         # Test get_properties and set_properties methods.
         resource_binding_post_parameters_model.set_properties({})
         actual_dict = resource_binding_post_parameters_model.get_properties()
-        assert actual_dict == {}
+        assert not actual_dict
 
         expected_dict = {'foo': 'testString'}
         resource_binding_post_parameters_model.set_properties(expected_dict)
@@ -3613,7 +3612,7 @@ class TestModel_ResourceInstanceLastOperation:
         # Test get_properties and set_properties methods.
         resource_instance_last_operation_model.set_properties({})
         actual_dict = resource_instance_last_operation_model.get_properties()
-        assert actual_dict == {}
+        assert not actual_dict
 
         expected_dict = {'foo': 'testString'}
         resource_instance_last_operation_model.set_properties(expected_dict)
@@ -3814,7 +3813,7 @@ class TestModel_ResourceKeyPostParameters:
         # Test get_properties and set_properties methods.
         resource_key_post_parameters_model.set_properties({})
         actual_dict = resource_key_post_parameters_model.get_properties()
-        assert actual_dict == {}
+        assert not actual_dict
 
         expected_dict = {'foo': 'testString'}
         resource_key_post_parameters_model.set_properties(expected_dict)

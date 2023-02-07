@@ -49,8 +49,7 @@ class TestGetAccountSettings:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_account_settings_all_params(self):
@@ -106,8 +105,7 @@ class TestUpdateAccountSettings:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_account_settings_all_params(self):
