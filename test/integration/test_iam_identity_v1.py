@@ -954,7 +954,7 @@ class TestIamIdentityV1:
             session_invalidation_in_seconds="7200",
             max_sessions_per_identity='10',
             system_access_token_expiration_in_seconds='3600',
-            system_refresh_token_expiration_in_seconds='2592000',
+            system_refresh_token_expiration_in_seconds='259200',
         )
 
         assert update_account_settings_response.get_status_code() == 200
@@ -973,7 +973,7 @@ class TestIamIdentityV1:
         assert settings["session_invalidation_in_seconds"] == "7200"
         assert settings["max_sessions_per_identity"] == "10"
         assert settings["system_access_token_expiration_in_seconds"] == "3600"
-        assert settings["system_refresh_token_expiration_in_seconds"] == "2592000"
+        assert settings["system_refresh_token_expiration_in_seconds"] == "259200"
 
     @needscredentials
     def test_create_report(self):
