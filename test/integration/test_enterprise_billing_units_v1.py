@@ -191,7 +191,7 @@ class TestEnterpriseBillingUnitsV1:
         # Test get_next().
         pager = GetCreditPoolsPager(
             client=self.enterprise_billing_units_service,
-            billing_unit_id=self.BILLING_UNIT_ID, 
+            billing_unit_id=self.BILLING_UNIT_ID,
             type='PLATFORM',
             limit=10,
         )
@@ -203,7 +203,7 @@ class TestEnterpriseBillingUnitsV1:
         # Test get_all().
         pager = GetCreditPoolsPager(
             client=self.enterprise_billing_units_service,
-            billing_unit_id=self.BILLING_UNIT_ID, 
+            billing_unit_id=self.BILLING_UNIT_ID,
             type='PLATFORM',
             limit=10,
         )

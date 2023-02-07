@@ -31,9 +31,7 @@ import urllib
 from ibm_platform_services.enterprise_billing_units_v1 import *
 
 
-_service = EnterpriseBillingUnitsV1(
-    authenticator=NoAuthAuthenticator()
-)
+_service = EnterpriseBillingUnitsV1(authenticator=NoAuthAuthenticator())
 
 _base_url = 'https://billing.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -70,7 +68,8 @@ def preprocess_url(operation_path: str):
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -97,7 +96,8 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestGetBillingUnit():
+
+class TestGetBillingUnit:
     """
     Test Class for get_billing_unit
     """
@@ -110,20 +110,13 @@ class TestGetBillingUnit():
         # Set up mock
         url = preprocess_url('/v1/billing-units/testString')
         mock_response = '{"id": "id", "crn": "crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>", "name": "name", "enterprise_id": "enterprise_id", "currency_code": "USD", "country_code": "USA", "master": true, "created_at": "2019-05-01T00:00:00.000Z"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         billing_unit_id = 'testString'
 
         # Invoke method
-        response = _service.get_billing_unit(
-            billing_unit_id,
-            headers={}
-        )
+        response = _service.get_billing_unit(billing_unit_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -146,11 +139,7 @@ class TestGetBillingUnit():
         # Set up mock
         url = preprocess_url('/v1/billing-units/testString')
         mock_response = '{"id": "id", "crn": "crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>", "name": "name", "enterprise_id": "enterprise_id", "currency_code": "USD", "country_code": "USA", "master": true, "created_at": "2019-05-01T00:00:00.000Z"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         billing_unit_id = 'testString'
@@ -160,7 +149,7 @@ class TestGetBillingUnit():
             "billing_unit_id": billing_unit_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_billing_unit(**req_copy)
 
@@ -173,7 +162,8 @@ class TestGetBillingUnit():
         _service.disable_retries()
         self.test_get_billing_unit_value_error()
 
-class TestListBillingUnits():
+
+class TestListBillingUnits:
     """
     Test Class for list_billing_units
     """
@@ -186,11 +176,7 @@ class TestListBillingUnits():
         # Set up mock
         url = preprocess_url('/v1/billing-units')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "crn": "crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>", "name": "name", "enterprise_id": "enterprise_id", "currency_code": "USD", "country_code": "USA", "master": true, "created_at": "2019-05-01T00:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
@@ -206,14 +192,14 @@ class TestListBillingUnits():
             account_group_id=account_group_id,
             limit=limit,
             start=start,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'account_id={}'.format(account_id) in query_string
         assert 'enterprise_id={}'.format(enterprise_id) in query_string
@@ -238,15 +224,10 @@ class TestListBillingUnits():
         # Set up mock
         url = preprocess_url('/v1/billing-units')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "crn": "crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>", "name": "name", "enterprise_id": "enterprise_id", "currency_code": "USD", "country_code": "USA", "master": true, "created_at": "2019-05-01T00:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Invoke method
         response = _service.list_billing_units()
-
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -270,16 +251,8 @@ class TestListBillingUnits():
         url = preprocess_url('/v1/billing-units')
         mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","crn":"crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>","name":"name","enterprise_id":"enterprise_id","currency_code":"USD","country_code":"USA","master":true,"created_at":"2019-05-01T00:00:00.000Z"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","crn":"crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>","name":"name","enterprise_id":"enterprise_id","currency_code":"USD","country_code":"USA","master":true,"created_at":"2019-05-01T00:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
+        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
 
         # Exercise the pager class for this operation
         all_results = []
@@ -305,16 +278,8 @@ class TestListBillingUnits():
         url = preprocess_url('/v1/billing-units')
         mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","crn":"crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>","name":"name","enterprise_id":"enterprise_id","currency_code":"USD","country_code":"USA","master":true,"created_at":"2019-05-01T00:00:00.000Z"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","crn":"crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>","name":"name","enterprise_id":"enterprise_id","currency_code":"USD","country_code":"USA","master":true,"created_at":"2019-05-01T00:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
+        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
 
         # Exercise the pager class for this operation
         pager = BillingUnitsPager(
@@ -328,6 +293,7 @@ class TestListBillingUnits():
         assert all_results is not None
         assert len(all_results) == 2
 
+
 # endregion
 ##############################################################################
 # End of Service: BillingUnits
@@ -338,7 +304,8 @@ class TestListBillingUnits():
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -365,7 +332,8 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestListBillingOptions():
+
+class TestListBillingOptions:
     """
     Test Class for list_billing_options
     """
@@ -378,11 +346,7 @@ class TestListBillingOptions():
         # Set up mock
         url = preprocess_url('/v1/billing-options')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "billing_unit_id": "billing_unit_id", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-05-01T00:00:00.000Z", "state": "ACTIVE", "type": "SUBSCRIPTION", "category": "PLATFORM", "payment_instrument": {"anyKey": "anyValue"}, "duration_in_months": 11, "line_item_id": 10, "billing_system": {"anyKey": "anyValue"}, "renewal_mode_code": "renewal_mode_code", "updated_at": "2019-06-01T00:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         billing_unit_id = 'testString'
@@ -390,18 +354,13 @@ class TestListBillingOptions():
         start = 38
 
         # Invoke method
-        response = _service.list_billing_options(
-            billing_unit_id,
-            limit=limit,
-            start=start,
-            headers={}
-        )
+        response = _service.list_billing_options(billing_unit_id, limit=limit, start=start, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'billing_unit_id={}'.format(billing_unit_id) in query_string
         assert 'limit={}'.format(limit) in query_string
@@ -424,26 +383,19 @@ class TestListBillingOptions():
         # Set up mock
         url = preprocess_url('/v1/billing-options')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "billing_unit_id": "billing_unit_id", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-05-01T00:00:00.000Z", "state": "ACTIVE", "type": "SUBSCRIPTION", "category": "PLATFORM", "payment_instrument": {"anyKey": "anyValue"}, "duration_in_months": 11, "line_item_id": 10, "billing_system": {"anyKey": "anyValue"}, "renewal_mode_code": "renewal_mode_code", "updated_at": "2019-06-01T00:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         billing_unit_id = 'testString'
 
         # Invoke method
-        response = _service.list_billing_options(
-            billing_unit_id,
-            headers={}
-        )
+        response = _service.list_billing_options(billing_unit_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'billing_unit_id={}'.format(billing_unit_id) in query_string
 
@@ -464,11 +416,7 @@ class TestListBillingOptions():
         # Set up mock
         url = preprocess_url('/v1/billing-options')
         mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "billing_unit_id": "billing_unit_id", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-05-01T00:00:00.000Z", "state": "ACTIVE", "type": "SUBSCRIPTION", "category": "PLATFORM", "payment_instrument": {"anyKey": "anyValue"}, "duration_in_months": 11, "line_item_id": 10, "billing_system": {"anyKey": "anyValue"}, "renewal_mode_code": "renewal_mode_code", "updated_at": "2019-06-01T00:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         billing_unit_id = 'testString'
@@ -478,7 +426,7 @@ class TestListBillingOptions():
             "billing_unit_id": billing_unit_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_billing_options(**req_copy)
 
@@ -500,16 +448,8 @@ class TestListBillingOptions():
         url = preprocess_url('/v1/billing-options')
         mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","billing_unit_id":"billing_unit_id","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-05-01T00:00:00.000Z","state":"ACTIVE","type":"SUBSCRIPTION","category":"PLATFORM","payment_instrument":{"anyKey":"anyValue"},"duration_in_months":11,"line_item_id":10,"billing_system":{"anyKey":"anyValue"},"renewal_mode_code":"renewal_mode_code","updated_at":"2019-06-01T00:00:00.000Z"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","billing_unit_id":"billing_unit_id","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-05-01T00:00:00.000Z","state":"ACTIVE","type":"SUBSCRIPTION","category":"PLATFORM","payment_instrument":{"anyKey":"anyValue"},"duration_in_months":11,"line_item_id":10,"billing_system":{"anyKey":"anyValue"},"renewal_mode_code":"renewal_mode_code","updated_at":"2019-06-01T00:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
+        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
 
         # Exercise the pager class for this operation
         all_results = []
@@ -533,16 +473,8 @@ class TestListBillingOptions():
         url = preprocess_url('/v1/billing-options')
         mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","billing_unit_id":"billing_unit_id","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-05-01T00:00:00.000Z","state":"ACTIVE","type":"SUBSCRIPTION","category":"PLATFORM","payment_instrument":{"anyKey":"anyValue"},"duration_in_months":11,"line_item_id":10,"billing_system":{"anyKey":"anyValue"},"renewal_mode_code":"renewal_mode_code","updated_at":"2019-06-01T00:00:00.000Z"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","billing_unit_id":"billing_unit_id","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-05-01T00:00:00.000Z","state":"ACTIVE","type":"SUBSCRIPTION","category":"PLATFORM","payment_instrument":{"anyKey":"anyValue"},"duration_in_months":11,"line_item_id":10,"billing_system":{"anyKey":"anyValue"},"renewal_mode_code":"renewal_mode_code","updated_at":"2019-06-01T00:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
+        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
 
         # Exercise the pager class for this operation
         pager = BillingOptionsPager(
@@ -554,6 +486,7 @@ class TestListBillingOptions():
         assert all_results is not None
         assert len(all_results) == 2
 
+
 # endregion
 ##############################################################################
 # End of Service: BillingOptions
@@ -564,7 +497,8 @@ class TestListBillingOptions():
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -591,7 +525,8 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestGetCreditPools():
+
+class TestGetCreditPools:
     """
     Test Class for get_credit_pools
     """
@@ -604,11 +539,7 @@ class TestGetCreditPools():
         # Set up mock
         url = preprocess_url('/v1/credit-pools')
         mock_response = '{"rows_count": 2, "next_url": "next_url", "resources": [{"type": "PLATFORM", "currency_code": "USD", "billing_unit_id": "billing_unit_id", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "category": "PLATFORM", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-04-30T23:59:29.999Z", "total_credits": 10000, "starting_balance": 9000, "used_credits": 9500, "current_balance": 0, "resources": [{"anyKey": "anyValue"}]}], "overage": {"cost": 500, "resources": [{"anyKey": "anyValue"}]}}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         billing_unit_id = 'testString'
@@ -619,19 +550,14 @@ class TestGetCreditPools():
 
         # Invoke method
         response = _service.get_credit_pools(
-            billing_unit_id,
-            date=date,
-            type=type,
-            limit=limit,
-            start=start,
-            headers={}
+            billing_unit_id, date=date, type=type, limit=limit, start=start, headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'billing_unit_id={}'.format(billing_unit_id) in query_string
         assert 'date={}'.format(date) in query_string
@@ -656,26 +582,19 @@ class TestGetCreditPools():
         # Set up mock
         url = preprocess_url('/v1/credit-pools')
         mock_response = '{"rows_count": 2, "next_url": "next_url", "resources": [{"type": "PLATFORM", "currency_code": "USD", "billing_unit_id": "billing_unit_id", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "category": "PLATFORM", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-04-30T23:59:29.999Z", "total_credits": 10000, "starting_balance": 9000, "used_credits": 9500, "current_balance": 0, "resources": [{"anyKey": "anyValue"}]}], "overage": {"cost": 500, "resources": [{"anyKey": "anyValue"}]}}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         billing_unit_id = 'testString'
 
         # Invoke method
-        response = _service.get_credit_pools(
-            billing_unit_id,
-            headers={}
-        )
+        response = _service.get_credit_pools(billing_unit_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'billing_unit_id={}'.format(billing_unit_id) in query_string
 
@@ -696,11 +615,7 @@ class TestGetCreditPools():
         # Set up mock
         url = preprocess_url('/v1/credit-pools')
         mock_response = '{"rows_count": 2, "next_url": "next_url", "resources": [{"type": "PLATFORM", "currency_code": "USD", "billing_unit_id": "billing_unit_id", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "category": "PLATFORM", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-04-30T23:59:29.999Z", "total_credits": 10000, "starting_balance": 9000, "used_credits": 9500, "current_balance": 0, "resources": [{"anyKey": "anyValue"}]}], "overage": {"cost": 500, "resources": [{"anyKey": "anyValue"}]}}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         billing_unit_id = 'testString'
@@ -710,7 +625,7 @@ class TestGetCreditPools():
             "billing_unit_id": billing_unit_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_credit_pools(**req_copy)
 
@@ -732,16 +647,8 @@ class TestGetCreditPools():
         url = preprocess_url('/v1/credit-pools')
         mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"type":"PLATFORM","currency_code":"USD","billing_unit_id":"billing_unit_id","term_credits":[{"billing_option_id":"JWX986YRGFSHACQUEFOI","category":"PLATFORM","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-04-30T23:59:29.999Z","total_credits":10000,"starting_balance":9000,"used_credits":9500,"current_balance":0,"resources":[{"anyKey":"anyValue"}]}],"overage":{"cost":500,"resources":[{"anyKey":"anyValue"}]}}]}'
         mock_response2 = '{"total_count":2,"limit":1,"resources":[{"type":"PLATFORM","currency_code":"USD","billing_unit_id":"billing_unit_id","term_credits":[{"billing_option_id":"JWX986YRGFSHACQUEFOI","category":"PLATFORM","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-04-30T23:59:29.999Z","total_credits":10000,"starting_balance":9000,"used_credits":9500,"current_balance":0,"resources":[{"anyKey":"anyValue"}]}],"overage":{"cost":500,"resources":[{"anyKey":"anyValue"}]}}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
+        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
 
         # Exercise the pager class for this operation
         all_results = []
@@ -767,16 +674,8 @@ class TestGetCreditPools():
         url = preprocess_url('/v1/credit-pools')
         mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"type":"PLATFORM","currency_code":"USD","billing_unit_id":"billing_unit_id","term_credits":[{"billing_option_id":"JWX986YRGFSHACQUEFOI","category":"PLATFORM","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-04-30T23:59:29.999Z","total_credits":10000,"starting_balance":9000,"used_credits":9500,"current_balance":0,"resources":[{"anyKey":"anyValue"}]}],"overage":{"cost":500,"resources":[{"anyKey":"anyValue"}]}}]}'
         mock_response2 = '{"total_count":2,"limit":1,"resources":[{"type":"PLATFORM","currency_code":"USD","billing_unit_id":"billing_unit_id","term_credits":[{"billing_option_id":"JWX986YRGFSHACQUEFOI","category":"PLATFORM","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-04-30T23:59:29.999Z","total_credits":10000,"starting_balance":9000,"used_credits":9500,"current_balance":0,"resources":[{"anyKey":"anyValue"}]}],"overage":{"cost":500,"resources":[{"anyKey":"anyValue"}]}}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
+        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
 
         # Exercise the pager class for this operation
         pager = GetCreditPoolsPager(
@@ -790,6 +689,7 @@ class TestGetCreditPools():
         assert all_results is not None
         assert len(all_results) == 2
 
+
 # endregion
 ##############################################################################
 # End of Service: CreditPools
@@ -800,7 +700,7 @@ class TestGetCreditPools():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestModel_BillingOption():
+class TestModel_BillingOption:
     """
     Test Class for BillingOption
     """
@@ -841,7 +741,8 @@ class TestModel_BillingOption():
         billing_option_model_json2 = billing_option_model.to_dict()
         assert billing_option_model_json2 == billing_option_model_json
 
-class TestModel_BillingOptionsList():
+
+class TestModel_BillingOptionsList:
     """
     Test Class for BillingOptionsList
     """
@@ -853,7 +754,7 @@ class TestModel_BillingOptionsList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        billing_option_model = {} # BillingOption
+        billing_option_model = {}  # BillingOption
         billing_option_model['id'] = 'CFL_JJKLVZ2I0JE-_MGU'
         billing_option_model['billing_unit_id'] = 'e19fa97c9bb34963a31a2008044d8b59'
         billing_option_model['start_date'] = '2019-05-02T07:00:00Z'
@@ -889,7 +790,8 @@ class TestModel_BillingOptionsList():
         billing_options_list_model_json2 = billing_options_list_model.to_dict()
         assert billing_options_list_model_json2 == billing_options_list_model_json
 
-class TestModel_BillingUnit():
+
+class TestModel_BillingUnit:
     """
     Test Class for BillingUnit
     """
@@ -902,7 +804,9 @@ class TestModel_BillingUnit():
         # Construct a json representation of a BillingUnit model
         billing_unit_model_json = {}
         billing_unit_model_json['id'] = 'testString'
-        billing_unit_model_json['crn'] = 'crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>'
+        billing_unit_model_json[
+            'crn'
+        ] = 'crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>'
         billing_unit_model_json['name'] = 'testString'
         billing_unit_model_json['enterprise_id'] = 'testString'
         billing_unit_model_json['currency_code'] = 'USD'
@@ -925,7 +829,8 @@ class TestModel_BillingUnit():
         billing_unit_model_json2 = billing_unit_model.to_dict()
         assert billing_unit_model_json2 == billing_unit_model_json
 
-class TestModel_BillingUnitsList():
+
+class TestModel_BillingUnitsList:
     """
     Test Class for BillingUnitsList
     """
@@ -937,9 +842,11 @@ class TestModel_BillingUnitsList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        billing_unit_model = {} # BillingUnit
+        billing_unit_model = {}  # BillingUnit
         billing_unit_model['id'] = '$BILLING_UNIT_ID'
-        billing_unit_model['crn'] = 'crn:v1:bluemix:public:billing::a/$ENTERPRISE_ACCOUNT_ID::billing-unit:$BILLING_UNIT_ID'
+        billing_unit_model[
+            'crn'
+        ] = 'crn:v1:bluemix:public:billing::a/$ENTERPRISE_ACCOUNT_ID::billing-unit:$BILLING_UNIT_ID'
         billing_unit_model['name'] = 'Sample Billing Unit'
         billing_unit_model['enterprise_id'] = '$ENTERPRISE_ID'
         billing_unit_model['currency_code'] = 'USD'
@@ -968,7 +875,8 @@ class TestModel_BillingUnitsList():
         billing_units_list_model_json2 = billing_units_list_model.to_dict()
         assert billing_units_list_model_json2 == billing_units_list_model_json
 
-class TestModel_CreditPool():
+
+class TestModel_CreditPool:
     """
     Test Class for CreditPool
     """
@@ -980,7 +888,7 @@ class TestModel_CreditPool():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        term_credits_model = {} # TermCredits
+        term_credits_model = {}  # TermCredits
         term_credits_model['billing_option_id'] = '$BILLING_OPTION_ID'
         term_credits_model['category'] = 'PLATFORM'
         term_credits_model['start_date'] = '2019-07-01T01:00:00Z'
@@ -991,7 +899,7 @@ class TestModel_CreditPool():
         term_credits_model['current_balance'] = 5000
         term_credits_model['resources'] = []
 
-        credit_pool_overage_model = {} # CreditPoolOverage
+        credit_pool_overage_model = {}  # CreditPoolOverage
         credit_pool_overage_model['cost'] = 0
         credit_pool_overage_model['resources'] = []
 
@@ -1018,7 +926,8 @@ class TestModel_CreditPool():
         credit_pool_model_json2 = credit_pool_model.to_dict()
         assert credit_pool_model_json2 == credit_pool_model_json
 
-class TestModel_CreditPoolOverage():
+
+class TestModel_CreditPoolOverage:
     """
     Test Class for CreditPoolOverage
     """
@@ -1048,7 +957,8 @@ class TestModel_CreditPoolOverage():
         credit_pool_overage_model_json2 = credit_pool_overage_model.to_dict()
         assert credit_pool_overage_model_json2 == credit_pool_overage_model_json
 
-class TestModel_CreditPoolsList():
+
+class TestModel_CreditPoolsList:
     """
     Test Class for CreditPoolsList
     """
@@ -1060,7 +970,7 @@ class TestModel_CreditPoolsList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        term_credits_model = {} # TermCredits
+        term_credits_model = {}  # TermCredits
         term_credits_model['billing_option_id'] = '$BILLING_OPTION_ID'
         term_credits_model['category'] = 'PLATFORM'
         term_credits_model['start_date'] = '2019-07-01T01:00:00Z'
@@ -1071,11 +981,11 @@ class TestModel_CreditPoolsList():
         term_credits_model['current_balance'] = 5000
         term_credits_model['resources'] = []
 
-        credit_pool_overage_model = {} # CreditPoolOverage
+        credit_pool_overage_model = {}  # CreditPoolOverage
         credit_pool_overage_model['cost'] = 0
         credit_pool_overage_model['resources'] = []
 
-        credit_pool_model = {} # CreditPool
+        credit_pool_model = {}  # CreditPool
         credit_pool_model['type'] = 'PLATFORM'
         credit_pool_model['currency_code'] = 'USD'
         credit_pool_model['billing_unit_id'] = '$BILLING_UNIT_ID'
@@ -1103,7 +1013,8 @@ class TestModel_CreditPoolsList():
         credit_pools_list_model_json2 = credit_pools_list_model.to_dict()
         assert credit_pools_list_model_json2 == credit_pools_list_model_json
 
-class TestModel_TermCredits():
+
+class TestModel_TermCredits:
     """
     Test Class for TermCredits
     """
