@@ -56,7 +56,6 @@ class TestCaseManagementV1(unittest.TestCase):
         print('Setup complete.')
 
     def test_01_create_case(self):
-
         # Offering info can be retrieved via /case-management/utilities/v1/offerings/technical
         offering_payload_type_model = {}
         offering_payload_type_model['group'] = 'crn_service_name'
@@ -87,7 +86,6 @@ class TestCaseManagementV1(unittest.TestCase):
         assert description == response.result['description']
 
     def test_02_create_case_with_empty_offering(self):
-
         type = 'technical'
         subject = TestCaseManagementV1.case_label + ' test case (negative test)'
         description = 'Please -ignore this is a test case.'
@@ -98,7 +96,6 @@ class TestCaseManagementV1(unittest.TestCase):
         assert e.value.code == 400
 
     def test_03_create_case_with_empty_subject_and_description(self):
-
         # Offering info can be retrieved via /case-management/utilities/v1/offerings/technical
         offering_payload_type_model = {}
         offering_payload_type_model['group'] = 'crn_service_name'
@@ -121,7 +118,6 @@ class TestCaseManagementV1(unittest.TestCase):
         assert e.value.code == 400
 
     def test_04_get_cases(self):
-
         cases = []
         offset = 0
         page_size = 1
@@ -177,7 +173,6 @@ class TestCaseManagementV1(unittest.TestCase):
         print(f'\nget_cases() returned a total of {len(all_results)} items(s) using GetCasesPager.')
 
     def test_05_get_case(self):
-
         fields = ['number', 'short_description']
         case_number = TestCaseManagementV1.new_case_number
 
@@ -187,7 +182,6 @@ class TestCaseManagementV1(unittest.TestCase):
         assert response.result['short_description'] != ''
 
     def test_06_get_case_with_invalid_field(self):
-
         fields = ['number', 'short_description', 'invalid_field']
         case_number = TestCaseManagementV1.new_case_number
 
@@ -196,7 +190,6 @@ class TestCaseManagementV1(unittest.TestCase):
         assert e.value.code == 400
 
     def test_07_add_comment(self):
-
         case_number = TestCaseManagementV1.new_case_number
         comment = 'This is a test comment!'
 
@@ -206,7 +199,6 @@ class TestCaseManagementV1(unittest.TestCase):
         assert comment == response.result["value"]
 
     def test_08_add_comment_to_nonexisting_case(self):
-
         case_number = 'fake-case-number'
         comment = 'This is a test comment!'
 
@@ -215,7 +207,6 @@ class TestCaseManagementV1(unittest.TestCase):
         assert e.value.code == 404
 
     def test_09_add_watch_list_member(self):
-
         # Users can be retrieved via the User Management API.
         user_id_and_realm_model = {}
         user_id_and_realm_model['realm'] = 'IBMid'
@@ -236,7 +227,6 @@ class TestCaseManagementV1(unittest.TestCase):
         assert len(found_users) == 1
 
     def test_10_file_upload(self):
-
         fileName = "test_file.txt"
 
         file_with_metadata_model = {}
@@ -253,7 +243,6 @@ class TestCaseManagementV1(unittest.TestCase):
         assert response.result['filename'] == fileName
 
     def test_11_download_file(self):
-
         response = self.service.download_file(
             TestCaseManagementV1.new_case_number, TestCaseManagementV1.file_attachment_id, headers={}
         )
@@ -262,7 +251,6 @@ class TestCaseManagementV1(unittest.TestCase):
         assert 'content-type' in response.headers
 
     def test_12_delete_file(self):
-
         response = self.service.delete_file(
             TestCaseManagementV1.new_case_number, TestCaseManagementV1.file_attachment_id, headers={}
         )
@@ -272,7 +260,6 @@ class TestCaseManagementV1(unittest.TestCase):
         assert len(response.result['attachments']) == 0
 
     def test_13_add_resource(self):
-
         response = self.service.add_resource(
             TestCaseManagementV1.new_case_number, crn=TestCaseManagementV1.resource_crn, note='Test resource'
         )
@@ -280,7 +267,6 @@ class TestCaseManagementV1(unittest.TestCase):
         assert response is not None
 
     def test_14_resolve_case(self):
-
         status_payload = {}
         status_payload['action'] = 'resolve'
         status_payload['comment'] = 'testString'

@@ -188,7 +188,6 @@ class TestIamPolicyManagementV1Examples:
         update_policy_state request example
         """
         try:
-
             print('\nupdate_policy_state() result:')
             # begin-update_policy_state
 
@@ -209,7 +208,6 @@ class TestIamPolicyManagementV1Examples:
         list_policies request example
         """
         try:
-
             print('\nlist_policies() result:')
             # begin-list_policies
 
@@ -230,7 +228,6 @@ class TestIamPolicyManagementV1Examples:
         delete_policy request example
         """
         try:
-
             print('\ndelete_policy() result:')
             # begin-delete_policy
 
@@ -338,7 +335,6 @@ class TestIamPolicyManagementV1Examples:
         replace_v2_policy request example
         """
         try:
-
             print('\nreplace_v2_policy() result:')
             # begin-replace_v2_policy
 
@@ -404,7 +400,6 @@ class TestIamPolicyManagementV1Examples:
         list_v2_policies request example
         """
         try:
-
             print('\nlist_v2_policies() result:')
             # begin-list_v2_policies
 
@@ -425,7 +420,6 @@ class TestIamPolicyManagementV1Examples:
         delete_v2_policy request example
         """
         try:
-
             print('\ndelete_v2_policy() result:')
             # begin-delete_v2_policy
 
@@ -495,7 +489,6 @@ class TestIamPolicyManagementV1Examples:
         replace_role request example
         """
         try:
-
             print('\nreplace_role() result:')
             # begin-replace_role
 
@@ -520,7 +513,6 @@ class TestIamPolicyManagementV1Examples:
         list_roles request example
         """
         try:
-
             print('\nlist_roles() result:')
             # begin-list_roles
 
@@ -539,7 +531,6 @@ class TestIamPolicyManagementV1Examples:
         delete_role request example
         """
         try:
-
             print('\ndelete_role() result:')
             # begin-delete_role
 

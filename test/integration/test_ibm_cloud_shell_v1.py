@@ -54,7 +54,6 @@ class IbmCloudShellV1IntegrationTests(unittest.TestCase):
 
     @needscredentials
     def test_get_account_settings(self):
-
         get_account_settings_response = self.ibm_cloud_shell_service.get_account_settings(account_id=self.ACCOUNT_ID)
 
         assert get_account_settings_response.get_status_code() == 200
@@ -63,7 +62,6 @@ class IbmCloudShellV1IntegrationTests(unittest.TestCase):
 
     @needscredentials
     def test_update_account_settings(self):
-
         get_account_settings_response = self.ibm_cloud_shell_service.get_account_settings(account_id=self.ACCOUNT_ID)
 
         assert get_account_settings_response.get_status_code() == 200

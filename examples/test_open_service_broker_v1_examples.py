@@ -62,6 +62,7 @@ initiatorId = 'null'
 reasonCode = 'IBMCLOUD_ACCT_SUSPEND'
 operation = 'Provision_45'
 
+
 ##############################################################################
 # Start of Examples for Service: OpenServiceBrokerV1
 ##############################################################################
@@ -228,7 +229,6 @@ class TestOpenServiceBrokerV1Examples:
         list_catalog request example
         """
         try:
-
             print('\nlist_catalog() result:')
             # begin-list_catalog
 

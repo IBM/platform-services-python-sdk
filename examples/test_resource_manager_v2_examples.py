@@ -47,6 +47,7 @@ example_user_account_id = None
 
 resource_group_id = None
 
+
 ##############################################################################
 # Start of Examples for Service: ResourceManagerV2
 ##############################################################################
@@ -102,7 +103,6 @@ class TestResourceManagerV2Examples:
         assert example_user_account_id is not None
 
         try:
-
             print('\ncreate_resource_group() result:')
             # begin-create_resource_group
 
@@ -129,7 +129,6 @@ class TestResourceManagerV2Examples:
         assert resource_group_id is not None
 
         try:
-
             print('\nget_resource_group() result:')
             # begin-get_resource_group
 
@@ -152,7 +151,6 @@ class TestResourceManagerV2Examples:
         assert resource_group_id is not None
 
         try:
-
             print('\nupdate_resource_group() result:')
             # begin-update_resource_group
 
@@ -177,7 +175,6 @@ class TestResourceManagerV2Examples:
         assert example_user_account_id is not None
 
         try:
-
             print('\nlist_resource_groups() result:')
             # begin-list_resource_groups
 
@@ -201,7 +198,6 @@ class TestResourceManagerV2Examples:
         assert resource_group_id is not None
 
         try:
-
             print('\ndelete_resource_group() result:')
             # begin-delete_resource_group
 
@@ -224,7 +220,6 @@ class TestResourceManagerV2Examples:
         assert example_quota_id is not None
 
         try:
-
             print('\nget_quota_definition() result:')
             # begin-get_quota_definition
 
@@ -245,7 +240,6 @@ class TestResourceManagerV2Examples:
         list_quota_definitions request example
         """
         try:
-
             print('\nlist_quota_definitions() result:')
             # begin-list_quota_definitions
 

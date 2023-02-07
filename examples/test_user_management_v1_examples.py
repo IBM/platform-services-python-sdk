@@ -62,6 +62,7 @@ access_group_id = None
 
 delete_user_id = None
 
+
 ##############################################################################
 # Start of Examples for Service: UserManagementV1
 ##############################################################################
@@ -128,7 +129,6 @@ class TestUserManagementV1Examples:
         assert access_group_id is not None
 
         try:
-
             print('\ninvite_users() result:')
             # begin-invite_users
 
@@ -195,7 +195,6 @@ class TestUserManagementV1Examples:
         assert delete_user_id is not None
 
         try:
-
             print('\nremove_user() result:')
             # begin-remove_user
 
@@ -220,7 +219,6 @@ class TestUserManagementV1Examples:
         assert user_id is not None
 
         try:
-
             print('\nget_user_profile() result:')
             # begin-get_user_profile
 
@@ -245,7 +243,6 @@ class TestUserManagementV1Examples:
         assert user_id is not None
 
         try:
-
             print('\nupdate_user_profile() result:')
             # begin-update_user_profile
 
@@ -271,7 +268,6 @@ class TestUserManagementV1Examples:
         assert user_id is not None
 
         try:
-
             print('\nget_user_settings() result:')
             # begin-get_user_settings
 
@@ -296,7 +292,6 @@ class TestUserManagementV1Examples:
         assert user_id is not None
 
         try:
-
             print('\nupdate_user_settings() result:')
             # begin-update_user_settings
 

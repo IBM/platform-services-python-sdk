@@ -173,7 +173,6 @@ class TestEnterpriseManagementV1Examples:
         assert account_group_id is not None
 
         try:
-
             print('\nget_account_group() result:')
             # begin-get_account_group
 

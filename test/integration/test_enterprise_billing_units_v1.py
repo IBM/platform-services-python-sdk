@@ -60,7 +60,6 @@ class TestEnterpriseBillingUnitsV1:
 
     @needscredentials
     def test_get_billing_unit(self):
-
         get_billing_unit_response = self.enterprise_billing_units_service.get_billing_unit(
             billing_unit_id=self.BILLING_UNIT_ID
         )
@@ -72,7 +71,6 @@ class TestEnterpriseBillingUnitsV1:
 
     @needscredentials
     def test_list_billing_units_1(self):
-
         list_billing_units_response = self.enterprise_billing_units_service.list_billing_units(
             enterprise_id=self.ENTERPRISE_ID
         )
@@ -84,7 +82,6 @@ class TestEnterpriseBillingUnitsV1:
 
     @needscredentials
     def test_list_billing_units_2(self):
-
         list_billing_units_response = self.enterprise_billing_units_service.list_billing_units(
             account_id=self.ACCOUNT_ID
         )
@@ -96,7 +93,6 @@ class TestEnterpriseBillingUnitsV1:
 
     @needscredentials
     def test_list_billing_units_3(self):
-
         list_billing_units_response = self.enterprise_billing_units_service.list_billing_units(
             account_group_id=self.ACCOUNT_GROUP_ID
         )
@@ -135,7 +131,6 @@ class TestEnterpriseBillingUnitsV1:
 
     @needscredentials
     def test_list_billing_options(self):
-
         list_billing_options_response = self.enterprise_billing_units_service.list_billing_options(
             billing_unit_id=self.BILLING_UNIT_ID
         )
@@ -174,7 +169,6 @@ class TestEnterpriseBillingUnitsV1:
 
     @needscredentials
     def test_get_credit_pools(self):
-
         get_credit_pools_response = self.enterprise_billing_units_service.get_credit_pools(
             billing_unit_id=self.BILLING_UNIT_ID, type='PLATFORM'
         )

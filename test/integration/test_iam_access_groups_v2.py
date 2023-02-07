@@ -91,7 +91,6 @@ class TestIamAccessGroupsV2:
 
         # Iterate across the groups
         for group in result.groups:
-
             # Force delete the test group (or any test groups older than 5 minutes)
             if group.name == cls.testGroupName:
                 now = datetime.now(tz=timezone.utc)

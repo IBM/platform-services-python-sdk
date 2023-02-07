@@ -154,7 +154,6 @@ class TestCatalogManagementV1:
     def test_get_catalog_returns_404_when_no_such_catalog(self):
         assert catalog_id is not None
         try:
-
             self.catalog_management_service_authorized.get_catalog(
                 catalog_identifier='invalid-' + catalog_id,
             )
@@ -165,7 +164,6 @@ class TestCatalogManagementV1:
     def test_get_catalog_returns_403_when_user_is_not_authorized(self):
         assert catalog_id is not None
         try:
-
             self.catalog_management_service_not_authorized.get_catalog(
                 catalog_identifier=catalog_id,
             )
@@ -937,7 +935,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_update_catalog_account_returns_400_when_no_such_account(self):
-
         try:
             self.catalog_management_service_authorized.update_catalog_account(
                 id='invalid-' + self.account_id,
@@ -947,7 +944,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_update_catalog_account_returns_403_when_user_is_not_authorized(self):
-
         try:
             self.catalog_management_service_not_authorized.update_catalog_account(
                 id=self.account_id,
@@ -958,7 +954,6 @@ class TestCatalogManagementV1:
     @needscredentials
     @pytest.mark.skip(reason='Skipped by design')
     def test_update_catalog_account_returns_400_when_backend_input_validation_fails(self):
-
         # user is not granted for this operation
         # a body with failing data comes here
 
@@ -972,7 +967,6 @@ class TestCatalogManagementV1:
     @needscredentials
     @pytest.mark.skip(reason='Skipped by design')
     def test_update_catalog_account(self):
-
         # user is not granted for this operation
         # a body with failing data comes here
 
@@ -1411,7 +1405,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_get_offering_about_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.get_offering_about(
                 version_loc_id=bogus_version_locator_id,
@@ -1520,7 +1513,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_get_offering_container_images_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.get_offering_container_images(
                 version_loc_id=bogus_version_locator_id,
@@ -1581,7 +1573,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_deprecate_version_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.deprecate_version(
                 version_loc_id=bogus_version_locator_id,
@@ -1620,7 +1611,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_account_publish_version_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.account_publish_version(
                 version_loc_id=bogus_version_locator_id,
@@ -1670,7 +1660,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_ibm_publish_version_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.ibm_publish_version(
                 version_loc_id=bogus_version_locator_id,
@@ -1719,7 +1708,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_public_publish_version_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.public_publish_version(
                 version_loc_id=bogus_version_locator_id,
@@ -1768,7 +1756,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_commit_version_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.commit_version(
                 version_loc_id=bogus_version_locator_id,
@@ -1842,7 +1829,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_copy_version_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.copy_version(
                 version_loc_id=bogus_version_locator_id,
@@ -1871,7 +1857,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_get_offering_working_copy_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.get_offering_working_copy(
                 version_loc_id=bogus_version_locator_id,
@@ -1924,7 +1909,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_get_version_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.get_version(
                 version_loc_id=bogus_version_locator_id,
@@ -1973,7 +1957,6 @@ class TestCatalogManagementV1:
     @needscredentials
     @pytest.mark.skip(reason='Skipped by design')
     def test_get_cluster_returns_403_when_user_is_not_authorized(self):
-
         # possibly this user doesn't have right to execute this operation
 
         try:
@@ -1987,7 +1970,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_get_cluster_returns_404_when_no_such_cluster(self):
-
         try:
             self.catalog_management_service_authorized.get_cluster(
                 cluster_id='invalid-' + self.cluster_id,
@@ -2000,7 +1982,6 @@ class TestCatalogManagementV1:
     @needscredentials
     @pytest.mark.skip(reason='Skipped by design')
     def test_get_cluster(self):
-
         # possibly this user doesn't have right to get the cluster details
         # until it is not clear it is skipped
         # The specified cluster could not be found. If applicable, make sure that you target the correct account
@@ -2033,7 +2014,6 @@ class TestCatalogManagementV1:
     @needscredentials
     @pytest.mark.skip(reason='Skipped by design')
     def test_get_namespaces_returns_403_when_user_is_not_authorized(self):
-
         # possibly this user doesn't have right to get the cluster details
         # until it is not clear it is skipped
         # The specified cluster could not be found. If applicable, make sure that you target the correct account
@@ -2051,7 +2031,6 @@ class TestCatalogManagementV1:
     @needscredentials
     @pytest.mark.skip(reason='Skipped by design')
     def test_get_namespaces(self):
-
         # possibly this user doesn't have right to get the cluster details
         # until it is not clear it is skipped
         # The specified cluster could not be found. If applicable, make sure that you target the correct account
@@ -2103,7 +2082,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_deploy_operators_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.deploy_operators(
                 x_auth_refresh_token=self.refresh_token_authorized,
@@ -2157,7 +2135,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_list_operators_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.list_operators(
                 x_auth_refresh_token=self.refresh_token_authorized,
@@ -2239,7 +2216,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_replace_operators_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.replace_operators(
                 x_auth_refresh_token=self.refresh_token_authorized,
@@ -2309,7 +2285,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_install_version_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.install_version(
                 version_loc_id=bogus_version_locator_id,
@@ -2363,7 +2338,6 @@ class TestCatalogManagementV1:
     @needscredentials
     @pytest.mark.skip(reason='Skipped by design')
     def test_preinstall_version_returns_404_when_no_such_cluster(self):
-
         # it requires a version where preinstall script is installed
         # but I don't know how to do it
         # once it is done possible to squeeze a 404 from the cluster
@@ -2383,7 +2357,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_preinstall_version_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.preinstall_version(
                 version_loc_id=bogus_version_locator_id,
@@ -2446,7 +2419,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_get_preinstall_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.get_preinstall(
                 version_loc_id=bogus_version_locator_id,
@@ -2511,7 +2483,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_validate_install_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.validate_install(
                 version_loc_id=bogus_version_locator_id,
@@ -2573,7 +2544,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_get_validation_status_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.get_validation_status(
                 version_loc_id=bogus_version_locator_id,
@@ -2623,7 +2593,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_get_override_values_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.get_override_values(
                 version_loc_id=bogus_version_locator_id,
@@ -2634,7 +2603,6 @@ class TestCatalogManagementV1:
     @needscredentials
     @pytest.mark.skip(reason='Skipped by design')
     def test_get_override_values(self):
-
         # requires validation run before this operation
 
         assert version_locator_id is not None
@@ -2653,7 +2621,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_search_objects_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.search_objects(
                 query='',
@@ -2665,7 +2632,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_search_objects_returns_200_when_user_is_not_authorized(self):
-
         search_objects_response = self.catalog_management_service_not_authorized.search_objects(
             query='name: ' + object_name,
             collapse=True,
@@ -2678,7 +2644,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_search_objects(self):
-
         limit = 1
         offset = 0
 
@@ -2811,7 +2776,6 @@ class TestCatalogManagementV1:
     @needscredentials
     @pytest.mark.skip(reason='Skipped by design')
     def test_replace_object(self):
-
         # cannot change name of object, what can be changed?
 
         assert catalog_id is not None
@@ -3527,7 +3491,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_delete_version_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.delete_version(
                 version_loc_id=bogus_version_locator_id,
@@ -3601,7 +3564,6 @@ class TestCatalogManagementV1:
 
     @needscredentials
     def test_delete_operators_returns_400_when_backend_input_validation_fails(self):
-
         try:
             self.catalog_management_service_authorized.delete_operators(
                 x_auth_refresh_token=self.refresh_token_authorized,

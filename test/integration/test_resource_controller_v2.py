@@ -1187,7 +1187,6 @@ class TestResourceControllerV2(unittest.TestCase):
         assert result.get('state') == "removed"
 
     def test_44_create_resource_instance_for_reclamation_enabled_plan(self):
-
         customHeaders = {}
         customHeaders["Transaction-Id"] = "rc-sdk-python-test44-" + self.transactionId
 
@@ -1372,7 +1371,6 @@ class TestResourceControllerV2(unittest.TestCase):
         time.sleep(20)
 
     def test_53_cancel_last_operation(self):
-
         customHeaders = {}
         customHeaders["Transaction-Id"] = "rc-sdk-python-test53-" + self.transactionId
         try:
@@ -1466,7 +1464,6 @@ class TestResourceControllerV2(unittest.TestCase):
 
     @classmethod
     def cleanupByName(cls):
-
         # Resource Keys
         for resourceKeyName in cls.keyNames.values():
             try:

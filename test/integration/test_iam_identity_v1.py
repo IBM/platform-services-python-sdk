@@ -412,7 +412,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_list_service_ids(self):
-
         list_service_ids_response = self.iam_identity_service.list_service_ids(
             account_id=self.account_id, name=self.serviceid_name, pagesize=100
         )
