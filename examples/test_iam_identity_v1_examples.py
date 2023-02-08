@@ -67,6 +67,10 @@ link_id = None
 
 account_settings_etag = None
 
+report_reference_mfa=None
+
+iam_id_member= None
+
 
 ##############################################################################
 # Start of Examples for Service: IamIdentityV1
@@ -99,6 +103,9 @@ class TestIamIdentityV1Examples:
 
             global iam_id
             iam_id = config['IAM_ID']
+
+            global iam_id_member
+            iam_id_member= config['IAM_ID_MEMBER']
 
             global apikey
             apikey = config['APIKEY']
@@ -789,7 +796,7 @@ class TestIamIdentityV1Examples:
             # begin-updateAccountSettings
 
             account_settings_user_mfa = {}
-            account_settings_user_mfa['iam_id'] = self.iam_id_member
+            account_settings_user_mfa['iam_id'] = iam_id_member
             account_settings_user_mfa['mfa'] = 'NONE'
 
             account_settings_response = iam_identity_service.update_account_settings(
@@ -803,7 +810,7 @@ class TestIamIdentityV1Examples:
                 session_invalidation_in_seconds="7200",
                 max_sessions_per_identity='10',
                 system_access_token_expiration_in_seconds='3600',
-                system_refresh_token_expiration_in_seconds='2592000',
+                system_refresh_token_expiration_in_seconds='259200',
             ).get_result()
 
             print(json.dumps(account_settings_response, indent=2))
@@ -846,12 +853,77 @@ class TestIamIdentityV1Examples:
 
             get_report_response = iam_identity_service.get_report(
                 account_id=account_id,
-                type="latest",
+                reference="latest"
             ).get_result()
 
             print(json.dumps(get_report_response, indent=2))
 
             # end-get_report
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_mfa_report(self):
+        """
+        create_mfa_report request example
+        """
+        try:
+            global report_reference_mfa
+            print('\ncreate_mfa_report() result:')
+            # begin-create_mfa_report
+
+            create_report_response = iam_identity_service.create_mfa_report(
+                account_id=account_id,
+                type="mfa_status"
+            ).get_result()
+
+            print(json.dumps(create_report_response, indent=2))
+            report_reference_mfa = create_report_response['reference']
+
+            # end-create_mfa_report
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_mfa_report(self):
+        """
+        get_mfa_report request example
+        """
+        try:
+            print('\nget_mfa_report() result:')
+            # begin-get_mfa_report
+
+            get_report_response = iam_identity_service.get_mfa_report(
+                account_id=account_id,
+                reference=report_reference_mfa
+            ).get_result()
+
+            print(json.dumps(get_report_response, indent=2))
+
+            # end-get_mfa_report
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_mfa_status(self):
+        """
+        get_mfa_status request example
+        """
+        try:
+            print('\nget_mfa_status() result:')
+            # begin-get_mfa_status
+
+            get_mfa_status_response = iam_identity_service.get_mfa_status(
+                account_id=account_id,
+                iam_id=iam_id
+            ).get_result()
+
+            print(json.dumps(get_mfa_status_response, indent=2))
+
+            # end-get_mfa_status
 
         except ApiException as e:
             pytest.fail(str(e))
