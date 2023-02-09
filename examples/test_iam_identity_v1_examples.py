@@ -67,9 +67,9 @@ link_id = None
 
 account_settings_etag = None
 
-report_reference_mfa=None
+report_reference_mfa = None
 
-iam_id_member= None
+iam_id_member = None
 
 
 ##############################################################################
@@ -105,7 +105,7 @@ class TestIamIdentityV1Examples:
             iam_id = config['IAM_ID']
 
             global iam_id_member
-            iam_id_member= config['IAM_ID_MEMBER']
+            iam_id_member = config['IAM_ID_MEMBER']
 
             global apikey
             apikey = config['APIKEY']
@@ -852,8 +852,7 @@ class TestIamIdentityV1Examples:
             # begin-get_report
 
             get_report_response = iam_identity_service.get_report(
-                account_id=account_id,
-                reference="latest"
+                account_id=account_id, reference="latest"
             ).get_result()
 
             print(json.dumps(get_report_response, indent=2))
@@ -874,8 +873,7 @@ class TestIamIdentityV1Examples:
             # begin-create_mfa_report
 
             create_report_response = iam_identity_service.create_mfa_report(
-                account_id=account_id,
-                type="mfa_status"
+                account_id=account_id, type="mfa_status"
             ).get_result()
 
             print(json.dumps(create_report_response, indent=2))
@@ -896,8 +894,7 @@ class TestIamIdentityV1Examples:
             # begin-get_mfa_report
 
             get_report_response = iam_identity_service.get_mfa_report(
-                account_id=account_id,
-                reference=report_reference_mfa
+                account_id=account_id, reference=report_reference_mfa
             ).get_result()
 
             print(json.dumps(get_report_response, indent=2))
@@ -917,8 +914,7 @@ class TestIamIdentityV1Examples:
             # begin-get_mfa_status
 
             get_mfa_status_response = iam_identity_service.get_mfa_status(
-                account_id=account_id,
-                iam_id=iam_id
+                account_id=account_id, iam_id=iam_id
             ).get_result()
 
             print(json.dumps(get_mfa_status_response, indent=2))

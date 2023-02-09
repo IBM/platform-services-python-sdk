@@ -51,7 +51,7 @@ link_id = None
 account_setting_etag = None
 
 report_reference = None
-report_reference_mfa=None
+report_reference_mfa = None
 
 
 class TestIamIdentityV1:
@@ -1044,8 +1044,7 @@ class TestIamIdentityV1:
         assert report_reference_mfa is None
 
         create_report_response = self.iam_identity_service.create_mfa_report(
-            account_id=self.account_id,
-            type="mfa_status"
+            account_id=self.account_id, type="mfa_status"
         )
 
         assert create_report_response.get_status_code() == 202
@@ -1077,7 +1076,7 @@ class TestIamIdentityV1:
                 assert report['report_time'] is not None
                 break
             time.sleep(1)
-    
+
     @needscredentials
     def test_get_mfa_report_notfound(self):
         with pytest.raises(ApiException) as e:
@@ -1089,10 +1088,9 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_mfa_status(self):
-       
+
         create_mfa_status_response = self.iam_identity_service.get_mfa_status(
-            account_id=self.account_id,
-            iam_id=self.iam_id
+            account_id=self.account_id, iam_id=self.iam_id
         )
 
         assert create_mfa_status_response.get_status_code() == 200
