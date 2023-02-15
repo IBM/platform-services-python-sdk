@@ -1,3 +1,10 @@
+## [0.31.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.31.0...v0.31.1) (2023-02-15)
+
+
+### Bug Fixes
+
+* **IAM Identity:** re-gen with latest API definition ([#190](https://github.com/IBM/platform-services-python-sdk/issues/190)) ([788762a](https://github.com/IBM/platform-services-python-sdk/commit/788762aafb17caf4c9e8b191f7ef8cc115bdbccb))
+
 # [0.31.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.30.3...v0.31.0) (2023-01-25)
 
 
