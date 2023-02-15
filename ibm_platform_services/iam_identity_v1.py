@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.62.0-a2a22f95-20221115-162524
+# IBM OpenAPI SDK Code Generator Version: 3.64.0-959a5845-20230112-195144
 
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -100,21 +100,21 @@ class IamIdentityV1(BaseService):
         IDs and their API keys, a user must be either an account owner, a IBM Cloud org
         manager or IBM Cloud space developer in order to manage service IDs of the entity.
 
-        :param str account_id: (optional) Account ID of the API keys(s) to query.
-               If a service IAM ID is specified in iam_id then account_id must match the
+        :param str account_id: (optional) Account ID of the API keys to query. If a
+               service IAM ID is specified in iam_id then account_id must match the
                account of the IAM ID. If a user IAM ID is specified in iam_id then then
                account_id must match the account of the Authorization token.
-        :param str iam_id: (optional) IAM ID of the API key(s) to be queried. The
-               IAM ID may be that of a user or a service. For a user IAM ID iam_id must
-               match the Authorization token.
+        :param str iam_id: (optional) IAM ID of the API keys to be queried. The IAM
+               ID may be that of a user or a service. For a user IAM ID iam_id must match
+               the Authorization token.
         :param int pagesize: (optional) Optional size of a single page. Default is
                20 items per page. Valid range is 1 to 100.
         :param str pagetoken: (optional) Optional Prev or Next page token returned
                from a previous query execution. Default is start with first page.
         :param str scope: (optional) Optional parameter to define the scope of the
-               queried API Keys. Can be 'entity' (default) or 'account'.
+               queried API keys. Can be 'entity' (default) or 'account'.
         :param str type: (optional) Optional parameter to filter the type of the
-               queried API Keys. Can be 'user' or 'serviceid'.
+               queried API keys. Can be 'user' or 'serviceid'.
         :param str sort: (optional) Optional sort property, valid values are name,
                description, created_at and created_by. If specified, the items are sorted
                by the value of this property.
@@ -204,7 +204,9 @@ class IamIdentityV1(BaseService):
             raise ValueError('name must be provided')
         if iam_id is None:
             raise ValueError('iam_id must be provided')
-        headers = {'Entity-Lock': entity_lock}
+        headers = {
+            'Entity-Lock': entity_lock,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_api_key'
         )
@@ -251,13 +253,17 @@ class IamIdentityV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `ApiKey` object
         """
 
-        headers = {'IAM-ApiKey': iam_api_key}
+        headers = {
+            'IAM-ApiKey': iam_api_key,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_api_keys_details'
         )
         headers.update(sdk_headers)
 
-        params = {'include_history': include_history}
+        params = {
+            'include_history': include_history,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -301,7 +307,10 @@ class IamIdentityV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        params = {'include_history': include_history, 'include_activity': include_activity}
+        params = {
+            'include_history': include_history,
+            'include_activity': include_activity,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -350,13 +359,18 @@ class IamIdentityV1(BaseService):
             raise ValueError('id must be provided')
         if not if_match:
             raise ValueError('if_match must be provided')
-        headers = {'If-Match': if_match}
+        headers = {
+            'If-Match': if_match,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_api_key'
         )
         headers.update(sdk_headers)
 
-        data = {'name': name, 'description': description}
+        data = {
+            'name': name,
+            'description': description,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -506,7 +520,7 @@ class IamIdentityV1(BaseService):
         Returns a list of service IDs. Users can manage user API keys for themself, or
         service ID API keys for service IDs that are bound to an entity they have access
         to. Note: apikey details are only included in the response when creating a Service
-        ID with an apikey.
+        ID with an api key.
 
         :param str account_id: (optional) Account ID of the service ID(s) to query.
                This parameter is required (unless using a pagetoken).
@@ -597,7 +611,9 @@ class IamIdentityV1(BaseService):
             raise ValueError('name must be provided')
         if apikey is not None:
             apikey = convert_model(apikey)
-        headers = {'Entity-Lock': entity_lock}
+        headers = {
+            'Entity-Lock': entity_lock,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_service_id'
         )
@@ -634,7 +650,7 @@ class IamIdentityV1(BaseService):
         Returns the details of a service ID. Users can manage user API keys for themself,
         or service ID API keys for service IDs that are bound to an entity they have
         access to. Note: apikey details are only included in the response when creating a
-        Service ID with an apikey.
+        Service ID with an api key.
 
         :param str id: Unique ID of the service ID.
         :param bool include_history: (optional) Defines if the entity history is
@@ -655,7 +671,10 @@ class IamIdentityV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        params = {'include_history': include_history, 'include_activity': include_activity}
+        params = {
+            'include_history': include_history,
+            'include_activity': include_activity,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -717,13 +736,19 @@ class IamIdentityV1(BaseService):
             raise ValueError('id must be provided')
         if not if_match:
             raise ValueError('if_match must be provided')
-        headers = {'If-Match': if_match}
+        headers = {
+            'If-Match': if_match,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_service_id'
         )
         headers.update(sdk_headers)
 
-        data = {'name': name, 'description': description, 'unique_instance_crns': unique_instance_crns}
+        data = {
+            'name': name,
+            'description': description,
+            'unique_instance_crns': unique_instance_crns,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -886,7 +911,11 @@ class IamIdentityV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        data = {'name': name, 'account_id': account_id, 'description': description}
+        data = {
+            'name': name,
+            'account_id': account_id,
+            'description': description,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -992,7 +1021,9 @@ class IamIdentityV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        params = {'include_activity': include_activity}
+        params = {
+            'include_activity': include_activity,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1038,13 +1069,18 @@ class IamIdentityV1(BaseService):
             raise ValueError('profile_id must be provided')
         if not if_match:
             raise ValueError('if_match must be provided')
-        headers = {'If-Match': if_match}
+        headers = {
+            'If-Match': if_match,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_profile'
         )
         headers.update(sdk_headers)
 
-        data = {'name': name, 'description': description}
+        data = {
+            'name': name,
+            'description': description,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1313,7 +1349,9 @@ class IamIdentityV1(BaseService):
         conditions = [convert_model(x) for x in conditions]
         if context is not None:
             context = convert_model(context)
-        headers = {'If-Match': if_match}
+        headers = {
+            'If-Match': if_match,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_claim_rule'
         )
@@ -1417,7 +1455,11 @@ class IamIdentityV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        data = {'cr_type': cr_type, 'link': link, 'name': name}
+        data = {
+            'cr_type': cr_type,
+            'link': link,
+            'name': name,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1569,7 +1611,9 @@ class IamIdentityV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        params = {'include_history': include_history}
+        params = {
+            'include_history': include_history,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1605,9 +1649,9 @@ class IamIdentityV1(BaseService):
         """
         Update account configurations.
 
-        Allows a user to configure settings on their account with regards to MFA, session
-        lifetimes, access control for creating new identities, and enforcing IP
-        restrictions on token creation.
+        Allows a user to configure settings on their account with regards to MFA, MFA
+        excemption list,  session lifetimes, access control for creating new identities,
+        and enforcing IP restrictions on token creation.
 
         :param str if_match: Version of the account settings to be updated. Specify
                the version that you retrieved as entity_tag (ETag header) when reading the
@@ -1656,7 +1700,7 @@ class IamIdentityV1(BaseService):
                  * NOT_SET - To unset account setting and use service default.
         :param str system_refresh_token_expiration_in_seconds: (optional) Defines
                the refresh token expiration in seconds. Valid values:
-                 * Any whole number between '900' and '2592000'
+                 * Any whole number between '900' and '259200'
                  * NOT_SET - To unset account setting and use service default.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -1669,7 +1713,9 @@ class IamIdentityV1(BaseService):
             raise ValueError('account_id must be provided')
         if user_mfa is not None:
             user_mfa = [convert_model(x) for x in user_mfa]
-        headers = {'If-Match': if_match}
+        headers = {
+            'If-Match': if_match,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_account_settings'
         )
@@ -1706,6 +1752,133 @@ class IamIdentityV1(BaseService):
         return response
 
     #########################
+    # MFA enrollment status
+    #########################
+
+    def get_mfa_status(self, account_id: str, iam_id: str, **kwargs) -> DetailedResponse:
+        """
+        Get MFA enrollment status for a single user in the account.
+
+        Get MFA enrollment status for a single user in the account.
+
+        :param str account_id: ID of the account.
+        :param str iam_id: iam_id of the user. This user must be the member of the
+               account.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `UserMfaEnrollments` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        if not iam_id:
+            raise ValueError('iam_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_mfa_status'
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'iam_id': iam_id,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/mfa/accounts/{account_id}/status'.format(**path_param_dict)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_mfa_report(self, account_id: str, *, type: str = None, **kwargs) -> DetailedResponse:
+        """
+        Trigger MFA enrollment status report for the account.
+
+        Trigger MFA enrollment status report for the account by specifying the account ID.
+        It can take a few minutes to generate the report for retrieval.
+
+        :param str account_id: ID of the account.
+        :param str type: (optional) Optional report type. The supported value is
+               'mfa_status'. List MFA enrollment status for all the identities.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ReportReference` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_mfa_report'
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'type': type,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/mfa/accounts/{account_id}/report'.format(**path_param_dict)
+        request = self.prepare_request(method='POST', url=url, headers=headers, params=params)
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_mfa_report(self, account_id: str, reference: str, **kwargs) -> DetailedResponse:
+        """
+        Get MFA enrollment status report for the account.
+
+        Get MFA enrollment status report for the account by specifying the account ID and
+        the reference that is generated by triggering the report. Reports older than a day
+        are deleted when generating a new report.
+
+        :param str account_id: ID of the account.
+        :param str reference: Reference for the report to be generated, You can use
+               'latest' to get the latest report for the given account.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ReportMfaEnrollmentStatus` object
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        if not reference:
+            raise ValueError('reference must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_mfa_report'
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['account_id', 'reference']
+        path_param_values = self.encode_path_vars(account_id, reference)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/mfa/accounts/{account_id}/report/{reference}'.format(**path_param_dict)
+        request = self.prepare_request(method='GET', url=url, headers=headers)
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
     # activityOperations
     #########################
 
@@ -1735,7 +1908,10 @@ class IamIdentityV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        params = {'type': type, 'duration': duration}
+        params = {
+            'type': type,
+            'duration': duration,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1799,7 +1975,7 @@ class ListApiKeysEnums:
 
     class Scope(str, Enum):
         """
-        Optional parameter to define the scope of the queried API Keys. Can be 'entity'
+        Optional parameter to define the scope of the queried API keys. Can be 'entity'
         (default) or 'account'.
         """
 
@@ -1808,7 +1984,7 @@ class ListApiKeysEnums:
 
     class Type(str, Enum):
         """
-        Optional parameter to filter the type of the queried API Keys. Can be 'user' or
+        Optional parameter to filter the type of the queried API keys. Can be 'user' or
         'serviceid'.
         """
 
@@ -1855,6 +2031,104 @@ class ListProfilesEnums:
 ##############################################################################
 # Models
 ##############################################################################
+
+
+class AccountBasedMfaEnrollment:
+    """
+    AccountBasedMfaEnrollment.
+
+    :attr MfaEnrollmentTypeStatus security_questions:
+    :attr MfaEnrollmentTypeStatus totp:
+    :attr MfaEnrollmentTypeStatus verisign:
+    :attr bool complies: The enrollment complies to the effective requirement.
+    """
+
+    def __init__(
+        self,
+        security_questions: 'MfaEnrollmentTypeStatus',
+        totp: 'MfaEnrollmentTypeStatus',
+        verisign: 'MfaEnrollmentTypeStatus',
+        complies: bool,
+    ) -> None:
+        """
+        Initialize a AccountBasedMfaEnrollment object.
+
+        :param MfaEnrollmentTypeStatus security_questions:
+        :param MfaEnrollmentTypeStatus totp:
+        :param MfaEnrollmentTypeStatus verisign:
+        :param bool complies: The enrollment complies to the effective requirement.
+        """
+        self.security_questions = security_questions
+        self.totp = totp
+        self.verisign = verisign
+        self.complies = complies
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccountBasedMfaEnrollment':
+        """Initialize a AccountBasedMfaEnrollment object from a json dictionary."""
+        args = {}
+        if 'security_questions' in _dict:
+            args['security_questions'] = MfaEnrollmentTypeStatus.from_dict(_dict.get('security_questions'))
+        else:
+            raise ValueError('Required property \'security_questions\' not present in AccountBasedMfaEnrollment JSON')
+        if 'totp' in _dict:
+            args['totp'] = MfaEnrollmentTypeStatus.from_dict(_dict.get('totp'))
+        else:
+            raise ValueError('Required property \'totp\' not present in AccountBasedMfaEnrollment JSON')
+        if 'verisign' in _dict:
+            args['verisign'] = MfaEnrollmentTypeStatus.from_dict(_dict.get('verisign'))
+        else:
+            raise ValueError('Required property \'verisign\' not present in AccountBasedMfaEnrollment JSON')
+        if 'complies' in _dict:
+            args['complies'] = _dict.get('complies')
+        else:
+            raise ValueError('Required property \'complies\' not present in AccountBasedMfaEnrollment JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccountBasedMfaEnrollment object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'security_questions') and self.security_questions is not None:
+            if isinstance(self.security_questions, dict):
+                _dict['security_questions'] = self.security_questions
+            else:
+                _dict['security_questions'] = self.security_questions.to_dict()
+        if hasattr(self, 'totp') and self.totp is not None:
+            if isinstance(self.totp, dict):
+                _dict['totp'] = self.totp
+            else:
+                _dict['totp'] = self.totp.to_dict()
+        if hasattr(self, 'verisign') and self.verisign is not None:
+            if isinstance(self.verisign, dict):
+                _dict['verisign'] = self.verisign
+            else:
+                _dict['verisign'] = self.verisign.to_dict()
+        if hasattr(self, 'complies') and self.complies is not None:
+            _dict['complies'] = self.complies
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccountBasedMfaEnrollment object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccountBasedMfaEnrollment') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccountBasedMfaEnrollment') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class AccountSettingsResponse:
@@ -1906,7 +2180,7 @@ class AccountSettingsResponse:
             * NOT_SET - To unset account setting and use service default.
     :attr str system_refresh_token_expiration_in_seconds: Defines the refresh token
           expiration in seconds. Valid values:
-            * Any whole number between '900' and '2592000'
+            * Any whole number between '900' and '259200'
             * NOT_SET - To unset account setting and use service default.
     """
 
@@ -1973,7 +2247,7 @@ class AccountSettingsResponse:
                  * NOT_SET - To unset account setting and use service default.
         :param str system_refresh_token_expiration_in_seconds: Defines the refresh
                token expiration in seconds. Valid values:
-                 * Any whole number between '900' and '2592000'
+                 * Any whole number between '900' and '259200'
                  * NOT_SET - To unset account setting and use service default.
         :param ResponseContext context: (optional) Context with key properties for
                problem determination.
@@ -3310,6 +3584,333 @@ class EntityActivity:
         return not self == other
 
 
+class IdBasedMfaEnrollment:
+    """
+    IdBasedMfaEnrollment.
+
+    :attr str trait_account_default: Defines the MFA trait for the account. Valid
+          values:
+            * NONE - No MFA trait set
+            * TOTP - For all non-federated IBMId users
+            * TOTP4ALL - For all users
+            * LEVEL1 - Email-based MFA for all users
+            * LEVEL2 - TOTP-based MFA for all users
+            * LEVEL3 - U2F MFA for all users.
+    :attr str trait_user_specific: (optional) Defines the MFA trait for the account.
+          Valid values:
+            * NONE - No MFA trait set
+            * TOTP - For all non-federated IBMId users
+            * TOTP4ALL - For all users
+            * LEVEL1 - Email-based MFA for all users
+            * LEVEL2 - TOTP-based MFA for all users
+            * LEVEL3 - U2F MFA for all users.
+    :attr str trait_effective: Defines the MFA trait for the account. Valid values:
+            * NONE - No MFA trait set
+            * TOTP - For all non-federated IBMId users
+            * TOTP4ALL - For all users
+            * LEVEL1 - Email-based MFA for all users
+            * LEVEL2 - TOTP-based MFA for all users
+            * LEVEL3 - U2F MFA for all users.
+    :attr bool complies: The enrollment complies to the effective requirement.
+    """
+
+    def __init__(
+        self, trait_account_default: str, trait_effective: str, complies: bool, *, trait_user_specific: str = None
+    ) -> None:
+        """
+        Initialize a IdBasedMfaEnrollment object.
+
+        :param str trait_account_default: Defines the MFA trait for the account.
+               Valid values:
+                 * NONE - No MFA trait set
+                 * TOTP - For all non-federated IBMId users
+                 * TOTP4ALL - For all users
+                 * LEVEL1 - Email-based MFA for all users
+                 * LEVEL2 - TOTP-based MFA for all users
+                 * LEVEL3 - U2F MFA for all users.
+        :param str trait_effective: Defines the MFA trait for the account. Valid
+               values:
+                 * NONE - No MFA trait set
+                 * TOTP - For all non-federated IBMId users
+                 * TOTP4ALL - For all users
+                 * LEVEL1 - Email-based MFA for all users
+                 * LEVEL2 - TOTP-based MFA for all users
+                 * LEVEL3 - U2F MFA for all users.
+        :param bool complies: The enrollment complies to the effective requirement.
+        :param str trait_user_specific: (optional) Defines the MFA trait for the
+               account. Valid values:
+                 * NONE - No MFA trait set
+                 * TOTP - For all non-federated IBMId users
+                 * TOTP4ALL - For all users
+                 * LEVEL1 - Email-based MFA for all users
+                 * LEVEL2 - TOTP-based MFA for all users
+                 * LEVEL3 - U2F MFA for all users.
+        """
+        self.trait_account_default = trait_account_default
+        self.trait_user_specific = trait_user_specific
+        self.trait_effective = trait_effective
+        self.complies = complies
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IdBasedMfaEnrollment':
+        """Initialize a IdBasedMfaEnrollment object from a json dictionary."""
+        args = {}
+        if 'trait_account_default' in _dict:
+            args['trait_account_default'] = _dict.get('trait_account_default')
+        else:
+            raise ValueError('Required property \'trait_account_default\' not present in IdBasedMfaEnrollment JSON')
+        if 'trait_user_specific' in _dict:
+            args['trait_user_specific'] = _dict.get('trait_user_specific')
+        if 'trait_effective' in _dict:
+            args['trait_effective'] = _dict.get('trait_effective')
+        else:
+            raise ValueError('Required property \'trait_effective\' not present in IdBasedMfaEnrollment JSON')
+        if 'complies' in _dict:
+            args['complies'] = _dict.get('complies')
+        else:
+            raise ValueError('Required property \'complies\' not present in IdBasedMfaEnrollment JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IdBasedMfaEnrollment object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'trait_account_default') and self.trait_account_default is not None:
+            _dict['trait_account_default'] = self.trait_account_default
+        if hasattr(self, 'trait_user_specific') and self.trait_user_specific is not None:
+            _dict['trait_user_specific'] = self.trait_user_specific
+        if hasattr(self, 'trait_effective') and self.trait_effective is not None:
+            _dict['trait_effective'] = self.trait_effective
+        if hasattr(self, 'complies') and self.complies is not None:
+            _dict['complies'] = self.complies
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IdBasedMfaEnrollment object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IdBasedMfaEnrollment') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IdBasedMfaEnrollment') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TraitAccountDefaultEnum(str, Enum):
+        """
+        Defines the MFA trait for the account. Valid values:
+          * NONE - No MFA trait set
+          * TOTP - For all non-federated IBMId users
+          * TOTP4ALL - For all users
+          * LEVEL1 - Email-based MFA for all users
+          * LEVEL2 - TOTP-based MFA for all users
+          * LEVEL3 - U2F MFA for all users.
+        """
+
+        NONE = 'NONE'
+        TOTP = 'TOTP'
+        TOTP4ALL = 'TOTP4ALL'
+        LEVEL1 = 'LEVEL1'
+        LEVEL2 = 'LEVEL2'
+        LEVEL3 = 'LEVEL3'
+
+    class TraitUserSpecificEnum(str, Enum):
+        """
+        Defines the MFA trait for the account. Valid values:
+          * NONE - No MFA trait set
+          * TOTP - For all non-federated IBMId users
+          * TOTP4ALL - For all users
+          * LEVEL1 - Email-based MFA for all users
+          * LEVEL2 - TOTP-based MFA for all users
+          * LEVEL3 - U2F MFA for all users.
+        """
+
+        NONE = 'NONE'
+        TOTP = 'TOTP'
+        TOTP4ALL = 'TOTP4ALL'
+        LEVEL1 = 'LEVEL1'
+        LEVEL2 = 'LEVEL2'
+        LEVEL3 = 'LEVEL3'
+
+    class TraitEffectiveEnum(str, Enum):
+        """
+        Defines the MFA trait for the account. Valid values:
+          * NONE - No MFA trait set
+          * TOTP - For all non-federated IBMId users
+          * TOTP4ALL - For all users
+          * LEVEL1 - Email-based MFA for all users
+          * LEVEL2 - TOTP-based MFA for all users
+          * LEVEL3 - U2F MFA for all users.
+        """
+
+        NONE = 'NONE'
+        TOTP = 'TOTP'
+        TOTP4ALL = 'TOTP4ALL'
+        LEVEL1 = 'LEVEL1'
+        LEVEL2 = 'LEVEL2'
+        LEVEL3 = 'LEVEL3'
+
+
+class MfaEnrollmentTypeStatus:
+    """
+    MfaEnrollmentTypeStatus.
+
+    :attr bool required: Describes whether the enrollment type is required.
+    :attr bool enrolled: Describes whether the enrollment type is enrolled.
+    """
+
+    def __init__(self, required: bool, enrolled: bool) -> None:
+        """
+        Initialize a MfaEnrollmentTypeStatus object.
+
+        :param bool required: Describes whether the enrollment type is required.
+        :param bool enrolled: Describes whether the enrollment type is enrolled.
+        """
+        self.required = required
+        self.enrolled = enrolled
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'MfaEnrollmentTypeStatus':
+        """Initialize a MfaEnrollmentTypeStatus object from a json dictionary."""
+        args = {}
+        if 'required' in _dict:
+            args['required'] = _dict.get('required')
+        else:
+            raise ValueError('Required property \'required\' not present in MfaEnrollmentTypeStatus JSON')
+        if 'enrolled' in _dict:
+            args['enrolled'] = _dict.get('enrolled')
+        else:
+            raise ValueError('Required property \'enrolled\' not present in MfaEnrollmentTypeStatus JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a MfaEnrollmentTypeStatus object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'required') and self.required is not None:
+            _dict['required'] = self.required
+        if hasattr(self, 'enrolled') and self.enrolled is not None:
+            _dict['enrolled'] = self.enrolled
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this MfaEnrollmentTypeStatus object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'MfaEnrollmentTypeStatus') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'MfaEnrollmentTypeStatus') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class MfaEnrollments:
+    """
+    MfaEnrollments.
+
+    :attr str effective_mfa_type: currently effective mfa type i.e. id_based_mfa or
+          account_based_mfa.
+    :attr IdBasedMfaEnrollment id_based_mfa: (optional)
+    :attr AccountBasedMfaEnrollment account_based_mfa: (optional)
+    """
+
+    def __init__(
+        self,
+        effective_mfa_type: str,
+        *,
+        id_based_mfa: 'IdBasedMfaEnrollment' = None,
+        account_based_mfa: 'AccountBasedMfaEnrollment' = None
+    ) -> None:
+        """
+        Initialize a MfaEnrollments object.
+
+        :param str effective_mfa_type: currently effective mfa type i.e.
+               id_based_mfa or account_based_mfa.
+        :param IdBasedMfaEnrollment id_based_mfa: (optional)
+        :param AccountBasedMfaEnrollment account_based_mfa: (optional)
+        """
+        self.effective_mfa_type = effective_mfa_type
+        self.id_based_mfa = id_based_mfa
+        self.account_based_mfa = account_based_mfa
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'MfaEnrollments':
+        """Initialize a MfaEnrollments object from a json dictionary."""
+        args = {}
+        if 'effective_mfa_type' in _dict:
+            args['effective_mfa_type'] = _dict.get('effective_mfa_type')
+        else:
+            raise ValueError('Required property \'effective_mfa_type\' not present in MfaEnrollments JSON')
+        if 'id_based_mfa' in _dict:
+            args['id_based_mfa'] = IdBasedMfaEnrollment.from_dict(_dict.get('id_based_mfa'))
+        if 'account_based_mfa' in _dict:
+            args['account_based_mfa'] = AccountBasedMfaEnrollment.from_dict(_dict.get('account_based_mfa'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a MfaEnrollments object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'effective_mfa_type') and self.effective_mfa_type is not None:
+            _dict['effective_mfa_type'] = self.effective_mfa_type
+        if hasattr(self, 'id_based_mfa') and self.id_based_mfa is not None:
+            if isinstance(self.id_based_mfa, dict):
+                _dict['id_based_mfa'] = self.id_based_mfa
+            else:
+                _dict['id_based_mfa'] = self.id_based_mfa.to_dict()
+        if hasattr(self, 'account_based_mfa') and self.account_based_mfa is not None:
+            if isinstance(self.account_based_mfa, dict):
+                _dict['account_based_mfa'] = self.account_based_mfa
+            else:
+                _dict['account_based_mfa'] = self.account_based_mfa.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this MfaEnrollments object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'MfaEnrollments') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'MfaEnrollments') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class ProfileClaimRule:
     """
     ProfileClaimRule.
@@ -4038,6 +4639,122 @@ class Report:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'Report') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ReportMfaEnrollmentStatus:
+    """
+    ReportMfaEnrollmentStatus.
+
+    :attr str created_by: IAMid of the user who triggered the report.
+    :attr str reference: Unique reference used to generate the report.
+    :attr str report_time: Date time at which report is generated. Date is in ISO
+          format.
+    :attr str account_id: BSS account id of the user who triggered the report.
+    :attr str ims_account_id: (optional) IMS account id of the user who triggered
+          the report.
+    :attr List[UserReportMfaEnrollmentStatus] users: (optional) List of users.
+    """
+
+    def __init__(
+        self,
+        created_by: str,
+        reference: str,
+        report_time: str,
+        account_id: str,
+        *,
+        ims_account_id: str = None,
+        users: List['UserReportMfaEnrollmentStatus'] = None
+    ) -> None:
+        """
+        Initialize a ReportMfaEnrollmentStatus object.
+
+        :param str created_by: IAMid of the user who triggered the report.
+        :param str reference: Unique reference used to generate the report.
+        :param str report_time: Date time at which report is generated. Date is in
+               ISO format.
+        :param str account_id: BSS account id of the user who triggered the report.
+        :param str ims_account_id: (optional) IMS account id of the user who
+               triggered the report.
+        :param List[UserReportMfaEnrollmentStatus] users: (optional) List of users.
+        """
+        self.created_by = created_by
+        self.reference = reference
+        self.report_time = report_time
+        self.account_id = account_id
+        self.ims_account_id = ims_account_id
+        self.users = users
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ReportMfaEnrollmentStatus':
+        """Initialize a ReportMfaEnrollmentStatus object from a json dictionary."""
+        args = {}
+        if 'created_by' in _dict:
+            args['created_by'] = _dict.get('created_by')
+        else:
+            raise ValueError('Required property \'created_by\' not present in ReportMfaEnrollmentStatus JSON')
+        if 'reference' in _dict:
+            args['reference'] = _dict.get('reference')
+        else:
+            raise ValueError('Required property \'reference\' not present in ReportMfaEnrollmentStatus JSON')
+        if 'report_time' in _dict:
+            args['report_time'] = _dict.get('report_time')
+        else:
+            raise ValueError('Required property \'report_time\' not present in ReportMfaEnrollmentStatus JSON')
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in ReportMfaEnrollmentStatus JSON')
+        if 'ims_account_id' in _dict:
+            args['ims_account_id'] = _dict.get('ims_account_id')
+        if 'users' in _dict:
+            args['users'] = [UserReportMfaEnrollmentStatus.from_dict(v) for v in _dict.get('users')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ReportMfaEnrollmentStatus object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'created_by') and self.created_by is not None:
+            _dict['created_by'] = self.created_by
+        if hasattr(self, 'reference') and self.reference is not None:
+            _dict['reference'] = self.reference
+        if hasattr(self, 'report_time') and self.report_time is not None:
+            _dict['report_time'] = self.report_time
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'ims_account_id') and self.ims_account_id is not None:
+            _dict['ims_account_id'] = self.ims_account_id
+        if hasattr(self, 'users') and self.users is not None:
+            users_list = []
+            for v in self.users:
+                if isinstance(v, dict):
+                    users_list.append(v)
+                else:
+                    users_list.append(v.to_dict())
+            _dict['users'] = users_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ReportMfaEnrollmentStatus object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ReportMfaEnrollmentStatus') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ReportMfaEnrollmentStatus') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -5025,5 +5742,190 @@ class UserActivity:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'UserActivity') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class UserMfaEnrollments:
+    """
+    UserMfaEnrollments.
+
+    :attr str iam_id: IAMid of the user.
+    :attr str effective_mfa_type: (optional) currently effective mfa type i.e.
+          id_based_mfa or account_based_mfa.
+    :attr IdBasedMfaEnrollment id_based_mfa: (optional)
+    :attr AccountBasedMfaEnrollment account_based_mfa: (optional)
+    """
+
+    def __init__(
+        self,
+        iam_id: str,
+        *,
+        effective_mfa_type: str = None,
+        id_based_mfa: 'IdBasedMfaEnrollment' = None,
+        account_based_mfa: 'AccountBasedMfaEnrollment' = None
+    ) -> None:
+        """
+        Initialize a UserMfaEnrollments object.
+
+        :param str iam_id: IAMid of the user.
+        :param str effective_mfa_type: (optional) currently effective mfa type i.e.
+               id_based_mfa or account_based_mfa.
+        :param IdBasedMfaEnrollment id_based_mfa: (optional)
+        :param AccountBasedMfaEnrollment account_based_mfa: (optional)
+        """
+        self.iam_id = iam_id
+        self.effective_mfa_type = effective_mfa_type
+        self.id_based_mfa = id_based_mfa
+        self.account_based_mfa = account_based_mfa
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UserMfaEnrollments':
+        """Initialize a UserMfaEnrollments object from a json dictionary."""
+        args = {}
+        if 'iam_id' in _dict:
+            args['iam_id'] = _dict.get('iam_id')
+        else:
+            raise ValueError('Required property \'iam_id\' not present in UserMfaEnrollments JSON')
+        if 'effective_mfa_type' in _dict:
+            args['effective_mfa_type'] = _dict.get('effective_mfa_type')
+        if 'id_based_mfa' in _dict:
+            args['id_based_mfa'] = IdBasedMfaEnrollment.from_dict(_dict.get('id_based_mfa'))
+        if 'account_based_mfa' in _dict:
+            args['account_based_mfa'] = AccountBasedMfaEnrollment.from_dict(_dict.get('account_based_mfa'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UserMfaEnrollments object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'iam_id') and self.iam_id is not None:
+            _dict['iam_id'] = self.iam_id
+        if hasattr(self, 'effective_mfa_type') and self.effective_mfa_type is not None:
+            _dict['effective_mfa_type'] = self.effective_mfa_type
+        if hasattr(self, 'id_based_mfa') and self.id_based_mfa is not None:
+            if isinstance(self.id_based_mfa, dict):
+                _dict['id_based_mfa'] = self.id_based_mfa
+            else:
+                _dict['id_based_mfa'] = self.id_based_mfa.to_dict()
+        if hasattr(self, 'account_based_mfa') and self.account_based_mfa is not None:
+            if isinstance(self.account_based_mfa, dict):
+                _dict['account_based_mfa'] = self.account_based_mfa
+            else:
+                _dict['account_based_mfa'] = self.account_based_mfa.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UserMfaEnrollments object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UserMfaEnrollments') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UserMfaEnrollments') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class UserReportMfaEnrollmentStatus:
+    """
+    UserReportMfaEnrollmentStatus.
+
+    :attr str iam_id: IAMid of the user.
+    :attr str name: (optional) Name of the user.
+    :attr str username: Username of the user.
+    :attr str email: (optional) Email of the user.
+    :attr MfaEnrollments enrollments:
+    """
+
+    def __init__(
+        self, iam_id: str, username: str, enrollments: 'MfaEnrollments', *, name: str = None, email: str = None
+    ) -> None:
+        """
+        Initialize a UserReportMfaEnrollmentStatus object.
+
+        :param str iam_id: IAMid of the user.
+        :param str username: Username of the user.
+        :param MfaEnrollments enrollments:
+        :param str name: (optional) Name of the user.
+        :param str email: (optional) Email of the user.
+        """
+        self.iam_id = iam_id
+        self.name = name
+        self.username = username
+        self.email = email
+        self.enrollments = enrollments
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UserReportMfaEnrollmentStatus':
+        """Initialize a UserReportMfaEnrollmentStatus object from a json dictionary."""
+        args = {}
+        if 'iam_id' in _dict:
+            args['iam_id'] = _dict.get('iam_id')
+        else:
+            raise ValueError('Required property \'iam_id\' not present in UserReportMfaEnrollmentStatus JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        if 'username' in _dict:
+            args['username'] = _dict.get('username')
+        else:
+            raise ValueError('Required property \'username\' not present in UserReportMfaEnrollmentStatus JSON')
+        if 'email' in _dict:
+            args['email'] = _dict.get('email')
+        if 'enrollments' in _dict:
+            args['enrollments'] = MfaEnrollments.from_dict(_dict.get('enrollments'))
+        else:
+            raise ValueError('Required property \'enrollments\' not present in UserReportMfaEnrollmentStatus JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UserReportMfaEnrollmentStatus object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'iam_id') and self.iam_id is not None:
+            _dict['iam_id'] = self.iam_id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'username') and self.username is not None:
+            _dict['username'] = self.username
+        if hasattr(self, 'email') and self.email is not None:
+            _dict['email'] = self.email
+        if hasattr(self, 'enrollments') and self.enrollments is not None:
+            if isinstance(self.enrollments, dict):
+                _dict['enrollments'] = self.enrollments
+            else:
+                _dict['enrollments'] = self.enrollments.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UserReportMfaEnrollmentStatus object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UserReportMfaEnrollmentStatus') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UserReportMfaEnrollmentStatus') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other

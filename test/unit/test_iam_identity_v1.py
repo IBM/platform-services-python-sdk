@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ from ibm_platform_services.iam_identity_v1 import *
 
 _service = IamIdentityV1(authenticator=NoAuthAuthenticator())
 
-_base_url = 'https://iam.cloud.ibm.com'
+_base_url = 'https://iam.test.cloud.ibm.com'
 _service.set_service_url(_base_url)
 
 
@@ -2751,7 +2751,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "2592000"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -2785,7 +2785,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "2592000"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -2814,7 +2814,7 @@ class TestGetAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "2592000"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -2851,7 +2851,7 @@ class TestUpdateAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "2592000"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
         # Construct a dict representation of a AccountSettingsUserMFA model
@@ -2871,7 +2871,7 @@ class TestUpdateAccountSettings:
         session_invalidation_in_seconds = '7200'
         max_sessions_per_identity = 'testString'
         system_access_token_expiration_in_seconds = '3600'
-        system_refresh_token_expiration_in_seconds = '2592000'
+        system_refresh_token_expiration_in_seconds = '259200'
 
         # Invoke method
         response = _service.update_account_settings(
@@ -2904,7 +2904,7 @@ class TestUpdateAccountSettings:
         assert req_body['session_invalidation_in_seconds'] == '7200'
         assert req_body['max_sessions_per_identity'] == 'testString'
         assert req_body['system_access_token_expiration_in_seconds'] == '3600'
-        assert req_body['system_refresh_token_expiration_in_seconds'] == '2592000'
+        assert req_body['system_refresh_token_expiration_in_seconds'] == '259200'
 
     def test_update_account_settings_all_params_with_retries(self):
         # Enable retries and run test_update_account_settings_all_params.
@@ -2922,7 +2922,7 @@ class TestUpdateAccountSettings:
         """
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "2592000"}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
         # Construct a dict representation of a AccountSettingsUserMFA model
@@ -2942,7 +2942,7 @@ class TestUpdateAccountSettings:
         session_invalidation_in_seconds = '7200'
         max_sessions_per_identity = 'testString'
         system_access_token_expiration_in_seconds = '3600'
-        system_refresh_token_expiration_in_seconds = '2592000'
+        system_refresh_token_expiration_in_seconds = '259200'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -2967,6 +2967,287 @@ class TestUpdateAccountSettings:
 # endregion
 ##############################################################################
 # End of Service: AccountSettings
+##############################################################################
+
+##############################################################################
+# Start of Service: MFAEnrollmentStatus
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamIdentityV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamIdentityV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamIdentityV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestGetMfaStatus:
+    """
+    Test Class for get_mfa_status
+    """
+
+    @responses.activate
+    def test_get_mfa_status_all_params(self):
+        """
+        get_mfa_status()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/mfa/accounts/testString/status')
+        mock_response = '{"iam_id": "iam_id", "effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}'
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+
+        # Invoke method
+        response = _service.get_mfa_status(account_id, iam_id, headers={})
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'iam_id={}'.format(iam_id) in query_string
+
+    def test_get_mfa_status_all_params_with_retries(self):
+        # Enable retries and run test_get_mfa_status_all_params.
+        _service.enable_retries()
+        self.test_get_mfa_status_all_params()
+
+        # Disable retries and run test_get_mfa_status_all_params.
+        _service.disable_retries()
+        self.test_get_mfa_status_all_params()
+
+    @responses.activate
+    def test_get_mfa_status_value_error(self):
+        """
+        test_get_mfa_status_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/mfa/accounts/testString/status')
+        mock_response = '{"iam_id": "iam_id", "effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}'
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+
+        # Set up parameter values
+        account_id = 'testString'
+        iam_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "iam_id": iam_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_mfa_status(**req_copy)
+
+    def test_get_mfa_status_value_error_with_retries(self):
+        # Enable retries and run test_get_mfa_status_value_error.
+        _service.enable_retries()
+        self.test_get_mfa_status_value_error()
+
+        # Disable retries and run test_get_mfa_status_value_error.
+        _service.disable_retries()
+        self.test_get_mfa_status_value_error()
+
+
+class TestCreateMfaReport:
+    """
+    Test Class for create_mfa_report
+    """
+
+    @responses.activate
+    def test_create_mfa_report_all_params(self):
+        """
+        create_mfa_report()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/mfa/accounts/testString/report')
+        mock_response = '{"reference": "reference"}'
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+
+        # Set up parameter values
+        account_id = 'testString'
+        type = 'testString'
+
+        # Invoke method
+        response = _service.create_mfa_report(account_id, type=type, headers={})
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'type={}'.format(type) in query_string
+
+    def test_create_mfa_report_all_params_with_retries(self):
+        # Enable retries and run test_create_mfa_report_all_params.
+        _service.enable_retries()
+        self.test_create_mfa_report_all_params()
+
+        # Disable retries and run test_create_mfa_report_all_params.
+        _service.disable_retries()
+        self.test_create_mfa_report_all_params()
+
+    @responses.activate
+    def test_create_mfa_report_required_params(self):
+        """
+        test_create_mfa_report_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/mfa/accounts/testString/report')
+        mock_response = '{"reference": "reference"}'
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.create_mfa_report(account_id, headers={})
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+
+    def test_create_mfa_report_required_params_with_retries(self):
+        # Enable retries and run test_create_mfa_report_required_params.
+        _service.enable_retries()
+        self.test_create_mfa_report_required_params()
+
+        # Disable retries and run test_create_mfa_report_required_params.
+        _service.disable_retries()
+        self.test_create_mfa_report_required_params()
+
+    @responses.activate
+    def test_create_mfa_report_value_error(self):
+        """
+        test_create_mfa_report_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/mfa/accounts/testString/report')
+        mock_response = '{"reference": "reference"}'
+        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_mfa_report(**req_copy)
+
+    def test_create_mfa_report_value_error_with_retries(self):
+        # Enable retries and run test_create_mfa_report_value_error.
+        _service.enable_retries()
+        self.test_create_mfa_report_value_error()
+
+        # Disable retries and run test_create_mfa_report_value_error.
+        _service.disable_retries()
+        self.test_create_mfa_report_value_error()
+
+
+class TestGetMfaReport:
+    """
+    Test Class for get_mfa_report
+    """
+
+    @responses.activate
+    def test_get_mfa_report_all_params(self):
+        """
+        get_mfa_report()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/mfa/accounts/testString/report/testString')
+        mock_response = '{"created_by": "created_by", "reference": "reference", "report_time": "report_time", "account_id": "account_id", "ims_account_id": "ims_account_id", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "enrollments": {"effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}}]}'
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+
+        # Set up parameter values
+        account_id = 'testString'
+        reference = 'testString'
+
+        # Invoke method
+        response = _service.get_mfa_report(account_id, reference, headers={})
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_mfa_report_all_params_with_retries(self):
+        # Enable retries and run test_get_mfa_report_all_params.
+        _service.enable_retries()
+        self.test_get_mfa_report_all_params()
+
+        # Disable retries and run test_get_mfa_report_all_params.
+        _service.disable_retries()
+        self.test_get_mfa_report_all_params()
+
+    @responses.activate
+    def test_get_mfa_report_value_error(self):
+        """
+        test_get_mfa_report_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/mfa/accounts/testString/report/testString')
+        mock_response = '{"created_by": "created_by", "reference": "reference", "report_time": "report_time", "account_id": "account_id", "ims_account_id": "ims_account_id", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "enrollments": {"effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}}]}'
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+
+        # Set up parameter values
+        account_id = 'testString'
+        reference = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+            "reference": reference,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_mfa_report(**req_copy)
+
+    def test_get_mfa_report_value_error_with_retries(self):
+        # Enable retries and run test_get_mfa_report_value_error.
+        _service.enable_retries()
+        self.test_get_mfa_report_value_error()
+
+        # Disable retries and run test_get_mfa_report_value_error.
+        _service.disable_retries()
+        self.test_get_mfa_report_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: MFAEnrollmentStatus
 ##############################################################################
 
 ##############################################################################
@@ -3184,6 +3465,49 @@ class TestGetReport:
 # Start of Model Tests
 ##############################################################################
 # region
+class TestModel_AccountBasedMfaEnrollment:
+    """
+    Test Class for AccountBasedMfaEnrollment
+    """
+
+    def test_account_based_mfa_enrollment_serialization(self):
+        """
+        Test serialization/deserialization for AccountBasedMfaEnrollment
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        mfa_enrollment_type_status_model = {}  # MfaEnrollmentTypeStatus
+        mfa_enrollment_type_status_model['required'] = True
+        mfa_enrollment_type_status_model['enrolled'] = True
+
+        # Construct a json representation of a AccountBasedMfaEnrollment model
+        account_based_mfa_enrollment_model_json = {}
+        account_based_mfa_enrollment_model_json['security_questions'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model_json['totp'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model_json['verisign'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model_json['complies'] = True
+
+        # Construct a model instance of AccountBasedMfaEnrollment by calling from_dict on the json representation
+        account_based_mfa_enrollment_model = AccountBasedMfaEnrollment.from_dict(
+            account_based_mfa_enrollment_model_json
+        )
+        assert account_based_mfa_enrollment_model != False
+
+        # Construct a model instance of AccountBasedMfaEnrollment by calling from_dict on the json representation
+        account_based_mfa_enrollment_model_dict = AccountBasedMfaEnrollment.from_dict(
+            account_based_mfa_enrollment_model_json
+        ).__dict__
+        account_based_mfa_enrollment_model2 = AccountBasedMfaEnrollment(**account_based_mfa_enrollment_model_dict)
+
+        # Verify the model instances are equivalent
+        assert account_based_mfa_enrollment_model == account_based_mfa_enrollment_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        account_based_mfa_enrollment_model_json2 = account_based_mfa_enrollment_model.to_dict()
+        assert account_based_mfa_enrollment_model_json2 == account_based_mfa_enrollment_model_json
+
+
 class TestModel_AccountSettingsResponse:
     """
     Test Class for AccountSettingsResponse
@@ -3236,7 +3560,7 @@ class TestModel_AccountSettingsResponse:
         account_settings_response_model_json['session_invalidation_in_seconds'] = '7200'
         account_settings_response_model_json['max_sessions_per_identity'] = 'testString'
         account_settings_response_model_json['system_access_token_expiration_in_seconds'] = '3600'
-        account_settings_response_model_json['system_refresh_token_expiration_in_seconds'] = '2592000'
+        account_settings_response_model_json['system_refresh_token_expiration_in_seconds'] = '259200'
 
         # Construct a model instance of AccountSettingsResponse by calling from_dict on the json representation
         account_settings_response_model = AccountSettingsResponse.from_dict(account_settings_response_model_json)
@@ -3730,6 +4054,122 @@ class TestModel_EntityActivity:
         assert entity_activity_model_json2 == entity_activity_model_json
 
 
+class TestModel_IdBasedMfaEnrollment:
+    """
+    Test Class for IdBasedMfaEnrollment
+    """
+
+    def test_id_based_mfa_enrollment_serialization(self):
+        """
+        Test serialization/deserialization for IdBasedMfaEnrollment
+        """
+
+        # Construct a json representation of a IdBasedMfaEnrollment model
+        id_based_mfa_enrollment_model_json = {}
+        id_based_mfa_enrollment_model_json['trait_account_default'] = 'NONE'
+        id_based_mfa_enrollment_model_json['trait_user_specific'] = 'NONE'
+        id_based_mfa_enrollment_model_json['trait_effective'] = 'NONE'
+        id_based_mfa_enrollment_model_json['complies'] = True
+
+        # Construct a model instance of IdBasedMfaEnrollment by calling from_dict on the json representation
+        id_based_mfa_enrollment_model = IdBasedMfaEnrollment.from_dict(id_based_mfa_enrollment_model_json)
+        assert id_based_mfa_enrollment_model != False
+
+        # Construct a model instance of IdBasedMfaEnrollment by calling from_dict on the json representation
+        id_based_mfa_enrollment_model_dict = IdBasedMfaEnrollment.from_dict(id_based_mfa_enrollment_model_json).__dict__
+        id_based_mfa_enrollment_model2 = IdBasedMfaEnrollment(**id_based_mfa_enrollment_model_dict)
+
+        # Verify the model instances are equivalent
+        assert id_based_mfa_enrollment_model == id_based_mfa_enrollment_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        id_based_mfa_enrollment_model_json2 = id_based_mfa_enrollment_model.to_dict()
+        assert id_based_mfa_enrollment_model_json2 == id_based_mfa_enrollment_model_json
+
+
+class TestModel_MfaEnrollmentTypeStatus:
+    """
+    Test Class for MfaEnrollmentTypeStatus
+    """
+
+    def test_mfa_enrollment_type_status_serialization(self):
+        """
+        Test serialization/deserialization for MfaEnrollmentTypeStatus
+        """
+
+        # Construct a json representation of a MfaEnrollmentTypeStatus model
+        mfa_enrollment_type_status_model_json = {}
+        mfa_enrollment_type_status_model_json['required'] = True
+        mfa_enrollment_type_status_model_json['enrolled'] = True
+
+        # Construct a model instance of MfaEnrollmentTypeStatus by calling from_dict on the json representation
+        mfa_enrollment_type_status_model = MfaEnrollmentTypeStatus.from_dict(mfa_enrollment_type_status_model_json)
+        assert mfa_enrollment_type_status_model != False
+
+        # Construct a model instance of MfaEnrollmentTypeStatus by calling from_dict on the json representation
+        mfa_enrollment_type_status_model_dict = MfaEnrollmentTypeStatus.from_dict(
+            mfa_enrollment_type_status_model_json
+        ).__dict__
+        mfa_enrollment_type_status_model2 = MfaEnrollmentTypeStatus(**mfa_enrollment_type_status_model_dict)
+
+        # Verify the model instances are equivalent
+        assert mfa_enrollment_type_status_model == mfa_enrollment_type_status_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        mfa_enrollment_type_status_model_json2 = mfa_enrollment_type_status_model.to_dict()
+        assert mfa_enrollment_type_status_model_json2 == mfa_enrollment_type_status_model_json
+
+
+class TestModel_MfaEnrollments:
+    """
+    Test Class for MfaEnrollments
+    """
+
+    def test_mfa_enrollments_serialization(self):
+        """
+        Test serialization/deserialization for MfaEnrollments
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        id_based_mfa_enrollment_model = {}  # IdBasedMfaEnrollment
+        id_based_mfa_enrollment_model['trait_account_default'] = 'NONE'
+        id_based_mfa_enrollment_model['trait_user_specific'] = 'NONE'
+        id_based_mfa_enrollment_model['trait_effective'] = 'NONE'
+        id_based_mfa_enrollment_model['complies'] = True
+
+        mfa_enrollment_type_status_model = {}  # MfaEnrollmentTypeStatus
+        mfa_enrollment_type_status_model['required'] = True
+        mfa_enrollment_type_status_model['enrolled'] = True
+
+        account_based_mfa_enrollment_model = {}  # AccountBasedMfaEnrollment
+        account_based_mfa_enrollment_model['security_questions'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model['totp'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model['verisign'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model['complies'] = True
+
+        # Construct a json representation of a MfaEnrollments model
+        mfa_enrollments_model_json = {}
+        mfa_enrollments_model_json['effective_mfa_type'] = 'testString'
+        mfa_enrollments_model_json['id_based_mfa'] = id_based_mfa_enrollment_model
+        mfa_enrollments_model_json['account_based_mfa'] = account_based_mfa_enrollment_model
+
+        # Construct a model instance of MfaEnrollments by calling from_dict on the json representation
+        mfa_enrollments_model = MfaEnrollments.from_dict(mfa_enrollments_model_json)
+        assert mfa_enrollments_model != False
+
+        # Construct a model instance of MfaEnrollments by calling from_dict on the json representation
+        mfa_enrollments_model_dict = MfaEnrollments.from_dict(mfa_enrollments_model_json).__dict__
+        mfa_enrollments_model2 = MfaEnrollments(**mfa_enrollments_model_dict)
+
+        # Verify the model instances are equivalent
+        assert mfa_enrollments_model == mfa_enrollments_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        mfa_enrollments_model_json2 = mfa_enrollments_model.to_dict()
+        assert mfa_enrollments_model_json2 == mfa_enrollments_model_json
+
+
 class TestModel_ProfileClaimRule:
     """
     Test Class for ProfileClaimRule
@@ -4064,6 +4504,75 @@ class TestModel_Report:
         # Convert model instance back to dict and verify no loss of data
         report_model_json2 = report_model.to_dict()
         assert report_model_json2 == report_model_json
+
+
+class TestModel_ReportMfaEnrollmentStatus:
+    """
+    Test Class for ReportMfaEnrollmentStatus
+    """
+
+    def test_report_mfa_enrollment_status_serialization(self):
+        """
+        Test serialization/deserialization for ReportMfaEnrollmentStatus
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        id_based_mfa_enrollment_model = {}  # IdBasedMfaEnrollment
+        id_based_mfa_enrollment_model['trait_account_default'] = 'NONE'
+        id_based_mfa_enrollment_model['trait_user_specific'] = 'NONE'
+        id_based_mfa_enrollment_model['trait_effective'] = 'NONE'
+        id_based_mfa_enrollment_model['complies'] = True
+
+        mfa_enrollment_type_status_model = {}  # MfaEnrollmentTypeStatus
+        mfa_enrollment_type_status_model['required'] = True
+        mfa_enrollment_type_status_model['enrolled'] = True
+
+        account_based_mfa_enrollment_model = {}  # AccountBasedMfaEnrollment
+        account_based_mfa_enrollment_model['security_questions'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model['totp'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model['verisign'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model['complies'] = True
+
+        mfa_enrollments_model = {}  # MfaEnrollments
+        mfa_enrollments_model['effective_mfa_type'] = 'testString'
+        mfa_enrollments_model['id_based_mfa'] = id_based_mfa_enrollment_model
+        mfa_enrollments_model['account_based_mfa'] = account_based_mfa_enrollment_model
+
+        user_report_mfa_enrollment_status_model = {}  # UserReportMfaEnrollmentStatus
+        user_report_mfa_enrollment_status_model['iam_id'] = 'testString'
+        user_report_mfa_enrollment_status_model['name'] = 'testString'
+        user_report_mfa_enrollment_status_model['username'] = 'testString'
+        user_report_mfa_enrollment_status_model['email'] = 'testString'
+        user_report_mfa_enrollment_status_model['enrollments'] = mfa_enrollments_model
+
+        # Construct a json representation of a ReportMfaEnrollmentStatus model
+        report_mfa_enrollment_status_model_json = {}
+        report_mfa_enrollment_status_model_json['created_by'] = 'testString'
+        report_mfa_enrollment_status_model_json['reference'] = 'testString'
+        report_mfa_enrollment_status_model_json['report_time'] = 'testString'
+        report_mfa_enrollment_status_model_json['account_id'] = 'testString'
+        report_mfa_enrollment_status_model_json['ims_account_id'] = 'testString'
+        report_mfa_enrollment_status_model_json['users'] = [user_report_mfa_enrollment_status_model]
+
+        # Construct a model instance of ReportMfaEnrollmentStatus by calling from_dict on the json representation
+        report_mfa_enrollment_status_model = ReportMfaEnrollmentStatus.from_dict(
+            report_mfa_enrollment_status_model_json
+        )
+        assert report_mfa_enrollment_status_model != False
+
+        # Construct a model instance of ReportMfaEnrollmentStatus by calling from_dict on the json representation
+        report_mfa_enrollment_status_model_dict = ReportMfaEnrollmentStatus.from_dict(
+            report_mfa_enrollment_status_model_json
+        ).__dict__
+        report_mfa_enrollment_status_model2 = ReportMfaEnrollmentStatus(**report_mfa_enrollment_status_model_dict)
+
+        # Verify the model instances are equivalent
+        assert report_mfa_enrollment_status_model == report_mfa_enrollment_status_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        report_mfa_enrollment_status_model_json2 = report_mfa_enrollment_status_model.to_dict()
+        assert report_mfa_enrollment_status_model_json2 == report_mfa_enrollment_status_model_json
 
 
 class TestModel_ReportReference:
@@ -4502,6 +5011,120 @@ class TestModel_UserActivity:
         # Convert model instance back to dict and verify no loss of data
         user_activity_model_json2 = user_activity_model.to_dict()
         assert user_activity_model_json2 == user_activity_model_json
+
+
+class TestModel_UserMfaEnrollments:
+    """
+    Test Class for UserMfaEnrollments
+    """
+
+    def test_user_mfa_enrollments_serialization(self):
+        """
+        Test serialization/deserialization for UserMfaEnrollments
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        id_based_mfa_enrollment_model = {}  # IdBasedMfaEnrollment
+        id_based_mfa_enrollment_model['trait_account_default'] = 'NONE'
+        id_based_mfa_enrollment_model['trait_user_specific'] = 'NONE'
+        id_based_mfa_enrollment_model['trait_effective'] = 'NONE'
+        id_based_mfa_enrollment_model['complies'] = True
+
+        mfa_enrollment_type_status_model = {}  # MfaEnrollmentTypeStatus
+        mfa_enrollment_type_status_model['required'] = True
+        mfa_enrollment_type_status_model['enrolled'] = True
+
+        account_based_mfa_enrollment_model = {}  # AccountBasedMfaEnrollment
+        account_based_mfa_enrollment_model['security_questions'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model['totp'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model['verisign'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model['complies'] = True
+
+        # Construct a json representation of a UserMfaEnrollments model
+        user_mfa_enrollments_model_json = {}
+        user_mfa_enrollments_model_json['iam_id'] = 'testString'
+        user_mfa_enrollments_model_json['effective_mfa_type'] = 'testString'
+        user_mfa_enrollments_model_json['id_based_mfa'] = id_based_mfa_enrollment_model
+        user_mfa_enrollments_model_json['account_based_mfa'] = account_based_mfa_enrollment_model
+
+        # Construct a model instance of UserMfaEnrollments by calling from_dict on the json representation
+        user_mfa_enrollments_model = UserMfaEnrollments.from_dict(user_mfa_enrollments_model_json)
+        assert user_mfa_enrollments_model != False
+
+        # Construct a model instance of UserMfaEnrollments by calling from_dict on the json representation
+        user_mfa_enrollments_model_dict = UserMfaEnrollments.from_dict(user_mfa_enrollments_model_json).__dict__
+        user_mfa_enrollments_model2 = UserMfaEnrollments(**user_mfa_enrollments_model_dict)
+
+        # Verify the model instances are equivalent
+        assert user_mfa_enrollments_model == user_mfa_enrollments_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        user_mfa_enrollments_model_json2 = user_mfa_enrollments_model.to_dict()
+        assert user_mfa_enrollments_model_json2 == user_mfa_enrollments_model_json
+
+
+class TestModel_UserReportMfaEnrollmentStatus:
+    """
+    Test Class for UserReportMfaEnrollmentStatus
+    """
+
+    def test_user_report_mfa_enrollment_status_serialization(self):
+        """
+        Test serialization/deserialization for UserReportMfaEnrollmentStatus
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        id_based_mfa_enrollment_model = {}  # IdBasedMfaEnrollment
+        id_based_mfa_enrollment_model['trait_account_default'] = 'NONE'
+        id_based_mfa_enrollment_model['trait_user_specific'] = 'NONE'
+        id_based_mfa_enrollment_model['trait_effective'] = 'NONE'
+        id_based_mfa_enrollment_model['complies'] = True
+
+        mfa_enrollment_type_status_model = {}  # MfaEnrollmentTypeStatus
+        mfa_enrollment_type_status_model['required'] = True
+        mfa_enrollment_type_status_model['enrolled'] = True
+
+        account_based_mfa_enrollment_model = {}  # AccountBasedMfaEnrollment
+        account_based_mfa_enrollment_model['security_questions'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model['totp'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model['verisign'] = mfa_enrollment_type_status_model
+        account_based_mfa_enrollment_model['complies'] = True
+
+        mfa_enrollments_model = {}  # MfaEnrollments
+        mfa_enrollments_model['effective_mfa_type'] = 'testString'
+        mfa_enrollments_model['id_based_mfa'] = id_based_mfa_enrollment_model
+        mfa_enrollments_model['account_based_mfa'] = account_based_mfa_enrollment_model
+
+        # Construct a json representation of a UserReportMfaEnrollmentStatus model
+        user_report_mfa_enrollment_status_model_json = {}
+        user_report_mfa_enrollment_status_model_json['iam_id'] = 'testString'
+        user_report_mfa_enrollment_status_model_json['name'] = 'testString'
+        user_report_mfa_enrollment_status_model_json['username'] = 'testString'
+        user_report_mfa_enrollment_status_model_json['email'] = 'testString'
+        user_report_mfa_enrollment_status_model_json['enrollments'] = mfa_enrollments_model
+
+        # Construct a model instance of UserReportMfaEnrollmentStatus by calling from_dict on the json representation
+        user_report_mfa_enrollment_status_model = UserReportMfaEnrollmentStatus.from_dict(
+            user_report_mfa_enrollment_status_model_json
+        )
+        assert user_report_mfa_enrollment_status_model != False
+
+        # Construct a model instance of UserReportMfaEnrollmentStatus by calling from_dict on the json representation
+        user_report_mfa_enrollment_status_model_dict = UserReportMfaEnrollmentStatus.from_dict(
+            user_report_mfa_enrollment_status_model_json
+        ).__dict__
+        user_report_mfa_enrollment_status_model2 = UserReportMfaEnrollmentStatus(
+            **user_report_mfa_enrollment_status_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert user_report_mfa_enrollment_status_model == user_report_mfa_enrollment_status_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        user_report_mfa_enrollment_status_model_json2 = user_report_mfa_enrollment_status_model.to_dict()
+        assert user_report_mfa_enrollment_status_model_json2 == user_report_mfa_enrollment_status_model_json
 
 
 # endregion
