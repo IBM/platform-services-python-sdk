@@ -1,3 +1,10 @@
+## [0.31.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.31.1...v0.31.2) (2023-03-07)
+
+
+### Bug Fixes
+
+* **Global Search:** remove is_hidden param from search operation ([#191](https://github.com/IBM/platform-services-python-sdk/issues/191)) ([548313c](https://github.com/IBM/platform-services-python-sdk/commit/548313cf834f9f9228031a0114a34358e012d618))
+
 ## [0.31.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.31.0...v0.31.1) (2023-02-15)
 
 
