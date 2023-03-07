@@ -125,7 +125,6 @@ class TestSearch:
         is_public = 'false'
         impersonate_user = 'testString'
         can_tag = 'false'
-        is_hidden = 'false'
 
         # Invoke method
         response = _service.search(
@@ -143,7 +142,6 @@ class TestSearch:
             is_public=is_public,
             impersonate_user=impersonate_user,
             can_tag=can_tag,
-            is_hidden=is_hidden,
             headers={},
         )
 
@@ -163,7 +161,6 @@ class TestSearch:
         assert 'is_public={}'.format(is_public) in query_string
         assert 'impersonate_user={}'.format(impersonate_user) in query_string
         assert 'can_tag={}'.format(can_tag) in query_string
-        assert 'is_hidden={}'.format(is_hidden) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['query'] == 'testString'
