@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.63.0-5dae26c1-20230111-193039
+# IBM OpenAPI SDK Code Generator Version: 3.67.0-df2073a1-20230222-221157
 
 """
 Search for resources with the global and shared resource properties repository that is
@@ -101,7 +101,6 @@ class GlobalSearchV2(BaseService):
         is_public: str = None,
         impersonate_user: str = None,
         can_tag: str = None,
-        is_hidden: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -169,10 +168,6 @@ class GlobalSearchV2(BaseService):
                (only a GhoST admin can use this parameter). If false (default), only
                resources user can view are returned; if true, only resources that user has
                permissions for tagging are returned (_for administrators only_).
-        :param str is_hidden: (optional) Determines if the result set must return
-               only the visible resources or not. If false (default), only visible
-               resources are returned; if true, only hidden resources are returned; if
-               any, all resources are returned.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ScanResult` object
@@ -197,7 +192,6 @@ class GlobalSearchV2(BaseService):
             'is_public': is_public,
             'impersonate_user': impersonate_user,
             'can_tag': can_tag,
-            'is_hidden': is_hidden,
         }
 
         data = {
@@ -317,17 +311,6 @@ class SearchEnums:
 
         TRUE = 'true'
         FALSE = 'false'
-
-    class IsHidden(str, Enum):
-        """
-        Determines if the result set must return only the visible resources or not. If
-        false (default), only visible resources are returned; if true, only hidden
-        resources are returned; if any, all resources are returned.
-        """
-
-        TRUE = 'true'
-        FALSE = 'false'
-        ANY = 'any'
 
 
 ##############################################################################

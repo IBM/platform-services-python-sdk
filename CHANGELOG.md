@@ -1,3 +1,17 @@
+## [0.31.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.31.1...v0.31.2) (2023-03-07)
+
+
+### Bug Fixes
+
+* **Global Search:** remove is_hidden param from search operation ([#191](https://github.com/IBM/platform-services-python-sdk/issues/191)) ([548313c](https://github.com/IBM/platform-services-python-sdk/commit/548313cf834f9f9228031a0114a34358e012d618))
+
+## [0.31.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.31.0...v0.31.1) (2023-02-15)
+
+
+### Bug Fixes
+
+* **IAM Identity:** re-gen with latest API definition ([#190](https://github.com/IBM/platform-services-python-sdk/issues/190)) ([788762a](https://github.com/IBM/platform-services-python-sdk/commit/788762aafb17caf4c9e8b191f7ef8cc115bdbccb))
+
 # [0.31.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.30.3...v0.31.0) (2023-01-25)
 
 

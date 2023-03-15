@@ -51,6 +51,7 @@ link_id = None
 account_setting_etag = None
 
 report_reference = None
+report_reference_mfa = None
 
 
 class TestIamIdentityV1:
@@ -953,7 +954,7 @@ class TestIamIdentityV1:
             session_invalidation_in_seconds="7200",
             max_sessions_per_identity='10',
             system_access_token_expiration_in_seconds='3600',
-            system_refresh_token_expiration_in_seconds='2592000',
+            system_refresh_token_expiration_in_seconds='259200',
         )
 
         assert update_account_settings_response.get_status_code() == 200
@@ -972,7 +973,7 @@ class TestIamIdentityV1:
         assert settings["session_invalidation_in_seconds"] == "7200"
         assert settings["max_sessions_per_identity"] == "10"
         assert settings["system_access_token_expiration_in_seconds"] == "3600"
-        assert settings["system_refresh_token_expiration_in_seconds"] == "2592000"
+        assert settings["system_refresh_token_expiration_in_seconds"] == "259200"
 
     @needscredentials
     def test_create_report(self):
@@ -1035,3 +1036,65 @@ class TestIamIdentityV1:
                 reference='test123',
             )
         assert e.value.code == 404
+
+    @needscredentials
+    def test_create_mfa_report(self):
+        global report_reference_mfa
+        assert report_reference_mfa is None
+
+        create_report_response = self.iam_identity_service.create_mfa_report(
+            account_id=self.account_id, type="mfa_status"
+        )
+
+        assert create_report_response.get_status_code() == 202
+        reportReference = create_report_response.get_result()
+        assert reportReference is not None
+        print('\ncreate_mfa_report() response: ', json.dumps(reportReference, indent=2))
+
+        report_reference_mfa = reportReference['reference']
+        assert report_reference is not None
+
+    @needscredentials
+    def test_get_mfa_report_complete(self):
+        get_report_response = self.iam_identity_service.get_mfa_report(
+            account_id=self.account_id,
+            reference=report_reference_mfa,
+        )
+
+        for x in range(30):
+            get_report_response = self.iam_identity_service.get_mfa_report(
+                account_id=self.account_id,
+                reference=report_reference_mfa,
+            )
+
+            if get_report_response.get_status_code() != 204:
+                report = get_report_response.get_result()
+                assert report is not None
+                assert report['created_by'] is not None
+                assert report['reference'] is not None
+                assert report['report_time'] is not None
+                break
+            time.sleep(1)
+
+    @needscredentials
+    def test_get_mfa_report_notfound(self):
+        with pytest.raises(ApiException) as e:
+            self.iam_identity_service.get_mfa_report(
+                account_id=self.account_id,
+                reference='test123',
+            )
+        assert e.value.code == 404
+
+    @needscredentials
+    def test_get_mfa_status(self):
+
+        create_mfa_status_response = self.iam_identity_service.get_mfa_status(
+            account_id=self.account_id, iam_id=self.iam_id
+        )
+
+        assert create_mfa_status_response.get_status_code() == 200
+        mfaStatus = create_mfa_status_response.get_result()
+        assert mfaStatus is not None
+        print('\nget_mfa_status() response: ', json.dumps(mfaStatus, indent=2))
+
+        assert mfaStatus['iam_id'] is not None
