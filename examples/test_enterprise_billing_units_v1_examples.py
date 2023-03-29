@@ -170,21 +170,14 @@ class TestEnterpriseBillingUnitsV1Examples:
 
             # begin-get_credit_pools
 
-            all_results = []
-            pager = GetCreditPoolsPager(
-                client=enterprise_billing_units_service,
-                billing_unit_id=billing_unit_id,
-                type='PLATFORM',
-                limit=10,
-            )
-            while pager.has_next():
-                next_page = pager.get_next()
-                assert next_page is not None
-                all_results.extend(next_page)
+            credit_pools_list = enterprise_billing_units_service.get_credit_pools(
+                billing_unit_id=billing_unit_id, type='PLATFORM'
+            ).get_result()
 
-            print(json.dumps(all_results, indent=2))
+            print(json.dumps(credit_pools_list, indent=2))
 
             # end-get_credit_pools
+
         except ApiException as e:
             pytest.fail(str(e))
 

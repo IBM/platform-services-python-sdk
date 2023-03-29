@@ -17,7 +17,7 @@
 # IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
 
 """
-Billing units for IBM Cloud enterprises
+Billing units for IBM Cloud Enterprise
 
 API Version: 1.0.0
 """
@@ -117,7 +117,7 @@ class EnterpriseBillingUnitsV1(BaseService):
         enterprise_id: str = None,
         account_group_id: str = None,
         limit: int = None,
-        start: int = None,
+        start: str = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -131,8 +131,8 @@ class EnterpriseBillingUnitsV1(BaseService):
         :param str account_group_id: (optional) The account group ID.
         :param int limit: (optional) Return results up to this limit. Valid values
                are between 0 and 100.
-        :param int start: (optional) The pagination offset. This will be the index
-               of the first returned result.
+        :param str start: (optional) The pagination offset. This represents the
+               index of the first returned result.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `BillingUnitsList` object
@@ -168,7 +168,7 @@ class EnterpriseBillingUnitsV1(BaseService):
     #########################
 
     def list_billing_options(
-        self, billing_unit_id: str, *, limit: int = None, start: int = None, **kwargs
+        self, billing_unit_id: str, *, limit: int = None, start: str = None, **kwargs
     ) -> DetailedResponse:
         """
         List billing options.
@@ -179,8 +179,8 @@ class EnterpriseBillingUnitsV1(BaseService):
         :param str billing_unit_id: The billing unit ID.
         :param int limit: (optional) Return results up to this limit. Valid values
                are between 0 and 100.
-        :param int start: (optional) The pagination offset. This will be the index
-               of the first returned result.
+        :param str start: (optional) The pagination offset. This represents the
+               index of the first returned result.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `BillingOptionsList` object
@@ -222,7 +222,7 @@ class EnterpriseBillingUnitsV1(BaseService):
         date: str = None,
         type: str = None,
         limit: int = None,
-        start: int = None,
+        start: str = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -239,8 +239,8 @@ class EnterpriseBillingUnitsV1(BaseService):
                `PLATFORM` or `SUPPORT`.
         :param int limit: (optional) Return results up to this limit. Valid values
                are between 0 and 100.
-        :param int start: (optional) The pagination offset. This will be the index
-               of the first returned result.
+        :param str start: (optional) The pagination offset. This represents the
+               index of the first returned result.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `CreditPoolsList` object
@@ -1234,7 +1234,7 @@ class BillingUnitsPager:
         next = None
         next_page_link = result.get('next_url')
         if next_page_link is not None:
-            next = get_query_param(next_page_link, 'start')
+            next = get_query_param(next_page_link.rstrip('&'), 'start')
         self._page_context['next'] = next
         if next is None:
             self._has_next = False
@@ -1303,7 +1303,7 @@ class BillingOptionsPager:
         next = None
         next_page_link = result.get('next_url')
         if next_page_link is not None:
-            next = get_query_param(next_page_link, 'start')
+            next = get_query_param(next_page_link.rstrip('&'), 'start')
         self._page_context['next'] = next
         if next is None:
             self._has_next = False
@@ -1315,84 +1315,6 @@ class BillingOptionsPager:
         Returns all results by invoking get_next() repeatedly
         until all pages of results have been retrieved.
         :return: A List[dict], where each element is a dict that represents an instance of BillingOption.
-        :rtype: List[dict]
-        """
-        results = []
-        while self.has_next():
-            next_page = self.get_next()
-            results.extend(next_page)
-        return results
-
-
-class GetCreditPoolsPager:
-    """
-    GetCreditPoolsPager can be used to simplify the use of the "get_credit_pools" method.
-    """
-
-    def __init__(
-        self,
-        *,
-        client: EnterpriseBillingUnitsV1,
-        billing_unit_id: str,
-        date: str = None,
-        type: str = None,
-        limit: int = None,
-    ) -> None:
-        """
-        Initialize a GetCreditPoolsPager object.
-        :param str billing_unit_id: The ID of the billing unit.
-        :param str date: (optional) The date in the format of YYYY-MM.
-        :param str type: (optional) Filters the credit pool by type, either
-               `PLATFORM` or `SUPPORT`.
-        :param int limit: (optional) Return results up to this limit. Valid values
-               are between 0 and 100.
-        """
-        self._has_next = True
-        self._client = client
-        self._page_context = {'next': None}
-        self._billing_unit_id = billing_unit_id
-        self._date = date
-        self._type = type
-        self._limit = limit
-
-    def has_next(self) -> bool:
-        """
-        Returns true if there are potentially more results to be retrieved.
-        """
-        return self._has_next
-
-    def get_next(self) -> List[dict]:
-        """
-        Returns the next page of results.
-        :return: A List[dict], where each element is a dict that represents an instance of CreditPool.
-        :rtype: List[dict]
-        """
-        if not self.has_next():
-            raise StopIteration(message='No more results available')
-
-        result = self._client.get_credit_pools(
-            billing_unit_id=self._billing_unit_id,
-            date=self._date,
-            type=self._type,
-            limit=self._limit,
-            start=self._page_context.get('next'),
-        ).get_result()
-
-        next = None
-        next_page_link = result.get('next_url')
-        if next_page_link is not None:
-            next = get_query_param(next_page_link, 'start')
-        self._page_context['next'] = next
-        if next is None:
-            self._has_next = False
-
-        return result.get('resources')
-
-    def get_all(self) -> List[dict]:
-        """
-        Returns all results by invoking get_next() repeatedly
-        until all pages of results have been retrieved.
-        :return: A List[dict], where each element is a dict that represents an instance of CreditPool.
         :rtype: List[dict]
         """
         results = []

@@ -1087,7 +1087,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_mfa_status(self):
-
         create_mfa_status_response = self.iam_identity_service.get_mfa_status(
             account_id=self.account_id, iam_id=self.iam_id
         )

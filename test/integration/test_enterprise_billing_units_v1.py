@@ -177,32 +177,3 @@ class TestEnterpriseBillingUnitsV1:
         credit_pools_list = get_credit_pools_response.get_result()
         assert credit_pools_list is not None
         print('get_credit_pools() result: ', json.dumps(credit_pools_list))
-
-    @needscredentials
-    def test_get_credit_pools_with_pager(self):
-        all_results = []
-
-        # Test get_next().
-        pager = GetCreditPoolsPager(
-            client=self.enterprise_billing_units_service,
-            billing_unit_id=self.BILLING_UNIT_ID,
-            type='PLATFORM',
-            limit=10,
-        )
-        while pager.has_next():
-            next_page = pager.get_next()
-            assert next_page is not None
-            all_results.extend(next_page)
-
-        # Test get_all().
-        pager = GetCreditPoolsPager(
-            client=self.enterprise_billing_units_service,
-            billing_unit_id=self.BILLING_UNIT_ID,
-            type='PLATFORM',
-            limit=10,
-        )
-        all_items = pager.get_all()
-        assert all_items is not None
-
-        assert len(all_results) == len(all_items)
-        print(f'\nget_credit_pools() returned a total of {len(all_results)} items(s) using GetCreditPoolsPager.')

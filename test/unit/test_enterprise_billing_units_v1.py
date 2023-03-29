@@ -182,7 +182,7 @@ class TestListBillingUnits:
         enterprise_id = 'testString'
         account_group_id = 'testString'
         limit = 1
-        start = 38
+        start = 'testString'
 
         # Invoke method
         response = _service.list_billing_units(
@@ -350,7 +350,7 @@ class TestListBillingOptions:
         # Set up parameter values
         billing_unit_id = 'testString'
         limit = 1
-        start = 38
+        start = 'testString'
 
         # Invoke method
         response = _service.list_billing_options(billing_unit_id, limit=limit, start=start, headers={})
@@ -545,7 +545,7 @@ class TestGetCreditPools:
         date = 'testString'
         type = 'testString'
         limit = 1
-        start = 38
+        start = 'testString'
 
         # Invoke method
         response = _service.get_credit_pools(
@@ -636,57 +636,6 @@ class TestGetCreditPools:
         # Disable retries and run test_get_credit_pools_value_error.
         _service.disable_retries()
         self.test_get_credit_pools_value_error()
-
-    @responses.activate
-    def test_get_credit_pools_with_pager_get_next(self):
-        """
-        test_get_credit_pools_with_pager_get_next()
-        """
-        # Set up a two-page mock response
-        url = preprocess_url('/v1/credit-pools')
-        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"type":"PLATFORM","currency_code":"USD","billing_unit_id":"billing_unit_id","term_credits":[{"billing_option_id":"JWX986YRGFSHACQUEFOI","category":"PLATFORM","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-04-30T23:59:29.999Z","total_credits":10000,"starting_balance":9000,"used_credits":9500,"current_balance":0,"resources":[{"anyKey":"anyValue"}]}],"overage":{"cost":500,"resources":[{"anyKey":"anyValue"}]}}]}'
-        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"type":"PLATFORM","currency_code":"USD","billing_unit_id":"billing_unit_id","term_credits":[{"billing_option_id":"JWX986YRGFSHACQUEFOI","category":"PLATFORM","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-04-30T23:59:29.999Z","total_credits":10000,"starting_balance":9000,"used_credits":9500,"current_balance":0,"resources":[{"anyKey":"anyValue"}]}],"overage":{"cost":500,"resources":[{"anyKey":"anyValue"}]}}]}'
-        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
-        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
-
-        # Exercise the pager class for this operation
-        all_results = []
-        pager = GetCreditPoolsPager(
-            client=_service,
-            billing_unit_id='testString',
-            date='testString',
-            type='testString',
-            limit=10,
-        )
-        while pager.has_next():
-            next_page = pager.get_next()
-            assert next_page is not None
-            all_results.extend(next_page)
-        assert len(all_results) == 2
-
-    @responses.activate
-    def test_get_credit_pools_with_pager_get_all(self):
-        """
-        test_get_credit_pools_with_pager_get_all()
-        """
-        # Set up a two-page mock response
-        url = preprocess_url('/v1/credit-pools')
-        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"type":"PLATFORM","currency_code":"USD","billing_unit_id":"billing_unit_id","term_credits":[{"billing_option_id":"JWX986YRGFSHACQUEFOI","category":"PLATFORM","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-04-30T23:59:29.999Z","total_credits":10000,"starting_balance":9000,"used_credits":9500,"current_balance":0,"resources":[{"anyKey":"anyValue"}]}],"overage":{"cost":500,"resources":[{"anyKey":"anyValue"}]}}]}'
-        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"type":"PLATFORM","currency_code":"USD","billing_unit_id":"billing_unit_id","term_credits":[{"billing_option_id":"JWX986YRGFSHACQUEFOI","category":"PLATFORM","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-04-30T23:59:29.999Z","total_credits":10000,"starting_balance":9000,"used_credits":9500,"current_balance":0,"resources":[{"anyKey":"anyValue"}]}],"overage":{"cost":500,"resources":[{"anyKey":"anyValue"}]}}]}'
-        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
-        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
-
-        # Exercise the pager class for this operation
-        pager = GetCreditPoolsPager(
-            client=_service,
-            billing_unit_id='testString',
-            date='testString',
-            type='testString',
-            limit=10,
-        )
-        all_results = pager.get_all()
-        assert all_results is not None
-        assert len(all_results) == 2
 
 
 # endregion
