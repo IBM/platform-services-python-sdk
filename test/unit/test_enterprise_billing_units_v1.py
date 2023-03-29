@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,8 +19,10 @@ Unit Tests for EnterpriseBillingUnitsV1
 
 from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import inspect
 import json
+import os
 import pytest
 import re
 import requests
@@ -29,10 +31,36 @@ import urllib
 from ibm_platform_services.enterprise_billing_units_v1 import *
 
 
-service = EnterpriseBillingUnitsV1(authenticator=NoAuthAuthenticator())
+_service = EnterpriseBillingUnitsV1(authenticator=NoAuthAuthenticator())
 
-base_url = 'https://billing.cloud.ibm.com'
-service.set_service_url(base_url)
+_base_url = 'https://billing.cloud.ibm.com'
+_service.set_service_url(_base_url)
+
+
+def preprocess_url(operation_path: str):
+    """
+    Returns the request url associated with the specified operation path.
+    This will be base_url concatenated with a quoted version of operation_path.
+    The returned request URL is used to register the mock response so it needs
+    to match the request URL that is formed by the requests library.
+    """
+    # First, unquote the path since it might have some quoted/escaped characters in it
+    # due to how the generator inserts the operation paths into the unit test code.
+    operation_path = urllib.parse.unquote(operation_path)
+
+    # Next, quote the path using urllib so that we approximate what will
+    # happen during request processing.
+    operation_path = urllib.parse.quote(operation_path, safe='/')
+
+    # Finally, form the request URL from the base URL and operation path.
+    request_url = _base_url + operation_path
+
+    # If the request url does NOT end with a /, then just return it as-is.
+    # Otherwise, return a regular expression that matches one or more trailing /.
+    if re.fullmatch('.*/+', request_url) is None:
+        return request_url
+    return re.compile(request_url.rstrip('/') + '/+')
+
 
 ##############################################################################
 # Start of Service: BillingUnits
@@ -40,19 +68,38 @@ service.set_service_url(base_url)
 # region
 
 
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = EnterpriseBillingUnitsV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, EnterpriseBillingUnitsV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = EnterpriseBillingUnitsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
 class TestGetBillingUnit:
     """
     Test Class for get_billing_unit
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_billing_unit_all_params(self):
@@ -60,19 +107,28 @@ class TestGetBillingUnit:
         get_billing_unit()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/billing-units/testString')
-        mock_response = '{"id": "id", "crn": "crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>", "name": "name", "enterprise_id": "enterprise_id", "currency_code": "USD", "country_code": "USA", "master": true, "created_at": "2019-01-01T12:00:00"}'
+        url = preprocess_url('/v1/billing-units/testString')
+        mock_response = '{"id": "id", "crn": "crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>", "name": "name", "enterprise_id": "enterprise_id", "currency_code": "USD", "country_code": "USA", "master": true, "created_at": "2019-05-01T00:00:00.000Z"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         billing_unit_id = 'testString'
 
         # Invoke method
-        response = service.get_billing_unit(billing_unit_id, headers={})
+        response = _service.get_billing_unit(billing_unit_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
+
+    def test_get_billing_unit_all_params_with_retries(self):
+        # Enable retries and run test_get_billing_unit_all_params.
+        _service.enable_retries()
+        self.test_get_billing_unit_all_params()
+
+        # Disable retries and run test_get_billing_unit_all_params.
+        _service.disable_retries()
+        self.test_get_billing_unit_all_params()
 
     @responses.activate
     def test_get_billing_unit_value_error(self):
@@ -80,8 +136,8 @@ class TestGetBillingUnit:
         test_get_billing_unit_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/billing-units/testString')
-        mock_response = '{"id": "id", "crn": "crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>", "name": "name", "enterprise_id": "enterprise_id", "currency_code": "USD", "country_code": "USA", "master": true, "created_at": "2019-01-01T12:00:00"}'
+        url = preprocess_url('/v1/billing-units/testString')
+        mock_response = '{"id": "id", "crn": "crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>", "name": "name", "enterprise_id": "enterprise_id", "currency_code": "USD", "country_code": "USA", "master": true, "created_at": "2019-05-01T00:00:00.000Z"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -94,7 +150,16 @@ class TestGetBillingUnit:
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_billing_unit(**req_copy)
+                _service.get_billing_unit(**req_copy)
+
+    def test_get_billing_unit_value_error_with_retries(self):
+        # Enable retries and run test_get_billing_unit_value_error.
+        _service.enable_retries()
+        self.test_get_billing_unit_value_error()
+
+        # Disable retries and run test_get_billing_unit_value_error.
+        _service.disable_retries()
+        self.test_get_billing_unit_value_error()
 
 
 class TestListBillingUnits:
@@ -102,33 +167,31 @@ class TestListBillingUnits:
     Test Class for list_billing_units
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_list_billing_units_all_params(self):
         """
         list_billing_units()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/billing-units')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "crn": "crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>", "name": "name", "enterprise_id": "enterprise_id", "currency_code": "USD", "country_code": "USA", "master": true, "created_at": "2019-01-01T12:00:00"}]}'
+        url = preprocess_url('/v1/billing-units')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "crn": "crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>", "name": "name", "enterprise_id": "enterprise_id", "currency_code": "USD", "country_code": "USA", "master": true, "created_at": "2019-05-01T00:00:00.000Z"}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         account_id = 'testString'
         enterprise_id = 'testString'
         account_group_id = 'testString'
+        limit = 1
+        start = 'testString'
 
         # Invoke method
-        response = service.list_billing_units(
-            account_id=account_id, enterprise_id=enterprise_id, account_group_id=account_group_id, headers={}
+        response = _service.list_billing_units(
+            account_id=account_id,
+            enterprise_id=enterprise_id,
+            account_group_id=account_group_id,
+            limit=limit,
+            start=start,
+            headers={},
         )
 
         # Check for correct operation
@@ -140,6 +203,17 @@ class TestListBillingUnits:
         assert 'account_id={}'.format(account_id) in query_string
         assert 'enterprise_id={}'.format(enterprise_id) in query_string
         assert 'account_group_id={}'.format(account_group_id) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
+
+    def test_list_billing_units_all_params_with_retries(self):
+        # Enable retries and run test_list_billing_units_all_params.
+        _service.enable_retries()
+        self.test_list_billing_units_all_params()
+
+        # Disable retries and run test_list_billing_units_all_params.
+        _service.disable_retries()
+        self.test_list_billing_units_all_params()
 
     @responses.activate
     def test_list_billing_units_required_params(self):
@@ -147,16 +221,76 @@ class TestListBillingUnits:
         test_list_billing_units_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/billing-units')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "crn": "crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>", "name": "name", "enterprise_id": "enterprise_id", "currency_code": "USD", "country_code": "USA", "master": true, "created_at": "2019-01-01T12:00:00"}]}'
+        url = preprocess_url('/v1/billing-units')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "crn": "crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>", "name": "name", "enterprise_id": "enterprise_id", "currency_code": "USD", "country_code": "USA", "master": true, "created_at": "2019-05-01T00:00:00.000Z"}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Invoke method
-        response = service.list_billing_units()
+        response = _service.list_billing_units()
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
+
+    def test_list_billing_units_required_params_with_retries(self):
+        # Enable retries and run test_list_billing_units_required_params.
+        _service.enable_retries()
+        self.test_list_billing_units_required_params()
+
+        # Disable retries and run test_list_billing_units_required_params.
+        _service.disable_retries()
+        self.test_list_billing_units_required_params()
+
+    @responses.activate
+    def test_list_billing_units_with_pager_get_next(self):
+        """
+        test_list_billing_units_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/billing-units')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","crn":"crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>","name":"name","enterprise_id":"enterprise_id","currency_code":"USD","country_code":"USA","master":true,"created_at":"2019-05-01T00:00:00.000Z"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","crn":"crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>","name":"name","enterprise_id":"enterprise_id","currency_code":"USD","country_code":"USA","master":true,"created_at":"2019-05-01T00:00:00.000Z"}]}'
+        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
+        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = BillingUnitsPager(
+            client=_service,
+            account_id='testString',
+            enterprise_id='testString',
+            account_group_id='testString',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_billing_units_with_pager_get_all(self):
+        """
+        test_list_billing_units_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/billing-units')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","crn":"crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>","name":"name","enterprise_id":"enterprise_id","currency_code":"USD","country_code":"USA","master":true,"created_at":"2019-05-01T00:00:00.000Z"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","crn":"crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>","name":"name","enterprise_id":"enterprise_id","currency_code":"USD","country_code":"USA","master":true,"created_at":"2019-05-01T00:00:00.000Z"}]}'
+        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
+        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+
+        # Exercise the pager class for this operation
+        pager = BillingUnitsPager(
+            client=_service,
+            account_id='testString',
+            enterprise_id='testString',
+            account_group_id='testString',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 
 # endregion
@@ -170,19 +304,38 @@ class TestListBillingUnits:
 # region
 
 
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = EnterpriseBillingUnitsV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, EnterpriseBillingUnitsV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = EnterpriseBillingUnitsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
 class TestListBillingOptions:
     """
     Test Class for list_billing_options
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_billing_options_all_params(self):
@@ -190,15 +343,52 @@ class TestListBillingOptions:
         list_billing_options()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/billing-options')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "billing_unit_id": "billing_unit_id", "start_date": "2019-01-01T12:00:00", "end_date": "2019-01-01T12:00:00", "state": "ACTIVE", "type": "SUBSCRIPTION", "category": "PLATFORM", "payment_instrument": {"mapKey": {"anyKey": "anyValue"}}, "duration_in_months": 11, "line_item_id": 10, "billing_system": {"mapKey": {"anyKey": "anyValue"}}, "renewal_mode_code": "renewal_mode_code", "updated_at": "2019-01-01T12:00:00"}]}'
+        url = preprocess_url('/v1/billing-options')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "billing_unit_id": "billing_unit_id", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-05-01T00:00:00.000Z", "state": "ACTIVE", "type": "SUBSCRIPTION", "category": "PLATFORM", "payment_instrument": {"anyKey": "anyValue"}, "duration_in_months": 11, "line_item_id": 10, "billing_system": {"anyKey": "anyValue"}, "renewal_mode_code": "renewal_mode_code", "updated_at": "2019-06-01T00:00:00.000Z"}]}'
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+
+        # Set up parameter values
+        billing_unit_id = 'testString'
+        limit = 1
+        start = 'testString'
+
+        # Invoke method
+        response = _service.list_billing_options(billing_unit_id, limit=limit, start=start, headers={})
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'billing_unit_id={}'.format(billing_unit_id) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
+
+    def test_list_billing_options_all_params_with_retries(self):
+        # Enable retries and run test_list_billing_options_all_params.
+        _service.enable_retries()
+        self.test_list_billing_options_all_params()
+
+        # Disable retries and run test_list_billing_options_all_params.
+        _service.disable_retries()
+        self.test_list_billing_options_all_params()
+
+    @responses.activate
+    def test_list_billing_options_required_params(self):
+        """
+        test_list_billing_options_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/billing-options')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "billing_unit_id": "billing_unit_id", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-05-01T00:00:00.000Z", "state": "ACTIVE", "type": "SUBSCRIPTION", "category": "PLATFORM", "payment_instrument": {"anyKey": "anyValue"}, "duration_in_months": 11, "line_item_id": 10, "billing_system": {"anyKey": "anyValue"}, "renewal_mode_code": "renewal_mode_code", "updated_at": "2019-06-01T00:00:00.000Z"}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         billing_unit_id = 'testString'
 
         # Invoke method
-        response = service.list_billing_options(billing_unit_id, headers={})
+        response = _service.list_billing_options(billing_unit_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -208,14 +398,23 @@ class TestListBillingOptions:
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'billing_unit_id={}'.format(billing_unit_id) in query_string
 
+    def test_list_billing_options_required_params_with_retries(self):
+        # Enable retries and run test_list_billing_options_required_params.
+        _service.enable_retries()
+        self.test_list_billing_options_required_params()
+
+        # Disable retries and run test_list_billing_options_required_params.
+        _service.disable_retries()
+        self.test_list_billing_options_required_params()
+
     @responses.activate
     def test_list_billing_options_value_error(self):
         """
         test_list_billing_options_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/billing-options')
-        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "billing_unit_id": "billing_unit_id", "start_date": "2019-01-01T12:00:00", "end_date": "2019-01-01T12:00:00", "state": "ACTIVE", "type": "SUBSCRIPTION", "category": "PLATFORM", "payment_instrument": {"mapKey": {"anyKey": "anyValue"}}, "duration_in_months": 11, "line_item_id": 10, "billing_system": {"mapKey": {"anyKey": "anyValue"}}, "renewal_mode_code": "renewal_mode_code", "updated_at": "2019-01-01T12:00:00"}]}'
+        url = preprocess_url('/v1/billing-options')
+        mock_response = '{"rows_count": 10, "next_url": "next_url", "resources": [{"id": "id", "billing_unit_id": "billing_unit_id", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-05-01T00:00:00.000Z", "state": "ACTIVE", "type": "SUBSCRIPTION", "category": "PLATFORM", "payment_instrument": {"anyKey": "anyValue"}, "duration_in_months": 11, "line_item_id": 10, "billing_system": {"anyKey": "anyValue"}, "renewal_mode_code": "renewal_mode_code", "updated_at": "2019-06-01T00:00:00.000Z"}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -228,7 +427,63 @@ class TestListBillingOptions:
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.list_billing_options(**req_copy)
+                _service.list_billing_options(**req_copy)
+
+    def test_list_billing_options_value_error_with_retries(self):
+        # Enable retries and run test_list_billing_options_value_error.
+        _service.enable_retries()
+        self.test_list_billing_options_value_error()
+
+        # Disable retries and run test_list_billing_options_value_error.
+        _service.disable_retries()
+        self.test_list_billing_options_value_error()
+
+    @responses.activate
+    def test_list_billing_options_with_pager_get_next(self):
+        """
+        test_list_billing_options_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/billing-options')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","billing_unit_id":"billing_unit_id","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-05-01T00:00:00.000Z","state":"ACTIVE","type":"SUBSCRIPTION","category":"PLATFORM","payment_instrument":{"anyKey":"anyValue"},"duration_in_months":11,"line_item_id":10,"billing_system":{"anyKey":"anyValue"},"renewal_mode_code":"renewal_mode_code","updated_at":"2019-06-01T00:00:00.000Z"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","billing_unit_id":"billing_unit_id","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-05-01T00:00:00.000Z","state":"ACTIVE","type":"SUBSCRIPTION","category":"PLATFORM","payment_instrument":{"anyKey":"anyValue"},"duration_in_months":11,"line_item_id":10,"billing_system":{"anyKey":"anyValue"},"renewal_mode_code":"renewal_mode_code","updated_at":"2019-06-01T00:00:00.000Z"}]}'
+        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
+        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = BillingOptionsPager(
+            client=_service,
+            billing_unit_id='testString',
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_billing_options_with_pager_get_all(self):
+        """
+        test_list_billing_options_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/billing-options')
+        mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?start=1","resources":[{"id":"id","billing_unit_id":"billing_unit_id","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-05-01T00:00:00.000Z","state":"ACTIVE","type":"SUBSCRIPTION","category":"PLATFORM","payment_instrument":{"anyKey":"anyValue"},"duration_in_months":11,"line_item_id":10,"billing_system":{"anyKey":"anyValue"},"renewal_mode_code":"renewal_mode_code","updated_at":"2019-06-01T00:00:00.000Z"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","billing_unit_id":"billing_unit_id","start_date":"2019-05-01T00:00:00.000Z","end_date":"2020-05-01T00:00:00.000Z","state":"ACTIVE","type":"SUBSCRIPTION","category":"PLATFORM","payment_instrument":{"anyKey":"anyValue"},"duration_in_months":11,"line_item_id":10,"billing_system":{"anyKey":"anyValue"},"renewal_mode_code":"renewal_mode_code","updated_at":"2019-06-01T00:00:00.000Z"}]}'
+        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
+        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+
+        # Exercise the pager class for this operation
+        pager = BillingOptionsPager(
+            client=_service,
+            billing_unit_id='testString',
+            limit=10,
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 
 # endregion
@@ -242,19 +497,38 @@ class TestListBillingOptions:
 # region
 
 
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = EnterpriseBillingUnitsV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, EnterpriseBillingUnitsV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = EnterpriseBillingUnitsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
 class TestGetCreditPools:
     """
     Test Class for get_credit_pools
     """
-
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_credit_pools_all_params(self):
@@ -262,17 +536,21 @@ class TestGetCreditPools:
         get_credit_pools()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/credit-pools')
-        mock_response = '{"rows_count": 2, "next_url": "next_url", "resources": [{"type": "PLATFORM", "currency_code": "USD", "billing_unit_id": "billing_unit_id", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "category": "PLATFORM", "start_date": "2019-01-01T12:00:00", "end_date": "2019-01-01T12:00:00", "total_credits": 10000, "starting_balance": 9000, "used_credits": 9500, "current_balance": 0, "resources": [{"mapKey": {"anyKey": "anyValue"}}]}], "overage": {"cost": 500, "resources": [{"mapKey": {"anyKey": "anyValue"}}]}}]}'
+        url = preprocess_url('/v1/credit-pools')
+        mock_response = '{"rows_count": 2, "next_url": "next_url", "resources": [{"type": "PLATFORM", "currency_code": "USD", "billing_unit_id": "billing_unit_id", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "category": "PLATFORM", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-04-30T23:59:29.999Z", "total_credits": 10000, "starting_balance": 9000, "used_credits": 9500, "current_balance": 0, "resources": [{"anyKey": "anyValue"}]}], "overage": {"cost": 500, "resources": [{"anyKey": "anyValue"}]}}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         billing_unit_id = 'testString'
         date = 'testString'
         type = 'testString'
+        limit = 1
+        start = 'testString'
 
         # Invoke method
-        response = service.get_credit_pools(billing_unit_id, date=date, type=type, headers={})
+        response = _service.get_credit_pools(
+            billing_unit_id, date=date, type=type, limit=limit, start=start, headers={}
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -283,6 +561,17 @@ class TestGetCreditPools:
         assert 'billing_unit_id={}'.format(billing_unit_id) in query_string
         assert 'date={}'.format(date) in query_string
         assert 'type={}'.format(type) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'start={}'.format(start) in query_string
+
+    def test_get_credit_pools_all_params_with_retries(self):
+        # Enable retries and run test_get_credit_pools_all_params.
+        _service.enable_retries()
+        self.test_get_credit_pools_all_params()
+
+        # Disable retries and run test_get_credit_pools_all_params.
+        _service.disable_retries()
+        self.test_get_credit_pools_all_params()
 
     @responses.activate
     def test_get_credit_pools_required_params(self):
@@ -290,15 +579,15 @@ class TestGetCreditPools:
         test_get_credit_pools_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/credit-pools')
-        mock_response = '{"rows_count": 2, "next_url": "next_url", "resources": [{"type": "PLATFORM", "currency_code": "USD", "billing_unit_id": "billing_unit_id", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "category": "PLATFORM", "start_date": "2019-01-01T12:00:00", "end_date": "2019-01-01T12:00:00", "total_credits": 10000, "starting_balance": 9000, "used_credits": 9500, "current_balance": 0, "resources": [{"mapKey": {"anyKey": "anyValue"}}]}], "overage": {"cost": 500, "resources": [{"mapKey": {"anyKey": "anyValue"}}]}}]}'
+        url = preprocess_url('/v1/credit-pools')
+        mock_response = '{"rows_count": 2, "next_url": "next_url", "resources": [{"type": "PLATFORM", "currency_code": "USD", "billing_unit_id": "billing_unit_id", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "category": "PLATFORM", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-04-30T23:59:29.999Z", "total_credits": 10000, "starting_balance": 9000, "used_credits": 9500, "current_balance": 0, "resources": [{"anyKey": "anyValue"}]}], "overage": {"cost": 500, "resources": [{"anyKey": "anyValue"}]}}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
         billing_unit_id = 'testString'
 
         # Invoke method
-        response = service.get_credit_pools(billing_unit_id, headers={})
+        response = _service.get_credit_pools(billing_unit_id, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -308,14 +597,23 @@ class TestGetCreditPools:
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'billing_unit_id={}'.format(billing_unit_id) in query_string
 
+    def test_get_credit_pools_required_params_with_retries(self):
+        # Enable retries and run test_get_credit_pools_required_params.
+        _service.enable_retries()
+        self.test_get_credit_pools_required_params()
+
+        # Disable retries and run test_get_credit_pools_required_params.
+        _service.disable_retries()
+        self.test_get_credit_pools_required_params()
+
     @responses.activate
     def test_get_credit_pools_value_error(self):
         """
         test_get_credit_pools_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(base_url + '/v1/credit-pools')
-        mock_response = '{"rows_count": 2, "next_url": "next_url", "resources": [{"type": "PLATFORM", "currency_code": "USD", "billing_unit_id": "billing_unit_id", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "category": "PLATFORM", "start_date": "2019-01-01T12:00:00", "end_date": "2019-01-01T12:00:00", "total_credits": 10000, "starting_balance": 9000, "used_credits": 9500, "current_balance": 0, "resources": [{"mapKey": {"anyKey": "anyValue"}}]}], "overage": {"cost": 500, "resources": [{"mapKey": {"anyKey": "anyValue"}}]}}]}'
+        url = preprocess_url('/v1/credit-pools')
+        mock_response = '{"rows_count": 2, "next_url": "next_url", "resources": [{"type": "PLATFORM", "currency_code": "USD", "billing_unit_id": "billing_unit_id", "term_credits": [{"billing_option_id": "JWX986YRGFSHACQUEFOI", "category": "PLATFORM", "start_date": "2019-05-01T00:00:00.000Z", "end_date": "2020-04-30T23:59:29.999Z", "total_credits": 10000, "starting_balance": 9000, "used_credits": 9500, "current_balance": 0, "resources": [{"anyKey": "anyValue"}]}], "overage": {"cost": 500, "resources": [{"anyKey": "anyValue"}]}}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -328,7 +626,16 @@ class TestGetCreditPools:
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                service.get_credit_pools(**req_copy)
+                _service.get_credit_pools(**req_copy)
+
+    def test_get_credit_pools_value_error_with_retries(self):
+        # Enable retries and run test_get_credit_pools_value_error.
+        _service.enable_retries()
+        self.test_get_credit_pools_value_error()
+
+        # Disable retries and run test_get_credit_pools_value_error.
+        _service.disable_retries()
+        self.test_get_credit_pools_value_error()
 
 
 # endregion
@@ -341,7 +648,7 @@ class TestGetCreditPools:
 # Start of Model Tests
 ##############################################################################
 # region
-class TestBillingOption:
+class TestModel_BillingOption:
     """
     Test Class for BillingOption
     """
@@ -355,17 +662,17 @@ class TestBillingOption:
         billing_option_model_json = {}
         billing_option_model_json['id'] = 'testString'
         billing_option_model_json['billing_unit_id'] = 'testString'
-        billing_option_model_json['start_date'] = '2020-01-28T18:40:40.123456Z'
-        billing_option_model_json['end_date'] = '2020-01-28T18:40:40.123456Z'
+        billing_option_model_json['start_date'] = '2019-05-01T00:00:00Z'
+        billing_option_model_json['end_date'] = '2020-05-01T00:00:00Z'
         billing_option_model_json['state'] = 'ACTIVE'
         billing_option_model_json['type'] = 'SUBSCRIPTION'
         billing_option_model_json['category'] = 'PLATFORM'
-        billing_option_model_json['payment_instrument'] = {}
+        billing_option_model_json['payment_instrument'] = {'foo': 'bar'}
         billing_option_model_json['duration_in_months'] = 11
         billing_option_model_json['line_item_id'] = 10
-        billing_option_model_json['billing_system'] = {}
+        billing_option_model_json['billing_system'] = {'foo': 'bar'}
         billing_option_model_json['renewal_mode_code'] = 'testString'
-        billing_option_model_json['updated_at'] = '2020-01-28T18:40:40.123456Z'
+        billing_option_model_json['updated_at'] = '2019-06-01T00:00:00Z'
 
         # Construct a model instance of BillingOption by calling from_dict on the json representation
         billing_option_model = BillingOption.from_dict(billing_option_model_json)
@@ -383,7 +690,7 @@ class TestBillingOption:
         assert billing_option_model_json2 == billing_option_model_json
 
 
-class TestBillingOptionsList:
+class TestModel_BillingOptionsList:
     """
     Test Class for BillingOptionsList
     """
@@ -398,17 +705,17 @@ class TestBillingOptionsList:
         billing_option_model = {}  # BillingOption
         billing_option_model['id'] = 'CFL_JJKLVZ2I0JE-_MGU'
         billing_option_model['billing_unit_id'] = 'e19fa97c9bb34963a31a2008044d8b59'
-        billing_option_model['start_date'] = '2020-01-28T18:40:40.123456Z'
-        billing_option_model['end_date'] = '2020-01-28T18:40:40.123456Z'
+        billing_option_model['start_date'] = '2019-05-02T07:00:00Z'
+        billing_option_model['end_date'] = '2019-11-30T08:00:00Z'
         billing_option_model['state'] = 'ACTIVE'
         billing_option_model['type'] = 'SUBSCRIPTION'
         billing_option_model['category'] = 'PLATFORM'
-        billing_option_model['payment_instrument'] = {}
+        billing_option_model['payment_instrument'] = {'foo': 'bar'}
         billing_option_model['duration_in_months'] = 6
         billing_option_model['line_item_id'] = 10
-        billing_option_model['billing_system'] = {}
+        billing_option_model['billing_system'] = {'foo': 'bar'}
         billing_option_model['renewal_mode_code'] = 'T'
-        billing_option_model['updated_at'] = '2020-01-28T18:40:40.123456Z'
+        billing_option_model['updated_at'] = '2019-05-02T07:00:00Z'
 
         # Construct a json representation of a BillingOptionsList model
         billing_options_list_model_json = {}
@@ -432,7 +739,7 @@ class TestBillingOptionsList:
         assert billing_options_list_model_json2 == billing_options_list_model_json
 
 
-class TestBillingUnit:
+class TestModel_BillingUnit:
     """
     Test Class for BillingUnit
     """
@@ -453,7 +760,7 @@ class TestBillingUnit:
         billing_unit_model_json['currency_code'] = 'USD'
         billing_unit_model_json['country_code'] = 'USA'
         billing_unit_model_json['master'] = True
-        billing_unit_model_json['created_at'] = '2020-01-28T18:40:40.123456Z'
+        billing_unit_model_json['created_at'] = '2019-05-01T00:00:00Z'
 
         # Construct a model instance of BillingUnit by calling from_dict on the json representation
         billing_unit_model = BillingUnit.from_dict(billing_unit_model_json)
@@ -471,7 +778,7 @@ class TestBillingUnit:
         assert billing_unit_model_json2 == billing_unit_model_json
 
 
-class TestBillingUnitsList:
+class TestModel_BillingUnitsList:
     """
     Test Class for BillingUnitsList
     """
@@ -493,7 +800,7 @@ class TestBillingUnitsList:
         billing_unit_model['currency_code'] = 'USD'
         billing_unit_model['country_code'] = 'USA'
         billing_unit_model['master'] = True
-        billing_unit_model['created_at'] = '2020-01-28T18:40:40.123456Z'
+        billing_unit_model['created_at'] = '2019-07-01T00:00:00Z'
 
         # Construct a json representation of a BillingUnitsList model
         billing_units_list_model_json = {}
@@ -517,7 +824,7 @@ class TestBillingUnitsList:
         assert billing_units_list_model_json2 == billing_units_list_model_json
 
 
-class TestCreditPool:
+class TestModel_CreditPool:
     """
     Test Class for CreditPool
     """
@@ -532,17 +839,17 @@ class TestCreditPool:
         term_credits_model = {}  # TermCredits
         term_credits_model['billing_option_id'] = '$BILLING_OPTION_ID'
         term_credits_model['category'] = 'PLATFORM'
-        term_credits_model['start_date'] = '2020-01-28T18:40:40.123456Z'
-        term_credits_model['end_date'] = '2020-01-28T18:40:40.123456Z'
+        term_credits_model['start_date'] = '2019-07-01T01:00:00Z'
+        term_credits_model['end_date'] = '2020-06-30T23:59:59.999000Z'
         term_credits_model['total_credits'] = 7000
         term_credits_model['starting_balance'] = 6000
         term_credits_model['used_credits'] = 1000
         term_credits_model['current_balance'] = 5000
-        term_credits_model['resources'] = [{}]
+        term_credits_model['resources'] = []
 
         credit_pool_overage_model = {}  # CreditPoolOverage
         credit_pool_overage_model['cost'] = 0
-        credit_pool_overage_model['resources'] = [{}]
+        credit_pool_overage_model['resources'] = []
 
         # Construct a json representation of a CreditPool model
         credit_pool_model_json = {}
@@ -568,7 +875,7 @@ class TestCreditPool:
         assert credit_pool_model_json2 == credit_pool_model_json
 
 
-class TestCreditPoolOverage:
+class TestModel_CreditPoolOverage:
     """
     Test Class for CreditPoolOverage
     """
@@ -581,7 +888,7 @@ class TestCreditPoolOverage:
         # Construct a json representation of a CreditPoolOverage model
         credit_pool_overage_model_json = {}
         credit_pool_overage_model_json['cost'] = 500
-        credit_pool_overage_model_json['resources'] = [{}]
+        credit_pool_overage_model_json['resources'] = [{'foo': 'bar'}]
 
         # Construct a model instance of CreditPoolOverage by calling from_dict on the json representation
         credit_pool_overage_model = CreditPoolOverage.from_dict(credit_pool_overage_model_json)
@@ -599,7 +906,7 @@ class TestCreditPoolOverage:
         assert credit_pool_overage_model_json2 == credit_pool_overage_model_json
 
 
-class TestCreditPoolsList:
+class TestModel_CreditPoolsList:
     """
     Test Class for CreditPoolsList
     """
@@ -614,17 +921,17 @@ class TestCreditPoolsList:
         term_credits_model = {}  # TermCredits
         term_credits_model['billing_option_id'] = '$BILLING_OPTION_ID'
         term_credits_model['category'] = 'PLATFORM'
-        term_credits_model['start_date'] = '2020-01-28T18:40:40.123456Z'
-        term_credits_model['end_date'] = '2020-01-28T18:40:40.123456Z'
+        term_credits_model['start_date'] = '2019-07-01T01:00:00Z'
+        term_credits_model['end_date'] = '2020-06-30T23:59:59.999000Z'
         term_credits_model['total_credits'] = 7000
         term_credits_model['starting_balance'] = 6000
         term_credits_model['used_credits'] = 1000
         term_credits_model['current_balance'] = 5000
-        term_credits_model['resources'] = [{}]
+        term_credits_model['resources'] = []
 
         credit_pool_overage_model = {}  # CreditPoolOverage
         credit_pool_overage_model['cost'] = 0
-        credit_pool_overage_model['resources'] = [{}]
+        credit_pool_overage_model['resources'] = []
 
         credit_pool_model = {}  # CreditPool
         credit_pool_model['type'] = 'PLATFORM'
@@ -655,7 +962,7 @@ class TestCreditPoolsList:
         assert credit_pools_list_model_json2 == credit_pools_list_model_json
 
 
-class TestTermCredits:
+class TestModel_TermCredits:
     """
     Test Class for TermCredits
     """
@@ -669,13 +976,13 @@ class TestTermCredits:
         term_credits_model_json = {}
         term_credits_model_json['billing_option_id'] = 'JWX986YRGFSHACQUEFOI'
         term_credits_model_json['category'] = 'PLATFORM'
-        term_credits_model_json['start_date'] = '2020-01-28T18:40:40.123456Z'
-        term_credits_model_json['end_date'] = '2020-01-28T18:40:40.123456Z'
+        term_credits_model_json['start_date'] = '2019-05-01T00:00:00Z'
+        term_credits_model_json['end_date'] = '2020-04-30T23:59:29.999000Z'
         term_credits_model_json['total_credits'] = 10000
         term_credits_model_json['starting_balance'] = 9000
         term_credits_model_json['used_credits'] = 9500
         term_credits_model_json['current_balance'] = 0
-        term_credits_model_json['resources'] = [{}]
+        term_credits_model_json['resources'] = [{'foo': 'bar'}]
 
         # Construct a model instance of TermCredits by calling from_dict on the json representation
         term_credits_model = TermCredits.from_dict(term_credits_model_json)

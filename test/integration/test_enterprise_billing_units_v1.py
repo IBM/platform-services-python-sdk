@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@
 Integration Tests for EnterpriseBillingUnitsV1
 """
 
+from ibm_cloud_sdk_core import *
 import os
 import json
 import pytest
-from ibm_cloud_sdk_core import *
 from ibm_platform_services.enterprise_billing_units_v1 import *
 
 # Config file name
@@ -60,7 +60,6 @@ class TestEnterpriseBillingUnitsV1:
 
     @needscredentials
     def test_get_billing_unit(self):
-
         get_billing_unit_response = self.enterprise_billing_units_service.get_billing_unit(
             billing_unit_id=self.BILLING_UNIT_ID
         )
@@ -72,7 +71,6 @@ class TestEnterpriseBillingUnitsV1:
 
     @needscredentials
     def test_list_billing_units_1(self):
-
         list_billing_units_response = self.enterprise_billing_units_service.list_billing_units(
             enterprise_id=self.ENTERPRISE_ID
         )
@@ -84,7 +82,6 @@ class TestEnterpriseBillingUnitsV1:
 
     @needscredentials
     def test_list_billing_units_2(self):
-
         list_billing_units_response = self.enterprise_billing_units_service.list_billing_units(
             account_id=self.ACCOUNT_ID
         )
@@ -96,7 +93,6 @@ class TestEnterpriseBillingUnitsV1:
 
     @needscredentials
     def test_list_billing_units_3(self):
-
         list_billing_units_response = self.enterprise_billing_units_service.list_billing_units(
             account_group_id=self.ACCOUNT_GROUP_ID
         )
@@ -107,8 +103,34 @@ class TestEnterpriseBillingUnitsV1:
         print('list_billing_units(account group id) result: ', json.dumps(billing_units_list))
 
     @needscredentials
-    def test_list_billing_options(self):
+    def test_list_billing_units_with_pager(self):
+        all_results = []
 
+        # Test get_next().
+        pager = BillingUnitsPager(
+            client=self.enterprise_billing_units_service,
+            account_id=self.ACCOUNT_ID,
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = BillingUnitsPager(
+            client=self.enterprise_billing_units_service,
+            account_id=self.ACCOUNT_ID,
+            limit=10,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_billing_units() returned a total of {len(all_results)} items(s) using BillingUnitsPager.')
+
+    @needscredentials
+    def test_list_billing_options(self):
         list_billing_options_response = self.enterprise_billing_units_service.list_billing_options(
             billing_unit_id=self.BILLING_UNIT_ID
         )
@@ -119,8 +141,34 @@ class TestEnterpriseBillingUnitsV1:
         print('list_billing_options() result: ', json.dumps(billing_options_list))
 
     @needscredentials
-    def test_get_credit_pools(self):
+    def test_list_billing_options_with_pager(self):
+        all_results = []
 
+        # Test get_next().
+        pager = BillingOptionsPager(
+            client=self.enterprise_billing_units_service,
+            billing_unit_id=self.BILLING_UNIT_ID,
+            limit=10,
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+
+        # Test get_all().
+        pager = BillingOptionsPager(
+            client=self.enterprise_billing_units_service,
+            billing_unit_id=self.BILLING_UNIT_ID,
+            limit=10,
+        )
+        all_items = pager.get_all()
+        assert all_items is not None
+
+        assert len(all_results) == len(all_items)
+        print(f'\nlist_billing_options() returned a total of {len(all_results)} items(s) using BillingOptionsPager.')
+
+    @needscredentials
+    def test_get_credit_pools(self):
         get_credit_pools_response = self.enterprise_billing_units_service.get_credit_pools(
             billing_unit_id=self.BILLING_UNIT_ID, type='PLATFORM'
         )

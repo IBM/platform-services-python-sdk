@@ -646,7 +646,6 @@ class TestContextBasedRestrictionsV1:
 
     @needscredentials
     def test_list_available_service_operations(self):
-
         list_available_service_operations_response = (
             self.context_based_restrictions_service.list_available_service_operations(
                 service_name='containers-kubernetes', transaction_id=self.getTransactionID()

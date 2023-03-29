@@ -47,7 +47,6 @@ class TestUsageMeteringV4:
 
     @needscredentials
     def test_report_resource_usage(self):
-
         # Get current time in ms since epoch.
         start_time = int(time.time() * 1000)
         end_time = start_time

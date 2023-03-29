@@ -60,7 +60,6 @@ class TestUsageReportsV4:
 
     @needscredentials
     def test_get_account_summary(self):
-
         get_account_summary_response = self.usage_reports_service.get_account_summary(
             account_id=self.ACCOUNT_ID,
             billingmonth=self.BILLING_MONTH,
@@ -76,7 +75,6 @@ class TestUsageReportsV4:
 
     @needscredentials
     def test_get_account_usage(self):
-
         get_account_usage_response = self.usage_reports_service.get_account_usage(
             account_id=self.ACCOUNT_ID, billingmonth=self.BILLING_MONTH, names=True, accept_language='English'
         )
@@ -90,7 +88,6 @@ class TestUsageReportsV4:
 
     @needscredentials
     def test_get_resource_group_usage(self):
-
         get_resource_group_usage_response = self.usage_reports_service.get_resource_group_usage(
             account_id=self.ACCOUNT_ID,
             resource_group_id=self.RESOURCE_GROUP_ID,
@@ -107,7 +104,6 @@ class TestUsageReportsV4:
 
     @needscredentials
     def test_get_org_usage(self):
-
         get_org_usage_response = self.usage_reports_service.get_org_usage(
             account_id=self.ACCOUNT_ID,
             organization_id=self.ORG_ID,

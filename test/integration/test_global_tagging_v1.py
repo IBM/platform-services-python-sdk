@@ -172,7 +172,6 @@ class TestGlobalTaggingV1:
 
     @needscredentials
     def test_attach_tag_user(self):
-
         # Construct a dict representation of a Resource model
         resource_model = {
             'resource_id': self.resource_crn,
@@ -198,7 +197,6 @@ class TestGlobalTaggingV1:
 
     @needscredentials
     def test_attach_tag_access(self):
-
         # Construct a dict representation of a Resource model
         resource_model = {
             'resource_id': self.resource_crn,
@@ -276,7 +274,6 @@ class TestGlobalTaggingV1:
 
     @needscredentials
     def test_detach_tag_user(self):
-
         # Construct a dict representation of a Resource model
         resource_model = {'resource_id': self.resource_crn}
 
@@ -300,7 +297,6 @@ class TestGlobalTaggingV1:
 
     @needscredentials
     def test_detach_tag_access(self):
-
         # Construct a dict representation of a Resource model
         resource_model = {'resource_id': self.resource_crn}
 

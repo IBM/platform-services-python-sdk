@@ -413,7 +413,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_list_service_ids(self):
-
         list_service_ids_response = self.iam_identity_service.list_service_ids(
             account_id=self.account_id, name=self.serviceid_name, pagesize=100
         )
@@ -1088,7 +1087,6 @@ class TestIamIdentityV1:
 
     @needscredentials
     def test_get_mfa_status(self):
-
         create_mfa_status_response = self.iam_identity_service.get_mfa_status(
             account_id=self.account_id, iam_id=self.iam_id
         )

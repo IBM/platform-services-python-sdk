@@ -99,7 +99,6 @@ class TestEnterpriseManagementV1:
 
     @needscredentials
     def test_list_account_groups(self):
-
         results = []
         doc_id = None
 
@@ -203,7 +202,6 @@ class TestEnterpriseManagementV1:
 
     @needscredentials
     def test_list_accounts(self):
-
         results = []
         doc_id = None
 
@@ -288,7 +286,6 @@ class TestEnterpriseManagementV1:
 
     @needscredentials
     def test_list_enterprises(self):
-
         results = []
         doc_ic = None
 
@@ -340,7 +337,6 @@ class TestEnterpriseManagementV1:
 
     @needscredentials
     def test_get_enterprise(self):
-
         get_enterprise_response = self.enterprise_management_service.get_enterprise(
             enterprise_id=self.enterprise_id,
         )
@@ -351,7 +347,6 @@ class TestEnterpriseManagementV1:
 
     @needscredentials
     def test_update_enterprise(self):
-
         update_enterprise_response = self.enterprise_management_service.update_enterprise(
             enterprise_id=self.enterprise_id,
             name=updated_enterprise_name,

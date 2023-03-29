@@ -81,8 +81,7 @@ class TestListResourceGroups:
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_resource_groups_all_params(self):
@@ -167,8 +166,7 @@ class TestCreateResourceGroup:
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_create_resource_group_all_params(self):
@@ -244,8 +242,7 @@ class TestGetResourceGroup:
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_resource_group_all_params(self):
@@ -321,8 +318,7 @@ class TestUpdateResourceGroup:
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_resource_group_all_params(self):
@@ -433,8 +429,7 @@ class TestDeleteResourceGroup:
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_delete_resource_group_all_params(self):
@@ -545,8 +540,7 @@ class TestListQuotaDefinitions:
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_quota_definitions_all_params(self):
@@ -588,8 +582,7 @@ class TestGetQuotaDefinition:
         request_url = urllib.parse.quote(request_url, safe=':/')
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_quota_definition_all_params(self):
