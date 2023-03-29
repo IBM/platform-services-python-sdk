@@ -1,3 +1,10 @@
+# [0.32.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.31.2...v0.32.0) (2023-03-29)
+
+
+### Features
+
+* **Enterprise Billing Units:** add start and limit parameters to billing unit list APIs ([#189](https://github.com/IBM/platform-services-python-sdk/issues/189)) ([b15781d](https://github.com/IBM/platform-services-python-sdk/commit/b15781d16d935235bbfd08146cfcf57b55c467f9))
+
 ## [0.31.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.31.1...v0.31.2) (2023-03-07)
 
 
