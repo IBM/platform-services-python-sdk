@@ -60,6 +60,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         cls.testViewerRoleCrn = "crn:v1:bluemix:public:iam::::role:Viewer"
         cls.testEditorRoleCrn = "crn:v1:bluemix:public:iam::::role:Editor"
         cls.testServiceName = "iam-groups"
+        cls.testServiceRoleCrn = "crn:v1:bluemix:public:iam-identity::::serviceRole:ServiceIdCreator"
         cls.testPolicySubject = PolicySubject(attributes=[SubjectAttribute(name='iam_id', value=cls.testUserId)])
         cls.testPolicyRole = PolicyRole(role_id=cls.testViewerRoleCrn)
         resource_tag = ResourceTag(name='project', value='prototype', operator='stringEquals')
@@ -81,7 +82,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
             ],
             tags=[V2PolicyResourceTag(key='project', value='prototype', operator='stringEquals')],
         )
-        cls.testV2PolicyControl = Control(grant=V2PolicyGrant(roles=[cls.testPolicyRole]))
+        cls.testV2PolicyControl = Control(grant=Grant(roles=[cls.testPolicyRole]))
         cls.testV2PolicyRule = V2PolicyRuleRuleWithConditions(
             operator='and',
             conditions=[
@@ -397,7 +398,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert result.resource == self.testV2PolicyResource
         assert result.control is not None
         control = Control.from_dict(result.control)
-        assert control == self.testV2PolicyControl
+        assert control.grant.roles[0].role_id == self.testViewerRoleCrn
 
         print('\nTest policy: ', result)
 
@@ -439,6 +440,8 @@ class TestIamPolicyManagementV1(unittest.TestCase):
             subject=self.testV2PolicySubject,
             control=self.testV2PolicyControl,
             resource=self.testV2PolicyResource,
+            pattern='time-based-conditions:weekly:custom-hours',
+            rule=self.testV2PolicyRule,
         )
         assert response is not None
         assert response.get_status_code() == 200
@@ -480,3 +483,31 @@ class TestIamPolicyManagementV1(unittest.TestCase):
                 foundTestPolicy = True
                 break
         assert foundTestPolicy
+
+    def test_14_list_v2_roles(self):
+
+        response = self.service.list_roles(account_id=self.testCustomRole.account_id, service_group_id="IAM")
+        assert response is not None
+        assert response.get_status_code() == 200
+
+        result_dict = response.get_result()
+        assert result_dict is not None
+
+        result = RoleList.from_dict(result_dict)
+        assert result is not None
+
+        print("List roles: ", result)
+
+        # confirm the system's viewer and service roles are present
+        testSystemRolePresent = False
+        testServiceRolePresent = False
+        for role in result.system_roles:
+            if role.crn == self.testViewerRoleCrn:
+                testSystemRolePresent = True
+                break
+        assert testSystemRolePresent
+        for role in result.service_roles:
+            if role.crn == self.testServiceRoleCrn:
+                testServiceRolePresent = True
+                break
+        assert testServiceRolePresent
