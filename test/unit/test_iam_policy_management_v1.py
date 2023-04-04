@@ -865,6 +865,7 @@ class TestListRoles:
         service_name = 'iam-groups'
         source_service_name = 'iam-groups'
         policy_type = 'authorization'
+        service_group_id = 'IAM'
 
         # Invoke method
         response = _service.list_roles(
@@ -873,6 +874,7 @@ class TestListRoles:
             service_name=service_name,
             source_service_name=source_service_name,
             policy_type=policy_type,
+            service_group_id=service_group_id,
             headers={},
         )
 
@@ -886,6 +888,7 @@ class TestListRoles:
         assert 'service_name={}'.format(service_name) in query_string
         assert 'source_service_name={}'.format(source_service_name) in query_string
         assert 'policy_type={}'.format(policy_type) in query_string
+        assert 'service_group_id={}'.format(service_group_id) in query_string
 
     def test_list_roles_all_params_with_retries(self):
         # Enable retries and run test_list_roles_all_params.
@@ -1328,7 +1331,7 @@ class TestListV2Policies:
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}]}'
+        mock_response = '{"policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -1340,6 +1343,7 @@ class TestListV2Policies:
         service_type = 'service'
         service_name = 'testString'
         service_group_id = 'testString'
+        sort = 'testString'
         format = 'include_last_permit'
         state = 'active'
 
@@ -1353,6 +1357,7 @@ class TestListV2Policies:
             service_type=service_type,
             service_name=service_name,
             service_group_id=service_group_id,
+            sort=sort,
             format=format,
             state=state,
             headers={},
@@ -1371,6 +1376,7 @@ class TestListV2Policies:
         assert 'service_type={}'.format(service_type) in query_string
         assert 'service_name={}'.format(service_name) in query_string
         assert 'service_group_id={}'.format(service_group_id) in query_string
+        assert 'sort={}'.format(sort) in query_string
         assert 'format={}'.format(format) in query_string
         assert 'state={}'.format(state) in query_string
 
@@ -1390,7 +1396,7 @@ class TestListV2Policies:
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}]}'
+        mock_response = '{"policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -1423,7 +1429,7 @@ class TestListV2Policies:
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}]}'
+        mock_response = '{"policies": [{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -1460,20 +1466,20 @@ class TestCreateV2Policy:
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
-        # Construct a dict representation of a PolicyRole model
-        policy_role_model = {}
-        policy_role_model['role_id'] = 'testString'
+        # Construct a dict representation of a Roles model
+        roles_model = {}
+        roles_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyGrant model
-        v2_policy_grant_model = {}
-        v2_policy_grant_model['roles'] = [policy_role_model]
+        # Construct a dict representation of a Grant model
+        grant_model = {}
+        grant_model['roles'] = [roles_model]
 
         # Construct a dict representation of a Control model
         control_model = {}
-        control_model['grant'] = v2_policy_grant_model
+        control_model['grant'] = grant_model
 
         # Construct a dict representation of a V2PolicySubjectAttribute model
         v2_policy_subject_attribute_model = {}
@@ -1560,20 +1566,20 @@ class TestCreateV2Policy:
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
-        # Construct a dict representation of a PolicyRole model
-        policy_role_model = {}
-        policy_role_model['role_id'] = 'testString'
+        # Construct a dict representation of a Roles model
+        roles_model = {}
+        roles_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyGrant model
-        v2_policy_grant_model = {}
-        v2_policy_grant_model['roles'] = [policy_role_model]
+        # Construct a dict representation of a Grant model
+        grant_model = {}
+        grant_model['roles'] = [roles_model]
 
         # Construct a dict representation of a Control model
         control_model = {}
-        control_model['grant'] = v2_policy_grant_model
+        control_model['grant'] = grant_model
 
         # Construct a dict representation of a V2PolicySubjectAttribute model
         v2_policy_subject_attribute_model = {}
@@ -1658,20 +1664,20 @@ class TestCreateV2Policy:
         """
         # Set up mock
         url = preprocess_url('/v2/policies')
-        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
-        # Construct a dict representation of a PolicyRole model
-        policy_role_model = {}
-        policy_role_model['role_id'] = 'testString'
+        # Construct a dict representation of a Roles model
+        roles_model = {}
+        roles_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyGrant model
-        v2_policy_grant_model = {}
-        v2_policy_grant_model['roles'] = [policy_role_model]
+        # Construct a dict representation of a Grant model
+        grant_model = {}
+        grant_model['roles'] = [roles_model]
 
         # Construct a dict representation of a Control model
         control_model = {}
-        control_model['grant'] = v2_policy_grant_model
+        control_model['grant'] = grant_model
 
         # Construct a dict representation of a V2PolicySubjectAttribute model
         v2_policy_subject_attribute_model = {}
@@ -1747,20 +1753,20 @@ class TestReplaceV2Policy:
         """
         # Set up mock
         url = preprocess_url('/v2/policies/testString')
-        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
-        # Construct a dict representation of a PolicyRole model
-        policy_role_model = {}
-        policy_role_model['role_id'] = 'testString'
+        # Construct a dict representation of a Roles model
+        roles_model = {}
+        roles_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyGrant model
-        v2_policy_grant_model = {}
-        v2_policy_grant_model['roles'] = [policy_role_model]
+        # Construct a dict representation of a Grant model
+        grant_model = {}
+        grant_model['roles'] = [roles_model]
 
         # Construct a dict representation of a Control model
         control_model = {}
-        control_model['grant'] = v2_policy_grant_model
+        control_model['grant'] = grant_model
 
         # Construct a dict representation of a V2PolicySubjectAttribute model
         v2_policy_subject_attribute_model = {}
@@ -1849,20 +1855,20 @@ class TestReplaceV2Policy:
         """
         # Set up mock
         url = preprocess_url('/v2/policies/testString')
-        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
         responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
 
-        # Construct a dict representation of a PolicyRole model
-        policy_role_model = {}
-        policy_role_model['role_id'] = 'testString'
+        # Construct a dict representation of a Roles model
+        roles_model = {}
+        roles_model['role_id'] = 'testString'
 
-        # Construct a dict representation of a V2PolicyGrant model
-        v2_policy_grant_model = {}
-        v2_policy_grant_model['roles'] = [policy_role_model]
+        # Construct a dict representation of a Grant model
+        grant_model = {}
+        grant_model['roles'] = [roles_model]
 
         # Construct a dict representation of a Control model
         control_model = {}
-        control_model['grant'] = v2_policy_grant_model
+        control_model['grant'] = grant_model
 
         # Construct a dict representation of a V2PolicySubjectAttribute model
         v2_policy_subject_attribute_model = {}
@@ -1942,7 +1948,41 @@ class TestGetV2Policy:
         """
         # Set up mock
         url = preprocess_url('/v2/policies/testString')
-        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
+        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+
+        # Set up parameter values
+        id = 'testString'
+        format = 'include_last_permit'
+
+        # Invoke method
+        response = _service.get_v2_policy(id, format=format, headers={})
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'format={}'.format(format) in query_string
+
+    def test_get_v2_policy_all_params_with_retries(self):
+        # Enable retries and run test_get_v2_policy_all_params.
+        _service.enable_retries()
+        self.test_get_v2_policy_all_params()
+
+        # Disable retries and run test_get_v2_policy_all_params.
+        _service.disable_retries()
+        self.test_get_v2_policy_all_params()
+
+    @responses.activate
+    def test_get_v2_policy_required_params(self):
+        """
+        test_get_v2_policy_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v2/policies/testString')
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -1955,14 +1995,14 @@ class TestGetV2Policy:
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
-    def test_get_v2_policy_all_params_with_retries(self):
-        # Enable retries and run test_get_v2_policy_all_params.
+    def test_get_v2_policy_required_params_with_retries(self):
+        # Enable retries and run test_get_v2_policy_required_params.
         _service.enable_retries()
-        self.test_get_v2_policy_all_params()
+        self.test_get_v2_policy_required_params()
 
-        # Disable retries and run test_get_v2_policy_all_params.
+        # Disable retries and run test_get_v2_policy_required_params.
         _service.disable_retries()
-        self.test_get_v2_policy_all_params()
+        self.test_get_v2_policy_required_params()
 
     @responses.activate
     def test_get_v2_policy_value_error(self):
@@ -1971,7 +2011,7 @@ class TestGetV2Policy:
         """
         # Set up mock
         url = preprocess_url('/v2/policies/testString')
-        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id", "display_name": "display_name", "description": "description"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
+        mock_response = '{"type": "access", "description": "description", "subject": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "value"}]}, "resource": {"attributes": [{"key": "key", "operator": "stringEquals", "value": "anyValue"}], "tags": [{"key": "key", "value": "value", "operator": "stringEquals"}]}, "pattern": "pattern", "rule": {"key": "key", "operator": "timeLessThan", "value": "anyValue"}, "id": "id", "href": "href", "control": {"grant": {"roles": [{"role_id": "role_id"}]}}, "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "state": "active", "last_permit_at": "last_permit_at", "last_permit_frequency": 21}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -2082,15 +2122,15 @@ class TestModel_Control:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        policy_role_model = {}  # PolicyRole
-        policy_role_model['role_id'] = 'testString'
+        roles_model = {}  # Roles
+        roles_model['role_id'] = 'testString'
 
-        v2_policy_grant_model = {}  # V2PolicyGrant
-        v2_policy_grant_model['roles'] = [policy_role_model]
+        grant_model = {}  # Grant
+        grant_model['roles'] = [roles_model]
 
         # Construct a json representation of a Control model
         control_model_json = {}
-        control_model_json['grant'] = v2_policy_grant_model
+        control_model_json['grant'] = grant_model
 
         # Construct a model instance of Control by calling from_dict on the json representation
         control_model = Control.from_dict(control_model_json)
@@ -2108,14 +2148,14 @@ class TestModel_Control:
         assert control_model_json2 == control_model_json
 
 
-class TestModel_GrantWithTranslatedRoles:
+class TestModel_EnrichedRoles:
     """
-    Test Class for GrantWithTranslatedRoles
+    Test Class for EnrichedRoles
     """
 
-    def test_grant_with_translated_roles_serialization(self):
+    def test_enriched_roles_serialization(self):
         """
-        Test serialization/deserialization for GrantWithTranslatedRoles
+        Test serialization/deserialization for EnrichedRoles
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
@@ -2125,30 +2165,103 @@ class TestModel_GrantWithTranslatedRoles:
         role_action_model['display_name'] = 'testString'
         role_action_model['description'] = 'testString'
 
-        role_in_display_format_model = {}  # RoleInDisplayFormat
-        role_in_display_format_model['role_id'] = 'testString'
-        role_in_display_format_model['actions'] = [role_action_model]
+        # Construct a json representation of a EnrichedRoles model
+        enriched_roles_model_json = {}
+        enriched_roles_model_json['role_id'] = 'testString'
+        enriched_roles_model_json['actions'] = [role_action_model]
 
-        # Construct a json representation of a GrantWithTranslatedRoles model
-        grant_with_translated_roles_model_json = {}
-        grant_with_translated_roles_model_json['roles'] = [role_in_display_format_model]
+        # Construct a model instance of EnrichedRoles by calling from_dict on the json representation
+        enriched_roles_model = EnrichedRoles.from_dict(enriched_roles_model_json)
+        assert enriched_roles_model != False
 
-        # Construct a model instance of GrantWithTranslatedRoles by calling from_dict on the json representation
-        grant_with_translated_roles_model = GrantWithTranslatedRoles.from_dict(grant_with_translated_roles_model_json)
-        assert grant_with_translated_roles_model != False
-
-        # Construct a model instance of GrantWithTranslatedRoles by calling from_dict on the json representation
-        grant_with_translated_roles_model_dict = GrantWithTranslatedRoles.from_dict(
-            grant_with_translated_roles_model_json
-        ).__dict__
-        grant_with_translated_roles_model2 = GrantWithTranslatedRoles(**grant_with_translated_roles_model_dict)
+        # Construct a model instance of EnrichedRoles by calling from_dict on the json representation
+        enriched_roles_model_dict = EnrichedRoles.from_dict(enriched_roles_model_json).__dict__
+        enriched_roles_model2 = EnrichedRoles(**enriched_roles_model_dict)
 
         # Verify the model instances are equivalent
-        assert grant_with_translated_roles_model == grant_with_translated_roles_model2
+        assert enriched_roles_model == enriched_roles_model2
 
         # Convert model instance back to dict and verify no loss of data
-        grant_with_translated_roles_model_json2 = grant_with_translated_roles_model.to_dict()
-        assert grant_with_translated_roles_model_json2 == grant_with_translated_roles_model_json
+        enriched_roles_model_json2 = enriched_roles_model.to_dict()
+        assert enriched_roles_model_json2 == enriched_roles_model_json
+
+
+class TestModel_Grant:
+    """
+    Test Class for Grant
+    """
+
+    def test_grant_serialization(self):
+        """
+        Test serialization/deserialization for Grant
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        roles_model = {}  # Roles
+        roles_model['role_id'] = 'testString'
+
+        # Construct a json representation of a Grant model
+        grant_model_json = {}
+        grant_model_json['roles'] = [roles_model]
+
+        # Construct a model instance of Grant by calling from_dict on the json representation
+        grant_model = Grant.from_dict(grant_model_json)
+        assert grant_model != False
+
+        # Construct a model instance of Grant by calling from_dict on the json representation
+        grant_model_dict = Grant.from_dict(grant_model_json).__dict__
+        grant_model2 = Grant(**grant_model_dict)
+
+        # Verify the model instances are equivalent
+        assert grant_model == grant_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        grant_model_json2 = grant_model.to_dict()
+        assert grant_model_json2 == grant_model_json
+
+
+class TestModel_GrantWithEnrichedRoles:
+    """
+    Test Class for GrantWithEnrichedRoles
+    """
+
+    def test_grant_with_enriched_roles_serialization(self):
+        """
+        Test serialization/deserialization for GrantWithEnrichedRoles
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        role_action_model = {}  # RoleAction
+        role_action_model['id'] = 'testString'
+        role_action_model['display_name'] = 'testString'
+        role_action_model['description'] = 'testString'
+
+        enriched_roles_model = {}  # EnrichedRoles
+        enriched_roles_model['role_id'] = 'testString'
+        enriched_roles_model['actions'] = [role_action_model]
+
+        # Construct a json representation of a GrantWithEnrichedRoles model
+        grant_with_enriched_roles_model_json = {}
+        grant_with_enriched_roles_model_json['roles'] = [enriched_roles_model]
+
+        # Construct a model instance of GrantWithEnrichedRoles by calling from_dict on the json representation
+        grant_with_enriched_roles_model = GrantWithEnrichedRoles.from_dict(grant_with_enriched_roles_model_json)
+        assert grant_with_enriched_roles_model != False
+
+        # Construct a model instance of GrantWithEnrichedRoles by calling from_dict on the json representation
+        grant_with_enriched_roles_model_dict = GrantWithEnrichedRoles.from_dict(
+            grant_with_enriched_roles_model_json
+        ).__dict__
+        grant_with_enriched_roles_model2 = GrantWithEnrichedRoles(**grant_with_enriched_roles_model_dict)
+
+        # Verify the model instances are equivalent
+        assert grant_with_enriched_roles_model == grant_with_enriched_roles_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        grant_with_enriched_roles_model_json2 = grant_with_enriched_roles_model.to_dict()
+        assert grant_with_enriched_roles_model_json2 == grant_with_enriched_roles_model_json
 
 
 class TestModel_PolicyRole:
@@ -2213,42 +2326,34 @@ class TestModel_RoleAction:
         assert role_action_model_json2 == role_action_model_json
 
 
-class TestModel_RoleInDisplayFormat:
+class TestModel_Roles:
     """
-    Test Class for RoleInDisplayFormat
+    Test Class for Roles
     """
 
-    def test_role_in_display_format_serialization(self):
+    def test_roles_serialization(self):
         """
-        Test serialization/deserialization for RoleInDisplayFormat
+        Test serialization/deserialization for Roles
         """
 
-        # Construct dict forms of any model objects needed in order to build this model.
+        # Construct a json representation of a Roles model
+        roles_model_json = {}
+        roles_model_json['role_id'] = 'testString'
 
-        role_action_model = {}  # RoleAction
-        role_action_model['id'] = 'testString'
-        role_action_model['display_name'] = 'testString'
-        role_action_model['description'] = 'testString'
+        # Construct a model instance of Roles by calling from_dict on the json representation
+        roles_model = Roles.from_dict(roles_model_json)
+        assert roles_model != False
 
-        # Construct a json representation of a RoleInDisplayFormat model
-        role_in_display_format_model_json = {}
-        role_in_display_format_model_json['role_id'] = 'testString'
-        role_in_display_format_model_json['actions'] = [role_action_model]
-
-        # Construct a model instance of RoleInDisplayFormat by calling from_dict on the json representation
-        role_in_display_format_model = RoleInDisplayFormat.from_dict(role_in_display_format_model_json)
-        assert role_in_display_format_model != False
-
-        # Construct a model instance of RoleInDisplayFormat by calling from_dict on the json representation
-        role_in_display_format_model_dict = RoleInDisplayFormat.from_dict(role_in_display_format_model_json).__dict__
-        role_in_display_format_model2 = RoleInDisplayFormat(**role_in_display_format_model_dict)
+        # Construct a model instance of Roles by calling from_dict on the json representation
+        roles_model_dict = Roles.from_dict(roles_model_json).__dict__
+        roles_model2 = Roles(**roles_model_dict)
 
         # Verify the model instances are equivalent
-        assert role_in_display_format_model == role_in_display_format_model2
+        assert roles_model == roles_model2
 
         # Convert model instance back to dict and verify no loss of data
-        role_in_display_format_model_json2 = role_in_display_format_model.to_dict()
-        assert role_in_display_format_model_json2 == role_in_display_format_model_json
+        roles_model_json2 = roles_model.to_dict()
+        assert roles_model_json2 == roles_model_json
 
 
 class TestModel_RuleAttribute:
@@ -2322,14 +2427,14 @@ class TestModel_V2Policy:
         v2_policy_rule_model['operator'] = 'timeLessThan'
         v2_policy_rule_model['value'] = 'testString'
 
-        policy_role_model = {}  # PolicyRole
-        policy_role_model['role_id'] = 'testString'
+        roles_model = {}  # Roles
+        roles_model['role_id'] = 'testString'
 
-        v2_policy_grant_model = {}  # V2PolicyGrant
-        v2_policy_grant_model['roles'] = [policy_role_model]
+        grant_model = {}  # Grant
+        grant_model['roles'] = [roles_model]
 
         control_response_model = {}  # ControlResponseControl
-        control_response_model['grant'] = v2_policy_grant_model
+        control_response_model['grant'] = grant_model
 
         # Construct a json representation of a V2Policy model
         v2_policy_model_json = {}
@@ -2399,14 +2504,14 @@ class TestModel_V2PolicyCollection:
         v2_policy_rule_model['operator'] = 'timeLessThan'
         v2_policy_rule_model['value'] = 'testString'
 
-        policy_role_model = {}  # PolicyRole
-        policy_role_model['role_id'] = 'testString'
+        roles_model = {}  # Roles
+        roles_model['role_id'] = 'testString'
 
-        v2_policy_grant_model = {}  # V2PolicyGrant
-        v2_policy_grant_model['roles'] = [policy_role_model]
+        grant_model = {}  # Grant
+        grant_model['roles'] = [roles_model]
 
         control_response_model = {}  # ControlResponseControl
-        control_response_model['grant'] = v2_policy_grant_model
+        control_response_model['grant'] = grant_model
 
         v2_policy_model = {}  # V2Policy
         v2_policy_model['type'] = 'access'
@@ -2438,41 +2543,6 @@ class TestModel_V2PolicyCollection:
         # Convert model instance back to dict and verify no loss of data
         v2_policy_collection_model_json2 = v2_policy_collection_model.to_dict()
         assert v2_policy_collection_model_json2 == v2_policy_collection_model_json
-
-
-class TestModel_V2PolicyGrant:
-    """
-    Test Class for V2PolicyGrant
-    """
-
-    def test_v2_policy_grant_serialization(self):
-        """
-        Test serialization/deserialization for V2PolicyGrant
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        policy_role_model = {}  # PolicyRole
-        policy_role_model['role_id'] = 'testString'
-
-        # Construct a json representation of a V2PolicyGrant model
-        v2_policy_grant_model_json = {}
-        v2_policy_grant_model_json['roles'] = [policy_role_model]
-
-        # Construct a model instance of V2PolicyGrant by calling from_dict on the json representation
-        v2_policy_grant_model = V2PolicyGrant.from_dict(v2_policy_grant_model_json)
-        assert v2_policy_grant_model != False
-
-        # Construct a model instance of V2PolicyGrant by calling from_dict on the json representation
-        v2_policy_grant_model_dict = V2PolicyGrant.from_dict(v2_policy_grant_model_json).__dict__
-        v2_policy_grant_model2 = V2PolicyGrant(**v2_policy_grant_model_dict)
-
-        # Verify the model instances are equivalent
-        assert v2_policy_grant_model == v2_policy_grant_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        v2_policy_grant_model_json2 = v2_policy_grant_model.to_dict()
-        assert v2_policy_grant_model_json2 == v2_policy_grant_model_json
 
 
 class TestModel_V2PolicyResource:
@@ -3082,15 +3152,15 @@ class TestModel_ControlResponseControl:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        policy_role_model = {}  # PolicyRole
-        policy_role_model['role_id'] = 'testString'
+        roles_model = {}  # Roles
+        roles_model['role_id'] = 'testString'
 
-        v2_policy_grant_model = {}  # V2PolicyGrant
-        v2_policy_grant_model['roles'] = [policy_role_model]
+        grant_model = {}  # Grant
+        grant_model['roles'] = [roles_model]
 
         # Construct a json representation of a ControlResponseControl model
         control_response_control_model_json = {}
-        control_response_control_model_json['grant'] = v2_policy_grant_model
+        control_response_control_model_json['grant'] = grant_model
 
         # Construct a model instance of ControlResponseControl by calling from_dict on the json representation
         control_response_control_model = ControlResponseControl.from_dict(control_response_control_model_json)
@@ -3110,14 +3180,14 @@ class TestModel_ControlResponseControl:
         assert control_response_control_model_json2 == control_response_control_model_json
 
 
-class TestModel_ControlResponseControlWithTranslatedRoles:
+class TestModel_ControlResponseControlWithEnrichedRoles:
     """
-    Test Class for ControlResponseControlWithTranslatedRoles
+    Test Class for ControlResponseControlWithEnrichedRoles
     """
 
-    def test_control_response_control_with_translated_roles_serialization(self):
+    def test_control_response_control_with_enriched_roles_serialization(self):
         """
-        Test serialization/deserialization for ControlResponseControlWithTranslatedRoles
+        Test serialization/deserialization for ControlResponseControlWithEnrichedRoles
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
@@ -3127,44 +3197,41 @@ class TestModel_ControlResponseControlWithTranslatedRoles:
         role_action_model['display_name'] = 'testString'
         role_action_model['description'] = 'testString'
 
-        role_in_display_format_model = {}  # RoleInDisplayFormat
-        role_in_display_format_model['role_id'] = 'testString'
-        role_in_display_format_model['actions'] = [role_action_model]
+        enriched_roles_model = {}  # EnrichedRoles
+        enriched_roles_model['role_id'] = 'testString'
+        enriched_roles_model['actions'] = [role_action_model]
 
-        grant_with_translated_roles_model = {}  # GrantWithTranslatedRoles
-        grant_with_translated_roles_model['roles'] = [role_in_display_format_model]
+        grant_with_enriched_roles_model = {}  # GrantWithEnrichedRoles
+        grant_with_enriched_roles_model['roles'] = [enriched_roles_model]
 
-        # Construct a json representation of a ControlResponseControlWithTranslatedRoles model
-        control_response_control_with_translated_roles_model_json = {}
-        control_response_control_with_translated_roles_model_json['grant'] = grant_with_translated_roles_model
+        # Construct a json representation of a ControlResponseControlWithEnrichedRoles model
+        control_response_control_with_enriched_roles_model_json = {}
+        control_response_control_with_enriched_roles_model_json['grant'] = grant_with_enriched_roles_model
 
-        # Construct a model instance of ControlResponseControlWithTranslatedRoles by calling from_dict on the json representation
-        control_response_control_with_translated_roles_model = ControlResponseControlWithTranslatedRoles.from_dict(
-            control_response_control_with_translated_roles_model_json
+        # Construct a model instance of ControlResponseControlWithEnrichedRoles by calling from_dict on the json representation
+        control_response_control_with_enriched_roles_model = ControlResponseControlWithEnrichedRoles.from_dict(
+            control_response_control_with_enriched_roles_model_json
         )
-        assert control_response_control_with_translated_roles_model != False
+        assert control_response_control_with_enriched_roles_model != False
 
-        # Construct a model instance of ControlResponseControlWithTranslatedRoles by calling from_dict on the json representation
-        control_response_control_with_translated_roles_model_dict = ControlResponseControlWithTranslatedRoles.from_dict(
-            control_response_control_with_translated_roles_model_json
+        # Construct a model instance of ControlResponseControlWithEnrichedRoles by calling from_dict on the json representation
+        control_response_control_with_enriched_roles_model_dict = ControlResponseControlWithEnrichedRoles.from_dict(
+            control_response_control_with_enriched_roles_model_json
         ).__dict__
-        control_response_control_with_translated_roles_model2 = ControlResponseControlWithTranslatedRoles(
-            **control_response_control_with_translated_roles_model_dict
+        control_response_control_with_enriched_roles_model2 = ControlResponseControlWithEnrichedRoles(
+            **control_response_control_with_enriched_roles_model_dict
         )
 
         # Verify the model instances are equivalent
-        assert (
-            control_response_control_with_translated_roles_model
-            == control_response_control_with_translated_roles_model2
-        )
+        assert control_response_control_with_enriched_roles_model == control_response_control_with_enriched_roles_model2
 
         # Convert model instance back to dict and verify no loss of data
-        control_response_control_with_translated_roles_model_json2 = (
-            control_response_control_with_translated_roles_model.to_dict()
+        control_response_control_with_enriched_roles_model_json2 = (
+            control_response_control_with_enriched_roles_model.to_dict()
         )
         assert (
-            control_response_control_with_translated_roles_model_json2
-            == control_response_control_with_translated_roles_model_json
+            control_response_control_with_enriched_roles_model_json2
+            == control_response_control_with_enriched_roles_model_json
         )
 
 

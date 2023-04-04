@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.64.0-959a5845-20230112-195144
+# IBM OpenAPI SDK Code Generator Version: 3.68.2-ac7def68-20230310-195410
 
 """
 IAM Policy Management API
@@ -95,18 +95,15 @@ class IamPolicyManagementV1(BaseService):
         """
         Get policies by attributes.
 
-        Get policies and filter by attributes. While managing policies, you may want to
+        Get policies and filter by attributes. While managing policies, you might want to
         retrieve policies in the account and filter by attribute values. This can be done
-        through query parameters. Currently, only the following attributes are supported:
-        account_id, iam_id, access_group_id, type, service_type, sort, format and state.
-        account_id is a required query parameter. Only policies that have the specified
-        attributes and that the caller has read access to are returned. If the caller does
-        not have read access to any policies an empty array is returned. If a policy was
-        created using the new beta v2/policies API, then the caller will see placeholder
-        information, e.g., "unsupported version" for iam_id, and a valid v2/policies href.
-        The caller should use this href to view the policy.
+        through query parameters. The following attributes are supported: account_id,
+        iam_id, access_group_id, type, service_type, sort, format and state. account_id is
+        a required query parameter. Only policies that have the specified attributes and
+        that the caller has read access to are returned. If the caller does not have read
+        access to any policies an empty array is returned.
 
-        :param str account_id: The account GUID in which the policies belong to.
+        :param str account_id: The account GUID that the policies belong to.
         :param str accept_language: (optional) Language code for translations
                * `default` - English
                * `de` -  German (Standard)
@@ -123,10 +120,10 @@ class IamPolicyManagementV1(BaseService):
         :param str access_group_id: (optional) Optional access group id.
         :param str type: (optional) Optional type of policy.
         :param str service_type: (optional) Optional type of service.
-        :param str tag_name: (optional) Optional name of the access management tag
-               in the policy.
-        :param str tag_value: (optional) Optional value of the access management
-               tag in the policy.
+        :param str tag_name: (optional) Optional name of the access tag in the
+               policy.
+        :param str tag_value: (optional) Optional value of the access tag in the
+               policy.
         :param str sort: (optional) Optional top level policy field to sort
                results. Ascending sort is default. Descending sort available by prepending
                '-' to field. Example '-last_modified_at'.
@@ -201,15 +198,17 @@ class IamPolicyManagementV1(BaseService):
         subject attributes are **`iam_id`** and **`access_group_id`**. Use the
         **`iam_id`** subject attribute for assigning access for a user or service-id. Use
         the **`access_group_id`** subject attribute for assigning access for an access
-        group. The roles must be a subset of a service's or the platform's supported
-        roles. The resource attributes must be a subset of a service's or the platform's
-        supported attributes. The policy resource must include either the
-        **`serviceType`**, **`serviceName`**, **`resourceGroupId`** or
-        **`service_group_id`** attribute and the **`accountId`** attribute.` The IAM
-        Services group (`IAM`) is a subset of account management services that includes
-        the IAM platform services IAM Identity, IAM Access Management, IAM Users
-        Management, IAM Groups, and future IAM services. If the subject is a locked
-        service-id, the request will fail.
+        group. Assign roles that are supported by the service or platform roles. For more
+        information, see [IAM roles and
+        actions](/docs/account?topic=account-iam-service-roles-actions). Use only the
+        resource attributes supported by the service. To view a service's or the
+        platform's supported attributes, check the [documentation](/docs?tab=all-docs).
+        The policy resource must include either the **`serviceType`**, **`serviceName`**,
+        **`resourceGroupId`** or **`service_group_id`** attribute and the **`accountId`**
+        attribute. The IAM Services group (`IAM`) is a subset of account management
+        services that includes the IAM platform services IAM Identity, IAM Access
+        Management, IAM Users Management, IAM Groups, and future IAM services. If the
+        subject is a locked service-id, the request will fail.
         ### Authorization
         Authorization policies are supported by services on a case by case basis. Refer to
         service documentation to verify their support of authorization policies. To create
@@ -217,17 +216,19 @@ class IamPolicyManagementV1(BaseService):
         subject attributes must match the supported authorization subjects of the
         resource. Multiple subject attributes might be provided. The following attributes
         are supported:
-          serviceName, serviceInstance, region, resourceType, resource, accountId The
-        policy roles must be a subset of the supported authorization roles supported by
-        the target service. The user must also have the same level of access or greater to
-        the target resource in order to grant the role. The resource attributes must be a
-        subset of a service's or the platform's supported attributes. Both the policy
-        subject and the policy resource must include the **`serviceName`** and
-        **`accountId`** attributes.
+          serviceName, serviceInstance, region, resourceType, resource, accountId Assign
+        roles that are supported by the service or platform roles. For more information,
+        see [IAM roles and
+        actions](/docs/account?topic=account-iam-service-roles-actions). The user must
+        also have the same level of access or greater to the target resource in order to
+        grant the role. Use only the resource attributes supported by the service. To view
+        a service's or the platform's supported attributes, check the
+        [documentation](/docs?tab=all-docs). Both the policy subject and the policy
+        resource must include the **`serviceName`** and **`accountId`** attributes.
         ### Attribute Operators
         Currently, only the `stringEquals` and the `stringMatch` operators are available.
         Resource attributes may support one or both operators. For more information, see
-        [how to assign access by using wildcards
+        [Assigning access by using wildcard
         policies](https://cloud.ibm.com/docs/account?topic=account-wildcard).
         ### Attribute Validations
         Policy attribute values must be between 1 and 1,000 characters in length. If
@@ -323,28 +324,32 @@ class IamPolicyManagementV1(BaseService):
         subject attributes are **`iam_id`** and **`access_group_id`**. Use the
         **`iam_id`** subject attribute for assigning access for a user or service-id. Use
         the **`access_group_id`** subject attribute for assigning access for an access
-        group. The roles must be a subset of a service's or the platform's supported
-        roles. The resource attributes must be a subset of a service's or the platform's
-        supported attributes. The policy resource must include either the
-        **`serviceType`**, **`serviceName`**,  or **`resourceGroupId`** attribute and the
-        **`accountId`** attribute.` If the subject is a locked service-id, the request
-        will fail.
+        group. Assign roles that are supported by the service or platform roles. For more
+        information, see [IAM roles and
+        actions](/docs/account?topic=account-iam-service-roles-actions). Use only the
+        resource attributes supported by the service. To view a service's or the
+        platform's supported attributes, check the [documentation](/docs?tab=all-docs).
+        The policy resource must include either the **`serviceType`**, **`serviceName`**,
+        or **`resourceGroupId`** attribute and the **`accountId`** attribute.` If the
+        subject is a locked service-id, the request will fail.
         ### Authorization
         To update an authorization policy, use **`"type": "authorization"`** in the body.
         The subject attributes must match the supported authorization subjects of the
         resource. Multiple subject attributes might be provided. The following attributes
         are supported:
-          serviceName, serviceInstance, region, resourceType, resource, accountId The
-        policy roles must be a subset of the supported authorization roles supported by
-        the target service. The user must also have the same level of access or greater to
-        the target resource in order to grant the role. The resource attributes must be a
-        subset of a service's or the platform's supported attributes. Both the policy
-        subject and the policy resource must include the **`serviceName`** and
-        **`accountId`** attributes.
+          serviceName, serviceInstance, region, resourceType, resource, accountId Assign
+        roles that are supported by the service or platform roles. For more information,
+        see [IAM roles and
+        actions](/docs/account?topic=account-iam-service-roles-actions). The user must
+        also have the same level of access or greater to the target resource in order to
+        grant the role. Use only the resource attributes supported by the service. To view
+        a service's or the platform's supported attributes, check the
+        [documentation](/docs?tab=all-docs). Both the policy subject and the policy
+        resource must include the **`serviceName`** and **`accountId`** attributes.
         ### Attribute Operators
         Currently, only the `stringEquals` and the `stringMatch` operators are available.
         Resource attributes might support one or both operators. For more information, see
-        [how to assign access by using wildcards
+        [Assigning access by using wildcard
         policies](https://cloud.ibm.com/docs/account?topic=account-wildcard).
         ### Attribute Validations
         Policy attribute values must be between 1 and 1,000 characters in length. If
@@ -550,6 +555,7 @@ class IamPolicyManagementV1(BaseService):
         service_name: str = None,
         source_service_name: str = None,
         policy_type: str = None,
+        service_group_id: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -558,9 +564,10 @@ class IamPolicyManagementV1(BaseService):
         Get roles based on the filters. While managing roles, you may want to retrieve
         roles and filter by usages. This can be done through query parameters. Currently,
         we only support the following attributes: account_id, service_name,
-        source_service_name and policy_type. Only roles that match the filter and that the
-        caller has read access to are returned. If the caller does not have read access to
-        any roles an empty array is returned.
+        service_group_id, source_service_name and policy_type. Both service_name and
+        service_group_id attributes are mutually exclusive. Only roles that match the
+        filter and that the caller has read access to are returned. If the caller does not
+        have read access to any roles an empty array is returned.
 
         :param str accept_language: (optional) Language code for translations
                * `default` - English
@@ -580,6 +587,7 @@ class IamPolicyManagementV1(BaseService):
         :param str source_service_name: (optional) Optional name of source IAM
                enabled service.
         :param str policy_type: (optional) Optional Policy Type.
+        :param str service_group_id: (optional) Optional id of service group.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `RoleList` object
@@ -598,6 +606,7 @@ class IamPolicyManagementV1(BaseService):
             'service_name': service_name,
             'source_service_name': source_service_name,
             'policy_type': policy_type,
+            'service_group_id': service_group_id,
         }
 
         if 'headers' in kwargs:
@@ -634,8 +643,8 @@ class IamPolicyManagementV1(BaseService):
 
         :param str display_name: The display name of the role that is shown in the
                console.
-        :param List[str] actions: The actions of the role. Please refer to [IAM
-               roles and
+        :param List[str] actions: The actions of the role. For more information,
+               see [IAM roles and
                actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
         :param str name: The name of the role that is used in the CRN. Can only be
                alphanumeric and has to be capitalized.
@@ -716,8 +725,8 @@ class IamPolicyManagementV1(BaseService):
                GET /v2/roles/{role_id} API and looking at the ETag response header.
         :param str display_name: The display name of the role that is shown in the
                console.
-        :param List[str] actions: The actions of the role. Please refer to [IAM
-               roles and
+        :param List[str] actions: The actions of the role. For more information,
+               see [IAM roles and
                actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
         :param str description: (optional) The description of the role.
         :param dict headers: A `dict` containing the request headers
@@ -846,6 +855,7 @@ class IamPolicyManagementV1(BaseService):
         service_type: str = None,
         service_name: str = None,
         service_group_id: str = None,
+        sort: str = None,
         format: str = None,
         state: str = None,
         **kwargs
@@ -853,13 +863,13 @@ class IamPolicyManagementV1(BaseService):
         """
         Get policies by attributes.
 
-        Get policies and filter by attributes. While managing policies, you may want to
+        Get policies and filter by attributes. While managing policies, you might want to
         retrieve policies in the account and filter by attribute values. This can be done
-        through query parameters. Currently, only the following attributes are supported:
-        account_id, iam_id, access_group_id, type, service_type, sort, format and state.
-        account_id is a required query parameter. Only policies that have the specified
-        attributes and that the caller has read access to are returned. If the caller does
-        not have read access to any policies an empty array is returned.
+        through query parameters. The following attributes are supported: account_id,
+        iam_id, access_group_id, type, service_type, sort, format and state. account_id is
+        a required query parameter. Only policies that have the specified attributes and
+        that the caller has read access to are returned. If the caller does not have read
+        access to any policies an empty array is returned.
 
         :param str account_id: The account GUID in which the policies belong to.
         :param str accept_language: (optional) Language code for translations
@@ -880,6 +890,22 @@ class IamPolicyManagementV1(BaseService):
         :param str service_type: (optional) Optional type of service.
         :param str service_name: (optional) Optional name of service.
         :param str service_group_id: (optional) Optional ID of service group.
+        :param str sort: (optional) Optional top level policy field to sort
+               results. Ascending sort is default. Descending sort available by prepending
+               '-' to field, for example, '-last_modified_at'. Note that last permit
+               information is only included when 'format=include_last_permit', for
+               example, "format=include_last_permit&sort=last_permit_at" Example fields
+               that can be sorted on:
+                 - 'id'
+                 - 'type'
+                 - 'href'
+                 - 'created_at'
+                 - 'created_by_id'
+                 - 'last_modified_at'
+                 - 'last_modified_by_id'
+                 - 'state'
+                 - 'last_permit_at'
+                 - 'last_permit_frequency'.
         :param str format: (optional) Include additional data per policy returned
                * `include_last_permit` - returns details of when the policy last granted a
                permit decision and the number of times it has done so
@@ -911,6 +937,7 @@ class IamPolicyManagementV1(BaseService):
             'service_type': service_type,
             'service_name': service_name,
             'service_group_id': service_group_id,
+            'sort': sort,
             'format': format,
             'state': state,
         }
@@ -944,28 +971,27 @@ class IamPolicyManagementV1(BaseService):
 
         Creates a policy to grant access between a subject and a resource. Currently,
         there is one type of a v2/policy: **access**. A policy administrator might want to
-        create an access policy which grants access to a user, service-id, or an access
+        create an access policy that grants access to a user, service-id, or an access
         group.
         ### Access
-        To create an access policy, use **`"type": "access"`** in the body. The possible
+        To create an access policy, use **`"type": "access"`** in the body. The supported
         subject attributes are **`iam_id`** and **`access_group_id`**. Use the
-        **`iam_id`** subject attribute for assigning access for a user or service-id. Use
-        the **`access_group_id`** subject attribute for assigning access for an access
-        group. The roles must be a subset of a service's or the platform's supported
-        roles. For more information, see [IAM roles and
-        actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
-        The resource attributes must be a subset of a service's or the platform's
-        supported attributes. Caller should check with service, e.g.,
-        [VPC](https://cloud.ibm.com/docs/vpc?topic=vpc-resource-attributes), to view
-        supported attributes. The policy resource must include either the
-        **`serviceType`**, **`serviceName`**, **`resourceGroupId`** or
-        **`service_group_id`** attribute and the **`accountId`** attribute.` The rule
-        field can either specify single **`key`**, **`value`**, and **`operator`** or be
-        set of **`conditions`** with a combination **`operator`**.  The possible
-        combination operator are **`and`** and **`or`**. The operator for a rule can be
-        used to specify a time-based condition (e.g., access only during business hours,
-        during the Monday-Friday work week). For example, a policy can grant access
-        Monday-Friday, 9:00am-5:00pm using the following rule:
+        **`iam_id`** subject attribute to assign access to a user or service-id. Use the
+        **`access_group_id`** subject attribute to assign access to an access group.
+        Assign roles that are supported by the service or platform roles. For more
+        information, see [IAM roles and
+        actions](/docs/account?topic=account-iam-service-roles-actions). Use only the
+        resource attributes supported by the service. To view a service's or the
+        platform's supported attributes, check the [documentation](/docs?tab=all-docs).
+        The policy resource must include either the **`serviceType`**, **`serviceName`**,
+        **`resourceGroupId`** or **`service_group_id`** attribute and the **`accountId`**
+        attribute. In the rule field, you can specify a single condition by using
+        **`key`**, **`value`**, and condition **`operator`**, or a set of **`conditions`**
+        with a combination **`operator`**.  The possible combination operators are
+        **`and`** and **`or`**. Combine conditions to specify a time-based restriction
+        (e.g., access only during business hours, during the Monday-Friday work week). For
+        example, a policy can grant access Monday-Friday, 9:00am-5:00pm using the
+        following rule:
         ```json
           "rule": {
             "operator": "and",
@@ -983,8 +1009,7 @@ class IamPolicyManagementV1(BaseService):
               "value": "17:00:00+00:00"
             }]
           }
-        ``` Rules and conditions allow the following operators with **`key`**, **`value`**
-        :
+        ``` You can use the following operators in the **`key`** and **`value`** pair:
         ```
           'timeLessThan', 'timeLessThanOrEquals', 'timeGreaterThan',
         'timeGreaterThanOrEquals',
@@ -1000,13 +1025,10 @@ class IamPolicyManagementV1(BaseService):
         and
         [Limiting access with time-based
         conditions](https://cloud.ibm.com/docs/account?topic=account-iam-time-based&interface=ui).
-        The IAM Services group (`IAM`) is a subset of account management services that
-        includes the IAM platform services IAM Identity, IAM Access Management, IAM Users
-        Management, IAM Groups, and future IAM services. If the subject is a locked
-        service-id, the request will fail.
+        If the subject is a locked service-id, the request will fail.
         ### Attribute Operators
         Currently, only the `stringEquals`, `stringMatch`, and `stringEquals` operators
-        are available. For more information, see [how to assign access by using wildcards
+        are available. For more information, see [Assigning access by using wildcard
         policies](https://cloud.ibm.com/docs/account?topic=account-wildcard).
         ### Attribute Validations
         Policy attribute values must be between 1 and 1,000 characters in length. If
@@ -1107,24 +1129,24 @@ class IamPolicyManagementV1(BaseService):
         Update a policy to grant access between a subject and a resource. A policy
         administrator might want to update an existing policy.
         ### Access
-        To update an access policy, use **`"type": "access"`** in the body. The possible
+        To create an access policy, use **`"type": "access"`** in the body. The supported
         subject attributes are **`iam_id`** and **`access_group_id`**. Use the
-        **`iam_id`** subject attribute for assigning access for a user or service-id. Use
-        the **`access_group_id`** subject attribute for assigning access for an access
-        group. The roles must be a subset of a service's or the platform's supported
-        roles. For more information, see [IAM roles and
-        actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
-        The resource attributes must be a subset of a service's or the platform's
-        supported attributes. Caller should check with service, e.g.,
-        [VPC](https://cloud.ibm.com/docs/vpc?topic=vpc-resource-attributes), to view
-        supported attributes. The policy resource must include either the
-        **`serviceType`**, **`serviceName`**,  or **`resourceGroupId`** attribute and the
-        **`accountId`** attribute.` The rule field can either specify single **`key`**,
-        **`value`**, and **`operator`** or be set of **`conditions`** with a combination
-        **`operator`**.  The possible combination operator are **`and`** and **`or`**. The
-        operator for a rule can be used to specify a time-based condition (e.g., access
-        only during business hours, during the Monday-Friday work week). For example, a
-        policy can grant access Monday-Friday, 9:00am-5:00pm using the following rule:
+        **`iam_id`** subject attribute to assign access to a user or service-id. Use the
+        **`access_group_id`** subject attribute to assign access to an access group.
+        Assign roles that are supported by the service or platform roles. For more
+        information, see [IAM roles and
+        actions](/docs/account?topic=account-iam-service-roles-actions). Use only the
+        resource attributes supported by the service. To view a service's or the
+        platform's supported attributes, check the [documentation](/docs?tab=all-docs).
+        The policy resource must include either the **`serviceType`**, **`serviceName`**,
+        **`resourceGroupId`** or **`service_group_id`** attribute and the **`accountId`**
+        attribute. In the rule field, you can specify a single condition by using
+        **`key`**, **`value`**, and condition **`operator`**, or a set of **`conditions`**
+        with a combination **`operator`**.  The possible combination operators are
+        **`and`** and **`or`**. Combine conditions to specify a time-based restriction
+        (e.g., access only during business hours, during the Monday-Friday work week). For
+        example, a policy can grant access Monday-Friday, 9:00am-5:00pm using the
+        following rule:
         ```json
           "rule": {
             "operator": "and",
@@ -1142,8 +1164,7 @@ class IamPolicyManagementV1(BaseService):
               "value": "17:00:00+00:00"
             }]
           }
-        ``` Rules and conditions allow the following operators with **`key`**, **`value`**
-        :
+        ``` You can use the following operators in the **`key`**, **`value`** pair:
         ```
           'timeLessThan', 'timeLessThanOrEquals', 'timeGreaterThan',
         'timeGreaterThanOrEquals',
@@ -1160,7 +1181,7 @@ class IamPolicyManagementV1(BaseService):
         conditions](https://cloud.ibm.com/docs/account?topic=account-iam-time-based&interface=ui).
         ### Attribute Operators
         Currently, only the `stringEquals`, `stringMatch`, and `stringEquals` operators
-        are available. For more information, see [how to assign access by using wildcards
+        are available. For more information, see [Assigning access by using wildcard
         policies](https://cloud.ibm.com/docs/account?topic=account-wildcard).
         ### Attribute Validations
         Policy attribute values must be between 1 and 1,000 characters in length. If
@@ -1241,13 +1262,18 @@ class IamPolicyManagementV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def get_v2_policy(self, id: str, **kwargs) -> DetailedResponse:
+    def get_v2_policy(self, id: str, *, format: str = None, **kwargs) -> DetailedResponse:
         """
         Retrieve a policy by ID.
 
         Retrieve a policy by providing a policy ID.
 
         :param str id: The policy ID.
+        :param str format: (optional) Include additional data for policy returned
+               * `include_last_permit` - returns details of when the policy last granted a
+               permit decision and the number of times it has done so
+               * `display` - returns the list of all actions included in each of the
+               policy roles and translations for all relevant fields.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `V2Policy` object
@@ -1261,6 +1287,10 @@ class IamPolicyManagementV1(BaseService):
         )
         headers.update(sdk_headers)
 
+        params = {
+            'format': format,
+        }
+
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
             del kwargs['headers']
@@ -1270,7 +1300,7 @@ class IamPolicyManagementV1(BaseService):
         path_param_values = self.encode_path_vars(id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/policies/{id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
 
         response = self.send(request, **kwargs)
         return response
@@ -1414,6 +1444,24 @@ class ListV2PoliciesEnums:
         DELETED = 'deleted'
 
 
+class GetV2PolicyEnums:
+    """
+    Enums for get_v2_policy parameters.
+    """
+
+    class Format(str, Enum):
+        """
+        Include additional data for policy returned
+        * `include_last_permit` - returns details of when the policy last granted a permit
+        decision and the number of times it has done so
+        * `display` - returns the list of all actions included in each of the policy roles
+        and translations for all relevant fields.
+        """
+
+        INCLUDE_LAST_PERMIT = 'include_last_permit'
+        DISPLAY = 'display'
+
+
 ##############################################################################
 # Models
 ##############################################################################
@@ -1423,14 +1471,14 @@ class Control:
     """
     Specifies the type of access granted by the policy.
 
-    :attr V2PolicyGrant grant: Permission granted by the policy.
+    :attr Grant grant: Permission granted by the policy.
     """
 
-    def __init__(self, grant: 'V2PolicyGrant') -> None:
+    def __init__(self, grant: 'Grant') -> None:
         """
         Initialize a Control object.
 
-        :param V2PolicyGrant grant: Permission granted by the policy.
+        :param Grant grant: Permission granted by the policy.
         """
         self.grant = grant
 
@@ -1439,7 +1487,7 @@ class Control:
         """Initialize a Control object from a json dictionary."""
         args = {}
         if 'grant' in _dict:
-            args['grant'] = V2PolicyGrant.from_dict(_dict.get('grant'))
+            args['grant'] = Grant.from_dict(_dict.get('grant'))
         else:
             raise ValueError('Required property \'grant\' not present in Control JSON')
         return cls(**args)
@@ -1490,41 +1538,135 @@ class ControlResponse:
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-            ", ".join(['ControlResponseControl', 'ControlResponseControlWithTranslatedRoles'])
+            ", ".join(['ControlResponseControl', 'ControlResponseControlWithEnrichedRoles'])
         )
         raise Exception(msg)
 
 
-class GrantWithTranslatedRoles:
+class EnrichedRoles:
     """
-    Permission granted by the policy with translated roles and additional role
-    information.
+    A role associated with a policy with additional information (display_name,
+    description, actions) when `format=display`.
 
-    :attr List[RoleInDisplayFormat] roles: A set of roles granted by the policy.
+    :attr str role_id: The role Cloud Resource Name (CRN) granted by the policy.
+          Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
+    :attr str display_name: (optional) The service defined (or user defined if a
+          custom role) display name of the role.
+    :attr str description: (optional) The service defined (or user defined if a
+          custom role) description of the role.
+    :attr List[RoleAction] actions: The actions of the role. For more information,
+          see [IAM roles and
+          actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
     """
 
-    def __init__(self, roles: List['RoleInDisplayFormat']) -> None:
+    def __init__(
+        self, role_id: str, actions: List['RoleAction'], *, display_name: str = None, description: str = None
+    ) -> None:
         """
-        Initialize a GrantWithTranslatedRoles object.
+        Initialize a EnrichedRoles object.
 
-        :param List[RoleInDisplayFormat] roles: A set of roles granted by the
-               policy.
+        :param str role_id: The role Cloud Resource Name (CRN) granted by the
+               policy. Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
+        :param List[RoleAction] actions: The actions of the role. For more
+               information, see [IAM roles and
+               actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
         """
-        self.roles = roles
+        self.role_id = role_id
+        self.display_name = display_name
+        self.description = description
+        self.actions = actions
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'GrantWithTranslatedRoles':
-        """Initialize a GrantWithTranslatedRoles object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'EnrichedRoles':
+        """Initialize a EnrichedRoles object from a json dictionary."""
         args = {}
-        if 'roles' in _dict:
-            args['roles'] = [RoleInDisplayFormat.from_dict(v) for v in _dict.get('roles')]
+        if 'role_id' in _dict:
+            args['role_id'] = _dict.get('role_id')
         else:
-            raise ValueError('Required property \'roles\' not present in GrantWithTranslatedRoles JSON')
+            raise ValueError('Required property \'role_id\' not present in EnrichedRoles JSON')
+        if 'display_name' in _dict:
+            args['display_name'] = _dict.get('display_name')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'actions' in _dict:
+            args['actions'] = [RoleAction.from_dict(v) for v in _dict.get('actions')]
+        else:
+            raise ValueError('Required property \'actions\' not present in EnrichedRoles JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a GrantWithTranslatedRoles object from a json dictionary."""
+        """Initialize a EnrichedRoles object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'role_id') and self.role_id is not None:
+            _dict['role_id'] = self.role_id
+        if hasattr(self, 'display_name') and getattr(self, 'display_name') is not None:
+            _dict['display_name'] = getattr(self, 'display_name')
+        if hasattr(self, 'description') and getattr(self, 'description') is not None:
+            _dict['description'] = getattr(self, 'description')
+        if hasattr(self, 'actions') and self.actions is not None:
+            actions_list = []
+            for v in self.actions:
+                if isinstance(v, dict):
+                    actions_list.append(v)
+                else:
+                    actions_list.append(v.to_dict())
+            _dict['actions'] = actions_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this EnrichedRoles object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'EnrichedRoles') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'EnrichedRoles') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class Grant:
+    """
+    Permission granted by the policy.
+
+    :attr List[Roles] roles: A set of role cloud resource names (CRNs) granted by
+          the policy.
+    """
+
+    def __init__(self, roles: List['Roles']) -> None:
+        """
+        Initialize a Grant object.
+
+        :param List[Roles] roles: A set of role cloud resource names (CRNs) granted
+               by the policy.
+        """
+        self.roles = roles
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Grant':
+        """Initialize a Grant object from a json dictionary."""
+        args = {}
+        if 'roles' in _dict:
+            args['roles'] = [Roles.from_dict(v) for v in _dict.get('roles')]
+        else:
+            raise ValueError('Required property \'roles\' not present in Grant JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Grant object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -1545,16 +1687,79 @@ class GrantWithTranslatedRoles:
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this GrantWithTranslatedRoles object."""
+        """Return a `str` version of this Grant object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'GrantWithTranslatedRoles') -> bool:
+    def __eq__(self, other: 'Grant') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'GrantWithTranslatedRoles') -> bool:
+    def __ne__(self, other: 'Grant') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class GrantWithEnrichedRoles:
+    """
+    Permission granted by the policy with translated roles and additional role
+    information.
+
+    :attr List[EnrichedRoles] roles: A set of roles granted by the policy.
+    """
+
+    def __init__(self, roles: List['EnrichedRoles']) -> None:
+        """
+        Initialize a GrantWithEnrichedRoles object.
+
+        :param List[EnrichedRoles] roles: A set of roles granted by the policy.
+        """
+        self.roles = roles
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'GrantWithEnrichedRoles':
+        """Initialize a GrantWithEnrichedRoles object from a json dictionary."""
+        args = {}
+        if 'roles' in _dict:
+            args['roles'] = [EnrichedRoles.from_dict(v) for v in _dict.get('roles')]
+        else:
+            raise ValueError('Required property \'roles\' not present in GrantWithEnrichedRoles JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a GrantWithEnrichedRoles object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'roles') and self.roles is not None:
+            roles_list = []
+            for v in self.roles:
+                if isinstance(v, dict):
+                    roles_list.append(v)
+                else:
+                    roles_list.append(v.to_dict())
+            _dict['roles'] = roles_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this GrantWithEnrichedRoles object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'GrantWithEnrichedRoles') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'GrantWithEnrichedRoles') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -1705,60 +1910,36 @@ class RoleAction:
         return not self == other
 
 
-class RoleInDisplayFormat:
+class Roles:
     """
-    A role associated with a policy with additional information (display_name,
-    description, actions) when `format=display`.
+    A role associated with a policy.
 
     :attr str role_id: The role Cloud Resource Name (CRN) granted by the policy.
           Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
-    :attr str display_name: (optional) The service defined (or user defined if a
-          custom role) display name of the role.
-    :attr str description: (optional) The service defined (or user defined if a
-          custom role) description of the role.
-    :attr List[RoleAction] actions: The actions of the role. Please refer to [IAM
-          roles and
-          actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
     """
 
-    def __init__(
-        self, role_id: str, actions: List['RoleAction'], *, display_name: str = None, description: str = None
-    ) -> None:
+    def __init__(self, role_id: str) -> None:
         """
-        Initialize a RoleInDisplayFormat object.
+        Initialize a Roles object.
 
         :param str role_id: The role Cloud Resource Name (CRN) granted by the
                policy. Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
-        :param List[RoleAction] actions: The actions of the role. Please refer to
-               [IAM roles and
-               actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
         """
         self.role_id = role_id
-        self.display_name = display_name
-        self.description = description
-        self.actions = actions
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'RoleInDisplayFormat':
-        """Initialize a RoleInDisplayFormat object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'Roles':
+        """Initialize a Roles object from a json dictionary."""
         args = {}
         if 'role_id' in _dict:
             args['role_id'] = _dict.get('role_id')
         else:
-            raise ValueError('Required property \'role_id\' not present in RoleInDisplayFormat JSON')
-        if 'display_name' in _dict:
-            args['display_name'] = _dict.get('display_name')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
-        if 'actions' in _dict:
-            args['actions'] = [RoleAction.from_dict(v) for v in _dict.get('actions')]
-        else:
-            raise ValueError('Required property \'actions\' not present in RoleInDisplayFormat JSON')
+            raise ValueError('Required property \'role_id\' not present in Roles JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a RoleInDisplayFormat object from a json dictionary."""
+        """Initialize a Roles object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -1766,18 +1947,6 @@ class RoleInDisplayFormat:
         _dict = {}
         if hasattr(self, 'role_id') and self.role_id is not None:
             _dict['role_id'] = self.role_id
-        if hasattr(self, 'display_name') and getattr(self, 'display_name') is not None:
-            _dict['display_name'] = getattr(self, 'display_name')
-        if hasattr(self, 'description') and getattr(self, 'description') is not None:
-            _dict['description'] = getattr(self, 'description')
-        if hasattr(self, 'actions') and self.actions is not None:
-            actions_list = []
-            for v in self.actions:
-                if isinstance(v, dict):
-                    actions_list.append(v)
-                else:
-                    actions_list.append(v.to_dict())
-            _dict['actions'] = actions_list
         return _dict
 
     def _to_dict(self):
@@ -1785,16 +1954,16 @@ class RoleInDisplayFormat:
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this RoleInDisplayFormat object."""
+        """Return a `str` version of this Roles object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'RoleInDisplayFormat') -> bool:
+    def __eq__(self, other: 'Roles') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'RoleInDisplayFormat') -> bool:
+    def __ne__(self, other: 'Roles') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -1805,9 +1974,9 @@ class RuleAttribute:
 
     :attr str key: The name of an attribute.
     :attr str operator: The operator of an attribute.
-    :attr object value: The value of an rule or resource attribute; can be boolean
-          or string for resource attribute. Can be a string or an array of strings (e.g.,
-          array of days to permit access) for rule attribute.
+    :attr object value: The value of a rule or resource attribute; can be boolean or
+          string for resource attribute. Can be string or an array of strings (e.g., array
+          of days to permit access) for rule attribute.
     """
 
     def __init__(self, key: str, operator: str, value: object) -> None:
@@ -1816,8 +1985,8 @@ class RuleAttribute:
 
         :param str key: The name of an attribute.
         :param str operator: The operator of an attribute.
-        :param object value: The value of an rule or resource attribute; can be
-               boolean or string for resource attribute. Can be a string or an array of
+        :param object value: The value of a rule or resource attribute; can be
+               boolean or string for resource attribute. Can be string or an array of
                strings (e.g., array of days to permit access) for rule attribute.
         """
         self.key = key
@@ -2182,70 +2351,6 @@ class V2PolicyCollection:
         return not self == other
 
 
-class V2PolicyGrant:
-    """
-    Permission granted by the policy.
-
-    :attr List[PolicyRole] roles: A set of role cloud resource names (CRNs) granted
-          by the policy.
-    """
-
-    def __init__(self, roles: List['PolicyRole']) -> None:
-        """
-        Initialize a V2PolicyGrant object.
-
-        :param List[PolicyRole] roles: A set of role cloud resource names (CRNs)
-               granted by the policy.
-        """
-        self.roles = roles
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'V2PolicyGrant':
-        """Initialize a V2PolicyGrant object from a json dictionary."""
-        args = {}
-        if 'roles' in _dict:
-            args['roles'] = [PolicyRole.from_dict(v) for v in _dict.get('roles')]
-        else:
-            raise ValueError('Required property \'roles\' not present in V2PolicyGrant JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a V2PolicyGrant object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'roles') and self.roles is not None:
-            roles_list = []
-            for v in self.roles:
-                if isinstance(v, dict):
-                    roles_list.append(v)
-                else:
-                    roles_list.append(v.to_dict())
-            _dict['roles'] = roles_list
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this V2PolicyGrant object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'V2PolicyGrant') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'V2PolicyGrant') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
 class V2PolicyResource:
     """
     The resource attributes to which the policy grants access.
@@ -2333,9 +2438,9 @@ class V2PolicyResourceAttribute:
 
     :attr str key: The name of a resource attribute.
     :attr str operator: The operator of an attribute.
-    :attr object value: The value of an rule or resource attribute; can be boolean
-          or string for resource attribute. Can be a string or an array of strings (e.g.,
-          array of days to permit access) for rule attribute.
+    :attr object value: The value of a rule or resource attribute; can be boolean or
+          string for resource attribute. Can be string or an array of strings (e.g., array
+          of days to permit access) for rule attribute.
     """
 
     def __init__(self, key: str, operator: str, value: object) -> None:
@@ -2344,8 +2449,8 @@ class V2PolicyResourceAttribute:
 
         :param str key: The name of a resource attribute.
         :param str operator: The operator of an attribute.
-        :param object value: The value of an rule or resource attribute; can be
-               boolean or string for resource attribute. Can be a string or an array of
+        :param object value: The value of a rule or resource attribute; can be
+               boolean or string for resource attribute. Can be string or an array of
                strings (e.g., array of days to permit access) for rule attribute.
         """
         self.key = key
@@ -2669,7 +2774,8 @@ class CustomRole:
     :attr str display_name: The display name of the role that is shown in the
           console.
     :attr str description: (optional) The description of the role.
-    :attr List[str] actions: The actions of the role. Please refer to [IAM roles and
+    :attr List[str] actions: The actions of the role. For more information, see [IAM
+          roles and
           actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
     :attr str crn: (optional) The role Cloud Resource Name (CRN). Example CRN:
           'crn:v1:ibmcloud:public:iam-access-management::a/exampleAccountId::customRole:ExampleRoleName'.
@@ -2710,8 +2816,8 @@ class CustomRole:
 
         :param str display_name: The display name of the role that is shown in the
                console.
-        :param List[str] actions: The actions of the role. Please refer to [IAM
-               roles and
+        :param List[str] actions: The actions of the role. For more information,
+               see [IAM roles and
                actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
         :param str name: The name of the role that is used in the CRN. Can only be
                alphanumeric and has to be capitalized.
@@ -3359,7 +3465,8 @@ class Role:
     :attr str display_name: The display name of the role that is shown in the
           console.
     :attr str description: (optional) The description of the role.
-    :attr List[str] actions: The actions of the role. Please refer to [IAM roles and
+    :attr List[str] actions: The actions of the role. For more information, see [IAM
+          roles and
           actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
     :attr str crn: (optional) The role Cloud Resource Name (CRN). Example CRN:
           'crn:v1:ibmcloud:public:iam-access-management::a/exampleAccountId::customRole:ExampleRoleName'.
@@ -3371,8 +3478,8 @@ class Role:
 
         :param str display_name: The display name of the role that is shown in the
                console.
-        :param List[str] actions: The actions of the role. Please refer to [IAM
-               roles and
+        :param List[str] actions: The actions of the role. For more information,
+               see [IAM roles and
                actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
         :param str description: (optional) The description of the role.
         """
@@ -3597,14 +3704,14 @@ class ControlResponseControl(ControlResponse):
     """
     Specifies the type of access granted by the policy.
 
-    :attr V2PolicyGrant grant: Permission granted by the policy.
+    :attr Grant grant: Permission granted by the policy.
     """
 
-    def __init__(self, grant: 'V2PolicyGrant') -> None:
+    def __init__(self, grant: 'Grant') -> None:
         """
         Initialize a ControlResponseControl object.
 
-        :param V2PolicyGrant grant: Permission granted by the policy.
+        :param Grant grant: Permission granted by the policy.
         """
         # pylint: disable=super-init-not-called
         self.grant = grant
@@ -3614,7 +3721,7 @@ class ControlResponseControl(ControlResponse):
         """Initialize a ControlResponseControl object from a json dictionary."""
         args = {}
         if 'grant' in _dict:
-            args['grant'] = V2PolicyGrant.from_dict(_dict.get('grant'))
+            args['grant'] = Grant.from_dict(_dict.get('grant'))
         else:
             raise ValueError('Required property \'grant\' not present in ControlResponseControl JSON')
         return cls(**args)
@@ -3653,39 +3760,37 @@ class ControlResponseControl(ControlResponse):
         return not self == other
 
 
-class ControlResponseControlWithTranslatedRoles(ControlResponse):
+class ControlResponseControlWithEnrichedRoles(ControlResponse):
     """
     Specifies the type of access granted by the policy with additional role information.
 
-    :attr GrantWithTranslatedRoles grant: Permission granted by the policy with
+    :attr GrantWithEnrichedRoles grant: Permission granted by the policy with
           translated roles and additional role information.
     """
 
-    def __init__(self, grant: 'GrantWithTranslatedRoles') -> None:
+    def __init__(self, grant: 'GrantWithEnrichedRoles') -> None:
         """
-        Initialize a ControlResponseControlWithTranslatedRoles object.
+        Initialize a ControlResponseControlWithEnrichedRoles object.
 
-        :param GrantWithTranslatedRoles grant: Permission granted by the policy
-               with translated roles and additional role information.
+        :param GrantWithEnrichedRoles grant: Permission granted by the policy with
+               translated roles and additional role information.
         """
         # pylint: disable=super-init-not-called
         self.grant = grant
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ControlResponseControlWithTranslatedRoles':
-        """Initialize a ControlResponseControlWithTranslatedRoles object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'ControlResponseControlWithEnrichedRoles':
+        """Initialize a ControlResponseControlWithEnrichedRoles object from a json dictionary."""
         args = {}
         if 'grant' in _dict:
-            args['grant'] = GrantWithTranslatedRoles.from_dict(_dict.get('grant'))
+            args['grant'] = GrantWithEnrichedRoles.from_dict(_dict.get('grant'))
         else:
-            raise ValueError(
-                'Required property \'grant\' not present in ControlResponseControlWithTranslatedRoles JSON'
-            )
+            raise ValueError('Required property \'grant\' not present in ControlResponseControlWithEnrichedRoles JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a ControlResponseControlWithTranslatedRoles object from a json dictionary."""
+        """Initialize a ControlResponseControlWithEnrichedRoles object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -3703,16 +3808,16 @@ class ControlResponseControlWithTranslatedRoles(ControlResponse):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this ControlResponseControlWithTranslatedRoles object."""
+        """Return a `str` version of this ControlResponseControlWithEnrichedRoles object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'ControlResponseControlWithTranslatedRoles') -> bool:
+    def __eq__(self, other: 'ControlResponseControlWithEnrichedRoles') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'ControlResponseControlWithTranslatedRoles') -> bool:
+    def __ne__(self, other: 'ControlResponseControlWithEnrichedRoles') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -3723,9 +3828,9 @@ class V2PolicyRuleRuleAttribute(V2PolicyRule):
 
     :attr str key: The name of an attribute.
     :attr str operator: The operator of an attribute.
-    :attr object value: The value of an rule or resource attribute; can be boolean
-          or string for resource attribute. Can be a string or an array of strings (e.g.,
-          array of days to permit access) for rule attribute.
+    :attr object value: The value of a rule or resource attribute; can be boolean or
+          string for resource attribute. Can be string or an array of strings (e.g., array
+          of days to permit access) for rule attribute.
     """
 
     def __init__(self, key: str, operator: str, value: object) -> None:
@@ -3734,8 +3839,8 @@ class V2PolicyRuleRuleAttribute(V2PolicyRule):
 
         :param str key: The name of an attribute.
         :param str operator: The operator of an attribute.
-        :param object value: The value of an rule or resource attribute; can be
-               boolean or string for resource attribute. Can be a string or an array of
+        :param object value: The value of a rule or resource attribute; can be
+               boolean or string for resource attribute. Can be string or an array of
                strings (e.g., array of days to permit access) for rule attribute.
         """
         # pylint: disable=super-init-not-called
@@ -3817,9 +3922,9 @@ class V2PolicyRuleRuleWithConditions(V2PolicyRule):
     Rule that specifies additional access granted (e.g., time-based condition) accross
     multiple conditions.
 
-    :attr str operator: Operator to evalute conditions.
+    :attr str operator: Operator to evaluate conditions.
     :attr List[RuleAttribute] conditions: List of conditions associated with a
-          policy, e.g., time-based-conditions that grant access over a certain time
+          policy, e.g., time-based conditions that grant access over a certain time
           period.
     """
 
@@ -3827,9 +3932,9 @@ class V2PolicyRuleRuleWithConditions(V2PolicyRule):
         """
         Initialize a V2PolicyRuleRuleWithConditions object.
 
-        :param str operator: Operator to evalute conditions.
+        :param str operator: Operator to evaluate conditions.
         :param List[RuleAttribute] conditions: List of conditions associated with a
-               policy, e.g., time-based-conditions that grant access over a certain time
+               policy, e.g., time-based conditions that grant access over a certain time
                period.
         """
         # pylint: disable=super-init-not-called
@@ -3890,7 +3995,7 @@ class V2PolicyRuleRuleWithConditions(V2PolicyRule):
 
     class OperatorEnum(str, Enum):
         """
-        Operator to evalute conditions.
+        Operator to evaluate conditions.
         """
 
         AND = 'and'
