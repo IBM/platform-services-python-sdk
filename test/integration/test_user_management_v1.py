@@ -62,7 +62,6 @@ class TestUserManagementV1(unittest.TestCase):
         print('Setup complete.')
 
     def test_01_get_user_settings(self):
-
         user_settings = self.user_management_service.get_user_settings(
             account_id=self.ACCOUNT_ID, iam_id=self.IAM_USERID
         )
@@ -72,7 +71,6 @@ class TestUserManagementV1(unittest.TestCase):
         print('\nget_user_settings() result: ', json.dumps(user_settings.get_result(), indent=2))
 
     def test_02_update_user_settings(self):
-
         user_settings = self.user_management_service.update_user_settings(
             account_id=self.ACCOUNT_ID,
             iam_id=self.IAM_USERID,
@@ -135,7 +133,6 @@ class TestUserManagementV1(unittest.TestCase):
         print(f'\nlist_users() returned a total of {len(all_results)} items(s) using UsersPager.')
 
     def test_04_invite_users(self):
-
         # Construct a dict representation of a InviteUser model
         invite_user_model = {'email': self.INVITED_USER_EMAIL, 'account_role': 'Member'}
 
@@ -172,7 +169,6 @@ class TestUserManagementV1(unittest.TestCase):
         assert REMOVED_USERID is not None
 
     def test_05_get_user_profile(self):
-
         user_profile = self.user_management_service.get_user_profile(account_id=self.ACCOUNT_ID, iam_id=self.IAM_USERID)
 
         assert user_profile.get_status_code() == 200
@@ -180,7 +176,6 @@ class TestUserManagementV1(unittest.TestCase):
         print('\nget_user_profile() result: ', json.dumps(user_profile.get_result(), indent=2))
 
     def test_06_update_user_profile(self):
-
         response = self.user_management_service.update_user_profile(
             account_id=self.ACCOUNT_ID,
             iam_id=self.IAM_USERID,

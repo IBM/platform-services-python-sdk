@@ -49,8 +49,7 @@ class TestReportResourceUsage:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_report_resource_usage_all_params(self):

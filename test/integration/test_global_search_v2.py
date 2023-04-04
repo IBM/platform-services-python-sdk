@@ -49,7 +49,6 @@ class TestGlobalSearchV2:
 
     @needscredentials
     def test_search(self):
-
         search_results = []
         more_results = True
         search_cursor = None
@@ -75,7 +74,6 @@ class TestGlobalSearchV2:
 
     @needscredentials
     def test_get_supported_types(self):
-
         get_supported_types_response = self.global_search_service.get_supported_types()
 
         assert get_supported_types_response.get_status_code() == 200

@@ -50,8 +50,7 @@ class TestGetServiceInstanceState:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_service_instance_state_all_params(self):
@@ -107,8 +106,7 @@ class TestReplaceServiceInstanceState:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_replace_service_instance_state_all_params(self):
@@ -205,8 +203,7 @@ class TestReplaceServiceInstance:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_replace_service_instance_all_params(self):
@@ -317,8 +314,7 @@ class TestUpdateServiceInstance:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_service_instance_all_params(self):
@@ -426,8 +422,7 @@ class TestDeleteServiceInstance:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_delete_service_instance_all_params(self):
@@ -536,8 +531,7 @@ class TestListCatalog:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_catalog_all_params(self):
@@ -579,8 +573,7 @@ class TestGetLastOperation:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_last_operation_all_params(self):
@@ -678,8 +671,7 @@ class TestReplaceServiceBinding:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_replace_service_binding_all_params(self):
@@ -785,8 +777,7 @@ class TestDeleteServiceBinding:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_delete_service_binding_all_params(self):

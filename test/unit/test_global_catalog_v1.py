@@ -53,8 +53,7 @@ class TestListCatalogEntries:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_catalog_entries_all_params(self):
@@ -139,8 +138,7 @@ class TestCreateCatalogEntry:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_create_catalog_entry_all_params(self):
@@ -963,8 +961,7 @@ class TestGetCatalogEntry:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_catalog_entry_all_params(self):
@@ -1055,8 +1052,7 @@ class TestUpdateCatalogEntry:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_catalog_entry_all_params(self):
@@ -1880,8 +1876,7 @@ class TestDeleteCatalogEntry:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_delete_catalog_entry_all_params(self):
@@ -1961,8 +1956,7 @@ class TestGetChildObjects:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_child_objects_all_params(self):
@@ -2076,8 +2070,7 @@ class TestRestoreCatalogEntry:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_restore_catalog_entry_all_params(self):
@@ -2166,8 +2159,7 @@ class TestGetVisibility:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_visibility_all_params(self):
@@ -2248,8 +2240,7 @@ class TestUpdateVisibility:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_update_visibility_all_params(self):
@@ -2383,8 +2374,7 @@ class TestGetPricing:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_pricing_all_params(self):
@@ -2476,8 +2466,7 @@ class TestGetAuditLogs:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_audit_logs_all_params(self):
@@ -2579,8 +2568,7 @@ class TestListArtifacts:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_list_artifacts_all_params(self):
@@ -2661,8 +2649,7 @@ class TestGetArtifact:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_get_artifact_all_params(self):
@@ -2747,8 +2734,7 @@ class TestUploadArtifact:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_upload_artifact_all_params(self):
@@ -2835,8 +2821,7 @@ class TestDeleteArtifact:
         """
         if re.fullmatch('.*/+', request_url) is None:
             return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
+        return re.compile(request_url.rstrip('/') + '/+')
 
     @responses.activate
     def test_delete_artifact_all_params(self):
