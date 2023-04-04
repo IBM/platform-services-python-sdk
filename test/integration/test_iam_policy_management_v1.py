@@ -441,7 +441,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
             control=self.testV2PolicyControl,
             resource=self.testV2PolicyResource,
             pattern='time-based-conditions:weekly:custom-hours',
-            rule=self.testV2PolicyRule
+            rule=self.testV2PolicyRule,
         )
         assert response is not None
         assert response.get_status_code() == 200
@@ -486,10 +486,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
 
     def test_14_list_v2_roles(self):
 
-        response = self.service.list_roles(
-            account_id=self.testCustomRole.account_id,
-            service_group_id="IAM"
-        )
+        response = self.service.list_roles(account_id=self.testCustomRole.account_id, service_group_id="IAM")
         assert response is not None
         assert response.get_status_code() == 200
 
