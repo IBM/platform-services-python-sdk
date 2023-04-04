@@ -1,3 +1,10 @@
+# [0.33.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.32.0...v0.33.0) (2023-04-04)
+
+
+### Features
+
+* **IAM Policy Management:** support new query param source_group_id for v2/roles ([#194](https://github.com/IBM/platform-services-python-sdk/issues/194)) ([1659436](https://github.com/IBM/platform-services-python-sdk/commit/1659436622f861fdb7e8aeb8b0d42a842b3d8c2d))
+
 # [0.32.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.31.2...v0.32.0) (2023-03-29)
 
 
