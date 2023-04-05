@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.62.0-a2a22f95-20221115-162524
+# IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
 
 """
 Usage reports for IBM Cloud accounts
@@ -139,13 +139,17 @@ class UsageReportsV4(BaseService):
             raise ValueError('account_id must be provided')
         if not billingmonth:
             raise ValueError('billingmonth must be provided')
-        headers = {'Accept-Language': accept_language}
+        headers = {
+            'Accept-Language': accept_language,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_account_usage'
         )
         headers.update(sdk_headers)
 
-        params = {'_names': names}
+        params = {
+            '_names': names,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -202,13 +206,17 @@ class UsageReportsV4(BaseService):
             raise ValueError('resource_group_id must be provided')
         if not billingmonth:
             raise ValueError('billingmonth must be provided')
-        headers = {'Accept-Language': accept_language}
+        headers = {
+            'Accept-Language': accept_language,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_resource_group_usage'
         )
         headers.update(sdk_headers)
 
-        params = {'_names': names}
+        params = {
+            '_names': names,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -276,7 +284,9 @@ class UsageReportsV4(BaseService):
             raise ValueError('account_id must be provided')
         if not billingmonth:
             raise ValueError('billingmonth must be provided')
-        headers = {'Accept-Language': accept_language}
+        headers = {
+            'Accept-Language': accept_language,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_resource_usage_account'
         )
@@ -360,7 +370,9 @@ class UsageReportsV4(BaseService):
             raise ValueError('resource_group_id must be provided')
         if not billingmonth:
             raise ValueError('billingmonth must be provided')
-        headers = {'Accept-Language': accept_language}
+        headers = {
+            'Accept-Language': accept_language,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
             service_version='V4',
@@ -445,7 +457,9 @@ class UsageReportsV4(BaseService):
             raise ValueError('organization_id must be provided')
         if not billingmonth:
             raise ValueError('billingmonth must be provided')
-        headers = {'Accept-Language': accept_language}
+        headers = {
+            'Accept-Language': accept_language,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_resource_usage_org'
         )
@@ -519,13 +533,17 @@ class UsageReportsV4(BaseService):
             raise ValueError('organization_id must be provided')
         if not billingmonth:
             raise ValueError('billingmonth must be provided')
-        headers = {'Accept-Language': accept_language}
+        headers = {
+            'Accept-Language': accept_language,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V4', operation_id='get_org_usage'
         )
         headers.update(sdk_headers)
 
-        params = {'_names': names}
+        params = {
+            '_names': names,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -711,10 +729,19 @@ class AccountUsage:
           plans and metrics.
     :attr str month: The month.
     :attr List[Resource] resources: All the resource used in the account.
+    :attr float currency_rate: (optional) The value of the account's currency in
+          USD.
     """
 
     def __init__(
-        self, account_id: str, pricing_country: str, currency_code: str, month: str, resources: List['Resource']
+        self,
+        account_id: str,
+        pricing_country: str,
+        currency_code: str,
+        month: str,
+        resources: List['Resource'],
+        *,
+        currency_rate: float = None,
     ) -> None:
         """
         Initialize a AccountUsage object.
@@ -725,12 +752,15 @@ class AccountUsage:
                resources, plans and metrics.
         :param str month: The month.
         :param List[Resource] resources: All the resource used in the account.
+        :param float currency_rate: (optional) The value of the account's currency
+               in USD.
         """
         self.account_id = account_id
         self.pricing_country = pricing_country
         self.currency_code = currency_code
         self.month = month
         self.resources = resources
+        self.currency_rate = currency_rate
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'AccountUsage':
@@ -756,6 +786,8 @@ class AccountUsage:
             args['resources'] = [Resource.from_dict(v) for v in _dict.get('resources')]
         else:
             raise ValueError('Required property \'resources\' not present in AccountUsage JSON')
+        if 'currency_rate' in _dict:
+            args['currency_rate'] = _dict.get('currency_rate')
         return cls(**args)
 
     @classmethod
@@ -782,6 +814,8 @@ class AccountUsage:
                 else:
                     resources_list.append(v.to_dict())
             _dict['resources'] = resources_list
+        if hasattr(self, 'currency_rate') and self.currency_rate is not None:
+            _dict['currency_rate'] = self.currency_rate
         return _dict
 
     def _to_dict(self):
@@ -911,6 +945,9 @@ class InstanceUsage:
           provisioned and rated.
     :attr str month: The month.
     :attr List[Metric] usage: All the resource used in the account.
+    :attr bool pending: (optional) Pending charge from classic infrastructure.
+    :attr float currency_rate: (optional) The value of the account's currency in
+          USD.
     """
 
     def __init__(
@@ -937,6 +974,8 @@ class InstanceUsage:
         region: str = None,
         pricing_region: str = None,
         plan_name: str = None,
+        pending: bool = None,
+        currency_rate: float = None,
     ) -> None:
         """
         Initialize a InstanceUsage object.
@@ -967,6 +1006,9 @@ class InstanceUsage:
                that was submitted was rated.
         :param str plan_name: (optional) The name of the plan where the instance
                was provisioned and rated.
+        :param bool pending: (optional) Pending charge from classic infrastructure.
+        :param float currency_rate: (optional) The value of the account's currency
+               in USD.
         """
         self.account_id = account_id
         self.resource_instance_id = resource_instance_id
@@ -989,6 +1031,8 @@ class InstanceUsage:
         self.plan_name = plan_name
         self.month = month
         self.usage = usage
+        self.pending = pending
+        self.currency_rate = currency_rate
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'InstanceUsage':
@@ -1054,6 +1098,10 @@ class InstanceUsage:
             args['usage'] = [Metric.from_dict(v) for v in _dict.get('usage')]
         else:
             raise ValueError('Required property \'usage\' not present in InstanceUsage JSON')
+        if 'pending' in _dict:
+            args['pending'] = _dict.get('pending')
+        if 'currency_rate' in _dict:
+            args['currency_rate'] = _dict.get('currency_rate')
         return cls(**args)
 
     @classmethod
@@ -1112,6 +1160,10 @@ class InstanceUsage:
                 else:
                     usage_list.append(v.to_dict())
             _dict['usage'] = usage_list
+        if hasattr(self, 'pending') and self.pending is not None:
+            _dict['pending'] = self.pending
+        if hasattr(self, 'currency_rate') and self.currency_rate is not None:
+            _dict['currency_rate'] = self.currency_rate
         return _dict
 
     def _to_dict(self):
@@ -1720,6 +1772,8 @@ class OrgUsage:
           plans and metrics.
     :attr str month: The month.
     :attr List[Resource] resources: All the resource used in the account.
+    :attr float currency_rate: (optional) The value of the account's currency in
+          USD.
     """
 
     def __init__(
@@ -1732,6 +1786,7 @@ class OrgUsage:
         resources: List['Resource'],
         *,
         organization_name: str = None,
+        currency_rate: float = None,
     ) -> None:
         """
         Initialize a OrgUsage object.
@@ -1744,6 +1799,8 @@ class OrgUsage:
         :param str month: The month.
         :param List[Resource] resources: All the resource used in the account.
         :param str organization_name: (optional) The name of the organization.
+        :param float currency_rate: (optional) The value of the account's currency
+               in USD.
         """
         self.account_id = account_id
         self.organization_id = organization_id
@@ -1752,6 +1809,7 @@ class OrgUsage:
         self.currency_code = currency_code
         self.month = month
         self.resources = resources
+        self.currency_rate = currency_rate
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'OrgUsage':
@@ -1783,6 +1841,8 @@ class OrgUsage:
             args['resources'] = [Resource.from_dict(v) for v in _dict.get('resources')]
         else:
             raise ValueError('Required property \'resources\' not present in OrgUsage JSON')
+        if 'currency_rate' in _dict:
+            args['currency_rate'] = _dict.get('currency_rate')
         return cls(**args)
 
     @classmethod
@@ -1813,6 +1873,8 @@ class OrgUsage:
                 else:
                     resources_list.append(v.to_dict())
             _dict['resources'] = resources_list
+        if hasattr(self, 'currency_rate') and self.currency_rate is not None:
+            _dict['currency_rate'] = self.currency_rate
         return _dict
 
     def _to_dict(self):
@@ -1846,6 +1908,7 @@ class Plan:
     :attr float rated_cost: Total pre-discounted cost incurred by the plan.
     :attr List[Metric] usage: All the metrics in the plan.
     :attr List[Discount] discounts: All the discounts applicable to the plan.
+    :attr bool pending: (optional) Pending charge from classic infrastructure.
     """
 
     def __init__(
@@ -1859,6 +1922,7 @@ class Plan:
         *,
         plan_name: str = None,
         pricing_region: str = None,
+        pending: bool = None,
     ) -> None:
         """
         Initialize a Plan object.
@@ -1872,6 +1936,7 @@ class Plan:
         :param List[Discount] discounts: All the discounts applicable to the plan.
         :param str plan_name: (optional) The name of the plan.
         :param str pricing_region: (optional) The pricing region for the plan.
+        :param bool pending: (optional) Pending charge from classic infrastructure.
         """
         self.plan_id = plan_id
         self.plan_name = plan_name
@@ -1881,6 +1946,7 @@ class Plan:
         self.rated_cost = rated_cost
         self.usage = usage
         self.discounts = discounts
+        self.pending = pending
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'Plan':
@@ -1914,6 +1980,8 @@ class Plan:
             args['discounts'] = [Discount.from_dict(v) for v in _dict.get('discounts')]
         else:
             raise ValueError('Required property \'discounts\' not present in Plan JSON')
+        if 'pending' in _dict:
+            args['pending'] = _dict.get('pending')
         return cls(**args)
 
     @classmethod
@@ -1952,6 +2020,8 @@ class Plan:
                 else:
                     discounts_list.append(v.to_dict())
             _dict['discounts'] = discounts_list
+        if hasattr(self, 'pending') and self.pending is not None:
+            _dict['pending'] = self.pending
         return _dict
 
     def _to_dict(self):
@@ -2130,6 +2200,8 @@ class ResourceGroupUsage:
           plans and metrics.
     :attr str month: The month.
     :attr List[Resource] resources: All the resource used in the account.
+    :attr float currency_rate: (optional) The value of the account's currency in
+          USD.
     """
 
     def __init__(
@@ -2142,6 +2214,7 @@ class ResourceGroupUsage:
         resources: List['Resource'],
         *,
         resource_group_name: str = None,
+        currency_rate: float = None,
     ) -> None:
         """
         Initialize a ResourceGroupUsage object.
@@ -2154,6 +2227,8 @@ class ResourceGroupUsage:
         :param str month: The month.
         :param List[Resource] resources: All the resource used in the account.
         :param str resource_group_name: (optional) The name of the resource group.
+        :param float currency_rate: (optional) The value of the account's currency
+               in USD.
         """
         self.account_id = account_id
         self.resource_group_id = resource_group_id
@@ -2162,6 +2237,7 @@ class ResourceGroupUsage:
         self.currency_code = currency_code
         self.month = month
         self.resources = resources
+        self.currency_rate = currency_rate
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'ResourceGroupUsage':
@@ -2193,6 +2269,8 @@ class ResourceGroupUsage:
             args['resources'] = [Resource.from_dict(v) for v in _dict.get('resources')]
         else:
             raise ValueError('Required property \'resources\' not present in ResourceGroupUsage JSON')
+        if 'currency_rate' in _dict:
+            args['currency_rate'] = _dict.get('currency_rate')
         return cls(**args)
 
     @classmethod
@@ -2223,6 +2301,8 @@ class ResourceGroupUsage:
                 else:
                     resources_list.append(v.to_dict())
             _dict['resources'] = resources_list
+        if hasattr(self, 'currency_rate') and self.currency_rate is not None:
+            _dict['currency_rate'] = self.currency_rate
         return _dict
 
     def _to_dict(self):
