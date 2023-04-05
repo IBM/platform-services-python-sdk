@@ -1,3 +1,10 @@
+## [0.33.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.33.0...v0.33.1) (2023-04-05)
+
+
+### Bug Fixes
+
+* **Usage Reports:** regen usage reports with latest API def ([#195](https://github.com/IBM/platform-services-python-sdk/issues/195)) ([51df289](https://github.com/IBM/platform-services-python-sdk/commit/51df2895272f8b2c2681bd140896ef448c2c9972))
+
 # [0.33.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.32.0...v0.33.0) (2023-04-04)
 
 
