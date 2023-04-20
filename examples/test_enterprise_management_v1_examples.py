@@ -442,6 +442,42 @@ class TestEnterpriseManagementV1Examples:
         except ApiException as e:
             pytest.fail(str(e))
 
+    @needscredentials
+    def test_delete_account_example(self):
+        """
+        delete_account request example
+        """
+        try:
+            # begin-delete_account
+
+            response = enterprise_management_service.delete_account(
+                account_id=account_id,
+            )
+
+            # end-delete_account
+            print('\ndelete_account() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_account_group_example(self):
+        """
+        delete_account_group request example
+        """
+        try:
+            # begin-delete_account_group
+
+            response = enterprise_management_service.delete_account_group(
+                account_group_id=account_group_id,
+            )
+
+            # end-delete_account_group
+            print('\ndelete_account_group() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
 
 # endregion
 ##############################################################################

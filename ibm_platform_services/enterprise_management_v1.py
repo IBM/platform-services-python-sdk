@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.60.2-95dc7721-20221102-203229
+# IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
 
 """
 The Enterprise Management API enables you to create and manage an enterprise, account
@@ -352,7 +352,9 @@ class EnterpriseManagementV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def create_account(self, parent: str, name: str, owner_iam_id: str, **kwargs) -> DetailedResponse:
+    def create_account(
+        self, parent: str, name: str, owner_iam_id: str, *, traits: dict = None, **kwargs
+    ) -> DetailedResponse:
         """
         Create a new account in an enterprise.
 
@@ -369,6 +371,9 @@ class EnterpriseManagementV1(BaseService):
                characters.
         :param str owner_iam_id: The IAM ID of the account owner, such as
                `IBMid-0123ABC`. The IAM ID must already exist.
+        :param dict traits: (optional) The traits object can be used to opt-out of
+               Multi-Factor Authentication setting when creating a child account in the
+               enterprise. This is an optional field.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `CreateAccountResponse` object
@@ -386,7 +391,12 @@ class EnterpriseManagementV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        data = {'parent': parent, 'name': name, 'owner_iam_id': owner_iam_id}
+        data = {
+            'parent': parent,
+            'name': name,
+            'owner_iam_id': owner_iam_id,
+            'traits': traits,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -410,6 +420,7 @@ class EnterpriseManagementV1(BaseService):
         next_docid: str = None,
         parent: str = None,
         limit: int = None,
+        include_deleted: bool = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -442,6 +453,8 @@ class EnterpriseManagementV1(BaseService):
                children or are a part of the hierarchy for a given parent CRN.
         :param int limit: (optional) Return results up to this limit. Valid values
                are between `0` and `100`.
+        :param bool include_deleted: (optional) Include the deleted accounts from
+               an enterprise when used in conjunction with enterprise_id.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ListAccountsResponse` object
@@ -459,6 +472,7 @@ class EnterpriseManagementV1(BaseService):
             'next_docid': next_docid,
             'parent': parent,
             'limit': limit,
+            'include_deleted': include_deleted,
         }
 
         if 'headers' in kwargs:
@@ -479,7 +493,7 @@ class EnterpriseManagementV1(BaseService):
         Retrieve an account by the `account_id` parameter. All data related to the account
         is returned only if the caller has access to retrieve the account.
 
-        :param str account_id: The ID of the account to retrieve.
+        :param str account_id: The ID of the target account.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Account` object
@@ -513,7 +527,7 @@ class EnterpriseManagementV1(BaseService):
 
         Move an account to a different parent within the same enterprise.
 
-        :param str account_id: The ID of the account to retrieve.
+        :param str account_id: The ID of the target account.
         :param str parent: The CRN of the new parent within the enterprise.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -530,7 +544,9 @@ class EnterpriseManagementV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        data = {'parent': parent}
+        data = {
+            'parent': parent,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -544,6 +560,40 @@ class EnterpriseManagementV1(BaseService):
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/accounts/{account_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_account(self, account_id: str, **kwargs) -> DetailedResponse:
+        """
+        Remove an account from its enterprise.
+
+        Remove an account from the enterprise its currently in. After an account is
+        removed, it will be canceled and cannot be reactivated.
+
+        :param str account_id: The ID of the target account.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not account_id:
+            raise ValueError('account_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_account'
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['account_id']
+        path_param_values = self.encode_path_vars(account_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/accounts/{account_id}'.format(**path_param_dict)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -610,6 +660,7 @@ class EnterpriseManagementV1(BaseService):
         next_docid: str = None,
         parent: str = None,
         limit: int = None,
+        include_deleted: bool = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -644,6 +695,8 @@ class EnterpriseManagementV1(BaseService):
                children or are a part of the hierarchy for a given parent CRN.
         :param int limit: (optional) Return results up to this limit. Valid values
                are between `0` and `100`.
+        :param bool include_deleted: (optional) Include the deleted account groups
+               from an enterprise when used in conjunction with other query parameters.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ListAccountGroupsResponse` object
@@ -661,6 +714,7 @@ class EnterpriseManagementV1(BaseService):
             'next_docid': next_docid,
             'parent': parent,
             'limit': limit,
+            'include_deleted': include_deleted,
         }
 
         if 'headers' in kwargs:
@@ -751,6 +805,42 @@ class EnterpriseManagementV1(BaseService):
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/account-groups/{account_group_id}'.format(**path_param_dict)
         request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_account_group(self, account_group_id: str, **kwargs) -> DetailedResponse:
+        """
+        Delete an account group from the enterprise.
+
+        Delete an existing account group from the enterprise. You can't delete an account
+        group that has child account groups, the delete request will fail. This API
+        doesn't perform a recursive delete on the child account groups, it only deletes
+        the current account group.
+
+        :param str account_group_id: The ID of the account group to retrieve.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not account_group_id:
+            raise ValueError('account_group_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='delete_account_group'
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['account_group_id']
+        path_param_values = self.encode_path_vars(account_group_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/account-groups/{account_group_id}'.format(**path_param_dict)
+        request = self.prepare_request(method='DELETE', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -1825,6 +1915,7 @@ class AccountsPager:
         account_group_id: str = None,
         parent: str = None,
         limit: int = None,
+        include_deleted: bool = None,
     ) -> None:
         """
         Initialize a AccountsPager object.
@@ -1837,6 +1928,8 @@ class AccountsPager:
                children or are a part of the hierarchy for a given parent CRN.
         :param int limit: (optional) Return results up to this limit. Valid values
                are between `0` and `100`.
+        :param bool include_deleted: (optional) Include the deleted accounts from
+               an enterprise when used in conjunction with enterprise_id.
         """
         self._has_next = True
         self._client = client
@@ -1845,6 +1938,7 @@ class AccountsPager:
         self._account_group_id = account_group_id
         self._parent = parent
         self._limit = limit
+        self._include_deleted = include_deleted
 
     def has_next(self) -> bool:
         """
@@ -1866,6 +1960,7 @@ class AccountsPager:
             account_group_id=self._account_group_id,
             parent=self._parent,
             limit=self._limit,
+            include_deleted=self._include_deleted,
             next_docid=self._page_context.get('next'),
         ).get_result()
 
@@ -1906,6 +2001,7 @@ class AccountGroupsPager:
         parent_account_group_id: str = None,
         parent: str = None,
         limit: int = None,
+        include_deleted: bool = None,
     ) -> None:
         """
         Initialize a AccountGroupsPager object.
@@ -1919,6 +2015,8 @@ class AccountGroupsPager:
                children or are a part of the hierarchy for a given parent CRN.
         :param int limit: (optional) Return results up to this limit. Valid values
                are between `0` and `100`.
+        :param bool include_deleted: (optional) Include the deleted account groups
+               from an enterprise when used in conjunction with other query parameters.
         """
         self._has_next = True
         self._client = client
@@ -1927,6 +2025,7 @@ class AccountGroupsPager:
         self._parent_account_group_id = parent_account_group_id
         self._parent = parent
         self._limit = limit
+        self._include_deleted = include_deleted
 
     def has_next(self) -> bool:
         """
@@ -1948,6 +2047,7 @@ class AccountGroupsPager:
             parent_account_group_id=self._parent_account_group_id,
             parent=self._parent,
             limit=self._limit,
+            include_deleted=self._include_deleted,
             next_docid=self._page_context.get('next'),
         ).get_result()
 

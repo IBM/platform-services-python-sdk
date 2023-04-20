@@ -354,3 +354,21 @@ class TestEnterpriseManagementV1:
         )
 
         assert update_enterprise_response.get_status_code() == 204
+
+    @needscredentials
+    def test_delete_account(self):
+
+        response = self.enterprise_management_service.delete_account(
+            account_id=example_account_id,
+        )
+
+        assert response.get_status_code() == 204
+
+    @needscredentials
+    def test_delete_account_group(self):
+
+        response = self.enterprise_management_service.delete_account_group(
+            account_group_id=first_example_account_group_id,
+        )
+
+        assert response.get_status_code() == 204
