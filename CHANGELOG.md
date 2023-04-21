@@ -1,3 +1,10 @@
+# [0.34.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.33.1...v0.34.0) (2023-04-21)
+
+
+### Features
+
+* **Enterprise-Management:** re-gen service after recent API changes ([#196](https://github.com/IBM/platform-services-python-sdk/issues/196)) ([940639e](https://github.com/IBM/platform-services-python-sdk/commit/940639e78e3b1a5333c6c3729db3fbb1d5f51a1a))
+
 ## [0.33.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.33.0...v0.33.1) (2023-04-05)
 
 
