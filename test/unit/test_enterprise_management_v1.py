@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -614,9 +614,10 @@ class TestCreateAccount:
         parent = 'testString'
         name = 'testString'
         owner_iam_id = 'testString'
+        traits = {'foo': 'bar'}
 
         # Invoke method
-        response = _service.create_account(parent, name, owner_iam_id, headers={})
+        response = _service.create_account(parent, name, owner_iam_id, traits=traits, headers={})
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -626,6 +627,7 @@ class TestCreateAccount:
         assert req_body['parent'] == 'testString'
         assert req_body['name'] == 'testString'
         assert req_body['owner_iam_id'] == 'testString'
+        assert req_body['traits'] == {'foo': 'bar'}
 
     def test_create_account_all_params_with_retries(self):
         # Enable retries and run test_create_account_all_params.
@@ -650,6 +652,7 @@ class TestCreateAccount:
         parent = 'testString'
         name = 'testString'
         owner_iam_id = 'testString'
+        traits = {'foo': 'bar'}
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -693,6 +696,7 @@ class TestListAccounts:
         next_docid = 'testString'
         parent = 'testString'
         limit = 100
+        include_deleted = True
 
         # Invoke method
         response = _service.list_accounts(
@@ -701,6 +705,7 @@ class TestListAccounts:
             next_docid=next_docid,
             parent=parent,
             limit=limit,
+            include_deleted=include_deleted,
             headers={},
         )
 
@@ -715,6 +720,7 @@ class TestListAccounts:
         assert 'next_docid={}'.format(next_docid) in query_string
         assert 'parent={}'.format(parent) in query_string
         assert 'limit={}'.format(limit) in query_string
+        assert 'include_deleted={}'.format('true' if include_deleted else 'false') in query_string
 
     def test_list_accounts_all_params_with_retries(self):
         # Enable retries and run test_list_accounts_all_params.
@@ -771,6 +777,7 @@ class TestListAccounts:
             account_group_id='testString',
             parent='testString',
             limit=10,
+            include_deleted=True,
         )
         while pager.has_next():
             next_page = pager.get_next()
@@ -797,6 +804,7 @@ class TestListAccounts:
             account_group_id='testString',
             parent='testString',
             limit=10,
+            include_deleted=True,
         )
         all_results = pager.get_all()
         assert all_results is not None
@@ -939,6 +947,70 @@ class TestUpdateAccount:
         self.test_update_account_value_error()
 
 
+class TestDeleteAccount:
+    """
+    Test Class for delete_account
+    """
+
+    @responses.activate
+    def test_delete_account_all_params(self):
+        """
+        delete_account()
+        """
+        # Set up mock
+        url = preprocess_url('/accounts/testString')
+        responses.add(responses.DELETE, url, status=204)
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_account(account_id, headers={})
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_account_all_params_with_retries(self):
+        # Enable retries and run test_delete_account_all_params.
+        _service.enable_retries()
+        self.test_delete_account_all_params()
+
+        # Disable retries and run test_delete_account_all_params.
+        _service.disable_retries()
+        self.test_delete_account_all_params()
+
+    @responses.activate
+    def test_delete_account_value_error(self):
+        """
+        test_delete_account_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/accounts/testString')
+        responses.add(responses.DELETE, url, status=204)
+
+        # Set up parameter values
+        account_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_id": account_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_account(**req_copy)
+
+    def test_delete_account_value_error_with_retries(self):
+        # Enable retries and run test_delete_account_value_error.
+        _service.enable_retries()
+        self.test_delete_account_value_error()
+
+        # Disable retries and run test_delete_account_value_error.
+        _service.disable_retries()
+        self.test_delete_account_value_error()
+
+
 # endregion
 ##############################################################################
 # End of Service: AccountOperations
@@ -1076,6 +1148,7 @@ class TestListAccountGroups:
         next_docid = 'testString'
         parent = 'testString'
         limit = 100
+        include_deleted = True
 
         # Invoke method
         response = _service.list_account_groups(
@@ -1084,6 +1157,7 @@ class TestListAccountGroups:
             next_docid=next_docid,
             parent=parent,
             limit=limit,
+            include_deleted=include_deleted,
             headers={},
         )
 
@@ -1098,6 +1172,7 @@ class TestListAccountGroups:
         assert 'next_docid={}'.format(next_docid) in query_string
         assert 'parent={}'.format(parent) in query_string
         assert 'limit={}'.format(limit) in query_string
+        assert 'include_deleted={}'.format('true' if include_deleted else 'false') in query_string
 
     def test_list_account_groups_all_params_with_retries(self):
         # Enable retries and run test_list_account_groups_all_params.
@@ -1154,6 +1229,7 @@ class TestListAccountGroups:
             parent_account_group_id='testString',
             parent='testString',
             limit=10,
+            include_deleted=True,
         )
         while pager.has_next():
             next_page = pager.get_next()
@@ -1180,6 +1256,7 @@ class TestListAccountGroups:
             parent_account_group_id='testString',
             parent='testString',
             limit=10,
+            include_deleted=True,
         )
         all_results = pager.get_all()
         assert all_results is not None
@@ -1324,6 +1401,70 @@ class TestUpdateAccountGroup:
         # Disable retries and run test_update_account_group_value_error.
         _service.disable_retries()
         self.test_update_account_group_value_error()
+
+
+class TestDeleteAccountGroup:
+    """
+    Test Class for delete_account_group
+    """
+
+    @responses.activate
+    def test_delete_account_group_all_params(self):
+        """
+        delete_account_group()
+        """
+        # Set up mock
+        url = preprocess_url('/account-groups/testString')
+        responses.add(responses.DELETE, url, status=204)
+
+        # Set up parameter values
+        account_group_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_account_group(account_group_id, headers={})
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_account_group_all_params_with_retries(self):
+        # Enable retries and run test_delete_account_group_all_params.
+        _service.enable_retries()
+        self.test_delete_account_group_all_params()
+
+        # Disable retries and run test_delete_account_group_all_params.
+        _service.disable_retries()
+        self.test_delete_account_group_all_params()
+
+    @responses.activate
+    def test_delete_account_group_value_error(self):
+        """
+        test_delete_account_group_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/account-groups/testString')
+        responses.add(responses.DELETE, url, status=204)
+
+        # Set up parameter values
+        account_group_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "account_group_id": account_group_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_account_group(**req_copy)
+
+    def test_delete_account_group_value_error_with_retries(self):
+        # Enable retries and run test_delete_account_group_value_error.
+        _service.enable_retries()
+        self.test_delete_account_group_value_error()
+
+        # Disable retries and run test_delete_account_group_value_error.
+        _service.disable_retries()
+        self.test_delete_account_group_value_error()
 
 
 # endregion
