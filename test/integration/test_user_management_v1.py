@@ -132,6 +132,62 @@ class TestUserManagementV1(unittest.TestCase):
         assert len(all_results) == len(all_items)
         print(f'\nlist_users() returned a total of {len(all_results)} items(s) using UsersPager.')
 
+    def test_03b_list_users_with_include_settings(self):
+        results = []
+        start = None
+
+        while True:
+            response = self.user_management_service.list_users(
+                account_id=self.ACCOUNT_ID, include_settings=True, limit=10, start=start
+            )
+            assert response.get_status_code() == 200
+
+            user_list = response.get_result()
+            assert user_list is not None
+
+            assert 'resources' in user_list
+
+            results.extend(user_list['resources'])
+
+            next_url = user_list.get('next_url')
+            start = None
+            if next_url is not None:
+                start = self.get_start_token_from_url(next_url)
+
+            if start is None:
+                break
+
+        num_users = len(results)
+        print(f'\nlist_users() returned a total of {num_users} users.')
+
+    def test_03c_list_users_with_search(self):
+        results = []
+        start = None
+
+        while True:
+            response = self.user_management_service.list_users(
+                account_id=self.ACCOUNT_ID, search="state:ACTIVE", limit=10, start=start
+            )
+            assert response.get_status_code() == 200
+
+            user_list = response.get_result()
+            assert user_list is not None
+
+            assert 'resources' in user_list
+
+            results.extend(user_list['resources'])
+
+            next_url = user_list.get('next_url')
+            start = None
+            if next_url is not None:
+                start = self.get_start_token_from_url(next_url)
+
+            if start is None:
+                break
+
+        num_users = len(results)
+        print(f'\nlist_users() returned a total of {num_users} users.')
+
     def test_04_invite_users(self):
         # Construct a dict representation of a InviteUser model
         invite_user_model = {'email': self.INVITED_USER_EMAIL, 'account_role': 'Member'}

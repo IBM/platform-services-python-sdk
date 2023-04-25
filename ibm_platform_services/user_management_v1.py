@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.60.2-95dc7721-20221102-203229
+# IBM OpenAPI SDK Code Generator Version: 3.70.0-7df966bf-20230419-195904
 
 """
 Manage the lifecycle of your users using User Management APIs.
@@ -75,7 +75,15 @@ class UserManagementV1(BaseService):
     #########################
 
     def list_users(
-        self, account_id: str, *, limit: int = None, start: str = None, user_id: str = None, **kwargs
+        self,
+        account_id: str,
+        *,
+        limit: int = None,
+        include_settings: bool = None,
+        search: str = None,
+        start: str = None,
+        user_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         List users.
@@ -89,10 +97,22 @@ class UserManagementV1(BaseService):
         users in the account. If unrestricted view is enabled and the user does not have
         these roles, the API returns only the current user. Users are returned in a
         paginated list with a default limit of 100 users. You can iterate through all
-        users by following the `next_url` field.
+        users by following the `next_url` field. Additional substring search fields are
+        supported to filter the users.
 
         :param str account_id: The account ID of the specified user.
         :param int limit: (optional) The number of results to be returned.
+        :param bool include_settings: (optional) The user settings to be returned.
+               Set to true to view language, allowed IP address, and authentication
+               settings.
+        :param str search: (optional) The desired search results to be returned. To
+               view the list of users with the additional search filter, use the following
+               query options: `firstname`, `lastname`, `email`, `state`, `substate`,
+               `iam_id`, `realm`, and `userId`. HTML URL encoding for the search query and
+               `:` must be used. For example, search=state%3AINVALID returns a list of
+               invalid users. Multiple search queries can be combined to obtain `OR`
+               results using `,` operator (not URL encoded). For example,
+               search=state%3AINVALID,email%3Amail.test.ibm.com.
         :param str start: (optional) An optional token that indicates the beginning
                of the page of results to be returned. If omitted, the first page of
                results is returned. This value is obtained from the 'next_url' field of
@@ -107,11 +127,19 @@ class UserManagementV1(BaseService):
             raise ValueError('account_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='list_users'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_users',
         )
         headers.update(sdk_headers)
 
-        params = {'limit': limit, '_start': start, 'user_id': user_id}
+        params = {
+            'limit': limit,
+            'include_settings': include_settings,
+            'search': search,
+            '_start': start,
+            'user_id': user_id,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -122,7 +150,12 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/accounts/{account_id}/users'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -171,11 +204,17 @@ class UserManagementV1(BaseService):
             iam_policy = [convert_model(x) for x in iam_policy]
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='invite_users'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='invite_users',
         )
         headers.update(sdk_headers)
 
-        data = {'users': users, 'iam_policy': iam_policy, 'access_groups': access_groups}
+        data = {
+            'users': users,
+            'iam_policy': iam_policy,
+            'access_groups': access_groups,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -189,13 +228,23 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/accounts/{account_id}/users'.format(**path_param_dict)
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def get_user_profile(
-        self, account_id: str, iam_id: str, *, include_activity: str = None, **kwargs
+        self,
+        account_id: str,
+        iam_id: str,
+        *,
+        include_activity: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get user profile.
@@ -220,11 +269,15 @@ class UserManagementV1(BaseService):
             raise ValueError('iam_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_user_profile'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_user_profile',
         )
         headers.update(sdk_headers)
 
-        params = {'include_activity': include_activity}
+        params = {
+            'include_activity': include_activity,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -235,7 +288,12 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/accounts/{account_id}/users/{iam_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -292,11 +350,15 @@ class UserManagementV1(BaseService):
             raise ValueError('iam_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_user_profile'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_user_profile',
         )
         headers.update(sdk_headers)
 
-        params = {'include_activity': include_activity}
+        params = {
+            'include_activity': include_activity,
+        }
 
         data = {
             'firstname': firstname,
@@ -319,12 +381,25 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/accounts/{account_id}/users/{iam_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH', url=url, headers=headers, params=params, data=data)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            params=params,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def remove_user(self, account_id: str, iam_id: str, *, include_activity: str = None, **kwargs) -> DetailedResponse:
+    def remove_user(
+        self,
+        account_id: str,
+        iam_id: str,
+        *,
+        include_activity: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Remove user from account.
 
@@ -349,11 +424,15 @@ class UserManagementV1(BaseService):
             raise ValueError('iam_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='remove_user'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='remove_user',
         )
         headers.update(sdk_headers)
 
-        params = {'include_activity': include_activity}
+        params = {
+            'include_activity': include_activity,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -363,12 +442,22 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/accounts/{account_id}/users/{iam_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def accept(self, *, account_id: str = None, **kwargs) -> DetailedResponse:
+    def accept(
+        self,
+        *,
+        account_id: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Accept an invitation.
 
@@ -385,11 +474,15 @@ class UserManagementV1(BaseService):
 
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='accept'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='accept',
         )
         headers.update(sdk_headers)
 
-        data = {'account_id': account_id}
+        data = {
+            'account_id': account_id,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -399,12 +492,22 @@ class UserManagementV1(BaseService):
             del kwargs['headers']
 
         url = '/v2/users/accept'
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
-    def v3_remove_user(self, account_id: str, iam_id: str, **kwargs) -> DetailedResponse:
+    def v3_remove_user(
+        self,
+        account_id: str,
+        iam_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Remove user from account (Asynchronous).
 
@@ -428,7 +531,9 @@ class UserManagementV1(BaseService):
             raise ValueError('iam_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='v3_remove_user'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='v3_remove_user',
         )
         headers.update(sdk_headers)
 
@@ -440,7 +545,11 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v3/accounts/{account_id}/users/{iam_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -449,7 +558,12 @@ class UserManagementV1(BaseService):
     # User Settings
     #########################
 
-    def get_user_settings(self, account_id: str, iam_id: str, **kwargs) -> DetailedResponse:
+    def get_user_settings(
+        self,
+        account_id: str,
+        iam_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Get user settings.
 
@@ -479,7 +593,9 @@ class UserManagementV1(BaseService):
             raise ValueError('iam_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='get_user_settings'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_user_settings',
         )
         headers.update(sdk_headers)
 
@@ -492,7 +608,11 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/accounts/{account_id}/users/{iam_id}/settings'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -539,7 +659,9 @@ class UserManagementV1(BaseService):
             raise ValueError('iam_id must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='update_user_settings'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_user_settings',
         )
         headers.update(sdk_headers)
 
@@ -561,7 +683,12 @@ class UserManagementV1(BaseService):
         path_param_values = self.encode_path_vars(account_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/accounts/{account_id}/users/{iam_id}/settings'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -581,7 +708,13 @@ class InvitedUser:
     :attr str state: (optional) The state of the invitation for the user.
     """
 
-    def __init__(self, *, email: str = None, id: str = None, state: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        email: str = None,
+        id: str = None,
+        state: str = None,
+    ) -> None:
         """
         Initialize a InvitedUser object.
 
@@ -650,7 +783,11 @@ class InvitedUserList:
           invited to join the account.
     """
 
-    def __init__(self, *, resources: List['InvitedUser'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        resources: List['InvitedUser'] = None,
+    ) -> None:
         """
         Initialize a InvitedUserList object.
 
@@ -1071,7 +1208,12 @@ class Attribute:
     :attr str value: (optional) The value of the attribute.
     """
 
-    def __init__(self, *, name: str = None, value: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        name: str = None,
+        value: str = None,
+    ) -> None:
         """
         Initialize a Attribute object.
 
@@ -1132,7 +1274,12 @@ class InviteUser:
     :attr str account_role: (optional) The account role of the user to be invited.
     """
 
-    def __init__(self, *, email: str = None, account_role: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        email: str = None,
+        account_role: str = None,
+    ) -> None:
         """
         Initialize a InviteUser object.
 
@@ -1195,7 +1342,13 @@ class InviteUserIamPolicy:
     :attr List[Resource] resources: (optional) A list of resources.
     """
 
-    def __init__(self, type: str, *, roles: List['Role'] = None, resources: List['Resource'] = None) -> None:
+    def __init__(
+        self,
+        type: str,
+        *,
+        roles: List['Role'] = None,
+        resources: List['Resource'] = None,
+    ) -> None:
         """
         Initialize a InviteUserIamPolicy object.
 
@@ -1276,7 +1429,11 @@ class Resource:
     :attr List[Attribute] attributes: (optional) A list of IAM attributes.
     """
 
-    def __init__(self, *, attributes: List['Attribute'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        attributes: List['Attribute'] = None,
+    ) -> None:
         """
         Initialize a Resource object.
 
@@ -1336,7 +1493,11 @@ class Role:
     :attr str role_id: (optional) An alphanumeric value identifying the origin.
     """
 
-    def __init__(self, *, role_id: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        role_id: str = None,
+    ) -> None:
         """
         Initialize a Role object.
 
@@ -1400,12 +1561,25 @@ class UsersPager:
         client: UserManagementV1,
         account_id: str,
         limit: int = None,
+        include_settings: bool = None,
+        search: str = None,
         user_id: str = None,
     ) -> None:
         """
         Initialize a UsersPager object.
         :param str account_id: The account ID of the specified user.
         :param int limit: (optional) The number of results to be returned.
+        :param bool include_settings: (optional) The user settings to be returned.
+               Set to true to view language, allowed IP address, and authentication
+               settings.
+        :param str search: (optional) The desired search results to be returned. To
+               view the list of users with the additional search filter, use the following
+               query options: `firstname`, `lastname`, `email`, `state`, `substate`,
+               `iam_id`, `realm`, and `userId`. HTML URL encoding for the search query and
+               `:` must be used. For example, search=state%3AINVALID returns a list of
+               invalid users. Multiple search queries can be combined to obtain `OR`
+               results using `,` operator (not URL encoded). For example,
+               search=state%3AINVALID,email%3Amail.test.ibm.com.
         :param str user_id: (optional) Filter users based on their user ID.
         """
         self._has_next = True
@@ -1413,6 +1587,8 @@ class UsersPager:
         self._page_context = {'next': None}
         self._account_id = account_id
         self._limit = limit
+        self._include_settings = include_settings
+        self._search = search
         self._user_id = user_id
 
     def has_next(self) -> bool:
@@ -1433,6 +1609,8 @@ class UsersPager:
         result = self._client.list_users(
             account_id=self._account_id,
             limit=self._limit,
+            include_settings=self._include_settings,
+            search=self._search,
             user_id=self._user_id,
             start=self._page_context.get('next'),
         ).get_result()
