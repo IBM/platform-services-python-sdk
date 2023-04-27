@@ -59,7 +59,8 @@ def preprocess_url(operation_path: str):
     # Otherwise, return a regular expression that matches one or more trailing /.
     if re.fullmatch('.*/+', request_url) is None:
         return request_url
-    return re.compile(request_url.rstrip('/') + '/+')
+    else:
+        return re.compile(request_url.rstrip('/') + '/+')
 
 
 ##############################################################################
@@ -610,11 +611,15 @@ class TestCreateAccount:
         mock_response = '{"account_id": "account_id"}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
+        # Construct a dict representation of a CreateAccountRequestTraits model
+        create_account_request_traits_model = {}
+        create_account_request_traits_model['mfa'] = 'testString'
+
         # Set up parameter values
         parent = 'testString'
         name = 'testString'
         owner_iam_id = 'testString'
-        traits = {'foo': 'bar'}
+        traits = create_account_request_traits_model
 
         # Invoke method
         response = _service.create_account(parent, name, owner_iam_id, traits=traits, headers={})
@@ -627,7 +632,7 @@ class TestCreateAccount:
         assert req_body['parent'] == 'testString'
         assert req_body['name'] == 'testString'
         assert req_body['owner_iam_id'] == 'testString'
-        assert req_body['traits'] == {'foo': 'bar'}
+        assert req_body['traits'] == create_account_request_traits_model
 
     def test_create_account_all_params_with_retries(self):
         # Enable retries and run test_create_account_all_params.
@@ -648,11 +653,15 @@ class TestCreateAccount:
         mock_response = '{"account_id": "account_id"}'
         responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
 
+        # Construct a dict representation of a CreateAccountRequestTraits model
+        create_account_request_traits_model = {}
+        create_account_request_traits_model['mfa'] = 'testString'
+
         # Set up parameter values
         parent = 'testString'
         name = 'testString'
         owner_iam_id = 'testString'
-        traits = {'foo': 'bar'}
+        traits = create_account_request_traits_model
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1599,6 +1608,40 @@ class TestModel_CreateAccountGroupResponse:
         # Convert model instance back to dict and verify no loss of data
         create_account_group_response_model_json2 = create_account_group_response_model.to_dict()
         assert create_account_group_response_model_json2 == create_account_group_response_model_json
+
+
+class TestModel_CreateAccountRequestTraits:
+    """
+    Test Class for CreateAccountRequestTraits
+    """
+
+    def test_create_account_request_traits_serialization(self):
+        """
+        Test serialization/deserialization for CreateAccountRequestTraits
+        """
+
+        # Construct a json representation of a CreateAccountRequestTraits model
+        create_account_request_traits_model_json = {}
+        create_account_request_traits_model_json['mfa'] = 'testString'
+
+        # Construct a model instance of CreateAccountRequestTraits by calling from_dict on the json representation
+        create_account_request_traits_model = CreateAccountRequestTraits.from_dict(
+            create_account_request_traits_model_json
+        )
+        assert create_account_request_traits_model != False
+
+        # Construct a model instance of CreateAccountRequestTraits by calling from_dict on the json representation
+        create_account_request_traits_model_dict = CreateAccountRequestTraits.from_dict(
+            create_account_request_traits_model_json
+        ).__dict__
+        create_account_request_traits_model2 = CreateAccountRequestTraits(**create_account_request_traits_model_dict)
+
+        # Verify the model instances are equivalent
+        assert create_account_request_traits_model == create_account_request_traits_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        create_account_request_traits_model_json2 = create_account_request_traits_model.to_dict()
+        assert create_account_request_traits_model_json2 == create_account_request_traits_model_json
 
 
 class TestModel_CreateAccountResponse:
