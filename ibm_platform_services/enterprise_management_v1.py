@@ -30,7 +30,7 @@ import json
 from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
-from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
+from ibm_cloud_sdk_core.utils import convert_model, datetime_to_string, string_to_datetime
 
 from .common import get_sdk_headers
 
@@ -270,7 +270,11 @@ class EnterpriseManagementV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        data = {'name': name, 'domain': domain, 'primary_contact_iam_id': primary_contact_iam_id}
+        data = {
+            'name': name,
+            'domain': domain,
+            'primary_contact_iam_id': primary_contact_iam_id,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -334,7 +338,10 @@ class EnterpriseManagementV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        data = {'parent': parent, 'billing_unit_id': billing_unit_id}
+        data = {
+            'parent': parent,
+            'billing_unit_id': billing_unit_id,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -353,7 +360,7 @@ class EnterpriseManagementV1(BaseService):
         return response
 
     def create_account(
-        self, parent: str, name: str, owner_iam_id: str, *, traits: dict = None, **kwargs
+        self, parent: str, name: str, owner_iam_id: str, *, traits: 'CreateAccountRequestTraits' = None, **kwargs
     ) -> DetailedResponse:
         """
         Create a new account in an enterprise.
@@ -371,9 +378,9 @@ class EnterpriseManagementV1(BaseService):
                characters.
         :param str owner_iam_id: The IAM ID of the account owner, such as
                `IBMid-0123ABC`. The IAM ID must already exist.
-        :param dict traits: (optional) The traits object can be used to opt-out of
-               Multi-Factor Authentication setting when creating a child account in the
-               enterprise. This is an optional field.
+        :param CreateAccountRequestTraits traits: (optional) The traits object can
+               be used to opt-out of Multi-Factor Authentication setting when creating a
+               child account in the enterprise. This is an optional field.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `CreateAccountResponse` object
@@ -385,6 +392,8 @@ class EnterpriseManagementV1(BaseService):
             raise ValueError('name must be provided')
         if owner_iam_id is None:
             raise ValueError('owner_iam_id must be provided')
+        if traits is not None:
+            traits = convert_model(traits)
         headers = {}
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME, service_version='V1', operation_id='create_account'
@@ -636,7 +645,11 @@ class EnterpriseManagementV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        data = {'parent': parent, 'name': name, 'primary_contact_iam_id': primary_contact_iam_id}
+        data = {
+            'parent': parent,
+            'name': name,
+            'primary_contact_iam_id': primary_contact_iam_id,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -791,7 +804,10 @@ class EnterpriseManagementV1(BaseService):
         )
         headers.update(sdk_headers)
 
-        data = {'name': name, 'primary_contact_iam_id': primary_contact_iam_id}
+        data = {
+            'name': name,
+            'primary_contact_iam_id': primary_contact_iam_id,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1292,6 +1308,63 @@ class CreateAccountGroupResponse:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'CreateAccountGroupResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class CreateAccountRequestTraits:
+    """
+    The traits object can be used to opt-out of Multi-Factor Authentication setting when
+    creating a child account in the enterprise. This is an optional field.
+
+    :attr str mfa: (optional) By default MFA will be set on the account. To opt out,
+          pass the traits object with the mfa field set to empty string.
+    """
+
+    def __init__(self, *, mfa: str = None) -> None:
+        """
+        Initialize a CreateAccountRequestTraits object.
+
+        :param str mfa: (optional) By default MFA will be set on the account. To
+               opt out, pass the traits object with the mfa field set to empty string.
+        """
+        self.mfa = mfa
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'CreateAccountRequestTraits':
+        """Initialize a CreateAccountRequestTraits object from a json dictionary."""
+        args = {}
+        if 'mfa' in _dict:
+            args['mfa'] = _dict.get('mfa')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a CreateAccountRequestTraits object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'mfa') and self.mfa is not None:
+            _dict['mfa'] = self.mfa
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this CreateAccountRequestTraits object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'CreateAccountRequestTraits') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'CreateAccountRequestTraits') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
