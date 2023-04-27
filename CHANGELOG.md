@@ -1,3 +1,10 @@
+## [0.34.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.34.0...v0.34.1) (2023-04-27)
+
+
+### Bug Fixes
+
+* **Enterprise Management:** re-gen after trait schema change ([#199](https://github.com/IBM/platform-services-python-sdk/issues/199)) ([919b571](https://github.com/IBM/platform-services-python-sdk/commit/919b571232f5d7ac4f2770004cb290458bc53e75))
+
 # [0.34.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.33.1...v0.34.0) (2023-04-21)
 
 
