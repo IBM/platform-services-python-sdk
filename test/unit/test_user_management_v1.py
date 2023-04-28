@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -107,16 +107,32 @@ class TestListUsers:
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users')
         mock_response = '{"total_results": 13, "limit": 5, "first_url": "first_url", "next_url": "next_url", "resources": [{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id", "added_on": "added_on"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
         limit = 100
+        include_settings = True
+        search = 'testString'
         start = 'testString'
         user_id = 'testString'
 
         # Invoke method
-        response = _service.list_users(account_id, limit=limit, start=start, user_id=user_id, headers={})
+        response = _service.list_users(
+            account_id,
+            limit=limit,
+            include_settings=include_settings,
+            search=search,
+            start=start,
+            user_id=user_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -125,6 +141,8 @@ class TestListUsers:
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'limit={}'.format(limit) in query_string
+        assert 'include_settings={}'.format('true' if include_settings else 'false') in query_string
+        assert 'search={}'.format(search) in query_string
         assert '_start={}'.format(start) in query_string
         assert 'user_id={}'.format(user_id) in query_string
 
@@ -145,13 +163,22 @@ class TestListUsers:
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users')
         mock_response = '{"total_results": 13, "limit": 5, "first_url": "first_url", "next_url": "next_url", "resources": [{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id", "added_on": "added_on"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.list_users(account_id, headers={})
+        response = _service.list_users(
+            account_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -174,7 +201,13 @@ class TestListUsers:
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users')
         mock_response = '{"total_results": 13, "limit": 5, "first_url": "first_url", "next_url": "next_url", "resources": [{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id", "added_on": "added_on"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -206,8 +239,20 @@ class TestListUsers:
         url = preprocess_url('/v2/accounts/testString/users')
         mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?_start=1","resources":[{"id":"id","iam_id":"iam_id","realm":"realm","user_id":"user_id","firstname":"firstname","lastname":"lastname","state":"state","email":"email","phonenumber":"phonenumber","altphonenumber":"altphonenumber","photo":"photo","account_id":"account_id","added_on":"added_on"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","iam_id":"iam_id","realm":"realm","user_id":"user_id","firstname":"firstname","lastname":"lastname","state":"state","email":"email","phonenumber":"phonenumber","altphonenumber":"altphonenumber","photo":"photo","account_id":"account_id","added_on":"added_on"}]}'
-        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
-        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         all_results = []
@@ -215,6 +260,8 @@ class TestListUsers:
             client=_service,
             account_id='testString',
             limit=10,
+            include_settings=True,
+            search='testString',
             user_id='testString',
         )
         while pager.has_next():
@@ -232,14 +279,28 @@ class TestListUsers:
         url = preprocess_url('/v2/accounts/testString/users')
         mock_response1 = '{"total_count":2,"limit":1,"next_url":"https://myhost.com/somePath?_start=1","resources":[{"id":"id","iam_id":"iam_id","realm":"realm","user_id":"user_id","firstname":"firstname","lastname":"lastname","state":"state","email":"email","phonenumber":"phonenumber","altphonenumber":"altphonenumber","photo":"photo","account_id":"account_id","added_on":"added_on"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"resources":[{"id":"id","iam_id":"iam_id","realm":"realm","user_id":"user_id","firstname":"firstname","lastname":"lastname","state":"state","email":"email","phonenumber":"phonenumber","altphonenumber":"altphonenumber","photo":"photo","account_id":"account_id","added_on":"added_on"}]}'
-        responses.add(responses.GET, url, body=mock_response1, content_type='application/json', status=200)
-        responses.add(responses.GET, url, body=mock_response2, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         pager = UsersPager(
             client=_service,
             account_id='testString',
             limit=10,
+            include_settings=True,
+            search='testString',
             user_id='testString',
         )
         all_results = pager.get_all()
@@ -260,7 +321,13 @@ class TestInviteUsers:
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users')
         mock_response = '{"resources": [{"email": "email", "id": "id", "state": "state"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Construct a dict representation of a InviteUser model
         invite_user_model = {}
@@ -294,7 +361,11 @@ class TestInviteUsers:
 
         # Invoke method
         response = _service.invite_users(
-            account_id, users=users, iam_policy=iam_policy, access_groups=access_groups, headers={}
+            account_id,
+            users=users,
+            iam_policy=iam_policy,
+            access_groups=access_groups,
+            headers={},
         )
 
         # Check for correct operation
@@ -323,13 +394,22 @@ class TestInviteUsers:
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users')
         mock_response = '{"resources": [{"email": "email", "id": "id", "state": "state"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.invite_users(account_id, headers={})
+        response = _service.invite_users(
+            account_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -352,7 +432,13 @@ class TestInviteUsers:
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users')
         mock_response = '{"resources": [{"email": "email", "id": "id", "state": "state"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -389,7 +475,13 @@ class TestGetUserProfile:
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users/testString')
         mock_response = '{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id", "added_on": "added_on"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -397,7 +489,12 @@ class TestGetUserProfile:
         include_activity = 'testString'
 
         # Invoke method
-        response = _service.get_user_profile(account_id, iam_id, include_activity=include_activity, headers={})
+        response = _service.get_user_profile(
+            account_id,
+            iam_id,
+            include_activity=include_activity,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -424,14 +521,24 @@ class TestGetUserProfile:
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users/testString')
         mock_response = '{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id", "added_on": "added_on"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
         iam_id = 'testString'
 
         # Invoke method
-        response = _service.get_user_profile(account_id, iam_id, headers={})
+        response = _service.get_user_profile(
+            account_id,
+            iam_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -454,7 +561,13 @@ class TestGetUserProfile:
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users/testString')
         mock_response = '{"id": "id", "iam_id": "iam_id", "realm": "realm", "user_id": "user_id", "firstname": "firstname", "lastname": "lastname", "state": "state", "email": "email", "phonenumber": "phonenumber", "altphonenumber": "altphonenumber", "photo": "photo", "account_id": "account_id", "added_on": "added_on"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -492,7 +605,11 @@ class TestUpdateUserProfile:
         """
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users/testString')
-        responses.add(responses.PATCH, url, status=204)
+        responses.add(
+            responses.PATCH,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -554,14 +671,22 @@ class TestUpdateUserProfile:
         """
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users/testString')
-        responses.add(responses.PATCH, url, status=204)
+        responses.add(
+            responses.PATCH,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_id = 'testString'
         iam_id = 'testString'
 
         # Invoke method
-        response = _service.update_user_profile(account_id, iam_id, headers={})
+        response = _service.update_user_profile(
+            account_id,
+            iam_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -583,7 +708,11 @@ class TestUpdateUserProfile:
         """
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users/testString')
-        responses.add(responses.PATCH, url, status=204)
+        responses.add(
+            responses.PATCH,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -621,7 +750,11 @@ class TestRemoveUser:
         """
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -629,7 +762,12 @@ class TestRemoveUser:
         include_activity = 'testString'
 
         # Invoke method
-        response = _service.remove_user(account_id, iam_id, include_activity=include_activity, headers={})
+        response = _service.remove_user(
+            account_id,
+            iam_id,
+            include_activity=include_activity,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -655,14 +793,22 @@ class TestRemoveUser:
         """
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_id = 'testString'
         iam_id = 'testString'
 
         # Invoke method
-        response = _service.remove_user(account_id, iam_id, headers={})
+        response = _service.remove_user(
+            account_id,
+            iam_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -684,7 +830,11 @@ class TestRemoveUser:
         """
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -722,13 +872,20 @@ class TestAccept:
         """
         # Set up mock
         url = preprocess_url('/v2/users/accept')
-        responses.add(responses.POST, url, status=202)
+        responses.add(
+            responses.POST,
+            url,
+            status=202,
+        )
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.accept(account_id=account_id, headers={})
+        response = _service.accept(
+            account_id=account_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -753,7 +910,11 @@ class TestAccept:
         """
         # Set up mock
         url = preprocess_url('/v2/users/accept')
-        responses.add(responses.POST, url, status=202)
+        responses.add(
+            responses.POST,
+            url,
+            status=202,
+        )
 
         # Invoke method
         response = _service.accept()
@@ -784,14 +945,22 @@ class TestV3RemoveUser:
         """
         # Set up mock
         url = preprocess_url('/v3/accounts/testString/users/testString')
-        responses.add(responses.DELETE, url, status=202)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=202,
+        )
 
         # Set up parameter values
         account_id = 'testString'
         iam_id = 'testString'
 
         # Invoke method
-        response = _service.v3_remove_user(account_id, iam_id, headers={})
+        response = _service.v3_remove_user(
+            account_id,
+            iam_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -813,7 +982,11 @@ class TestV3RemoveUser:
         """
         # Set up mock
         url = preprocess_url('/v3/accounts/testString/users/testString')
-        responses.add(responses.DELETE, url, status=202)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=202,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -891,14 +1064,24 @@ class TestGetUserSettings:
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users/testString/settings')
         mock_response = '{"language": "language", "notification_language": "notification_language", "allowed_ip_addresses": "32.96.110.50,172.16.254.1", "self_manage": false}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
         iam_id = 'testString'
 
         # Invoke method
-        response = _service.get_user_settings(account_id, iam_id, headers={})
+        response = _service.get_user_settings(
+            account_id,
+            iam_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -921,7 +1104,13 @@ class TestGetUserSettings:
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users/testString/settings')
         mock_response = '{"language": "language", "notification_language": "notification_language", "allowed_ip_addresses": "32.96.110.50,172.16.254.1", "self_manage": false}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -959,7 +1148,11 @@ class TestUpdateUserSettings:
         """
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users/testString/settings')
-        responses.add(responses.PATCH, url, status=204)
+        responses.add(
+            responses.PATCH,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -1006,14 +1199,22 @@ class TestUpdateUserSettings:
         """
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users/testString/settings')
-        responses.add(responses.PATCH, url, status=204)
+        responses.add(
+            responses.PATCH,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_id = 'testString'
         iam_id = 'testString'
 
         # Invoke method
-        response = _service.update_user_settings(account_id, iam_id, headers={})
+        response = _service.update_user_settings(
+            account_id,
+            iam_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1035,7 +1236,11 @@ class TestUpdateUserSettings:
         """
         # Set up mock
         url = preprocess_url('/v2/accounts/testString/users/testString/settings')
-        responses.add(responses.PATCH, url, status=204)
+        responses.add(
+            responses.PATCH,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -1071,6 +1276,8 @@ class TestUpdateUserSettings:
 # Start of Model Tests
 ##############################################################################
 # region
+
+
 class TestModel_InvitedUser:
     """
     Test Class for InvitedUser

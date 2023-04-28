@@ -174,6 +174,8 @@ class TestUserManagementV1Examples:
             pager = UsersPager(
                 client=user_management_service,
                 account_id=account_id,
+                include_settings=True,
+                search="state:ACTIVE",
             )
             while pager.has_next():
                 next_page = pager.get_next()
