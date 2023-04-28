@@ -1,3 +1,10 @@
+## [0.34.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.34.1...v0.34.2) (2023-04-28)
+
+
+### Bug Fixes
+
+* **Global Search:** remove deprecated method getSupportedTypes ([#200](https://github.com/IBM/platform-services-python-sdk/issues/200)) ([ba60bcb](https://github.com/IBM/platform-services-python-sdk/commit/ba60bcbd339039283c0a4886d28323f5fe4dfcca))
+
 ## [0.34.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.34.0...v0.34.1) (2023-04-27)
 
 
