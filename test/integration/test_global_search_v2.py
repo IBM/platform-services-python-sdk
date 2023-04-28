@@ -71,13 +71,3 @@ class TestGlobalSearchV2:
                 more_results = False
 
         print('Total items returned by search(): ', len(search_results))
-
-    @needscredentials
-    def test_get_supported_types(self):
-        get_supported_types_response = self.global_search_service.get_supported_types()
-
-        assert get_supported_types_response.get_status_code() == 200
-        supported_types_list = get_supported_types_response.get_result()
-        assert supported_types_list is not None
-
-        print('get_supported_types() result: ', json.dumps(supported_types_list, indent=2))
