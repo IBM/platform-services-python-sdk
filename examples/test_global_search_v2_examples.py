@@ -88,6 +88,7 @@ class TestGlobalSearchV2Examples:
         except ApiException as e:
             pytest.fail(str(e))
 
+
 # endregion
 ##############################################################################
 # End of Examples for Service: GlobalSearchV2
