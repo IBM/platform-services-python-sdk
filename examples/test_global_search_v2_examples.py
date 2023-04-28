@@ -88,24 +88,6 @@ class TestGlobalSearchV2Examples:
         except ApiException as e:
             pytest.fail(str(e))
 
-    @needscredentials
-    def test_get_supported_types_example(self):
-        """
-        get_supported_types request example
-        """
-        try:
-            print('\nget_supported_types() result:')
-            # begin-get_supported_types
-
-            supported_types_list = global_search_service.get_supported_types().get_result()
-
-            print(json.dumps(supported_types_list, indent=2))
-
-            # end-get_supported_types
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
 
 # endregion
 ##############################################################################

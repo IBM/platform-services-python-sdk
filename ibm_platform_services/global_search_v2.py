@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.67.0-df2073a1-20230222-221157
+# IBM OpenAPI SDK Code Generator Version: 3.70.0-7df966bf-20230419-195904
 
 """
 Search for resources with the global and shared resource properties repository that is
@@ -33,7 +33,6 @@ API Version: 2.0.1
 from enum import Enum
 from typing import Dict, List
 import json
-import logging
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
@@ -92,7 +91,6 @@ class GlobalSearchV2(BaseService):
         search_cursor: str = None,
         transaction_id: str = None,
         account_id: str = None,
-        boundary: str = None,
         limit: int = None,
         timeout: int = None,
         sort: List[str] = None,
@@ -101,7 +99,7 @@ class GlobalSearchV2(BaseService):
         is_public: str = None,
         impersonate_user: str = None,
         can_tag: str = None,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Find instances of resources (v3).
@@ -135,8 +133,6 @@ class GlobalSearchV2(BaseService):
                used to trace a request across services. If not specified, it automatically
                generated with the prefix "gst-".
         :param str account_id: (optional) The account ID to filter resources.
-        :param str boundary: (optional) The boundary where the search performs.
-               This parameter must be set only for the cross-account searches.
         :param int limit: (optional) The maximum number of hits to return. Defaults
                to 10.
         :param int timeout: (optional) A search timeout in milliseconds, bounding
@@ -177,13 +173,14 @@ class GlobalSearchV2(BaseService):
             'transaction-id': transaction_id,
         }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='search'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='search',
         )
         headers.update(sdk_headers)
 
         params = {
             'account_id': account_id,
-            'boundary': boundary,
             'limit': limit,
             'timeout': timeout,
             'sort': convert_list(sort),
@@ -209,43 +206,13 @@ class GlobalSearchV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v3/resources/search'
-        request = self.prepare_request(method='POST', url=url, headers=headers, params=params, data=data)
-
-        response = self.send(request, **kwargs)
-        return response
-
-    #########################
-    # resourceTypes
-    #########################
-
-    def get_supported_types(self, **kwargs) -> DetailedResponse:
-        """
-        DEPRECATED. Get all GhoST indexes.
-
-        Retrieves a list of all GhoST indexes.
-
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `SupportedTypesList` object
-
-        Deprecated: this method is deprecated and may be removed in a future release.
-        """
-
-        logging.warning('A deprecated operation has been invoked: get_supported_types')
-
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_supported_types'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            params=params,
+            data=data,
         )
-        headers.update(sdk_headers)
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        url = '/v2/resources/supported_types'
-        request = self.prepare_request(method='GET', url=url, headers=headers)
 
         response = self.send(request, **kwargs)
         return response
@@ -255,15 +222,6 @@ class SearchEnums:
     """
     Enums for search parameters.
     """
-
-    class Boundary(str, Enum):
-        """
-        The boundary where the search performs. This parameter must be set only for the
-        cross-account searches.
-        """
-
-        GLOBAL = 'global'
-        US_REGULATED = 'us-regulated'
 
     class IsDeleted(str, Enum):
         """
@@ -329,7 +287,11 @@ class ResultItem:
     # The set of defined properties for the class
     _properties = frozenset(['crn'])
 
-    def __init__(self, crn: str, **kwargs) -> None:
+    def __init__(
+        self,
+        crn: str,
+        **kwargs,
+    ) -> None:
         """
         Initialize a ResultItem object.
 
@@ -413,7 +375,13 @@ class ScanResult:
           are no more results to fetch.
     """
 
-    def __init__(self, limit: int, items: List['ResultItem'], *, search_cursor: str = None) -> None:
+    def __init__(
+        self,
+        limit: int,
+        items: List['ResultItem'],
+        *,
+        search_cursor: str = None,
+    ) -> None:
         """
         Initialize a ScanResult object.
 
@@ -481,59 +449,5 @@ class ScanResult:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'ScanResult') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
-class SupportedTypesList:
-    """
-    A list of all GhoST indexes.
-
-    :attr List[str] supported_types: (optional) A list of all GhoST indexes.
-    """
-
-    def __init__(self, *, supported_types: List[str] = None) -> None:
-        """
-        Initialize a SupportedTypesList object.
-
-        :param List[str] supported_types: (optional) A list of all GhoST indexes.
-        """
-        self.supported_types = supported_types
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'SupportedTypesList':
-        """Initialize a SupportedTypesList object from a json dictionary."""
-        args = {}
-        if 'supported_types' in _dict:
-            args['supported_types'] = _dict.get('supported_types')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a SupportedTypesList object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'supported_types') and self.supported_types is not None:
-            _dict['supported_types'] = self.supported_types
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this SupportedTypesList object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'SupportedTypesList') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'SupportedTypesList') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
