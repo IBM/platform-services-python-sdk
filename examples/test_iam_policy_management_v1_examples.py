@@ -49,6 +49,10 @@ example_policy_id = None
 example_policy_etag = None
 example_custom_role_id = None
 example_custom_role_etag = None
+example_template_id = None
+example_template_etag = None
+example_template_version = None
+example_assignment_id = None
 example_user_id = "IBMid-user1"
 example_service_name = "iam-groups"
 
@@ -539,6 +543,341 @@ class TestIamPolicyManagementV1Examples:
             print(json.dumps(response, indent=2))
 
             # end-delete_role
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_policy_template_example(self):
+        """
+        create_policy_template request example
+        """
+        try:
+            print('\ncreate_policy_template() result:')
+
+            global example_template_id
+            global example_template_version
+            # begin-create_policy_template
+
+            v2_policy_resource_attribute_model = {
+                'key': 'serviceType',
+                'operator': 'stringEquals',
+                'value': 'service',
+            }
+
+            v2_policy_resource_model = {
+                'attributes': [v2_policy_resource_attribute_model],
+            }
+
+            roles_model = {
+                'role_id': 'crn:v1:bluemix:public:iam::::role:Viewer',
+            }
+
+            grant_model = {
+                'roles': [roles_model],
+            }
+
+            control_model = {
+                'grant': grant_model,
+            }
+
+            template_policy_model = {
+                'type': 'access',
+                'resource': v2_policy_resource_model,
+                'control': control_model,
+            }
+
+            response = iam_policy_management_service.create_policy_template(
+                name='SDKExamplesTest',
+                account_id=example_account_id,
+                policy=template_policy_model,
+            )
+            policy_template = response.get_result()
+
+            print(json.dumps(policy_template, indent=2))
+
+            # end-create_policy_template
+
+            example_template_id = policy_template['id']
+            example_template_version = policy_template['version']
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_policy_template_example(self):
+        """
+        get_policy_template request example
+        """
+        try:
+            print('\nget_policy_template() result:')
+
+            global example_template_etag
+            # begin-get_policy_template
+
+            print('example_template_id: ', example_template_id)
+            response = iam_policy_management_service.get_policy_template(
+                policy_template_id=example_template_id,
+            )
+            policy_template = response.get_result()
+
+            print(json.dumps(policy_template, indent=2))
+
+            # end-get_policy_template
+
+            example_template_etag = response.get_headers().get("Etag")
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_replace_policy_template_example(self):
+        """
+        replace_policy_template request example
+        """
+        try:
+            print('\nreplace_policy_template() result:')
+            # begin-replace_policy_template
+
+            v2_policy_resource_attribute_model = {
+                'key': 'serviceType',
+                'operator': 'stringEquals',
+                'value': 'service',
+            }
+
+            v2_policy_resource_model = {
+                'attributes': [v2_policy_resource_attribute_model],
+            }
+
+            roles_model = {
+                'role_id': 'crn:v1:bluemix:public:iam::::role:Editor',
+            }
+
+            grant_model = {
+                'roles': [roles_model],
+            }
+
+            control_model = {
+                'grant': grant_model,
+            }
+
+            template_policy_model = {
+                'type': 'access',
+                'resource': v2_policy_resource_model,
+                'control': control_model,
+            }
+
+            response = iam_policy_management_service.replace_policy_template(
+                policy_template_id=example_template_id,
+                version=example_template_version,
+                if_match=example_template_etag,
+                policy=template_policy_model,
+            )
+            policy_template = response.get_result()
+
+            print(json.dumps(policy_template, indent=2))
+
+            # end-replace_policy_template
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_policy_templates_example(self):
+        """
+        list_policy_templates request example
+        """
+        try:
+            print('\nlist_policy_templates() result:')
+            # begin-list_policy_templates
+
+            response = iam_policy_management_service.list_policy_templates(
+                account_id=example_account_id,
+            )
+            policy_template_collection = response.get_result()
+
+            print(json.dumps(policy_template_collection, indent=2))
+
+            # end-list_policy_templates
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_policy_template_version_example(self):
+        """
+        create_policy_template_version request example
+        """
+        try:
+            print('\ncreate_policy_template_version() result:')
+            # begin-create_policy_template_version
+
+            v2_policy_resource_attribute_model = {
+                'key': 'serviceType',
+                'operator': 'stringEquals',
+                'value': 'service',
+            }
+
+            v2_policy_resource_model = {
+                'attributes': [v2_policy_resource_attribute_model],
+            }
+
+            roles_model = {
+                'role_id': 'crn:v1:bluemix:public:iam::::role:Viewer',
+            }
+
+            grant_model = {
+                'roles': [roles_model],
+            }
+
+            control_model = {
+                'grant': grant_model,
+            }
+
+            template_policy_model = {
+                'type': 'access',
+                'resource': v2_policy_resource_model,
+                'control': control_model,
+            }
+
+            response = iam_policy_management_service.create_policy_template_version(
+                policy_template_id=example_template_id,
+                policy=template_policy_model,
+            )
+            policy_template = response.get_result()
+
+            print(json.dumps(policy_template, indent=2))
+
+            # end-create_policy_template_version
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_policy_template_versions_example(self):
+        """
+        list_policy_template_versions request example
+        """
+        try:
+            print('\nlist_policy_template_versions() result:')
+            # begin-list_policy_template_versions
+
+            response = iam_policy_management_service.list_policy_template_versions(
+                policy_template_id=example_template_id,
+            )
+            policy_template_versions_collection = response.get_result()
+
+            print(json.dumps(policy_template_versions_collection, indent=2))
+
+            # end-list_policy_template_versions
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_policy_template_version_example(self):
+        """
+        get_policy_template_version request example
+        """
+        try:
+            print('\nget_policy_template_version() result:')
+            # begin-get_policy_template_version
+
+            response = iam_policy_management_service.get_policy_template_version(
+                policy_template_id=example_template_id,
+                version=example_template_version,
+            )
+            policy_template = response.get_result()
+
+            print(json.dumps(policy_template, indent=2))
+
+            # end-get_policy_template_version
+
+            example_template_etag = response.get_headers().get("Etag")
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_commit_policy_template_example(self):
+        """
+        commit_policy_template request example
+        """
+        try:
+            # begin-commit_policy_template
+
+            response = iam_policy_management_service.commit_policy_template(
+                policy_template_id=example_template_id,
+                version=example_template_version,
+                if_match=example_template_etag,
+            )
+
+            # end-commit_policy_template
+            print('\ncommit_policy_template() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_policy_assignments_example(self):
+        """
+        list_policy_assignments request example
+        """
+        try:
+            print('\nlist_policy_assignments() result:')
+
+            global example_assignment_id
+            # begin-list_Policy Assignments
+
+            response = iam_policy_management_service.list_policy_assignments(
+                account_id=example_account_id,
+            )
+            polcy_template_assignment_collection = response.get_result()
+
+            print(json.dumps(polcy_template_assignment_collection, indent=2))
+
+            # end-list_Policy Assignments
+
+            example_assignment_id = polcy_template_assignment_collection['policy_assignments'][0]['id']
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_policy_assignment_example(self):
+        """
+        get_policy_assignment request example
+        """
+        try:
+            print('\nget_policy_assignment() result:')
+            # begin-get_policy_assignment
+
+            response = iam_policy_management_service.get_policy_assignment(
+                assignment_id=example_assignment_id,
+            )
+            policy_assignment_record = response.get_result()
+
+            print(json.dumps(policy_assignment_record, indent=2))
+
+            # end-get_policy_assignment
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_policy_template_example(self):
+        """
+        delete_policy_template request example
+        """
+        try:
+            # begin-delete_policy_template
+
+            response = iam_policy_management_service.delete_policy_template(
+                policy_template_id=example_template_id,
+            )
+
+            # end-delete_policy_template
+            print('\ndelete_policy_template() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
