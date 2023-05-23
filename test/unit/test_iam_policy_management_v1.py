@@ -3298,7 +3298,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"policy_assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
+        mock_response = '{"policy_assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -3342,7 +3342,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"policy_assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
+        mock_response = '{"policy_assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -3375,7 +3375,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"policy_assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
+        mock_response = '{"policy_assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -3412,7 +3412,7 @@ class TestGetPolicyAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments/testString')
-        mock_response = '{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}'
+        mock_response = '{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -3441,7 +3441,7 @@ class TestGetPolicyAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments/testString')
-        mock_response = '{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}'
+        mock_response = '{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}'
         responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
 
         # Set up parameter values
@@ -3674,6 +3674,13 @@ class TestModel_PolcyTemplateAssignmentCollection:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
+        policy_assignment_options_model = {}  # PolicyAssignmentOptions
+        policy_assignment_options_model['subject_type'] = 'iam_id'
+        policy_assignment_options_model['subject_id'] = 'testString'
+        policy_assignment_options_model['root_requester_id'] = 'testString'
+        policy_assignment_options_model['root_template_id'] = 'testString'
+        policy_assignment_options_model['root_template_version'] = 'testString'
+
         assignment_resource_created_model = {}  # AssignmentResourceCreated
         assignment_resource_created_model['id'] = 'testString'
 
@@ -3710,6 +3717,7 @@ class TestModel_PolcyTemplateAssignmentCollection:
         policy_assignment_record_model['assignment_id'] = 'testString'
         policy_assignment_record_model['target_type'] = 'Account'
         policy_assignment_record_model['target'] = 'testString'
+        policy_assignment_record_model['options'] = [policy_assignment_options_model]
         policy_assignment_record_model['resources'] = [policy_assignment_resources_model]
         policy_assignment_record_model['status'] = 'in_progress'
 
@@ -3739,6 +3747,42 @@ class TestModel_PolcyTemplateAssignmentCollection:
         assert polcy_template_assignment_collection_model_json2 == polcy_template_assignment_collection_model_json
 
 
+class TestModel_PolicyAssignmentOptions:
+    """
+    Test Class for PolicyAssignmentOptions
+    """
+
+    def test_policy_assignment_options_serialization(self):
+        """
+        Test serialization/deserialization for PolicyAssignmentOptions
+        """
+
+        # Construct a json representation of a PolicyAssignmentOptions model
+        policy_assignment_options_model_json = {}
+        policy_assignment_options_model_json['subject_type'] = 'iam_id'
+        policy_assignment_options_model_json['subject_id'] = 'testString'
+        policy_assignment_options_model_json['root_requester_id'] = 'testString'
+        policy_assignment_options_model_json['root_template_id'] = 'testString'
+        policy_assignment_options_model_json['root_template_version'] = 'testString'
+
+        # Construct a model instance of PolicyAssignmentOptions by calling from_dict on the json representation
+        policy_assignment_options_model = PolicyAssignmentOptions.from_dict(policy_assignment_options_model_json)
+        assert policy_assignment_options_model != False
+
+        # Construct a model instance of PolicyAssignmentOptions by calling from_dict on the json representation
+        policy_assignment_options_model_dict = PolicyAssignmentOptions.from_dict(
+            policy_assignment_options_model_json
+        ).__dict__
+        policy_assignment_options_model2 = PolicyAssignmentOptions(**policy_assignment_options_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_assignment_options_model == policy_assignment_options_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_assignment_options_model_json2 = policy_assignment_options_model.to_dict()
+        assert policy_assignment_options_model_json2 == policy_assignment_options_model_json
+
+
 class TestModel_PolicyAssignmentRecord:
     """
     Test Class for PolicyAssignmentRecord
@@ -3750,6 +3794,13 @@ class TestModel_PolicyAssignmentRecord:
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
+
+        policy_assignment_options_model = {}  # PolicyAssignmentOptions
+        policy_assignment_options_model['subject_type'] = 'iam_id'
+        policy_assignment_options_model['subject_id'] = 'testString'
+        policy_assignment_options_model['root_requester_id'] = 'testString'
+        policy_assignment_options_model['root_template_id'] = 'testString'
+        policy_assignment_options_model['root_template_version'] = 'testString'
 
         assignment_resource_created_model = {}  # AssignmentResourceCreated
         assignment_resource_created_model['id'] = 'testString'
@@ -3788,6 +3839,7 @@ class TestModel_PolicyAssignmentRecord:
         policy_assignment_record_model_json['assignment_id'] = 'testString'
         policy_assignment_record_model_json['target_type'] = 'Account'
         policy_assignment_record_model_json['target'] = 'testString'
+        policy_assignment_record_model_json['options'] = [policy_assignment_options_model]
         policy_assignment_record_model_json['resources'] = [policy_assignment_resources_model]
         policy_assignment_record_model_json['status'] = 'in_progress'
 

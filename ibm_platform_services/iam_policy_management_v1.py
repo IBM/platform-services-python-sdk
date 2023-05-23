@@ -2462,6 +2462,116 @@ class PolcyTemplateAssignmentCollection:
         return not self == other
 
 
+class PolicyAssignmentOptions:
+    """
+    The set of properties required for a policy assignment.
+
+    :attr str subject_type: The policy subject type; either 'iam_id' or
+          'access_group_id'.
+    :attr str subject_id: The policy subject id.
+    :attr str root_requester_id: The policy assignment requester id.
+    :attr str root_template_id: (optional) The template id where this policy is
+          being assigned from.
+    :attr str root_template_version: (optional) The template version where this
+          policy is being assigned from.
+    """
+
+    def __init__(
+        self,
+        subject_type: str,
+        subject_id: str,
+        root_requester_id: str,
+        *,
+        root_template_id: str = None,
+        root_template_version: str = None
+    ) -> None:
+        """
+        Initialize a PolicyAssignmentOptions object.
+
+        :param str subject_type: The policy subject type; either 'iam_id' or
+               'access_group_id'.
+        :param str subject_id: The policy subject id.
+        :param str root_requester_id: The policy assignment requester id.
+        :param str root_template_id: (optional) The template id where this policy
+               is being assigned from.
+        :param str root_template_version: (optional) The template version where
+               this policy is being assigned from.
+        """
+        self.subject_type = subject_type
+        self.subject_id = subject_id
+        self.root_requester_id = root_requester_id
+        self.root_template_id = root_template_id
+        self.root_template_version = root_template_version
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'PolicyAssignmentOptions':
+        """Initialize a PolicyAssignmentOptions object from a json dictionary."""
+        args = {}
+        if 'subject_type' in _dict:
+            args['subject_type'] = _dict.get('subject_type')
+        else:
+            raise ValueError('Required property \'subject_type\' not present in PolicyAssignmentOptions JSON')
+        if 'subject_id' in _dict:
+            args['subject_id'] = _dict.get('subject_id')
+        else:
+            raise ValueError('Required property \'subject_id\' not present in PolicyAssignmentOptions JSON')
+        if 'root_requester_id' in _dict:
+            args['root_requester_id'] = _dict.get('root_requester_id')
+        else:
+            raise ValueError('Required property \'root_requester_id\' not present in PolicyAssignmentOptions JSON')
+        if 'root_template_id' in _dict:
+            args['root_template_id'] = _dict.get('root_template_id')
+        if 'root_template_version' in _dict:
+            args['root_template_version'] = _dict.get('root_template_version')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a PolicyAssignmentOptions object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'subject_type') and self.subject_type is not None:
+            _dict['subject_type'] = self.subject_type
+        if hasattr(self, 'subject_id') and self.subject_id is not None:
+            _dict['subject_id'] = self.subject_id
+        if hasattr(self, 'root_requester_id') and self.root_requester_id is not None:
+            _dict['root_requester_id'] = self.root_requester_id
+        if hasattr(self, 'root_template_id') and self.root_template_id is not None:
+            _dict['root_template_id'] = self.root_template_id
+        if hasattr(self, 'root_template_version') and self.root_template_version is not None:
+            _dict['root_template_version'] = self.root_template_version
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this PolicyAssignmentOptions object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'PolicyAssignmentOptions') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'PolicyAssignmentOptions') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class SubjectTypeEnum(str, Enum):
+        """
+        The policy subject type; either 'iam_id' or 'access_group_id'.
+        """
+
+        IAM_ID = 'iam_id'
+        ACCESS_GROUP_ID = 'access_group_id'
+
+
 class PolicyAssignmentRecord:
     """
     The set of properties associated with the policy template assignment.
@@ -2472,6 +2582,8 @@ class PolicyAssignmentRecord:
     :attr str target_type: Assignment target type.
     :attr str target: assignment target id.
     :attr str id: (optional) Policy assignment ID.
+    :attr str account_id: (optional) The account GUID that the policies assignments
+          belong to..
     :attr str href: (optional) The href URL that links to the policies assignments
           API by policy assignment ID.
     :attr datetime created_at: (optional) The UTC timestamp when the policy
@@ -2482,6 +2594,8 @@ class PolicyAssignmentRecord:
           assignment was last modified.
     :attr str last_modified_by_id: (optional) The iam ID of the entity that last
           modified the policy assignment.
+    :attr List[PolicyAssignmentOptions] options: (optional) Object for each
+          properties for a policy assignment.
     :attr List[PolicyAssignmentResources] resources: (optional) Object for each
           account assigned.
     :attr str status: The policy assignment status.
@@ -2497,11 +2611,13 @@ class PolicyAssignmentRecord:
         status: str,
         *,
         id: str = None,
+        account_id: str = None,
         href: str = None,
         created_at: datetime = None,
         created_by_id: str = None,
         last_modified_at: datetime = None,
         last_modified_by_id: str = None,
+        options: List['PolicyAssignmentOptions'] = None,
         resources: List['PolicyAssignmentResources'] = None
     ) -> None:
         """
@@ -2514,6 +2630,8 @@ class PolicyAssignmentRecord:
         :param str target_type: Assignment target type.
         :param str target: assignment target id.
         :param str status: The policy assignment status.
+        :param List[PolicyAssignmentOptions] options: (optional) Object for each
+               properties for a policy assignment.
         :param List[PolicyAssignmentResources] resources: (optional) Object for
                each account assigned.
         """
@@ -2523,11 +2641,13 @@ class PolicyAssignmentRecord:
         self.target_type = target_type
         self.target = target
         self.id = id
+        self.account_id = account_id
         self.href = href
         self.created_at = created_at
         self.created_by_id = created_by_id
         self.last_modified_at = last_modified_at
         self.last_modified_by_id = last_modified_by_id
+        self.options = options
         self.resources = resources
         self.status = status
 
@@ -2557,6 +2677,8 @@ class PolicyAssignmentRecord:
             raise ValueError('Required property \'target\' not present in PolicyAssignmentRecord JSON')
         if 'id' in _dict:
             args['id'] = _dict.get('id')
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
         if 'href' in _dict:
             args['href'] = _dict.get('href')
         if 'created_at' in _dict:
@@ -2567,6 +2689,8 @@ class PolicyAssignmentRecord:
             args['last_modified_at'] = string_to_datetime(_dict.get('last_modified_at'))
         if 'last_modified_by_id' in _dict:
             args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        if 'options' in _dict:
+            args['options'] = [PolicyAssignmentOptions.from_dict(v) for v in _dict.get('options')]
         if 'resources' in _dict:
             args['resources'] = [PolicyAssignmentResources.from_dict(v) for v in _dict.get('resources')]
         if 'status' in _dict:
@@ -2595,6 +2719,8 @@ class PolicyAssignmentRecord:
             _dict['target'] = self.target
         if hasattr(self, 'id') and getattr(self, 'id') is not None:
             _dict['id'] = getattr(self, 'id')
+        if hasattr(self, 'account_id') and getattr(self, 'account_id') is not None:
+            _dict['account_id'] = getattr(self, 'account_id')
         if hasattr(self, 'href') and getattr(self, 'href') is not None:
             _dict['href'] = getattr(self, 'href')
         if hasattr(self, 'created_at') and getattr(self, 'created_at') is not None:
@@ -2605,6 +2731,14 @@ class PolicyAssignmentRecord:
             _dict['last_modified_at'] = datetime_to_string(getattr(self, 'last_modified_at'))
         if hasattr(self, 'last_modified_by_id') and getattr(self, 'last_modified_by_id') is not None:
             _dict['last_modified_by_id'] = getattr(self, 'last_modified_by_id')
+        if hasattr(self, 'options') and self.options is not None:
+            options_list = []
+            for v in self.options:
+                if isinstance(v, dict):
+                    options_list.append(v)
+                else:
+                    options_list.append(v.to_dict())
+            _dict['options'] = options_list
         if hasattr(self, 'resources') and self.resources is not None:
             resources_list = []
             for v in self.resources:
