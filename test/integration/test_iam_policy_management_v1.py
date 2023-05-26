@@ -132,7 +132,8 @@ class TestIamPolicyManagementV1(unittest.TestCase):
             resource=cls.testV2PolicyTemplateResource,
             description='SDK Test Policy',
         )
-        cls.testTemplateName = 'SDKPython' + str(random.randint(0, 99999))
+        cls.testTemplatePrefix = 'SDKPython'
+        cls.testTemplateName = cls.testTemplatePrefix + str(random.randint(0, 99999))
 
         print('\nSetup complete.')
 
@@ -189,7 +190,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         for template in result.policy_templates:
             now = datetime.now(timezone.utc)
             minutesDifference = (now - policy.created_at).seconds / 60
-            if template.id == cls.testTemplateId or minutesDifference < 5:
+            if cls.testTemplatePrefix in template.name and (template.id == cls.testTemplateId or minutesDifference < 5):
                 response = cls.service.delete_policy_template(policy_template_id=template.id)
                 assert response is not None
                 assert response.get_status_code() == 204
