@@ -1,3 +1,10 @@
+# [0.35.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.34.2...v0.35.0) (2023-05-31)
+
+
+### Features
+
+* **build:** bump python core to latest (3.16.7) ([#204](https://github.com/IBM/platform-services-python-sdk/issues/204)) ([e3a1e36](https://github.com/IBM/platform-services-python-sdk/commit/e3a1e36261d175a0e04de19a7bf51b2a1559efe2))
+
 ## [0.34.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.34.1...v0.34.2) (2023-04-28)
 
 
