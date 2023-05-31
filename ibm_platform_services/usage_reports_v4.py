@@ -570,6 +570,8 @@ class AccountSummary:
     A summary of charges and credits for an account.
 
     :attr str account_id: The ID of the account.
+    :attr List[Resource] account_resources: (optional) The list of account resources
+          for the month.
     :attr str month: The month in which usages were incurred. Represented in yyyy-mm
           format.
     :attr str billing_country_code: Country.
@@ -578,6 +580,8 @@ class AccountSummary:
     :attr List[Offer] offers: The list of offers applicable for the account for the
           month.
     :attr List[SupportSummary] support: Support-related charges.
+    :attr List[object] support_resources: (optional) The list of support resources
+          for the month.
     :attr SubscriptionSummary subscription: A summary of charges and credits related
           to a subscription.
     """
@@ -592,6 +596,9 @@ class AccountSummary:
         offers: List['Offer'],
         support: List['SupportSummary'],
         subscription: 'SubscriptionSummary',
+        *,
+        account_resources: List['Resource'] = None,
+        support_resources: List[object] = None,
     ) -> None:
         """
         Initialize a AccountSummary object.
@@ -608,14 +615,20 @@ class AccountSummary:
         :param List[SupportSummary] support: Support-related charges.
         :param SubscriptionSummary subscription: A summary of charges and credits
                related to a subscription.
+        :param List[Resource] account_resources: (optional) The list of account
+               resources for the month.
+        :param List[object] support_resources: (optional) The list of support
+               resources for the month.
         """
         self.account_id = account_id
+        self.account_resources = account_resources
         self.month = month
         self.billing_country_code = billing_country_code
         self.billing_currency_code = billing_currency_code
         self.resources = resources
         self.offers = offers
         self.support = support
+        self.support_resources = support_resources
         self.subscription = subscription
 
     @classmethod
@@ -626,6 +639,8 @@ class AccountSummary:
             args['account_id'] = _dict.get('account_id')
         else:
             raise ValueError('Required property \'account_id\' not present in AccountSummary JSON')
+        if 'account_resources' in _dict:
+            args['account_resources'] = [Resource.from_dict(v) for v in _dict.get('account_resources')]
         if 'month' in _dict:
             args['month'] = _dict.get('month')
         else:
@@ -650,6 +665,8 @@ class AccountSummary:
             args['support'] = [SupportSummary.from_dict(v) for v in _dict.get('support')]
         else:
             raise ValueError('Required property \'support\' not present in AccountSummary JSON')
+        if 'support_resources' in _dict:
+            args['support_resources'] = _dict.get('support_resources')
         if 'subscription' in _dict:
             args['subscription'] = SubscriptionSummary.from_dict(_dict.get('subscription'))
         else:
@@ -666,6 +683,14 @@ class AccountSummary:
         _dict = {}
         if hasattr(self, 'account_id') and self.account_id is not None:
             _dict['account_id'] = self.account_id
+        if hasattr(self, 'account_resources') and self.account_resources is not None:
+            account_resources_list = []
+            for v in self.account_resources:
+                if isinstance(v, dict):
+                    account_resources_list.append(v)
+                else:
+                    account_resources_list.append(v.to_dict())
+            _dict['account_resources'] = account_resources_list
         if hasattr(self, 'month') and self.month is not None:
             _dict['month'] = self.month
         if hasattr(self, 'billing_country_code') and self.billing_country_code is not None:
@@ -693,6 +718,8 @@ class AccountSummary:
                 else:
                     support_list.append(v.to_dict())
             _dict['support'] = support_list
+        if hasattr(self, 'support_resources') and self.support_resources is not None:
+            _dict['support_resources'] = self.support_resources
         if hasattr(self, 'subscription') and self.subscription is not None:
             if isinstance(self.subscription, dict):
                 _dict['subscription'] = self.subscription
@@ -1903,6 +1930,7 @@ class Plan:
     :attr str plan_id: The ID of the plan.
     :attr str plan_name: (optional) The name of the plan.
     :attr str pricing_region: (optional) The pricing region for the plan.
+    :attr str pricing_plan_id: (optional)
     :attr bool billable: Indicates if the plan charges are billed to the customer.
     :attr float cost: The total cost incurred by the plan.
     :attr float rated_cost: Total pre-discounted cost incurred by the plan.
@@ -1922,6 +1950,7 @@ class Plan:
         *,
         plan_name: str = None,
         pricing_region: str = None,
+        pricing_plan_id: str = None,
         pending: bool = None,
     ) -> None:
         """
@@ -1936,11 +1965,13 @@ class Plan:
         :param List[Discount] discounts: All the discounts applicable to the plan.
         :param str plan_name: (optional) The name of the plan.
         :param str pricing_region: (optional) The pricing region for the plan.
+        :param str pricing_plan_id: (optional)
         :param bool pending: (optional) Pending charge from classic infrastructure.
         """
         self.plan_id = plan_id
         self.plan_name = plan_name
         self.pricing_region = pricing_region
+        self.pricing_plan_id = pricing_plan_id
         self.billable = billable
         self.cost = cost
         self.rated_cost = rated_cost
@@ -1960,6 +1991,8 @@ class Plan:
             args['plan_name'] = _dict.get('plan_name')
         if 'pricing_region' in _dict:
             args['pricing_region'] = _dict.get('pricing_region')
+        if 'pricing_plan_id' in _dict:
+            args['pricing_plan_id'] = _dict.get('pricing_plan_id')
         if 'billable' in _dict:
             args['billable'] = _dict.get('billable')
         else:
@@ -1998,6 +2031,8 @@ class Plan:
             _dict['plan_name'] = self.plan_name
         if hasattr(self, 'pricing_region') and self.pricing_region is not None:
             _dict['pricing_region'] = self.pricing_region
+        if hasattr(self, 'pricing_plan_id') and self.pricing_plan_id is not None:
+            _dict['pricing_plan_id'] = self.pricing_plan_id
         if hasattr(self, 'billable') and self.billable is not None:
             _dict['billable'] = self.billable
         if hasattr(self, 'cost') and self.cost is not None:
