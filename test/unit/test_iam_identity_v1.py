@@ -59,7 +59,8 @@ def preprocess_url(operation_path: str):
     # Otherwise, return a regular expression that matches one or more trailing /.
     if re.fullmatch('.*/+', request_url) is None:
         return request_url
-    return re.compile(request_url.rstrip('/') + '/+')
+    else:
+        return re.compile(request_url.rstrip('/') + '/+')
 
 
 ##############################################################################
@@ -109,7 +110,13 @@ class TestListApiKeys:
         # Set up mock
         url = preprocess_url('/v1/apikeys')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "apikeys": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -169,7 +176,13 @@ class TestListApiKeys:
         # Set up mock
         url = preprocess_url('/v1/apikeys')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "apikeys": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Invoke method
         response = _service.list_api_keys()
@@ -201,7 +214,13 @@ class TestCreateApiKey:
         # Set up mock
         url = preprocess_url('/v1/apikeys')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Set up parameter values
         name = 'testString'
@@ -253,7 +272,13 @@ class TestCreateApiKey:
         # Set up mock
         url = preprocess_url('/v1/apikeys')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Set up parameter values
         name = 'testString'
@@ -303,7 +328,13 @@ class TestCreateApiKey:
         # Set up mock
         url = preprocess_url('/v1/apikeys')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Set up parameter values
         name = 'testString'
@@ -346,14 +377,24 @@ class TestGetApiKeysDetails:
         # Set up mock
         url = preprocess_url('/v1/apikeys/details')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         iam_api_key = 'testString'
         include_history = False
 
         # Invoke method
-        response = _service.get_api_keys_details(iam_api_key=iam_api_key, include_history=include_history, headers={})
+        response = _service.get_api_keys_details(
+            iam_api_key=iam_api_key,
+            include_history=include_history,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -380,7 +421,13 @@ class TestGetApiKeysDetails:
         # Set up mock
         url = preprocess_url('/v1/apikeys/details')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Invoke method
         response = _service.get_api_keys_details()
@@ -412,7 +459,13 @@ class TestGetApiKey:
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         id = 'testString'
@@ -421,7 +474,10 @@ class TestGetApiKey:
 
         # Invoke method
         response = _service.get_api_key(
-            id, include_history=include_history, include_activity=include_activity, headers={}
+            id,
+            include_history=include_history,
+            include_activity=include_activity,
+            headers={},
         )
 
         # Check for correct operation
@@ -450,13 +506,22 @@ class TestGetApiKey:
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         id = 'testString'
 
         # Invoke method
-        response = _service.get_api_key(id, headers={})
+        response = _service.get_api_key(
+            id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -479,7 +544,13 @@ class TestGetApiKey:
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         id = 'testString'
@@ -516,7 +587,13 @@ class TestUpdateApiKey:
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         id = 'testString'
@@ -525,7 +602,13 @@ class TestUpdateApiKey:
         description = 'testString'
 
         # Invoke method
-        response = _service.update_api_key(id, if_match, name=name, description=description, headers={})
+        response = _service.update_api_key(
+            id,
+            if_match,
+            name=name,
+            description=description,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -552,7 +635,13 @@ class TestUpdateApiKey:
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         id = 'testString'
@@ -592,13 +681,20 @@ class TestDeleteApiKey:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         id = 'testString'
 
         # Invoke method
-        response = _service.delete_api_key(id, headers={})
+        response = _service.delete_api_key(
+            id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -620,7 +716,11 @@ class TestDeleteApiKey:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         id = 'testString'
@@ -656,13 +756,20 @@ class TestLockApiKey:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString/lock')
-        responses.add(responses.POST, url, status=204)
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         id = 'testString'
 
         # Invoke method
-        response = _service.lock_api_key(id, headers={})
+        response = _service.lock_api_key(
+            id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -684,7 +791,11 @@ class TestLockApiKey:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString/lock')
-        responses.add(responses.POST, url, status=204)
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         id = 'testString'
@@ -720,13 +831,20 @@ class TestUnlockApiKey:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString/lock')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         id = 'testString'
 
         # Invoke method
-        response = _service.unlock_api_key(id, headers={})
+        response = _service.unlock_api_key(
+            id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -748,7 +866,11 @@ class TestUnlockApiKey:
         """
         # Set up mock
         url = preprocess_url('/v1/apikeys/testString/lock')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         id = 'testString'
@@ -824,7 +946,13 @@ class TestListServiceIds:
         # Set up mock
         url = preprocess_url('/v1/serviceids/')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "serviceids": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -878,7 +1006,13 @@ class TestListServiceIds:
         # Set up mock
         url = preprocess_url('/v1/serviceids/')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "serviceids": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Invoke method
         response = _service.list_service_ids()
@@ -910,7 +1044,13 @@ class TestCreateServiceId:
         # Set up mock
         url = preprocess_url('/v1/serviceids/')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Construct a dict representation of a ApiKeyInsideCreateServiceIdRequest model
         api_key_inside_create_service_id_request_model = {}
@@ -966,7 +1106,13 @@ class TestCreateServiceId:
         # Set up mock
         url = preprocess_url('/v1/serviceids/')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Construct a dict representation of a ApiKeyInsideCreateServiceIdRequest model
         api_key_inside_create_service_id_request_model = {}
@@ -1020,7 +1166,13 @@ class TestCreateServiceId:
         # Set up mock
         url = preprocess_url('/v1/serviceids/')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Construct a dict representation of a ApiKeyInsideCreateServiceIdRequest model
         api_key_inside_create_service_id_request_model = {}
@@ -1069,7 +1221,13 @@ class TestGetServiceId:
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         id = 'testString'
@@ -1078,7 +1236,10 @@ class TestGetServiceId:
 
         # Invoke method
         response = _service.get_service_id(
-            id, include_history=include_history, include_activity=include_activity, headers={}
+            id,
+            include_history=include_history,
+            include_activity=include_activity,
+            headers={},
         )
 
         # Check for correct operation
@@ -1107,13 +1268,22 @@ class TestGetServiceId:
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         id = 'testString'
 
         # Invoke method
-        response = _service.get_service_id(id, headers={})
+        response = _service.get_service_id(
+            id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1136,7 +1306,13 @@ class TestGetServiceId:
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         id = 'testString'
@@ -1173,7 +1349,13 @@ class TestUpdateServiceId:
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         id = 'testString'
@@ -1184,7 +1366,12 @@ class TestUpdateServiceId:
 
         # Invoke method
         response = _service.update_service_id(
-            id, if_match, name=name, description=description, unique_instance_crns=unique_instance_crns, headers={}
+            id,
+            if_match,
+            name=name,
+            description=description,
+            unique_instance_crns=unique_instance_crns,
+            headers={},
         )
 
         # Check for correct operation
@@ -1213,7 +1400,13 @@ class TestUpdateServiceId:
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "iam_id": "iam_id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "account_id": "account_id", "name": "name", "description": "description", "unique_instance_crns": ["unique_instance_crns"], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "apikey": {"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "locked": true, "created_at": "2019-01-01T12:00:00.000Z", "created_by": "created_by", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "description": "description", "iam_id": "iam_id", "account_id": "account_id", "apikey": "apikey", "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}, "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         id = 'testString'
@@ -1254,13 +1447,20 @@ class TestDeleteServiceId:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         id = 'testString'
 
         # Invoke method
-        response = _service.delete_service_id(id, headers={})
+        response = _service.delete_service_id(
+            id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1282,7 +1482,11 @@ class TestDeleteServiceId:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         id = 'testString'
@@ -1318,13 +1522,20 @@ class TestLockServiceId:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString/lock')
-        responses.add(responses.POST, url, status=204)
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         id = 'testString'
 
         # Invoke method
-        response = _service.lock_service_id(id, headers={})
+        response = _service.lock_service_id(
+            id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1346,7 +1557,11 @@ class TestLockServiceId:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString/lock')
-        responses.add(responses.POST, url, status=204)
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         id = 'testString'
@@ -1382,13 +1597,20 @@ class TestUnlockServiceId:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString/lock')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         id = 'testString'
 
         # Invoke method
-        response = _service.unlock_service_id(id, headers={})
+        response = _service.unlock_service_id(
+            id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1410,7 +1632,11 @@ class TestUnlockServiceId:
         """
         # Set up mock
         url = preprocess_url('/v1/serviceids/testString/lock')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         id = 'testString'
@@ -1486,7 +1712,13 @@ class TestCreateProfile:
         # Set up mock
         url = preprocess_url('/v1/profiles')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Set up parameter values
         name = 'testString'
@@ -1494,7 +1726,12 @@ class TestCreateProfile:
         description = 'testString'
 
         # Invoke method
-        response = _service.create_profile(name, account_id, description=description, headers={})
+        response = _service.create_profile(
+            name,
+            account_id,
+            description=description,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1522,7 +1759,13 @@ class TestCreateProfile:
         # Set up mock
         url = preprocess_url('/v1/profiles')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Set up parameter values
         name = 'testString'
@@ -1562,7 +1805,13 @@ class TestListProfiles:
         # Set up mock
         url = preprocess_url('/v1/profiles')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -1616,13 +1865,22 @@ class TestListProfiles:
         # Set up mock
         url = preprocess_url('/v1/profiles')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.list_profiles(account_id, headers={})
+        response = _service.list_profiles(
+            account_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1649,7 +1907,13 @@ class TestListProfiles:
         # Set up mock
         url = preprocess_url('/v1/profiles')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -1686,14 +1950,24 @@ class TestGetProfile:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
         include_activity = False
 
         # Invoke method
-        response = _service.get_profile(profile_id, include_activity=include_activity, headers={})
+        response = _service.get_profile(
+            profile_id,
+            include_activity=include_activity,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1720,13 +1994,22 @@ class TestGetProfile:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
 
         # Invoke method
-        response = _service.get_profile(profile_id, headers={})
+        response = _service.get_profile(
+            profile_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1749,7 +2032,13 @@ class TestGetProfile:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
@@ -1786,7 +2075,13 @@ class TestUpdateProfile:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
@@ -1795,7 +2090,13 @@ class TestUpdateProfile:
         description = 'testString'
 
         # Invoke method
-        response = _service.update_profile(profile_id, if_match, name=name, description=description, headers={})
+        response = _service.update_profile(
+            profile_id,
+            if_match,
+            name=name,
+            description=description,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1822,7 +2123,13 @@ class TestUpdateProfile:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
@@ -1862,13 +2169,20 @@ class TestDeleteProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
 
         # Invoke method
-        response = _service.delete_profile(profile_id, headers={})
+        response = _service.delete_profile(
+            profile_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -1890,7 +2204,11 @@ class TestDeleteProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
@@ -1927,7 +2245,13 @@ class TestCreateClaimRule:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/rules')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Construct a dict representation of a ProfileClaimRuleConditions model
         profile_claim_rule_conditions_model = {}
@@ -2002,7 +2326,13 @@ class TestCreateClaimRule:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/rules')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Construct a dict representation of a ProfileClaimRuleConditions model
         profile_claim_rule_conditions_model = {}
@@ -2068,13 +2398,22 @@ class TestListClaimRules:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/rules')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "rules": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
 
         # Invoke method
-        response = _service.list_claim_rules(profile_id, headers={})
+        response = _service.list_claim_rules(
+            profile_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2097,7 +2436,13 @@ class TestListClaimRules:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/rules')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "rules": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
@@ -2134,14 +2479,24 @@ class TestGetClaimRule:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/rules/testString')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
         rule_id = 'testString'
 
         # Invoke method
-        response = _service.get_claim_rule(profile_id, rule_id, headers={})
+        response = _service.get_claim_rule(
+            profile_id,
+            rule_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2164,7 +2519,13 @@ class TestGetClaimRule:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/rules/testString')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
@@ -2203,7 +2564,13 @@ class TestUpdateClaimRule:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/rules/testString')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a ProfileClaimRuleConditions model
         profile_claim_rule_conditions_model = {}
@@ -2282,7 +2649,13 @@ class TestUpdateClaimRule:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/rules/testString')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "type": "type", "realm_name": "realm_name", "expiration": 10, "cr_type": "cr_type", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a ProfileClaimRuleConditions model
         profile_claim_rule_conditions_model = {}
@@ -2351,14 +2724,22 @@ class TestDeleteClaimRule:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/rules/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
         rule_id = 'testString'
 
         # Invoke method
-        response = _service.delete_claim_rule(profile_id, rule_id, headers={})
+        response = _service.delete_claim_rule(
+            profile_id,
+            rule_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2380,7 +2761,11 @@ class TestDeleteClaimRule:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/rules/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
@@ -2419,7 +2804,13 @@ class TestCreateLink:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Construct a dict representation of a CreateProfileLinkRequestLink model
         create_profile_link_request_link_model = {}
@@ -2434,7 +2825,13 @@ class TestCreateLink:
         name = 'testString'
 
         # Invoke method
-        response = _service.create_link(profile_id, cr_type, link, name=name, headers={})
+        response = _service.create_link(
+            profile_id,
+            cr_type,
+            link,
+            name=name,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2462,7 +2859,13 @@ class TestCreateLink:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Construct a dict representation of a CreateProfileLinkRequestLink model
         create_profile_link_request_link_model = {}
@@ -2510,13 +2913,22 @@ class TestListLinks:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links')
         mock_response = '{"links": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
 
         # Invoke method
-        response = _service.list_links(profile_id, headers={})
+        response = _service.list_links(
+            profile_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2539,7 +2951,13 @@ class TestListLinks:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links')
         mock_response = '{"links": [{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
@@ -2576,14 +2994,24 @@ class TestGetLink:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links/testString')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
         link_id = 'testString'
 
         # Invoke method
-        response = _service.get_link(profile_id, link_id, headers={})
+        response = _service.get_link(
+            profile_id,
+            link_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2606,7 +3034,13 @@ class TestGetLink:
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links/testString')
         mock_response = '{"id": "id", "entity_tag": "entity_tag", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "name": "name", "cr_type": "cr_type", "link": {"crn": "crn", "namespace": "namespace", "name": "name"}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
@@ -2644,14 +3078,22 @@ class TestDeleteLink:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
         link_id = 'testString'
 
         # Invoke method
-        response = _service.delete_link(profile_id, link_id, headers={})
+        response = _service.delete_link(
+            profile_id,
+            link_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2673,7 +3115,11 @@ class TestDeleteLink:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString/links/testString')
-        responses.add(responses.DELETE, url, status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         profile_id = 'testString'
@@ -2697,6 +3143,475 @@ class TestDeleteLink:
         # Disable retries and run test_delete_link_value_error.
         _service.disable_retries()
         self.test_delete_link_value_error()
+
+
+class TestGetProfileIdentities:
+    """
+    Test Class for get_profile_identities
+    """
+
+    @responses.activate
+    def test_get_profile_identities_all_params(self):
+        """
+        get_profile_identities()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profiles/testString/identities')
+        mock_response = '{"entity_tag": "entity_tag", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        profile_id = 'testString'
+
+        # Invoke method
+        response = _service.get_profile_identities(
+            profile_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_profile_identities_all_params_with_retries(self):
+        # Enable retries and run test_get_profile_identities_all_params.
+        _service.enable_retries()
+        self.test_get_profile_identities_all_params()
+
+        # Disable retries and run test_get_profile_identities_all_params.
+        _service.disable_retries()
+        self.test_get_profile_identities_all_params()
+
+    @responses.activate
+    def test_get_profile_identities_value_error(self):
+        """
+        test_get_profile_identities_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profiles/testString/identities')
+        mock_response = '{"entity_tag": "entity_tag", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        profile_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "profile_id": profile_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_profile_identities(**req_copy)
+
+    def test_get_profile_identities_value_error_with_retries(self):
+        # Enable retries and run test_get_profile_identities_value_error.
+        _service.enable_retries()
+        self.test_get_profile_identities_value_error()
+
+        # Disable retries and run test_get_profile_identities_value_error.
+        _service.disable_retries()
+        self.test_get_profile_identities_value_error()
+
+
+class TestSetProfileIdentities:
+    """
+    Test Class for set_profile_identities
+    """
+
+    @responses.activate
+    def test_set_profile_identities_all_params(self):
+        """
+        set_profile_identities()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profiles/testString/identities')
+        mock_response = '{"entity_tag": "entity_tag", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a ProfileIdentity model
+        profile_identity_model = {}
+        profile_identity_model['iam_id'] = 'testString'
+        profile_identity_model['identifier'] = 'testString'
+        profile_identity_model['type'] = 'user'
+        profile_identity_model['accounts'] = ['testString']
+        profile_identity_model['description'] = 'testString'
+
+        # Set up parameter values
+        profile_id = 'testString'
+        if_match = 'testString'
+        identities = [profile_identity_model]
+
+        # Invoke method
+        response = _service.set_profile_identities(
+            profile_id,
+            if_match,
+            identities=identities,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['identities'] == [profile_identity_model]
+
+    def test_set_profile_identities_all_params_with_retries(self):
+        # Enable retries and run test_set_profile_identities_all_params.
+        _service.enable_retries()
+        self.test_set_profile_identities_all_params()
+
+        # Disable retries and run test_set_profile_identities_all_params.
+        _service.disable_retries()
+        self.test_set_profile_identities_all_params()
+
+    @responses.activate
+    def test_set_profile_identities_value_error(self):
+        """
+        test_set_profile_identities_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profiles/testString/identities')
+        mock_response = '{"entity_tag": "entity_tag", "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a ProfileIdentity model
+        profile_identity_model = {}
+        profile_identity_model['iam_id'] = 'testString'
+        profile_identity_model['identifier'] = 'testString'
+        profile_identity_model['type'] = 'user'
+        profile_identity_model['accounts'] = ['testString']
+        profile_identity_model['description'] = 'testString'
+
+        # Set up parameter values
+        profile_id = 'testString'
+        if_match = 'testString'
+        identities = [profile_identity_model]
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "profile_id": profile_id,
+            "if_match": if_match,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.set_profile_identities(**req_copy)
+
+    def test_set_profile_identities_value_error_with_retries(self):
+        # Enable retries and run test_set_profile_identities_value_error.
+        _service.enable_retries()
+        self.test_set_profile_identities_value_error()
+
+        # Disable retries and run test_set_profile_identities_value_error.
+        _service.disable_retries()
+        self.test_set_profile_identities_value_error()
+
+
+class TestSetProfileIdentity:
+    """
+    Test Class for set_profile_identity
+    """
+
+    @responses.activate
+    def test_set_profile_identity_all_params(self):
+        """
+        set_profile_identity()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profiles/testString/identities/user')
+        mock_response = '{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        profile_id = 'testString'
+        identity_type = 'user'
+        identifier = 'testString'
+        type = 'user'
+        iam_id = 'testString'
+        accounts = ['testString']
+        description = 'testString'
+
+        # Invoke method
+        response = _service.set_profile_identity(
+            profile_id,
+            identity_type,
+            identifier,
+            type,
+            iam_id=iam_id,
+            accounts=accounts,
+            description=description,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['identifier'] == 'testString'
+        assert req_body['type'] == 'user'
+        assert req_body['iam_id'] == 'testString'
+        assert req_body['accounts'] == ['testString']
+        assert req_body['description'] == 'testString'
+
+    def test_set_profile_identity_all_params_with_retries(self):
+        # Enable retries and run test_set_profile_identity_all_params.
+        _service.enable_retries()
+        self.test_set_profile_identity_all_params()
+
+        # Disable retries and run test_set_profile_identity_all_params.
+        _service.disable_retries()
+        self.test_set_profile_identity_all_params()
+
+    @responses.activate
+    def test_set_profile_identity_value_error(self):
+        """
+        test_set_profile_identity_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profiles/testString/identities/user')
+        mock_response = '{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        profile_id = 'testString'
+        identity_type = 'user'
+        identifier = 'testString'
+        type = 'user'
+        iam_id = 'testString'
+        accounts = ['testString']
+        description = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "profile_id": profile_id,
+            "identity_type": identity_type,
+            "identifier": identifier,
+            "type": type,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.set_profile_identity(**req_copy)
+
+    def test_set_profile_identity_value_error_with_retries(self):
+        # Enable retries and run test_set_profile_identity_value_error.
+        _service.enable_retries()
+        self.test_set_profile_identity_value_error()
+
+        # Disable retries and run test_set_profile_identity_value_error.
+        _service.disable_retries()
+        self.test_set_profile_identity_value_error()
+
+
+class TestGetProfileIdentity:
+    """
+    Test Class for get_profile_identity
+    """
+
+    @responses.activate
+    def test_get_profile_identity_all_params(self):
+        """
+        get_profile_identity()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profiles/testString/identities/user/testString')
+        mock_response = '{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        profile_id = 'testString'
+        identity_type = 'user'
+        identifier_id = 'testString'
+
+        # Invoke method
+        response = _service.get_profile_identity(
+            profile_id,
+            identity_type,
+            identifier_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_profile_identity_all_params_with_retries(self):
+        # Enable retries and run test_get_profile_identity_all_params.
+        _service.enable_retries()
+        self.test_get_profile_identity_all_params()
+
+        # Disable retries and run test_get_profile_identity_all_params.
+        _service.disable_retries()
+        self.test_get_profile_identity_all_params()
+
+    @responses.activate
+    def test_get_profile_identity_value_error(self):
+        """
+        test_get_profile_identity_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profiles/testString/identities/user/testString')
+        mock_response = '{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        profile_id = 'testString'
+        identity_type = 'user'
+        identifier_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "profile_id": profile_id,
+            "identity_type": identity_type,
+            "identifier_id": identifier_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_profile_identity(**req_copy)
+
+    def test_get_profile_identity_value_error_with_retries(self):
+        # Enable retries and run test_get_profile_identity_value_error.
+        _service.enable_retries()
+        self.test_get_profile_identity_value_error()
+
+        # Disable retries and run test_get_profile_identity_value_error.
+        _service.disable_retries()
+        self.test_get_profile_identity_value_error()
+
+
+class TestDeleteProfileIdentity:
+    """
+    Test Class for delete_profile_identity
+    """
+
+    @responses.activate
+    def test_delete_profile_identity_all_params(self):
+        """
+        delete_profile_identity()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profiles/testString/identities/user/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        profile_id = 'testString'
+        identity_type = 'user'
+        identifier_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_profile_identity(
+            profile_id,
+            identity_type,
+            identifier_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_profile_identity_all_params_with_retries(self):
+        # Enable retries and run test_delete_profile_identity_all_params.
+        _service.enable_retries()
+        self.test_delete_profile_identity_all_params()
+
+        # Disable retries and run test_delete_profile_identity_all_params.
+        _service.disable_retries()
+        self.test_delete_profile_identity_all_params()
+
+    @responses.activate
+    def test_delete_profile_identity_value_error(self):
+        """
+        test_delete_profile_identity_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profiles/testString/identities/user/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        profile_id = 'testString'
+        identity_type = 'user'
+        identifier_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "profile_id": profile_id,
+            "identity_type": identity_type,
+            "identifier_id": identifier_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_profile_identity(**req_copy)
+
+    def test_delete_profile_identity_value_error_with_retries(self):
+        # Enable retries and run test_delete_profile_identity_value_error.
+        _service.enable_retries()
+        self.test_delete_profile_identity_value_error()
+
+        # Disable retries and run test_delete_profile_identity_value_error.
+        _service.disable_retries()
+        self.test_delete_profile_identity_value_error()
 
 
 # endregion
@@ -2751,14 +3666,24 @@ class TestGetAccountSettings:
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
         include_history = False
 
         # Invoke method
-        response = _service.get_account_settings(account_id, include_history=include_history, headers={})
+        response = _service.get_account_settings(
+            account_id,
+            include_history=include_history,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2785,13 +3710,22 @@ class TestGetAccountSettings:
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.get_account_settings(account_id, headers={})
+        response = _service.get_account_settings(
+            account_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -2814,7 +3748,13 @@ class TestGetAccountSettings:
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -2851,7 +3791,13 @@ class TestUpdateAccountSettings:
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a AccountSettingsUserMFA model
         account_settings_user_mfa_model = {}
@@ -2922,7 +3868,13 @@ class TestUpdateAccountSettings:
         # Set up mock
         url = preprocess_url('/v1/accounts/testString/settings/identity')
         mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "account_id": "account_id", "restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "entity_tag": "entity_tag", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}'
-        responses.add(responses.PUT, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a AccountSettingsUserMFA model
         account_settings_user_mfa_model = {}
@@ -3015,14 +3967,24 @@ class TestGetMfaStatus:
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/status')
         mock_response = '{"iam_id": "iam_id", "effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
         iam_id = 'testString'
 
         # Invoke method
-        response = _service.get_mfa_status(account_id, iam_id, headers={})
+        response = _service.get_mfa_status(
+            account_id,
+            iam_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -3049,7 +4011,13 @@ class TestGetMfaStatus:
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/status')
         mock_response = '{"iam_id": "iam_id", "effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -3088,14 +4056,24 @@ class TestCreateMfaReport:
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/report')
         mock_response = '{"reference": "reference"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Set up parameter values
         account_id = 'testString'
         type = 'testString'
 
         # Invoke method
-        response = _service.create_mfa_report(account_id, type=type, headers={})
+        response = _service.create_mfa_report(
+            account_id,
+            type=type,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -3122,13 +4100,22 @@ class TestCreateMfaReport:
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/report')
         mock_response = '{"reference": "reference"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.create_mfa_report(account_id, headers={})
+        response = _service.create_mfa_report(
+            account_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -3151,7 +4138,13 @@ class TestCreateMfaReport:
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/report')
         mock_response = '{"reference": "reference"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -3188,14 +4181,24 @@ class TestGetMfaReport:
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/report/testString')
         mock_response = '{"created_by": "created_by", "reference": "reference", "report_time": "report_time", "account_id": "account_id", "ims_account_id": "ims_account_id", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "enrollments": {"effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
         reference = 'testString'
 
         # Invoke method
-        response = _service.get_mfa_report(account_id, reference, headers={})
+        response = _service.get_mfa_report(
+            account_id,
+            reference,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -3218,7 +4221,13 @@ class TestGetMfaReport:
         # Set up mock
         url = preprocess_url('/v1/mfa/accounts/testString/report/testString')
         mock_response = '{"created_by": "created_by", "reference": "reference", "report_time": "report_time", "account_id": "account_id", "ims_account_id": "ims_account_id", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "enrollments": {"effective_mfa_type": "effective_mfa_type", "id_based_mfa": {"trait_account_default": "NONE", "trait_user_specific": "NONE", "trait_effective": "NONE", "complies": true}, "account_based_mfa": {"security_questions": {"required": true, "enrolled": true}, "totp": {"required": true, "enrolled": true}, "verisign": {"required": true, "enrolled": true}, "complies": true}}}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -3296,7 +4305,13 @@ class TestCreateReport:
         # Set up mock
         url = preprocess_url('/v1/activity/accounts/testString/report')
         mock_response = '{"reference": "reference"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -3304,7 +4319,12 @@ class TestCreateReport:
         duration = '720'
 
         # Invoke method
-        response = _service.create_report(account_id, type=type, duration=duration, headers={})
+        response = _service.create_report(
+            account_id,
+            type=type,
+            duration=duration,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -3332,13 +4352,22 @@ class TestCreateReport:
         # Set up mock
         url = preprocess_url('/v1/activity/accounts/testString/report')
         mock_response = '{"reference": "reference"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Set up parameter values
         account_id = 'testString'
 
         # Invoke method
-        response = _service.create_report(account_id, headers={})
+        response = _service.create_report(
+            account_id,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -3361,7 +4390,13 @@ class TestCreateReport:
         # Set up mock
         url = preprocess_url('/v1/activity/accounts/testString/report')
         mock_response = '{"reference": "reference"}'
-        responses.add(responses.POST, url, body=mock_response, content_type='application/json', status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -3398,14 +4433,24 @@ class TestGetReport:
         # Set up mock
         url = preprocess_url('/v1/activity/accounts/testString/report/testString')
         mock_response = '{"created_by": "created_by", "reference": "reference", "report_duration": "report_duration", "report_start_time": "report_start_time", "report_end_time": "report_end_time", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "last_authn": "last_authn"}], "apikeys": [{"id": "id", "name": "name", "type": "type", "serviceid": {"id": "id", "name": "name"}, "user": {"iam_id": "iam_id", "name": "name", "username": "username", "email": "email"}, "last_authn": "last_authn"}], "serviceids": [{"id": "id", "name": "name", "last_authn": "last_authn"}], "profiles": [{"id": "id", "name": "name", "last_authn": "last_authn"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
         reference = 'testString'
 
         # Invoke method
-        response = _service.get_report(account_id, reference, headers={})
+        response = _service.get_report(
+            account_id,
+            reference,
+            headers={},
+        )
 
         # Check for correct operation
         assert len(responses.calls) == 1
@@ -3428,7 +4473,13 @@ class TestGetReport:
         # Set up mock
         url = preprocess_url('/v1/activity/accounts/testString/report/testString')
         mock_response = '{"created_by": "created_by", "reference": "reference", "report_duration": "report_duration", "report_start_time": "report_start_time", "report_end_time": "report_end_time", "users": [{"iam_id": "iam_id", "name": "name", "username": "username", "email": "email", "last_authn": "last_authn"}], "apikeys": [{"id": "id", "name": "name", "type": "type", "serviceid": {"id": "id", "name": "name"}, "user": {"iam_id": "iam_id", "name": "name", "username": "username", "email": "email"}, "last_authn": "last_authn"}], "serviceids": [{"id": "id", "name": "name", "last_authn": "last_authn"}], "profiles": [{"id": "id", "name": "name", "last_authn": "last_authn"}]}'
-        responses.add(responses.GET, url, body=mock_response, content_type='application/json', status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         account_id = 'testString'
@@ -3464,6 +4515,8 @@ class TestGetReport:
 # Start of Model Tests
 ##############################################################################
 # region
+
+
 class TestModel_AccountBasedMfaEnrollment:
     """
     Test Class for AccountBasedMfaEnrollment
@@ -4312,6 +5365,82 @@ class TestModel_ProfileClaimRuleList:
         # Convert model instance back to dict and verify no loss of data
         profile_claim_rule_list_model_json2 = profile_claim_rule_list_model.to_dict()
         assert profile_claim_rule_list_model_json2 == profile_claim_rule_list_model_json
+
+
+class TestModel_ProfileIdentitiesResponse:
+    """
+    Test Class for ProfileIdentitiesResponse
+    """
+
+    def test_profile_identities_response_serialization(self):
+        """
+        Test serialization/deserialization for ProfileIdentitiesResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        profile_identity_model = {}  # ProfileIdentity
+        profile_identity_model['iam_id'] = 'testString'
+        profile_identity_model['identifier'] = 'testString'
+        profile_identity_model['type'] = 'user'
+        profile_identity_model['accounts'] = ['testString']
+        profile_identity_model['description'] = 'testString'
+
+        # Construct a json representation of a ProfileIdentitiesResponse model
+        profile_identities_response_model_json = {}
+        profile_identities_response_model_json['entity_tag'] = 'testString'
+        profile_identities_response_model_json['identities'] = [profile_identity_model]
+
+        # Construct a model instance of ProfileIdentitiesResponse by calling from_dict on the json representation
+        profile_identities_response_model = ProfileIdentitiesResponse.from_dict(profile_identities_response_model_json)
+        assert profile_identities_response_model != False
+
+        # Construct a model instance of ProfileIdentitiesResponse by calling from_dict on the json representation
+        profile_identities_response_model_dict = ProfileIdentitiesResponse.from_dict(
+            profile_identities_response_model_json
+        ).__dict__
+        profile_identities_response_model2 = ProfileIdentitiesResponse(**profile_identities_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert profile_identities_response_model == profile_identities_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        profile_identities_response_model_json2 = profile_identities_response_model.to_dict()
+        assert profile_identities_response_model_json2 == profile_identities_response_model_json
+
+
+class TestModel_ProfileIdentity:
+    """
+    Test Class for ProfileIdentity
+    """
+
+    def test_profile_identity_serialization(self):
+        """
+        Test serialization/deserialization for ProfileIdentity
+        """
+
+        # Construct a json representation of a ProfileIdentity model
+        profile_identity_model_json = {}
+        profile_identity_model_json['iam_id'] = 'testString'
+        profile_identity_model_json['identifier'] = 'testString'
+        profile_identity_model_json['type'] = 'user'
+        profile_identity_model_json['accounts'] = ['testString']
+        profile_identity_model_json['description'] = 'testString'
+
+        # Construct a model instance of ProfileIdentity by calling from_dict on the json representation
+        profile_identity_model = ProfileIdentity.from_dict(profile_identity_model_json)
+        assert profile_identity_model != False
+
+        # Construct a model instance of ProfileIdentity by calling from_dict on the json representation
+        profile_identity_model_dict = ProfileIdentity.from_dict(profile_identity_model_json).__dict__
+        profile_identity_model2 = ProfileIdentity(**profile_identity_model_dict)
+
+        # Verify the model instances are equivalent
+        assert profile_identity_model == profile_identity_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        profile_identity_model_json2 = profile_identity_model.to_dict()
+        assert profile_identity_model_json2 == profile_identity_model_json
 
 
 class TestModel_ProfileLink:

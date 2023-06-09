@@ -41,6 +41,7 @@ profile_id1 = None
 profile_id2 = None
 profile_iamId = None
 profile_etag = None
+profile_identities_etag = None
 
 claimRule_id1 = None
 claimRule_id2 = None
@@ -805,6 +806,86 @@ class TestIamIdentityV1:
 
         link = self.get_link(self.iam_identity_service, profile_id2, link_id)
         assert link is None
+
+    @needscredentials
+    def test_set_identities(self):
+        identifiers = []
+        accounts = [self.account_id]
+        profileIdentity = ProfileIdentity(
+            identifier=self.iam_id, accounts=accounts, type="user", description="Identity description"
+        )
+        identities = [profileIdentity]
+
+        get_identities_response = self.iam_identity_service.set_profile_identities(
+            profile_id=profile_id2, if_match="*", identities=identities
+        )
+        assert get_identities_response.get_status_code() == 200
+        Identities_list = get_identities_response.get_result()
+        assert Identities_list is not None
+        print('\nlist_links() response: ', json.dumps(Identities_list, indent=2))
+
+        if len(Identities_list['identities']) > 0:
+            for identifier in Identities_list['identities']:
+                if identifier['iam_id'] == self.iam_id:
+                    identifiers.append(identifier)
+
+        assert len(identifiers) == 1
+
+    @needscredentials
+    def test_get_identities(self):
+        identifiers = []
+
+        get_identities_response = self.iam_identity_service.get_profile_identities(profile_id=profile_id2)
+        assert get_identities_response.get_status_code() == 200
+        Identities_list = get_identities_response.get_result()
+        assert Identities_list is not None
+        print('\nlist_links() response: ', json.dumps(Identities_list, indent=2))
+
+        if len(Identities_list['identities']) > 0:
+            for identifier in Identities_list['identities']:
+                if identifier['iam_id'] == self.iam_id:
+                    identifiers.append(identifier)
+
+        assert len(identifiers) == 1
+
+    @needscredentials
+    def test_set_identity(self):
+        identifiers = []
+        accounts = [self.account_id]
+
+        get_identity_response = self.iam_identity_service.set_profile_identity(
+            profile_id=profile_id2,
+            identity_type="user",
+            identifier=self.iam_id_member,
+            type="user",
+            accounts=accounts,
+            description="Identity description",
+        )
+        assert get_identity_response.get_status_code() == 200
+        Identity_in_response = get_identity_response.get_result()
+        assert Identity_in_response is not None
+        print('\nlist_links() response: ', json.dumps(Identity_in_response, indent=2))
+
+    @needscredentials
+    def test_get_identity(self):
+        identifiers = []
+
+        get_identity_response = self.iam_identity_service.get_profile_identity(
+            profile_id=profile_id2, identity_type="user", identifier_id=self.iam_id_member
+        )
+        assert get_identity_response.get_status_code() == 200
+        Identity_list = get_identity_response.get_result()
+        assert Identity_list is not None
+        print('\nlist_links() response: ', json.dumps(Identity_list, indent=2))
+
+    @needscredentials
+    def test_delete_identity(self):
+        identifiers = []
+
+        delete_identity_response = self.iam_identity_service.delete_profile_identity(
+            profile_id=profile_id2, identity_type="user", identifier_id=self.iam_id_member
+        )
+        assert delete_identity_response.get_status_code() == 204
 
     @needscredentials
     def test_delete_profile2(self):
