@@ -59,6 +59,7 @@ svc_id_etag = None
 
 profile_id = None
 profile_etag = None
+profile_identity_etag = None
 
 claimRule_id = None
 claimRule_etag = None
@@ -469,7 +470,7 @@ class TestIamIdentityV1Examples:
 
             response = iam_identity_service.get_profile(
                 profile_id=profile_id,
-                include_history=True,
+                include_activity=True,
             )
 
             profile_etag = response.get_headers()['Etag']
@@ -663,9 +664,9 @@ class TestIamIdentityV1Examples:
             # begin-create_link
 
             CreateProfileLinkRequestLink = {}
-            CreateProfileLinkRequestLink[
-                'crn'
-            ] = 'crn:v1:staging:public:iam-identity::a/18e3020749ce4744b0b472466d61fdb4::computeresource:Fake-Compute-Resource'
+            CreateProfileLinkRequestLink['crn'] = (
+                'crn:v1:staging:public:iam-identity::a/' + account_id + '::computeresource:Fake-Compute-Resource'
+            )
             CreateProfileLinkRequestLink['namespace'] = 'default'
             CreateProfileLinkRequestLink['name'] = 'nice name'
 
@@ -741,6 +742,112 @@ class TestIamIdentityV1Examples:
             # end-delete_link
             print('\ndelete_link() response status code: ', response.get_status_code())
 
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_profile_identities(self):
+        """
+        get_profile_identities request example
+        """
+        try:
+            global profile_id, profile_identity_etag
+
+            # begin-get_profile_identities
+
+            response = iam_identity_service.get_profile_identities(profile_id=profile_id)
+
+            # end-get_profile_identities
+            print('\nget_profile_identities() response status code: ', response.get_status_code())
+            profile_identity_etag = response.get_headers()['Etag']
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_set_profile_identities(self):
+        """
+        set_profile_identities request example
+        """
+        try:
+            global profile_id, profile_identity_etag
+
+            # begin-set_profile_identities
+            accounts = [account_id]
+            profileIdentity = ProfileIdentity(
+                identifier=iam_id, accounts=accounts, type="user", description="Identity description"
+            )
+            profile_identities_input = [profileIdentity]
+
+            response = iam_identity_service.set_profile_identities(
+                profile_id=profile_id, if_match=profile_identity_etag, identities=profile_identities_input
+            )
+
+            # end-set_profile_identities
+            print('\nset_profile_identities() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_set_profile_identity(self):
+        """
+        set_profile_identity request example
+        """
+        try:
+            global profile_id
+
+            # begin-set_profile_identity
+            accounts = [account_id]
+            response = iam_identity_service.set_profile_identity(
+                profile_id=profile_id,
+                identity_type="user",
+                identifier=iam_id_member,
+                type="user",
+                accounts=accounts,
+                description="Identity description",
+            )
+
+            # end-set_profile_identity
+            print('\nset_profile_identities() response status code: ', response.get_status_code())
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_profile_identity(self):
+        """
+        get_profile_identity request example
+        """
+        try:
+            global profile_id
+
+            # begin-get_profile_identity
+
+            response = iam_identity_service.get_profile_identity(
+                profile_id=profile_id, identity_type="user", identifier_id=iam_id_member
+            )
+
+            # end-get_profile_identity
+            print('\nget_profile_identities() response status code: ', response.get_status_code())
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_profile_identity(self):
+        """
+        delete_profile_identity request example
+        """
+        try:
+            global profile_id
+
+            # begin-delete_profile_identity
+
+            response = iam_identity_service.delete_profile_identity(
+                profile_id=profile_id, identity_type="user", identifier_id=iam_id_member
+            )
+
+            # end-delete_profile_identity
+            print('\ndelete_profile_identity() response status code: ', response.get_status_code())
         except ApiException as e:
             pytest.fail(str(e))
 

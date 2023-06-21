@@ -1,3 +1,17 @@
+# [0.37.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.36.0...v0.37.0) (2023-06-09)
+
+
+### Features
+
+* **IAM Identity:** add trusted profile identities API ([#206](https://github.com/IBM/platform-services-python-sdk/issues/206)) ([3b0f952](https://github.com/IBM/platform-services-python-sdk/commit/3b0f952fe251a0fa90272a3bae71bf57b65f123c))
+
+# [0.36.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.35.0...v0.36.0) (2023-06-01)
+
+
+### Features
+
+* **Usage Reports:** Update Account Summary ([#205](https://github.com/IBM/platform-services-python-sdk/issues/205)) ([7f3a461](https://github.com/IBM/platform-services-python-sdk/commit/7f3a4614becd1e8e19002818f26f3b952c353ffe))
+
 # [0.35.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.34.2...v0.35.0) (2023-05-31)
 
 
