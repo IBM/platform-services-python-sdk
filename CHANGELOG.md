@@ -1,3 +1,10 @@
+# [0.38.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.37.0...v0.38.0) (2023-07-05)
+
+
+### Features
+
+* **Enterprise Management:** re-gen service after update trait object ([#209](https://github.com/IBM/platform-services-python-sdk/issues/209)) ([d3175cf](https://github.com/IBM/platform-services-python-sdk/commit/d3175cf7231570fb32affca65ca4a054f7e2a4f3))
+
 # [0.37.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.36.0...v0.37.0) (2023-06-09)
 
 
