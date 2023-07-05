@@ -614,6 +614,7 @@ class TestCreateAccount:
         # Construct a dict representation of a CreateAccountRequestTraits model
         create_account_request_traits_model = {}
         create_account_request_traits_model['mfa'] = 'testString'
+        create_account_request_traits_model['enterprise_iam_managed'] = True
 
         # Set up parameter values
         parent = 'testString'
@@ -656,6 +657,7 @@ class TestCreateAccount:
         # Construct a dict representation of a CreateAccountRequestTraits model
         create_account_request_traits_model = {}
         create_account_request_traits_model['mfa'] = 'testString'
+        create_account_request_traits_model['enterprise_iam_managed'] = True
 
         # Set up parameter values
         parent = 'testString'
@@ -1623,6 +1625,7 @@ class TestModel_CreateAccountRequestTraits:
         # Construct a json representation of a CreateAccountRequestTraits model
         create_account_request_traits_model_json = {}
         create_account_request_traits_model_json['mfa'] = 'testString'
+        create_account_request_traits_model_json['enterprise_iam_managed'] = True
 
         # Construct a model instance of CreateAccountRequestTraits by calling from_dict on the json representation
         create_account_request_traits_model = CreateAccountRequestTraits.from_dict(
