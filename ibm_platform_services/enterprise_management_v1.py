@@ -379,8 +379,10 @@ class EnterpriseManagementV1(BaseService):
         :param str owner_iam_id: The IAM ID of the account owner, such as
                `IBMid-0123ABC`. The IAM ID must already exist.
         :param CreateAccountRequestTraits traits: (optional) The traits object can
-               be used to opt-out of Multi-Factor Authentication setting when creating a
-               child account in the enterprise. This is an optional field.
+               be used to set properties on child accounts of an enterprise. You can pass
+               a field to opt-out of Multi-Factor Authentication setting or setup
+               enterprise IAM settings when creating a child account in the enterprise.
+               This is an optional field.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `CreateAccountResponse` object
@@ -1314,21 +1316,34 @@ class CreateAccountGroupResponse:
 
 class CreateAccountRequestTraits:
     """
-    The traits object can be used to opt-out of Multi-Factor Authentication setting when
-    creating a child account in the enterprise. This is an optional field.
+    The traits object can be used to set properties on child accounts of an enterprise.
+    You can pass a field to opt-out of Multi-Factor Authentication setting or setup
+    enterprise IAM settings when creating a child account in the enterprise. This is an
+    optional field.
 
-    :attr str mfa: (optional) By default MFA will be set on the account. To opt out,
-          pass the traits object with the mfa field set to empty string.
+    :attr str mfa: (optional) By default MFA will be enabled on a child account. To
+          opt out, pass the traits object with the mfa field set to empty string. This is
+          an optional field.
+    :attr bool enterprise_iam_managed: (optional) The Enterprise IAM settings
+          property will be turned off for a newly created child account by default. You
+          can enable this property by passing 'true' in this boolean field. This is an
+          optional field.
     """
 
-    def __init__(self, *, mfa: str = None) -> None:
+    def __init__(self, *, mfa: str = None, enterprise_iam_managed: bool = None) -> None:
         """
         Initialize a CreateAccountRequestTraits object.
 
-        :param str mfa: (optional) By default MFA will be set on the account. To
-               opt out, pass the traits object with the mfa field set to empty string.
+        :param str mfa: (optional) By default MFA will be enabled on a child
+               account. To opt out, pass the traits object with the mfa field set to empty
+               string. This is an optional field.
+        :param bool enterprise_iam_managed: (optional) The Enterprise IAM settings
+               property will be turned off for a newly created child account by default.
+               You can enable this property by passing 'true' in this boolean field. This
+               is an optional field.
         """
         self.mfa = mfa
+        self.enterprise_iam_managed = enterprise_iam_managed
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'CreateAccountRequestTraits':
@@ -1336,6 +1351,8 @@ class CreateAccountRequestTraits:
         args = {}
         if 'mfa' in _dict:
             args['mfa'] = _dict.get('mfa')
+        if 'enterprise_iam_managed' in _dict:
+            args['enterprise_iam_managed'] = _dict.get('enterprise_iam_managed')
         return cls(**args)
 
     @classmethod
@@ -1348,6 +1365,8 @@ class CreateAccountRequestTraits:
         _dict = {}
         if hasattr(self, 'mfa') and self.mfa is not None:
             _dict['mfa'] = self.mfa
+        if hasattr(self, 'enterprise_iam_managed') and self.enterprise_iam_managed is not None:
+            _dict['enterprise_iam_managed'] = self.enterprise_iam_managed
         return _dict
 
     def _to_dict(self):
