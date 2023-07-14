@@ -1,4 +1,4 @@
-dist: bionic
+dist: jammy
 
 language: python
 
@@ -21,7 +21,9 @@ script:
 - make ci
 
 before_deploy:
-- nvm install 14
+- nvm install 18
+- node --version
+- npm --version
 - npm install
 - pip install bump2version
 
