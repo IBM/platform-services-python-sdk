@@ -55,9 +55,7 @@ class IamPolicyManagementV1(BaseService):
                specified parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(
-            authenticator
-            )
+        service = cls(authenticator)
         service.configure_service(service_name)
         return service
 
@@ -2227,6 +2225,7 @@ class ListPoliciesEnums:
 
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
+
     class ServiceType(str, Enum):
         """
         Optional type of service.
@@ -2234,6 +2233,7 @@ class ListPoliciesEnums:
 
         SERVICE = 'service'
         PLATFORM_SERVICE = 'platform_service'
+
     class Sort(str, Enum):
         """
         Optional top level policy field to sort results. Ascending sort is default.
@@ -2248,6 +2248,7 @@ class ListPoliciesEnums:
         LAST_MODIFIED_AT = 'last_modified_at'
         LAST_MODIFIED_BY_ID = 'last_modified_by_id'
         STATE = 'state'
+
     class Format(str, Enum):
         """
         Include additional data per policy returned
@@ -2259,6 +2260,7 @@ class ListPoliciesEnums:
 
         INCLUDE_LAST_PERMIT = 'include_last_permit'
         DISPLAY = 'display'
+
     class State(str, Enum):
         """
         The state of the policy.
@@ -2282,6 +2284,7 @@ class ListV2PoliciesEnums:
 
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
+
     class ServiceType(str, Enum):
         """
         Optional type of service.
@@ -2289,6 +2292,7 @@ class ListV2PoliciesEnums:
 
         SERVICE = 'service'
         PLATFORM_SERVICE = 'platform_service'
+
     class Format(str, Enum):
         """
         Include additional data per policy returned
@@ -2300,6 +2304,7 @@ class ListV2PoliciesEnums:
 
         INCLUDE_LAST_PERMIT = 'include_last_permit'
         DISPLAY = 'display'
+
     class State(str, Enum):
         """
         The state of the policy.
@@ -2990,7 +2995,6 @@ class ErrorObject:
         POLICY_ASSIGNMENT_CONFLICT_ERROR = 'policy_assignment_conflict_error'
 
 
-
 class ErrorResponse:
     """
     The error response from API.
@@ -3398,7 +3402,6 @@ class Policy:
         DELETED = 'deleted'
 
 
-
 class PolicyAssignment:
     """
     The set of properties associated with the policy template assignment.
@@ -3605,7 +3608,6 @@ class PolicyAssignment:
 
         ACCOUNT = 'Account'
 
-
     class StatusEnum(str, Enum):
         """
         The policy assignment status.
@@ -3615,7 +3617,6 @@ class PolicyAssignment:
         SUCCEEDED = 'succeeded'
         SUCCEED_WITH_ERRORS = 'succeed_with_errors'
         FAILED = 'failed'
-
 
 
 class PolicyAssignmentRequestOptionsItem:
@@ -3666,7 +3667,9 @@ class PolicyAssignmentRequestOptionsItem:
         if 'subject_type' in _dict:
             args['subject_type'] = _dict.get('subject_type')
         else:
-            raise ValueError('Required property \'subject_type\' not present in PolicyAssignmentRequestOptionsItem JSON')
+            raise ValueError(
+                'Required property \'subject_type\' not present in PolicyAssignmentRequestOptionsItem JSON'
+            )
         if 'subject_id' in _dict:
             args['subject_id'] = _dict.get('subject_id')
         else:
@@ -3674,7 +3677,9 @@ class PolicyAssignmentRequestOptionsItem:
         if 'root_requester_id' in _dict:
             args['root_requester_id'] = _dict.get('root_requester_id')
         else:
-            raise ValueError('Required property \'root_requester_id\' not present in PolicyAssignmentRequestOptionsItem JSON')
+            raise ValueError(
+                'Required property \'root_requester_id\' not present in PolicyAssignmentRequestOptionsItem JSON'
+            )
         if 'root_template_id' in _dict:
             args['root_template_id'] = _dict.get('root_template_id')
         if 'root_template_version' in _dict:
@@ -3726,7 +3731,6 @@ class PolicyAssignmentRequestOptionsItem:
 
         IAM_ID = 'iam_id'
         ACCESS_GROUP_ID = 'access_group_id'
-
 
 
 class PolicyAssignmentResources:
@@ -3832,7 +3836,9 @@ class PolicyAssignmentResourcesPolicy:
         if 'resource_created' in _dict:
             args['resource_created'] = AssignmentResourceCreated.from_dict(_dict.get('resource_created'))
         else:
-            raise ValueError('Required property \'resource_created\' not present in PolicyAssignmentResourcesPolicy JSON')
+            raise ValueError(
+                'Required property \'resource_created\' not present in PolicyAssignmentResourcesPolicy JSON'
+            )
         if 'error_message' in _dict:
             args['error_message'] = ErrorResponse.from_dict(_dict.get('error_message'))
         return cls(**args)
@@ -5108,7 +5114,6 @@ class RuleAttribute:
         DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
 
 
-
 class SubjectAttribute:
     """
     An attribute associated with a subject.
@@ -5377,7 +5382,6 @@ class TemplatePolicy:
         AUTHORIZATION = 'authorization'
 
 
-
 class V2Policy:
     """
     The core set of properties associated with the policy.
@@ -5607,7 +5611,6 @@ class V2Policy:
         ACCESS = 'access'
         AUTHORIZATION = 'authorization'
 
-
     class StateEnum(str, Enum):
         """
         The policy state, either 'deleted' or 'active'.
@@ -5615,7 +5618,6 @@ class V2Policy:
 
         ACTIVE = 'active'
         DELETED = 'deleted'
-
 
 
 class V2PolicyCollection:
@@ -5858,7 +5860,6 @@ class V2PolicyResourceAttribute:
         STRINGMATCH = 'stringMatch'
 
 
-
 class V2PolicyResourceTag:
     """
     A tag associated with a resource.
@@ -5944,7 +5945,6 @@ class V2PolicyResourceTag:
 
         STRINGEQUALS = 'stringEquals'
         STRINGMATCH = 'stringMatch'
-
 
 
 class V2PolicyRule:
@@ -6120,7 +6120,6 @@ class V2PolicySubjectAttribute:
         """
 
         STRINGEQUALS = 'stringEquals'
-
 
 
 class ControlResponseControl(ControlResponse):
@@ -6351,7 +6350,6 @@ class V2PolicyRuleRuleAttribute(V2PolicyRule):
         DAYOFWEEKANYOF = 'dayOfWeekAnyOf'
 
 
-
 class V2PolicyRuleRuleWithConditions(V2PolicyRule):
     """
     Rule that specifies additional access granted (e.g., time-based condition) accross
@@ -6439,4 +6437,3 @@ class V2PolicyRuleRuleWithConditions(V2PolicyRule):
 
         AND = 'and'
         OR = 'or'
-
