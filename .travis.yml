@@ -1,4 +1,4 @@
-dist: bionic
+dist: jammy
 
 language: python
 
@@ -18,10 +18,12 @@ install:
 - pip install setuptools=="60.8.2"
 
 script:
-- make ci
+- make all
 
 before_deploy:
-- nvm install 14
+- nvm install 18
+- node --version
+- npm --version
 - npm install
 - pip install bump2version
 

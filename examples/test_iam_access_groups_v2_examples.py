@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2020, 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@
 Examples for IamAccessGroupsV2
 """
 
+from ibm_cloud_sdk_core import ApiException, read_external_sources
 import os
 import pytest
-from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.iam_access_groups_v2 import *
 
 #
-# This file provides an example of how to use the IAM Access Groups service.
+# This file provides an example of how to use the iam-access-groups service.
 #
 # The following configuration properties are assumed to be defined:
 #
@@ -54,8 +54,6 @@ test_claim_rule_etag = None
 # Start of Examples for Service: IamAccessGroupsV2
 ##############################################################################
 # region
-
-
 class TestIamAccessGroupsV2Examples:
     """
     Example Test Class for IamAccessGroupsV2
@@ -92,12 +90,16 @@ class TestIamAccessGroupsV2Examples:
         create_access_group request example
         """
         try:
+            global access_group_id_link
             print('\ncreate_access_group() result:')
             # begin-create_access_group
 
-            group = iam_access_groups_service.create_access_group(
-                account_id=test_account_id, name='Managers', description='Group for managers'
-            ).get_result()
+            response = iam_access_groups_service.create_access_group(
+                account_id=test_account_id,
+                name='Managers',
+                description='Group for managers',
+            )
+            group = response.get_result()
 
             print(json.dumps(group, indent=2))
 
@@ -115,18 +117,20 @@ class TestIamAccessGroupsV2Examples:
         get_access_group request example
         """
         try:
+            global access_group_e_tag_link
             print('\nget_access_group() result:')
             # begin-get_access_group
 
-            response = iam_access_groups_service.get_access_group(access_group_id=test_group_id)
+            response = iam_access_groups_service.get_access_group(
+                access_group_id=test_group_id,
+            )
             group = response.get_result()
 
             print(json.dumps(group, indent=2))
 
             # end-get_access_group
-            global test_group_etag
-            test_group_etag = response.get_headers().get('Etag')
 
+            access_group_e_tag_link = response.get_headers().get('ETag')
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -139,12 +143,13 @@ class TestIamAccessGroupsV2Examples:
             print('\nupdate_access_group() result:')
             # begin-update_access_group
 
-            group = iam_access_groups_service.update_access_group(
+            response = iam_access_groups_service.update_access_group(
                 access_group_id=test_group_id,
-                if_match=test_group_etag,
+                if_match=access_group_e_tag_link,
                 name='Awesome Managers',
-                description='Group for awesome managers',
-            ).get_result()
+                description='Group for awesome managers.',
+            )
+            group = response.get_result()
 
             print(json.dumps(group, indent=2))
 
@@ -186,14 +191,17 @@ class TestIamAccessGroupsV2Examples:
         try:
             print('\nadd_members_to_access_group() result:')
             # begin-add_members_to_access_group
+
             member1 = AddGroupMembersRequestMembersItem(iam_id='IBMid-user1', type='user')
             member2 = AddGroupMembersRequestMembersItem(iam_id='iam-ServiceId-123', type='service')
             member3 = AddGroupMembersRequestMembersItem(iam_id=test_profile_id, type='profile')
             members = [member1, member2, member3]
 
-            add_group_members_response = iam_access_groups_service.add_members_to_access_group(
-                access_group_id=test_group_id, members=members
-            ).get_result()
+            response = iam_access_groups_service.add_members_to_access_group(
+                access_group_id=test_group_id,
+                members=members,
+            )
+            add_group_members_response = response.get_result()
 
             print(json.dumps(add_group_members_response, indent=2))
 
@@ -254,11 +262,12 @@ class TestIamAccessGroupsV2Examples:
             # begin-remove_member_from_access_group
 
             response = iam_access_groups_service.remove_member_from_access_group(
-                access_group_id=test_group_id, iam_id='IBMid-user1'
+                access_group_id=test_group_id,
+                iam_id='IBMid-user1',
             )
 
             # end-remove_member_from_access_group
-            print('\nremove_member_from_access_group() response status code:', response.get_status_code())
+            print('\nremove_member_from_access_group() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -272,29 +281,11 @@ class TestIamAccessGroupsV2Examples:
             print('\nremove_members_from_access_group() result:')
             # begin-remove_members_from_access_group
 
-            delete_group_bulk_members_response = iam_access_groups_service.remove_members_from_access_group(
-                access_group_id=test_group_id, members=['iam-ServiceId-123']
-            ).get_result()
-
-            print(json.dumps(delete_group_bulk_members_response, indent=2))
-
-            # end-remove_members_from_access_group
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_remove_profile_members_from_access_group_example(self):
-        """
-        remove_members_from_access_group request example
-        """
-        try:
-            print('\nremove_members_from_access_group() result:')
-            # begin-remove_members_from_access_group
-
-            delete_group_bulk_members_response = iam_access_groups_service.remove_members_from_access_group(
-                access_group_id=test_group_id, members=[test_profile_id]
-            ).get_result()
+            response = iam_access_groups_service.remove_members_from_access_group(
+                access_group_id=test_group_id,
+                members=['IBMId-user1', 'iam-ServiceId-123', test_profile_id],
+            )
+            delete_group_bulk_members_response = response.get_result()
 
             print(json.dumps(delete_group_bulk_members_response, indent=2))
 
@@ -312,9 +303,13 @@ class TestIamAccessGroupsV2Examples:
             print('\nadd_member_to_multiple_access_groups() result:')
             # begin-add_member_to_multiple_access_groups
 
-            add_membership_multiple_groups_response = iam_access_groups_service.add_member_to_multiple_access_groups(
-                account_id=test_account_id, iam_id='IBMid-user1', type='user', groups=[test_group_id]
-            ).get_result()
+            response = iam_access_groups_service.add_member_to_multiple_access_groups(
+                account_id=test_account_id,
+                iam_id='IBMid-user1',
+                type='user',
+                groups=[test_group_id],
+            )
+            add_membership_multiple_groups_response = response.get_result()
 
             print(json.dumps(add_membership_multiple_groups_response, indent=2))
 
@@ -332,9 +327,10 @@ class TestIamAccessGroupsV2Examples:
             print('\nremove_member_from_all_access_groups() result:')
             # begin-remove_member_from_all_access_groups
 
-            delete_from_all_groups_response = iam_access_groups_service.remove_member_from_all_access_groups(
+            response = iam_access_groups_service.remove_member_from_all_access_groups(
                 account_id=test_account_id, iam_id='IBMid-user1'
-            ).get_result()
+            )
+            delete_from_all_groups_response = response.get_result()
 
             print(json.dumps(delete_from_all_groups_response, indent=2))
 
@@ -352,21 +348,46 @@ class TestIamAccessGroupsV2Examples:
             print('\nadd_access_group_rule() result:')
             # begin-add_access_group_rule
 
-            rule_conditions_model = {'claim': 'isManager', 'operator': 'EQUALS', 'value': 'true'}
+            rule_conditions_model = {
+                'claim': 'isManager',
+                'operator': 'EQUALS',
+                'value': 'true',
+            }
 
-            rule = iam_access_groups_service.add_access_group_rule(
+            response = iam_access_groups_service.add_access_group_rule(
                 access_group_id=test_group_id,
-                name='Manager group rule',
                 expiration=12,
-                realm_name='https://idp.example.org/SAML2"',
+                realm_name='https://idp.example.org/SAML3',
                 conditions=[rule_conditions_model],
-            ).get_result()
-
-            print(json.dumps(rule, indent=2))
+                name='Manager group rule',
+            )
+            rule = response.get_result()
 
             # end-add_access_group_rule
             global test_claim_rule_id
             test_claim_rule_id = rule['id']
+            # end-add_access_group_rule
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_access_group_rules_example(self):
+        """
+        list_access_group_rules request example
+        """
+        try:
+            print('\nlist_access_group_rules() result:')
+            # begin-list_access_group_rules
+
+            response = iam_access_groups_service.list_access_group_rules(
+                access_group_id=test_group_id,
+            )
+            rules_list = response.get_result()
+
+            print(json.dumps(rules_list, indent=2))
+
+            # end-list_access_group_rules
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -381,7 +402,8 @@ class TestIamAccessGroupsV2Examples:
             # begin-get_access_group_rule
 
             response = iam_access_groups_service.get_access_group_rule(
-                access_group_id=test_group_id, rule_id=test_claim_rule_id
+                access_group_id=test_group_id,
+                rule_id=test_claim_rule_id,
             )
             rule = response.get_result()
 
@@ -403,39 +425,26 @@ class TestIamAccessGroupsV2Examples:
             print('\nreplace_access_group_rule() result:')
             # begin-replace_access_group_rule
 
-            rule_conditions_model = {'claim': 'isManager', 'operator': 'EQUALS', 'value': 'true'}
+            rule_conditions_model = {
+                'claim': 'isManager',
+                'operator': 'EQUALS',
+                'value': 'true',
+            }
 
-            rule = iam_access_groups_service.replace_access_group_rule(
+            response = iam_access_groups_service.replace_access_group_rule(
                 access_group_id=test_group_id,
                 rule_id=test_claim_rule_id,
                 if_match=test_claim_rule_etag,
-                name='Manager group rule',
-                expiration=24,
-                realm_name='https://idp.example.org/SAML2a',
+                expiration=12,
+                realm_name='https://idp.example.org/SAML3',
                 conditions=[rule_conditions_model],
-            ).get_result()
+                name='Manager group rule',
+            )
+            rule = response.get_result()
 
             print(json.dumps(rule, indent=2))
 
             # end-replace_access_group_rule
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_list_access_group_rules_example(self):
-        """
-        list_access_group_rules request example
-        """
-        try:
-            print('\nlist_access_group_rules() result:')
-            # begin-list_access_group_rules
-
-            rules_list = iam_access_groups_service.list_access_group_rules(access_group_id=test_group_id).get_result()
-
-            print(json.dumps(rules_list, indent=2))
-
-            # end-list_access_group_rules
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -449,11 +458,12 @@ class TestIamAccessGroupsV2Examples:
             # begin-remove_access_group_rule
 
             response = iam_access_groups_service.remove_access_group_rule(
-                access_group_id=test_group_id, rule_id=test_claim_rule_id
+                access_group_id=test_group_id,
+                rule_id=test_claim_rule_id,
             )
 
             # end-remove_access_group_rule
-            print('\nremove_access_group_rule() response status code:', response.get_status_code())
+            print('\nremove_access_group_rule() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -467,7 +477,10 @@ class TestIamAccessGroupsV2Examples:
             print('\nget_account_settings() result:')
             # begin-get_account_settings
 
-            account_settings = iam_access_groups_service.get_account_settings(account_id=test_account_id).get_result()
+            response = iam_access_groups_service.get_account_settings(
+                account_id=test_account_id,
+            )
+            account_settings = response.get_result()
 
             print(json.dumps(account_settings, indent=2))
 
@@ -485,9 +498,11 @@ class TestIamAccessGroupsV2Examples:
             print('\nupdate_account_settings() result:')
             # begin-update_account_settings
 
-            account_settings = iam_access_groups_service.update_account_settings(
-                account_id=test_account_id, public_access_enabled=True
-            ).get_result()
+            response = iam_access_groups_service.update_account_settings(
+                account_id=test_account_id,
+                public_access_enabled=True,
+            )
+            account_settings = response.get_result()
 
             print(json.dumps(account_settings, indent=2))
 
@@ -504,10 +519,12 @@ class TestIamAccessGroupsV2Examples:
         try:
             # begin-delete_access_group
 
-            response = iam_access_groups_service.delete_access_group(access_group_id=test_group_id)
+            response = iam_access_groups_service.delete_access_group(
+                access_group_id=test_group_id,
+            )
 
             # end-delete_access_group
-            print('\ndelete_access_group() response status code:' + str(response.get_status_code()))
+            print('\ndelete_access_group() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))

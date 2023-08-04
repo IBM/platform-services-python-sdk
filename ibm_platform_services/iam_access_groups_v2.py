@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.60.0-13f6e1ba-20221019-164457
+# IBM OpenAPI SDK Code Generator Version: 3.70.0-7df966bf-20230419-195904
 
 """
 The IAM Access Groups API allows for the management of access groups (Create, Read,
@@ -79,7 +79,13 @@ class IamAccessGroupsV2(BaseService):
     #########################
 
     def create_access_group(
-        self, account_id: str, name: str, *, description: str = None, transaction_id: str = None, **kwargs
+        self,
+        account_id: str,
+        name: str,
+        *,
+        description: str = None,
+        transaction_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Create an access group.
@@ -113,15 +119,24 @@ class IamAccessGroupsV2(BaseService):
             raise ValueError('account_id must be provided')
         if name is None:
             raise ValueError('name must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='create_access_group'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='create_access_group',
         )
         headers.update(sdk_headers)
 
-        params = {'account_id': account_id}
+        params = {
+            'account_id': account_id,
+        }
 
-        data = {'name': name, 'description': description}
+        data = {
+            'name': name,
+            'description': description,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -132,7 +147,13 @@ class IamAccessGroupsV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/groups'
-        request = self.prepare_request(method='POST', url=url, headers=headers, params=params, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            params=params,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -143,6 +164,7 @@ class IamAccessGroupsV2(BaseService):
         *,
         transaction_id: str = None,
         iam_id: str = None,
+        search: str = None,
         membership_type: str = None,
         limit: int = None,
         offset: int = None,
@@ -172,6 +194,12 @@ class IamAccessGroupsV2(BaseService):
                ID is passed in, then a random ID is generated.
         :param str iam_id: (optional) Return groups for member ID (IBMid, service
                ID or trusted profile ID).
+        :param str search: (optional) Use search to filter access groups list by
+               id, name or description.
+               * `search=id:<ACCESS_GROUP_ID>` - To list access groups by id
+               * `search=name:<ACCESS_GROUP_NAME>` - To list access groups by name
+               * `search=description:<ACCESS_GROUP_DESC>` - To list access groups by
+               description.
         :param str membership_type: (optional) Membership type need to be specified
                along with iam_id and must be either `static`, `dynamic` or `all`. If
                membership type is `static`, members explicitly added to the group will be
@@ -196,15 +224,20 @@ class IamAccessGroupsV2(BaseService):
 
         if not account_id:
             raise ValueError('account_id must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_access_groups'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='list_access_groups',
         )
         headers.update(sdk_headers)
 
         params = {
             'account_id': account_id,
             'iam_id': iam_id,
+            'search': search,
             'membership_type': membership_type,
             'limit': limit,
             'offset': offset,
@@ -219,13 +252,23 @@ class IamAccessGroupsV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/groups'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def get_access_group(
-        self, access_group_id: str, *, transaction_id: str = None, show_federated: bool = None, **kwargs
+        self,
+        access_group_id: str,
+        *,
+        transaction_id: str = None,
+        show_federated: bool = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get an access group.
@@ -251,13 +294,19 @@ class IamAccessGroupsV2(BaseService):
 
         if not access_group_id:
             raise ValueError('access_group_id must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_access_group'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='get_access_group',
         )
         headers.update(sdk_headers)
 
-        params = {'show_federated': show_federated}
+        params = {
+            'show_federated': show_federated,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -268,7 +317,12 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/{access_group_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -313,13 +367,21 @@ class IamAccessGroupsV2(BaseService):
             raise ValueError('access_group_id must be provided')
         if not if_match:
             raise ValueError('if_match must be provided')
-        headers = {'If-Match': if_match, 'Transaction-Id': transaction_id}
+        headers = {
+            'If-Match': if_match,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='update_access_group'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='update_access_group',
         )
         headers.update(sdk_headers)
 
-        data = {'name': name, 'description': description}
+        data = {
+            'name': name,
+            'description': description,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -333,13 +395,23 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/{access_group_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PATCH', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def delete_access_group(
-        self, access_group_id: str, *, transaction_id: str = None, force: bool = None, **kwargs
+        self,
+        access_group_id: str,
+        *,
+        transaction_id: str = None,
+        force: bool = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Delete an access group.
@@ -364,13 +436,19 @@ class IamAccessGroupsV2(BaseService):
 
         if not access_group_id:
             raise ValueError('access_group_id must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='delete_access_group'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='delete_access_group',
         )
         headers.update(sdk_headers)
 
-        params = {'force': force}
+        params = {
+            'force': force,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -380,7 +458,12 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/{access_group_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -390,7 +473,12 @@ class IamAccessGroupsV2(BaseService):
     #########################
 
     def is_member_of_access_group(
-        self, access_group_id: str, iam_id: str, *, transaction_id: str = None, **kwargs
+        self,
+        access_group_id: str,
+        iam_id: str,
+        *,
+        transaction_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Check membership in an access group.
@@ -417,9 +505,13 @@ class IamAccessGroupsV2(BaseService):
             raise ValueError('access_group_id must be provided')
         if not iam_id:
             raise ValueError('iam_id must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='is_member_of_access_group'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='is_member_of_access_group',
         )
         headers.update(sdk_headers)
 
@@ -431,7 +523,11 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(access_group_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/{access_group_id}/members/{iam_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='HEAD', url=url, headers=headers)
+        request = self.prepare_request(
+            method='HEAD',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -471,13 +567,19 @@ class IamAccessGroupsV2(BaseService):
             raise ValueError('access_group_id must be provided')
         if members is not None:
             members = [convert_model(x) for x in members]
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='add_members_to_access_group'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='add_members_to_access_group',
         )
         headers.update(sdk_headers)
 
-        data = {'members': members}
+        data = {
+            'members': members,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -491,7 +593,12 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/{access_group_id}/members'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -545,9 +652,13 @@ class IamAccessGroupsV2(BaseService):
 
         if not access_group_id:
             raise ValueError('access_group_id must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_access_group_members'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='list_access_group_members',
         )
         headers.update(sdk_headers)
 
@@ -569,13 +680,23 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/{access_group_id}/members'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def remove_member_from_access_group(
-        self, access_group_id: str, iam_id: str, *, transaction_id: str = None, **kwargs
+        self,
+        access_group_id: str,
+        iam_id: str,
+        *,
+        transaction_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Delete member from an access group.
@@ -602,9 +723,13 @@ class IamAccessGroupsV2(BaseService):
             raise ValueError('access_group_id must be provided')
         if not iam_id:
             raise ValueError('iam_id must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='remove_member_from_access_group'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='remove_member_from_access_group',
         )
         headers.update(sdk_headers)
 
@@ -616,13 +741,22 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(access_group_id, iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/{access_group_id}/members/{iam_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def remove_members_from_access_group(
-        self, access_group_id: str, *, members: List[str] = None, transaction_id: str = None, **kwargs
+        self,
+        access_group_id: str,
+        *,
+        members: List[str] = None,
+        transaction_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Delete members from an access group.
@@ -648,7 +782,9 @@ class IamAccessGroupsV2(BaseService):
 
         if not access_group_id:
             raise ValueError('access_group_id must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
             service_version='V2',
@@ -656,7 +792,9 @@ class IamAccessGroupsV2(BaseService):
         )
         headers.update(sdk_headers)
 
-        data = {'members': members}
+        data = {
+            'members': members,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -670,13 +808,23 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/{access_group_id}/members/delete'.format(**path_param_dict)
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def remove_member_from_all_access_groups(
-        self, account_id: str, iam_id: str, *, transaction_id: str = None, **kwargs
+        self,
+        account_id: str,
+        iam_id: str,
+        *,
+        transaction_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Delete member from all access groups.
@@ -705,7 +853,9 @@ class IamAccessGroupsV2(BaseService):
             raise ValueError('account_id must be provided')
         if not iam_id:
             raise ValueError('iam_id must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
             service_version='V2',
@@ -713,7 +863,9 @@ class IamAccessGroupsV2(BaseService):
         )
         headers.update(sdk_headers)
 
-        params = {'account_id': account_id}
+        params = {
+            'account_id': account_id,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -724,7 +876,12 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/_allgroups/members/{iam_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -769,7 +926,9 @@ class IamAccessGroupsV2(BaseService):
             raise ValueError('account_id must be provided')
         if not iam_id:
             raise ValueError('iam_id must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
             service_version='V2',
@@ -777,9 +936,14 @@ class IamAccessGroupsV2(BaseService):
         )
         headers.update(sdk_headers)
 
-        params = {'account_id': account_id}
+        params = {
+            'account_id': account_id,
+        }
 
-        data = {'type': type, 'groups': groups}
+        data = {
+            'type': type,
+            'groups': groups,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -793,7 +957,13 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(iam_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/_allgroups/members/{iam_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT', url=url, headers=headers, params=params, data=data)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            params=params,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -849,13 +1019,22 @@ class IamAccessGroupsV2(BaseService):
         if conditions is None:
             raise ValueError('conditions must be provided')
         conditions = [convert_model(x) for x in conditions]
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='add_access_group_rule'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='add_access_group_rule',
         )
         headers.update(sdk_headers)
 
-        data = {'expiration': expiration, 'realm_name': realm_name, 'conditions': conditions, 'name': name}
+        data = {
+            'expiration': expiration,
+            'realm_name': realm_name,
+            'conditions': conditions,
+            'name': name,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -869,13 +1048,22 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/{access_group_id}/rules'.format(**path_param_dict)
-        request = self.prepare_request(method='POST', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def list_access_group_rules(
-        self, access_group_id: str, *, transaction_id: str = None, **kwargs
+        self,
+        access_group_id: str,
+        *,
+        transaction_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         List access group rules.
@@ -896,9 +1084,13 @@ class IamAccessGroupsV2(BaseService):
 
         if not access_group_id:
             raise ValueError('access_group_id must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='list_access_group_rules'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='list_access_group_rules',
         )
         headers.update(sdk_headers)
 
@@ -911,13 +1103,22 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(access_group_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/{access_group_id}/rules'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def get_access_group_rule(
-        self, access_group_id: str, rule_id: str, *, transaction_id: str = None, **kwargs
+        self,
+        access_group_id: str,
+        rule_id: str,
+        *,
+        transaction_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get an access group rule.
@@ -941,9 +1142,13 @@ class IamAccessGroupsV2(BaseService):
             raise ValueError('access_group_id must be provided')
         if not rule_id:
             raise ValueError('rule_id must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_access_group_rule'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='get_access_group_rule',
         )
         headers.update(sdk_headers)
 
@@ -956,7 +1161,11 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(access_group_id, rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/{access_group_id}/rules/{rule_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET', url=url, headers=headers)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -1013,13 +1222,23 @@ class IamAccessGroupsV2(BaseService):
         if conditions is None:
             raise ValueError('conditions must be provided')
         conditions = [convert_model(x) for x in conditions]
-        headers = {'If-Match': if_match, 'Transaction-Id': transaction_id}
+        headers = {
+            'If-Match': if_match,
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='replace_access_group_rule'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='replace_access_group_rule',
         )
         headers.update(sdk_headers)
 
-        data = {'expiration': expiration, 'realm_name': realm_name, 'conditions': conditions, 'name': name}
+        data = {
+            'expiration': expiration,
+            'realm_name': realm_name,
+            'conditions': conditions,
+            'name': name,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1033,13 +1252,23 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(access_group_id, rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/{access_group_id}/rules/{rule_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='PUT', url=url, headers=headers, data=data)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def remove_access_group_rule(
-        self, access_group_id: str, rule_id: str, *, transaction_id: str = None, **kwargs
+        self,
+        access_group_id: str,
+        rule_id: str,
+        *,
+        transaction_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Delete an access group rule.
@@ -1064,9 +1293,13 @@ class IamAccessGroupsV2(BaseService):
             raise ValueError('access_group_id must be provided')
         if not rule_id:
             raise ValueError('rule_id must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='remove_access_group_rule'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='remove_access_group_rule',
         )
         headers.update(sdk_headers)
 
@@ -1078,7 +1311,11 @@ class IamAccessGroupsV2(BaseService):
         path_param_values = self.encode_path_vars(access_group_id, rule_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v2/groups/{access_group_id}/rules/{rule_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='DELETE', url=url, headers=headers)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -1087,7 +1324,13 @@ class IamAccessGroupsV2(BaseService):
     # Account settings
     #########################
 
-    def get_account_settings(self, account_id: str, *, transaction_id: str = None, **kwargs) -> DetailedResponse:
+    def get_account_settings(
+        self,
+        account_id: str,
+        *,
+        transaction_id: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
         """
         Get account settings.
 
@@ -1109,13 +1352,19 @@ class IamAccessGroupsV2(BaseService):
 
         if not account_id:
             raise ValueError('account_id must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='get_account_settings'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='get_account_settings',
         )
         headers.update(sdk_headers)
 
-        params = {'account_id': account_id}
+        params = {
+            'account_id': account_id,
+        }
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1123,13 +1372,23 @@ class IamAccessGroupsV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/groups/settings'
-        request = self.prepare_request(method='GET', url=url, headers=headers, params=params)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
 
         response = self.send(request, **kwargs)
         return response
 
     def update_account_settings(
-        self, account_id: str, *, public_access_enabled: bool = None, transaction_id: str = None, **kwargs
+        self,
+        account_id: str,
+        *,
+        public_access_enabled: bool = None,
+        transaction_id: str = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update account settings.
@@ -1160,15 +1419,23 @@ class IamAccessGroupsV2(BaseService):
 
         if not account_id:
             raise ValueError('account_id must be provided')
-        headers = {'Transaction-Id': transaction_id}
+        headers = {
+            'Transaction-Id': transaction_id,
+        }
         sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME, service_version='V2', operation_id='update_account_settings'
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V2',
+            operation_id='update_account_settings',
         )
         headers.update(sdk_headers)
 
-        params = {'account_id': account_id}
+        params = {
+            'account_id': account_id,
+        }
 
-        data = {'public_access_enabled': public_access_enabled}
+        data = {
+            'public_access_enabled': public_access_enabled,
+        }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
         headers['content-type'] = 'application/json'
@@ -1179,7 +1446,13 @@ class IamAccessGroupsV2(BaseService):
         headers['Accept'] = 'application/json'
 
         url = '/v2/groups/settings'
-        request = self.prepare_request(method='PATCH', url=url, headers=headers, params=params, data=data)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            params=params,
+            data=data,
+        )
 
         response = self.send(request, **kwargs)
         return response
@@ -1292,7 +1565,11 @@ class AddGroupMembersRequestMembersItem:
           "profile".
     """
 
-    def __init__(self, iam_id: str, type: str) -> None:
+    def __init__(
+        self,
+        iam_id: str,
+        type: str,
+    ) -> None:
         """
         Initialize a AddGroupMembersRequestMembersItem object.
 
@@ -1359,7 +1636,11 @@ class AddGroupMembersResponse:
           added to an access group.
     """
 
-    def __init__(self, *, members: List['AddGroupMembersResponseMembersItem'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        members: List['AddGroupMembersResponseMembersItem'] = None,
+    ) -> None:
         """
         Initialize a AddGroupMembersResponse object.
 
@@ -1373,7 +1654,7 @@ class AddGroupMembersResponse:
         """Initialize a AddGroupMembersResponse object from a json dictionary."""
         args = {}
         if 'members' in _dict:
-            args['members'] = [AddGroupMembersResponseMembersItem.from_dict(x) for x in _dict.get('members')]
+            args['members'] = [AddGroupMembersResponseMembersItem.from_dict(v) for v in _dict.get('members')]
         return cls(**args)
 
     @classmethod
@@ -1385,7 +1666,13 @@ class AddGroupMembersResponse:
         """Return a json dictionary representing this model."""
         _dict = {}
         if hasattr(self, 'members') and self.members is not None:
-            _dict['members'] = [x.to_dict() for x in self.members]
+            members_list = []
+            for v in self.members:
+                if isinstance(v, dict):
+                    members_list.append(v)
+                else:
+                    members_list.append(v.to_dict())
+            _dict['members'] = members_list
         return _dict
 
     def _to_dict(self):
@@ -1478,7 +1765,7 @@ class AddGroupMembersResponseMembersItem:
         if 'trace' in _dict:
             args['trace'] = _dict.get('trace')
         if 'errors' in _dict:
-            args['errors'] = [Error.from_dict(x) for x in _dict.get('errors')]
+            args['errors'] = [Error.from_dict(v) for v in _dict.get('errors')]
         return cls(**args)
 
     @classmethod
@@ -1502,7 +1789,13 @@ class AddGroupMembersResponseMembersItem:
         if hasattr(self, 'trace') and self.trace is not None:
             _dict['trace'] = self.trace
         if hasattr(self, 'errors') and self.errors is not None:
-            _dict['errors'] = [x.to_dict() for x in self.errors]
+            errors_list = []
+            for v in self.errors:
+                if isinstance(v, dict):
+                    errors_list.append(v)
+                else:
+                    errors_list.append(v.to_dict())
+            _dict['errors'] = errors_list
         return _dict
 
     def _to_dict(self):
@@ -1534,7 +1827,10 @@ class AddMembershipMultipleGroupsResponse:
     """
 
     def __init__(
-        self, *, iam_id: str = None, groups: List['AddMembershipMultipleGroupsResponseGroupsItem'] = None
+        self,
+        *,
+        iam_id: str = None,
+        groups: List['AddMembershipMultipleGroupsResponseGroupsItem'] = None,
     ) -> None:
         """
         Initialize a AddMembershipMultipleGroupsResponse object.
@@ -1553,7 +1849,7 @@ class AddMembershipMultipleGroupsResponse:
         if 'iam_id' in _dict:
             args['iam_id'] = _dict.get('iam_id')
         if 'groups' in _dict:
-            args['groups'] = [AddMembershipMultipleGroupsResponseGroupsItem.from_dict(x) for x in _dict.get('groups')]
+            args['groups'] = [AddMembershipMultipleGroupsResponseGroupsItem.from_dict(v) for v in _dict.get('groups')]
         return cls(**args)
 
     @classmethod
@@ -1567,7 +1863,13 @@ class AddMembershipMultipleGroupsResponse:
         if hasattr(self, 'iam_id') and self.iam_id is not None:
             _dict['iam_id'] = self.iam_id
         if hasattr(self, 'groups') and self.groups is not None:
-            _dict['groups'] = [x.to_dict() for x in self.groups]
+            groups_list = []
+            for v in self.groups:
+                if isinstance(v, dict):
+                    groups_list.append(v)
+                else:
+                    groups_list.append(v.to_dict())
+            _dict['groups'] = groups_list
         return _dict
 
     def _to_dict(self):
@@ -1604,7 +1906,12 @@ class AddMembershipMultipleGroupsResponseGroupsItem:
     """
 
     def __init__(
-        self, *, access_group_id: str = None, status_code: int = None, trace: str = None, errors: List['Error'] = None
+        self,
+        *,
+        access_group_id: str = None,
+        status_code: int = None,
+        trace: str = None,
+        errors: List['Error'] = None,
     ) -> None:
         """
         Initialize a AddMembershipMultipleGroupsResponseGroupsItem object.
@@ -1634,7 +1941,7 @@ class AddMembershipMultipleGroupsResponseGroupsItem:
         if 'trace' in _dict:
             args['trace'] = _dict.get('trace')
         if 'errors' in _dict:
-            args['errors'] = [Error.from_dict(x) for x in _dict.get('errors')]
+            args['errors'] = [Error.from_dict(v) for v in _dict.get('errors')]
         return cls(**args)
 
     @classmethod
@@ -1652,7 +1959,13 @@ class AddMembershipMultipleGroupsResponseGroupsItem:
         if hasattr(self, 'trace') and self.trace is not None:
             _dict['trace'] = self.trace
         if hasattr(self, 'errors') and self.errors is not None:
-            _dict['errors'] = [x.to_dict() for x in self.errors]
+            errors_list = []
+            for v in self.errors:
+                if isinstance(v, dict):
+                    errors_list.append(v)
+                else:
+                    errors_list.append(v.to_dict())
+            _dict['errors'] = errors_list
         return _dict
 
     def _to_dict(self):
@@ -1683,7 +1996,12 @@ class DeleteFromAllGroupsResponse:
           the member was removed from.
     """
 
-    def __init__(self, *, iam_id: str = None, groups: List['DeleteFromAllGroupsResponseGroupsItem'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        iam_id: str = None,
+        groups: List['DeleteFromAllGroupsResponseGroupsItem'] = None,
+    ) -> None:
         """
         Initialize a DeleteFromAllGroupsResponse object.
 
@@ -1702,7 +2020,7 @@ class DeleteFromAllGroupsResponse:
         if 'iam_id' in _dict:
             args['iam_id'] = _dict.get('iam_id')
         if 'groups' in _dict:
-            args['groups'] = [DeleteFromAllGroupsResponseGroupsItem.from_dict(x) for x in _dict.get('groups')]
+            args['groups'] = [DeleteFromAllGroupsResponseGroupsItem.from_dict(v) for v in _dict.get('groups')]
         return cls(**args)
 
     @classmethod
@@ -1716,7 +2034,13 @@ class DeleteFromAllGroupsResponse:
         if hasattr(self, 'iam_id') and self.iam_id is not None:
             _dict['iam_id'] = self.iam_id
         if hasattr(self, 'groups') and self.groups is not None:
-            _dict['groups'] = [x.to_dict() for x in self.groups]
+            groups_list = []
+            for v in self.groups:
+                if isinstance(v, dict):
+                    groups_list.append(v)
+                else:
+                    groups_list.append(v.to_dict())
+            _dict['groups'] = groups_list
         return _dict
 
     def _to_dict(self):
@@ -1753,7 +2077,12 @@ class DeleteFromAllGroupsResponseGroupsItem:
     """
 
     def __init__(
-        self, *, access_group_id: str = None, status_code: int = None, trace: str = None, errors: List['Error'] = None
+        self,
+        *,
+        access_group_id: str = None,
+        status_code: int = None,
+        trace: str = None,
+        errors: List['Error'] = None,
     ) -> None:
         """
         Initialize a DeleteFromAllGroupsResponseGroupsItem object.
@@ -1783,7 +2112,7 @@ class DeleteFromAllGroupsResponseGroupsItem:
         if 'trace' in _dict:
             args['trace'] = _dict.get('trace')
         if 'errors' in _dict:
-            args['errors'] = [Error.from_dict(x) for x in _dict.get('errors')]
+            args['errors'] = [Error.from_dict(v) for v in _dict.get('errors')]
         return cls(**args)
 
     @classmethod
@@ -1801,7 +2130,13 @@ class DeleteFromAllGroupsResponseGroupsItem:
         if hasattr(self, 'trace') and self.trace is not None:
             _dict['trace'] = self.trace
         if hasattr(self, 'errors') and self.errors is not None:
-            _dict['errors'] = [x.to_dict() for x in self.errors]
+            errors_list = []
+            for v in self.errors:
+                if isinstance(v, dict):
+                    errors_list.append(v)
+                else:
+                    errors_list.append(v.to_dict())
+            _dict['errors'] = errors_list
         return _dict
 
     def _to_dict(self):
@@ -1833,7 +2168,10 @@ class DeleteGroupBulkMembersResponse:
     """
 
     def __init__(
-        self, *, access_group_id: str = None, members: List['DeleteGroupBulkMembersResponseMembersItem'] = None
+        self,
+        *,
+        access_group_id: str = None,
+        members: List['DeleteGroupBulkMembersResponseMembersItem'] = None,
     ) -> None:
         """
         Initialize a DeleteGroupBulkMembersResponse object.
@@ -1852,7 +2190,7 @@ class DeleteGroupBulkMembersResponse:
         if 'access_group_id' in _dict:
             args['access_group_id'] = _dict.get('access_group_id')
         if 'members' in _dict:
-            args['members'] = [DeleteGroupBulkMembersResponseMembersItem.from_dict(x) for x in _dict.get('members')]
+            args['members'] = [DeleteGroupBulkMembersResponseMembersItem.from_dict(v) for v in _dict.get('members')]
         return cls(**args)
 
     @classmethod
@@ -1866,7 +2204,13 @@ class DeleteGroupBulkMembersResponse:
         if hasattr(self, 'access_group_id') and self.access_group_id is not None:
             _dict['access_group_id'] = self.access_group_id
         if hasattr(self, 'members') and self.members is not None:
-            _dict['members'] = [x.to_dict() for x in self.members]
+            members_list = []
+            for v in self.members:
+                if isinstance(v, dict):
+                    members_list.append(v)
+                else:
+                    members_list.append(v.to_dict())
+            _dict['members'] = members_list
         return _dict
 
     def _to_dict(self):
@@ -1902,7 +2246,12 @@ class DeleteGroupBulkMembersResponseMembersItem:
     """
 
     def __init__(
-        self, *, iam_id: str = None, trace: str = None, status_code: int = None, errors: List['Error'] = None
+        self,
+        *,
+        iam_id: str = None,
+        trace: str = None,
+        status_code: int = None,
+        errors: List['Error'] = None,
     ) -> None:
         """
         Initialize a DeleteGroupBulkMembersResponseMembersItem object.
@@ -1931,7 +2280,7 @@ class DeleteGroupBulkMembersResponseMembersItem:
         if 'status_code' in _dict:
             args['status_code'] = _dict.get('status_code')
         if 'errors' in _dict:
-            args['errors'] = [Error.from_dict(x) for x in _dict.get('errors')]
+            args['errors'] = [Error.from_dict(v) for v in _dict.get('errors')]
         return cls(**args)
 
     @classmethod
@@ -1949,7 +2298,13 @@ class DeleteGroupBulkMembersResponseMembersItem:
         if hasattr(self, 'status_code') and self.status_code is not None:
             _dict['status_code'] = self.status_code
         if hasattr(self, 'errors') and self.errors is not None:
-            _dict['errors'] = [x.to_dict() for x in self.errors]
+            errors_list = []
+            for v in self.errors:
+                if isinstance(v, dict):
+                    errors_list.append(v)
+                else:
+                    errors_list.append(v.to_dict())
+            _dict['errors'] = errors_list
         return _dict
 
     def _to_dict(self):
@@ -1983,7 +2338,12 @@ class Error:
           an action to take.
     """
 
-    def __init__(self, *, code: str = None, message: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        code: str = None,
+        message: str = None,
+    ) -> None:
         """
         Initialize a Error object.
 
@@ -2244,7 +2604,7 @@ class GroupMembersList:
         if 'last' in _dict:
             args['last'] = HrefStruct.from_dict(_dict.get('last'))
         if 'members' in _dict:
-            args['members'] = [ListGroupMembersResponseMember.from_dict(x) for x in _dict.get('members')]
+            args['members'] = [ListGroupMembersResponseMember.from_dict(v) for v in _dict.get('members')]
         return cls(**args)
 
     @classmethod
@@ -2262,15 +2622,33 @@ class GroupMembersList:
         if hasattr(self, 'total_count') and self.total_count is not None:
             _dict['total_count'] = self.total_count
         if hasattr(self, 'first') and self.first is not None:
-            _dict['first'] = self.first.to_dict()
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
         if hasattr(self, 'previous') and self.previous is not None:
-            _dict['previous'] = self.previous.to_dict()
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
         if hasattr(self, 'next') and self.next is not None:
-            _dict['next'] = self.next.to_dict()
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
         if hasattr(self, 'last') and self.last is not None:
-            _dict['last'] = self.last.to_dict()
+            if isinstance(self.last, dict):
+                _dict['last'] = self.last
+            else:
+                _dict['last'] = self.last.to_dict()
         if hasattr(self, 'members') and self.members is not None:
-            _dict['members'] = [x.to_dict() for x in self.members]
+            members_list = []
+            for v in self.members:
+                if isinstance(v, dict):
+                    members_list.append(v)
+                else:
+                    members_list.append(v.to_dict())
+            _dict['members'] = members_list
         return _dict
 
     def _to_dict(self):
@@ -2364,7 +2742,7 @@ class GroupsList:
         if 'last' in _dict:
             args['last'] = HrefStruct.from_dict(_dict.get('last'))
         if 'groups' in _dict:
-            args['groups'] = [Group.from_dict(x) for x in _dict.get('groups')]
+            args['groups'] = [Group.from_dict(v) for v in _dict.get('groups')]
         return cls(**args)
 
     @classmethod
@@ -2382,15 +2760,33 @@ class GroupsList:
         if hasattr(self, 'total_count') and self.total_count is not None:
             _dict['total_count'] = self.total_count
         if hasattr(self, 'first') and self.first is not None:
-            _dict['first'] = self.first.to_dict()
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
         if hasattr(self, 'previous') and self.previous is not None:
-            _dict['previous'] = self.previous.to_dict()
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
         if hasattr(self, 'next') and self.next is not None:
-            _dict['next'] = self.next.to_dict()
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
         if hasattr(self, 'last') and self.last is not None:
-            _dict['last'] = self.last.to_dict()
+            if isinstance(self.last, dict):
+                _dict['last'] = self.last
+            else:
+                _dict['last'] = self.last.to_dict()
         if hasattr(self, 'groups') and self.groups is not None:
-            _dict['groups'] = [x.to_dict() for x in self.groups]
+            groups_list = []
+            for v in self.groups:
+                if isinstance(v, dict):
+                    groups_list.append(v)
+                else:
+                    groups_list.append(v.to_dict())
+            _dict['groups'] = groups_list
         return _dict
 
     def _to_dict(self):
@@ -2419,7 +2815,11 @@ class HrefStruct:
     :attr str href: (optional) A string containing the link’s URL.
     """
 
-    def __init__(self, *, href: str = None) -> None:
+    def __init__(
+        self,
+        *,
+        href: str = None,
+    ) -> None:
         """
         Initialize a HrefStruct object.
 
@@ -2688,7 +3088,7 @@ class Rule:
         if 'account_id' in _dict:
             args['account_id'] = _dict.get('account_id')
         if 'conditions' in _dict:
-            args['conditions'] = [RuleConditions.from_dict(x) for x in _dict.get('conditions')]
+            args['conditions'] = [RuleConditions.from_dict(v) for v in _dict.get('conditions')]
         if 'created_at' in _dict:
             args['created_at'] = string_to_datetime(_dict.get('created_at'))
         if 'created_by_id' in _dict:
@@ -2720,7 +3120,13 @@ class Rule:
         if hasattr(self, 'account_id') and self.account_id is not None:
             _dict['account_id'] = self.account_id
         if hasattr(self, 'conditions') and self.conditions is not None:
-            _dict['conditions'] = [x.to_dict() for x in self.conditions]
+            conditions_list = []
+            for v in self.conditions:
+                if isinstance(v, dict):
+                    conditions_list.append(v)
+                else:
+                    conditions_list.append(v.to_dict())
+            _dict['conditions'] = conditions_list
         if hasattr(self, 'created_at') and self.created_at is not None:
             _dict['created_at'] = datetime_to_string(self.created_at)
         if hasattr(self, 'created_by_id') and self.created_by_id is not None:
@@ -2761,7 +3167,12 @@ class RuleConditions:
           the operator.
     """
 
-    def __init__(self, claim: str, operator: str, value: str) -> None:
+    def __init__(
+        self,
+        claim: str,
+        operator: str,
+        value: str,
+    ) -> None:
         """
         Initialize a RuleConditions object.
 
@@ -2847,7 +3258,11 @@ class RulesList:
     :attr List[Rule] rules: (optional) A list of rules.
     """
 
-    def __init__(self, *, rules: List['Rule'] = None) -> None:
+    def __init__(
+        self,
+        *,
+        rules: List['Rule'] = None,
+    ) -> None:
         """
         Initialize a RulesList object.
 
@@ -2860,7 +3275,7 @@ class RulesList:
         """Initialize a RulesList object from a json dictionary."""
         args = {}
         if 'rules' in _dict:
-            args['rules'] = [Rule.from_dict(x) for x in _dict.get('rules')]
+            args['rules'] = [Rule.from_dict(v) for v in _dict.get('rules')]
         return cls(**args)
 
     @classmethod
@@ -2872,7 +3287,13 @@ class RulesList:
         """Return a json dictionary representing this model."""
         _dict = {}
         if hasattr(self, 'rules') and self.rules is not None:
-            _dict['rules'] = [x.to_dict() for x in self.rules]
+            rules_list = []
+            for v in self.rules:
+                if isinstance(v, dict):
+                    rules_list.append(v)
+                else:
+                    rules_list.append(v.to_dict())
+            _dict['rules'] = rules_list
         return _dict
 
     def _to_dict(self):
@@ -2911,6 +3332,7 @@ class AccessGroupsPager:
         account_id: str,
         transaction_id: str = None,
         iam_id: str = None,
+        search: str = None,
         membership_type: str = None,
         limit: int = None,
         sort: str = None,
@@ -2930,6 +3352,12 @@ class AccessGroupsPager:
                ID is passed in, then a random ID is generated.
         :param str iam_id: (optional) Return groups for member ID (IBMid, service
                ID or trusted profile ID).
+        :param str search: (optional) Use search to filter access groups list by
+               id, name or description.
+               * `search=id:<ACCESS_GROUP_ID>` - To list access groups by id
+               * `search=name:<ACCESS_GROUP_NAME>` - To list access groups by name
+               * `search=description:<ACCESS_GROUP_DESC>` - To list access groups by
+               description.
         :param str membership_type: (optional) Membership type need to be specified
                along with iam_id and must be either `static`, `dynamic` or `all`. If
                membership type is `static`, members explicitly added to the group will be
@@ -2952,6 +3380,7 @@ class AccessGroupsPager:
         self._account_id = account_id
         self._transaction_id = transaction_id
         self._iam_id = iam_id
+        self._search = search
         self._membership_type = membership_type
         self._limit = limit
         self._sort = sort
@@ -2977,6 +3406,7 @@ class AccessGroupsPager:
             account_id=self._account_id,
             transaction_id=self._transaction_id,
             iam_id=self._iam_id,
+            search=self._search,
             membership_type=self._membership_type,
             limit=self._limit,
             sort=self._sort,
