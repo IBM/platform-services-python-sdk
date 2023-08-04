@@ -838,7 +838,7 @@ class TestIamPolicyManagementV1Examples:
 
             # end-list_Policy Assignments
 
-            example_assignment_id = polcy_template_assignment_collection['policy_assignments'][0]['id']
+            example_assignment_id = polcy_template_assignment_collection['assignments'][0]['id']
 
         except ApiException as e:
             pytest.fail(str(e))

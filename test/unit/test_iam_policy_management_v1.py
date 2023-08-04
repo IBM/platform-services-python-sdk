@@ -31,7 +31,9 @@ import urllib
 from ibm_platform_services.iam_policy_management_v1 import *
 
 
-_service = IamPolicyManagementV1(authenticator=NoAuthAuthenticator())
+_service = IamPolicyManagementV1(
+    authenticator=NoAuthAuthenticator()
+)
 
 _base_url = 'https://iam.cloud.ibm.com'
 _service.set_service_url(_base_url)
@@ -3750,7 +3752,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"policy_assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
+        mock_response = '{"assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3800,7 +3802,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"policy_assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
+        mock_response = '{"assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3842,7 +3844,7 @@ class TestListPolicyAssignments:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments')
-        mock_response = '{"policy_assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
+        mock_response = '{"assignments": [{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3885,7 +3887,7 @@ class TestGetPolicyAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments/testString')
-        mock_response = '{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}'
+        mock_response = '{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}'
         responses.add(
             responses.GET,
             url,
@@ -3923,7 +3925,7 @@ class TestGetPolicyAssignment:
         """
         # Set up mock
         url = preprocess_url('/v1/policy_assignments/testString')
-        mock_response = '{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}'
+        mock_response = '{"template_id": "template_id", "template_version": "template_version", "assignment_id": "assignment_id", "target_type": "Account", "target": "target", "options": [{"subject_type": "iam_id", "subject_id": "subject_id", "root_requester_id": "root_requester_id", "root_template_id": "root_template_id", "root_template_version": "root_template_version"}], "id": "id", "account_id": "account_id", "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id", "resources": [{"target": "target", "policy": {"resource_created": {"id": "id"}, "error_message": {"trace": "trace", "errors": [{"code": "insufficent_permissions", "message": "message", "details": {"conflicts_with": {"etag": "etag", "role": "role", "policy": "policy"}}, "more_info": "more_info"}], "status_code": 11}}}], "status": "in_progress"}'
         responses.add(
             responses.GET,
             url,
@@ -3985,9 +3987,7 @@ class TestModel_AssignmentResourceCreated:
         assert assignment_resource_created_model != False
 
         # Construct a model instance of AssignmentResourceCreated by calling from_dict on the json representation
-        assignment_resource_created_model_dict = AssignmentResourceCreated.from_dict(
-            assignment_resource_created_model_json
-        ).__dict__
+        assignment_resource_created_model_dict = AssignmentResourceCreated.from_dict(assignment_resource_created_model_json).__dict__
         assignment_resource_created_model2 = AssignmentResourceCreated(**assignment_resource_created_model_dict)
 
         # Verify the model instances are equivalent
@@ -3996,6 +3996,38 @@ class TestModel_AssignmentResourceCreated:
         # Convert model instance back to dict and verify no loss of data
         assignment_resource_created_model_json2 = assignment_resource_created_model.to_dict()
         assert assignment_resource_created_model_json2 == assignment_resource_created_model_json
+
+
+class TestModel_ConflictsWith:
+    """
+    Test Class for ConflictsWith
+    """
+
+    def test_conflicts_with_serialization(self):
+        """
+        Test serialization/deserialization for ConflictsWith
+        """
+
+        # Construct a json representation of a ConflictsWith model
+        conflicts_with_model_json = {}
+        conflicts_with_model_json['etag'] = 'testString'
+        conflicts_with_model_json['role'] = 'testString'
+        conflicts_with_model_json['policy'] = 'testString'
+
+        # Construct a model instance of ConflictsWith by calling from_dict on the json representation
+        conflicts_with_model = ConflictsWith.from_dict(conflicts_with_model_json)
+        assert conflicts_with_model != False
+
+        # Construct a model instance of ConflictsWith by calling from_dict on the json representation
+        conflicts_with_model_dict = ConflictsWith.from_dict(conflicts_with_model_json).__dict__
+        conflicts_with_model2 = ConflictsWith(**conflicts_with_model_dict)
+
+        # Verify the model instances are equivalent
+        assert conflicts_with_model == conflicts_with_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        conflicts_with_model_json2 = conflicts_with_model.to_dict()
+        assert conflicts_with_model_json2 == conflicts_with_model_json
 
 
 class TestModel_Control:
@@ -4036,6 +4068,41 @@ class TestModel_Control:
         assert control_model_json2 == control_model_json
 
 
+class TestModel_CustomRole:
+    """
+    Test Class for CustomRole
+    """
+
+    def test_custom_role_serialization(self):
+        """
+        Test serialization/deserialization for CustomRole
+        """
+
+        # Construct a json representation of a CustomRole model
+        custom_role_model_json = {}
+        custom_role_model_json['display_name'] = 'testString'
+        custom_role_model_json['description'] = 'testString'
+        custom_role_model_json['actions'] = ['testString']
+        custom_role_model_json['name'] = 'Developer'
+        custom_role_model_json['account_id'] = 'testString'
+        custom_role_model_json['service_name'] = 'iam-groups'
+
+        # Construct a model instance of CustomRole by calling from_dict on the json representation
+        custom_role_model = CustomRole.from_dict(custom_role_model_json)
+        assert custom_role_model != False
+
+        # Construct a model instance of CustomRole by calling from_dict on the json representation
+        custom_role_model_dict = CustomRole.from_dict(custom_role_model_json).__dict__
+        custom_role_model2 = CustomRole(**custom_role_model_dict)
+
+        # Verify the model instances are equivalent
+        assert custom_role_model == custom_role_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        custom_role_model_json2 = custom_role_model.to_dict()
+        assert custom_role_model_json2 == custom_role_model_json
+
+
 class TestModel_EnrichedRoles:
     """
     Test Class for EnrichedRoles
@@ -4072,1274 +4139,6 @@ class TestModel_EnrichedRoles:
         # Convert model instance back to dict and verify no loss of data
         enriched_roles_model_json2 = enriched_roles_model.to_dict()
         assert enriched_roles_model_json2 == enriched_roles_model_json
-
-
-class TestModel_Grant:
-    """
-    Test Class for Grant
-    """
-
-    def test_grant_serialization(self):
-        """
-        Test serialization/deserialization for Grant
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        roles_model = {}  # Roles
-        roles_model['role_id'] = 'testString'
-
-        # Construct a json representation of a Grant model
-        grant_model_json = {}
-        grant_model_json['roles'] = [roles_model]
-
-        # Construct a model instance of Grant by calling from_dict on the json representation
-        grant_model = Grant.from_dict(grant_model_json)
-        assert grant_model != False
-
-        # Construct a model instance of Grant by calling from_dict on the json representation
-        grant_model_dict = Grant.from_dict(grant_model_json).__dict__
-        grant_model2 = Grant(**grant_model_dict)
-
-        # Verify the model instances are equivalent
-        assert grant_model == grant_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        grant_model_json2 = grant_model.to_dict()
-        assert grant_model_json2 == grant_model_json
-
-
-class TestModel_GrantWithEnrichedRoles:
-    """
-    Test Class for GrantWithEnrichedRoles
-    """
-
-    def test_grant_with_enriched_roles_serialization(self):
-        """
-        Test serialization/deserialization for GrantWithEnrichedRoles
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        role_action_model = {}  # RoleAction
-        role_action_model['id'] = 'testString'
-        role_action_model['display_name'] = 'testString'
-        role_action_model['description'] = 'testString'
-
-        enriched_roles_model = {}  # EnrichedRoles
-        enriched_roles_model['role_id'] = 'testString'
-        enriched_roles_model['actions'] = [role_action_model]
-
-        # Construct a json representation of a GrantWithEnrichedRoles model
-        grant_with_enriched_roles_model_json = {}
-        grant_with_enriched_roles_model_json['roles'] = [enriched_roles_model]
-
-        # Construct a model instance of GrantWithEnrichedRoles by calling from_dict on the json representation
-        grant_with_enriched_roles_model = GrantWithEnrichedRoles.from_dict(grant_with_enriched_roles_model_json)
-        assert grant_with_enriched_roles_model != False
-
-        # Construct a model instance of GrantWithEnrichedRoles by calling from_dict on the json representation
-        grant_with_enriched_roles_model_dict = GrantWithEnrichedRoles.from_dict(
-            grant_with_enriched_roles_model_json
-        ).__dict__
-        grant_with_enriched_roles_model2 = GrantWithEnrichedRoles(**grant_with_enriched_roles_model_dict)
-
-        # Verify the model instances are equivalent
-        assert grant_with_enriched_roles_model == grant_with_enriched_roles_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        grant_with_enriched_roles_model_json2 = grant_with_enriched_roles_model.to_dict()
-        assert grant_with_enriched_roles_model_json2 == grant_with_enriched_roles_model_json
-
-
-class TestModel_PolcyTemplateAssignmentCollection:
-    """
-    Test Class for PolcyTemplateAssignmentCollection
-    """
-
-    def test_polcy_template_assignment_collection_serialization(self):
-        """
-        Test serialization/deserialization for PolcyTemplateAssignmentCollection
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        policy_assignment_options_model = {}  # PolicyAssignmentOptions
-        policy_assignment_options_model['subject_type'] = 'iam_id'
-        policy_assignment_options_model['subject_id'] = 'testString'
-        policy_assignment_options_model['root_requester_id'] = 'testString'
-        policy_assignment_options_model['root_template_id'] = 'testString'
-        policy_assignment_options_model['root_template_version'] = 'testString'
-
-        assignment_resource_created_model = {}  # AssignmentResourceCreated
-        assignment_resource_created_model['id'] = 'testString'
-
-        conflicts_with_model = {}  # ConflictsWith
-        conflicts_with_model['etag'] = 'testString'
-        conflicts_with_model['role'] = 'testString'
-        conflicts_with_model['policy'] = 'testString'
-
-        error_details_model = {}  # ErrorDetails
-        error_details_model['conflicts_with'] = conflicts_with_model
-
-        error_object_model = {}  # ErrorObject
-        error_object_model['code'] = 'insufficent_permissions'
-        error_object_model['message'] = 'testString'
-        error_object_model['details'] = error_details_model
-        error_object_model['more_info'] = 'testString'
-
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
-
-        policy_assignment_resources_policy_model = {}  # PolicyAssignmentResourcesPolicy
-        policy_assignment_resources_policy_model['resource_created'] = assignment_resource_created_model
-        policy_assignment_resources_policy_model['error_message'] = error_response_model
-
-        policy_assignment_resources_model = {}  # PolicyAssignmentResources
-        policy_assignment_resources_model['target'] = 'testString'
-        policy_assignment_resources_model['policy'] = policy_assignment_resources_policy_model
-
-        policy_assignment_record_model = {}  # PolicyAssignmentRecord
-        policy_assignment_record_model['template_id'] = 'testString'
-        policy_assignment_record_model['template_version'] = 'testString'
-        policy_assignment_record_model['assignment_id'] = 'testString'
-        policy_assignment_record_model['target_type'] = 'Account'
-        policy_assignment_record_model['target'] = 'testString'
-        policy_assignment_record_model['options'] = [policy_assignment_options_model]
-        policy_assignment_record_model['resources'] = [policy_assignment_resources_model]
-        policy_assignment_record_model['status'] = 'in_progress'
-
-        # Construct a json representation of a PolcyTemplateAssignmentCollection model
-        polcy_template_assignment_collection_model_json = {}
-        polcy_template_assignment_collection_model_json['policy_assignments'] = [policy_assignment_record_model]
-
-        # Construct a model instance of PolcyTemplateAssignmentCollection by calling from_dict on the json representation
-        polcy_template_assignment_collection_model = PolcyTemplateAssignmentCollection.from_dict(
-            polcy_template_assignment_collection_model_json
-        )
-        assert polcy_template_assignment_collection_model != False
-
-        # Construct a model instance of PolcyTemplateAssignmentCollection by calling from_dict on the json representation
-        polcy_template_assignment_collection_model_dict = PolcyTemplateAssignmentCollection.from_dict(
-            polcy_template_assignment_collection_model_json
-        ).__dict__
-        polcy_template_assignment_collection_model2 = PolcyTemplateAssignmentCollection(
-            **polcy_template_assignment_collection_model_dict
-        )
-
-        # Verify the model instances are equivalent
-        assert polcy_template_assignment_collection_model == polcy_template_assignment_collection_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        polcy_template_assignment_collection_model_json2 = polcy_template_assignment_collection_model.to_dict()
-        assert polcy_template_assignment_collection_model_json2 == polcy_template_assignment_collection_model_json
-
-
-class TestModel_PolicyAssignmentOptions:
-    """
-    Test Class for PolicyAssignmentOptions
-    """
-
-    def test_policy_assignment_options_serialization(self):
-        """
-        Test serialization/deserialization for PolicyAssignmentOptions
-        """
-
-        # Construct a json representation of a PolicyAssignmentOptions model
-        policy_assignment_options_model_json = {}
-        policy_assignment_options_model_json['subject_type'] = 'iam_id'
-        policy_assignment_options_model_json['subject_id'] = 'testString'
-        policy_assignment_options_model_json['root_requester_id'] = 'testString'
-        policy_assignment_options_model_json['root_template_id'] = 'testString'
-        policy_assignment_options_model_json['root_template_version'] = 'testString'
-
-        # Construct a model instance of PolicyAssignmentOptions by calling from_dict on the json representation
-        policy_assignment_options_model = PolicyAssignmentOptions.from_dict(policy_assignment_options_model_json)
-        assert policy_assignment_options_model != False
-
-        # Construct a model instance of PolicyAssignmentOptions by calling from_dict on the json representation
-        policy_assignment_options_model_dict = PolicyAssignmentOptions.from_dict(
-            policy_assignment_options_model_json
-        ).__dict__
-        policy_assignment_options_model2 = PolicyAssignmentOptions(**policy_assignment_options_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_assignment_options_model == policy_assignment_options_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_assignment_options_model_json2 = policy_assignment_options_model.to_dict()
-        assert policy_assignment_options_model_json2 == policy_assignment_options_model_json
-
-
-class TestModel_PolicyAssignmentRecord:
-    """
-    Test Class for PolicyAssignmentRecord
-    """
-
-    def test_policy_assignment_record_serialization(self):
-        """
-        Test serialization/deserialization for PolicyAssignmentRecord
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        policy_assignment_options_model = {}  # PolicyAssignmentOptions
-        policy_assignment_options_model['subject_type'] = 'iam_id'
-        policy_assignment_options_model['subject_id'] = 'testString'
-        policy_assignment_options_model['root_requester_id'] = 'testString'
-        policy_assignment_options_model['root_template_id'] = 'testString'
-        policy_assignment_options_model['root_template_version'] = 'testString'
-
-        assignment_resource_created_model = {}  # AssignmentResourceCreated
-        assignment_resource_created_model['id'] = 'testString'
-
-        conflicts_with_model = {}  # ConflictsWith
-        conflicts_with_model['etag'] = 'testString'
-        conflicts_with_model['role'] = 'testString'
-        conflicts_with_model['policy'] = 'testString'
-
-        error_details_model = {}  # ErrorDetails
-        error_details_model['conflicts_with'] = conflicts_with_model
-
-        error_object_model = {}  # ErrorObject
-        error_object_model['code'] = 'insufficent_permissions'
-        error_object_model['message'] = 'testString'
-        error_object_model['details'] = error_details_model
-        error_object_model['more_info'] = 'testString'
-
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
-
-        policy_assignment_resources_policy_model = {}  # PolicyAssignmentResourcesPolicy
-        policy_assignment_resources_policy_model['resource_created'] = assignment_resource_created_model
-        policy_assignment_resources_policy_model['error_message'] = error_response_model
-
-        policy_assignment_resources_model = {}  # PolicyAssignmentResources
-        policy_assignment_resources_model['target'] = 'testString'
-        policy_assignment_resources_model['policy'] = policy_assignment_resources_policy_model
-
-        # Construct a json representation of a PolicyAssignmentRecord model
-        policy_assignment_record_model_json = {}
-        policy_assignment_record_model_json['template_id'] = 'testString'
-        policy_assignment_record_model_json['template_version'] = 'testString'
-        policy_assignment_record_model_json['assignment_id'] = 'testString'
-        policy_assignment_record_model_json['target_type'] = 'Account'
-        policy_assignment_record_model_json['target'] = 'testString'
-        policy_assignment_record_model_json['options'] = [policy_assignment_options_model]
-        policy_assignment_record_model_json['resources'] = [policy_assignment_resources_model]
-        policy_assignment_record_model_json['status'] = 'in_progress'
-
-        # Construct a model instance of PolicyAssignmentRecord by calling from_dict on the json representation
-        policy_assignment_record_model = PolicyAssignmentRecord.from_dict(policy_assignment_record_model_json)
-        assert policy_assignment_record_model != False
-
-        # Construct a model instance of PolicyAssignmentRecord by calling from_dict on the json representation
-        policy_assignment_record_model_dict = PolicyAssignmentRecord.from_dict(
-            policy_assignment_record_model_json
-        ).__dict__
-        policy_assignment_record_model2 = PolicyAssignmentRecord(**policy_assignment_record_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_assignment_record_model == policy_assignment_record_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_assignment_record_model_json2 = policy_assignment_record_model.to_dict()
-        assert policy_assignment_record_model_json2 == policy_assignment_record_model_json
-
-
-class TestModel_PolicyAssignmentResources:
-    """
-    Test Class for PolicyAssignmentResources
-    """
-
-    def test_policy_assignment_resources_serialization(self):
-        """
-        Test serialization/deserialization for PolicyAssignmentResources
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        assignment_resource_created_model = {}  # AssignmentResourceCreated
-        assignment_resource_created_model['id'] = 'testString'
-
-        conflicts_with_model = {}  # ConflictsWith
-        conflicts_with_model['etag'] = 'testString'
-        conflicts_with_model['role'] = 'testString'
-        conflicts_with_model['policy'] = 'testString'
-
-        error_details_model = {}  # ErrorDetails
-        error_details_model['conflicts_with'] = conflicts_with_model
-
-        error_object_model = {}  # ErrorObject
-        error_object_model['code'] = 'insufficent_permissions'
-        error_object_model['message'] = 'testString'
-        error_object_model['details'] = error_details_model
-        error_object_model['more_info'] = 'testString'
-
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
-
-        policy_assignment_resources_policy_model = {}  # PolicyAssignmentResourcesPolicy
-        policy_assignment_resources_policy_model['resource_created'] = assignment_resource_created_model
-        policy_assignment_resources_policy_model['error_message'] = error_response_model
-
-        # Construct a json representation of a PolicyAssignmentResources model
-        policy_assignment_resources_model_json = {}
-        policy_assignment_resources_model_json['target'] = 'testString'
-        policy_assignment_resources_model_json['policy'] = policy_assignment_resources_policy_model
-
-        # Construct a model instance of PolicyAssignmentResources by calling from_dict on the json representation
-        policy_assignment_resources_model = PolicyAssignmentResources.from_dict(policy_assignment_resources_model_json)
-        assert policy_assignment_resources_model != False
-
-        # Construct a model instance of PolicyAssignmentResources by calling from_dict on the json representation
-        policy_assignment_resources_model_dict = PolicyAssignmentResources.from_dict(
-            policy_assignment_resources_model_json
-        ).__dict__
-        policy_assignment_resources_model2 = PolicyAssignmentResources(**policy_assignment_resources_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_assignment_resources_model == policy_assignment_resources_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_assignment_resources_model_json2 = policy_assignment_resources_model.to_dict()
-        assert policy_assignment_resources_model_json2 == policy_assignment_resources_model_json
-
-
-class TestModel_PolicyAssignmentResourcesPolicy:
-    """
-    Test Class for PolicyAssignmentResourcesPolicy
-    """
-
-    def test_policy_assignment_resources_policy_serialization(self):
-        """
-        Test serialization/deserialization for PolicyAssignmentResourcesPolicy
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        assignment_resource_created_model = {}  # AssignmentResourceCreated
-        assignment_resource_created_model['id'] = 'testString'
-
-        conflicts_with_model = {}  # ConflictsWith
-        conflicts_with_model['etag'] = 'testString'
-        conflicts_with_model['role'] = 'testString'
-        conflicts_with_model['policy'] = 'testString'
-
-        error_details_model = {}  # ErrorDetails
-        error_details_model['conflicts_with'] = conflicts_with_model
-
-        error_object_model = {}  # ErrorObject
-        error_object_model['code'] = 'insufficent_permissions'
-        error_object_model['message'] = 'testString'
-        error_object_model['details'] = error_details_model
-        error_object_model['more_info'] = 'testString'
-
-        error_response_model = {}  # ErrorResponse
-        error_response_model['trace'] = 'testString'
-        error_response_model['errors'] = [error_object_model]
-        error_response_model['status_code'] = 38
-
-        # Construct a json representation of a PolicyAssignmentResourcesPolicy model
-        policy_assignment_resources_policy_model_json = {}
-        policy_assignment_resources_policy_model_json['resource_created'] = assignment_resource_created_model
-        policy_assignment_resources_policy_model_json['error_message'] = error_response_model
-
-        # Construct a model instance of PolicyAssignmentResourcesPolicy by calling from_dict on the json representation
-        policy_assignment_resources_policy_model = PolicyAssignmentResourcesPolicy.from_dict(
-            policy_assignment_resources_policy_model_json
-        )
-        assert policy_assignment_resources_policy_model != False
-
-        # Construct a model instance of PolicyAssignmentResourcesPolicy by calling from_dict on the json representation
-        policy_assignment_resources_policy_model_dict = PolicyAssignmentResourcesPolicy.from_dict(
-            policy_assignment_resources_policy_model_json
-        ).__dict__
-        policy_assignment_resources_policy_model2 = PolicyAssignmentResourcesPolicy(
-            **policy_assignment_resources_policy_model_dict
-        )
-
-        # Verify the model instances are equivalent
-        assert policy_assignment_resources_policy_model == policy_assignment_resources_policy_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_assignment_resources_policy_model_json2 = policy_assignment_resources_policy_model.to_dict()
-        assert policy_assignment_resources_policy_model_json2 == policy_assignment_resources_policy_model_json
-
-
-class TestModel_PolicyRole:
-    """
-    Test Class for PolicyRole
-    """
-
-    def test_policy_role_serialization(self):
-        """
-        Test serialization/deserialization for PolicyRole
-        """
-
-        # Construct a json representation of a PolicyRole model
-        policy_role_model_json = {}
-        policy_role_model_json['role_id'] = 'testString'
-
-        # Construct a model instance of PolicyRole by calling from_dict on the json representation
-        policy_role_model = PolicyRole.from_dict(policy_role_model_json)
-        assert policy_role_model != False
-
-        # Construct a model instance of PolicyRole by calling from_dict on the json representation
-        policy_role_model_dict = PolicyRole.from_dict(policy_role_model_json).__dict__
-        policy_role_model2 = PolicyRole(**policy_role_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_role_model == policy_role_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_role_model_json2 = policy_role_model.to_dict()
-        assert policy_role_model_json2 == policy_role_model_json
-
-
-class TestModel_PolicyTemplate:
-    """
-    Test Class for PolicyTemplate
-    """
-
-    def test_policy_template_serialization(self):
-        """
-        Test serialization/deserialization for PolicyTemplate
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
-        v2_policy_resource_attribute_model['key'] = 'testString'
-        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
-        v2_policy_resource_attribute_model['value'] = 'testString'
-
-        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
-        v2_policy_resource_tag_model['key'] = 'testString'
-        v2_policy_resource_tag_model['value'] = 'testString'
-        v2_policy_resource_tag_model['operator'] = 'stringEquals'
-
-        v2_policy_resource_model = {}  # V2PolicyResource
-        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
-        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
-
-        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
-        v2_policy_rule_model['key'] = 'testString'
-        v2_policy_rule_model['operator'] = 'timeLessThan'
-        v2_policy_rule_model['value'] = 'testString'
-
-        roles_model = {}  # Roles
-        roles_model['role_id'] = 'testString'
-
-        grant_model = {}  # Grant
-        grant_model['roles'] = [roles_model]
-
-        control_model = {}  # Control
-        control_model['grant'] = grant_model
-
-        template_policy_model = {}  # TemplatePolicy
-        template_policy_model['type'] = 'access'
-        template_policy_model['description'] = 'testString'
-        template_policy_model['resource'] = v2_policy_resource_model
-        template_policy_model['pattern'] = 'testString'
-        template_policy_model['rule'] = v2_policy_rule_model
-        template_policy_model['control'] = control_model
-
-        # Construct a json representation of a PolicyTemplate model
-        policy_template_model_json = {}
-        policy_template_model_json['name'] = 'testString'
-        policy_template_model_json['description'] = 'testString'
-        policy_template_model_json['account_id'] = 'testString'
-        policy_template_model_json['version'] = 'testString'
-        policy_template_model_json['committed'] = True
-        policy_template_model_json['policy'] = template_policy_model
-
-        # Construct a model instance of PolicyTemplate by calling from_dict on the json representation
-        policy_template_model = PolicyTemplate.from_dict(policy_template_model_json)
-        assert policy_template_model != False
-
-        # Construct a model instance of PolicyTemplate by calling from_dict on the json representation
-        policy_template_model_dict = PolicyTemplate.from_dict(policy_template_model_json).__dict__
-        policy_template_model2 = PolicyTemplate(**policy_template_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_template_model == policy_template_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_template_model_json2 = policy_template_model.to_dict()
-        assert policy_template_model_json2 == policy_template_model_json
-
-
-class TestModel_PolicyTemplateCollection:
-    """
-    Test Class for PolicyTemplateCollection
-    """
-
-    def test_policy_template_collection_serialization(self):
-        """
-        Test serialization/deserialization for PolicyTemplateCollection
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
-        v2_policy_resource_attribute_model['key'] = 'testString'
-        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
-        v2_policy_resource_attribute_model['value'] = 'testString'
-
-        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
-        v2_policy_resource_tag_model['key'] = 'testString'
-        v2_policy_resource_tag_model['value'] = 'testString'
-        v2_policy_resource_tag_model['operator'] = 'stringEquals'
-
-        v2_policy_resource_model = {}  # V2PolicyResource
-        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
-        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
-
-        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
-        v2_policy_rule_model['key'] = 'testString'
-        v2_policy_rule_model['operator'] = 'timeLessThan'
-        v2_policy_rule_model['value'] = 'testString'
-
-        roles_model = {}  # Roles
-        roles_model['role_id'] = 'testString'
-
-        grant_model = {}  # Grant
-        grant_model['roles'] = [roles_model]
-
-        control_model = {}  # Control
-        control_model['grant'] = grant_model
-
-        template_policy_model = {}  # TemplatePolicy
-        template_policy_model['type'] = 'access'
-        template_policy_model['description'] = 'testString'
-        template_policy_model['resource'] = v2_policy_resource_model
-        template_policy_model['pattern'] = 'testString'
-        template_policy_model['rule'] = v2_policy_rule_model
-        template_policy_model['control'] = control_model
-
-        policy_template_model = {}  # PolicyTemplate
-        policy_template_model['name'] = 'testString'
-        policy_template_model['description'] = 'testString'
-        policy_template_model['account_id'] = 'testString'
-        policy_template_model['version'] = 'testString'
-        policy_template_model['committed'] = True
-        policy_template_model['policy'] = template_policy_model
-
-        # Construct a json representation of a PolicyTemplateCollection model
-        policy_template_collection_model_json = {}
-        policy_template_collection_model_json['policy_templates'] = [policy_template_model]
-
-        # Construct a model instance of PolicyTemplateCollection by calling from_dict on the json representation
-        policy_template_collection_model = PolicyTemplateCollection.from_dict(policy_template_collection_model_json)
-        assert policy_template_collection_model != False
-
-        # Construct a model instance of PolicyTemplateCollection by calling from_dict on the json representation
-        policy_template_collection_model_dict = PolicyTemplateCollection.from_dict(
-            policy_template_collection_model_json
-        ).__dict__
-        policy_template_collection_model2 = PolicyTemplateCollection(**policy_template_collection_model_dict)
-
-        # Verify the model instances are equivalent
-        assert policy_template_collection_model == policy_template_collection_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_template_collection_model_json2 = policy_template_collection_model.to_dict()
-        assert policy_template_collection_model_json2 == policy_template_collection_model_json
-
-
-class TestModel_PolicyTemplateVersionsCollection:
-    """
-    Test Class for PolicyTemplateVersionsCollection
-    """
-
-    def test_policy_template_versions_collection_serialization(self):
-        """
-        Test serialization/deserialization for PolicyTemplateVersionsCollection
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
-        v2_policy_resource_attribute_model['key'] = 'testString'
-        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
-        v2_policy_resource_attribute_model['value'] = 'testString'
-
-        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
-        v2_policy_resource_tag_model['key'] = 'testString'
-        v2_policy_resource_tag_model['value'] = 'testString'
-        v2_policy_resource_tag_model['operator'] = 'stringEquals'
-
-        v2_policy_resource_model = {}  # V2PolicyResource
-        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
-        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
-
-        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
-        v2_policy_rule_model['key'] = 'testString'
-        v2_policy_rule_model['operator'] = 'timeLessThan'
-        v2_policy_rule_model['value'] = 'testString'
-
-        roles_model = {}  # Roles
-        roles_model['role_id'] = 'testString'
-
-        grant_model = {}  # Grant
-        grant_model['roles'] = [roles_model]
-
-        control_model = {}  # Control
-        control_model['grant'] = grant_model
-
-        template_policy_model = {}  # TemplatePolicy
-        template_policy_model['type'] = 'access'
-        template_policy_model['description'] = 'testString'
-        template_policy_model['resource'] = v2_policy_resource_model
-        template_policy_model['pattern'] = 'testString'
-        template_policy_model['rule'] = v2_policy_rule_model
-        template_policy_model['control'] = control_model
-
-        policy_template_model = {}  # PolicyTemplate
-        policy_template_model['name'] = 'testString'
-        policy_template_model['description'] = 'testString'
-        policy_template_model['account_id'] = 'testString'
-        policy_template_model['version'] = 'testString'
-        policy_template_model['committed'] = True
-        policy_template_model['policy'] = template_policy_model
-
-        # Construct a json representation of a PolicyTemplateVersionsCollection model
-        policy_template_versions_collection_model_json = {}
-        policy_template_versions_collection_model_json['versions'] = [policy_template_model]
-
-        # Construct a model instance of PolicyTemplateVersionsCollection by calling from_dict on the json representation
-        policy_template_versions_collection_model = PolicyTemplateVersionsCollection.from_dict(
-            policy_template_versions_collection_model_json
-        )
-        assert policy_template_versions_collection_model != False
-
-        # Construct a model instance of PolicyTemplateVersionsCollection by calling from_dict on the json representation
-        policy_template_versions_collection_model_dict = PolicyTemplateVersionsCollection.from_dict(
-            policy_template_versions_collection_model_json
-        ).__dict__
-        policy_template_versions_collection_model2 = PolicyTemplateVersionsCollection(
-            **policy_template_versions_collection_model_dict
-        )
-
-        # Verify the model instances are equivalent
-        assert policy_template_versions_collection_model == policy_template_versions_collection_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        policy_template_versions_collection_model_json2 = policy_template_versions_collection_model.to_dict()
-        assert policy_template_versions_collection_model_json2 == policy_template_versions_collection_model_json
-
-
-class TestModel_RoleAction:
-    """
-    Test Class for RoleAction
-    """
-
-    def test_role_action_serialization(self):
-        """
-        Test serialization/deserialization for RoleAction
-        """
-
-        # Construct a json representation of a RoleAction model
-        role_action_model_json = {}
-        role_action_model_json['id'] = 'testString'
-        role_action_model_json['display_name'] = 'testString'
-        role_action_model_json['description'] = 'testString'
-
-        # Construct a model instance of RoleAction by calling from_dict on the json representation
-        role_action_model = RoleAction.from_dict(role_action_model_json)
-        assert role_action_model != False
-
-        # Construct a model instance of RoleAction by calling from_dict on the json representation
-        role_action_model_dict = RoleAction.from_dict(role_action_model_json).__dict__
-        role_action_model2 = RoleAction(**role_action_model_dict)
-
-        # Verify the model instances are equivalent
-        assert role_action_model == role_action_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        role_action_model_json2 = role_action_model.to_dict()
-        assert role_action_model_json2 == role_action_model_json
-
-
-class TestModel_Roles:
-    """
-    Test Class for Roles
-    """
-
-    def test_roles_serialization(self):
-        """
-        Test serialization/deserialization for Roles
-        """
-
-        # Construct a json representation of a Roles model
-        roles_model_json = {}
-        roles_model_json['role_id'] = 'testString'
-
-        # Construct a model instance of Roles by calling from_dict on the json representation
-        roles_model = Roles.from_dict(roles_model_json)
-        assert roles_model != False
-
-        # Construct a model instance of Roles by calling from_dict on the json representation
-        roles_model_dict = Roles.from_dict(roles_model_json).__dict__
-        roles_model2 = Roles(**roles_model_dict)
-
-        # Verify the model instances are equivalent
-        assert roles_model == roles_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        roles_model_json2 = roles_model.to_dict()
-        assert roles_model_json2 == roles_model_json
-
-
-class TestModel_RuleAttribute:
-    """
-    Test Class for RuleAttribute
-    """
-
-    def test_rule_attribute_serialization(self):
-        """
-        Test serialization/deserialization for RuleAttribute
-        """
-
-        # Construct a json representation of a RuleAttribute model
-        rule_attribute_model_json = {}
-        rule_attribute_model_json['key'] = 'testString'
-        rule_attribute_model_json['operator'] = 'timeLessThan'
-        rule_attribute_model_json['value'] = 'testString'
-
-        # Construct a model instance of RuleAttribute by calling from_dict on the json representation
-        rule_attribute_model = RuleAttribute.from_dict(rule_attribute_model_json)
-        assert rule_attribute_model != False
-
-        # Construct a model instance of RuleAttribute by calling from_dict on the json representation
-        rule_attribute_model_dict = RuleAttribute.from_dict(rule_attribute_model_json).__dict__
-        rule_attribute_model2 = RuleAttribute(**rule_attribute_model_dict)
-
-        # Verify the model instances are equivalent
-        assert rule_attribute_model == rule_attribute_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        rule_attribute_model_json2 = rule_attribute_model.to_dict()
-        assert rule_attribute_model_json2 == rule_attribute_model_json
-
-
-class TestModel_TemplateMetada:
-    """
-    Test Class for TemplateMetada
-    """
-
-    def test_template_metada_serialization(self):
-        """
-        Test serialization/deserialization for TemplateMetada
-        """
-
-        # Construct a json representation of a TemplateMetada model
-        template_metada_model_json = {}
-        template_metada_model_json['crn'] = 'testString'
-        template_metada_model_json['version'] = 'testString'
-
-        # Construct a model instance of TemplateMetada by calling from_dict on the json representation
-        template_metada_model = TemplateMetada.from_dict(template_metada_model_json)
-        assert template_metada_model != False
-
-        # Construct a model instance of TemplateMetada by calling from_dict on the json representation
-        template_metada_model_dict = TemplateMetada.from_dict(template_metada_model_json).__dict__
-        template_metada_model2 = TemplateMetada(**template_metada_model_dict)
-
-        # Verify the model instances are equivalent
-        assert template_metada_model == template_metada_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        template_metada_model_json2 = template_metada_model.to_dict()
-        assert template_metada_model_json2 == template_metada_model_json
-
-
-class TestModel_TemplatePolicy:
-    """
-    Test Class for TemplatePolicy
-    """
-
-    def test_template_policy_serialization(self):
-        """
-        Test serialization/deserialization for TemplatePolicy
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
-        v2_policy_resource_attribute_model['key'] = 'testString'
-        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
-        v2_policy_resource_attribute_model['value'] = 'testString'
-
-        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
-        v2_policy_resource_tag_model['key'] = 'testString'
-        v2_policy_resource_tag_model['value'] = 'testString'
-        v2_policy_resource_tag_model['operator'] = 'stringEquals'
-
-        v2_policy_resource_model = {}  # V2PolicyResource
-        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
-        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
-
-        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
-        v2_policy_rule_model['key'] = 'testString'
-        v2_policy_rule_model['operator'] = 'timeLessThan'
-        v2_policy_rule_model['value'] = 'testString'
-
-        roles_model = {}  # Roles
-        roles_model['role_id'] = 'testString'
-
-        grant_model = {}  # Grant
-        grant_model['roles'] = [roles_model]
-
-        control_model = {}  # Control
-        control_model['grant'] = grant_model
-
-        # Construct a json representation of a TemplatePolicy model
-        template_policy_model_json = {}
-        template_policy_model_json['type'] = 'access'
-        template_policy_model_json['description'] = 'testString'
-        template_policy_model_json['resource'] = v2_policy_resource_model
-        template_policy_model_json['pattern'] = 'testString'
-        template_policy_model_json['rule'] = v2_policy_rule_model
-        template_policy_model_json['control'] = control_model
-
-        # Construct a model instance of TemplatePolicy by calling from_dict on the json representation
-        template_policy_model = TemplatePolicy.from_dict(template_policy_model_json)
-        assert template_policy_model != False
-
-        # Construct a model instance of TemplatePolicy by calling from_dict on the json representation
-        template_policy_model_dict = TemplatePolicy.from_dict(template_policy_model_json).__dict__
-        template_policy_model2 = TemplatePolicy(**template_policy_model_dict)
-
-        # Verify the model instances are equivalent
-        assert template_policy_model == template_policy_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        template_policy_model_json2 = template_policy_model.to_dict()
-        assert template_policy_model_json2 == template_policy_model_json
-
-
-class TestModel_V2Policy:
-    """
-    Test Class for V2Policy
-    """
-
-    def test_v2_policy_serialization(self):
-        """
-        Test serialization/deserialization for V2Policy
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
-        v2_policy_subject_attribute_model['key'] = 'testString'
-        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
-        v2_policy_subject_attribute_model['value'] = 'testString'
-
-        v2_policy_subject_model = {}  # V2PolicySubject
-        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
-
-        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
-        v2_policy_resource_attribute_model['key'] = 'testString'
-        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
-        v2_policy_resource_attribute_model['value'] = 'testString'
-
-        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
-        v2_policy_resource_tag_model['key'] = 'testString'
-        v2_policy_resource_tag_model['value'] = 'testString'
-        v2_policy_resource_tag_model['operator'] = 'stringEquals'
-
-        v2_policy_resource_model = {}  # V2PolicyResource
-        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
-        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
-
-        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
-        v2_policy_rule_model['key'] = 'testString'
-        v2_policy_rule_model['operator'] = 'timeLessThan'
-        v2_policy_rule_model['value'] = 'testString'
-
-        roles_model = {}  # Roles
-        roles_model['role_id'] = 'testString'
-
-        grant_model = {}  # Grant
-        grant_model['roles'] = [roles_model]
-
-        control_response_model = {}  # ControlResponseControl
-        control_response_model['grant'] = grant_model
-
-        template_metada_model = {}  # TemplateMetada
-        template_metada_model['crn'] = 'testString'
-        template_metada_model['version'] = 'testString'
-
-        # Construct a json representation of a V2Policy model
-        v2_policy_model_json = {}
-        v2_policy_model_json['type'] = 'access'
-        v2_policy_model_json['description'] = 'testString'
-        v2_policy_model_json['subject'] = v2_policy_subject_model
-        v2_policy_model_json['resource'] = v2_policy_resource_model
-        v2_policy_model_json['pattern'] = 'testString'
-        v2_policy_model_json['rule'] = v2_policy_rule_model
-        v2_policy_model_json['control'] = control_response_model
-        v2_policy_model_json['state'] = 'active'
-        v2_policy_model_json['last_permit_at'] = 'testString'
-        v2_policy_model_json['last_permit_frequency'] = 38
-        v2_policy_model_json['template'] = template_metada_model
-
-        # Construct a model instance of V2Policy by calling from_dict on the json representation
-        v2_policy_model = V2Policy.from_dict(v2_policy_model_json)
-        assert v2_policy_model != False
-
-        # Construct a model instance of V2Policy by calling from_dict on the json representation
-        v2_policy_model_dict = V2Policy.from_dict(v2_policy_model_json).__dict__
-        v2_policy_model2 = V2Policy(**v2_policy_model_dict)
-
-        # Verify the model instances are equivalent
-        assert v2_policy_model == v2_policy_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        v2_policy_model_json2 = v2_policy_model.to_dict()
-        assert v2_policy_model_json2 == v2_policy_model_json
-
-
-class TestModel_V2PolicyCollection:
-    """
-    Test Class for V2PolicyCollection
-    """
-
-    def test_v2_policy_collection_serialization(self):
-        """
-        Test serialization/deserialization for V2PolicyCollection
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
-        v2_policy_subject_attribute_model['key'] = 'testString'
-        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
-        v2_policy_subject_attribute_model['value'] = 'testString'
-
-        v2_policy_subject_model = {}  # V2PolicySubject
-        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
-
-        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
-        v2_policy_resource_attribute_model['key'] = 'testString'
-        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
-        v2_policy_resource_attribute_model['value'] = 'testString'
-
-        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
-        v2_policy_resource_tag_model['key'] = 'testString'
-        v2_policy_resource_tag_model['value'] = 'testString'
-        v2_policy_resource_tag_model['operator'] = 'stringEquals'
-
-        v2_policy_resource_model = {}  # V2PolicyResource
-        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
-        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
-
-        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
-        v2_policy_rule_model['key'] = 'testString'
-        v2_policy_rule_model['operator'] = 'timeLessThan'
-        v2_policy_rule_model['value'] = 'testString'
-
-        roles_model = {}  # Roles
-        roles_model['role_id'] = 'testString'
-
-        grant_model = {}  # Grant
-        grant_model['roles'] = [roles_model]
-
-        control_response_model = {}  # ControlResponseControl
-        control_response_model['grant'] = grant_model
-
-        template_metada_model = {}  # TemplateMetada
-        template_metada_model['crn'] = 'testString'
-        template_metada_model['version'] = 'testString'
-
-        v2_policy_model = {}  # V2Policy
-        v2_policy_model['type'] = 'access'
-        v2_policy_model['description'] = 'testString'
-        v2_policy_model['subject'] = v2_policy_subject_model
-        v2_policy_model['resource'] = v2_policy_resource_model
-        v2_policy_model['pattern'] = 'testString'
-        v2_policy_model['rule'] = v2_policy_rule_model
-        v2_policy_model['control'] = control_response_model
-        v2_policy_model['state'] = 'active'
-        v2_policy_model['last_permit_at'] = 'testString'
-        v2_policy_model['last_permit_frequency'] = 38
-        v2_policy_model['template'] = template_metada_model
-
-        # Construct a json representation of a V2PolicyCollection model
-        v2_policy_collection_model_json = {}
-        v2_policy_collection_model_json['policies'] = [v2_policy_model]
-
-        # Construct a model instance of V2PolicyCollection by calling from_dict on the json representation
-        v2_policy_collection_model = V2PolicyCollection.from_dict(v2_policy_collection_model_json)
-        assert v2_policy_collection_model != False
-
-        # Construct a model instance of V2PolicyCollection by calling from_dict on the json representation
-        v2_policy_collection_model_dict = V2PolicyCollection.from_dict(v2_policy_collection_model_json).__dict__
-        v2_policy_collection_model2 = V2PolicyCollection(**v2_policy_collection_model_dict)
-
-        # Verify the model instances are equivalent
-        assert v2_policy_collection_model == v2_policy_collection_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        v2_policy_collection_model_json2 = v2_policy_collection_model.to_dict()
-        assert v2_policy_collection_model_json2 == v2_policy_collection_model_json
-
-
-class TestModel_V2PolicyResource:
-    """
-    Test Class for V2PolicyResource
-    """
-
-    def test_v2_policy_resource_serialization(self):
-        """
-        Test serialization/deserialization for V2PolicyResource
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
-        v2_policy_resource_attribute_model['key'] = 'testString'
-        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
-        v2_policy_resource_attribute_model['value'] = 'testString'
-
-        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
-        v2_policy_resource_tag_model['key'] = 'testString'
-        v2_policy_resource_tag_model['value'] = 'testString'
-        v2_policy_resource_tag_model['operator'] = 'stringEquals'
-
-        # Construct a json representation of a V2PolicyResource model
-        v2_policy_resource_model_json = {}
-        v2_policy_resource_model_json['attributes'] = [v2_policy_resource_attribute_model]
-        v2_policy_resource_model_json['tags'] = [v2_policy_resource_tag_model]
-
-        # Construct a model instance of V2PolicyResource by calling from_dict on the json representation
-        v2_policy_resource_model = V2PolicyResource.from_dict(v2_policy_resource_model_json)
-        assert v2_policy_resource_model != False
-
-        # Construct a model instance of V2PolicyResource by calling from_dict on the json representation
-        v2_policy_resource_model_dict = V2PolicyResource.from_dict(v2_policy_resource_model_json).__dict__
-        v2_policy_resource_model2 = V2PolicyResource(**v2_policy_resource_model_dict)
-
-        # Verify the model instances are equivalent
-        assert v2_policy_resource_model == v2_policy_resource_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        v2_policy_resource_model_json2 = v2_policy_resource_model.to_dict()
-        assert v2_policy_resource_model_json2 == v2_policy_resource_model_json
-
-
-class TestModel_V2PolicyResourceAttribute:
-    """
-    Test Class for V2PolicyResourceAttribute
-    """
-
-    def test_v2_policy_resource_attribute_serialization(self):
-        """
-        Test serialization/deserialization for V2PolicyResourceAttribute
-        """
-
-        # Construct a json representation of a V2PolicyResourceAttribute model
-        v2_policy_resource_attribute_model_json = {}
-        v2_policy_resource_attribute_model_json['key'] = 'testString'
-        v2_policy_resource_attribute_model_json['operator'] = 'stringEquals'
-        v2_policy_resource_attribute_model_json['value'] = 'testString'
-
-        # Construct a model instance of V2PolicyResourceAttribute by calling from_dict on the json representation
-        v2_policy_resource_attribute_model = V2PolicyResourceAttribute.from_dict(
-            v2_policy_resource_attribute_model_json
-        )
-        assert v2_policy_resource_attribute_model != False
-
-        # Construct a model instance of V2PolicyResourceAttribute by calling from_dict on the json representation
-        v2_policy_resource_attribute_model_dict = V2PolicyResourceAttribute.from_dict(
-            v2_policy_resource_attribute_model_json
-        ).__dict__
-        v2_policy_resource_attribute_model2 = V2PolicyResourceAttribute(**v2_policy_resource_attribute_model_dict)
-
-        # Verify the model instances are equivalent
-        assert v2_policy_resource_attribute_model == v2_policy_resource_attribute_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        v2_policy_resource_attribute_model_json2 = v2_policy_resource_attribute_model.to_dict()
-        assert v2_policy_resource_attribute_model_json2 == v2_policy_resource_attribute_model_json
-
-
-class TestModel_V2PolicyResourceTag:
-    """
-    Test Class for V2PolicyResourceTag
-    """
-
-    def test_v2_policy_resource_tag_serialization(self):
-        """
-        Test serialization/deserialization for V2PolicyResourceTag
-        """
-
-        # Construct a json representation of a V2PolicyResourceTag model
-        v2_policy_resource_tag_model_json = {}
-        v2_policy_resource_tag_model_json['key'] = 'testString'
-        v2_policy_resource_tag_model_json['value'] = 'testString'
-        v2_policy_resource_tag_model_json['operator'] = 'stringEquals'
-
-        # Construct a model instance of V2PolicyResourceTag by calling from_dict on the json representation
-        v2_policy_resource_tag_model = V2PolicyResourceTag.from_dict(v2_policy_resource_tag_model_json)
-        assert v2_policy_resource_tag_model != False
-
-        # Construct a model instance of V2PolicyResourceTag by calling from_dict on the json representation
-        v2_policy_resource_tag_model_dict = V2PolicyResourceTag.from_dict(v2_policy_resource_tag_model_json).__dict__
-        v2_policy_resource_tag_model2 = V2PolicyResourceTag(**v2_policy_resource_tag_model_dict)
-
-        # Verify the model instances are equivalent
-        assert v2_policy_resource_tag_model == v2_policy_resource_tag_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        v2_policy_resource_tag_model_json2 = v2_policy_resource_tag_model.to_dict()
-        assert v2_policy_resource_tag_model_json2 == v2_policy_resource_tag_model_json
-
-
-class TestModel_V2PolicySubject:
-    """
-    Test Class for V2PolicySubject
-    """
-
-    def test_v2_policy_subject_serialization(self):
-        """
-        Test serialization/deserialization for V2PolicySubject
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
-        v2_policy_subject_attribute_model['key'] = 'testString'
-        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
-        v2_policy_subject_attribute_model['value'] = 'testString'
-
-        # Construct a json representation of a V2PolicySubject model
-        v2_policy_subject_model_json = {}
-        v2_policy_subject_model_json['attributes'] = [v2_policy_subject_attribute_model]
-
-        # Construct a model instance of V2PolicySubject by calling from_dict on the json representation
-        v2_policy_subject_model = V2PolicySubject.from_dict(v2_policy_subject_model_json)
-        assert v2_policy_subject_model != False
-
-        # Construct a model instance of V2PolicySubject by calling from_dict on the json representation
-        v2_policy_subject_model_dict = V2PolicySubject.from_dict(v2_policy_subject_model_json).__dict__
-        v2_policy_subject_model2 = V2PolicySubject(**v2_policy_subject_model_dict)
-
-        # Verify the model instances are equivalent
-        assert v2_policy_subject_model == v2_policy_subject_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        v2_policy_subject_model_json2 = v2_policy_subject_model.to_dict()
-        assert v2_policy_subject_model_json2 == v2_policy_subject_model_json
-
-
-class TestModel_V2PolicySubjectAttribute:
-    """
-    Test Class for V2PolicySubjectAttribute
-    """
-
-    def test_v2_policy_subject_attribute_serialization(self):
-        """
-        Test serialization/deserialization for V2PolicySubjectAttribute
-        """
-
-        # Construct a json representation of a V2PolicySubjectAttribute model
-        v2_policy_subject_attribute_model_json = {}
-        v2_policy_subject_attribute_model_json['key'] = 'testString'
-        v2_policy_subject_attribute_model_json['operator'] = 'stringEquals'
-        v2_policy_subject_attribute_model_json['value'] = 'testString'
-
-        # Construct a model instance of V2PolicySubjectAttribute by calling from_dict on the json representation
-        v2_policy_subject_attribute_model = V2PolicySubjectAttribute.from_dict(v2_policy_subject_attribute_model_json)
-        assert v2_policy_subject_attribute_model != False
-
-        # Construct a model instance of V2PolicySubjectAttribute by calling from_dict on the json representation
-        v2_policy_subject_attribute_model_dict = V2PolicySubjectAttribute.from_dict(
-            v2_policy_subject_attribute_model_json
-        ).__dict__
-        v2_policy_subject_attribute_model2 = V2PolicySubjectAttribute(**v2_policy_subject_attribute_model_dict)
-
-        # Verify the model instances are equivalent
-        assert v2_policy_subject_attribute_model == v2_policy_subject_attribute_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        v2_policy_subject_attribute_model_json2 = v2_policy_subject_attribute_model.to_dict()
-        assert v2_policy_subject_attribute_model_json2 == v2_policy_subject_attribute_model_json
-
-
-class TestModel_ConflictsWith:
-    """
-    Test Class for ConflictsWith
-    """
-
-    def test_conflicts_with_serialization(self):
-        """
-        Test serialization/deserialization for ConflictsWith
-        """
-
-        # Construct a json representation of a ConflictsWith model
-        conflicts_with_model_json = {}
-        conflicts_with_model_json['etag'] = 'testString'
-        conflicts_with_model_json['role'] = 'testString'
-        conflicts_with_model_json['policy'] = 'testString'
-
-        # Construct a model instance of ConflictsWith by calling from_dict on the json representation
-        conflicts_with_model = ConflictsWith.from_dict(conflicts_with_model_json)
-        assert conflicts_with_model != False
-
-        # Construct a model instance of ConflictsWith by calling from_dict on the json representation
-        conflicts_with_model_dict = ConflictsWith.from_dict(conflicts_with_model_json).__dict__
-        conflicts_with_model2 = ConflictsWith(**conflicts_with_model_dict)
-
-        # Verify the model instances are equivalent
-        assert conflicts_with_model == conflicts_with_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        conflicts_with_model_json2 = conflicts_with_model.to_dict()
-        assert conflicts_with_model_json2 == conflicts_with_model_json
-
-
-class TestModel_CustomRole:
-    """
-    Test Class for CustomRole
-    """
-
-    def test_custom_role_serialization(self):
-        """
-        Test serialization/deserialization for CustomRole
-        """
-
-        # Construct a json representation of a CustomRole model
-        custom_role_model_json = {}
-        custom_role_model_json['display_name'] = 'testString'
-        custom_role_model_json['description'] = 'testString'
-        custom_role_model_json['actions'] = ['testString']
-        custom_role_model_json['name'] = 'Developer'
-        custom_role_model_json['account_id'] = 'testString'
-        custom_role_model_json['service_name'] = 'iam-groups'
-
-        # Construct a model instance of CustomRole by calling from_dict on the json representation
-        custom_role_model = CustomRole.from_dict(custom_role_model_json)
-        assert custom_role_model != False
-
-        # Construct a model instance of CustomRole by calling from_dict on the json representation
-        custom_role_model_dict = CustomRole.from_dict(custom_role_model_json).__dict__
-        custom_role_model2 = CustomRole(**custom_role_model_dict)
-
-        # Verify the model instances are equivalent
-        assert custom_role_model == custom_role_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        custom_role_model_json2 = custom_role_model.to_dict()
-        assert custom_role_model_json2 == custom_role_model_json
 
 
 class TestModel_ErrorDetails:
@@ -5470,6 +4269,82 @@ class TestModel_ErrorResponse:
         assert error_response_model_json2 == error_response_model_json
 
 
+class TestModel_Grant:
+    """
+    Test Class for Grant
+    """
+
+    def test_grant_serialization(self):
+        """
+        Test serialization/deserialization for Grant
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        roles_model = {}  # Roles
+        roles_model['role_id'] = 'testString'
+
+        # Construct a json representation of a Grant model
+        grant_model_json = {}
+        grant_model_json['roles'] = [roles_model]
+
+        # Construct a model instance of Grant by calling from_dict on the json representation
+        grant_model = Grant.from_dict(grant_model_json)
+        assert grant_model != False
+
+        # Construct a model instance of Grant by calling from_dict on the json representation
+        grant_model_dict = Grant.from_dict(grant_model_json).__dict__
+        grant_model2 = Grant(**grant_model_dict)
+
+        # Verify the model instances are equivalent
+        assert grant_model == grant_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        grant_model_json2 = grant_model.to_dict()
+        assert grant_model_json2 == grant_model_json
+
+
+class TestModel_GrantWithEnrichedRoles:
+    """
+    Test Class for GrantWithEnrichedRoles
+    """
+
+    def test_grant_with_enriched_roles_serialization(self):
+        """
+        Test serialization/deserialization for GrantWithEnrichedRoles
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        role_action_model = {}  # RoleAction
+        role_action_model['id'] = 'testString'
+        role_action_model['display_name'] = 'testString'
+        role_action_model['description'] = 'testString'
+
+        enriched_roles_model = {}  # EnrichedRoles
+        enriched_roles_model['role_id'] = 'testString'
+        enriched_roles_model['actions'] = [role_action_model]
+
+        # Construct a json representation of a GrantWithEnrichedRoles model
+        grant_with_enriched_roles_model_json = {}
+        grant_with_enriched_roles_model_json['roles'] = [enriched_roles_model]
+
+        # Construct a model instance of GrantWithEnrichedRoles by calling from_dict on the json representation
+        grant_with_enriched_roles_model = GrantWithEnrichedRoles.from_dict(grant_with_enriched_roles_model_json)
+        assert grant_with_enriched_roles_model != False
+
+        # Construct a model instance of GrantWithEnrichedRoles by calling from_dict on the json representation
+        grant_with_enriched_roles_model_dict = GrantWithEnrichedRoles.from_dict(grant_with_enriched_roles_model_json).__dict__
+        grant_with_enriched_roles_model2 = GrantWithEnrichedRoles(**grant_with_enriched_roles_model_dict)
+
+        # Verify the model instances are equivalent
+        assert grant_with_enriched_roles_model == grant_with_enriched_roles_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        grant_with_enriched_roles_model_json2 = grant_with_enriched_roles_model.to_dict()
+        assert grant_with_enriched_roles_model_json2 == grant_with_enriched_roles_model_json
+
+
 class TestModel_Policy:
     """
     Test Class for Policy
@@ -5506,9 +4381,9 @@ class TestModel_Policy:
         policy_resource_model['attributes'] = [resource_attribute_model]
         policy_resource_model['tags'] = [resource_tag_model]
 
-        template_metada_model = {}  # TemplateMetada
-        template_metada_model['crn'] = 'testString'
-        template_metada_model['version'] = 'testString'
+        template_metadata_model = {}  # TemplateMetadata
+        template_metadata_model['crn'] = 'testString'
+        template_metadata_model['version'] = 'testString'
 
         # Construct a json representation of a Policy model
         policy_model_json = {}
@@ -5518,7 +4393,7 @@ class TestModel_Policy:
         policy_model_json['roles'] = [policy_role_model]
         policy_model_json['resources'] = [policy_resource_model]
         policy_model_json['state'] = 'active'
-        policy_model_json['template'] = template_metada_model
+        policy_model_json['template'] = template_metadata_model
 
         # Construct a model instance of Policy by calling from_dict on the json representation
         policy_model = Policy.from_dict(policy_model_json)
@@ -5536,14 +4411,238 @@ class TestModel_Policy:
         assert policy_model_json2 == policy_model_json
 
 
-class TestModel_PolicyList:
+class TestModel_PolicyAssignment:
     """
-    Test Class for PolicyList
+    Test Class for PolicyAssignment
     """
 
-    def test_policy_list_serialization(self):
+    def test_policy_assignment_serialization(self):
         """
-        Test serialization/deserialization for PolicyList
+        Test serialization/deserialization for PolicyAssignment
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        policy_assignment_request_options_item_model = {}  # PolicyAssignmentRequestOptionsItem
+        policy_assignment_request_options_item_model['subject_type'] = 'iam_id'
+        policy_assignment_request_options_item_model['subject_id'] = 'testString'
+        policy_assignment_request_options_item_model['root_requester_id'] = 'testString'
+        policy_assignment_request_options_item_model['root_template_id'] = 'testString'
+        policy_assignment_request_options_item_model['root_template_version'] = 'testString'
+
+        assignment_resource_created_model = {}  # AssignmentResourceCreated
+        assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        error_response_model = {}  # ErrorResponse
+        error_response_model['trace'] = 'testString'
+        error_response_model['errors'] = [error_object_model]
+        error_response_model['status_code'] = 38
+
+        policy_assignment_resources_policy_model = {}  # PolicyAssignmentResourcesPolicy
+        policy_assignment_resources_policy_model['resource_created'] = assignment_resource_created_model
+        policy_assignment_resources_policy_model['error_message'] = error_response_model
+
+        policy_assignment_resources_model = {}  # PolicyAssignmentResources
+        policy_assignment_resources_model['target'] = 'testString'
+        policy_assignment_resources_model['policy'] = policy_assignment_resources_policy_model
+
+        # Construct a json representation of a PolicyAssignment model
+        policy_assignment_model_json = {}
+        policy_assignment_model_json['template_id'] = 'testString'
+        policy_assignment_model_json['template_version'] = 'testString'
+        policy_assignment_model_json['assignment_id'] = 'testString'
+        policy_assignment_model_json['target_type'] = 'Account'
+        policy_assignment_model_json['target'] = 'testString'
+        policy_assignment_model_json['options'] = [policy_assignment_request_options_item_model]
+        policy_assignment_model_json['resources'] = [policy_assignment_resources_model]
+        policy_assignment_model_json['status'] = 'in_progress'
+
+        # Construct a model instance of PolicyAssignment by calling from_dict on the json representation
+        policy_assignment_model = PolicyAssignment.from_dict(policy_assignment_model_json)
+        assert policy_assignment_model != False
+
+        # Construct a model instance of PolicyAssignment by calling from_dict on the json representation
+        policy_assignment_model_dict = PolicyAssignment.from_dict(policy_assignment_model_json).__dict__
+        policy_assignment_model2 = PolicyAssignment(**policy_assignment_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_assignment_model == policy_assignment_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_assignment_model_json2 = policy_assignment_model.to_dict()
+        assert policy_assignment_model_json2 == policy_assignment_model_json
+
+
+class TestModel_PolicyAssignmentRequestOptionsItem:
+    """
+    Test Class for PolicyAssignmentRequestOptionsItem
+    """
+
+    def test_policy_assignment_request_options_item_serialization(self):
+        """
+        Test serialization/deserialization for PolicyAssignmentRequestOptionsItem
+        """
+
+        # Construct a json representation of a PolicyAssignmentRequestOptionsItem model
+        policy_assignment_request_options_item_model_json = {}
+        policy_assignment_request_options_item_model_json['subject_type'] = 'iam_id'
+        policy_assignment_request_options_item_model_json['subject_id'] = 'testString'
+        policy_assignment_request_options_item_model_json['root_requester_id'] = 'testString'
+        policy_assignment_request_options_item_model_json['root_template_id'] = 'testString'
+        policy_assignment_request_options_item_model_json['root_template_version'] = 'testString'
+
+        # Construct a model instance of PolicyAssignmentRequestOptionsItem by calling from_dict on the json representation
+        policy_assignment_request_options_item_model = PolicyAssignmentRequestOptionsItem.from_dict(policy_assignment_request_options_item_model_json)
+        assert policy_assignment_request_options_item_model != False
+
+        # Construct a model instance of PolicyAssignmentRequestOptionsItem by calling from_dict on the json representation
+        policy_assignment_request_options_item_model_dict = PolicyAssignmentRequestOptionsItem.from_dict(policy_assignment_request_options_item_model_json).__dict__
+        policy_assignment_request_options_item_model2 = PolicyAssignmentRequestOptionsItem(**policy_assignment_request_options_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_assignment_request_options_item_model == policy_assignment_request_options_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_assignment_request_options_item_model_json2 = policy_assignment_request_options_item_model.to_dict()
+        assert policy_assignment_request_options_item_model_json2 == policy_assignment_request_options_item_model_json
+
+
+class TestModel_PolicyAssignmentResources:
+    """
+    Test Class for PolicyAssignmentResources
+    """
+
+    def test_policy_assignment_resources_serialization(self):
+        """
+        Test serialization/deserialization for PolicyAssignmentResources
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        assignment_resource_created_model = {}  # AssignmentResourceCreated
+        assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        error_response_model = {}  # ErrorResponse
+        error_response_model['trace'] = 'testString'
+        error_response_model['errors'] = [error_object_model]
+        error_response_model['status_code'] = 38
+
+        policy_assignment_resources_policy_model = {}  # PolicyAssignmentResourcesPolicy
+        policy_assignment_resources_policy_model['resource_created'] = assignment_resource_created_model
+        policy_assignment_resources_policy_model['error_message'] = error_response_model
+
+        # Construct a json representation of a PolicyAssignmentResources model
+        policy_assignment_resources_model_json = {}
+        policy_assignment_resources_model_json['target'] = 'testString'
+        policy_assignment_resources_model_json['policy'] = policy_assignment_resources_policy_model
+
+        # Construct a model instance of PolicyAssignmentResources by calling from_dict on the json representation
+        policy_assignment_resources_model = PolicyAssignmentResources.from_dict(policy_assignment_resources_model_json)
+        assert policy_assignment_resources_model != False
+
+        # Construct a model instance of PolicyAssignmentResources by calling from_dict on the json representation
+        policy_assignment_resources_model_dict = PolicyAssignmentResources.from_dict(policy_assignment_resources_model_json).__dict__
+        policy_assignment_resources_model2 = PolicyAssignmentResources(**policy_assignment_resources_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_assignment_resources_model == policy_assignment_resources_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_assignment_resources_model_json2 = policy_assignment_resources_model.to_dict()
+        assert policy_assignment_resources_model_json2 == policy_assignment_resources_model_json
+
+
+class TestModel_PolicyAssignmentResourcesPolicy:
+    """
+    Test Class for PolicyAssignmentResourcesPolicy
+    """
+
+    def test_policy_assignment_resources_policy_serialization(self):
+        """
+        Test serialization/deserialization for PolicyAssignmentResourcesPolicy
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        assignment_resource_created_model = {}  # AssignmentResourceCreated
+        assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        error_response_model = {}  # ErrorResponse
+        error_response_model['trace'] = 'testString'
+        error_response_model['errors'] = [error_object_model]
+        error_response_model['status_code'] = 38
+
+        # Construct a json representation of a PolicyAssignmentResourcesPolicy model
+        policy_assignment_resources_policy_model_json = {}
+        policy_assignment_resources_policy_model_json['resource_created'] = assignment_resource_created_model
+        policy_assignment_resources_policy_model_json['error_message'] = error_response_model
+
+        # Construct a model instance of PolicyAssignmentResourcesPolicy by calling from_dict on the json representation
+        policy_assignment_resources_policy_model = PolicyAssignmentResourcesPolicy.from_dict(policy_assignment_resources_policy_model_json)
+        assert policy_assignment_resources_policy_model != False
+
+        # Construct a model instance of PolicyAssignmentResourcesPolicy by calling from_dict on the json representation
+        policy_assignment_resources_policy_model_dict = PolicyAssignmentResourcesPolicy.from_dict(policy_assignment_resources_policy_model_json).__dict__
+        policy_assignment_resources_policy_model2 = PolicyAssignmentResourcesPolicy(**policy_assignment_resources_policy_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_assignment_resources_policy_model == policy_assignment_resources_policy_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_assignment_resources_policy_model_json2 = policy_assignment_resources_policy_model.to_dict()
+        assert policy_assignment_resources_policy_model_json2 == policy_assignment_resources_policy_model_json
+
+
+class TestModel_PolicyCollection:
+    """
+    Test Class for PolicyCollection
+    """
+
+    def test_policy_collection_serialization(self):
+        """
+        Test serialization/deserialization for PolicyCollection
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
@@ -5572,9 +4671,9 @@ class TestModel_PolicyList:
         policy_resource_model['attributes'] = [resource_attribute_model]
         policy_resource_model['tags'] = [resource_tag_model]
 
-        template_metada_model = {}  # TemplateMetada
-        template_metada_model['crn'] = 'testString'
-        template_metada_model['version'] = 'testString'
+        template_metadata_model = {}  # TemplateMetadata
+        template_metadata_model['crn'] = 'testString'
+        template_metadata_model['version'] = 'testString'
 
         policy_model = {}  # Policy
         policy_model['type'] = 'testString'
@@ -5583,26 +4682,26 @@ class TestModel_PolicyList:
         policy_model['roles'] = [policy_role_model]
         policy_model['resources'] = [policy_resource_model]
         policy_model['state'] = 'active'
-        policy_model['template'] = template_metada_model
+        policy_model['template'] = template_metadata_model
 
-        # Construct a json representation of a PolicyList model
-        policy_list_model_json = {}
-        policy_list_model_json['policies'] = [policy_model]
+        # Construct a json representation of a PolicyCollection model
+        policy_collection_model_json = {}
+        policy_collection_model_json['policies'] = [policy_model]
 
-        # Construct a model instance of PolicyList by calling from_dict on the json representation
-        policy_list_model = PolicyList.from_dict(policy_list_model_json)
-        assert policy_list_model != False
+        # Construct a model instance of PolicyCollection by calling from_dict on the json representation
+        policy_collection_model = PolicyCollection.from_dict(policy_collection_model_json)
+        assert policy_collection_model != False
 
-        # Construct a model instance of PolicyList by calling from_dict on the json representation
-        policy_list_model_dict = PolicyList.from_dict(policy_list_model_json).__dict__
-        policy_list_model2 = PolicyList(**policy_list_model_dict)
+        # Construct a model instance of PolicyCollection by calling from_dict on the json representation
+        policy_collection_model_dict = PolicyCollection.from_dict(policy_collection_model_json).__dict__
+        policy_collection_model2 = PolicyCollection(**policy_collection_model_dict)
 
         # Verify the model instances are equivalent
-        assert policy_list_model == policy_list_model2
+        assert policy_collection_model == policy_collection_model2
 
         # Convert model instance back to dict and verify no loss of data
-        policy_list_model_json2 = policy_list_model.to_dict()
-        assert policy_list_model_json2 == policy_list_model_json
+        policy_collection_model_json2 = policy_collection_model.to_dict()
+        assert policy_collection_model_json2 == policy_collection_model_json
 
 
 class TestModel_PolicyResource:
@@ -5648,6 +4747,36 @@ class TestModel_PolicyResource:
         assert policy_resource_model_json2 == policy_resource_model_json
 
 
+class TestModel_PolicyRole:
+    """
+    Test Class for PolicyRole
+    """
+
+    def test_policy_role_serialization(self):
+        """
+        Test serialization/deserialization for PolicyRole
+        """
+
+        # Construct a json representation of a PolicyRole model
+        policy_role_model_json = {}
+        policy_role_model_json['role_id'] = 'testString'
+
+        # Construct a model instance of PolicyRole by calling from_dict on the json representation
+        policy_role_model = PolicyRole.from_dict(policy_role_model_json)
+        assert policy_role_model != False
+
+        # Construct a model instance of PolicyRole by calling from_dict on the json representation
+        policy_role_model_dict = PolicyRole.from_dict(policy_role_model_json).__dict__
+        policy_role_model2 = PolicyRole(**policy_role_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_role_model == policy_role_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_role_model_json2 = policy_role_model.to_dict()
+        assert policy_role_model_json2 == policy_role_model_json
+
+
 class TestModel_PolicySubject:
     """
     Test Class for PolicySubject
@@ -5682,6 +4811,310 @@ class TestModel_PolicySubject:
         # Convert model instance back to dict and verify no loss of data
         policy_subject_model_json2 = policy_subject_model.to_dict()
         assert policy_subject_model_json2 == policy_subject_model_json
+
+
+class TestModel_PolicyTemplate:
+    """
+    Test Class for PolicyTemplate
+    """
+
+    def test_policy_template_serialization(self):
+        """
+        Test serialization/deserialization for PolicyTemplate
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
+
+        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        v2_policy_resource_model = {}  # V2PolicyResource
+        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
+
+        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
+        v2_policy_rule_model['key'] = 'testString'
+        v2_policy_rule_model['operator'] = 'timeLessThan'
+        v2_policy_rule_model['value'] = 'testString'
+
+        roles_model = {}  # Roles
+        roles_model['role_id'] = 'testString'
+
+        grant_model = {}  # Grant
+        grant_model['roles'] = [roles_model]
+
+        control_model = {}  # Control
+        control_model['grant'] = grant_model
+
+        template_policy_model = {}  # TemplatePolicy
+        template_policy_model['type'] = 'access'
+        template_policy_model['description'] = 'testString'
+        template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['pattern'] = 'testString'
+        template_policy_model['rule'] = v2_policy_rule_model
+        template_policy_model['control'] = control_model
+
+        # Construct a json representation of a PolicyTemplate model
+        policy_template_model_json = {}
+        policy_template_model_json['name'] = 'testString'
+        policy_template_model_json['description'] = 'testString'
+        policy_template_model_json['account_id'] = 'testString'
+        policy_template_model_json['version'] = 'testString'
+        policy_template_model_json['committed'] = True
+        policy_template_model_json['policy'] = template_policy_model
+
+        # Construct a model instance of PolicyTemplate by calling from_dict on the json representation
+        policy_template_model = PolicyTemplate.from_dict(policy_template_model_json)
+        assert policy_template_model != False
+
+        # Construct a model instance of PolicyTemplate by calling from_dict on the json representation
+        policy_template_model_dict = PolicyTemplate.from_dict(policy_template_model_json).__dict__
+        policy_template_model2 = PolicyTemplate(**policy_template_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_template_model == policy_template_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_template_model_json2 = policy_template_model.to_dict()
+        assert policy_template_model_json2 == policy_template_model_json
+
+
+class TestModel_PolicyTemplateAssignmentCollection:
+    """
+    Test Class for PolicyTemplateAssignmentCollection
+    """
+
+    def test_policy_template_assignment_collection_serialization(self):
+        """
+        Test serialization/deserialization for PolicyTemplateAssignmentCollection
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        policy_assignment_request_options_item_model = {}  # PolicyAssignmentRequestOptionsItem
+        policy_assignment_request_options_item_model['subject_type'] = 'iam_id'
+        policy_assignment_request_options_item_model['subject_id'] = 'testString'
+        policy_assignment_request_options_item_model['root_requester_id'] = 'testString'
+        policy_assignment_request_options_item_model['root_template_id'] = 'testString'
+        policy_assignment_request_options_item_model['root_template_version'] = 'testString'
+
+        assignment_resource_created_model = {}  # AssignmentResourceCreated
+        assignment_resource_created_model['id'] = 'testString'
+
+        conflicts_with_model = {}  # ConflictsWith
+        conflicts_with_model['etag'] = 'testString'
+        conflicts_with_model['role'] = 'testString'
+        conflicts_with_model['policy'] = 'testString'
+
+        error_details_model = {}  # ErrorDetails
+        error_details_model['conflicts_with'] = conflicts_with_model
+
+        error_object_model = {}  # ErrorObject
+        error_object_model['code'] = 'insufficent_permissions'
+        error_object_model['message'] = 'testString'
+        error_object_model['details'] = error_details_model
+        error_object_model['more_info'] = 'testString'
+
+        error_response_model = {}  # ErrorResponse
+        error_response_model['trace'] = 'testString'
+        error_response_model['errors'] = [error_object_model]
+        error_response_model['status_code'] = 38
+
+        policy_assignment_resources_policy_model = {}  # PolicyAssignmentResourcesPolicy
+        policy_assignment_resources_policy_model['resource_created'] = assignment_resource_created_model
+        policy_assignment_resources_policy_model['error_message'] = error_response_model
+
+        policy_assignment_resources_model = {}  # PolicyAssignmentResources
+        policy_assignment_resources_model['target'] = 'testString'
+        policy_assignment_resources_model['policy'] = policy_assignment_resources_policy_model
+
+        policy_assignment_model = {}  # PolicyAssignment
+        policy_assignment_model['template_id'] = 'testString'
+        policy_assignment_model['template_version'] = 'testString'
+        policy_assignment_model['assignment_id'] = 'testString'
+        policy_assignment_model['target_type'] = 'Account'
+        policy_assignment_model['target'] = 'testString'
+        policy_assignment_model['options'] = [policy_assignment_request_options_item_model]
+        policy_assignment_model['resources'] = [policy_assignment_resources_model]
+        policy_assignment_model['status'] = 'in_progress'
+
+        # Construct a json representation of a PolicyTemplateAssignmentCollection model
+        policy_template_assignment_collection_model_json = {}
+        policy_template_assignment_collection_model_json['assignments'] = [policy_assignment_model]
+
+        # Construct a model instance of PolicyTemplateAssignmentCollection by calling from_dict on the json representation
+        policy_template_assignment_collection_model = PolicyTemplateAssignmentCollection.from_dict(policy_template_assignment_collection_model_json)
+        assert policy_template_assignment_collection_model != False
+
+        # Construct a model instance of PolicyTemplateAssignmentCollection by calling from_dict on the json representation
+        policy_template_assignment_collection_model_dict = PolicyTemplateAssignmentCollection.from_dict(policy_template_assignment_collection_model_json).__dict__
+        policy_template_assignment_collection_model2 = PolicyTemplateAssignmentCollection(**policy_template_assignment_collection_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_template_assignment_collection_model == policy_template_assignment_collection_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_template_assignment_collection_model_json2 = policy_template_assignment_collection_model.to_dict()
+        assert policy_template_assignment_collection_model_json2 == policy_template_assignment_collection_model_json
+
+
+class TestModel_PolicyTemplateCollection:
+    """
+    Test Class for PolicyTemplateCollection
+    """
+
+    def test_policy_template_collection_serialization(self):
+        """
+        Test serialization/deserialization for PolicyTemplateCollection
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
+
+        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        v2_policy_resource_model = {}  # V2PolicyResource
+        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
+
+        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
+        v2_policy_rule_model['key'] = 'testString'
+        v2_policy_rule_model['operator'] = 'timeLessThan'
+        v2_policy_rule_model['value'] = 'testString'
+
+        roles_model = {}  # Roles
+        roles_model['role_id'] = 'testString'
+
+        grant_model = {}  # Grant
+        grant_model['roles'] = [roles_model]
+
+        control_model = {}  # Control
+        control_model['grant'] = grant_model
+
+        template_policy_model = {}  # TemplatePolicy
+        template_policy_model['type'] = 'access'
+        template_policy_model['description'] = 'testString'
+        template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['pattern'] = 'testString'
+        template_policy_model['rule'] = v2_policy_rule_model
+        template_policy_model['control'] = control_model
+
+        policy_template_model = {}  # PolicyTemplate
+        policy_template_model['name'] = 'testString'
+        policy_template_model['description'] = 'testString'
+        policy_template_model['account_id'] = 'testString'
+        policy_template_model['version'] = 'testString'
+        policy_template_model['committed'] = True
+        policy_template_model['policy'] = template_policy_model
+
+        # Construct a json representation of a PolicyTemplateCollection model
+        policy_template_collection_model_json = {}
+        policy_template_collection_model_json['policy_templates'] = [policy_template_model]
+
+        # Construct a model instance of PolicyTemplateCollection by calling from_dict on the json representation
+        policy_template_collection_model = PolicyTemplateCollection.from_dict(policy_template_collection_model_json)
+        assert policy_template_collection_model != False
+
+        # Construct a model instance of PolicyTemplateCollection by calling from_dict on the json representation
+        policy_template_collection_model_dict = PolicyTemplateCollection.from_dict(policy_template_collection_model_json).__dict__
+        policy_template_collection_model2 = PolicyTemplateCollection(**policy_template_collection_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_template_collection_model == policy_template_collection_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_template_collection_model_json2 = policy_template_collection_model.to_dict()
+        assert policy_template_collection_model_json2 == policy_template_collection_model_json
+
+
+class TestModel_PolicyTemplateVersionsCollection:
+    """
+    Test Class for PolicyTemplateVersionsCollection
+    """
+
+    def test_policy_template_versions_collection_serialization(self):
+        """
+        Test serialization/deserialization for PolicyTemplateVersionsCollection
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
+
+        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        v2_policy_resource_model = {}  # V2PolicyResource
+        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
+
+        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
+        v2_policy_rule_model['key'] = 'testString'
+        v2_policy_rule_model['operator'] = 'timeLessThan'
+        v2_policy_rule_model['value'] = 'testString'
+
+        roles_model = {}  # Roles
+        roles_model['role_id'] = 'testString'
+
+        grant_model = {}  # Grant
+        grant_model['roles'] = [roles_model]
+
+        control_model = {}  # Control
+        control_model['grant'] = grant_model
+
+        template_policy_model = {}  # TemplatePolicy
+        template_policy_model['type'] = 'access'
+        template_policy_model['description'] = 'testString'
+        template_policy_model['resource'] = v2_policy_resource_model
+        template_policy_model['pattern'] = 'testString'
+        template_policy_model['rule'] = v2_policy_rule_model
+        template_policy_model['control'] = control_model
+
+        policy_template_model = {}  # PolicyTemplate
+        policy_template_model['name'] = 'testString'
+        policy_template_model['description'] = 'testString'
+        policy_template_model['account_id'] = 'testString'
+        policy_template_model['version'] = 'testString'
+        policy_template_model['committed'] = True
+        policy_template_model['policy'] = template_policy_model
+
+        # Construct a json representation of a PolicyTemplateVersionsCollection model
+        policy_template_versions_collection_model_json = {}
+        policy_template_versions_collection_model_json['versions'] = [policy_template_model]
+
+        # Construct a model instance of PolicyTemplateVersionsCollection by calling from_dict on the json representation
+        policy_template_versions_collection_model = PolicyTemplateVersionsCollection.from_dict(policy_template_versions_collection_model_json)
+        assert policy_template_versions_collection_model != False
+
+        # Construct a model instance of PolicyTemplateVersionsCollection by calling from_dict on the json representation
+        policy_template_versions_collection_model_dict = PolicyTemplateVersionsCollection.from_dict(policy_template_versions_collection_model_json).__dict__
+        policy_template_versions_collection_model2 = PolicyTemplateVersionsCollection(**policy_template_versions_collection_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_template_versions_collection_model == policy_template_versions_collection_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_template_versions_collection_model_json2 = policy_template_versions_collection_model.to_dict()
+        assert policy_template_versions_collection_model_json2 == policy_template_versions_collection_model_json
 
 
 class TestModel_ResourceAttribute:
@@ -5780,14 +5213,46 @@ class TestModel_Role:
         assert role_model_json2 == role_model_json
 
 
-class TestModel_RoleList:
+class TestModel_RoleAction:
     """
-    Test Class for RoleList
+    Test Class for RoleAction
     """
 
-    def test_role_list_serialization(self):
+    def test_role_action_serialization(self):
         """
-        Test serialization/deserialization for RoleList
+        Test serialization/deserialization for RoleAction
+        """
+
+        # Construct a json representation of a RoleAction model
+        role_action_model_json = {}
+        role_action_model_json['id'] = 'testString'
+        role_action_model_json['display_name'] = 'testString'
+        role_action_model_json['description'] = 'testString'
+
+        # Construct a model instance of RoleAction by calling from_dict on the json representation
+        role_action_model = RoleAction.from_dict(role_action_model_json)
+        assert role_action_model != False
+
+        # Construct a model instance of RoleAction by calling from_dict on the json representation
+        role_action_model_dict = RoleAction.from_dict(role_action_model_json).__dict__
+        role_action_model2 = RoleAction(**role_action_model_dict)
+
+        # Verify the model instances are equivalent
+        assert role_action_model == role_action_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        role_action_model_json2 = role_action_model.to_dict()
+        assert role_action_model_json2 == role_action_model_json
+
+
+class TestModel_RoleCollection:
+    """
+    Test Class for RoleCollection
+    """
+
+    def test_role_collection_serialization(self):
+        """
+        Test serialization/deserialization for RoleCollection
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
@@ -5805,26 +5270,88 @@ class TestModel_RoleList:
         role_model['description'] = 'testString'
         role_model['actions'] = ['testString']
 
-        # Construct a json representation of a RoleList model
-        role_list_model_json = {}
-        role_list_model_json['custom_roles'] = [custom_role_model]
-        role_list_model_json['service_roles'] = [role_model]
-        role_list_model_json['system_roles'] = [role_model]
+        # Construct a json representation of a RoleCollection model
+        role_collection_model_json = {}
+        role_collection_model_json['custom_roles'] = [custom_role_model]
+        role_collection_model_json['service_roles'] = [role_model]
+        role_collection_model_json['system_roles'] = [role_model]
 
-        # Construct a model instance of RoleList by calling from_dict on the json representation
-        role_list_model = RoleList.from_dict(role_list_model_json)
-        assert role_list_model != False
+        # Construct a model instance of RoleCollection by calling from_dict on the json representation
+        role_collection_model = RoleCollection.from_dict(role_collection_model_json)
+        assert role_collection_model != False
 
-        # Construct a model instance of RoleList by calling from_dict on the json representation
-        role_list_model_dict = RoleList.from_dict(role_list_model_json).__dict__
-        role_list_model2 = RoleList(**role_list_model_dict)
+        # Construct a model instance of RoleCollection by calling from_dict on the json representation
+        role_collection_model_dict = RoleCollection.from_dict(role_collection_model_json).__dict__
+        role_collection_model2 = RoleCollection(**role_collection_model_dict)
 
         # Verify the model instances are equivalent
-        assert role_list_model == role_list_model2
+        assert role_collection_model == role_collection_model2
 
         # Convert model instance back to dict and verify no loss of data
-        role_list_model_json2 = role_list_model.to_dict()
-        assert role_list_model_json2 == role_list_model_json
+        role_collection_model_json2 = role_collection_model.to_dict()
+        assert role_collection_model_json2 == role_collection_model_json
+
+
+class TestModel_Roles:
+    """
+    Test Class for Roles
+    """
+
+    def test_roles_serialization(self):
+        """
+        Test serialization/deserialization for Roles
+        """
+
+        # Construct a json representation of a Roles model
+        roles_model_json = {}
+        roles_model_json['role_id'] = 'testString'
+
+        # Construct a model instance of Roles by calling from_dict on the json representation
+        roles_model = Roles.from_dict(roles_model_json)
+        assert roles_model != False
+
+        # Construct a model instance of Roles by calling from_dict on the json representation
+        roles_model_dict = Roles.from_dict(roles_model_json).__dict__
+        roles_model2 = Roles(**roles_model_dict)
+
+        # Verify the model instances are equivalent
+        assert roles_model == roles_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        roles_model_json2 = roles_model.to_dict()
+        assert roles_model_json2 == roles_model_json
+
+
+class TestModel_RuleAttribute:
+    """
+    Test Class for RuleAttribute
+    """
+
+    def test_rule_attribute_serialization(self):
+        """
+        Test serialization/deserialization for RuleAttribute
+        """
+
+        # Construct a json representation of a RuleAttribute model
+        rule_attribute_model_json = {}
+        rule_attribute_model_json['key'] = 'testString'
+        rule_attribute_model_json['operator'] = 'timeLessThan'
+        rule_attribute_model_json['value'] = 'testString'
+
+        # Construct a model instance of RuleAttribute by calling from_dict on the json representation
+        rule_attribute_model = RuleAttribute.from_dict(rule_attribute_model_json)
+        assert rule_attribute_model != False
+
+        # Construct a model instance of RuleAttribute by calling from_dict on the json representation
+        rule_attribute_model_dict = RuleAttribute.from_dict(rule_attribute_model_json).__dict__
+        rule_attribute_model2 = RuleAttribute(**rule_attribute_model_dict)
+
+        # Verify the model instances are equivalent
+        assert rule_attribute_model == rule_attribute_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        rule_attribute_model_json2 = rule_attribute_model.to_dict()
+        assert rule_attribute_model_json2 == rule_attribute_model_json
 
 
 class TestModel_SubjectAttribute:
@@ -5858,6 +5385,445 @@ class TestModel_SubjectAttribute:
         assert subject_attribute_model_json2 == subject_attribute_model_json
 
 
+class TestModel_TemplateMetadata:
+    """
+    Test Class for TemplateMetadata
+    """
+
+    def test_template_metadata_serialization(self):
+        """
+        Test serialization/deserialization for TemplateMetadata
+        """
+
+        # Construct a json representation of a TemplateMetadata model
+        template_metadata_model_json = {}
+        template_metadata_model_json['crn'] = 'testString'
+        template_metadata_model_json['version'] = 'testString'
+
+        # Construct a model instance of TemplateMetadata by calling from_dict on the json representation
+        template_metadata_model = TemplateMetadata.from_dict(template_metadata_model_json)
+        assert template_metadata_model != False
+
+        # Construct a model instance of TemplateMetadata by calling from_dict on the json representation
+        template_metadata_model_dict = TemplateMetadata.from_dict(template_metadata_model_json).__dict__
+        template_metadata_model2 = TemplateMetadata(**template_metadata_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_metadata_model == template_metadata_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_metadata_model_json2 = template_metadata_model.to_dict()
+        assert template_metadata_model_json2 == template_metadata_model_json
+
+
+class TestModel_TemplatePolicy:
+    """
+    Test Class for TemplatePolicy
+    """
+
+    def test_template_policy_serialization(self):
+        """
+        Test serialization/deserialization for TemplatePolicy
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
+
+        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        v2_policy_resource_model = {}  # V2PolicyResource
+        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
+
+        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
+        v2_policy_rule_model['key'] = 'testString'
+        v2_policy_rule_model['operator'] = 'timeLessThan'
+        v2_policy_rule_model['value'] = 'testString'
+
+        roles_model = {}  # Roles
+        roles_model['role_id'] = 'testString'
+
+        grant_model = {}  # Grant
+        grant_model['roles'] = [roles_model]
+
+        control_model = {}  # Control
+        control_model['grant'] = grant_model
+
+        # Construct a json representation of a TemplatePolicy model
+        template_policy_model_json = {}
+        template_policy_model_json['type'] = 'access'
+        template_policy_model_json['description'] = 'testString'
+        template_policy_model_json['resource'] = v2_policy_resource_model
+        template_policy_model_json['pattern'] = 'testString'
+        template_policy_model_json['rule'] = v2_policy_rule_model
+        template_policy_model_json['control'] = control_model
+
+        # Construct a model instance of TemplatePolicy by calling from_dict on the json representation
+        template_policy_model = TemplatePolicy.from_dict(template_policy_model_json)
+        assert template_policy_model != False
+
+        # Construct a model instance of TemplatePolicy by calling from_dict on the json representation
+        template_policy_model_dict = TemplatePolicy.from_dict(template_policy_model_json).__dict__
+        template_policy_model2 = TemplatePolicy(**template_policy_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_policy_model == template_policy_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_policy_model_json2 = template_policy_model.to_dict()
+        assert template_policy_model_json2 == template_policy_model_json
+
+
+class TestModel_V2Policy:
+    """
+    Test Class for V2Policy
+    """
+
+    def test_v2_policy_serialization(self):
+        """
+        Test serialization/deserialization for V2Policy
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        v2_policy_subject_model = {}  # V2PolicySubject
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
+        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
+
+        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        v2_policy_resource_model = {}  # V2PolicyResource
+        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
+
+        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
+        v2_policy_rule_model['key'] = 'testString'
+        v2_policy_rule_model['operator'] = 'timeLessThan'
+        v2_policy_rule_model['value'] = 'testString'
+
+        roles_model = {}  # Roles
+        roles_model['role_id'] = 'testString'
+
+        grant_model = {}  # Grant
+        grant_model['roles'] = [roles_model]
+
+        control_response_model = {}  # ControlResponseControl
+        control_response_model['grant'] = grant_model
+
+        template_metadata_model = {}  # TemplateMetadata
+        template_metadata_model['crn'] = 'testString'
+        template_metadata_model['version'] = 'testString'
+
+        # Construct a json representation of a V2Policy model
+        v2_policy_model_json = {}
+        v2_policy_model_json['type'] = 'access'
+        v2_policy_model_json['description'] = 'testString'
+        v2_policy_model_json['subject'] = v2_policy_subject_model
+        v2_policy_model_json['resource'] = v2_policy_resource_model
+        v2_policy_model_json['pattern'] = 'testString'
+        v2_policy_model_json['rule'] = v2_policy_rule_model
+        v2_policy_model_json['control'] = control_response_model
+        v2_policy_model_json['state'] = 'active'
+        v2_policy_model_json['last_permit_at'] = 'testString'
+        v2_policy_model_json['last_permit_frequency'] = 38
+        v2_policy_model_json['template'] = template_metadata_model
+
+        # Construct a model instance of V2Policy by calling from_dict on the json representation
+        v2_policy_model = V2Policy.from_dict(v2_policy_model_json)
+        assert v2_policy_model != False
+
+        # Construct a model instance of V2Policy by calling from_dict on the json representation
+        v2_policy_model_dict = V2Policy.from_dict(v2_policy_model_json).__dict__
+        v2_policy_model2 = V2Policy(**v2_policy_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_model == v2_policy_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_model_json2 = v2_policy_model.to_dict()
+        assert v2_policy_model_json2 == v2_policy_model_json
+
+
+class TestModel_V2PolicyCollection:
+    """
+    Test Class for V2PolicyCollection
+    """
+
+    def test_v2_policy_collection_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicyCollection
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        v2_policy_subject_model = {}  # V2PolicySubject
+        v2_policy_subject_model['attributes'] = [v2_policy_subject_attribute_model]
+
+        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
+
+        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        v2_policy_resource_model = {}  # V2PolicyResource
+        v2_policy_resource_model['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model['tags'] = [v2_policy_resource_tag_model]
+
+        v2_policy_rule_model = {}  # V2PolicyRuleRuleAttribute
+        v2_policy_rule_model['key'] = 'testString'
+        v2_policy_rule_model['operator'] = 'timeLessThan'
+        v2_policy_rule_model['value'] = 'testString'
+
+        roles_model = {}  # Roles
+        roles_model['role_id'] = 'testString'
+
+        grant_model = {}  # Grant
+        grant_model['roles'] = [roles_model]
+
+        control_response_model = {}  # ControlResponseControl
+        control_response_model['grant'] = grant_model
+
+        template_metadata_model = {}  # TemplateMetadata
+        template_metadata_model['crn'] = 'testString'
+        template_metadata_model['version'] = 'testString'
+
+        v2_policy_model = {}  # V2Policy
+        v2_policy_model['type'] = 'access'
+        v2_policy_model['description'] = 'testString'
+        v2_policy_model['subject'] = v2_policy_subject_model
+        v2_policy_model['resource'] = v2_policy_resource_model
+        v2_policy_model['pattern'] = 'testString'
+        v2_policy_model['rule'] = v2_policy_rule_model
+        v2_policy_model['control'] = control_response_model
+        v2_policy_model['state'] = 'active'
+        v2_policy_model['last_permit_at'] = 'testString'
+        v2_policy_model['last_permit_frequency'] = 38
+        v2_policy_model['template'] = template_metadata_model
+
+        # Construct a json representation of a V2PolicyCollection model
+        v2_policy_collection_model_json = {}
+        v2_policy_collection_model_json['policies'] = [v2_policy_model]
+
+        # Construct a model instance of V2PolicyCollection by calling from_dict on the json representation
+        v2_policy_collection_model = V2PolicyCollection.from_dict(v2_policy_collection_model_json)
+        assert v2_policy_collection_model != False
+
+        # Construct a model instance of V2PolicyCollection by calling from_dict on the json representation
+        v2_policy_collection_model_dict = V2PolicyCollection.from_dict(v2_policy_collection_model_json).__dict__
+        v2_policy_collection_model2 = V2PolicyCollection(**v2_policy_collection_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_collection_model == v2_policy_collection_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_collection_model_json2 = v2_policy_collection_model.to_dict()
+        assert v2_policy_collection_model_json2 == v2_policy_collection_model_json
+
+
+class TestModel_V2PolicyResource:
+    """
+    Test Class for V2PolicyResource
+    """
+
+    def test_v2_policy_resource_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicyResource
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        v2_policy_resource_attribute_model = {}  # V2PolicyResourceAttribute
+        v2_policy_resource_attribute_model['key'] = 'testString'
+        v2_policy_resource_attribute_model['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model['value'] = 'testString'
+
+        v2_policy_resource_tag_model = {}  # V2PolicyResourceTag
+        v2_policy_resource_tag_model['key'] = 'testString'
+        v2_policy_resource_tag_model['value'] = 'testString'
+        v2_policy_resource_tag_model['operator'] = 'stringEquals'
+
+        # Construct a json representation of a V2PolicyResource model
+        v2_policy_resource_model_json = {}
+        v2_policy_resource_model_json['attributes'] = [v2_policy_resource_attribute_model]
+        v2_policy_resource_model_json['tags'] = [v2_policy_resource_tag_model]
+
+        # Construct a model instance of V2PolicyResource by calling from_dict on the json representation
+        v2_policy_resource_model = V2PolicyResource.from_dict(v2_policy_resource_model_json)
+        assert v2_policy_resource_model != False
+
+        # Construct a model instance of V2PolicyResource by calling from_dict on the json representation
+        v2_policy_resource_model_dict = V2PolicyResource.from_dict(v2_policy_resource_model_json).__dict__
+        v2_policy_resource_model2 = V2PolicyResource(**v2_policy_resource_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_resource_model == v2_policy_resource_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_resource_model_json2 = v2_policy_resource_model.to_dict()
+        assert v2_policy_resource_model_json2 == v2_policy_resource_model_json
+
+
+class TestModel_V2PolicyResourceAttribute:
+    """
+    Test Class for V2PolicyResourceAttribute
+    """
+
+    def test_v2_policy_resource_attribute_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicyResourceAttribute
+        """
+
+        # Construct a json representation of a V2PolicyResourceAttribute model
+        v2_policy_resource_attribute_model_json = {}
+        v2_policy_resource_attribute_model_json['key'] = 'testString'
+        v2_policy_resource_attribute_model_json['operator'] = 'stringEquals'
+        v2_policy_resource_attribute_model_json['value'] = 'testString'
+
+        # Construct a model instance of V2PolicyResourceAttribute by calling from_dict on the json representation
+        v2_policy_resource_attribute_model = V2PolicyResourceAttribute.from_dict(v2_policy_resource_attribute_model_json)
+        assert v2_policy_resource_attribute_model != False
+
+        # Construct a model instance of V2PolicyResourceAttribute by calling from_dict on the json representation
+        v2_policy_resource_attribute_model_dict = V2PolicyResourceAttribute.from_dict(v2_policy_resource_attribute_model_json).__dict__
+        v2_policy_resource_attribute_model2 = V2PolicyResourceAttribute(**v2_policy_resource_attribute_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_resource_attribute_model == v2_policy_resource_attribute_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_resource_attribute_model_json2 = v2_policy_resource_attribute_model.to_dict()
+        assert v2_policy_resource_attribute_model_json2 == v2_policy_resource_attribute_model_json
+
+
+class TestModel_V2PolicyResourceTag:
+    """
+    Test Class for V2PolicyResourceTag
+    """
+
+    def test_v2_policy_resource_tag_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicyResourceTag
+        """
+
+        # Construct a json representation of a V2PolicyResourceTag model
+        v2_policy_resource_tag_model_json = {}
+        v2_policy_resource_tag_model_json['key'] = 'testString'
+        v2_policy_resource_tag_model_json['value'] = 'testString'
+        v2_policy_resource_tag_model_json['operator'] = 'stringEquals'
+
+        # Construct a model instance of V2PolicyResourceTag by calling from_dict on the json representation
+        v2_policy_resource_tag_model = V2PolicyResourceTag.from_dict(v2_policy_resource_tag_model_json)
+        assert v2_policy_resource_tag_model != False
+
+        # Construct a model instance of V2PolicyResourceTag by calling from_dict on the json representation
+        v2_policy_resource_tag_model_dict = V2PolicyResourceTag.from_dict(v2_policy_resource_tag_model_json).__dict__
+        v2_policy_resource_tag_model2 = V2PolicyResourceTag(**v2_policy_resource_tag_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_resource_tag_model == v2_policy_resource_tag_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_resource_tag_model_json2 = v2_policy_resource_tag_model.to_dict()
+        assert v2_policy_resource_tag_model_json2 == v2_policy_resource_tag_model_json
+
+
+class TestModel_V2PolicySubject:
+    """
+    Test Class for V2PolicySubject
+    """
+
+    def test_v2_policy_subject_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicySubject
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        v2_policy_subject_attribute_model = {}  # V2PolicySubjectAttribute
+        v2_policy_subject_attribute_model['key'] = 'testString'
+        v2_policy_subject_attribute_model['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model['value'] = 'testString'
+
+        # Construct a json representation of a V2PolicySubject model
+        v2_policy_subject_model_json = {}
+        v2_policy_subject_model_json['attributes'] = [v2_policy_subject_attribute_model]
+
+        # Construct a model instance of V2PolicySubject by calling from_dict on the json representation
+        v2_policy_subject_model = V2PolicySubject.from_dict(v2_policy_subject_model_json)
+        assert v2_policy_subject_model != False
+
+        # Construct a model instance of V2PolicySubject by calling from_dict on the json representation
+        v2_policy_subject_model_dict = V2PolicySubject.from_dict(v2_policy_subject_model_json).__dict__
+        v2_policy_subject_model2 = V2PolicySubject(**v2_policy_subject_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_subject_model == v2_policy_subject_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_subject_model_json2 = v2_policy_subject_model.to_dict()
+        assert v2_policy_subject_model_json2 == v2_policy_subject_model_json
+
+
+class TestModel_V2PolicySubjectAttribute:
+    """
+    Test Class for V2PolicySubjectAttribute
+    """
+
+    def test_v2_policy_subject_attribute_serialization(self):
+        """
+        Test serialization/deserialization for V2PolicySubjectAttribute
+        """
+
+        # Construct a json representation of a V2PolicySubjectAttribute model
+        v2_policy_subject_attribute_model_json = {}
+        v2_policy_subject_attribute_model_json['key'] = 'testString'
+        v2_policy_subject_attribute_model_json['operator'] = 'stringEquals'
+        v2_policy_subject_attribute_model_json['value'] = 'testString'
+
+        # Construct a model instance of V2PolicySubjectAttribute by calling from_dict on the json representation
+        v2_policy_subject_attribute_model = V2PolicySubjectAttribute.from_dict(v2_policy_subject_attribute_model_json)
+        assert v2_policy_subject_attribute_model != False
+
+        # Construct a model instance of V2PolicySubjectAttribute by calling from_dict on the json representation
+        v2_policy_subject_attribute_model_dict = V2PolicySubjectAttribute.from_dict(v2_policy_subject_attribute_model_json).__dict__
+        v2_policy_subject_attribute_model2 = V2PolicySubjectAttribute(**v2_policy_subject_attribute_model_dict)
+
+        # Verify the model instances are equivalent
+        assert v2_policy_subject_attribute_model == v2_policy_subject_attribute_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        v2_policy_subject_attribute_model_json2 = v2_policy_subject_attribute_model.to_dict()
+        assert v2_policy_subject_attribute_model_json2 == v2_policy_subject_attribute_model_json
+
+
 class TestModel_ControlResponseControl:
     """
     Test Class for ControlResponseControl
@@ -5885,9 +5851,7 @@ class TestModel_ControlResponseControl:
         assert control_response_control_model != False
 
         # Construct a model instance of ControlResponseControl by calling from_dict on the json representation
-        control_response_control_model_dict = ControlResponseControl.from_dict(
-            control_response_control_model_json
-        ).__dict__
+        control_response_control_model_dict = ControlResponseControl.from_dict(control_response_control_model_json).__dict__
         control_response_control_model2 = ControlResponseControl(**control_response_control_model_dict)
 
         # Verify the model instances are equivalent
@@ -5927,30 +5891,19 @@ class TestModel_ControlResponseControlWithEnrichedRoles:
         control_response_control_with_enriched_roles_model_json['grant'] = grant_with_enriched_roles_model
 
         # Construct a model instance of ControlResponseControlWithEnrichedRoles by calling from_dict on the json representation
-        control_response_control_with_enriched_roles_model = ControlResponseControlWithEnrichedRoles.from_dict(
-            control_response_control_with_enriched_roles_model_json
-        )
+        control_response_control_with_enriched_roles_model = ControlResponseControlWithEnrichedRoles.from_dict(control_response_control_with_enriched_roles_model_json)
         assert control_response_control_with_enriched_roles_model != False
 
         # Construct a model instance of ControlResponseControlWithEnrichedRoles by calling from_dict on the json representation
-        control_response_control_with_enriched_roles_model_dict = ControlResponseControlWithEnrichedRoles.from_dict(
-            control_response_control_with_enriched_roles_model_json
-        ).__dict__
-        control_response_control_with_enriched_roles_model2 = ControlResponseControlWithEnrichedRoles(
-            **control_response_control_with_enriched_roles_model_dict
-        )
+        control_response_control_with_enriched_roles_model_dict = ControlResponseControlWithEnrichedRoles.from_dict(control_response_control_with_enriched_roles_model_json).__dict__
+        control_response_control_with_enriched_roles_model2 = ControlResponseControlWithEnrichedRoles(**control_response_control_with_enriched_roles_model_dict)
 
         # Verify the model instances are equivalent
         assert control_response_control_with_enriched_roles_model == control_response_control_with_enriched_roles_model2
 
         # Convert model instance back to dict and verify no loss of data
-        control_response_control_with_enriched_roles_model_json2 = (
-            control_response_control_with_enriched_roles_model.to_dict()
-        )
-        assert (
-            control_response_control_with_enriched_roles_model_json2
-            == control_response_control_with_enriched_roles_model_json
-        )
+        control_response_control_with_enriched_roles_model_json2 = control_response_control_with_enriched_roles_model.to_dict()
+        assert control_response_control_with_enriched_roles_model_json2 == control_response_control_with_enriched_roles_model_json
 
 
 class TestModel_V2PolicyRuleRuleAttribute:
@@ -5970,15 +5923,11 @@ class TestModel_V2PolicyRuleRuleAttribute:
         v2_policy_rule_rule_attribute_model_json['value'] = 'testString'
 
         # Construct a model instance of V2PolicyRuleRuleAttribute by calling from_dict on the json representation
-        v2_policy_rule_rule_attribute_model = V2PolicyRuleRuleAttribute.from_dict(
-            v2_policy_rule_rule_attribute_model_json
-        )
+        v2_policy_rule_rule_attribute_model = V2PolicyRuleRuleAttribute.from_dict(v2_policy_rule_rule_attribute_model_json)
         assert v2_policy_rule_rule_attribute_model != False
 
         # Construct a model instance of V2PolicyRuleRuleAttribute by calling from_dict on the json representation
-        v2_policy_rule_rule_attribute_model_dict = V2PolicyRuleRuleAttribute.from_dict(
-            v2_policy_rule_rule_attribute_model_json
-        ).__dict__
+        v2_policy_rule_rule_attribute_model_dict = V2PolicyRuleRuleAttribute.from_dict(v2_policy_rule_rule_attribute_model_json).__dict__
         v2_policy_rule_rule_attribute_model2 = V2PolicyRuleRuleAttribute(**v2_policy_rule_rule_attribute_model_dict)
 
         # Verify the model instances are equivalent
@@ -6012,18 +5961,12 @@ class TestModel_V2PolicyRuleRuleWithConditions:
         v2_policy_rule_rule_with_conditions_model_json['conditions'] = [rule_attribute_model]
 
         # Construct a model instance of V2PolicyRuleRuleWithConditions by calling from_dict on the json representation
-        v2_policy_rule_rule_with_conditions_model = V2PolicyRuleRuleWithConditions.from_dict(
-            v2_policy_rule_rule_with_conditions_model_json
-        )
+        v2_policy_rule_rule_with_conditions_model = V2PolicyRuleRuleWithConditions.from_dict(v2_policy_rule_rule_with_conditions_model_json)
         assert v2_policy_rule_rule_with_conditions_model != False
 
         # Construct a model instance of V2PolicyRuleRuleWithConditions by calling from_dict on the json representation
-        v2_policy_rule_rule_with_conditions_model_dict = V2PolicyRuleRuleWithConditions.from_dict(
-            v2_policy_rule_rule_with_conditions_model_json
-        ).__dict__
-        v2_policy_rule_rule_with_conditions_model2 = V2PolicyRuleRuleWithConditions(
-            **v2_policy_rule_rule_with_conditions_model_dict
-        )
+        v2_policy_rule_rule_with_conditions_model_dict = V2PolicyRuleRuleWithConditions.from_dict(v2_policy_rule_rule_with_conditions_model_json).__dict__
+        v2_policy_rule_rule_with_conditions_model2 = V2PolicyRuleRuleWithConditions(**v2_policy_rule_rule_with_conditions_model_dict)
 
         # Verify the model instances are equivalent
         assert v2_policy_rule_rule_with_conditions_model == v2_policy_rule_rule_with_conditions_model2

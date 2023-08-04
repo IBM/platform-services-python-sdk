@@ -123,7 +123,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         cls.testAssignmentId = ""
         cls.testV2PolicyTemplateResource = V2PolicyResource(
             attributes=[
-                V2PolicyResourceAttribute(key='serviceType', value='service', operator='stringEquals'),
+                V2PolicyResourceAttribute(key='serviceName', value='watson', operator='stringEquals'),
             ],
         )
         cls.testTemplatePolicy = TemplatePolicy(
@@ -149,7 +149,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result_dict = response.get_result()
         assert result_dict is not None
 
-        result = PolicyList.from_dict(result_dict)
+        result = PolicyCollection.from_dict(result_dict)
         assert result is not None
 
         # Iterate across the policies
@@ -284,7 +284,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result_dict = response.get_result()
         assert result_dict is not None
 
-        result = PolicyList.from_dict(result_dict)
+        result = PolicyCollection.from_dict(result_dict)
         assert result is not None
 
         print("Policy list: ", result)
@@ -384,7 +384,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result_dict = response.get_result()
         assert result_dict is not None
 
-        result = RoleList.from_dict(result_dict)
+        result = RoleCollection.from_dict(result_dict)
         assert result is not None
 
         print("Custom roles list: ", result)
@@ -536,7 +536,7 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result_dict = response.get_result()
         assert result_dict is not None
 
-        result = RoleList.from_dict(result_dict)
+        result = RoleCollection.from_dict(result_dict)
         assert result is not None
 
         print("List roles: ", result)
@@ -747,10 +747,10 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         assert response.get_status_code() == 200
         result_dict = response.get_result()
         assert result_dict is not None
-        result = PolcyTemplateAssignmentCollection.from_dict(result_dict)
+        result = PolicyTemplateAssignmentCollection.from_dict(result_dict)
         assert result is not None
 
-        self.__class__.testAssignmentId = result.policy_assignments[0].id
+        self.__class__.testAssignmentId = result.assignments[0].id
 
     def test_25_get_policy_assignment(self):
 
@@ -762,6 +762,6 @@ class TestIamPolicyManagementV1(unittest.TestCase):
         result_dict = response.get_result()
         assert result_dict is not None
 
-        result = PolicyAssignmentRecord.from_dict(result_dict)
+        result = PolicyAssignment.from_dict(result_dict)
         assert result is not None
         assert result.id == self.testAssignmentId
