@@ -31,9 +31,11 @@ import urllib
 from ibm_platform_services.iam_identity_v1 import *
 
 
-_service = IamIdentityV1(authenticator=NoAuthAuthenticator())
+_service = IamIdentityV1(
+    authenticator=NoAuthAuthenticator()
+)
 
-_base_url = 'https://iam.test.cloud.ibm.com'
+_base_url = 'https://iam.cloud.ibm.com'
 _service.set_service_url(_base_url)
 
 
@@ -1711,7 +1713,7 @@ class TestCreateProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.POST,
             url,
@@ -1758,7 +1760,7 @@ class TestCreateProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.POST,
             url,
@@ -1804,7 +1806,7 @@ class TestListProfiles:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
         responses.add(
             responses.GET,
             url,
@@ -1864,7 +1866,7 @@ class TestListProfiles:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
         responses.add(
             responses.GET,
             url,
@@ -1906,7 +1908,7 @@ class TestListProfiles:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "profiles": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}]}'
         responses.add(
             responses.GET,
             url,
@@ -1949,7 +1951,7 @@ class TestGetProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.GET,
             url,
@@ -1993,7 +1995,7 @@ class TestGetProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.GET,
             url,
@@ -2031,7 +2033,7 @@ class TestGetProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.GET,
             url,
@@ -2074,7 +2076,7 @@ class TestUpdateProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.PUT,
             url,
@@ -2122,7 +2124,7 @@ class TestUpdateProfile:
         """
         # Set up mock
         url = preprocess_url('/v1/profiles/testString')
-        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "entity_tag": "entity_tag", "crn": "crn", "name": "name", "description": "description", "created_at": "2019-01-01T12:00:00.000Z", "modified_at": "2019-01-01T12:00:00.000Z", "iam_id": "iam_id", "account_id": "account_id", "template_id": "template_id", "assignment_id": "assignment_id", "ims_account_id": 14, "ims_user_id": 11, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "activity": {"last_authn": "last_authn", "authn_count": 11}}'
         responses.add(
             responses.PUT,
             url,
@@ -3247,18 +3249,17 @@ class TestSetProfileIdentities:
             status=200,
         )
 
-        # Construct a dict representation of a ProfileIdentity model
-        profile_identity_model = {}
-        profile_identity_model['iam_id'] = 'testString'
-        profile_identity_model['identifier'] = 'testString'
-        profile_identity_model['type'] = 'user'
-        profile_identity_model['accounts'] = ['testString']
-        profile_identity_model['description'] = 'testString'
+        # Construct a dict representation of a ProfileIdentityRequest model
+        profile_identity_request_model = {}
+        profile_identity_request_model['identifier'] = 'testString'
+        profile_identity_request_model['type'] = 'user'
+        profile_identity_request_model['accounts'] = ['testString']
+        profile_identity_request_model['description'] = 'testString'
 
         # Set up parameter values
         profile_id = 'testString'
         if_match = 'testString'
-        identities = [profile_identity_model]
+        identities = [profile_identity_request_model]
 
         # Invoke method
         response = _service.set_profile_identities(
@@ -3273,7 +3274,7 @@ class TestSetProfileIdentities:
         assert response.status_code == 200
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['identities'] == [profile_identity_model]
+        assert req_body['identities'] == [profile_identity_request_model]
 
     def test_set_profile_identities_all_params_with_retries(self):
         # Enable retries and run test_set_profile_identities_all_params.
@@ -3300,18 +3301,17 @@ class TestSetProfileIdentities:
             status=200,
         )
 
-        # Construct a dict representation of a ProfileIdentity model
-        profile_identity_model = {}
-        profile_identity_model['iam_id'] = 'testString'
-        profile_identity_model['identifier'] = 'testString'
-        profile_identity_model['type'] = 'user'
-        profile_identity_model['accounts'] = ['testString']
-        profile_identity_model['description'] = 'testString'
+        # Construct a dict representation of a ProfileIdentityRequest model
+        profile_identity_request_model = {}
+        profile_identity_request_model['identifier'] = 'testString'
+        profile_identity_request_model['type'] = 'user'
+        profile_identity_request_model['accounts'] = ['testString']
+        profile_identity_request_model['description'] = 'testString'
 
         # Set up parameter values
         profile_id = 'testString'
         if_match = 'testString'
-        identities = [profile_identity_model]
+        identities = [profile_identity_request_model]
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -3359,7 +3359,6 @@ class TestSetProfileIdentity:
         identity_type = 'user'
         identifier = 'testString'
         type = 'user'
-        iam_id = 'testString'
         accounts = ['testString']
         description = 'testString'
 
@@ -3369,7 +3368,6 @@ class TestSetProfileIdentity:
             identity_type,
             identifier,
             type,
-            iam_id=iam_id,
             accounts=accounts,
             description=description,
             headers={},
@@ -3382,7 +3380,6 @@ class TestSetProfileIdentity:
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['identifier'] == 'testString'
         assert req_body['type'] == 'user'
-        assert req_body['iam_id'] == 'testString'
         assert req_body['accounts'] == ['testString']
         assert req_body['description'] == 'testString'
 
@@ -3416,7 +3413,6 @@ class TestSetProfileIdentity:
         identity_type = 'user'
         identifier = 'testString'
         type = 'user'
-        iam_id = 'testString'
         accounts = ['testString']
         description = 'testString'
 
@@ -4259,6 +4255,1661 @@ class TestGetMfaReport:
 ##############################################################################
 
 ##############################################################################
+# Start of Service: AccountSettingsAssignments
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamIdentityV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamIdentityV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamIdentityV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestListAccountSettingsAssignments:
+    """
+    Test Class for list_account_settings_assignments
+    """
+
+    @responses.activate
+    def test_list_account_settings_assignments_all_params(self):
+        """
+        list_account_settings_assignments()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_assignments/')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "assignments": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        template_id = 'testString'
+        template_version = 'testString'
+        target = 'testString'
+        target_type = 'Account'
+        limit = 20
+        pagetoken = 'testString'
+        sort = 'created_at'
+        order = 'asc'
+        include_history = False
+
+        # Invoke method
+        response = _service.list_account_settings_assignments(
+            account_id=account_id,
+            template_id=template_id,
+            template_version=template_version,
+            target=target,
+            target_type=target_type,
+            limit=limit,
+            pagetoken=pagetoken,
+            sort=sort,
+            order=order,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        assert 'template_id={}'.format(template_id) in query_string
+        assert 'template_version={}'.format(template_version) in query_string
+        assert 'target={}'.format(target) in query_string
+        assert 'target_type={}'.format(target_type) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'pagetoken={}'.format(pagetoken) in query_string
+        assert 'sort={}'.format(sort) in query_string
+        assert 'order={}'.format(order) in query_string
+        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+
+    def test_list_account_settings_assignments_all_params_with_retries(self):
+        # Enable retries and run test_list_account_settings_assignments_all_params.
+        _service.enable_retries()
+        self.test_list_account_settings_assignments_all_params()
+
+        # Disable retries and run test_list_account_settings_assignments_all_params.
+        _service.disable_retries()
+        self.test_list_account_settings_assignments_all_params()
+
+    @responses.activate
+    def test_list_account_settings_assignments_required_params(self):
+        """
+        test_list_account_settings_assignments_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_assignments/')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "assignments": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Invoke method
+        response = _service.list_account_settings_assignments()
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_account_settings_assignments_required_params_with_retries(self):
+        # Enable retries and run test_list_account_settings_assignments_required_params.
+        _service.enable_retries()
+        self.test_list_account_settings_assignments_required_params()
+
+        # Disable retries and run test_list_account_settings_assignments_required_params.
+        _service.disable_retries()
+        self.test_list_account_settings_assignments_required_params()
+
+
+class TestCreateAccountSettingsAssignment:
+    """
+    Test Class for create_account_settings_assignment
+    """
+
+    @responses.activate
+    def test_create_account_settings_assignment_all_params(self):
+        """
+        create_account_settings_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_assignments/')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        template_version = 1
+        target_type = 'Account'
+        target = 'testString'
+
+        # Invoke method
+        response = _service.create_account_settings_assignment(
+            template_id,
+            template_version,
+            target_type,
+            target,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['template_id'] == 'testString'
+        assert req_body['template_version'] == 1
+        assert req_body['target_type'] == 'Account'
+        assert req_body['target'] == 'testString'
+
+    def test_create_account_settings_assignment_all_params_with_retries(self):
+        # Enable retries and run test_create_account_settings_assignment_all_params.
+        _service.enable_retries()
+        self.test_create_account_settings_assignment_all_params()
+
+        # Disable retries and run test_create_account_settings_assignment_all_params.
+        _service.disable_retries()
+        self.test_create_account_settings_assignment_all_params()
+
+    @responses.activate
+    def test_create_account_settings_assignment_value_error(self):
+        """
+        test_create_account_settings_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_assignments/')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        template_version = 1
+        target_type = 'Account'
+        target = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+            "template_version": template_version,
+            "target_type": target_type,
+            "target": target,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_account_settings_assignment(**req_copy)
+
+    def test_create_account_settings_assignment_value_error_with_retries(self):
+        # Enable retries and run test_create_account_settings_assignment_value_error.
+        _service.enable_retries()
+        self.test_create_account_settings_assignment_value_error()
+
+        # Disable retries and run test_create_account_settings_assignment_value_error.
+        _service.disable_retries()
+        self.test_create_account_settings_assignment_value_error()
+
+
+class TestGetAccountSettingsAssignment:
+    """
+    Test Class for get_account_settings_assignment
+    """
+
+    @responses.activate
+    def test_get_account_settings_assignment_all_params(self):
+        """
+        get_account_settings_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_assignments/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+        include_history = False
+
+        # Invoke method
+        response = _service.get_account_settings_assignment(
+            assignment_id,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+
+    def test_get_account_settings_assignment_all_params_with_retries(self):
+        # Enable retries and run test_get_account_settings_assignment_all_params.
+        _service.enable_retries()
+        self.test_get_account_settings_assignment_all_params()
+
+        # Disable retries and run test_get_account_settings_assignment_all_params.
+        _service.disable_retries()
+        self.test_get_account_settings_assignment_all_params()
+
+    @responses.activate
+    def test_get_account_settings_assignment_required_params(self):
+        """
+        test_get_account_settings_assignment_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_assignments/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Invoke method
+        response = _service.get_account_settings_assignment(
+            assignment_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_account_settings_assignment_required_params_with_retries(self):
+        # Enable retries and run test_get_account_settings_assignment_required_params.
+        _service.enable_retries()
+        self.test_get_account_settings_assignment_required_params()
+
+        # Disable retries and run test_get_account_settings_assignment_required_params.
+        _service.disable_retries()
+        self.test_get_account_settings_assignment_required_params()
+
+    @responses.activate
+    def test_get_account_settings_assignment_value_error(self):
+        """
+        test_get_account_settings_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_assignments/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "assignment_id": assignment_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_account_settings_assignment(**req_copy)
+
+    def test_get_account_settings_assignment_value_error_with_retries(self):
+        # Enable retries and run test_get_account_settings_assignment_value_error.
+        _service.enable_retries()
+        self.test_get_account_settings_assignment_value_error()
+
+        # Disable retries and run test_get_account_settings_assignment_value_error.
+        _service.disable_retries()
+        self.test_get_account_settings_assignment_value_error()
+
+
+class TestDeleteAccountSettingsAssignment:
+    """
+    Test Class for delete_account_settings_assignment
+    """
+
+    @responses.activate
+    def test_delete_account_settings_assignment_all_params(self):
+        """
+        delete_account_settings_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_assignments/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "status_code": "status_code", "errors": [{"code": "code", "message_code": "message_code", "message": "message", "details": "details"}], "trace": "trace"}'
+        responses.add(
+            responses.DELETE,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_account_settings_assignment(
+            assignment_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+
+    def test_delete_account_settings_assignment_all_params_with_retries(self):
+        # Enable retries and run test_delete_account_settings_assignment_all_params.
+        _service.enable_retries()
+        self.test_delete_account_settings_assignment_all_params()
+
+        # Disable retries and run test_delete_account_settings_assignment_all_params.
+        _service.disable_retries()
+        self.test_delete_account_settings_assignment_all_params()
+
+    @responses.activate
+    def test_delete_account_settings_assignment_value_error(self):
+        """
+        test_delete_account_settings_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_assignments/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "status_code": "status_code", "errors": [{"code": "code", "message_code": "message_code", "message": "message", "details": "details"}], "trace": "trace"}'
+        responses.add(
+            responses.DELETE,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "assignment_id": assignment_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_account_settings_assignment(**req_copy)
+
+    def test_delete_account_settings_assignment_value_error_with_retries(self):
+        # Enable retries and run test_delete_account_settings_assignment_value_error.
+        _service.enable_retries()
+        self.test_delete_account_settings_assignment_value_error()
+
+        # Disable retries and run test_delete_account_settings_assignment_value_error.
+        _service.disable_retries()
+        self.test_delete_account_settings_assignment_value_error()
+
+
+class TestUpdateAccountSettingsAssignment:
+    """
+    Test Class for update_account_settings_assignment
+    """
+
+    @responses.activate
+    def test_update_account_settings_assignment_all_params(self):
+        """
+        update_account_settings_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_assignments/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+        if_match = 'testString'
+        template_version = 1
+
+        # Invoke method
+        response = _service.update_account_settings_assignment(
+            assignment_id,
+            if_match,
+            template_version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['template_version'] == 1
+
+    def test_update_account_settings_assignment_all_params_with_retries(self):
+        # Enable retries and run test_update_account_settings_assignment_all_params.
+        _service.enable_retries()
+        self.test_update_account_settings_assignment_all_params()
+
+        # Disable retries and run test_update_account_settings_assignment_all_params.
+        _service.disable_retries()
+        self.test_update_account_settings_assignment_all_params()
+
+    @responses.activate
+    def test_update_account_settings_assignment_value_error(self):
+        """
+        test_update_account_settings_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_assignments/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+        if_match = 'testString'
+        template_version = 1
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "assignment_id": assignment_id,
+            "if_match": if_match,
+            "template_version": template_version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_account_settings_assignment(**req_copy)
+
+    def test_update_account_settings_assignment_value_error_with_retries(self):
+        # Enable retries and run test_update_account_settings_assignment_value_error.
+        _service.enable_retries()
+        self.test_update_account_settings_assignment_value_error()
+
+        # Disable retries and run test_update_account_settings_assignment_value_error.
+        _service.disable_retries()
+        self.test_update_account_settings_assignment_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: AccountSettingsAssignments
+##############################################################################
+
+##############################################################################
+# Start of Service: AccountSettingsTemplate
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamIdentityV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamIdentityV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamIdentityV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestListAccountSettingsTemplates:
+    """
+    Test Class for list_account_settings_templates
+    """
+
+    @responses.activate
+    def test_list_account_settings_templates_all_params(self):
+        """
+        list_account_settings_templates()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "account_settings_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        limit = '20'
+        pagetoken = 'testString'
+        sort = 'created_at'
+        order = 'asc'
+        include_history = 'false'
+
+        # Invoke method
+        response = _service.list_account_settings_templates(
+            account_id=account_id,
+            limit=limit,
+            pagetoken=pagetoken,
+            sort=sort,
+            order=order,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'pagetoken={}'.format(pagetoken) in query_string
+        assert 'sort={}'.format(sort) in query_string
+        assert 'order={}'.format(order) in query_string
+        assert 'include_history={}'.format(include_history) in query_string
+
+    def test_list_account_settings_templates_all_params_with_retries(self):
+        # Enable retries and run test_list_account_settings_templates_all_params.
+        _service.enable_retries()
+        self.test_list_account_settings_templates_all_params()
+
+        # Disable retries and run test_list_account_settings_templates_all_params.
+        _service.disable_retries()
+        self.test_list_account_settings_templates_all_params()
+
+    @responses.activate
+    def test_list_account_settings_templates_required_params(self):
+        """
+        test_list_account_settings_templates_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "account_settings_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Invoke method
+        response = _service.list_account_settings_templates()
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_account_settings_templates_required_params_with_retries(self):
+        # Enable retries and run test_list_account_settings_templates_required_params.
+        _service.enable_retries()
+        self.test_list_account_settings_templates_required_params()
+
+        # Disable retries and run test_list_account_settings_templates_required_params.
+        _service.disable_retries()
+        self.test_list_account_settings_templates_required_params()
+
+
+class TestCreateAccountSettingsTemplate:
+    """
+    Test Class for create_account_settings_template
+    """
+
+    @responses.activate
+    def test_create_account_settings_template_all_params(self):
+        """
+        create_account_settings_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a AccountSettingsUserMFA model
+        account_settings_user_mfa_model = {}
+        account_settings_user_mfa_model['iam_id'] = 'testString'
+        account_settings_user_mfa_model['mfa'] = 'NONE'
+
+        # Construct a dict representation of a AccountSettingsComponent model
+        account_settings_component_model = {}
+        account_settings_component_model['restrict_create_service_id'] = 'NOT_SET'
+        account_settings_component_model['restrict_create_platform_apikey'] = 'NOT_SET'
+        account_settings_component_model['allowed_ip_addresses'] = 'testString'
+        account_settings_component_model['mfa'] = 'NONE'
+        account_settings_component_model['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model['session_expiration_in_seconds'] = '86400'
+        account_settings_component_model['session_invalidation_in_seconds'] = '7200'
+        account_settings_component_model['max_sessions_per_identity'] = 'testString'
+        account_settings_component_model['system_access_token_expiration_in_seconds'] = '3600'
+        account_settings_component_model['system_refresh_token_expiration_in_seconds'] = '259200'
+
+        # Set up parameter values
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        account_settings = account_settings_component_model
+
+        # Invoke method
+        response = _service.create_account_settings_template(
+            account_id=account_id,
+            name=name,
+            description=description,
+            account_settings=account_settings,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['account_settings'] == account_settings_component_model
+
+    def test_create_account_settings_template_all_params_with_retries(self):
+        # Enable retries and run test_create_account_settings_template_all_params.
+        _service.enable_retries()
+        self.test_create_account_settings_template_all_params()
+
+        # Disable retries and run test_create_account_settings_template_all_params.
+        _service.disable_retries()
+        self.test_create_account_settings_template_all_params()
+
+
+class TestGetLatestAccountSettingsTemplateVersion:
+    """
+    Test Class for get_latest_account_settings_template_version
+    """
+
+    @responses.activate
+    def test_get_latest_account_settings_template_version_all_params(self):
+        """
+        get_latest_account_settings_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        include_history = False
+
+        # Invoke method
+        response = _service.get_latest_account_settings_template_version(
+            template_id,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+
+    def test_get_latest_account_settings_template_version_all_params_with_retries(self):
+        # Enable retries and run test_get_latest_account_settings_template_version_all_params.
+        _service.enable_retries()
+        self.test_get_latest_account_settings_template_version_all_params()
+
+        # Disable retries and run test_get_latest_account_settings_template_version_all_params.
+        _service.disable_retries()
+        self.test_get_latest_account_settings_template_version_all_params()
+
+    @responses.activate
+    def test_get_latest_account_settings_template_version_required_params(self):
+        """
+        test_get_latest_account_settings_template_version_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Invoke method
+        response = _service.get_latest_account_settings_template_version(
+            template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_latest_account_settings_template_version_required_params_with_retries(self):
+        # Enable retries and run test_get_latest_account_settings_template_version_required_params.
+        _service.enable_retries()
+        self.test_get_latest_account_settings_template_version_required_params()
+
+        # Disable retries and run test_get_latest_account_settings_template_version_required_params.
+        _service.disable_retries()
+        self.test_get_latest_account_settings_template_version_required_params()
+
+    @responses.activate
+    def test_get_latest_account_settings_template_version_value_error(self):
+        """
+        test_get_latest_account_settings_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_latest_account_settings_template_version(**req_copy)
+
+    def test_get_latest_account_settings_template_version_value_error_with_retries(self):
+        # Enable retries and run test_get_latest_account_settings_template_version_value_error.
+        _service.enable_retries()
+        self.test_get_latest_account_settings_template_version_value_error()
+
+        # Disable retries and run test_get_latest_account_settings_template_version_value_error.
+        _service.disable_retries()
+        self.test_get_latest_account_settings_template_version_value_error()
+
+
+class TestDeleteAllVersionsOfAccountSettingsTemplate:
+    """
+    Test Class for delete_all_versions_of_account_settings_template
+    """
+
+    @responses.activate
+    def test_delete_all_versions_of_account_settings_template_all_params(self):
+        """
+        delete_all_versions_of_account_settings_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_all_versions_of_account_settings_template(
+            template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_all_versions_of_account_settings_template_all_params_with_retries(self):
+        # Enable retries and run test_delete_all_versions_of_account_settings_template_all_params.
+        _service.enable_retries()
+        self.test_delete_all_versions_of_account_settings_template_all_params()
+
+        # Disable retries and run test_delete_all_versions_of_account_settings_template_all_params.
+        _service.disable_retries()
+        self.test_delete_all_versions_of_account_settings_template_all_params()
+
+    @responses.activate
+    def test_delete_all_versions_of_account_settings_template_value_error(self):
+        """
+        test_delete_all_versions_of_account_settings_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_all_versions_of_account_settings_template(**req_copy)
+
+    def test_delete_all_versions_of_account_settings_template_value_error_with_retries(self):
+        # Enable retries and run test_delete_all_versions_of_account_settings_template_value_error.
+        _service.enable_retries()
+        self.test_delete_all_versions_of_account_settings_template_value_error()
+
+        # Disable retries and run test_delete_all_versions_of_account_settings_template_value_error.
+        _service.disable_retries()
+        self.test_delete_all_versions_of_account_settings_template_value_error()
+
+
+class TestListVersionsOfAccountSettingsTemplate:
+    """
+    Test Class for list_versions_of_account_settings_template
+    """
+
+    @responses.activate
+    def test_list_versions_of_account_settings_template_all_params(self):
+        """
+        list_versions_of_account_settings_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString/versions')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "account_settings_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        limit = '20'
+        pagetoken = 'testString'
+        sort = 'created_at'
+        order = 'asc'
+        include_history = 'false'
+
+        # Invoke method
+        response = _service.list_versions_of_account_settings_template(
+            template_id,
+            limit=limit,
+            pagetoken=pagetoken,
+            sort=sort,
+            order=order,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'limit={}'.format(limit) in query_string
+        assert 'pagetoken={}'.format(pagetoken) in query_string
+        assert 'sort={}'.format(sort) in query_string
+        assert 'order={}'.format(order) in query_string
+        assert 'include_history={}'.format(include_history) in query_string
+
+    def test_list_versions_of_account_settings_template_all_params_with_retries(self):
+        # Enable retries and run test_list_versions_of_account_settings_template_all_params.
+        _service.enable_retries()
+        self.test_list_versions_of_account_settings_template_all_params()
+
+        # Disable retries and run test_list_versions_of_account_settings_template_all_params.
+        _service.disable_retries()
+        self.test_list_versions_of_account_settings_template_all_params()
+
+    @responses.activate
+    def test_list_versions_of_account_settings_template_required_params(self):
+        """
+        test_list_versions_of_account_settings_template_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString/versions')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "account_settings_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Invoke method
+        response = _service.list_versions_of_account_settings_template(
+            template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_versions_of_account_settings_template_required_params_with_retries(self):
+        # Enable retries and run test_list_versions_of_account_settings_template_required_params.
+        _service.enable_retries()
+        self.test_list_versions_of_account_settings_template_required_params()
+
+        # Disable retries and run test_list_versions_of_account_settings_template_required_params.
+        _service.disable_retries()
+        self.test_list_versions_of_account_settings_template_required_params()
+
+    @responses.activate
+    def test_list_versions_of_account_settings_template_value_error(self):
+        """
+        test_list_versions_of_account_settings_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString/versions')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "account_settings_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_versions_of_account_settings_template(**req_copy)
+
+    def test_list_versions_of_account_settings_template_value_error_with_retries(self):
+        # Enable retries and run test_list_versions_of_account_settings_template_value_error.
+        _service.enable_retries()
+        self.test_list_versions_of_account_settings_template_value_error()
+
+        # Disable retries and run test_list_versions_of_account_settings_template_value_error.
+        _service.disable_retries()
+        self.test_list_versions_of_account_settings_template_value_error()
+
+
+class TestCreateAccountSettingsTemplateVersion:
+    """
+    Test Class for create_account_settings_template_version
+    """
+
+    @responses.activate
+    def test_create_account_settings_template_version_all_params(self):
+        """
+        create_account_settings_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString/versions')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a AccountSettingsUserMFA model
+        account_settings_user_mfa_model = {}
+        account_settings_user_mfa_model['iam_id'] = 'testString'
+        account_settings_user_mfa_model['mfa'] = 'NONE'
+
+        # Construct a dict representation of a AccountSettingsComponent model
+        account_settings_component_model = {}
+        account_settings_component_model['restrict_create_service_id'] = 'NOT_SET'
+        account_settings_component_model['restrict_create_platform_apikey'] = 'NOT_SET'
+        account_settings_component_model['allowed_ip_addresses'] = 'testString'
+        account_settings_component_model['mfa'] = 'NONE'
+        account_settings_component_model['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model['session_expiration_in_seconds'] = '86400'
+        account_settings_component_model['session_invalidation_in_seconds'] = '7200'
+        account_settings_component_model['max_sessions_per_identity'] = 'testString'
+        account_settings_component_model['system_access_token_expiration_in_seconds'] = '3600'
+        account_settings_component_model['system_refresh_token_expiration_in_seconds'] = '259200'
+
+        # Set up parameter values
+        template_id = 'testString'
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        account_settings = account_settings_component_model
+
+        # Invoke method
+        response = _service.create_account_settings_template_version(
+            template_id,
+            account_id=account_id,
+            name=name,
+            description=description,
+            account_settings=account_settings,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['account_settings'] == account_settings_component_model
+
+    def test_create_account_settings_template_version_all_params_with_retries(self):
+        # Enable retries and run test_create_account_settings_template_version_all_params.
+        _service.enable_retries()
+        self.test_create_account_settings_template_version_all_params()
+
+        # Disable retries and run test_create_account_settings_template_version_all_params.
+        _service.disable_retries()
+        self.test_create_account_settings_template_version_all_params()
+
+    @responses.activate
+    def test_create_account_settings_template_version_value_error(self):
+        """
+        test_create_account_settings_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString/versions')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a AccountSettingsUserMFA model
+        account_settings_user_mfa_model = {}
+        account_settings_user_mfa_model['iam_id'] = 'testString'
+        account_settings_user_mfa_model['mfa'] = 'NONE'
+
+        # Construct a dict representation of a AccountSettingsComponent model
+        account_settings_component_model = {}
+        account_settings_component_model['restrict_create_service_id'] = 'NOT_SET'
+        account_settings_component_model['restrict_create_platform_apikey'] = 'NOT_SET'
+        account_settings_component_model['allowed_ip_addresses'] = 'testString'
+        account_settings_component_model['mfa'] = 'NONE'
+        account_settings_component_model['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model['session_expiration_in_seconds'] = '86400'
+        account_settings_component_model['session_invalidation_in_seconds'] = '7200'
+        account_settings_component_model['max_sessions_per_identity'] = 'testString'
+        account_settings_component_model['system_access_token_expiration_in_seconds'] = '3600'
+        account_settings_component_model['system_refresh_token_expiration_in_seconds'] = '259200'
+
+        # Set up parameter values
+        template_id = 'testString'
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        account_settings = account_settings_component_model
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_account_settings_template_version(**req_copy)
+
+    def test_create_account_settings_template_version_value_error_with_retries(self):
+        # Enable retries and run test_create_account_settings_template_version_value_error.
+        _service.enable_retries()
+        self.test_create_account_settings_template_version_value_error()
+
+        # Disable retries and run test_create_account_settings_template_version_value_error.
+        _service.disable_retries()
+        self.test_create_account_settings_template_version_value_error()
+
+
+class TestGetAccountSettingsTemplateVersion:
+    """
+    Test Class for get_account_settings_template_version
+    """
+
+    @responses.activate
+    def test_get_account_settings_template_version_all_params(self):
+        """
+        get_account_settings_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+        include_history = False
+
+        # Invoke method
+        response = _service.get_account_settings_template_version(
+            template_id,
+            version,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+
+    def test_get_account_settings_template_version_all_params_with_retries(self):
+        # Enable retries and run test_get_account_settings_template_version_all_params.
+        _service.enable_retries()
+        self.test_get_account_settings_template_version_all_params()
+
+        # Disable retries and run test_get_account_settings_template_version_all_params.
+        _service.disable_retries()
+        self.test_get_account_settings_template_version_all_params()
+
+    @responses.activate
+    def test_get_account_settings_template_version_required_params(self):
+        """
+        test_get_account_settings_template_version_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.get_account_settings_template_version(
+            template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_account_settings_template_version_required_params_with_retries(self):
+        # Enable retries and run test_get_account_settings_template_version_required_params.
+        _service.enable_retries()
+        self.test_get_account_settings_template_version_required_params()
+
+        # Disable retries and run test_get_account_settings_template_version_required_params.
+        _service.disable_retries()
+        self.test_get_account_settings_template_version_required_params()
+
+    @responses.activate
+    def test_get_account_settings_template_version_value_error(self):
+        """
+        test_get_account_settings_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_account_settings_template_version(**req_copy)
+
+    def test_get_account_settings_template_version_value_error_with_retries(self):
+        # Enable retries and run test_get_account_settings_template_version_value_error.
+        _service.enable_retries()
+        self.test_get_account_settings_template_version_value_error()
+
+        # Disable retries and run test_get_account_settings_template_version_value_error.
+        _service.disable_retries()
+        self.test_get_account_settings_template_version_value_error()
+
+
+class TestUpdateAccountSettingsTemplateVersion:
+    """
+    Test Class for update_account_settings_template_version
+    """
+
+    @responses.activate
+    def test_update_account_settings_template_version_all_params(self):
+        """
+        update_account_settings_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a AccountSettingsUserMFA model
+        account_settings_user_mfa_model = {}
+        account_settings_user_mfa_model['iam_id'] = 'testString'
+        account_settings_user_mfa_model['mfa'] = 'NONE'
+
+        # Construct a dict representation of a AccountSettingsComponent model
+        account_settings_component_model = {}
+        account_settings_component_model['restrict_create_service_id'] = 'NOT_SET'
+        account_settings_component_model['restrict_create_platform_apikey'] = 'NOT_SET'
+        account_settings_component_model['allowed_ip_addresses'] = 'testString'
+        account_settings_component_model['mfa'] = 'NONE'
+        account_settings_component_model['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model['session_expiration_in_seconds'] = '86400'
+        account_settings_component_model['session_invalidation_in_seconds'] = '7200'
+        account_settings_component_model['max_sessions_per_identity'] = 'testString'
+        account_settings_component_model['system_access_token_expiration_in_seconds'] = '3600'
+        account_settings_component_model['system_refresh_token_expiration_in_seconds'] = '259200'
+
+        # Set up parameter values
+        if_match = 'testString'
+        template_id = 'testString'
+        version = 'testString'
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        account_settings = account_settings_component_model
+
+        # Invoke method
+        response = _service.update_account_settings_template_version(
+            if_match,
+            template_id,
+            version,
+            account_id=account_id,
+            name=name,
+            description=description,
+            account_settings=account_settings,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['account_settings'] == account_settings_component_model
+
+    def test_update_account_settings_template_version_all_params_with_retries(self):
+        # Enable retries and run test_update_account_settings_template_version_all_params.
+        _service.enable_retries()
+        self.test_update_account_settings_template_version_all_params()
+
+        # Disable retries and run test_update_account_settings_template_version_all_params.
+        _service.disable_retries()
+        self.test_update_account_settings_template_version_all_params()
+
+    @responses.activate
+    def test_update_account_settings_template_version_value_error(self):
+        """
+        test_update_account_settings_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "account_settings": {"restrict_create_service_id": "NOT_SET", "restrict_create_platform_apikey": "NOT_SET", "allowed_ip_addresses": "allowed_ip_addresses", "mfa": "NONE", "user_mfa": [{"iam_id": "iam_id", "mfa": "NONE"}], "session_expiration_in_seconds": "86400", "session_invalidation_in_seconds": "7200", "max_sessions_per_identity": "max_sessions_per_identity", "system_access_token_expiration_in_seconds": "3600", "system_refresh_token_expiration_in_seconds": "259200"}, "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a AccountSettingsUserMFA model
+        account_settings_user_mfa_model = {}
+        account_settings_user_mfa_model['iam_id'] = 'testString'
+        account_settings_user_mfa_model['mfa'] = 'NONE'
+
+        # Construct a dict representation of a AccountSettingsComponent model
+        account_settings_component_model = {}
+        account_settings_component_model['restrict_create_service_id'] = 'NOT_SET'
+        account_settings_component_model['restrict_create_platform_apikey'] = 'NOT_SET'
+        account_settings_component_model['allowed_ip_addresses'] = 'testString'
+        account_settings_component_model['mfa'] = 'NONE'
+        account_settings_component_model['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model['session_expiration_in_seconds'] = '86400'
+        account_settings_component_model['session_invalidation_in_seconds'] = '7200'
+        account_settings_component_model['max_sessions_per_identity'] = 'testString'
+        account_settings_component_model['system_access_token_expiration_in_seconds'] = '3600'
+        account_settings_component_model['system_refresh_token_expiration_in_seconds'] = '259200'
+
+        # Set up parameter values
+        if_match = 'testString'
+        template_id = 'testString'
+        version = 'testString'
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        account_settings = account_settings_component_model
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "if_match": if_match,
+            "template_id": template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_account_settings_template_version(**req_copy)
+
+    def test_update_account_settings_template_version_value_error_with_retries(self):
+        # Enable retries and run test_update_account_settings_template_version_value_error.
+        _service.enable_retries()
+        self.test_update_account_settings_template_version_value_error()
+
+        # Disable retries and run test_update_account_settings_template_version_value_error.
+        _service.disable_retries()
+        self.test_update_account_settings_template_version_value_error()
+
+
+class TestDeleteAccountSettingsTemplateVersion:
+    """
+    Test Class for delete_account_settings_template_version
+    """
+
+    @responses.activate
+    def test_delete_account_settings_template_version_all_params(self):
+        """
+        delete_account_settings_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString/versions/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.delete_account_settings_template_version(
+            template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_account_settings_template_version_all_params_with_retries(self):
+        # Enable retries and run test_delete_account_settings_template_version_all_params.
+        _service.enable_retries()
+        self.test_delete_account_settings_template_version_all_params()
+
+        # Disable retries and run test_delete_account_settings_template_version_all_params.
+        _service.disable_retries()
+        self.test_delete_account_settings_template_version_all_params()
+
+    @responses.activate
+    def test_delete_account_settings_template_version_value_error(self):
+        """
+        test_delete_account_settings_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString/versions/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_account_settings_template_version(**req_copy)
+
+    def test_delete_account_settings_template_version_value_error_with_retries(self):
+        # Enable retries and run test_delete_account_settings_template_version_value_error.
+        _service.enable_retries()
+        self.test_delete_account_settings_template_version_value_error()
+
+        # Disable retries and run test_delete_account_settings_template_version_value_error.
+        _service.disable_retries()
+        self.test_delete_account_settings_template_version_value_error()
+
+
+class TestCommitAccountSettingsTemplate:
+    """
+    Test Class for commit_account_settings_template
+    """
+
+    @responses.activate
+    def test_commit_account_settings_template_all_params(self):
+        """
+        commit_account_settings_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString/versions/testString/commit')
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.commit_account_settings_template(
+            template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_commit_account_settings_template_all_params_with_retries(self):
+        # Enable retries and run test_commit_account_settings_template_all_params.
+        _service.enable_retries()
+        self.test_commit_account_settings_template_all_params()
+
+        # Disable retries and run test_commit_account_settings_template_all_params.
+        _service.disable_retries()
+        self.test_commit_account_settings_template_all_params()
+
+    @responses.activate
+    def test_commit_account_settings_template_value_error(self):
+        """
+        test_commit_account_settings_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/account_settings_templates/testString/versions/testString/commit')
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.commit_account_settings_template(**req_copy)
+
+    def test_commit_account_settings_template_value_error_with_retries(self):
+        # Enable retries and run test_commit_account_settings_template_value_error.
+        _service.enable_retries()
+        self.test_commit_account_settings_template_value_error()
+
+        # Disable retries and run test_commit_account_settings_template_value_error.
+        _service.disable_retries()
+        self.test_commit_account_settings_template_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: AccountSettingsTemplate
+##############################################################################
+
+##############################################################################
 # Start of Service: ActivityOperations
 ##############################################################################
 # region
@@ -4510,6 +6161,1747 @@ class TestGetReport:
 # End of Service: ActivityOperations
 ##############################################################################
 
+##############################################################################
+# Start of Service: TrustedProfileAssignments
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamIdentityV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamIdentityV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamIdentityV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestListTrustedProfileAssignments:
+    """
+    Test Class for list_trusted_profile_assignments
+    """
+
+    @responses.activate
+    def test_list_trusted_profile_assignments_all_params(self):
+        """
+        list_trusted_profile_assignments()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_assignments/')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "assignments": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        template_id = 'testString'
+        template_version = 'testString'
+        target = 'testString'
+        target_type = 'Account'
+        limit = 20
+        pagetoken = 'testString'
+        sort = 'created_at'
+        order = 'asc'
+        include_history = False
+
+        # Invoke method
+        response = _service.list_trusted_profile_assignments(
+            account_id=account_id,
+            template_id=template_id,
+            template_version=template_version,
+            target=target,
+            target_type=target_type,
+            limit=limit,
+            pagetoken=pagetoken,
+            sort=sort,
+            order=order,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        assert 'template_id={}'.format(template_id) in query_string
+        assert 'template_version={}'.format(template_version) in query_string
+        assert 'target={}'.format(target) in query_string
+        assert 'target_type={}'.format(target_type) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'pagetoken={}'.format(pagetoken) in query_string
+        assert 'sort={}'.format(sort) in query_string
+        assert 'order={}'.format(order) in query_string
+        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+
+    def test_list_trusted_profile_assignments_all_params_with_retries(self):
+        # Enable retries and run test_list_trusted_profile_assignments_all_params.
+        _service.enable_retries()
+        self.test_list_trusted_profile_assignments_all_params()
+
+        # Disable retries and run test_list_trusted_profile_assignments_all_params.
+        _service.disable_retries()
+        self.test_list_trusted_profile_assignments_all_params()
+
+    @responses.activate
+    def test_list_trusted_profile_assignments_required_params(self):
+        """
+        test_list_trusted_profile_assignments_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_assignments/')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 5, "first": "first", "previous": "previous", "next": "next", "assignments": [{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Invoke method
+        response = _service.list_trusted_profile_assignments()
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_trusted_profile_assignments_required_params_with_retries(self):
+        # Enable retries and run test_list_trusted_profile_assignments_required_params.
+        _service.enable_retries()
+        self.test_list_trusted_profile_assignments_required_params()
+
+        # Disable retries and run test_list_trusted_profile_assignments_required_params.
+        _service.disable_retries()
+        self.test_list_trusted_profile_assignments_required_params()
+
+
+class TestCreateTrustedProfileAssignment:
+    """
+    Test Class for create_trusted_profile_assignment
+    """
+
+    @responses.activate
+    def test_create_trusted_profile_assignment_all_params(self):
+        """
+        create_trusted_profile_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_assignments/')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        template_version = 1
+        target_type = 'Account'
+        target = 'testString'
+
+        # Invoke method
+        response = _service.create_trusted_profile_assignment(
+            template_id,
+            template_version,
+            target_type,
+            target,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['template_id'] == 'testString'
+        assert req_body['template_version'] == 1
+        assert req_body['target_type'] == 'Account'
+        assert req_body['target'] == 'testString'
+
+    def test_create_trusted_profile_assignment_all_params_with_retries(self):
+        # Enable retries and run test_create_trusted_profile_assignment_all_params.
+        _service.enable_retries()
+        self.test_create_trusted_profile_assignment_all_params()
+
+        # Disable retries and run test_create_trusted_profile_assignment_all_params.
+        _service.disable_retries()
+        self.test_create_trusted_profile_assignment_all_params()
+
+    @responses.activate
+    def test_create_trusted_profile_assignment_value_error(self):
+        """
+        test_create_trusted_profile_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_assignments/')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        template_version = 1
+        target_type = 'Account'
+        target = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+            "template_version": template_version,
+            "target_type": target_type,
+            "target": target,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_trusted_profile_assignment(**req_copy)
+
+    def test_create_trusted_profile_assignment_value_error_with_retries(self):
+        # Enable retries and run test_create_trusted_profile_assignment_value_error.
+        _service.enable_retries()
+        self.test_create_trusted_profile_assignment_value_error()
+
+        # Disable retries and run test_create_trusted_profile_assignment_value_error.
+        _service.disable_retries()
+        self.test_create_trusted_profile_assignment_value_error()
+
+
+class TestGetTrustedProfileAssignment:
+    """
+    Test Class for get_trusted_profile_assignment
+    """
+
+    @responses.activate
+    def test_get_trusted_profile_assignment_all_params(self):
+        """
+        get_trusted_profile_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_assignments/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+        include_history = False
+
+        # Invoke method
+        response = _service.get_trusted_profile_assignment(
+            assignment_id,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+
+    def test_get_trusted_profile_assignment_all_params_with_retries(self):
+        # Enable retries and run test_get_trusted_profile_assignment_all_params.
+        _service.enable_retries()
+        self.test_get_trusted_profile_assignment_all_params()
+
+        # Disable retries and run test_get_trusted_profile_assignment_all_params.
+        _service.disable_retries()
+        self.test_get_trusted_profile_assignment_all_params()
+
+    @responses.activate
+    def test_get_trusted_profile_assignment_required_params(self):
+        """
+        test_get_trusted_profile_assignment_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_assignments/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Invoke method
+        response = _service.get_trusted_profile_assignment(
+            assignment_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_trusted_profile_assignment_required_params_with_retries(self):
+        # Enable retries and run test_get_trusted_profile_assignment_required_params.
+        _service.enable_retries()
+        self.test_get_trusted_profile_assignment_required_params()
+
+        # Disable retries and run test_get_trusted_profile_assignment_required_params.
+        _service.disable_retries()
+        self.test_get_trusted_profile_assignment_required_params()
+
+    @responses.activate
+    def test_get_trusted_profile_assignment_value_error(self):
+        """
+        test_get_trusted_profile_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_assignments/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "assignment_id": assignment_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_trusted_profile_assignment(**req_copy)
+
+    def test_get_trusted_profile_assignment_value_error_with_retries(self):
+        # Enable retries and run test_get_trusted_profile_assignment_value_error.
+        _service.enable_retries()
+        self.test_get_trusted_profile_assignment_value_error()
+
+        # Disable retries and run test_get_trusted_profile_assignment_value_error.
+        _service.disable_retries()
+        self.test_get_trusted_profile_assignment_value_error()
+
+
+class TestDeleteTrustedProfileAssignment:
+    """
+    Test Class for delete_trusted_profile_assignment
+    """
+
+    @responses.activate
+    def test_delete_trusted_profile_assignment_all_params(self):
+        """
+        delete_trusted_profile_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_assignments/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "status_code": "status_code", "errors": [{"code": "code", "message_code": "message_code", "message": "message", "details": "details"}], "trace": "trace"}'
+        responses.add(
+            responses.DELETE,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_trusted_profile_assignment(
+            assignment_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+
+    def test_delete_trusted_profile_assignment_all_params_with_retries(self):
+        # Enable retries and run test_delete_trusted_profile_assignment_all_params.
+        _service.enable_retries()
+        self.test_delete_trusted_profile_assignment_all_params()
+
+        # Disable retries and run test_delete_trusted_profile_assignment_all_params.
+        _service.disable_retries()
+        self.test_delete_trusted_profile_assignment_all_params()
+
+    @responses.activate
+    def test_delete_trusted_profile_assignment_value_error(self):
+        """
+        test_delete_trusted_profile_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_assignments/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "status_code": "status_code", "errors": [{"code": "code", "message_code": "message_code", "message": "message", "details": "details"}], "trace": "trace"}'
+        responses.add(
+            responses.DELETE,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "assignment_id": assignment_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_trusted_profile_assignment(**req_copy)
+
+    def test_delete_trusted_profile_assignment_value_error_with_retries(self):
+        # Enable retries and run test_delete_trusted_profile_assignment_value_error.
+        _service.enable_retries()
+        self.test_delete_trusted_profile_assignment_value_error()
+
+        # Disable retries and run test_delete_trusted_profile_assignment_value_error.
+        _service.disable_retries()
+        self.test_delete_trusted_profile_assignment_value_error()
+
+
+class TestUpdateTrustedProfileAssignment:
+    """
+    Test Class for update_trusted_profile_assignment
+    """
+
+    @responses.activate
+    def test_update_trusted_profile_assignment_all_params(self):
+        """
+        update_trusted_profile_assignment()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_assignments/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+        if_match = 'testString'
+        template_version = 1
+
+        # Invoke method
+        response = _service.update_trusted_profile_assignment(
+            assignment_id,
+            if_match,
+            template_version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['template_version'] == 1
+
+    def test_update_trusted_profile_assignment_all_params_with_retries(self):
+        # Enable retries and run test_update_trusted_profile_assignment_all_params.
+        _service.enable_retries()
+        self.test_update_trusted_profile_assignment_all_params()
+
+        # Disable retries and run test_update_trusted_profile_assignment_all_params.
+        _service.disable_retries()
+        self.test_update_trusted_profile_assignment_all_params()
+
+    @responses.activate
+    def test_update_trusted_profile_assignment_value_error(self):
+        """
+        test_update_trusted_profile_assignment_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_assignments/testString')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "id": "id", "account_id": "account_id", "template_id": "template_id", "template_version": 16, "target_type": "target_type", "target": "target", "status": "status", "resources": [{"target": "target", "profile": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "account_settings": {"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}, "policy_template_refs": [{"id": "id", "version": "version", "resource_created": {"id": "id"}, "error_message": {"name": "name", "errorCode": "error_code", "message": "message", "statusCode": "status_code"}, "status": "status"}]}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id", "entity_tag": "entity_tag"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        assignment_id = 'testString'
+        if_match = 'testString'
+        template_version = 1
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "assignment_id": assignment_id,
+            "if_match": if_match,
+            "template_version": template_version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_trusted_profile_assignment(**req_copy)
+
+    def test_update_trusted_profile_assignment_value_error_with_retries(self):
+        # Enable retries and run test_update_trusted_profile_assignment_value_error.
+        _service.enable_retries()
+        self.test_update_trusted_profile_assignment_value_error()
+
+        # Disable retries and run test_update_trusted_profile_assignment_value_error.
+        _service.disable_retries()
+        self.test_update_trusted_profile_assignment_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: TrustedProfileAssignments
+##############################################################################
+
+##############################################################################
+# Start of Service: TrustedProfileTemplate
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = IamIdentityV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, IamIdentityV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = IamIdentityV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestListProfileTemplates:
+    """
+    Test Class for list_profile_templates
+    """
+
+    @responses.activate
+    def test_list_profile_templates_all_params(self):
+        """
+        list_profile_templates()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        account_id = 'testString'
+        limit = '20'
+        pagetoken = 'testString'
+        sort = 'created_at'
+        order = 'asc'
+        include_history = 'false'
+
+        # Invoke method
+        response = _service.list_profile_templates(
+            account_id=account_id,
+            limit=limit,
+            pagetoken=pagetoken,
+            sort=sort,
+            order=order,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'account_id={}'.format(account_id) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'pagetoken={}'.format(pagetoken) in query_string
+        assert 'sort={}'.format(sort) in query_string
+        assert 'order={}'.format(order) in query_string
+        assert 'include_history={}'.format(include_history) in query_string
+
+    def test_list_profile_templates_all_params_with_retries(self):
+        # Enable retries and run test_list_profile_templates_all_params.
+        _service.enable_retries()
+        self.test_list_profile_templates_all_params()
+
+        # Disable retries and run test_list_profile_templates_all_params.
+        _service.disable_retries()
+        self.test_list_profile_templates_all_params()
+
+    @responses.activate
+    def test_list_profile_templates_required_params(self):
+        """
+        test_list_profile_templates_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Invoke method
+        response = _service.list_profile_templates()
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_profile_templates_required_params_with_retries(self):
+        # Enable retries and run test_list_profile_templates_required_params.
+        _service.enable_retries()
+        self.test_list_profile_templates_required_params()
+
+        # Disable retries and run test_list_profile_templates_required_params.
+        _service.disable_retries()
+        self.test_list_profile_templates_required_params()
+
+
+class TestCreateProfileTemplate:
+    """
+    Test Class for create_profile_template
+    """
+
+    @responses.activate
+    def test_create_profile_template_all_params(self):
+        """
+        create_profile_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a ProfileClaimRuleConditions model
+        profile_claim_rule_conditions_model = {}
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
+        trusted_profile_template_claim_rule_model = {}
+        trusted_profile_template_claim_rule_model['name'] = 'testString'
+        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model['expiration'] = 38
+        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
+
+        # Construct a dict representation of a ProfileIdentityRequest model
+        profile_identity_request_model = {}
+        profile_identity_request_model['identifier'] = 'testString'
+        profile_identity_request_model['type'] = 'user'
+        profile_identity_request_model['accounts'] = ['testString']
+        profile_identity_request_model['description'] = 'testString'
+
+        # Construct a dict representation of a TemplateProfileComponentRequest model
+        template_profile_component_request_model = {}
+        template_profile_component_request_model['name'] = 'testString'
+        template_profile_component_request_model['description'] = 'testString'
+        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_request_model['identities'] = [profile_identity_request_model]
+
+        # Construct a dict representation of a PolicyTemplateReference model
+        policy_template_reference_model = {}
+        policy_template_reference_model['id'] = 'testString'
+        policy_template_reference_model['version'] = 'testString'
+
+        # Set up parameter values
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        profile = template_profile_component_request_model
+        policy_template_references = [policy_template_reference_model]
+
+        # Invoke method
+        response = _service.create_profile_template(
+            account_id=account_id,
+            name=name,
+            description=description,
+            profile=profile,
+            policy_template_references=policy_template_references,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['profile'] == template_profile_component_request_model
+        assert req_body['policy_template_references'] == [policy_template_reference_model]
+
+    def test_create_profile_template_all_params_with_retries(self):
+        # Enable retries and run test_create_profile_template_all_params.
+        _service.enable_retries()
+        self.test_create_profile_template_all_params()
+
+        # Disable retries and run test_create_profile_template_all_params.
+        _service.disable_retries()
+        self.test_create_profile_template_all_params()
+
+
+class TestGetLatestProfileTemplateVersion:
+    """
+    Test Class for get_latest_profile_template_version
+    """
+
+    @responses.activate
+    def test_get_latest_profile_template_version_all_params(self):
+        """
+        get_latest_profile_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        include_history = False
+
+        # Invoke method
+        response = _service.get_latest_profile_template_version(
+            template_id,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+
+    def test_get_latest_profile_template_version_all_params_with_retries(self):
+        # Enable retries and run test_get_latest_profile_template_version_all_params.
+        _service.enable_retries()
+        self.test_get_latest_profile_template_version_all_params()
+
+        # Disable retries and run test_get_latest_profile_template_version_all_params.
+        _service.disable_retries()
+        self.test_get_latest_profile_template_version_all_params()
+
+    @responses.activate
+    def test_get_latest_profile_template_version_required_params(self):
+        """
+        test_get_latest_profile_template_version_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Invoke method
+        response = _service.get_latest_profile_template_version(
+            template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_latest_profile_template_version_required_params_with_retries(self):
+        # Enable retries and run test_get_latest_profile_template_version_required_params.
+        _service.enable_retries()
+        self.test_get_latest_profile_template_version_required_params()
+
+        # Disable retries and run test_get_latest_profile_template_version_required_params.
+        _service.disable_retries()
+        self.test_get_latest_profile_template_version_required_params()
+
+    @responses.activate
+    def test_get_latest_profile_template_version_value_error(self):
+        """
+        test_get_latest_profile_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_latest_profile_template_version(**req_copy)
+
+    def test_get_latest_profile_template_version_value_error_with_retries(self):
+        # Enable retries and run test_get_latest_profile_template_version_value_error.
+        _service.enable_retries()
+        self.test_get_latest_profile_template_version_value_error()
+
+        # Disable retries and run test_get_latest_profile_template_version_value_error.
+        _service.disable_retries()
+        self.test_get_latest_profile_template_version_value_error()
+
+
+class TestDeleteAllVersionsOfProfileTemplate:
+    """
+    Test Class for delete_all_versions_of_profile_template
+    """
+
+    @responses.activate
+    def test_delete_all_versions_of_profile_template_all_params(self):
+        """
+        delete_all_versions_of_profile_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_all_versions_of_profile_template(
+            template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_all_versions_of_profile_template_all_params_with_retries(self):
+        # Enable retries and run test_delete_all_versions_of_profile_template_all_params.
+        _service.enable_retries()
+        self.test_delete_all_versions_of_profile_template_all_params()
+
+        # Disable retries and run test_delete_all_versions_of_profile_template_all_params.
+        _service.disable_retries()
+        self.test_delete_all_versions_of_profile_template_all_params()
+
+    @responses.activate
+    def test_delete_all_versions_of_profile_template_value_error(self):
+        """
+        test_delete_all_versions_of_profile_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_all_versions_of_profile_template(**req_copy)
+
+    def test_delete_all_versions_of_profile_template_value_error_with_retries(self):
+        # Enable retries and run test_delete_all_versions_of_profile_template_value_error.
+        _service.enable_retries()
+        self.test_delete_all_versions_of_profile_template_value_error()
+
+        # Disable retries and run test_delete_all_versions_of_profile_template_value_error.
+        _service.disable_retries()
+        self.test_delete_all_versions_of_profile_template_value_error()
+
+
+class TestListVersionsOfProfileTemplate:
+    """
+    Test Class for list_versions_of_profile_template
+    """
+
+    @responses.activate
+    def test_list_versions_of_profile_template_all_params(self):
+        """
+        list_versions_of_profile_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        limit = '20'
+        pagetoken = 'testString'
+        sort = 'created_at'
+        order = 'asc'
+        include_history = 'false'
+
+        # Invoke method
+        response = _service.list_versions_of_profile_template(
+            template_id,
+            limit=limit,
+            pagetoken=pagetoken,
+            sort=sort,
+            order=order,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'limit={}'.format(limit) in query_string
+        assert 'pagetoken={}'.format(pagetoken) in query_string
+        assert 'sort={}'.format(sort) in query_string
+        assert 'order={}'.format(order) in query_string
+        assert 'include_history={}'.format(include_history) in query_string
+
+    def test_list_versions_of_profile_template_all_params_with_retries(self):
+        # Enable retries and run test_list_versions_of_profile_template_all_params.
+        _service.enable_retries()
+        self.test_list_versions_of_profile_template_all_params()
+
+        # Disable retries and run test_list_versions_of_profile_template_all_params.
+        _service.disable_retries()
+        self.test_list_versions_of_profile_template_all_params()
+
+    @responses.activate
+    def test_list_versions_of_profile_template_required_params(self):
+        """
+        test_list_versions_of_profile_template_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Invoke method
+        response = _service.list_versions_of_profile_template(
+            template_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_versions_of_profile_template_required_params_with_retries(self):
+        # Enable retries and run test_list_versions_of_profile_template_required_params.
+        _service.enable_retries()
+        self.test_list_versions_of_profile_template_required_params()
+
+        # Disable retries and run test_list_versions_of_profile_template_required_params.
+        _service.disable_retries()
+        self.test_list_versions_of_profile_template_required_params()
+
+    @responses.activate
+    def test_list_versions_of_profile_template_value_error(self):
+        """
+        test_list_versions_of_profile_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions')
+        mock_response = '{"context": {"transaction_id": "transaction_id", "operation": "operation", "user_agent": "user_agent", "url": "url", "instance_id": "instance_id", "thread_id": "thread_id", "host": "host", "start_time": "start_time", "end_time": "end_time", "elapsed_time": "elapsed_time", "cluster_name": "cluster_name"}, "offset": 6, "limit": 20, "first": "first", "previous": "previous", "next": "next", "profile_templates": [{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_versions_of_profile_template(**req_copy)
+
+    def test_list_versions_of_profile_template_value_error_with_retries(self):
+        # Enable retries and run test_list_versions_of_profile_template_value_error.
+        _service.enable_retries()
+        self.test_list_versions_of_profile_template_value_error()
+
+        # Disable retries and run test_list_versions_of_profile_template_value_error.
+        _service.disable_retries()
+        self.test_list_versions_of_profile_template_value_error()
+
+
+class TestCreateProfileTemplateVersion:
+    """
+    Test Class for create_profile_template_version
+    """
+
+    @responses.activate
+    def test_create_profile_template_version_all_params(self):
+        """
+        create_profile_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a ProfileClaimRuleConditions model
+        profile_claim_rule_conditions_model = {}
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
+        trusted_profile_template_claim_rule_model = {}
+        trusted_profile_template_claim_rule_model['name'] = 'testString'
+        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model['expiration'] = 38
+        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
+
+        # Construct a dict representation of a ProfileIdentityRequest model
+        profile_identity_request_model = {}
+        profile_identity_request_model['identifier'] = 'testString'
+        profile_identity_request_model['type'] = 'user'
+        profile_identity_request_model['accounts'] = ['testString']
+        profile_identity_request_model['description'] = 'testString'
+
+        # Construct a dict representation of a TemplateProfileComponentRequest model
+        template_profile_component_request_model = {}
+        template_profile_component_request_model['name'] = 'testString'
+        template_profile_component_request_model['description'] = 'testString'
+        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_request_model['identities'] = [profile_identity_request_model]
+
+        # Construct a dict representation of a PolicyTemplateReference model
+        policy_template_reference_model = {}
+        policy_template_reference_model['id'] = 'testString'
+        policy_template_reference_model['version'] = 'testString'
+
+        # Set up parameter values
+        template_id = 'testString'
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        profile = template_profile_component_request_model
+        policy_template_references = [policy_template_reference_model]
+
+        # Invoke method
+        response = _service.create_profile_template_version(
+            template_id,
+            account_id=account_id,
+            name=name,
+            description=description,
+            profile=profile,
+            policy_template_references=policy_template_references,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['profile'] == template_profile_component_request_model
+        assert req_body['policy_template_references'] == [policy_template_reference_model]
+
+    def test_create_profile_template_version_all_params_with_retries(self):
+        # Enable retries and run test_create_profile_template_version_all_params.
+        _service.enable_retries()
+        self.test_create_profile_template_version_all_params()
+
+        # Disable retries and run test_create_profile_template_version_all_params.
+        _service.disable_retries()
+        self.test_create_profile_template_version_all_params()
+
+    @responses.activate
+    def test_create_profile_template_version_value_error(self):
+        """
+        test_create_profile_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a ProfileClaimRuleConditions model
+        profile_claim_rule_conditions_model = {}
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
+        trusted_profile_template_claim_rule_model = {}
+        trusted_profile_template_claim_rule_model['name'] = 'testString'
+        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model['expiration'] = 38
+        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
+
+        # Construct a dict representation of a ProfileIdentityRequest model
+        profile_identity_request_model = {}
+        profile_identity_request_model['identifier'] = 'testString'
+        profile_identity_request_model['type'] = 'user'
+        profile_identity_request_model['accounts'] = ['testString']
+        profile_identity_request_model['description'] = 'testString'
+
+        # Construct a dict representation of a TemplateProfileComponentRequest model
+        template_profile_component_request_model = {}
+        template_profile_component_request_model['name'] = 'testString'
+        template_profile_component_request_model['description'] = 'testString'
+        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_request_model['identities'] = [profile_identity_request_model]
+
+        # Construct a dict representation of a PolicyTemplateReference model
+        policy_template_reference_model = {}
+        policy_template_reference_model['id'] = 'testString'
+        policy_template_reference_model['version'] = 'testString'
+
+        # Set up parameter values
+        template_id = 'testString'
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        profile = template_profile_component_request_model
+        policy_template_references = [policy_template_reference_model]
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_profile_template_version(**req_copy)
+
+    def test_create_profile_template_version_value_error_with_retries(self):
+        # Enable retries and run test_create_profile_template_version_value_error.
+        _service.enable_retries()
+        self.test_create_profile_template_version_value_error()
+
+        # Disable retries and run test_create_profile_template_version_value_error.
+        _service.disable_retries()
+        self.test_create_profile_template_version_value_error()
+
+
+class TestGetProfileTemplateVersion:
+    """
+    Test Class for get_profile_template_version
+    """
+
+    @responses.activate
+    def test_get_profile_template_version_all_params(self):
+        """
+        get_profile_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+        include_history = False
+
+        # Invoke method
+        response = _service.get_profile_template_version(
+            template_id,
+            version,
+            include_history=include_history,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'include_history={}'.format('true' if include_history else 'false') in query_string
+
+    def test_get_profile_template_version_all_params_with_retries(self):
+        # Enable retries and run test_get_profile_template_version_all_params.
+        _service.enable_retries()
+        self.test_get_profile_template_version_all_params()
+
+        # Disable retries and run test_get_profile_template_version_all_params.
+        _service.disable_retries()
+        self.test_get_profile_template_version_all_params()
+
+    @responses.activate
+    def test_get_profile_template_version_required_params(self):
+        """
+        test_get_profile_template_version_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.get_profile_template_version(
+            template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_profile_template_version_required_params_with_retries(self):
+        # Enable retries and run test_get_profile_template_version_required_params.
+        _service.enable_retries()
+        self.test_get_profile_template_version_required_params()
+
+        # Disable retries and run test_get_profile_template_version_required_params.
+        _service.disable_retries()
+        self.test_get_profile_template_version_required_params()
+
+    @responses.activate
+    def test_get_profile_template_version_value_error(self):
+        """
+        test_get_profile_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_profile_template_version(**req_copy)
+
+    def test_get_profile_template_version_value_error_with_retries(self):
+        # Enable retries and run test_get_profile_template_version_value_error.
+        _service.enable_retries()
+        self.test_get_profile_template_version_value_error()
+
+        # Disable retries and run test_get_profile_template_version_value_error.
+        _service.disable_retries()
+        self.test_get_profile_template_version_value_error()
+
+
+class TestUpdateProfileTemplateVersion:
+    """
+    Test Class for update_profile_template_version
+    """
+
+    @responses.activate
+    def test_update_profile_template_version_all_params(self):
+        """
+        update_profile_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a ProfileClaimRuleConditions model
+        profile_claim_rule_conditions_model = {}
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
+        trusted_profile_template_claim_rule_model = {}
+        trusted_profile_template_claim_rule_model['name'] = 'testString'
+        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model['expiration'] = 38
+        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
+
+        # Construct a dict representation of a ProfileIdentityRequest model
+        profile_identity_request_model = {}
+        profile_identity_request_model['identifier'] = 'testString'
+        profile_identity_request_model['type'] = 'user'
+        profile_identity_request_model['accounts'] = ['testString']
+        profile_identity_request_model['description'] = 'testString'
+
+        # Construct a dict representation of a TemplateProfileComponentRequest model
+        template_profile_component_request_model = {}
+        template_profile_component_request_model['name'] = 'testString'
+        template_profile_component_request_model['description'] = 'testString'
+        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_request_model['identities'] = [profile_identity_request_model]
+
+        # Construct a dict representation of a PolicyTemplateReference model
+        policy_template_reference_model = {}
+        policy_template_reference_model['id'] = 'testString'
+        policy_template_reference_model['version'] = 'testString'
+
+        # Set up parameter values
+        if_match = 'testString'
+        template_id = 'testString'
+        version = 'testString'
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        profile = template_profile_component_request_model
+        policy_template_references = [policy_template_reference_model]
+
+        # Invoke method
+        response = _service.update_profile_template_version(
+            if_match,
+            template_id,
+            version,
+            account_id=account_id,
+            name=name,
+            description=description,
+            profile=profile,
+            policy_template_references=policy_template_references,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['account_id'] == 'testString'
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['profile'] == template_profile_component_request_model
+        assert req_body['policy_template_references'] == [policy_template_reference_model]
+
+    def test_update_profile_template_version_all_params_with_retries(self):
+        # Enable retries and run test_update_profile_template_version_all_params.
+        _service.enable_retries()
+        self.test_update_profile_template_version_all_params()
+
+        # Disable retries and run test_update_profile_template_version_all_params.
+        _service.disable_retries()
+        self.test_update_profile_template_version_all_params()
+
+    @responses.activate
+    def test_update_profile_template_version_value_error(self):
+        """
+        test_update_profile_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
+        mock_response = '{"id": "id", "version": 7, "account_id": "account_id", "name": "name", "description": "description", "committed": false, "profile": {"name": "name", "description": "description", "rules": [{"name": "name", "type": "Profile-SAML", "realm_name": "realm_name", "expiration": 10, "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}]}], "identities": [{"iam_id": "iam_id", "identifier": "identifier", "type": "user", "accounts": ["accounts"], "description": "description"}]}, "policy_template_references": [{"id": "id", "version": "version"}], "history": [{"timestamp": "timestamp", "iam_id": "iam_id", "iam_id_account": "iam_id_account", "action": "action", "params": ["params"], "message": "message"}], "entity_tag": "entity_tag", "crn": "crn", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a ProfileClaimRuleConditions model
+        profile_claim_rule_conditions_model = {}
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        # Construct a dict representation of a TrustedProfileTemplateClaimRule model
+        trusted_profile_template_claim_rule_model = {}
+        trusted_profile_template_claim_rule_model['name'] = 'testString'
+        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model['expiration'] = 38
+        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
+
+        # Construct a dict representation of a ProfileIdentityRequest model
+        profile_identity_request_model = {}
+        profile_identity_request_model['identifier'] = 'testString'
+        profile_identity_request_model['type'] = 'user'
+        profile_identity_request_model['accounts'] = ['testString']
+        profile_identity_request_model['description'] = 'testString'
+
+        # Construct a dict representation of a TemplateProfileComponentRequest model
+        template_profile_component_request_model = {}
+        template_profile_component_request_model['name'] = 'testString'
+        template_profile_component_request_model['description'] = 'testString'
+        template_profile_component_request_model['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_request_model['identities'] = [profile_identity_request_model]
+
+        # Construct a dict representation of a PolicyTemplateReference model
+        policy_template_reference_model = {}
+        policy_template_reference_model['id'] = 'testString'
+        policy_template_reference_model['version'] = 'testString'
+
+        # Set up parameter values
+        if_match = 'testString'
+        template_id = 'testString'
+        version = 'testString'
+        account_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        profile = template_profile_component_request_model
+        policy_template_references = [policy_template_reference_model]
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "if_match": if_match,
+            "template_id": template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_profile_template_version(**req_copy)
+
+    def test_update_profile_template_version_value_error_with_retries(self):
+        # Enable retries and run test_update_profile_template_version_value_error.
+        _service.enable_retries()
+        self.test_update_profile_template_version_value_error()
+
+        # Disable retries and run test_update_profile_template_version_value_error.
+        _service.disable_retries()
+        self.test_update_profile_template_version_value_error()
+
+
+class TestDeleteProfileTemplateVersion:
+    """
+    Test Class for delete_profile_template_version
+    """
+
+    @responses.activate
+    def test_delete_profile_template_version_all_params(self):
+        """
+        delete_profile_template_version()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.delete_profile_template_version(
+            template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_profile_template_version_all_params_with_retries(self):
+        # Enable retries and run test_delete_profile_template_version_all_params.
+        _service.enable_retries()
+        self.test_delete_profile_template_version_all_params()
+
+        # Disable retries and run test_delete_profile_template_version_all_params.
+        _service.disable_retries()
+        self.test_delete_profile_template_version_all_params()
+
+    @responses.activate
+    def test_delete_profile_template_version_value_error(self):
+        """
+        test_delete_profile_template_version_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_profile_template_version(**req_copy)
+
+    def test_delete_profile_template_version_value_error_with_retries(self):
+        # Enable retries and run test_delete_profile_template_version_value_error.
+        _service.enable_retries()
+        self.test_delete_profile_template_version_value_error()
+
+        # Disable retries and run test_delete_profile_template_version_value_error.
+        _service.disable_retries()
+        self.test_delete_profile_template_version_value_error()
+
+
+class TestCommitProfileTemplate:
+    """
+    Test Class for commit_profile_template
+    """
+
+    @responses.activate
+    def test_commit_profile_template_all_params(self):
+        """
+        commit_profile_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString/commit')
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Invoke method
+        response = _service.commit_profile_template(
+            template_id,
+            version,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_commit_profile_template_all_params_with_retries(self):
+        # Enable retries and run test_commit_profile_template_all_params.
+        _service.enable_retries()
+        self.test_commit_profile_template_all_params()
+
+        # Disable retries and run test_commit_profile_template_all_params.
+        _service.disable_retries()
+        self.test_commit_profile_template_all_params()
+
+    @responses.activate
+    def test_commit_profile_template_value_error(self):
+        """
+        test_commit_profile_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/profile_templates/testString/versions/testString/commit')
+        responses.add(
+            responses.POST,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        template_id = 'testString'
+        version = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "template_id": template_id,
+            "version": version,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.commit_profile_template(**req_copy)
+
+    def test_commit_profile_template_value_error_with_retries(self):
+        # Enable retries and run test_commit_profile_template_value_error.
+        _service.enable_retries()
+        self.test_commit_profile_template_value_error()
+
+        # Disable retries and run test_commit_profile_template_value_error.
+        _service.disable_retries()
+        self.test_commit_profile_template_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: TrustedProfileTemplate
+##############################################################################
+
 
 ##############################################################################
 # Start of Model Tests
@@ -4541,15 +7933,11 @@ class TestModel_AccountBasedMfaEnrollment:
         account_based_mfa_enrollment_model_json['complies'] = True
 
         # Construct a model instance of AccountBasedMfaEnrollment by calling from_dict on the json representation
-        account_based_mfa_enrollment_model = AccountBasedMfaEnrollment.from_dict(
-            account_based_mfa_enrollment_model_json
-        )
+        account_based_mfa_enrollment_model = AccountBasedMfaEnrollment.from_dict(account_based_mfa_enrollment_model_json)
         assert account_based_mfa_enrollment_model != False
 
         # Construct a model instance of AccountBasedMfaEnrollment by calling from_dict on the json representation
-        account_based_mfa_enrollment_model_dict = AccountBasedMfaEnrollment.from_dict(
-            account_based_mfa_enrollment_model_json
-        ).__dict__
+        account_based_mfa_enrollment_model_dict = AccountBasedMfaEnrollment.from_dict(account_based_mfa_enrollment_model_json).__dict__
         account_based_mfa_enrollment_model2 = AccountBasedMfaEnrollment(**account_based_mfa_enrollment_model_dict)
 
         # Verify the model instances are equivalent
@@ -4558,6 +7946,51 @@ class TestModel_AccountBasedMfaEnrollment:
         # Convert model instance back to dict and verify no loss of data
         account_based_mfa_enrollment_model_json2 = account_based_mfa_enrollment_model.to_dict()
         assert account_based_mfa_enrollment_model_json2 == account_based_mfa_enrollment_model_json
+
+
+class TestModel_AccountSettingsComponent:
+    """
+    Test Class for AccountSettingsComponent
+    """
+
+    def test_account_settings_component_serialization(self):
+        """
+        Test serialization/deserialization for AccountSettingsComponent
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        account_settings_user_mfa_model = {}  # AccountSettingsUserMFA
+        account_settings_user_mfa_model['iam_id'] = 'testString'
+        account_settings_user_mfa_model['mfa'] = 'NONE'
+
+        # Construct a json representation of a AccountSettingsComponent model
+        account_settings_component_model_json = {}
+        account_settings_component_model_json['restrict_create_service_id'] = 'NOT_SET'
+        account_settings_component_model_json['restrict_create_platform_apikey'] = 'NOT_SET'
+        account_settings_component_model_json['allowed_ip_addresses'] = 'testString'
+        account_settings_component_model_json['mfa'] = 'NONE'
+        account_settings_component_model_json['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model_json['session_expiration_in_seconds'] = '86400'
+        account_settings_component_model_json['session_invalidation_in_seconds'] = '7200'
+        account_settings_component_model_json['max_sessions_per_identity'] = 'testString'
+        account_settings_component_model_json['system_access_token_expiration_in_seconds'] = '3600'
+        account_settings_component_model_json['system_refresh_token_expiration_in_seconds'] = '259200'
+
+        # Construct a model instance of AccountSettingsComponent by calling from_dict on the json representation
+        account_settings_component_model = AccountSettingsComponent.from_dict(account_settings_component_model_json)
+        assert account_settings_component_model != False
+
+        # Construct a model instance of AccountSettingsComponent by calling from_dict on the json representation
+        account_settings_component_model_dict = AccountSettingsComponent.from_dict(account_settings_component_model_json).__dict__
+        account_settings_component_model2 = AccountSettingsComponent(**account_settings_component_model_dict)
+
+        # Verify the model instances are equivalent
+        assert account_settings_component_model == account_settings_component_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        account_settings_component_model_json2 = account_settings_component_model.to_dict()
+        assert account_settings_component_model_json2 == account_settings_component_model_json
 
 
 class TestModel_AccountSettingsResponse:
@@ -4619,9 +8052,7 @@ class TestModel_AccountSettingsResponse:
         assert account_settings_response_model != False
 
         # Construct a model instance of AccountSettingsResponse by calling from_dict on the json representation
-        account_settings_response_model_dict = AccountSettingsResponse.from_dict(
-            account_settings_response_model_json
-        ).__dict__
+        account_settings_response_model_dict = AccountSettingsResponse.from_dict(account_settings_response_model_json).__dict__
         account_settings_response_model2 = AccountSettingsResponse(**account_settings_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -4630,6 +8061,166 @@ class TestModel_AccountSettingsResponse:
         # Convert model instance back to dict and verify no loss of data
         account_settings_response_model_json2 = account_settings_response_model.to_dict()
         assert account_settings_response_model_json2 == account_settings_response_model_json
+
+
+class TestModel_AccountSettingsTemplateList:
+    """
+    Test Class for AccountSettingsTemplateList
+    """
+
+    def test_account_settings_template_list_serialization(self):
+        """
+        Test serialization/deserialization for AccountSettingsTemplateList
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        response_context_model = {}  # ResponseContext
+        response_context_model['transaction_id'] = 'testString'
+        response_context_model['operation'] = 'testString'
+        response_context_model['user_agent'] = 'testString'
+        response_context_model['url'] = 'testString'
+        response_context_model['instance_id'] = 'testString'
+        response_context_model['thread_id'] = 'testString'
+        response_context_model['host'] = 'testString'
+        response_context_model['start_time'] = 'testString'
+        response_context_model['end_time'] = 'testString'
+        response_context_model['elapsed_time'] = 'testString'
+        response_context_model['cluster_name'] = 'testString'
+
+        account_settings_user_mfa_model = {}  # AccountSettingsUserMFA
+        account_settings_user_mfa_model['iam_id'] = 'testString'
+        account_settings_user_mfa_model['mfa'] = 'NONE'
+
+        account_settings_component_model = {}  # AccountSettingsComponent
+        account_settings_component_model['restrict_create_service_id'] = 'NOT_SET'
+        account_settings_component_model['restrict_create_platform_apikey'] = 'NOT_SET'
+        account_settings_component_model['allowed_ip_addresses'] = 'testString'
+        account_settings_component_model['mfa'] = 'NONE'
+        account_settings_component_model['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model['session_expiration_in_seconds'] = '86400'
+        account_settings_component_model['session_invalidation_in_seconds'] = '7200'
+        account_settings_component_model['max_sessions_per_identity'] = 'testString'
+        account_settings_component_model['system_access_token_expiration_in_seconds'] = '3600'
+        account_settings_component_model['system_refresh_token_expiration_in_seconds'] = '259200'
+
+        enity_history_record_model = {}  # EnityHistoryRecord
+        enity_history_record_model['timestamp'] = 'testString'
+        enity_history_record_model['iam_id'] = 'testString'
+        enity_history_record_model['iam_id_account'] = 'testString'
+        enity_history_record_model['action'] = 'testString'
+        enity_history_record_model['params'] = ['testString']
+        enity_history_record_model['message'] = 'testString'
+
+        account_settings_template_response_model = {}  # AccountSettingsTemplateResponse
+        account_settings_template_response_model['id'] = 'testString'
+        account_settings_template_response_model['version'] = 26
+        account_settings_template_response_model['account_id'] = 'testString'
+        account_settings_template_response_model['name'] = 'testString'
+        account_settings_template_response_model['description'] = 'testString'
+        account_settings_template_response_model['committed'] = True
+        account_settings_template_response_model['account_settings'] = account_settings_component_model
+        account_settings_template_response_model['history'] = [enity_history_record_model]
+        account_settings_template_response_model['entity_tag'] = 'testString'
+        account_settings_template_response_model['crn'] = 'testString'
+        account_settings_template_response_model['created_at'] = 'testString'
+        account_settings_template_response_model['created_by_id'] = 'testString'
+        account_settings_template_response_model['last_modified_at'] = 'testString'
+        account_settings_template_response_model['last_modified_by_id'] = 'testString'
+
+        # Construct a json representation of a AccountSettingsTemplateList model
+        account_settings_template_list_model_json = {}
+        account_settings_template_list_model_json['context'] = response_context_model
+        account_settings_template_list_model_json['offset'] = 26
+        account_settings_template_list_model_json['limit'] = 20
+        account_settings_template_list_model_json['first'] = 'testString'
+        account_settings_template_list_model_json['previous'] = 'testString'
+        account_settings_template_list_model_json['next'] = 'testString'
+        account_settings_template_list_model_json['account_settings_templates'] = [account_settings_template_response_model]
+
+        # Construct a model instance of AccountSettingsTemplateList by calling from_dict on the json representation
+        account_settings_template_list_model = AccountSettingsTemplateList.from_dict(account_settings_template_list_model_json)
+        assert account_settings_template_list_model != False
+
+        # Construct a model instance of AccountSettingsTemplateList by calling from_dict on the json representation
+        account_settings_template_list_model_dict = AccountSettingsTemplateList.from_dict(account_settings_template_list_model_json).__dict__
+        account_settings_template_list_model2 = AccountSettingsTemplateList(**account_settings_template_list_model_dict)
+
+        # Verify the model instances are equivalent
+        assert account_settings_template_list_model == account_settings_template_list_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        account_settings_template_list_model_json2 = account_settings_template_list_model.to_dict()
+        assert account_settings_template_list_model_json2 == account_settings_template_list_model_json
+
+
+class TestModel_AccountSettingsTemplateResponse:
+    """
+    Test Class for AccountSettingsTemplateResponse
+    """
+
+    def test_account_settings_template_response_serialization(self):
+        """
+        Test serialization/deserialization for AccountSettingsTemplateResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        account_settings_user_mfa_model = {}  # AccountSettingsUserMFA
+        account_settings_user_mfa_model['iam_id'] = 'testString'
+        account_settings_user_mfa_model['mfa'] = 'NONE'
+
+        account_settings_component_model = {}  # AccountSettingsComponent
+        account_settings_component_model['restrict_create_service_id'] = 'NOT_SET'
+        account_settings_component_model['restrict_create_platform_apikey'] = 'NOT_SET'
+        account_settings_component_model['allowed_ip_addresses'] = 'testString'
+        account_settings_component_model['mfa'] = 'NONE'
+        account_settings_component_model['user_mfa'] = [account_settings_user_mfa_model]
+        account_settings_component_model['session_expiration_in_seconds'] = '86400'
+        account_settings_component_model['session_invalidation_in_seconds'] = '7200'
+        account_settings_component_model['max_sessions_per_identity'] = 'testString'
+        account_settings_component_model['system_access_token_expiration_in_seconds'] = '3600'
+        account_settings_component_model['system_refresh_token_expiration_in_seconds'] = '259200'
+
+        enity_history_record_model = {}  # EnityHistoryRecord
+        enity_history_record_model['timestamp'] = 'testString'
+        enity_history_record_model['iam_id'] = 'testString'
+        enity_history_record_model['iam_id_account'] = 'testString'
+        enity_history_record_model['action'] = 'testString'
+        enity_history_record_model['params'] = ['testString']
+        enity_history_record_model['message'] = 'testString'
+
+        # Construct a json representation of a AccountSettingsTemplateResponse model
+        account_settings_template_response_model_json = {}
+        account_settings_template_response_model_json['id'] = 'testString'
+        account_settings_template_response_model_json['version'] = 26
+        account_settings_template_response_model_json['account_id'] = 'testString'
+        account_settings_template_response_model_json['name'] = 'testString'
+        account_settings_template_response_model_json['description'] = 'testString'
+        account_settings_template_response_model_json['committed'] = True
+        account_settings_template_response_model_json['account_settings'] = account_settings_component_model
+        account_settings_template_response_model_json['history'] = [enity_history_record_model]
+        account_settings_template_response_model_json['entity_tag'] = 'testString'
+        account_settings_template_response_model_json['crn'] = 'testString'
+        account_settings_template_response_model_json['created_at'] = 'testString'
+        account_settings_template_response_model_json['created_by_id'] = 'testString'
+        account_settings_template_response_model_json['last_modified_at'] = 'testString'
+        account_settings_template_response_model_json['last_modified_by_id'] = 'testString'
+
+        # Construct a model instance of AccountSettingsTemplateResponse by calling from_dict on the json representation
+        account_settings_template_response_model = AccountSettingsTemplateResponse.from_dict(account_settings_template_response_model_json)
+        assert account_settings_template_response_model != False
+
+        # Construct a model instance of AccountSettingsTemplateResponse by calling from_dict on the json representation
+        account_settings_template_response_model_dict = AccountSettingsTemplateResponse.from_dict(account_settings_template_response_model_json).__dict__
+        account_settings_template_response_model2 = AccountSettingsTemplateResponse(**account_settings_template_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert account_settings_template_response_model == account_settings_template_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        account_settings_template_response_model_json2 = account_settings_template_response_model.to_dict()
+        assert account_settings_template_response_model_json2 == account_settings_template_response_model_json
 
 
 class TestModel_AccountSettingsUserMFA:
@@ -4652,9 +8243,7 @@ class TestModel_AccountSettingsUserMFA:
         assert account_settings_user_mfa_model != False
 
         # Construct a model instance of AccountSettingsUserMFA by calling from_dict on the json representation
-        account_settings_user_mfa_model_dict = AccountSettingsUserMFA.from_dict(
-            account_settings_user_mfa_model_json
-        ).__dict__
+        account_settings_user_mfa_model_dict = AccountSettingsUserMFA.from_dict(account_settings_user_mfa_model_json).__dict__
         account_settings_user_mfa_model2 = AccountSettingsUserMFA(**account_settings_user_mfa_model_dict)
 
         # Verify the model instances are equivalent
@@ -4785,27 +8374,19 @@ class TestModel_ApiKeyInsideCreateServiceIdRequest:
         api_key_inside_create_service_id_request_model_json['store_value'] = True
 
         # Construct a model instance of ApiKeyInsideCreateServiceIdRequest by calling from_dict on the json representation
-        api_key_inside_create_service_id_request_model = ApiKeyInsideCreateServiceIdRequest.from_dict(
-            api_key_inside_create_service_id_request_model_json
-        )
+        api_key_inside_create_service_id_request_model = ApiKeyInsideCreateServiceIdRequest.from_dict(api_key_inside_create_service_id_request_model_json)
         assert api_key_inside_create_service_id_request_model != False
 
         # Construct a model instance of ApiKeyInsideCreateServiceIdRequest by calling from_dict on the json representation
-        api_key_inside_create_service_id_request_model_dict = ApiKeyInsideCreateServiceIdRequest.from_dict(
-            api_key_inside_create_service_id_request_model_json
-        ).__dict__
-        api_key_inside_create_service_id_request_model2 = ApiKeyInsideCreateServiceIdRequest(
-            **api_key_inside_create_service_id_request_model_dict
-        )
+        api_key_inside_create_service_id_request_model_dict = ApiKeyInsideCreateServiceIdRequest.from_dict(api_key_inside_create_service_id_request_model_json).__dict__
+        api_key_inside_create_service_id_request_model2 = ApiKeyInsideCreateServiceIdRequest(**api_key_inside_create_service_id_request_model_dict)
 
         # Verify the model instances are equivalent
         assert api_key_inside_create_service_id_request_model == api_key_inside_create_service_id_request_model2
 
         # Convert model instance back to dict and verify no loss of data
         api_key_inside_create_service_id_request_model_json2 = api_key_inside_create_service_id_request_model.to_dict()
-        assert (
-            api_key_inside_create_service_id_request_model_json2 == api_key_inside_create_service_id_request_model_json
-        )
+        assert api_key_inside_create_service_id_request_model_json2 == api_key_inside_create_service_id_request_model_json
 
 
 class TestModel_ApiKeyList:
@@ -4955,9 +8536,7 @@ class TestModel_ApikeyActivityServiceid:
         assert apikey_activity_serviceid_model != False
 
         # Construct a model instance of ApikeyActivityServiceid by calling from_dict on the json representation
-        apikey_activity_serviceid_model_dict = ApikeyActivityServiceid.from_dict(
-            apikey_activity_serviceid_model_json
-        ).__dict__
+        apikey_activity_serviceid_model_dict = ApikeyActivityServiceid.from_dict(apikey_activity_serviceid_model_json).__dict__
         apikey_activity_serviceid_model2 = ApikeyActivityServiceid(**apikey_activity_serviceid_model_dict)
 
         # Verify the model instances are equivalent
@@ -5018,18 +8597,12 @@ class TestModel_CreateProfileLinkRequestLink:
         create_profile_link_request_link_model_json['name'] = 'testString'
 
         # Construct a model instance of CreateProfileLinkRequestLink by calling from_dict on the json representation
-        create_profile_link_request_link_model = CreateProfileLinkRequestLink.from_dict(
-            create_profile_link_request_link_model_json
-        )
+        create_profile_link_request_link_model = CreateProfileLinkRequestLink.from_dict(create_profile_link_request_link_model_json)
         assert create_profile_link_request_link_model != False
 
         # Construct a model instance of CreateProfileLinkRequestLink by calling from_dict on the json representation
-        create_profile_link_request_link_model_dict = CreateProfileLinkRequestLink.from_dict(
-            create_profile_link_request_link_model_json
-        ).__dict__
-        create_profile_link_request_link_model2 = CreateProfileLinkRequestLink(
-            **create_profile_link_request_link_model_dict
-        )
+        create_profile_link_request_link_model_dict = CreateProfileLinkRequestLink.from_dict(create_profile_link_request_link_model_json).__dict__
+        create_profile_link_request_link_model2 = CreateProfileLinkRequestLink(**create_profile_link_request_link_model_dict)
 
         # Verify the model instances are equivalent
         assert create_profile_link_request_link_model == create_profile_link_request_link_model2
@@ -5106,6 +8679,93 @@ class TestModel_EntityActivity:
         assert entity_activity_model_json2 == entity_activity_model_json
 
 
+class TestModel_Error:
+    """
+    Test Class for Error
+    """
+
+    def test_error_serialization(self):
+        """
+        Test serialization/deserialization for Error
+        """
+
+        # Construct a json representation of a Error model
+        error_model_json = {}
+        error_model_json['code'] = 'testString'
+        error_model_json['message_code'] = 'testString'
+        error_model_json['message'] = 'testString'
+        error_model_json['details'] = 'testString'
+
+        # Construct a model instance of Error by calling from_dict on the json representation
+        error_model = Error.from_dict(error_model_json)
+        assert error_model != False
+
+        # Construct a model instance of Error by calling from_dict on the json representation
+        error_model_dict = Error.from_dict(error_model_json).__dict__
+        error_model2 = Error(**error_model_dict)
+
+        # Verify the model instances are equivalent
+        assert error_model == error_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        error_model_json2 = error_model.to_dict()
+        assert error_model_json2 == error_model_json
+
+
+class TestModel_ExceptionResponse:
+    """
+    Test Class for ExceptionResponse
+    """
+
+    def test_exception_response_serialization(self):
+        """
+        Test serialization/deserialization for ExceptionResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        response_context_model = {}  # ResponseContext
+        response_context_model['transaction_id'] = 'testString'
+        response_context_model['operation'] = 'testString'
+        response_context_model['user_agent'] = 'testString'
+        response_context_model['url'] = 'testString'
+        response_context_model['instance_id'] = 'testString'
+        response_context_model['thread_id'] = 'testString'
+        response_context_model['host'] = 'testString'
+        response_context_model['start_time'] = 'testString'
+        response_context_model['end_time'] = 'testString'
+        response_context_model['elapsed_time'] = 'testString'
+        response_context_model['cluster_name'] = 'testString'
+
+        error_model = {}  # Error
+        error_model['code'] = 'testString'
+        error_model['message_code'] = 'testString'
+        error_model['message'] = 'testString'
+        error_model['details'] = 'testString'
+
+        # Construct a json representation of a ExceptionResponse model
+        exception_response_model_json = {}
+        exception_response_model_json['context'] = response_context_model
+        exception_response_model_json['status_code'] = 'testString'
+        exception_response_model_json['errors'] = [error_model]
+        exception_response_model_json['trace'] = 'testString'
+
+        # Construct a model instance of ExceptionResponse by calling from_dict on the json representation
+        exception_response_model = ExceptionResponse.from_dict(exception_response_model_json)
+        assert exception_response_model != False
+
+        # Construct a model instance of ExceptionResponse by calling from_dict on the json representation
+        exception_response_model_dict = ExceptionResponse.from_dict(exception_response_model_json).__dict__
+        exception_response_model2 = ExceptionResponse(**exception_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert exception_response_model == exception_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        exception_response_model_json2 = exception_response_model.to_dict()
+        assert exception_response_model_json2 == exception_response_model_json
+
+
 class TestModel_IdBasedMfaEnrollment:
     """
     Test Class for IdBasedMfaEnrollment
@@ -5159,9 +8819,7 @@ class TestModel_MfaEnrollmentTypeStatus:
         assert mfa_enrollment_type_status_model != False
 
         # Construct a model instance of MfaEnrollmentTypeStatus by calling from_dict on the json representation
-        mfa_enrollment_type_status_model_dict = MfaEnrollmentTypeStatus.from_dict(
-            mfa_enrollment_type_status_model_json
-        ).__dict__
+        mfa_enrollment_type_status_model_dict = MfaEnrollmentTypeStatus.from_dict(mfa_enrollment_type_status_model_json).__dict__
         mfa_enrollment_type_status_model2 = MfaEnrollmentTypeStatus(**mfa_enrollment_type_status_model_dict)
 
         # Verify the model instances are equivalent
@@ -5220,6 +8878,37 @@ class TestModel_MfaEnrollments:
         # Convert model instance back to dict and verify no loss of data
         mfa_enrollments_model_json2 = mfa_enrollments_model.to_dict()
         assert mfa_enrollments_model_json2 == mfa_enrollments_model_json
+
+
+class TestModel_PolicyTemplateReference:
+    """
+    Test Class for PolicyTemplateReference
+    """
+
+    def test_policy_template_reference_serialization(self):
+        """
+        Test serialization/deserialization for PolicyTemplateReference
+        """
+
+        # Construct a json representation of a PolicyTemplateReference model
+        policy_template_reference_model_json = {}
+        policy_template_reference_model_json['id'] = 'testString'
+        policy_template_reference_model_json['version'] = 'testString'
+
+        # Construct a model instance of PolicyTemplateReference by calling from_dict on the json representation
+        policy_template_reference_model = PolicyTemplateReference.from_dict(policy_template_reference_model_json)
+        assert policy_template_reference_model != False
+
+        # Construct a model instance of PolicyTemplateReference by calling from_dict on the json representation
+        policy_template_reference_model_dict = PolicyTemplateReference.from_dict(policy_template_reference_model_json).__dict__
+        policy_template_reference_model2 = PolicyTemplateReference(**policy_template_reference_model_dict)
+
+        # Verify the model instances are equivalent
+        assert policy_template_reference_model == policy_template_reference_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        policy_template_reference_model_json2 = policy_template_reference_model.to_dict()
+        assert policy_template_reference_model_json2 == policy_template_reference_model_json
 
 
 class TestModel_ProfileClaimRule:
@@ -5285,15 +8974,11 @@ class TestModel_ProfileClaimRuleConditions:
         profile_claim_rule_conditions_model_json['value'] = 'testString'
 
         # Construct a model instance of ProfileClaimRuleConditions by calling from_dict on the json representation
-        profile_claim_rule_conditions_model = ProfileClaimRuleConditions.from_dict(
-            profile_claim_rule_conditions_model_json
-        )
+        profile_claim_rule_conditions_model = ProfileClaimRuleConditions.from_dict(profile_claim_rule_conditions_model_json)
         assert profile_claim_rule_conditions_model != False
 
         # Construct a model instance of ProfileClaimRuleConditions by calling from_dict on the json representation
-        profile_claim_rule_conditions_model_dict = ProfileClaimRuleConditions.from_dict(
-            profile_claim_rule_conditions_model_json
-        ).__dict__
+        profile_claim_rule_conditions_model_dict = ProfileClaimRuleConditions.from_dict(profile_claim_rule_conditions_model_json).__dict__
         profile_claim_rule_conditions_model2 = ProfileClaimRuleConditions(**profile_claim_rule_conditions_model_dict)
 
         # Verify the model instances are equivalent
@@ -5379,26 +9064,24 @@ class TestModel_ProfileIdentitiesResponse:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        profile_identity_model = {}  # ProfileIdentity
-        profile_identity_model['iam_id'] = 'testString'
-        profile_identity_model['identifier'] = 'testString'
-        profile_identity_model['type'] = 'user'
-        profile_identity_model['accounts'] = ['testString']
-        profile_identity_model['description'] = 'testString'
+        profile_identity_response_model = {}  # ProfileIdentityResponse
+        profile_identity_response_model['iam_id'] = 'testString'
+        profile_identity_response_model['identifier'] = 'testString'
+        profile_identity_response_model['type'] = 'user'
+        profile_identity_response_model['accounts'] = ['testString']
+        profile_identity_response_model['description'] = 'testString'
 
         # Construct a json representation of a ProfileIdentitiesResponse model
         profile_identities_response_model_json = {}
         profile_identities_response_model_json['entity_tag'] = 'testString'
-        profile_identities_response_model_json['identities'] = [profile_identity_model]
+        profile_identities_response_model_json['identities'] = [profile_identity_response_model]
 
         # Construct a model instance of ProfileIdentitiesResponse by calling from_dict on the json representation
         profile_identities_response_model = ProfileIdentitiesResponse.from_dict(profile_identities_response_model_json)
         assert profile_identities_response_model != False
 
         # Construct a model instance of ProfileIdentitiesResponse by calling from_dict on the json representation
-        profile_identities_response_model_dict = ProfileIdentitiesResponse.from_dict(
-            profile_identities_response_model_json
-        ).__dict__
+        profile_identities_response_model_dict = ProfileIdentitiesResponse.from_dict(profile_identities_response_model_json).__dict__
         profile_identities_response_model2 = ProfileIdentitiesResponse(**profile_identities_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -5409,38 +9092,71 @@ class TestModel_ProfileIdentitiesResponse:
         assert profile_identities_response_model_json2 == profile_identities_response_model_json
 
 
-class TestModel_ProfileIdentity:
+class TestModel_ProfileIdentityRequest:
     """
-    Test Class for ProfileIdentity
+    Test Class for ProfileIdentityRequest
     """
 
-    def test_profile_identity_serialization(self):
+    def test_profile_identity_request_serialization(self):
         """
-        Test serialization/deserialization for ProfileIdentity
+        Test serialization/deserialization for ProfileIdentityRequest
         """
 
-        # Construct a json representation of a ProfileIdentity model
-        profile_identity_model_json = {}
-        profile_identity_model_json['iam_id'] = 'testString'
-        profile_identity_model_json['identifier'] = 'testString'
-        profile_identity_model_json['type'] = 'user'
-        profile_identity_model_json['accounts'] = ['testString']
-        profile_identity_model_json['description'] = 'testString'
+        # Construct a json representation of a ProfileIdentityRequest model
+        profile_identity_request_model_json = {}
+        profile_identity_request_model_json['identifier'] = 'testString'
+        profile_identity_request_model_json['type'] = 'user'
+        profile_identity_request_model_json['accounts'] = ['testString']
+        profile_identity_request_model_json['description'] = 'testString'
 
-        # Construct a model instance of ProfileIdentity by calling from_dict on the json representation
-        profile_identity_model = ProfileIdentity.from_dict(profile_identity_model_json)
-        assert profile_identity_model != False
+        # Construct a model instance of ProfileIdentityRequest by calling from_dict on the json representation
+        profile_identity_request_model = ProfileIdentityRequest.from_dict(profile_identity_request_model_json)
+        assert profile_identity_request_model != False
 
-        # Construct a model instance of ProfileIdentity by calling from_dict on the json representation
-        profile_identity_model_dict = ProfileIdentity.from_dict(profile_identity_model_json).__dict__
-        profile_identity_model2 = ProfileIdentity(**profile_identity_model_dict)
+        # Construct a model instance of ProfileIdentityRequest by calling from_dict on the json representation
+        profile_identity_request_model_dict = ProfileIdentityRequest.from_dict(profile_identity_request_model_json).__dict__
+        profile_identity_request_model2 = ProfileIdentityRequest(**profile_identity_request_model_dict)
 
         # Verify the model instances are equivalent
-        assert profile_identity_model == profile_identity_model2
+        assert profile_identity_request_model == profile_identity_request_model2
 
         # Convert model instance back to dict and verify no loss of data
-        profile_identity_model_json2 = profile_identity_model.to_dict()
-        assert profile_identity_model_json2 == profile_identity_model_json
+        profile_identity_request_model_json2 = profile_identity_request_model.to_dict()
+        assert profile_identity_request_model_json2 == profile_identity_request_model_json
+
+
+class TestModel_ProfileIdentityResponse:
+    """
+    Test Class for ProfileIdentityResponse
+    """
+
+    def test_profile_identity_response_serialization(self):
+        """
+        Test serialization/deserialization for ProfileIdentityResponse
+        """
+
+        # Construct a json representation of a ProfileIdentityResponse model
+        profile_identity_response_model_json = {}
+        profile_identity_response_model_json['iam_id'] = 'testString'
+        profile_identity_response_model_json['identifier'] = 'testString'
+        profile_identity_response_model_json['type'] = 'user'
+        profile_identity_response_model_json['accounts'] = ['testString']
+        profile_identity_response_model_json['description'] = 'testString'
+
+        # Construct a model instance of ProfileIdentityResponse by calling from_dict on the json representation
+        profile_identity_response_model = ProfileIdentityResponse.from_dict(profile_identity_response_model_json)
+        assert profile_identity_response_model != False
+
+        # Construct a model instance of ProfileIdentityResponse by calling from_dict on the json representation
+        profile_identity_response_model_dict = ProfileIdentityResponse.from_dict(profile_identity_response_model_json).__dict__
+        profile_identity_response_model2 = ProfileIdentityResponse(**profile_identity_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert profile_identity_response_model == profile_identity_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        profile_identity_response_model_json2 = profile_identity_response_model.to_dict()
+        assert profile_identity_response_model_json2 == profile_identity_response_model_json
 
 
 class TestModel_ProfileLink:
@@ -5684,15 +9400,11 @@ class TestModel_ReportMfaEnrollmentStatus:
         report_mfa_enrollment_status_model_json['users'] = [user_report_mfa_enrollment_status_model]
 
         # Construct a model instance of ReportMfaEnrollmentStatus by calling from_dict on the json representation
-        report_mfa_enrollment_status_model = ReportMfaEnrollmentStatus.from_dict(
-            report_mfa_enrollment_status_model_json
-        )
+        report_mfa_enrollment_status_model = ReportMfaEnrollmentStatus.from_dict(report_mfa_enrollment_status_model_json)
         assert report_mfa_enrollment_status_model != False
 
         # Construct a model instance of ReportMfaEnrollmentStatus by calling from_dict on the json representation
-        report_mfa_enrollment_status_model_dict = ReportMfaEnrollmentStatus.from_dict(
-            report_mfa_enrollment_status_model_json
-        ).__dict__
+        report_mfa_enrollment_status_model_dict = ReportMfaEnrollmentStatus.from_dict(report_mfa_enrollment_status_model_json).__dict__
         report_mfa_enrollment_status_model2 = ReportMfaEnrollmentStatus(**report_mfa_enrollment_status_model_dict)
 
         # Verify the model instances are equivalent
@@ -5958,6 +9670,461 @@ class TestModel_ServiceIdList:
         assert service_id_list_model_json2 == service_id_list_model_json
 
 
+class TestModel_TemplateAssignmentListResponse:
+    """
+    Test Class for TemplateAssignmentListResponse
+    """
+
+    def test_template_assignment_list_response_serialization(self):
+        """
+        Test serialization/deserialization for TemplateAssignmentListResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        response_context_model = {}  # ResponseContext
+        response_context_model['transaction_id'] = 'testString'
+        response_context_model['operation'] = 'testString'
+        response_context_model['user_agent'] = 'testString'
+        response_context_model['url'] = 'testString'
+        response_context_model['instance_id'] = 'testString'
+        response_context_model['thread_id'] = 'testString'
+        response_context_model['host'] = 'testString'
+        response_context_model['start_time'] = 'testString'
+        response_context_model['end_time'] = 'testString'
+        response_context_model['elapsed_time'] = 'testString'
+        response_context_model['cluster_name'] = 'testString'
+
+        template_assignment_resource_model = {}  # TemplateAssignmentResource
+        template_assignment_resource_model['id'] = 'testString'
+
+        template_assignment_resource_error_model = {}  # TemplateAssignmentResourceError
+        template_assignment_resource_error_model['name'] = 'testString'
+        template_assignment_resource_error_model['errorCode'] = 'testString'
+        template_assignment_resource_error_model['message'] = 'testString'
+        template_assignment_resource_error_model['statusCode'] = 'testString'
+
+        template_assignment_response_resource_detail_model = {}  # TemplateAssignmentResponseResourceDetail
+        template_assignment_response_resource_detail_model['id'] = 'testString'
+        template_assignment_response_resource_detail_model['version'] = 'testString'
+        template_assignment_response_resource_detail_model['resource_created'] = template_assignment_resource_model
+        template_assignment_response_resource_detail_model['error_message'] = template_assignment_resource_error_model
+        template_assignment_response_resource_detail_model['status'] = 'testString'
+
+        template_assignment_response_resource_model = {}  # TemplateAssignmentResponseResource
+        template_assignment_response_resource_model['target'] = 'testString'
+        template_assignment_response_resource_model['profile'] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model['account_settings'] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model['policy_template_refs'] = [template_assignment_response_resource_detail_model]
+
+        enity_history_record_model = {}  # EnityHistoryRecord
+        enity_history_record_model['timestamp'] = 'testString'
+        enity_history_record_model['iam_id'] = 'testString'
+        enity_history_record_model['iam_id_account'] = 'testString'
+        enity_history_record_model['action'] = 'testString'
+        enity_history_record_model['params'] = ['testString']
+        enity_history_record_model['message'] = 'testString'
+
+        template_assignment_response_model = {}  # TemplateAssignmentResponse
+        template_assignment_response_model['context'] = response_context_model
+        template_assignment_response_model['id'] = 'testString'
+        template_assignment_response_model['account_id'] = 'testString'
+        template_assignment_response_model['template_id'] = 'testString'
+        template_assignment_response_model['template_version'] = 26
+        template_assignment_response_model['target_type'] = 'testString'
+        template_assignment_response_model['target'] = 'testString'
+        template_assignment_response_model['status'] = 'testString'
+        template_assignment_response_model['resources'] = [template_assignment_response_resource_model]
+        template_assignment_response_model['history'] = [enity_history_record_model]
+        template_assignment_response_model['href'] = 'testString'
+        template_assignment_response_model['created_at'] = 'testString'
+        template_assignment_response_model['created_by_id'] = 'testString'
+        template_assignment_response_model['last_modified_at'] = 'testString'
+        template_assignment_response_model['last_modified_by_id'] = 'testString'
+        template_assignment_response_model['entity_tag'] = 'testString'
+
+        # Construct a json representation of a TemplateAssignmentListResponse model
+        template_assignment_list_response_model_json = {}
+        template_assignment_list_response_model_json['context'] = response_context_model
+        template_assignment_list_response_model_json['offset'] = 26
+        template_assignment_list_response_model_json['limit'] = 26
+        template_assignment_list_response_model_json['first'] = 'testString'
+        template_assignment_list_response_model_json['previous'] = 'testString'
+        template_assignment_list_response_model_json['next'] = 'testString'
+        template_assignment_list_response_model_json['assignments'] = [template_assignment_response_model]
+
+        # Construct a model instance of TemplateAssignmentListResponse by calling from_dict on the json representation
+        template_assignment_list_response_model = TemplateAssignmentListResponse.from_dict(template_assignment_list_response_model_json)
+        assert template_assignment_list_response_model != False
+
+        # Construct a model instance of TemplateAssignmentListResponse by calling from_dict on the json representation
+        template_assignment_list_response_model_dict = TemplateAssignmentListResponse.from_dict(template_assignment_list_response_model_json).__dict__
+        template_assignment_list_response_model2 = TemplateAssignmentListResponse(**template_assignment_list_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_assignment_list_response_model == template_assignment_list_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_assignment_list_response_model_json2 = template_assignment_list_response_model.to_dict()
+        assert template_assignment_list_response_model_json2 == template_assignment_list_response_model_json
+
+
+class TestModel_TemplateAssignmentResource:
+    """
+    Test Class for TemplateAssignmentResource
+    """
+
+    def test_template_assignment_resource_serialization(self):
+        """
+        Test serialization/deserialization for TemplateAssignmentResource
+        """
+
+        # Construct a json representation of a TemplateAssignmentResource model
+        template_assignment_resource_model_json = {}
+        template_assignment_resource_model_json['id'] = 'testString'
+
+        # Construct a model instance of TemplateAssignmentResource by calling from_dict on the json representation
+        template_assignment_resource_model = TemplateAssignmentResource.from_dict(template_assignment_resource_model_json)
+        assert template_assignment_resource_model != False
+
+        # Construct a model instance of TemplateAssignmentResource by calling from_dict on the json representation
+        template_assignment_resource_model_dict = TemplateAssignmentResource.from_dict(template_assignment_resource_model_json).__dict__
+        template_assignment_resource_model2 = TemplateAssignmentResource(**template_assignment_resource_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_assignment_resource_model == template_assignment_resource_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_assignment_resource_model_json2 = template_assignment_resource_model.to_dict()
+        assert template_assignment_resource_model_json2 == template_assignment_resource_model_json
+
+
+class TestModel_TemplateAssignmentResourceError:
+    """
+    Test Class for TemplateAssignmentResourceError
+    """
+
+    def test_template_assignment_resource_error_serialization(self):
+        """
+        Test serialization/deserialization for TemplateAssignmentResourceError
+        """
+
+        # Construct a json representation of a TemplateAssignmentResourceError model
+        template_assignment_resource_error_model_json = {}
+        template_assignment_resource_error_model_json['name'] = 'testString'
+        template_assignment_resource_error_model_json['errorCode'] = 'testString'
+        template_assignment_resource_error_model_json['message'] = 'testString'
+        template_assignment_resource_error_model_json['statusCode'] = 'testString'
+
+        # Construct a model instance of TemplateAssignmentResourceError by calling from_dict on the json representation
+        template_assignment_resource_error_model = TemplateAssignmentResourceError.from_dict(template_assignment_resource_error_model_json)
+        assert template_assignment_resource_error_model != False
+
+        # Construct a model instance of TemplateAssignmentResourceError by calling from_dict on the json representation
+        template_assignment_resource_error_model_dict = TemplateAssignmentResourceError.from_dict(template_assignment_resource_error_model_json).__dict__
+        template_assignment_resource_error_model2 = TemplateAssignmentResourceError(**template_assignment_resource_error_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_assignment_resource_error_model == template_assignment_resource_error_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_assignment_resource_error_model_json2 = template_assignment_resource_error_model.to_dict()
+        assert template_assignment_resource_error_model_json2 == template_assignment_resource_error_model_json
+
+
+class TestModel_TemplateAssignmentResponse:
+    """
+    Test Class for TemplateAssignmentResponse
+    """
+
+    def test_template_assignment_response_serialization(self):
+        """
+        Test serialization/deserialization for TemplateAssignmentResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        response_context_model = {}  # ResponseContext
+        response_context_model['transaction_id'] = 'testString'
+        response_context_model['operation'] = 'testString'
+        response_context_model['user_agent'] = 'testString'
+        response_context_model['url'] = 'testString'
+        response_context_model['instance_id'] = 'testString'
+        response_context_model['thread_id'] = 'testString'
+        response_context_model['host'] = 'testString'
+        response_context_model['start_time'] = 'testString'
+        response_context_model['end_time'] = 'testString'
+        response_context_model['elapsed_time'] = 'testString'
+        response_context_model['cluster_name'] = 'testString'
+
+        template_assignment_resource_model = {}  # TemplateAssignmentResource
+        template_assignment_resource_model['id'] = 'testString'
+
+        template_assignment_resource_error_model = {}  # TemplateAssignmentResourceError
+        template_assignment_resource_error_model['name'] = 'testString'
+        template_assignment_resource_error_model['errorCode'] = 'testString'
+        template_assignment_resource_error_model['message'] = 'testString'
+        template_assignment_resource_error_model['statusCode'] = 'testString'
+
+        template_assignment_response_resource_detail_model = {}  # TemplateAssignmentResponseResourceDetail
+        template_assignment_response_resource_detail_model['id'] = 'testString'
+        template_assignment_response_resource_detail_model['version'] = 'testString'
+        template_assignment_response_resource_detail_model['resource_created'] = template_assignment_resource_model
+        template_assignment_response_resource_detail_model['error_message'] = template_assignment_resource_error_model
+        template_assignment_response_resource_detail_model['status'] = 'testString'
+
+        template_assignment_response_resource_model = {}  # TemplateAssignmentResponseResource
+        template_assignment_response_resource_model['target'] = 'testString'
+        template_assignment_response_resource_model['profile'] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model['account_settings'] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model['policy_template_refs'] = [template_assignment_response_resource_detail_model]
+
+        enity_history_record_model = {}  # EnityHistoryRecord
+        enity_history_record_model['timestamp'] = 'testString'
+        enity_history_record_model['iam_id'] = 'testString'
+        enity_history_record_model['iam_id_account'] = 'testString'
+        enity_history_record_model['action'] = 'testString'
+        enity_history_record_model['params'] = ['testString']
+        enity_history_record_model['message'] = 'testString'
+
+        # Construct a json representation of a TemplateAssignmentResponse model
+        template_assignment_response_model_json = {}
+        template_assignment_response_model_json['context'] = response_context_model
+        template_assignment_response_model_json['id'] = 'testString'
+        template_assignment_response_model_json['account_id'] = 'testString'
+        template_assignment_response_model_json['template_id'] = 'testString'
+        template_assignment_response_model_json['template_version'] = 26
+        template_assignment_response_model_json['target_type'] = 'testString'
+        template_assignment_response_model_json['target'] = 'testString'
+        template_assignment_response_model_json['status'] = 'testString'
+        template_assignment_response_model_json['resources'] = [template_assignment_response_resource_model]
+        template_assignment_response_model_json['history'] = [enity_history_record_model]
+        template_assignment_response_model_json['href'] = 'testString'
+        template_assignment_response_model_json['created_at'] = 'testString'
+        template_assignment_response_model_json['created_by_id'] = 'testString'
+        template_assignment_response_model_json['last_modified_at'] = 'testString'
+        template_assignment_response_model_json['last_modified_by_id'] = 'testString'
+        template_assignment_response_model_json['entity_tag'] = 'testString'
+
+        # Construct a model instance of TemplateAssignmentResponse by calling from_dict on the json representation
+        template_assignment_response_model = TemplateAssignmentResponse.from_dict(template_assignment_response_model_json)
+        assert template_assignment_response_model != False
+
+        # Construct a model instance of TemplateAssignmentResponse by calling from_dict on the json representation
+        template_assignment_response_model_dict = TemplateAssignmentResponse.from_dict(template_assignment_response_model_json).__dict__
+        template_assignment_response_model2 = TemplateAssignmentResponse(**template_assignment_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_assignment_response_model == template_assignment_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_assignment_response_model_json2 = template_assignment_response_model.to_dict()
+        assert template_assignment_response_model_json2 == template_assignment_response_model_json
+
+
+class TestModel_TemplateAssignmentResponseResource:
+    """
+    Test Class for TemplateAssignmentResponseResource
+    """
+
+    def test_template_assignment_response_resource_serialization(self):
+        """
+        Test serialization/deserialization for TemplateAssignmentResponseResource
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        template_assignment_resource_model = {}  # TemplateAssignmentResource
+        template_assignment_resource_model['id'] = 'testString'
+
+        template_assignment_resource_error_model = {}  # TemplateAssignmentResourceError
+        template_assignment_resource_error_model['name'] = 'testString'
+        template_assignment_resource_error_model['errorCode'] = 'testString'
+        template_assignment_resource_error_model['message'] = 'testString'
+        template_assignment_resource_error_model['statusCode'] = 'testString'
+
+        template_assignment_response_resource_detail_model = {}  # TemplateAssignmentResponseResourceDetail
+        template_assignment_response_resource_detail_model['id'] = 'testString'
+        template_assignment_response_resource_detail_model['version'] = 'testString'
+        template_assignment_response_resource_detail_model['resource_created'] = template_assignment_resource_model
+        template_assignment_response_resource_detail_model['error_message'] = template_assignment_resource_error_model
+        template_assignment_response_resource_detail_model['status'] = 'testString'
+
+        # Construct a json representation of a TemplateAssignmentResponseResource model
+        template_assignment_response_resource_model_json = {}
+        template_assignment_response_resource_model_json['target'] = 'testString'
+        template_assignment_response_resource_model_json['profile'] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model_json['account_settings'] = template_assignment_response_resource_detail_model
+        template_assignment_response_resource_model_json['policy_template_refs'] = [template_assignment_response_resource_detail_model]
+
+        # Construct a model instance of TemplateAssignmentResponseResource by calling from_dict on the json representation
+        template_assignment_response_resource_model = TemplateAssignmentResponseResource.from_dict(template_assignment_response_resource_model_json)
+        assert template_assignment_response_resource_model != False
+
+        # Construct a model instance of TemplateAssignmentResponseResource by calling from_dict on the json representation
+        template_assignment_response_resource_model_dict = TemplateAssignmentResponseResource.from_dict(template_assignment_response_resource_model_json).__dict__
+        template_assignment_response_resource_model2 = TemplateAssignmentResponseResource(**template_assignment_response_resource_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_assignment_response_resource_model == template_assignment_response_resource_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_assignment_response_resource_model_json2 = template_assignment_response_resource_model.to_dict()
+        assert template_assignment_response_resource_model_json2 == template_assignment_response_resource_model_json
+
+
+class TestModel_TemplateAssignmentResponseResourceDetail:
+    """
+    Test Class for TemplateAssignmentResponseResourceDetail
+    """
+
+    def test_template_assignment_response_resource_detail_serialization(self):
+        """
+        Test serialization/deserialization for TemplateAssignmentResponseResourceDetail
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        template_assignment_resource_model = {}  # TemplateAssignmentResource
+        template_assignment_resource_model['id'] = 'testString'
+
+        template_assignment_resource_error_model = {}  # TemplateAssignmentResourceError
+        template_assignment_resource_error_model['name'] = 'testString'
+        template_assignment_resource_error_model['errorCode'] = 'testString'
+        template_assignment_resource_error_model['message'] = 'testString'
+        template_assignment_resource_error_model['statusCode'] = 'testString'
+
+        # Construct a json representation of a TemplateAssignmentResponseResourceDetail model
+        template_assignment_response_resource_detail_model_json = {}
+        template_assignment_response_resource_detail_model_json['id'] = 'testString'
+        template_assignment_response_resource_detail_model_json['version'] = 'testString'
+        template_assignment_response_resource_detail_model_json['resource_created'] = template_assignment_resource_model
+        template_assignment_response_resource_detail_model_json['error_message'] = template_assignment_resource_error_model
+        template_assignment_response_resource_detail_model_json['status'] = 'testString'
+
+        # Construct a model instance of TemplateAssignmentResponseResourceDetail by calling from_dict on the json representation
+        template_assignment_response_resource_detail_model = TemplateAssignmentResponseResourceDetail.from_dict(template_assignment_response_resource_detail_model_json)
+        assert template_assignment_response_resource_detail_model != False
+
+        # Construct a model instance of TemplateAssignmentResponseResourceDetail by calling from_dict on the json representation
+        template_assignment_response_resource_detail_model_dict = TemplateAssignmentResponseResourceDetail.from_dict(template_assignment_response_resource_detail_model_json).__dict__
+        template_assignment_response_resource_detail_model2 = TemplateAssignmentResponseResourceDetail(**template_assignment_response_resource_detail_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_assignment_response_resource_detail_model == template_assignment_response_resource_detail_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_assignment_response_resource_detail_model_json2 = template_assignment_response_resource_detail_model.to_dict()
+        assert template_assignment_response_resource_detail_model_json2 == template_assignment_response_resource_detail_model_json
+
+
+class TestModel_TemplateProfileComponentRequest:
+    """
+    Test Class for TemplateProfileComponentRequest
+    """
+
+    def test_template_profile_component_request_serialization(self):
+        """
+        Test serialization/deserialization for TemplateProfileComponentRequest
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        profile_claim_rule_conditions_model = {}  # ProfileClaimRuleConditions
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        trusted_profile_template_claim_rule_model = {}  # TrustedProfileTemplateClaimRule
+        trusted_profile_template_claim_rule_model['name'] = 'testString'
+        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model['expiration'] = 38
+        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
+
+        profile_identity_request_model = {}  # ProfileIdentityRequest
+        profile_identity_request_model['identifier'] = 'testString'
+        profile_identity_request_model['type'] = 'user'
+        profile_identity_request_model['accounts'] = ['testString']
+        profile_identity_request_model['description'] = 'testString'
+
+        # Construct a json representation of a TemplateProfileComponentRequest model
+        template_profile_component_request_model_json = {}
+        template_profile_component_request_model_json['name'] = 'testString'
+        template_profile_component_request_model_json['description'] = 'testString'
+        template_profile_component_request_model_json['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_request_model_json['identities'] = [profile_identity_request_model]
+
+        # Construct a model instance of TemplateProfileComponentRequest by calling from_dict on the json representation
+        template_profile_component_request_model = TemplateProfileComponentRequest.from_dict(template_profile_component_request_model_json)
+        assert template_profile_component_request_model != False
+
+        # Construct a model instance of TemplateProfileComponentRequest by calling from_dict on the json representation
+        template_profile_component_request_model_dict = TemplateProfileComponentRequest.from_dict(template_profile_component_request_model_json).__dict__
+        template_profile_component_request_model2 = TemplateProfileComponentRequest(**template_profile_component_request_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_profile_component_request_model == template_profile_component_request_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_profile_component_request_model_json2 = template_profile_component_request_model.to_dict()
+        assert template_profile_component_request_model_json2 == template_profile_component_request_model_json
+
+
+class TestModel_TemplateProfileComponentResponse:
+    """
+    Test Class for TemplateProfileComponentResponse
+    """
+
+    def test_template_profile_component_response_serialization(self):
+        """
+        Test serialization/deserialization for TemplateProfileComponentResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        profile_claim_rule_conditions_model = {}  # ProfileClaimRuleConditions
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        trusted_profile_template_claim_rule_model = {}  # TrustedProfileTemplateClaimRule
+        trusted_profile_template_claim_rule_model['name'] = 'testString'
+        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model['expiration'] = 38
+        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
+
+        profile_identity_response_model = {}  # ProfileIdentityResponse
+        profile_identity_response_model['iam_id'] = 'testString'
+        profile_identity_response_model['identifier'] = 'testString'
+        profile_identity_response_model['type'] = 'user'
+        profile_identity_response_model['accounts'] = ['testString']
+        profile_identity_response_model['description'] = 'testString'
+
+        # Construct a json representation of a TemplateProfileComponentResponse model
+        template_profile_component_response_model_json = {}
+        template_profile_component_response_model_json['name'] = 'testString'
+        template_profile_component_response_model_json['description'] = 'testString'
+        template_profile_component_response_model_json['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_response_model_json['identities'] = [profile_identity_response_model]
+
+        # Construct a model instance of TemplateProfileComponentResponse by calling from_dict on the json representation
+        template_profile_component_response_model = TemplateProfileComponentResponse.from_dict(template_profile_component_response_model_json)
+        assert template_profile_component_response_model != False
+
+        # Construct a model instance of TemplateProfileComponentResponse by calling from_dict on the json representation
+        template_profile_component_response_model_dict = TemplateProfileComponentResponse.from_dict(template_profile_component_response_model_json).__dict__
+        template_profile_component_response_model2 = TemplateProfileComponentResponse(**template_profile_component_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_profile_component_response_model == template_profile_component_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_profile_component_response_model_json2 = template_profile_component_response_model.to_dict()
+        assert template_profile_component_response_model_json2 == template_profile_component_response_model_json
+
+
 class TestModel_TrustedProfile:
     """
     Test Class for TrustedProfile
@@ -6007,6 +10174,8 @@ class TestModel_TrustedProfile:
         trusted_profile_model_json['modified_at'] = '2019-01-01T12:00:00Z'
         trusted_profile_model_json['iam_id'] = 'testString'
         trusted_profile_model_json['account_id'] = 'testString'
+        trusted_profile_model_json['template_id'] = 'testString'
+        trusted_profile_model_json['assignment_id'] = 'testString'
         trusted_profile_model_json['ims_account_id'] = 26
         trusted_profile_model_json['ims_user_id'] = 26
         trusted_profile_model_json['history'] = [enity_history_record_model]
@@ -6026,6 +10195,235 @@ class TestModel_TrustedProfile:
         # Convert model instance back to dict and verify no loss of data
         trusted_profile_model_json2 = trusted_profile_model.to_dict()
         assert trusted_profile_model_json2 == trusted_profile_model_json
+
+
+class TestModel_TrustedProfileTemplateClaimRule:
+    """
+    Test Class for TrustedProfileTemplateClaimRule
+    """
+
+    def test_trusted_profile_template_claim_rule_serialization(self):
+        """
+        Test serialization/deserialization for TrustedProfileTemplateClaimRule
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        profile_claim_rule_conditions_model = {}  # ProfileClaimRuleConditions
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        # Construct a json representation of a TrustedProfileTemplateClaimRule model
+        trusted_profile_template_claim_rule_model_json = {}
+        trusted_profile_template_claim_rule_model_json['name'] = 'testString'
+        trusted_profile_template_claim_rule_model_json['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model_json['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model_json['expiration'] = 38
+        trusted_profile_template_claim_rule_model_json['conditions'] = [profile_claim_rule_conditions_model]
+
+        # Construct a model instance of TrustedProfileTemplateClaimRule by calling from_dict on the json representation
+        trusted_profile_template_claim_rule_model = TrustedProfileTemplateClaimRule.from_dict(trusted_profile_template_claim_rule_model_json)
+        assert trusted_profile_template_claim_rule_model != False
+
+        # Construct a model instance of TrustedProfileTemplateClaimRule by calling from_dict on the json representation
+        trusted_profile_template_claim_rule_model_dict = TrustedProfileTemplateClaimRule.from_dict(trusted_profile_template_claim_rule_model_json).__dict__
+        trusted_profile_template_claim_rule_model2 = TrustedProfileTemplateClaimRule(**trusted_profile_template_claim_rule_model_dict)
+
+        # Verify the model instances are equivalent
+        assert trusted_profile_template_claim_rule_model == trusted_profile_template_claim_rule_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        trusted_profile_template_claim_rule_model_json2 = trusted_profile_template_claim_rule_model.to_dict()
+        assert trusted_profile_template_claim_rule_model_json2 == trusted_profile_template_claim_rule_model_json
+
+
+class TestModel_TrustedProfileTemplateList:
+    """
+    Test Class for TrustedProfileTemplateList
+    """
+
+    def test_trusted_profile_template_list_serialization(self):
+        """
+        Test serialization/deserialization for TrustedProfileTemplateList
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        response_context_model = {}  # ResponseContext
+        response_context_model['transaction_id'] = 'testString'
+        response_context_model['operation'] = 'testString'
+        response_context_model['user_agent'] = 'testString'
+        response_context_model['url'] = 'testString'
+        response_context_model['instance_id'] = 'testString'
+        response_context_model['thread_id'] = 'testString'
+        response_context_model['host'] = 'testString'
+        response_context_model['start_time'] = 'testString'
+        response_context_model['end_time'] = 'testString'
+        response_context_model['elapsed_time'] = 'testString'
+        response_context_model['cluster_name'] = 'testString'
+
+        profile_claim_rule_conditions_model = {}  # ProfileClaimRuleConditions
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        trusted_profile_template_claim_rule_model = {}  # TrustedProfileTemplateClaimRule
+        trusted_profile_template_claim_rule_model['name'] = 'testString'
+        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model['expiration'] = 38
+        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
+
+        profile_identity_response_model = {}  # ProfileIdentityResponse
+        profile_identity_response_model['iam_id'] = 'testString'
+        profile_identity_response_model['identifier'] = 'testString'
+        profile_identity_response_model['type'] = 'user'
+        profile_identity_response_model['accounts'] = ['testString']
+        profile_identity_response_model['description'] = 'testString'
+
+        template_profile_component_response_model = {}  # TemplateProfileComponentResponse
+        template_profile_component_response_model['name'] = 'testString'
+        template_profile_component_response_model['description'] = 'testString'
+        template_profile_component_response_model['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_response_model['identities'] = [profile_identity_response_model]
+
+        policy_template_reference_model = {}  # PolicyTemplateReference
+        policy_template_reference_model['id'] = 'testString'
+        policy_template_reference_model['version'] = 'testString'
+
+        enity_history_record_model = {}  # EnityHistoryRecord
+        enity_history_record_model['timestamp'] = 'testString'
+        enity_history_record_model['iam_id'] = 'testString'
+        enity_history_record_model['iam_id_account'] = 'testString'
+        enity_history_record_model['action'] = 'testString'
+        enity_history_record_model['params'] = ['testString']
+        enity_history_record_model['message'] = 'testString'
+
+        trusted_profile_template_response_model = {}  # TrustedProfileTemplateResponse
+        trusted_profile_template_response_model['id'] = 'testString'
+        trusted_profile_template_response_model['version'] = 26
+        trusted_profile_template_response_model['account_id'] = 'testString'
+        trusted_profile_template_response_model['name'] = 'testString'
+        trusted_profile_template_response_model['description'] = 'testString'
+        trusted_profile_template_response_model['committed'] = True
+        trusted_profile_template_response_model['profile'] = template_profile_component_response_model
+        trusted_profile_template_response_model['policy_template_references'] = [policy_template_reference_model]
+        trusted_profile_template_response_model['history'] = [enity_history_record_model]
+        trusted_profile_template_response_model['entity_tag'] = 'testString'
+        trusted_profile_template_response_model['crn'] = 'testString'
+        trusted_profile_template_response_model['created_at'] = 'testString'
+        trusted_profile_template_response_model['created_by_id'] = 'testString'
+        trusted_profile_template_response_model['last_modified_at'] = 'testString'
+        trusted_profile_template_response_model['last_modified_by_id'] = 'testString'
+
+        # Construct a json representation of a TrustedProfileTemplateList model
+        trusted_profile_template_list_model_json = {}
+        trusted_profile_template_list_model_json['context'] = response_context_model
+        trusted_profile_template_list_model_json['offset'] = 26
+        trusted_profile_template_list_model_json['limit'] = 20
+        trusted_profile_template_list_model_json['first'] = 'testString'
+        trusted_profile_template_list_model_json['previous'] = 'testString'
+        trusted_profile_template_list_model_json['next'] = 'testString'
+        trusted_profile_template_list_model_json['profile_templates'] = [trusted_profile_template_response_model]
+
+        # Construct a model instance of TrustedProfileTemplateList by calling from_dict on the json representation
+        trusted_profile_template_list_model = TrustedProfileTemplateList.from_dict(trusted_profile_template_list_model_json)
+        assert trusted_profile_template_list_model != False
+
+        # Construct a model instance of TrustedProfileTemplateList by calling from_dict on the json representation
+        trusted_profile_template_list_model_dict = TrustedProfileTemplateList.from_dict(trusted_profile_template_list_model_json).__dict__
+        trusted_profile_template_list_model2 = TrustedProfileTemplateList(**trusted_profile_template_list_model_dict)
+
+        # Verify the model instances are equivalent
+        assert trusted_profile_template_list_model == trusted_profile_template_list_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        trusted_profile_template_list_model_json2 = trusted_profile_template_list_model.to_dict()
+        assert trusted_profile_template_list_model_json2 == trusted_profile_template_list_model_json
+
+
+class TestModel_TrustedProfileTemplateResponse:
+    """
+    Test Class for TrustedProfileTemplateResponse
+    """
+
+    def test_trusted_profile_template_response_serialization(self):
+        """
+        Test serialization/deserialization for TrustedProfileTemplateResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        profile_claim_rule_conditions_model = {}  # ProfileClaimRuleConditions
+        profile_claim_rule_conditions_model['claim'] = 'testString'
+        profile_claim_rule_conditions_model['operator'] = 'testString'
+        profile_claim_rule_conditions_model['value'] = 'testString'
+
+        trusted_profile_template_claim_rule_model = {}  # TrustedProfileTemplateClaimRule
+        trusted_profile_template_claim_rule_model['name'] = 'testString'
+        trusted_profile_template_claim_rule_model['type'] = 'Profile-SAML'
+        trusted_profile_template_claim_rule_model['realm_name'] = 'testString'
+        trusted_profile_template_claim_rule_model['expiration'] = 38
+        trusted_profile_template_claim_rule_model['conditions'] = [profile_claim_rule_conditions_model]
+
+        profile_identity_response_model = {}  # ProfileIdentityResponse
+        profile_identity_response_model['iam_id'] = 'testString'
+        profile_identity_response_model['identifier'] = 'testString'
+        profile_identity_response_model['type'] = 'user'
+        profile_identity_response_model['accounts'] = ['testString']
+        profile_identity_response_model['description'] = 'testString'
+
+        template_profile_component_response_model = {}  # TemplateProfileComponentResponse
+        template_profile_component_response_model['name'] = 'testString'
+        template_profile_component_response_model['description'] = 'testString'
+        template_profile_component_response_model['rules'] = [trusted_profile_template_claim_rule_model]
+        template_profile_component_response_model['identities'] = [profile_identity_response_model]
+
+        policy_template_reference_model = {}  # PolicyTemplateReference
+        policy_template_reference_model['id'] = 'testString'
+        policy_template_reference_model['version'] = 'testString'
+
+        enity_history_record_model = {}  # EnityHistoryRecord
+        enity_history_record_model['timestamp'] = 'testString'
+        enity_history_record_model['iam_id'] = 'testString'
+        enity_history_record_model['iam_id_account'] = 'testString'
+        enity_history_record_model['action'] = 'testString'
+        enity_history_record_model['params'] = ['testString']
+        enity_history_record_model['message'] = 'testString'
+
+        # Construct a json representation of a TrustedProfileTemplateResponse model
+        trusted_profile_template_response_model_json = {}
+        trusted_profile_template_response_model_json['id'] = 'testString'
+        trusted_profile_template_response_model_json['version'] = 26
+        trusted_profile_template_response_model_json['account_id'] = 'testString'
+        trusted_profile_template_response_model_json['name'] = 'testString'
+        trusted_profile_template_response_model_json['description'] = 'testString'
+        trusted_profile_template_response_model_json['committed'] = True
+        trusted_profile_template_response_model_json['profile'] = template_profile_component_response_model
+        trusted_profile_template_response_model_json['policy_template_references'] = [policy_template_reference_model]
+        trusted_profile_template_response_model_json['history'] = [enity_history_record_model]
+        trusted_profile_template_response_model_json['entity_tag'] = 'testString'
+        trusted_profile_template_response_model_json['crn'] = 'testString'
+        trusted_profile_template_response_model_json['created_at'] = 'testString'
+        trusted_profile_template_response_model_json['created_by_id'] = 'testString'
+        trusted_profile_template_response_model_json['last_modified_at'] = 'testString'
+        trusted_profile_template_response_model_json['last_modified_by_id'] = 'testString'
+
+        # Construct a model instance of TrustedProfileTemplateResponse by calling from_dict on the json representation
+        trusted_profile_template_response_model = TrustedProfileTemplateResponse.from_dict(trusted_profile_template_response_model_json)
+        assert trusted_profile_template_response_model != False
+
+        # Construct a model instance of TrustedProfileTemplateResponse by calling from_dict on the json representation
+        trusted_profile_template_response_model_dict = TrustedProfileTemplateResponse.from_dict(trusted_profile_template_response_model_json).__dict__
+        trusted_profile_template_response_model2 = TrustedProfileTemplateResponse(**trusted_profile_template_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert trusted_profile_template_response_model == trusted_profile_template_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        trusted_profile_template_response_model_json2 = trusted_profile_template_response_model.to_dict()
+        assert trusted_profile_template_response_model_json2 == trusted_profile_template_response_model_json
 
 
 class TestModel_TrustedProfilesList:
@@ -6076,6 +10474,8 @@ class TestModel_TrustedProfilesList:
         trusted_profile_model['modified_at'] = '2019-01-01T12:00:00Z'
         trusted_profile_model['iam_id'] = 'testString'
         trusted_profile_model['account_id'] = 'testString'
+        trusted_profile_model['template_id'] = 'testString'
+        trusted_profile_model['assignment_id'] = 'testString'
         trusted_profile_model['ims_account_id'] = 26
         trusted_profile_model['ims_user_id'] = 26
         trusted_profile_model['history'] = [enity_history_record_model]
@@ -6234,18 +10634,12 @@ class TestModel_UserReportMfaEnrollmentStatus:
         user_report_mfa_enrollment_status_model_json['enrollments'] = mfa_enrollments_model
 
         # Construct a model instance of UserReportMfaEnrollmentStatus by calling from_dict on the json representation
-        user_report_mfa_enrollment_status_model = UserReportMfaEnrollmentStatus.from_dict(
-            user_report_mfa_enrollment_status_model_json
-        )
+        user_report_mfa_enrollment_status_model = UserReportMfaEnrollmentStatus.from_dict(user_report_mfa_enrollment_status_model_json)
         assert user_report_mfa_enrollment_status_model != False
 
         # Construct a model instance of UserReportMfaEnrollmentStatus by calling from_dict on the json representation
-        user_report_mfa_enrollment_status_model_dict = UserReportMfaEnrollmentStatus.from_dict(
-            user_report_mfa_enrollment_status_model_json
-        ).__dict__
-        user_report_mfa_enrollment_status_model2 = UserReportMfaEnrollmentStatus(
-            **user_report_mfa_enrollment_status_model_dict
-        )
+        user_report_mfa_enrollment_status_model_dict = UserReportMfaEnrollmentStatus.from_dict(user_report_mfa_enrollment_status_model_json).__dict__
+        user_report_mfa_enrollment_status_model2 = UserReportMfaEnrollmentStatus(**user_report_mfa_enrollment_status_model_dict)
 
         # Verify the model instances are equivalent
         assert user_report_mfa_enrollment_status_model == user_report_mfa_enrollment_status_model2

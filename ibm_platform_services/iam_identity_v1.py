@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.72.0-5d70f2bb-20230511-203609
+# IBM OpenAPI SDK Code Generator Version: 3.74.0-89f1dbab-20230630-160213
 
 """
 The IAM Identity Service API allows for the management of Account Settings and Identities
@@ -56,7 +56,9 @@ class IamIdentityV1(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -74,7 +76,7 @@ class IamIdentityV1(BaseService):
         BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
-    # API key Operations
+    # API key operations
     #########################
 
     def list_api_keys(
@@ -100,21 +102,21 @@ class IamIdentityV1(BaseService):
         IDs and their API keys, a user must be either an account owner, a IBM Cloud org
         manager or IBM Cloud space developer in order to manage service IDs of the entity.
 
-        :param str account_id: (optional) Account ID of the API keys to query. If a
-               service IAM ID is specified in iam_id then account_id must match the
+        :param str account_id: (optional) Account ID of the API keys(s) to query.
+               If a service IAM ID is specified in iam_id then account_id must match the
                account of the IAM ID. If a user IAM ID is specified in iam_id then then
                account_id must match the account of the Authorization token.
-        :param str iam_id: (optional) IAM ID of the API keys to be queried. The IAM
-               ID may be that of a user or a service. For a user IAM ID iam_id must match
-               the Authorization token.
+        :param str iam_id: (optional) IAM ID of the API key(s) to be queried. The
+               IAM ID may be that of a user or a service. For a user IAM ID iam_id must
+               match the Authorization token.
         :param int pagesize: (optional) Optional size of a single page. Default is
                20 items per page. Valid range is 1 to 100.
         :param str pagetoken: (optional) Optional Prev or Next page token returned
                from a previous query execution. Default is start with first page.
         :param str scope: (optional) Optional parameter to define the scope of the
-               queried API keys. Can be 'entity' (default) or 'account'.
+               queried API Keys. Can be 'entity' (default) or 'account'.
         :param str type: (optional) Optional parameter to filter the type of the
-               queried API keys. Can be 'user' or 'serviceid'.
+               queried API Keys. Can be 'user' or 'serviceid'.
         :param str sort: (optional) Optional sort property, valid values are name,
                description, created_at and created_by. If specified, the items are sorted
                by the value of this property.
@@ -194,8 +196,8 @@ class IamIdentityV1(BaseService):
                value for this API key. If passed, NO validation of that apiKey value is
                done, i.e. the value can be non-URL safe. If omitted, the API key
                management will create an URL safe opaque API key value. The value of the
-               API key is checked for uniqueness. Please ensure enough variations when
-               passing in this value.
+               API key is checked for uniqueness. Ensure enough variations when passing in
+               this value.
         :param bool store_value: (optional) Send true or false to set whether the
                API key value is retrievable in the future by using the Get details of an
                API key request. If you create an API key for a user, you must specify
@@ -323,7 +325,7 @@ class IamIdentityV1(BaseService):
                included in the response.
         :param bool include_activity: (optional) Defines if the entity's activity
                is included in the response. Retrieving activity data is an expensive
-               operation, so please only request this when needed.
+               operation, so only request this when needed.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ApiKey` object
@@ -579,7 +581,7 @@ class IamIdentityV1(BaseService):
         return response
 
     #########################
-    # Service ID Operations
+    # Service ID operations
     #########################
 
     def list_service_ids(
@@ -600,7 +602,7 @@ class IamIdentityV1(BaseService):
         Returns a list of service IDs. Users can manage user API keys for themself, or
         service ID API keys for service IDs that are bound to an entity they have access
         to. Note: apikey details are only included in the response when creating a Service
-        ID with an api key.
+        ID with an apikey.
 
         :param str account_id: (optional) Account ID of the service ID(s) to query.
                This parameter is required (unless using a pagetoken).
@@ -749,14 +751,14 @@ class IamIdentityV1(BaseService):
         Returns the details of a service ID. Users can manage user API keys for themself,
         or service ID API keys for service IDs that are bound to an entity they have
         access to. Note: apikey details are only included in the response when creating a
-        Service ID with an api key.
+        Service ID with an apikey.
 
         :param str id: Unique ID of the service ID.
         :param bool include_history: (optional) Defines if the entity history is
                included in the response.
         :param bool include_activity: (optional) Defines if the entity's activity
                is included in the response. Retrieving activity data is an expensive
-               operation, so please only request this when needed.
+               operation, so only request this when needed.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ServiceId` object
@@ -1023,7 +1025,7 @@ class IamIdentityV1(BaseService):
         return response
 
     #########################
-    # Trusted Profiles Operations
+    # Trusted profiles operations
     #########################
 
     def create_profile(
@@ -1177,7 +1179,7 @@ class IamIdentityV1(BaseService):
         :param str profile_id: ID of the trusted profile to get.
         :param bool include_activity: (optional) Defines if the entity's activity
                is included in the response. Retrieving activity data is an expensive
-               operation, so please only request this when needed.
+               operation, so only request this when needed.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TrustedProfile` object
@@ -1925,7 +1927,7 @@ class IamIdentityV1(BaseService):
         profile_id: str,
         if_match: str,
         *,
-        identities: List['ProfileIdentity'] = None,
+        identities: List['ProfileIdentityRequest'] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -1938,8 +1940,8 @@ class IamIdentityV1(BaseService):
                the tag that you retrieved when reading the Profile Identities. This value
                helps identify parallel usage of this API. Pass * to indicate updating any
                available version, which may result in stale updates.
-        :param List[ProfileIdentity] identities: (optional) List of identities that
-               can assume the trusted profile.
+        :param List[ProfileIdentityRequest] identities: (optional) List of
+               identities that can assume the trusted profile.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ProfileIdentitiesResponse` object
@@ -1994,7 +1996,6 @@ class IamIdentityV1(BaseService):
         identifier: str,
         type: str,
         *,
-        iam_id: str = None,
         accounts: List[str] = None,
         description: str = None,
         **kwargs,
@@ -2012,7 +2013,6 @@ class IamIdentityV1(BaseService):
                'serviceid' and for the identifier 'crn' it uses account id contained in
                the CRN.
         :param str type: Type of the identity.
-        :param str iam_id: (optional) IAM ID of the identity.
         :param List[str] accounts: (optional) Only valid for the type user.
                Accounts from which a user can assume the trusted profile.
         :param str description: (optional) Description of the identity that can
@@ -2023,7 +2023,7 @@ class IamIdentityV1(BaseService):
                project'.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ProfileIdentity` object
+        :rtype: DetailedResponse with `dict` result representing a `ProfileIdentityResponse` object
         """
 
         if not profile_id:
@@ -2045,7 +2045,6 @@ class IamIdentityV1(BaseService):
         data = {
             'identifier': identifier,
             'type': type,
-            'iam_id': iam_id,
             'accounts': accounts,
             'description': description,
         }
@@ -2090,7 +2089,7 @@ class IamIdentityV1(BaseService):
                trusted profiles.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `ProfileIdentity` object
+        :rtype: DetailedResponse with `dict` result representing a `ProfileIdentityResponse` object
         """
 
         if not profile_id:
@@ -2178,7 +2177,7 @@ class IamIdentityV1(BaseService):
         return response
 
     #########################
-    # Account Settings
+    # Account settings
     #########################
 
     def get_account_settings(
@@ -2255,7 +2254,7 @@ class IamIdentityV1(BaseService):
         Update account configurations.
 
         Allows a user to configure settings on their account with regards to MFA, MFA
-        excemption list,  session lifetimes, access control for creating new identities,
+        excemption list, session lifetimes, access control for creating new identities,
         and enforcing IP restrictions on token creation.
 
         :param str if_match: Version of the account settings to be updated. Specify
@@ -2265,14 +2264,16 @@ class IamIdentityV1(BaseService):
                updates.
         :param str account_id: The id of the account to update the settings for.
         :param str restrict_create_service_id: (optional) Defines whether or not
-               creating a Service Id is access controlled. Valid values:
-                 * RESTRICTED - to apply access control
-                 * NOT_RESTRICTED - to remove access control
-                 * NOT_SET - to unset a previously set value.
+               creating a service ID is access controlled. Valid values:
+                 * RESTRICTED - only users assigned the 'Service ID creator' role on the
+               IAM Identity Service can create service IDs, including the account owner
+                 * NOT_RESTRICTED - all members of an account can create service IDs
+                 * NOT_SET - to 'unset' a previous set value.
         :param str restrict_create_platform_apikey: (optional) Defines whether or
                not creating platform API keys is access controlled. Valid values:
-                 * RESTRICTED - to apply access control
-                 * NOT_RESTRICTED - to remove access control
+                 * RESTRICTED - only users assigned the 'User API key creator' role on the
+               IAM Identity Service can create API keys, including the account owner
+                 * NOT_RESTRICTED - all members of an account can create platform API keys
                  * NOT_SET - to 'unset' a previous set value.
         :param str allowed_ip_addresses: (optional) Defines the IP addresses and
                subnets from which IAM tokens can be created for the account.
@@ -2528,6 +2529,920 @@ class IamIdentityV1(BaseService):
         return response
 
     #########################
+    # accountSettingsAssignments
+    #########################
+
+    def list_account_settings_assignments(
+        self,
+        *,
+        account_id: str = None,
+        template_id: str = None,
+        template_version: str = None,
+        target: str = None,
+        target_type: str = None,
+        limit: int = None,
+        pagetoken: str = None,
+        sort: str = None,
+        order: str = None,
+        include_history: bool = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List assignments.
+
+        List account settings assignments.
+
+        :param str account_id: (optional) Account ID of the Assignments to query.
+               This parameter is required unless using a pagetoken.
+        :param str template_id: (optional) Filter results by Template Id.
+        :param str template_version: (optional) Filter results Template Version.
+        :param str target: (optional) Filter results by the assignment target.
+        :param str target_type: (optional) Filter results by the assignment's
+               target type.
+        :param int limit: (optional) Optional size of a single page. Default is 20
+               items per page. Valid range is 1 to 100.
+        :param str pagetoken: (optional) Optional Prev or Next page token returned
+               from a previous query execution. Default is start with first page.
+        :param str sort: (optional) If specified, the items are sorted by the value
+               of this property.
+        :param str order: (optional) Sort order.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentListResponse` object
+        """
+
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_account_settings_assignments',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'template_id': template_id,
+            'template_version': template_version,
+            'target': target,
+            'target_type': target_type,
+            'limit': limit,
+            'pagetoken': pagetoken,
+            'sort': sort,
+            'order': order,
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/account_settings_assignments/'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_account_settings_assignment(
+        self,
+        template_id: str,
+        template_version: int,
+        target_type: str,
+        target: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create assignment.
+
+        Create an assigment for an account settings template.
+
+        :param str template_id: ID of the template to assign.
+        :param int template_version: Version of the template to assign.
+        :param str target_type: Type of target to deploy to.
+        :param str target: Identifier of target to deploy to.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
+        """
+
+        if template_id is None:
+            raise ValueError('template_id must be provided')
+        if template_version is None:
+            raise ValueError('template_version must be provided')
+        if target_type is None:
+            raise ValueError('target_type must be provided')
+        if target is None:
+            raise ValueError('target must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_account_settings_assignment',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'template_id': template_id,
+            'template_version': template_version,
+            'target_type': target_type,
+            'target': target,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/account_settings_assignments/'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_account_settings_assignment(
+        self,
+        assignment_id: str,
+        *,
+        include_history: bool = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get assignment.
+
+        Get an assigment for an account settings template.
+
+        :param str assignment_id: ID of the Assignment Record.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_account_settings_assignment',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_account_settings_assignment(
+        self,
+        assignment_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete assignment.
+
+        Delete an account settings template assignment. This removes any IAM resources
+        created by this assignment in child accounts.
+
+        :param str assignment_id: ID of the Assignment Record.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ExceptionResponse` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_account_settings_assignment',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_account_settings_assignment(
+        self,
+        assignment_id: str,
+        if_match: str,
+        template_version: int,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update assignment.
+
+        Update an account settings assignment. Call this method to retry failed
+        assignments or migrate the settings in child accounts to a new version.
+
+        :param str assignment_id: ID of the Assignment Record.
+        :param str if_match: Version of the assignment to be updated. Specify the
+               version that you retrieved when reading the assignment. This value  helps
+               identifying parallel usage of this API. Pass * to indicate to update any
+               version available. This might result in stale updates.
+        :param int template_version: Template version to be applied to the
+               assignment. To retry all failed assignemtns, provide the existing version.
+               To migrate to a different version, provide the new version number.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if template_version is None:
+            raise ValueError('template_version must be provided')
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_account_settings_assignment',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'template_version': template_version,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # accountSettingsTemplate
+    #########################
+
+    def list_account_settings_templates(
+        self,
+        *,
+        account_id: str = None,
+        limit: str = None,
+        pagetoken: str = None,
+        sort: str = None,
+        order: str = None,
+        include_history: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List account settings templates.
+
+        List account settings templates in an enterprise account.
+
+        :param str account_id: (optional) Account ID of the account settings
+               templates to query. This parameter is required unless using a pagetoken.
+        :param str limit: (optional) Optional size of a single page.
+        :param str pagetoken: (optional) Optional Prev or Next page token returned
+               from a previous query execution. Default is start with first page.
+        :param str sort: (optional) Optional sort property. If specified, the
+               returned templated are sorted according to this property.
+        :param str order: (optional) Optional sort order.
+        :param str include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateList` object
+        """
+
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_account_settings_templates',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'limit': limit,
+            'pagetoken': pagetoken,
+            'sort': sort,
+            'order': order,
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/account_settings_templates'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_account_settings_template(
+        self,
+        *,
+        account_id: str = None,
+        name: str = None,
+        description: str = None,
+        account_settings: 'AccountSettingsComponent' = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create an account settings template.
+
+        Create a new account settings template in an enterprise account.
+
+        :param str account_id: (optional) ID of the account where the template
+               resides.
+        :param str name: (optional) The name of the trusted profile template. This
+               is visible only in the enterprise account.
+        :param str description: (optional) The description of the trusted profile
+               template. Describe the template for enterprise account users.
+        :param AccountSettingsComponent account_settings: (optional)
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
+        """
+
+        if account_settings is not None:
+            account_settings = convert_model(account_settings)
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_account_settings_template',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'account_id': account_id,
+            'name': name,
+            'description': description,
+            'account_settings': account_settings,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/account_settings_templates'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_latest_account_settings_template_version(
+        self,
+        template_id: str,
+        *,
+        include_history: bool = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get latest version of an account settings template.
+
+        Get the latest version of a specific account settings template in an enterprise
+        account.
+
+        :param str template_id: ID of the account settings template.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_latest_account_settings_template_version',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_all_versions_of_account_settings_template(
+        self,
+        template_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete all versions of an account settings template.
+
+        Delete all versions of an account settings template in an enterprise account. If
+        any version is assigned to child accounts, you must first delete the assignment.
+
+        :param str template_id: ID of the account settings template.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_all_versions_of_account_settings_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def list_versions_of_account_settings_template(
+        self,
+        template_id: str,
+        *,
+        limit: str = None,
+        pagetoken: str = None,
+        sort: str = None,
+        order: str = None,
+        include_history: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List account settings template versions.
+
+        List the versions of a specific account settings template in an enterprise
+        account.
+
+        :param str template_id: ID of the account settings template.
+        :param str limit: (optional) Optional size of a single page.
+        :param str pagetoken: (optional) Optional Prev or Next page token returned
+               from a previous query execution. Default is start with first page.
+        :param str sort: (optional) Optional sort property. If specified, the
+               returned templated are sorted according to this property.
+        :param str order: (optional) Optional sort order.
+        :param str include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateList` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_versions_of_account_settings_template',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'limit': limit,
+            'pagetoken': pagetoken,
+            'sort': sort,
+            'order': order,
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}/versions'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_account_settings_template_version(
+        self,
+        template_id: str,
+        *,
+        account_id: str = None,
+        name: str = None,
+        description: str = None,
+        account_settings: 'AccountSettingsComponent' = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create a new version of an account settings template.
+
+        Create a new version of an account settings template in an Enterprise Account.
+
+        :param str template_id: ID of the account settings template.
+        :param str account_id: (optional) ID of the account where the template
+               resides.
+        :param str name: (optional) The name of the trusted profile template. This
+               is visible only in the enterprise account.
+        :param str description: (optional) The description of the trusted profile
+               template. Describe the template for enterprise account users.
+        :param AccountSettingsComponent account_settings: (optional)
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if account_settings is not None:
+            account_settings = convert_model(account_settings)
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_account_settings_template_version',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'account_id': account_id,
+            'name': name,
+            'description': description,
+            'account_settings': account_settings,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}/versions'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_account_settings_template_version(
+        self,
+        template_id: str,
+        version: str,
+        *,
+        include_history: bool = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get version of an account settings template.
+
+        Get a specific version of an account settings template in an Enterprise Account.
+
+        :param str template_id: ID of the account settings template.
+        :param str version: Version of the account settings template.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_account_settings_template_version',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id', 'version']
+        path_param_values = self.encode_path_vars(template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_account_settings_template_version(
+        self,
+        if_match: str,
+        template_id: str,
+        version: str,
+        *,
+        account_id: str = None,
+        name: str = None,
+        description: str = None,
+        account_settings: 'AccountSettingsComponent' = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update version of an account settings template.
+
+        Update a specific version of an account settings template in an Enterprise
+        Account.
+
+        :param str if_match: Entity tag of the Template to be updated. Specify the
+               tag that you retrieved when reading the account settings template. This
+               value helps identifying parallel usage of this API. Pass * to indicate to
+               update any version available. This might result in stale updates.
+        :param str template_id: ID of the account settings template.
+        :param str version: Version of the account settings template.
+        :param str account_id: (optional) ID of the account where the template
+               resides.
+        :param str name: (optional) The name of the trusted profile template. This
+               is visible only in the enterprise account.
+        :param str description: (optional) The description of the trusted profile
+               template. Describe the template for enterprise account users.
+        :param AccountSettingsComponent account_settings: (optional)
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `AccountSettingsTemplateResponse` object
+        """
+
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        if account_settings is not None:
+            account_settings = convert_model(account_settings)
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_account_settings_template_version',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'account_id': account_id,
+            'name': name,
+            'description': description,
+            'account_settings': account_settings,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id', 'version']
+        path_param_values = self.encode_path_vars(template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_account_settings_template_version(
+        self,
+        template_id: str,
+        version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete version of an account settings template.
+
+        Delete a specific version of an account settings template in an Enterprise
+        Account.
+
+        :param str template_id: ID of the account settings template.
+        :param str version: Version of the account settings template.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_account_settings_template_version',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['template_id', 'version']
+        path_param_values = self.encode_path_vars(template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def commit_account_settings_template(
+        self,
+        template_id: str,
+        version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Commit a template version.
+
+        Commit a specific version of an account settings template in an Enterprise
+        Account. A Template must be committed before being assigned, and once committed,
+        can no longer be modified.
+
+        :param str template_id: ID of the account settings template.
+        :param str version: Version of the account settings template.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='commit_account_settings_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['template_id', 'version']
+        path_param_values = self.encode_path_vars(template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/account_settings_templates/{template_id}/versions/{version}/commit'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
     # activityOperations
     #########################
 
@@ -2549,8 +3464,8 @@ class IamIdentityV1(BaseService):
         :param str type: (optional) Optional report type. The supported value is
                'inactive'. List all identities that have not authenticated within the time
                indicated by duration.
-        :param str duration: (optional) Optional duration of the report. The
-               supported unit of duration is hours.
+        :param str duration: (optional) Optional duration of the report, supported
+               unit of duration is hours.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `ReportReference` object
@@ -2597,7 +3512,7 @@ class IamIdentityV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Get activity report for the account.
+        Get activity report across on account scope.
 
         Get activity report for the account by specifying the account ID and the reference
         that is generated by triggering the report. Reports older than a day are deleted
@@ -2641,6 +3556,948 @@ class IamIdentityV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    #########################
+    # trustedProfileAssignments
+    #########################
+
+    def list_trusted_profile_assignments(
+        self,
+        *,
+        account_id: str = None,
+        template_id: str = None,
+        template_version: str = None,
+        target: str = None,
+        target_type: str = None,
+        limit: int = None,
+        pagetoken: str = None,
+        sort: str = None,
+        order: str = None,
+        include_history: bool = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List assignments.
+
+        List trusted profile template assignments.
+
+        :param str account_id: (optional) Account ID of the Assignments to query.
+               This parameter is required unless using a pagetoken.
+        :param str template_id: (optional) Filter results by Template Id.
+        :param str template_version: (optional) Filter results Template Version.
+        :param str target: (optional) Filter results by the assignment target.
+        :param str target_type: (optional) Filter results by the assignment's
+               target type.
+        :param int limit: (optional) Optional size of a single page. Default is 20
+               items per page. Valid range is 1 to 100.
+        :param str pagetoken: (optional) Optional Prev or Next page token returned
+               from a previous query execution. Default is start with first page.
+        :param str sort: (optional) If specified, the items are sorted by the value
+               of this property.
+        :param str order: (optional) Sort order.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentListResponse` object
+        """
+
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_trusted_profile_assignments',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'template_id': template_id,
+            'template_version': template_version,
+            'target': target,
+            'target_type': target_type,
+            'limit': limit,
+            'pagetoken': pagetoken,
+            'sort': sort,
+            'order': order,
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/profile_assignments/'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_trusted_profile_assignment(
+        self,
+        template_id: str,
+        template_version: int,
+        target_type: str,
+        target: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create assignment.
+
+        Create an assigment for a trusted profile template.
+
+        :param str template_id: ID of the template to assign.
+        :param int template_version: Version of the template to assign.
+        :param str target_type: Type of target to deploy to.
+        :param str target: Identifier of target to deploy to.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
+        """
+
+        if template_id is None:
+            raise ValueError('template_id must be provided')
+        if template_version is None:
+            raise ValueError('template_version must be provided')
+        if target_type is None:
+            raise ValueError('target_type must be provided')
+        if target is None:
+            raise ValueError('target must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_trusted_profile_assignment',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'template_id': template_id,
+            'template_version': template_version,
+            'target_type': target_type,
+            'target': target,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/profile_assignments/'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_trusted_profile_assignment(
+        self,
+        assignment_id: str,
+        *,
+        include_history: bool = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get assignment.
+
+        Get an assigment for a trusted profile template.
+
+        :param str assignment_id: ID of the Assignment Record.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_trusted_profile_assignment',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profile_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_trusted_profile_assignment(
+        self,
+        assignment_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete assignment.
+
+        Delete a trusted profile assignment. This removes any IAM resources created by
+        this assignment in child accounts.
+
+        :param str assignment_id: ID of the Assignment Record.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `ExceptionResponse` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_trusted_profile_assignment',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profile_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_trusted_profile_assignment(
+        self,
+        assignment_id: str,
+        if_match: str,
+        template_version: int,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update assignment.
+
+        Update a trusted profile assignment. Call this method to retry failed assignments
+        or migrate the trusted profile in child accounts to a new version.
+
+        :param str assignment_id: ID of the Assignment Record.
+        :param str if_match: Version of the Assignment to be updated. Specify the
+               version that you retrieved when reading the Assignment. This value  helps
+               identifying parallel usage of this API. Pass * to indicate to update any
+               version available. This might result in stale updates.
+        :param int template_version: Template version to be applied to the
+               assignment. To retry all failed assignemtns, provide the existing version.
+               To migrate to a different version, provide the new version number.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateAssignmentResponse` object
+        """
+
+        if not assignment_id:
+            raise ValueError('assignment_id must be provided')
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if template_version is None:
+            raise ValueError('template_version must be provided')
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_trusted_profile_assignment',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'template_version': template_version,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['assignment_id']
+        path_param_values = self.encode_path_vars(assignment_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profile_assignments/{assignment_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
+    # trustedProfileTemplate
+    #########################
+
+    def list_profile_templates(
+        self,
+        *,
+        account_id: str = None,
+        limit: str = None,
+        pagetoken: str = None,
+        sort: str = None,
+        order: str = None,
+        include_history: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List trusted profile templates.
+
+        List the trusted profile templates in an enterprise account.
+
+        :param str account_id: (optional) Account ID of the trusted profile
+               templates to query. This parameter is required unless using a pagetoken.
+        :param str limit: (optional) Optional size of a single page.
+        :param str pagetoken: (optional) Optional Prev or Next page token returned
+               from a previous query execution. Default is start with first page.
+        :param str sort: (optional) Optional sort property. If specified, the
+               returned templates are sorted according to this property.
+        :param str order: (optional) Optional sort order.
+        :param str include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TrustedProfileTemplateList` object
+        """
+
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_profile_templates',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'account_id': account_id,
+            'limit': limit,
+            'pagetoken': pagetoken,
+            'sort': sort,
+            'order': order,
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/profile_templates'
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_profile_template(
+        self,
+        *,
+        account_id: str = None,
+        name: str = None,
+        description: str = None,
+        profile: 'TemplateProfileComponentRequest' = None,
+        policy_template_references: List['PolicyTemplateReference'] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create a trusted profile template.
+
+        Create a new trusted profile template in an enterprise account.
+
+        :param str account_id: (optional) ID of the account where the template
+               resides.
+        :param str name: (optional) The name of the trusted profile template. This
+               is visible only in the enterprise account. Required field when creating a
+               new template. Otherwise this field is optional. If the field is included it
+               will change the name value for all existing versions of the template.
+        :param str description: (optional) The description of the trusted profile
+               template. Describe the template for enterprise account users.
+        :param TemplateProfileComponentRequest profile: (optional) Input body
+               parameters for the TemplateProfileComponent.
+        :param List[PolicyTemplateReference] policy_template_references: (optional)
+               Existing policy templates that you can reference to assign access in the
+               trusted profile component.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TrustedProfileTemplateResponse` object
+        """
+
+        if profile is not None:
+            profile = convert_model(profile)
+        if policy_template_references is not None:
+            policy_template_references = [convert_model(x) for x in policy_template_references]
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_profile_template',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'account_id': account_id,
+            'name': name,
+            'description': description,
+            'profile': profile,
+            'policy_template_references': policy_template_references,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        url = '/v1/profile_templates'
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_latest_profile_template_version(
+        self,
+        template_id: str,
+        *,
+        include_history: bool = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get latest version of a trusted profile template.
+
+        Get the latest version of a trusted profile template in an enterprise account.
+
+        :param str template_id: ID of the trusted profile template.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TrustedProfileTemplateResponse` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_latest_profile_template_version',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profile_templates/{template_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_all_versions_of_profile_template(
+        self,
+        template_id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete all versions of a trusted profile template.
+
+        Delete all versions of a trusted profile template in an enterprise account. If any
+        version is assigned to child accounts, you must first delete the assignment.
+
+        :param str template_id: ID of the trusted profile template.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_all_versions_of_profile_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profile_templates/{template_id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def list_versions_of_profile_template(
+        self,
+        template_id: str,
+        *,
+        limit: str = None,
+        pagetoken: str = None,
+        sort: str = None,
+        order: str = None,
+        include_history: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List trusted profile template versions.
+
+        List the versions of a trusted profile template in an enterprise account.
+
+        :param str template_id: ID of the trusted profile template.
+        :param str limit: (optional) Optional size of a single page.
+        :param str pagetoken: (optional) Optional Prev or Next page token returned
+               from a previous query execution. Default is start with first page.
+        :param str sort: (optional) Optional sort property. If specified, the
+               returned templated are sorted according to this property.
+        :param str order: (optional) Optional sort order.
+        :param str include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TrustedProfileTemplateList` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_versions_of_profile_template',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'limit': limit,
+            'pagetoken': pagetoken,
+            'sort': sort,
+            'order': order,
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profile_templates/{template_id}/versions'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def create_profile_template_version(
+        self,
+        template_id: str,
+        *,
+        account_id: str = None,
+        name: str = None,
+        description: str = None,
+        profile: 'TemplateProfileComponentRequest' = None,
+        policy_template_references: List['PolicyTemplateReference'] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create new version of a trusted profile template.
+
+        Create a new version of a trusted profile template in an enterprise account.
+
+        :param str template_id: ID of the trusted profile template.
+        :param str account_id: (optional) ID of the account where the template
+               resides.
+        :param str name: (optional) The name of the trusted profile template. This
+               is visible only in the enterprise account. Required field when creating a
+               new template. Otherwise this field is optional. If the field is included it
+               will change the name value for all existing versions of the template.
+        :param str description: (optional) The description of the trusted profile
+               template. Describe the template for enterprise account users.
+        :param TemplateProfileComponentRequest profile: (optional) Input body
+               parameters for the TemplateProfileComponent.
+        :param List[PolicyTemplateReference] policy_template_references: (optional)
+               Existing policy templates that you can reference to assign access in the
+               trusted profile component.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TrustedProfileTemplateResponse` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if profile is not None:
+            profile = convert_model(profile)
+        if policy_template_references is not None:
+            policy_template_references = [convert_model(x) for x in policy_template_references]
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_profile_template_version',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'account_id': account_id,
+            'name': name,
+            'description': description,
+            'profile': profile,
+            'policy_template_references': policy_template_references,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id']
+        path_param_values = self.encode_path_vars(template_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profile_templates/{template_id}/versions'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_profile_template_version(
+        self,
+        template_id: str,
+        version: str,
+        *,
+        include_history: bool = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get version of trusted profile template.
+
+        Get a specific version of a trusted profile template in an enterprise account.
+
+        :param str template_id: ID of the trusted profile template.
+        :param str version: Version of the Profile Template.
+        :param bool include_history: (optional) Defines if the entity history is
+               included in the response.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TrustedProfileTemplateResponse` object
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_profile_template_version',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'include_history': include_history,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id', 'version']
+        path_param_values = self.encode_path_vars(template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profile_templates/{template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_profile_template_version(
+        self,
+        if_match: str,
+        template_id: str,
+        version: str,
+        *,
+        account_id: str = None,
+        name: str = None,
+        description: str = None,
+        profile: 'TemplateProfileComponentRequest' = None,
+        policy_template_references: List['PolicyTemplateReference'] = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update version of trusted profile template.
+
+        Update a specific version of a trusted profile template in an enterprise account.
+
+        :param str if_match: Entity tag of the Template to be updated. Specify the
+               tag that you retrieved when reading the Profile Template. This value helps
+               identifying parallel usage of this API. Pass * to indicate to update any
+               version available. This might result in stale updates.
+        :param str template_id: ID of the trusted profile template.
+        :param str version: Version of the Profile Template.
+        :param str account_id: (optional) ID of the account where the template
+               resides.
+        :param str name: (optional) The name of the trusted profile template. This
+               is visible only in the enterprise account. Required field when creating a
+               new template. Otherwise this field is optional. If the field is included it
+               will change the name value for all existing versions of the template.
+        :param str description: (optional) The description of the trusted profile
+               template. Describe the template for enterprise account users.
+        :param TemplateProfileComponentRequest profile: (optional) Input body
+               parameters for the TemplateProfileComponent.
+        :param List[PolicyTemplateReference] policy_template_references: (optional)
+               Existing policy templates that you can reference to assign access in the
+               trusted profile component.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TrustedProfileTemplateResponse` object
+        """
+
+        if not if_match:
+            raise ValueError('if_match must be provided')
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        if profile is not None:
+            profile = convert_model(profile)
+        if policy_template_references is not None:
+            policy_template_references = [convert_model(x) for x in policy_template_references]
+        headers = {
+            'If-Match': if_match,
+        }
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_profile_template_version',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'account_id': account_id,
+            'name': name,
+            'description': description,
+            'profile': profile,
+            'policy_template_references': policy_template_references,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['template_id', 'version']
+        path_param_values = self.encode_path_vars(template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profile_templates/{template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_profile_template_version(
+        self,
+        template_id: str,
+        version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete version of trusted profile template.
+
+        Delete a specific version of a trusted profile template in an enterprise account.
+        If the version is assigned to child accounts, you must first delete the
+        assignment.
+
+        :param str template_id: ID of the trusted profile template.
+        :param str version: Version of the Profile Template.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_profile_template_version',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['template_id', 'version']
+        path_param_values = self.encode_path_vars(template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profile_templates/{template_id}/versions/{version}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def commit_profile_template(
+        self,
+        template_id: str,
+        version: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Commit a template version.
+
+        Commit a specific version of a trusted profile template in an enterprise account.
+        You must commit a template before you can assign it to child accounts. Once a
+        template is committed, you can no longer modify the template.
+
+        :param str template_id: ID of the trusted profile template.
+        :param str version: Version of the Profile Template.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not template_id:
+            raise ValueError('template_id must be provided')
+        if not version:
+            raise ValueError('version must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='commit_profile_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['template_id', 'version']
+        path_param_values = self.encode_path_vars(template_id, version)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/profile_templates/{template_id}/versions/{version}/commit'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
 
 class ListApiKeysEnums:
     """
@@ -2649,22 +4506,20 @@ class ListApiKeysEnums:
 
     class Scope(str, Enum):
         """
-        Optional parameter to define the scope of the queried API keys. Can be 'entity'
+        Optional parameter to define the scope of the queried API Keys. Can be 'entity'
         (default) or 'account'.
         """
 
         ENTITY = 'entity'
         ACCOUNT = 'account'
-
     class Type(str, Enum):
         """
-        Optional parameter to filter the type of the queried API keys. Can be 'user' or
+        Optional parameter to filter the type of the queried API Keys. Can be 'user' or
         'serviceid'.
         """
 
         USER = 'user'
         SERVICEID = 'serviceid'
-
     class Order(str, Enum):
         """
         Optional sort order, valid values are asc and desc. Default: asc.
@@ -2745,6 +4600,156 @@ class DeleteProfileIdentityEnums:
         USER = 'user'
         SERVICEID = 'serviceid'
         CRN = 'crn'
+
+
+class ListAccountSettingsAssignmentsEnums:
+    """
+    Enums for list_account_settings_assignments parameters.
+    """
+
+    class TargetType(str, Enum):
+        """
+        Filter results by the assignment's target type.
+        """
+
+        ACCOUNT = 'Account'
+        ACCOUNTGROUP = 'AccountGroup'
+    class Sort(str, Enum):
+        """
+        If specified, the items are sorted by the value of this property.
+        """
+
+        TEMPLATE_ID = 'template_id'
+        CREATED_AT = 'created_at'
+        LAST_MODIFIED_AT = 'last_modified_at'
+    class Order(str, Enum):
+        """
+        Sort order.
+        """
+
+        ASC = 'asc'
+        DESC = 'desc'
+
+
+class ListAccountSettingsTemplatesEnums:
+    """
+    Enums for list_account_settings_templates parameters.
+    """
+
+    class Sort(str, Enum):
+        """
+        Optional sort property. If specified, the returned templated are sorted according
+        to this property.
+        """
+
+        CREATED_AT = 'created_at'
+        LAST_MODIFIED_AT = 'last_modified_at'
+        NAME = 'name'
+    class Order(str, Enum):
+        """
+        Optional sort order.
+        """
+
+        ASC = 'asc'
+        DESC = 'desc'
+
+
+class ListVersionsOfAccountSettingsTemplateEnums:
+    """
+    Enums for list_versions_of_account_settings_template parameters.
+    """
+
+    class Sort(str, Enum):
+        """
+        Optional sort property. If specified, the returned templated are sorted according
+        to this property.
+        """
+
+        CREATED_AT = 'created_at'
+        LAST_MODIFIED_AT = 'last_modified_at'
+        NAME = 'name'
+    class Order(str, Enum):
+        """
+        Optional sort order.
+        """
+
+        ASC = 'asc'
+        DESC = 'desc'
+
+
+class ListTrustedProfileAssignmentsEnums:
+    """
+    Enums for list_trusted_profile_assignments parameters.
+    """
+
+    class TargetType(str, Enum):
+        """
+        Filter results by the assignment's target type.
+        """
+
+        ACCOUNT = 'Account'
+        ACCOUNTGROUP = 'AccountGroup'
+    class Sort(str, Enum):
+        """
+        If specified, the items are sorted by the value of this property.
+        """
+
+        TEMPLATE_ID = 'template_id'
+        CREATED_AT = 'created_at'
+        LAST_MODIFIED_AT = 'last_modified_at'
+    class Order(str, Enum):
+        """
+        Sort order.
+        """
+
+        ASC = 'asc'
+        DESC = 'desc'
+
+
+class ListProfileTemplatesEnums:
+    """
+    Enums for list_profile_templates parameters.
+    """
+
+    class Sort(str, Enum):
+        """
+        Optional sort property. If specified, the returned templates are sorted according
+        to this property.
+        """
+
+        CREATED_AT = 'created_at'
+        LAST_MODIFIED_AT = 'last_modified_at'
+        NAME = 'name'
+    class Order(str, Enum):
+        """
+        Optional sort order.
+        """
+
+        ASC = 'asc'
+        DESC = 'desc'
+
+
+class ListVersionsOfProfileTemplateEnums:
+    """
+    Enums for list_versions_of_profile_template parameters.
+    """
+
+    class Sort(str, Enum):
+        """
+        Optional sort property. If specified, the returned templated are sorted according
+        to this property.
+        """
+
+        CREATED_AT = 'created_at'
+        LAST_MODIFIED_AT = 'last_modified_at'
+        NAME = 'name'
+    class Order(str, Enum):
+        """
+        Optional sort order.
+        """
+
+        ASC = 'asc'
+        DESC = 'desc'
 
 
 ##############################################################################
@@ -2850,6 +4855,256 @@ class AccountBasedMfaEnrollment:
         return not self == other
 
 
+class AccountSettingsComponent:
+    """
+    AccountSettingsComponent.
+
+    :attr str restrict_create_service_id: (optional) Defines whether or not creating
+          a service ID is access controlled. Valid values:
+            * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM
+          Identity Service can create service IDs, including the account owner
+            * NOT_RESTRICTED - all members of an account can create service IDs
+            * NOT_SET - to 'unset' a previous set value.
+    :attr str restrict_create_platform_apikey: (optional) Defines whether or not
+          creating platform API keys is access controlled. Valid values:
+            * RESTRICTED - to apply access control
+            * NOT_RESTRICTED - to remove access control
+            * NOT_SET - to 'unset' a previous set value.
+    :attr str allowed_ip_addresses: (optional) Defines the IP addresses and subnets
+          from which IAM tokens can be created for the account.
+    :attr str mfa: (optional) Defines the MFA trait for the account. Valid values:
+            * NONE - No MFA trait set
+            * TOTP - For all non-federated IBMId users
+            * TOTP4ALL - For all users
+            * LEVEL1 - Email-based MFA for all users
+            * LEVEL2 - TOTP-based MFA for all users
+            * LEVEL3 - U2F MFA for all users.
+    :attr List[AccountSettingsUserMFA] user_mfa: (optional) List of users that are
+          exempted from the MFA requirement of the account.
+    :attr str session_expiration_in_seconds: (optional) Defines the session
+          expiration in seconds for the account. Valid values:
+            * Any whole number between between '900' and '86400'
+            * NOT_SET - To unset account setting and use service default.
+    :attr str session_invalidation_in_seconds: (optional) Defines the period of time
+          in seconds in which a session will be invalidated due to inactivity. Valid
+          values:
+            * Any whole number between '900' and '7200'
+            * NOT_SET - To unset account setting and use service default.
+    :attr str max_sessions_per_identity: (optional) Defines the max allowed sessions
+          per identity required by the account. Valid values:
+            * Any whole number greater than 0
+            * NOT_SET - To unset account setting and use service default.
+    :attr str system_access_token_expiration_in_seconds: (optional) Defines the
+          access token expiration in seconds. Valid values:
+            * Any whole number between '900' and '3600'
+            * NOT_SET - To unset account setting and use service default.
+    :attr str system_refresh_token_expiration_in_seconds: (optional) Defines the
+          refresh token expiration in seconds. Valid values:
+            * Any whole number between '900' and '259200'
+            * NOT_SET - To unset account setting and use service default.
+    """
+
+    def __init__(
+        self,
+        *,
+        restrict_create_service_id: str = None,
+        restrict_create_platform_apikey: str = None,
+        allowed_ip_addresses: str = None,
+        mfa: str = None,
+        user_mfa: List['AccountSettingsUserMFA'] = None,
+        session_expiration_in_seconds: str = None,
+        session_invalidation_in_seconds: str = None,
+        max_sessions_per_identity: str = None,
+        system_access_token_expiration_in_seconds: str = None,
+        system_refresh_token_expiration_in_seconds: str = None,
+    ) -> None:
+        """
+        Initialize a AccountSettingsComponent object.
+
+        :param str restrict_create_service_id: (optional) Defines whether or not
+               creating a service ID is access controlled. Valid values:
+                 * RESTRICTED - only users assigned the 'Service ID creator' role on the
+               IAM Identity Service can create service IDs, including the account owner
+                 * NOT_RESTRICTED - all members of an account can create service IDs
+                 * NOT_SET - to 'unset' a previous set value.
+        :param str restrict_create_platform_apikey: (optional) Defines whether or
+               not creating platform API keys is access controlled. Valid values:
+                 * RESTRICTED - to apply access control
+                 * NOT_RESTRICTED - to remove access control
+                 * NOT_SET - to 'unset' a previous set value.
+        :param str allowed_ip_addresses: (optional) Defines the IP addresses and
+               subnets from which IAM tokens can be created for the account.
+        :param str mfa: (optional) Defines the MFA trait for the account. Valid
+               values:
+                 * NONE - No MFA trait set
+                 * TOTP - For all non-federated IBMId users
+                 * TOTP4ALL - For all users
+                 * LEVEL1 - Email-based MFA for all users
+                 * LEVEL2 - TOTP-based MFA for all users
+                 * LEVEL3 - U2F MFA for all users.
+        :param List[AccountSettingsUserMFA] user_mfa: (optional) List of users that
+               are exempted from the MFA requirement of the account.
+        :param str session_expiration_in_seconds: (optional) Defines the session
+               expiration in seconds for the account. Valid values:
+                 * Any whole number between between '900' and '86400'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str session_invalidation_in_seconds: (optional) Defines the period
+               of time in seconds in which a session will be invalidated due to
+               inactivity. Valid values:
+                 * Any whole number between '900' and '7200'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str max_sessions_per_identity: (optional) Defines the max allowed
+               sessions per identity required by the account. Valid values:
+                 * Any whole number greater than 0
+                 * NOT_SET - To unset account setting and use service default.
+        :param str system_access_token_expiration_in_seconds: (optional) Defines
+               the access token expiration in seconds. Valid values:
+                 * Any whole number between '900' and '3600'
+                 * NOT_SET - To unset account setting and use service default.
+        :param str system_refresh_token_expiration_in_seconds: (optional) Defines
+               the refresh token expiration in seconds. Valid values:
+                 * Any whole number between '900' and '259200'
+                 * NOT_SET - To unset account setting and use service default.
+        """
+        self.restrict_create_service_id = restrict_create_service_id
+        self.restrict_create_platform_apikey = restrict_create_platform_apikey
+        self.allowed_ip_addresses = allowed_ip_addresses
+        self.mfa = mfa
+        self.user_mfa = user_mfa
+        self.session_expiration_in_seconds = session_expiration_in_seconds
+        self.session_invalidation_in_seconds = session_invalidation_in_seconds
+        self.max_sessions_per_identity = max_sessions_per_identity
+        self.system_access_token_expiration_in_seconds = system_access_token_expiration_in_seconds
+        self.system_refresh_token_expiration_in_seconds = system_refresh_token_expiration_in_seconds
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccountSettingsComponent':
+        """Initialize a AccountSettingsComponent object from a json dictionary."""
+        args = {}
+        if 'restrict_create_service_id' in _dict:
+            args['restrict_create_service_id'] = _dict.get('restrict_create_service_id')
+        if 'restrict_create_platform_apikey' in _dict:
+            args['restrict_create_platform_apikey'] = _dict.get('restrict_create_platform_apikey')
+        if 'allowed_ip_addresses' in _dict:
+            args['allowed_ip_addresses'] = _dict.get('allowed_ip_addresses')
+        if 'mfa' in _dict:
+            args['mfa'] = _dict.get('mfa')
+        if 'user_mfa' in _dict:
+            args['user_mfa'] = [AccountSettingsUserMFA.from_dict(v) for v in _dict.get('user_mfa')]
+        if 'session_expiration_in_seconds' in _dict:
+            args['session_expiration_in_seconds'] = _dict.get('session_expiration_in_seconds')
+        if 'session_invalidation_in_seconds' in _dict:
+            args['session_invalidation_in_seconds'] = _dict.get('session_invalidation_in_seconds')
+        if 'max_sessions_per_identity' in _dict:
+            args['max_sessions_per_identity'] = _dict.get('max_sessions_per_identity')
+        if 'system_access_token_expiration_in_seconds' in _dict:
+            args['system_access_token_expiration_in_seconds'] = _dict.get('system_access_token_expiration_in_seconds')
+        if 'system_refresh_token_expiration_in_seconds' in _dict:
+            args['system_refresh_token_expiration_in_seconds'] = _dict.get('system_refresh_token_expiration_in_seconds')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccountSettingsComponent object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'restrict_create_service_id') and self.restrict_create_service_id is not None:
+            _dict['restrict_create_service_id'] = self.restrict_create_service_id
+        if hasattr(self, 'restrict_create_platform_apikey') and self.restrict_create_platform_apikey is not None:
+            _dict['restrict_create_platform_apikey'] = self.restrict_create_platform_apikey
+        if hasattr(self, 'allowed_ip_addresses') and self.allowed_ip_addresses is not None:
+            _dict['allowed_ip_addresses'] = self.allowed_ip_addresses
+        if hasattr(self, 'mfa') and self.mfa is not None:
+            _dict['mfa'] = self.mfa
+        if hasattr(self, 'user_mfa') and self.user_mfa is not None:
+            user_mfa_list = []
+            for v in self.user_mfa:
+                if isinstance(v, dict):
+                    user_mfa_list.append(v)
+                else:
+                    user_mfa_list.append(v.to_dict())
+            _dict['user_mfa'] = user_mfa_list
+        if hasattr(self, 'session_expiration_in_seconds') and self.session_expiration_in_seconds is not None:
+            _dict['session_expiration_in_seconds'] = self.session_expiration_in_seconds
+        if hasattr(self, 'session_invalidation_in_seconds') and self.session_invalidation_in_seconds is not None:
+            _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
+        if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
+            _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
+            _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
+            _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccountSettingsComponent object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccountSettingsComponent') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccountSettingsComponent') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class RestrictCreateServiceIdEnum(str, Enum):
+        """
+        Defines whether or not creating a service ID is access controlled. Valid values:
+          * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM
+        Identity Service can create service IDs, including the account owner
+          * NOT_RESTRICTED - all members of an account can create service IDs
+          * NOT_SET - to 'unset' a previous set value.
+        """
+
+        RESTRICTED = 'RESTRICTED'
+        NOT_RESTRICTED = 'NOT_RESTRICTED'
+        NOT_SET = 'NOT_SET'
+
+
+    class RestrictCreatePlatformApikeyEnum(str, Enum):
+        """
+        Defines whether or not creating platform API keys is access controlled. Valid
+        values:
+          * RESTRICTED - to apply access control
+          * NOT_RESTRICTED - to remove access control
+          * NOT_SET - to 'unset' a previous set value.
+        """
+
+        RESTRICTED = 'RESTRICTED'
+        NOT_RESTRICTED = 'NOT_RESTRICTED'
+        NOT_SET = 'NOT_SET'
+
+
+    class MfaEnum(str, Enum):
+        """
+        Defines the MFA trait for the account. Valid values:
+          * NONE - No MFA trait set
+          * TOTP - For all non-federated IBMId users
+          * TOTP4ALL - For all users
+          * LEVEL1 - Email-based MFA for all users
+          * LEVEL2 - TOTP-based MFA for all users
+          * LEVEL3 - U2F MFA for all users.
+        """
+
+        NONE = 'NONE'
+        TOTP = 'TOTP'
+        TOTP4ALL = 'TOTP4ALL'
+        LEVEL1 = 'LEVEL1'
+        LEVEL2 = 'LEVEL2'
+        LEVEL3 = 'LEVEL3'
+
+
+
 class AccountSettingsResponse:
     """
     Response body format for Account Settings REST requests.
@@ -2857,10 +5112,11 @@ class AccountSettingsResponse:
     :attr ResponseContext context: (optional) Context with key properties for
           problem determination.
     :attr str account_id: Unique ID of the account.
-    :attr str restrict_create_service_id: Defines whether or not creating a Service
-          Id is access controlled. Valid values:
-            * RESTRICTED - to apply access control
-            * NOT_RESTRICTED - to remove access control
+    :attr str restrict_create_service_id: Defines whether or not creating a service
+          ID is access controlled. Valid values:
+            * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM
+          Identity Service can create service IDs, including the account owner
+            * NOT_RESTRICTED - all members of an account can create service IDs
             * NOT_SET - to 'unset' a previous set value.
     :attr str restrict_create_platform_apikey: Defines whether or not creating
           platform API keys is access controlled. Valid values:
@@ -2927,9 +5183,10 @@ class AccountSettingsResponse:
 
         :param str account_id: Unique ID of the account.
         :param str restrict_create_service_id: Defines whether or not creating a
-               Service Id is access controlled. Valid values:
-                 * RESTRICTED - to apply access control
-                 * NOT_RESTRICTED - to remove access control
+               service ID is access controlled. Valid values:
+                 * RESTRICTED - only users assigned the 'Service ID creator' role on the
+               IAM Identity Service can create service IDs, including the account owner
+                 * NOT_RESTRICTED - all members of an account can create service IDs
                  * NOT_SET - to 'unset' a previous set value.
         :param str restrict_create_platform_apikey: Defines whether or not creating
                platform API keys is access controlled. Valid values:
@@ -3003,15 +5260,11 @@ class AccountSettingsResponse:
         if 'restrict_create_service_id' in _dict:
             args['restrict_create_service_id'] = _dict.get('restrict_create_service_id')
         else:
-            raise ValueError(
-                'Required property \'restrict_create_service_id\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'restrict_create_service_id\' not present in AccountSettingsResponse JSON')
         if 'restrict_create_platform_apikey' in _dict:
             args['restrict_create_platform_apikey'] = _dict.get('restrict_create_platform_apikey')
         else:
-            raise ValueError(
-                'Required property \'restrict_create_platform_apikey\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'restrict_create_platform_apikey\' not present in AccountSettingsResponse JSON')
         if 'allowed_ip_addresses' in _dict:
             args['allowed_ip_addresses'] = _dict.get('allowed_ip_addresses')
         else:
@@ -3033,33 +5286,23 @@ class AccountSettingsResponse:
         if 'session_expiration_in_seconds' in _dict:
             args['session_expiration_in_seconds'] = _dict.get('session_expiration_in_seconds')
         else:
-            raise ValueError(
-                'Required property \'session_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'session_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
         if 'session_invalidation_in_seconds' in _dict:
             args['session_invalidation_in_seconds'] = _dict.get('session_invalidation_in_seconds')
         else:
-            raise ValueError(
-                'Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'session_invalidation_in_seconds\' not present in AccountSettingsResponse JSON')
         if 'max_sessions_per_identity' in _dict:
             args['max_sessions_per_identity'] = _dict.get('max_sessions_per_identity')
         else:
-            raise ValueError(
-                'Required property \'max_sessions_per_identity\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'max_sessions_per_identity\' not present in AccountSettingsResponse JSON')
         if 'system_access_token_expiration_in_seconds' in _dict:
             args['system_access_token_expiration_in_seconds'] = _dict.get('system_access_token_expiration_in_seconds')
         else:
-            raise ValueError(
-                'Required property \'system_access_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'system_access_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
         if 'system_refresh_token_expiration_in_seconds' in _dict:
             args['system_refresh_token_expiration_in_seconds'] = _dict.get('system_refresh_token_expiration_in_seconds')
         else:
-            raise ValueError(
-                'Required property \'system_refresh_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON'
-            )
+            raise ValueError('Required property \'system_refresh_token_expiration_in_seconds\' not present in AccountSettingsResponse JSON')
         return cls(**args)
 
     @classmethod
@@ -3109,15 +5352,9 @@ class AccountSettingsResponse:
             _dict['session_invalidation_in_seconds'] = self.session_invalidation_in_seconds
         if hasattr(self, 'max_sessions_per_identity') and self.max_sessions_per_identity is not None:
             _dict['max_sessions_per_identity'] = self.max_sessions_per_identity
-        if (
-            hasattr(self, 'system_access_token_expiration_in_seconds')
-            and self.system_access_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_access_token_expiration_in_seconds') and self.system_access_token_expiration_in_seconds is not None:
             _dict['system_access_token_expiration_in_seconds'] = self.system_access_token_expiration_in_seconds
-        if (
-            hasattr(self, 'system_refresh_token_expiration_in_seconds')
-            and self.system_refresh_token_expiration_in_seconds is not None
-        ):
+        if hasattr(self, 'system_refresh_token_expiration_in_seconds') and self.system_refresh_token_expiration_in_seconds is not None:
             _dict['system_refresh_token_expiration_in_seconds'] = self.system_refresh_token_expiration_in_seconds
         return _dict
 
@@ -3141,15 +5378,17 @@ class AccountSettingsResponse:
 
     class RestrictCreateServiceIdEnum(str, Enum):
         """
-        Defines whether or not creating a Service Id is access controlled. Valid values:
-          * RESTRICTED - to apply access control
-          * NOT_RESTRICTED - to remove access control
+        Defines whether or not creating a service ID is access controlled. Valid values:
+          * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM
+        Identity Service can create service IDs, including the account owner
+          * NOT_RESTRICTED - all members of an account can create service IDs
           * NOT_SET - to 'unset' a previous set value.
         """
 
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
     class RestrictCreatePlatformApikeyEnum(str, Enum):
         """
@@ -3163,6 +5402,7 @@ class AccountSettingsResponse:
         RESTRICTED = 'RESTRICTED'
         NOT_RESTRICTED = 'NOT_RESTRICTED'
         NOT_SET = 'NOT_SET'
+
 
     class MfaEnum(str, Enum):
         """
@@ -3183,6 +5423,334 @@ class AccountSettingsResponse:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
+
+
+class AccountSettingsTemplateList:
+    """
+    AccountSettingsTemplateList.
+
+    :attr ResponseContext context: (optional) Context with key properties for
+          problem determination.
+    :attr int offset: (optional) The offset of the current page.
+    :attr int limit: (optional) Optional size of a single page.
+    :attr str first: (optional) Link to the first page.
+    :attr str previous: (optional) Link to the previous available page. If
+          'previous' property is not part of the response no previous page is available.
+    :attr str next: (optional) Link to the next available page. If 'next' property
+          is not part of the response no next page is available.
+    :attr List[AccountSettingsTemplateResponse] account_settings_templates: List of
+          account settings templates based on the query paramters and the page size. The
+          account_settings_templates array is always part of the response but might be
+          empty depending on the query parameter values provided.
+    """
+
+    def __init__(
+        self,
+        account_settings_templates: List['AccountSettingsTemplateResponse'],
+        *,
+        context: 'ResponseContext' = None,
+        offset: int = None,
+        limit: int = None,
+        first: str = None,
+        previous: str = None,
+        next: str = None,
+    ) -> None:
+        """
+        Initialize a AccountSettingsTemplateList object.
+
+        :param List[AccountSettingsTemplateResponse] account_settings_templates:
+               List of account settings templates based on the query paramters and the
+               page size. The account_settings_templates array is always part of the
+               response but might be empty depending on the query parameter values
+               provided.
+        :param ResponseContext context: (optional) Context with key properties for
+               problem determination.
+        :param int offset: (optional) The offset of the current page.
+        :param int limit: (optional) Optional size of a single page.
+        :param str first: (optional) Link to the first page.
+        :param str previous: (optional) Link to the previous available page. If
+               'previous' property is not part of the response no previous page is
+               available.
+        :param str next: (optional) Link to the next available page. If 'next'
+               property is not part of the response no next page is available.
+        """
+        self.context = context
+        self.offset = offset
+        self.limit = limit
+        self.first = first
+        self.previous = previous
+        self.next = next
+        self.account_settings_templates = account_settings_templates
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccountSettingsTemplateList':
+        """Initialize a AccountSettingsTemplateList object from a json dictionary."""
+        args = {}
+        if 'context' in _dict:
+            args['context'] = ResponseContext.from_dict(_dict.get('context'))
+        if 'offset' in _dict:
+            args['offset'] = _dict.get('offset')
+        if 'limit' in _dict:
+            args['limit'] = _dict.get('limit')
+        if 'first' in _dict:
+            args['first'] = _dict.get('first')
+        if 'previous' in _dict:
+            args['previous'] = _dict.get('previous')
+        if 'next' in _dict:
+            args['next'] = _dict.get('next')
+        if 'account_settings_templates' in _dict:
+            args['account_settings_templates'] = [AccountSettingsTemplateResponse.from_dict(v) for v in _dict.get('account_settings_templates')]
+        else:
+            raise ValueError('Required property \'account_settings_templates\' not present in AccountSettingsTemplateList JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccountSettingsTemplateList object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'context') and self.context is not None:
+            if isinstance(self.context, dict):
+                _dict['context'] = self.context
+            else:
+                _dict['context'] = self.context.to_dict()
+        if hasattr(self, 'offset') and self.offset is not None:
+            _dict['offset'] = self.offset
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            _dict['first'] = self.first
+        if hasattr(self, 'previous') and self.previous is not None:
+            _dict['previous'] = self.previous
+        if hasattr(self, 'next') and self.next is not None:
+            _dict['next'] = self.next
+        if hasattr(self, 'account_settings_templates') and self.account_settings_templates is not None:
+            account_settings_templates_list = []
+            for v in self.account_settings_templates:
+                if isinstance(v, dict):
+                    account_settings_templates_list.append(v)
+                else:
+                    account_settings_templates_list.append(v.to_dict())
+            _dict['account_settings_templates'] = account_settings_templates_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccountSettingsTemplateList object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccountSettingsTemplateList') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccountSettingsTemplateList') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class AccountSettingsTemplateResponse:
+    """
+    Response body format for account settings template REST requests.
+
+    :attr str id: ID of the the template.
+    :attr int version: Version of the the template.
+    :attr str account_id: ID of the account where the template resides.
+    :attr str name: The name of the trusted profile template. This is visible only
+          in the enterprise account.
+    :attr str description: (optional) The description of the trusted profile
+          template. Describe the template for enterprise account users.
+    :attr bool committed: Committed flag determines if the template is ready for
+          assignment.
+    :attr AccountSettingsComponent account_settings:
+    :attr List[EnityHistoryRecord] history: (optional) History of the Template.
+    :attr str entity_tag: Entity tag for this templateId-version combination.
+    :attr str crn: Cloud resource name.
+    :attr str created_at: (optional) Template Created At.
+    :attr str created_by_id: (optional) IAMid of the creator.
+    :attr str last_modified_at: (optional) Template last modified at.
+    :attr str last_modified_by_id: (optional) IAMid of the identity that made the
+          latest modification.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        version: int,
+        account_id: str,
+        name: str,
+        committed: bool,
+        account_settings: 'AccountSettingsComponent',
+        entity_tag: str,
+        crn: str,
+        *,
+        description: str = None,
+        history: List['EnityHistoryRecord'] = None,
+        created_at: str = None,
+        created_by_id: str = None,
+        last_modified_at: str = None,
+        last_modified_by_id: str = None,
+    ) -> None:
+        """
+        Initialize a AccountSettingsTemplateResponse object.
+
+        :param str id: ID of the the template.
+        :param int version: Version of the the template.
+        :param str account_id: ID of the account where the template resides.
+        :param str name: The name of the trusted profile template. This is visible
+               only in the enterprise account.
+        :param bool committed: Committed flag determines if the template is ready
+               for assignment.
+        :param AccountSettingsComponent account_settings:
+        :param str entity_tag: Entity tag for this templateId-version combination.
+        :param str crn: Cloud resource name.
+        :param str description: (optional) The description of the trusted profile
+               template. Describe the template for enterprise account users.
+        :param List[EnityHistoryRecord] history: (optional) History of the
+               Template.
+        :param str created_at: (optional) Template Created At.
+        :param str created_by_id: (optional) IAMid of the creator.
+        :param str last_modified_at: (optional) Template last modified at.
+        :param str last_modified_by_id: (optional) IAMid of the identity that made
+               the latest modification.
+        """
+        self.id = id
+        self.version = version
+        self.account_id = account_id
+        self.name = name
+        self.description = description
+        self.committed = committed
+        self.account_settings = account_settings
+        self.history = history
+        self.entity_tag = entity_tag
+        self.crn = crn
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'AccountSettingsTemplateResponse':
+        """Initialize a AccountSettingsTemplateResponse object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in AccountSettingsTemplateResponse JSON')
+        if 'version' in _dict:
+            args['version'] = _dict.get('version')
+        else:
+            raise ValueError('Required property \'version\' not present in AccountSettingsTemplateResponse JSON')
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in AccountSettingsTemplateResponse JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in AccountSettingsTemplateResponse JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'committed' in _dict:
+            args['committed'] = _dict.get('committed')
+        else:
+            raise ValueError('Required property \'committed\' not present in AccountSettingsTemplateResponse JSON')
+        if 'account_settings' in _dict:
+            args['account_settings'] = AccountSettingsComponent.from_dict(_dict.get('account_settings'))
+        else:
+            raise ValueError('Required property \'account_settings\' not present in AccountSettingsTemplateResponse JSON')
+        if 'history' in _dict:
+            args['history'] = [EnityHistoryRecord.from_dict(v) for v in _dict.get('history')]
+        if 'entity_tag' in _dict:
+            args['entity_tag'] = _dict.get('entity_tag')
+        else:
+            raise ValueError('Required property \'entity_tag\' not present in AccountSettingsTemplateResponse JSON')
+        if 'crn' in _dict:
+            args['crn'] = _dict.get('crn')
+        else:
+            raise ValueError('Required property \'crn\' not present in AccountSettingsTemplateResponse JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = _dict.get('created_at')
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = _dict.get('last_modified_at')
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a AccountSettingsTemplateResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'committed') and self.committed is not None:
+            _dict['committed'] = self.committed
+        if hasattr(self, 'account_settings') and self.account_settings is not None:
+            if isinstance(self.account_settings, dict):
+                _dict['account_settings'] = self.account_settings
+            else:
+                _dict['account_settings'] = self.account_settings.to_dict()
+        if hasattr(self, 'history') and self.history is not None:
+            history_list = []
+            for v in self.history:
+                if isinstance(v, dict):
+                    history_list.append(v)
+                else:
+                    history_list.append(v.to_dict())
+            _dict['history'] = history_list
+        if hasattr(self, 'entity_tag') and self.entity_tag is not None:
+            _dict['entity_tag'] = self.entity_tag
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = self.created_at
+        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
+            _dict['created_by_id'] = self.created_by_id
+        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
+            _dict['last_modified_at'] = self.last_modified_at
+        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
+            _dict['last_modified_by_id'] = self.last_modified_by_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this AccountSettingsTemplateResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'AccountSettingsTemplateResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'AccountSettingsTemplateResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class AccountSettingsUserMFA:
@@ -3286,6 +5854,7 @@ class AccountSettingsUserMFA:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
 
 class Activity:
@@ -4357,6 +6926,197 @@ class EntityActivity:
         return not self == other
 
 
+class Error:
+    """
+    Error information.
+
+    :attr str code: Error code of the REST Exception.
+    :attr str message_code: Error message code of the REST Exception.
+    :attr str message: Error message of the REST Exception. Error messages are
+          derived base on the input locale of the REST request and the available Message
+          catalogs. Dynamic fallback to 'us-english' is happening if no message catalog is
+          available for the provided input locale.
+    :attr str details: (optional) Error details of the REST Exception.
+    """
+
+    def __init__(
+        self,
+        code: str,
+        message_code: str,
+        message: str,
+        *,
+        details: str = None,
+    ) -> None:
+        """
+        Initialize a Error object.
+
+        :param str code: Error code of the REST Exception.
+        :param str message_code: Error message code of the REST Exception.
+        :param str message: Error message of the REST Exception. Error messages are
+               derived base on the input locale of the REST request and the available
+               Message catalogs. Dynamic fallback to 'us-english' is happening if no
+               message catalog is available for the provided input locale.
+        :param str details: (optional) Error details of the REST Exception.
+        """
+        self.code = code
+        self.message_code = message_code
+        self.message = message
+        self.details = details
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Error':
+        """Initialize a Error object from a json dictionary."""
+        args = {}
+        if 'code' in _dict:
+            args['code'] = _dict.get('code')
+        else:
+            raise ValueError('Required property \'code\' not present in Error JSON')
+        if 'message_code' in _dict:
+            args['message_code'] = _dict.get('message_code')
+        else:
+            raise ValueError('Required property \'message_code\' not present in Error JSON')
+        if 'message' in _dict:
+            args['message'] = _dict.get('message')
+        else:
+            raise ValueError('Required property \'message\' not present in Error JSON')
+        if 'details' in _dict:
+            args['details'] = _dict.get('details')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Error object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'code') and self.code is not None:
+            _dict['code'] = self.code
+        if hasattr(self, 'message_code') and self.message_code is not None:
+            _dict['message_code'] = self.message_code
+        if hasattr(self, 'message') and self.message is not None:
+            _dict['message'] = self.message
+        if hasattr(self, 'details') and self.details is not None:
+            _dict['details'] = self.details
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Error object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Error') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Error') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ExceptionResponse:
+    """
+    Response body parameters in case of error situations.
+
+    :attr ResponseContext context: (optional) Context with key properties for
+          problem determination.
+    :attr str status_code: Error message code of the REST Exception.
+    :attr List[Error] errors: List of errors that occured.
+    :attr str trace: (optional) Unique ID of the requst.
+    """
+
+    def __init__(
+        self,
+        status_code: str,
+        errors: List['Error'],
+        *,
+        context: 'ResponseContext' = None,
+        trace: str = None,
+    ) -> None:
+        """
+        Initialize a ExceptionResponse object.
+
+        :param str status_code: Error message code of the REST Exception.
+        :param List[Error] errors: List of errors that occured.
+        :param ResponseContext context: (optional) Context with key properties for
+               problem determination.
+        :param str trace: (optional) Unique ID of the requst.
+        """
+        self.context = context
+        self.status_code = status_code
+        self.errors = errors
+        self.trace = trace
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ExceptionResponse':
+        """Initialize a ExceptionResponse object from a json dictionary."""
+        args = {}
+        if 'context' in _dict:
+            args['context'] = ResponseContext.from_dict(_dict.get('context'))
+        if 'status_code' in _dict:
+            args['status_code'] = _dict.get('status_code')
+        else:
+            raise ValueError('Required property \'status_code\' not present in ExceptionResponse JSON')
+        if 'errors' in _dict:
+            args['errors'] = [Error.from_dict(v) for v in _dict.get('errors')]
+        else:
+            raise ValueError('Required property \'errors\' not present in ExceptionResponse JSON')
+        if 'trace' in _dict:
+            args['trace'] = _dict.get('trace')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ExceptionResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'context') and self.context is not None:
+            if isinstance(self.context, dict):
+                _dict['context'] = self.context
+            else:
+                _dict['context'] = self.context.to_dict()
+        if hasattr(self, 'status_code') and self.status_code is not None:
+            _dict['status_code'] = self.status_code
+        if hasattr(self, 'errors') and self.errors is not None:
+            errors_list = []
+            for v in self.errors:
+                if isinstance(v, dict):
+                    errors_list.append(v)
+                else:
+                    errors_list.append(v.to_dict())
+            _dict['errors'] = errors_list
+        if hasattr(self, 'trace') and self.trace is not None:
+            _dict['trace'] = self.trace
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ExceptionResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ExceptionResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ExceptionResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class IdBasedMfaEnrollment:
     """
     IdBasedMfaEnrollment.
@@ -4511,6 +7271,7 @@ class IdBasedMfaEnrollment:
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
 
+
     class TraitUserSpecificEnum(str, Enum):
         """
         Defines the MFA trait for the account. Valid values:
@@ -4531,6 +7292,7 @@ class IdBasedMfaEnrollment:
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
 
+
     class TraitEffectiveEnum(str, Enum):
         """
         Defines the MFA trait for the account. Valid values:
@@ -4550,6 +7312,7 @@ class IdBasedMfaEnrollment:
         LEVEL1 = 'LEVEL1'
         LEVEL2 = 'LEVEL2'
         LEVEL3 = 'LEVEL3'
+
 
 
 class MfaEnrollmentTypeStatus:
@@ -4701,6 +7464,75 @@ class MfaEnrollments:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'MfaEnrollments') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class PolicyTemplateReference:
+    """
+    Metadata for external access policy.
+
+    :attr str id: ID of Access Policy Template.
+    :attr str version: Version of Access Policy Template.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        version: str,
+    ) -> None:
+        """
+        Initialize a PolicyTemplateReference object.
+
+        :param str id: ID of Access Policy Template.
+        :param str version: Version of Access Policy Template.
+        """
+        self.id = id
+        self.version = version
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'PolicyTemplateReference':
+        """Initialize a PolicyTemplateReference object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in PolicyTemplateReference JSON')
+        if 'version' in _dict:
+            args['version'] = _dict.get('version')
+        else:
+            raise ValueError('Required property \'version\' not present in PolicyTemplateReference JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a PolicyTemplateReference object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this PolicyTemplateReference object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'PolicyTemplateReference') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'PolicyTemplateReference') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -4868,8 +7700,7 @@ class ProfileClaimRuleConditions:
     """
     ProfileClaimRuleConditions.
 
-    :attr str claim: The claim to evaluate against. [Learn
-          more](/docs/account?topic=account-iam-condition-properties&interface=ui#cr-attribute-names).
+    :attr str claim: The claim to evaluate against.
     :attr str operator: The operation to perform on the claim. valid values are
           EQUALS, NOT_EQUALS, EQUALS_IGNORE_CASE, NOT_EQUALS_IGNORE_CASE, CONTAINS, IN.
     :attr str value: The stringified JSON value that the claim is compared to using
@@ -4885,8 +7716,7 @@ class ProfileClaimRuleConditions:
         """
         Initialize a ProfileClaimRuleConditions object.
 
-        :param str claim: The claim to evaluate against. [Learn
-               more](/docs/account?topic=account-iam-condition-properties&interface=ui#cr-attribute-names).
+        :param str claim: The claim to evaluate against.
         :param str operator: The operation to perform on the claim. valid values
                are EQUALS, NOT_EQUALS, EQUALS_IGNORE_CASE, NOT_EQUALS_IGNORE_CASE,
                CONTAINS, IN.
@@ -5034,21 +7864,22 @@ class ProfileIdentitiesResponse:
     ProfileIdentitiesResponse.
 
     :attr str entity_tag: (optional) Entity tag of the profile identities response.
-    :attr List[ProfileIdentity] identities: (optional) List of identities.
+    :attr List[ProfileIdentityResponse] identities: (optional) List of identities.
     """
 
     def __init__(
         self,
         *,
         entity_tag: str = None,
-        identities: List['ProfileIdentity'] = None,
+        identities: List['ProfileIdentityResponse'] = None,
     ) -> None:
         """
         Initialize a ProfileIdentitiesResponse object.
 
         :param str entity_tag: (optional) Entity tag of the profile identities
                response.
-        :param List[ProfileIdentity] identities: (optional) List of identities.
+        :param List[ProfileIdentityResponse] identities: (optional) List of
+               identities.
         """
         self.entity_tag = entity_tag
         self.identities = identities
@@ -5060,7 +7891,7 @@ class ProfileIdentitiesResponse:
         if 'entity_tag' in _dict:
             args['entity_tag'] = _dict.get('entity_tag')
         if 'identities' in _dict:
-            args['identities'] = [ProfileIdentity.from_dict(v) for v in _dict.get('identities')]
+            args['identities'] = [ProfileIdentityResponse.from_dict(v) for v in _dict.get('identities')]
         return cls(**args)
 
     @classmethod
@@ -5102,11 +7933,10 @@ class ProfileIdentitiesResponse:
         return not self == other
 
 
-class ProfileIdentity:
+class ProfileIdentityRequest:
     """
-    ProfileIdentity.
+    ProfileIdentityRequest.
 
-    :attr str iam_id: (optional) IAM ID of the identity.
     :attr str identifier: Identifier of the identity that can assume the trusted
           profiles. This can be a user identifier (IAM id), serviceid or crn. Internally
           it uses account id of the service id for the identifier 'serviceid' and for the
@@ -5126,12 +7956,11 @@ class ProfileIdentity:
         identifier: str,
         type: str,
         *,
-        iam_id: str = None,
         accounts: List[str] = None,
         description: str = None,
     ) -> None:
         """
-        Initialize a ProfileIdentity object.
+        Initialize a ProfileIdentityRequest object.
 
         :param str identifier: Identifier of the identity that can assume the
                trusted profiles. This can be a user identifier (IAM id), serviceid or crn.
@@ -5139,7 +7968,123 @@ class ProfileIdentity:
                'serviceid' and for the identifier 'crn' it uses account id contained in
                the CRN.
         :param str type: Type of the identity.
-        :param str iam_id: (optional) IAM ID of the identity.
+        :param List[str] accounts: (optional) Only valid for the type user.
+               Accounts from which a user can assume the trusted profile.
+        :param str description: (optional) Description of the identity that can
+               assume the trusted profile. This is optional field for all the types of
+               identities. When this field is not set for the identity type 'serviceid'
+               then the description of the service id is used. Description is recommended
+               for the identity type 'crn' E.g. 'Instance 1234 of IBM Cloud Service
+               project'.
+        """
+        self.identifier = identifier
+        self.type = type
+        self.accounts = accounts
+        self.description = description
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ProfileIdentityRequest':
+        """Initialize a ProfileIdentityRequest object from a json dictionary."""
+        args = {}
+        if 'identifier' in _dict:
+            args['identifier'] = _dict.get('identifier')
+        else:
+            raise ValueError('Required property \'identifier\' not present in ProfileIdentityRequest JSON')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in ProfileIdentityRequest JSON')
+        if 'accounts' in _dict:
+            args['accounts'] = _dict.get('accounts')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ProfileIdentityRequest object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'identifier') and self.identifier is not None:
+            _dict['identifier'] = self.identifier
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'accounts') and self.accounts is not None:
+            _dict['accounts'] = self.accounts
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ProfileIdentityRequest object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ProfileIdentityRequest') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ProfileIdentityRequest') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        Type of the identity.
+        """
+
+        USER = 'user'
+        SERVICEID = 'serviceid'
+        CRN = 'crn'
+
+
+
+class ProfileIdentityResponse:
+    """
+    ProfileIdentityResponse.
+
+    :attr str iam_id: IAM ID of the identity.
+    :attr str identifier: Identifier of the identity that can assume the trusted
+          profiles. This can be a user identifier (IAM id), serviceid or crn. Internally
+          it uses account id of the service id for the identifier 'serviceid' and for the
+          identifier 'crn' it uses account id contained in the CRN.
+    :attr str type: Type of the identity.
+    :attr List[str] accounts: (optional) Only valid for the type user. Accounts from
+          which a user can assume the trusted profile.
+    :attr str description: (optional) Description of the identity that can assume
+          the trusted profile. This is optional field for all the types of identities.
+          When this field is not set for the identity type 'serviceid' then the
+          description of the service id is used. Description is recommended for the
+          identity type 'crn' E.g. 'Instance 1234 of IBM Cloud Service project'.
+    """
+
+    def __init__(
+        self,
+        iam_id: str,
+        identifier: str,
+        type: str,
+        *,
+        accounts: List[str] = None,
+        description: str = None,
+    ) -> None:
+        """
+        Initialize a ProfileIdentityResponse object.
+
+        :param str iam_id: IAM ID of the identity.
+        :param str identifier: Identifier of the identity that can assume the
+               trusted profiles. This can be a user identifier (IAM id), serviceid or crn.
+               Internally it uses account id of the service id for the identifier
+               'serviceid' and for the identifier 'crn' it uses account id contained in
+               the CRN.
+        :param str type: Type of the identity.
         :param List[str] accounts: (optional) Only valid for the type user.
                Accounts from which a user can assume the trusted profile.
         :param str description: (optional) Description of the identity that can
@@ -5156,19 +8101,21 @@ class ProfileIdentity:
         self.description = description
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'ProfileIdentity':
-        """Initialize a ProfileIdentity object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'ProfileIdentityResponse':
+        """Initialize a ProfileIdentityResponse object from a json dictionary."""
         args = {}
         if 'iam_id' in _dict:
             args['iam_id'] = _dict.get('iam_id')
+        else:
+            raise ValueError('Required property \'iam_id\' not present in ProfileIdentityResponse JSON')
         if 'identifier' in _dict:
             args['identifier'] = _dict.get('identifier')
         else:
-            raise ValueError('Required property \'identifier\' not present in ProfileIdentity JSON')
+            raise ValueError('Required property \'identifier\' not present in ProfileIdentityResponse JSON')
         if 'type' in _dict:
             args['type'] = _dict.get('type')
         else:
-            raise ValueError('Required property \'type\' not present in ProfileIdentity JSON')
+            raise ValueError('Required property \'type\' not present in ProfileIdentityResponse JSON')
         if 'accounts' in _dict:
             args['accounts'] = _dict.get('accounts')
         if 'description' in _dict:
@@ -5177,7 +8124,7 @@ class ProfileIdentity:
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a ProfileIdentity object from a json dictionary."""
+        """Initialize a ProfileIdentityResponse object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -5200,16 +8147,16 @@ class ProfileIdentity:
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this ProfileIdentity object."""
+        """Return a `str` version of this ProfileIdentityResponse object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'ProfileIdentity') -> bool:
+    def __eq__(self, other: 'ProfileIdentityResponse') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'ProfileIdentity') -> bool:
+    def __ne__(self, other: 'ProfileIdentityResponse') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -5221,6 +8168,7 @@ class ProfileIdentity:
         USER = 'user'
         SERVICEID = 'serviceid'
         CRN = 'crn'
+
 
 
 class ProfileLink:
@@ -6330,6 +9278,917 @@ class ServiceIdList:
         return not self == other
 
 
+class TemplateAssignmentListResponse:
+    """
+    List Response body format for Template Assignments Records.
+
+    :attr ResponseContext context: (optional) Context with key properties for
+          problem determination.
+    :attr int offset: (optional) The offset of the current page.
+    :attr int limit: (optional) Optional size of a single page. Default is 20 items
+          per page. Valid range is 1 to 100.
+    :attr str first: (optional) Link to the first page.
+    :attr str previous: (optional) Link to the previous available page. If
+          'previous' property is not part of the response no previous page is available.
+    :attr str next: (optional) Link to the next available page. If 'next' property
+          is not part of the response no next page is available.
+    :attr List[TemplateAssignmentResponse] assignments: List of Assignments based on
+          the query paramters and the page size. The assignments array is always part of
+          the response but might be empty depending on the query parameter values
+          provided.
+    """
+
+    def __init__(
+        self,
+        assignments: List['TemplateAssignmentResponse'],
+        *,
+        context: 'ResponseContext' = None,
+        offset: int = None,
+        limit: int = None,
+        first: str = None,
+        previous: str = None,
+        next: str = None,
+    ) -> None:
+        """
+        Initialize a TemplateAssignmentListResponse object.
+
+        :param List[TemplateAssignmentResponse] assignments: List of Assignments
+               based on the query paramters and the page size. The assignments array is
+               always part of the response but might be empty depending on the query
+               parameter values provided.
+        :param ResponseContext context: (optional) Context with key properties for
+               problem determination.
+        :param int offset: (optional) The offset of the current page.
+        :param int limit: (optional) Optional size of a single page. Default is 20
+               items per page. Valid range is 1 to 100.
+        :param str first: (optional) Link to the first page.
+        :param str previous: (optional) Link to the previous available page. If
+               'previous' property is not part of the response no previous page is
+               available.
+        :param str next: (optional) Link to the next available page. If 'next'
+               property is not part of the response no next page is available.
+        """
+        self.context = context
+        self.offset = offset
+        self.limit = limit
+        self.first = first
+        self.previous = previous
+        self.next = next
+        self.assignments = assignments
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentListResponse':
+        """Initialize a TemplateAssignmentListResponse object from a json dictionary."""
+        args = {}
+        if 'context' in _dict:
+            args['context'] = ResponseContext.from_dict(_dict.get('context'))
+        if 'offset' in _dict:
+            args['offset'] = _dict.get('offset')
+        if 'limit' in _dict:
+            args['limit'] = _dict.get('limit')
+        if 'first' in _dict:
+            args['first'] = _dict.get('first')
+        if 'previous' in _dict:
+            args['previous'] = _dict.get('previous')
+        if 'next' in _dict:
+            args['next'] = _dict.get('next')
+        if 'assignments' in _dict:
+            args['assignments'] = [TemplateAssignmentResponse.from_dict(v) for v in _dict.get('assignments')]
+        else:
+            raise ValueError('Required property \'assignments\' not present in TemplateAssignmentListResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateAssignmentListResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'context') and self.context is not None:
+            if isinstance(self.context, dict):
+                _dict['context'] = self.context
+            else:
+                _dict['context'] = self.context.to_dict()
+        if hasattr(self, 'offset') and self.offset is not None:
+            _dict['offset'] = self.offset
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            _dict['first'] = self.first
+        if hasattr(self, 'previous') and self.previous is not None:
+            _dict['previous'] = self.previous
+        if hasattr(self, 'next') and self.next is not None:
+            _dict['next'] = self.next
+        if hasattr(self, 'assignments') and self.assignments is not None:
+            assignments_list = []
+            for v in self.assignments:
+                if isinstance(v, dict):
+                    assignments_list.append(v)
+                else:
+                    assignments_list.append(v.to_dict())
+            _dict['assignments'] = assignments_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateAssignmentListResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateAssignmentListResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateAssignmentListResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateAssignmentResource:
+    """
+    Body parameters for created resource.
+
+    :attr str id: (optional) Id of the created resource.
+    """
+
+    def __init__(
+        self,
+        *,
+        id: str = None,
+    ) -> None:
+        """
+        Initialize a TemplateAssignmentResource object.
+
+        :param str id: (optional) Id of the created resource.
+        """
+        self.id = id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentResource':
+        """Initialize a TemplateAssignmentResource object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateAssignmentResource object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateAssignmentResource object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateAssignmentResource') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateAssignmentResource') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateAssignmentResourceError:
+    """
+    Body parameters for assignment error.
+
+    :attr str name: (optional) Name of the error.
+    :attr str error_code: (optional) Internal error code.
+    :attr str message: (optional) Error message detailing the nature of the error.
+    :attr str status_code: (optional) Internal status code for the error.
+    """
+
+    def __init__(
+        self,
+        *,
+        name: str = None,
+        error_code: str = None,
+        message: str = None,
+        status_code: str = None,
+    ) -> None:
+        """
+        Initialize a TemplateAssignmentResourceError object.
+
+        :param str name: (optional) Name of the error.
+        :param str error_code: (optional) Internal error code.
+        :param str message: (optional) Error message detailing the nature of the
+               error.
+        :param str status_code: (optional) Internal status code for the error.
+        """
+        self.name = name
+        self.error_code = error_code
+        self.message = message
+        self.status_code = status_code
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentResourceError':
+        """Initialize a TemplateAssignmentResourceError object from a json dictionary."""
+        args = {}
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        if 'errorCode' in _dict:
+            args['error_code'] = _dict.get('errorCode')
+        if 'message' in _dict:
+            args['message'] = _dict.get('message')
+        if 'statusCode' in _dict:
+            args['status_code'] = _dict.get('statusCode')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateAssignmentResourceError object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'error_code') and self.error_code is not None:
+            _dict['errorCode'] = self.error_code
+        if hasattr(self, 'message') and self.message is not None:
+            _dict['message'] = self.message
+        if hasattr(self, 'status_code') and self.status_code is not None:
+            _dict['statusCode'] = self.status_code
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateAssignmentResourceError object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateAssignmentResourceError') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateAssignmentResourceError') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateAssignmentResponse:
+    """
+    Response body format for Template Assignment Record.
+
+    :attr ResponseContext context: (optional) Context with key properties for
+          problem determination.
+    :attr str id: Assignment record Id.
+    :attr str account_id: Enterprise account Id.
+    :attr str template_id: Template Id.
+    :attr int template_version: Template version.
+    :attr str target_type: Assignment target type.
+    :attr str target: Assignment target.
+    :attr str status: Assignment status.
+    :attr List[TemplateAssignmentResponseResource] resources: (optional) Status
+          breakdown per target account of IAM resources created or errors encountered in
+          attempting to create those IAM resources. IAM resources are only included in the
+          response providing the assignment is not in progress. IAM resources are also
+          only included when getting a single assignment, and excluded by list APIs.
+    :attr List[EnityHistoryRecord] history: (optional) Assignment history.
+    :attr str href: (optional) Href.
+    :attr str created_at: Assignment created at.
+    :attr str created_by_id: IAMid of the identity that created the assignment.
+    :attr str last_modified_at: Assignment modified at.
+    :attr str last_modified_by_id: IAMid of the identity that last modified the
+          assignment.
+    :attr str entity_tag: Entity tag for this assignment record.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        account_id: str,
+        template_id: str,
+        template_version: int,
+        target_type: str,
+        target: str,
+        status: str,
+        created_at: str,
+        created_by_id: str,
+        last_modified_at: str,
+        last_modified_by_id: str,
+        entity_tag: str,
+        *,
+        context: 'ResponseContext' = None,
+        resources: List['TemplateAssignmentResponseResource'] = None,
+        history: List['EnityHistoryRecord'] = None,
+        href: str = None,
+    ) -> None:
+        """
+        Initialize a TemplateAssignmentResponse object.
+
+        :param str id: Assignment record Id.
+        :param str account_id: Enterprise account Id.
+        :param str template_id: Template Id.
+        :param int template_version: Template version.
+        :param str target_type: Assignment target type.
+        :param str target: Assignment target.
+        :param str status: Assignment status.
+        :param str created_at: Assignment created at.
+        :param str created_by_id: IAMid of the identity that created the
+               assignment.
+        :param str last_modified_at: Assignment modified at.
+        :param str last_modified_by_id: IAMid of the identity that last modified
+               the assignment.
+        :param str entity_tag: Entity tag for this assignment record.
+        :param ResponseContext context: (optional) Context with key properties for
+               problem determination.
+        :param List[TemplateAssignmentResponseResource] resources: (optional)
+               Status breakdown per target account of IAM resources created or errors
+               encountered in attempting to create those IAM resources. IAM resources are
+               only included in the response providing the assignment is not in progress.
+               IAM resources are also only included when getting a single assignment, and
+               excluded by list APIs.
+        :param List[EnityHistoryRecord] history: (optional) Assignment history.
+        :param str href: (optional) Href.
+        """
+        self.context = context
+        self.id = id
+        self.account_id = account_id
+        self.template_id = template_id
+        self.template_version = template_version
+        self.target_type = target_type
+        self.target = target
+        self.status = status
+        self.resources = resources
+        self.history = history
+        self.href = href
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+        self.entity_tag = entity_tag
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentResponse':
+        """Initialize a TemplateAssignmentResponse object from a json dictionary."""
+        args = {}
+        if 'context' in _dict:
+            args['context'] = ResponseContext.from_dict(_dict.get('context'))
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in TemplateAssignmentResponse JSON')
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in TemplateAssignmentResponse JSON')
+        if 'template_id' in _dict:
+            args['template_id'] = _dict.get('template_id')
+        else:
+            raise ValueError('Required property \'template_id\' not present in TemplateAssignmentResponse JSON')
+        if 'template_version' in _dict:
+            args['template_version'] = _dict.get('template_version')
+        else:
+            raise ValueError('Required property \'template_version\' not present in TemplateAssignmentResponse JSON')
+        if 'target_type' in _dict:
+            args['target_type'] = _dict.get('target_type')
+        else:
+            raise ValueError('Required property \'target_type\' not present in TemplateAssignmentResponse JSON')
+        if 'target' in _dict:
+            args['target'] = _dict.get('target')
+        else:
+            raise ValueError('Required property \'target\' not present in TemplateAssignmentResponse JSON')
+        if 'status' in _dict:
+            args['status'] = _dict.get('status')
+        else:
+            raise ValueError('Required property \'status\' not present in TemplateAssignmentResponse JSON')
+        if 'resources' in _dict:
+            args['resources'] = [TemplateAssignmentResponseResource.from_dict(v) for v in _dict.get('resources')]
+        if 'history' in _dict:
+            args['history'] = [EnityHistoryRecord.from_dict(v) for v in _dict.get('history')]
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        if 'created_at' in _dict:
+            args['created_at'] = _dict.get('created_at')
+        else:
+            raise ValueError('Required property \'created_at\' not present in TemplateAssignmentResponse JSON')
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        else:
+            raise ValueError('Required property \'created_by_id\' not present in TemplateAssignmentResponse JSON')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = _dict.get('last_modified_at')
+        else:
+            raise ValueError('Required property \'last_modified_at\' not present in TemplateAssignmentResponse JSON')
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        else:
+            raise ValueError('Required property \'last_modified_by_id\' not present in TemplateAssignmentResponse JSON')
+        if 'entity_tag' in _dict:
+            args['entity_tag'] = _dict.get('entity_tag')
+        else:
+            raise ValueError('Required property \'entity_tag\' not present in TemplateAssignmentResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateAssignmentResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'context') and self.context is not None:
+            if isinstance(self.context, dict):
+                _dict['context'] = self.context
+            else:
+                _dict['context'] = self.context.to_dict()
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'template_id') and self.template_id is not None:
+            _dict['template_id'] = self.template_id
+        if hasattr(self, 'template_version') and self.template_version is not None:
+            _dict['template_version'] = self.template_version
+        if hasattr(self, 'target_type') and self.target_type is not None:
+            _dict['target_type'] = self.target_type
+        if hasattr(self, 'target') and self.target is not None:
+            _dict['target'] = self.target
+        if hasattr(self, 'status') and self.status is not None:
+            _dict['status'] = self.status
+        if hasattr(self, 'resources') and self.resources is not None:
+            resources_list = []
+            for v in self.resources:
+                if isinstance(v, dict):
+                    resources_list.append(v)
+                else:
+                    resources_list.append(v.to_dict())
+            _dict['resources'] = resources_list
+        if hasattr(self, 'history') and self.history is not None:
+            history_list = []
+            for v in self.history:
+                if isinstance(v, dict):
+                    history_list.append(v)
+                else:
+                    history_list.append(v.to_dict())
+            _dict['history'] = history_list
+        if hasattr(self, 'href') and self.href is not None:
+            _dict['href'] = self.href
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = self.created_at
+        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
+            _dict['created_by_id'] = self.created_by_id
+        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
+            _dict['last_modified_at'] = self.last_modified_at
+        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
+            _dict['last_modified_by_id'] = self.last_modified_by_id
+        if hasattr(self, 'entity_tag') and self.entity_tag is not None:
+            _dict['entity_tag'] = self.entity_tag
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateAssignmentResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateAssignmentResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateAssignmentResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateAssignmentResponseResource:
+    """
+    Overview of resources assignment per target account.
+
+    :attr str target: Target account where the IAM resource is created.
+    :attr TemplateAssignmentResponseResourceDetail profile: (optional)
+    :attr TemplateAssignmentResponseResourceDetail account_settings: (optional)
+    :attr List[TemplateAssignmentResponseResourceDetail] policy_template_refs:
+          (optional) Policy resource(s) included only for trusted profile assignments with
+          policy references.
+    """
+
+    def __init__(
+        self,
+        target: str,
+        *,
+        profile: 'TemplateAssignmentResponseResourceDetail' = None,
+        account_settings: 'TemplateAssignmentResponseResourceDetail' = None,
+        policy_template_refs: List['TemplateAssignmentResponseResourceDetail'] = None,
+    ) -> None:
+        """
+        Initialize a TemplateAssignmentResponseResource object.
+
+        :param str target: Target account where the IAM resource is created.
+        :param TemplateAssignmentResponseResourceDetail profile: (optional)
+        :param TemplateAssignmentResponseResourceDetail account_settings:
+               (optional)
+        :param List[TemplateAssignmentResponseResourceDetail] policy_template_refs:
+               (optional) Policy resource(s) included only for trusted profile assignments
+               with policy references.
+        """
+        self.target = target
+        self.profile = profile
+        self.account_settings = account_settings
+        self.policy_template_refs = policy_template_refs
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentResponseResource':
+        """Initialize a TemplateAssignmentResponseResource object from a json dictionary."""
+        args = {}
+        if 'target' in _dict:
+            args['target'] = _dict.get('target')
+        else:
+            raise ValueError('Required property \'target\' not present in TemplateAssignmentResponseResource JSON')
+        if 'profile' in _dict:
+            args['profile'] = TemplateAssignmentResponseResourceDetail.from_dict(_dict.get('profile'))
+        if 'account_settings' in _dict:
+            args['account_settings'] = TemplateAssignmentResponseResourceDetail.from_dict(_dict.get('account_settings'))
+        if 'policy_template_refs' in _dict:
+            args['policy_template_refs'] = [TemplateAssignmentResponseResourceDetail.from_dict(v) for v in _dict.get('policy_template_refs')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateAssignmentResponseResource object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'target') and self.target is not None:
+            _dict['target'] = self.target
+        if hasattr(self, 'profile') and self.profile is not None:
+            if isinstance(self.profile, dict):
+                _dict['profile'] = self.profile
+            else:
+                _dict['profile'] = self.profile.to_dict()
+        if hasattr(self, 'account_settings') and self.account_settings is not None:
+            if isinstance(self.account_settings, dict):
+                _dict['account_settings'] = self.account_settings
+            else:
+                _dict['account_settings'] = self.account_settings.to_dict()
+        if hasattr(self, 'policy_template_refs') and self.policy_template_refs is not None:
+            policy_template_refs_list = []
+            for v in self.policy_template_refs:
+                if isinstance(v, dict):
+                    policy_template_refs_list.append(v)
+                else:
+                    policy_template_refs_list.append(v.to_dict())
+            _dict['policy_template_refs'] = policy_template_refs_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateAssignmentResponseResource object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateAssignmentResponseResource') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateAssignmentResponseResource') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateAssignmentResponseResourceDetail:
+    """
+    TemplateAssignmentResponseResourceDetail.
+
+    :attr str id: (optional) Policy Template Id, only returned for a profile
+          assignment with policy references.
+    :attr str version: (optional) Policy version, only returned for a profile
+          assignment with policy references.
+    :attr TemplateAssignmentResource resource_created: (optional) Body parameters
+          for created resource.
+    :attr TemplateAssignmentResourceError error_message: (optional) Body parameters
+          for assignment error.
+    :attr str status: Status for the target account's assignment.
+    """
+
+    def __init__(
+        self,
+        status: str,
+        *,
+        id: str = None,
+        version: str = None,
+        resource_created: 'TemplateAssignmentResource' = None,
+        error_message: 'TemplateAssignmentResourceError' = None,
+    ) -> None:
+        """
+        Initialize a TemplateAssignmentResponseResourceDetail object.
+
+        :param str status: Status for the target account's assignment.
+        :param str id: (optional) Policy Template Id, only returned for a profile
+               assignment with policy references.
+        :param str version: (optional) Policy version, only returned for a profile
+               assignment with policy references.
+        :param TemplateAssignmentResource resource_created: (optional) Body
+               parameters for created resource.
+        :param TemplateAssignmentResourceError error_message: (optional) Body
+               parameters for assignment error.
+        """
+        self.id = id
+        self.version = version
+        self.resource_created = resource_created
+        self.error_message = error_message
+        self.status = status
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateAssignmentResponseResourceDetail':
+        """Initialize a TemplateAssignmentResponseResourceDetail object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        if 'version' in _dict:
+            args['version'] = _dict.get('version')
+        if 'resource_created' in _dict:
+            args['resource_created'] = TemplateAssignmentResource.from_dict(_dict.get('resource_created'))
+        if 'error_message' in _dict:
+            args['error_message'] = TemplateAssignmentResourceError.from_dict(_dict.get('error_message'))
+        if 'status' in _dict:
+            args['status'] = _dict.get('status')
+        else:
+            raise ValueError('Required property \'status\' not present in TemplateAssignmentResponseResourceDetail JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateAssignmentResponseResourceDetail object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        if hasattr(self, 'resource_created') and self.resource_created is not None:
+            if isinstance(self.resource_created, dict):
+                _dict['resource_created'] = self.resource_created
+            else:
+                _dict['resource_created'] = self.resource_created.to_dict()
+        if hasattr(self, 'error_message') and self.error_message is not None:
+            if isinstance(self.error_message, dict):
+                _dict['error_message'] = self.error_message
+            else:
+                _dict['error_message'] = self.error_message.to_dict()
+        if hasattr(self, 'status') and self.status is not None:
+            _dict['status'] = self.status
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateAssignmentResponseResourceDetail object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateAssignmentResponseResourceDetail') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateAssignmentResponseResourceDetail') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateProfileComponentRequest:
+    """
+    Input body parameters for the TemplateProfileComponent.
+
+    :attr str name: Name of the Profile.
+    :attr str description: (optional) Description of the Profile.
+    :attr List[TrustedProfileTemplateClaimRule] rules: (optional) Rules for the
+          Profile.
+    :attr List[ProfileIdentityRequest] identities: (optional) Identities for the
+          Profile.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        *,
+        description: str = None,
+        rules: List['TrustedProfileTemplateClaimRule'] = None,
+        identities: List['ProfileIdentityRequest'] = None,
+    ) -> None:
+        """
+        Initialize a TemplateProfileComponentRequest object.
+
+        :param str name: Name of the Profile.
+        :param str description: (optional) Description of the Profile.
+        :param List[TrustedProfileTemplateClaimRule] rules: (optional) Rules for
+               the Profile.
+        :param List[ProfileIdentityRequest] identities: (optional) Identities for
+               the Profile.
+        """
+        self.name = name
+        self.description = description
+        self.rules = rules
+        self.identities = identities
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateProfileComponentRequest':
+        """Initialize a TemplateProfileComponentRequest object from a json dictionary."""
+        args = {}
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in TemplateProfileComponentRequest JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'rules' in _dict:
+            args['rules'] = [TrustedProfileTemplateClaimRule.from_dict(v) for v in _dict.get('rules')]
+        if 'identities' in _dict:
+            args['identities'] = [ProfileIdentityRequest.from_dict(v) for v in _dict.get('identities')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateProfileComponentRequest object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'rules') and self.rules is not None:
+            rules_list = []
+            for v in self.rules:
+                if isinstance(v, dict):
+                    rules_list.append(v)
+                else:
+                    rules_list.append(v.to_dict())
+            _dict['rules'] = rules_list
+        if hasattr(self, 'identities') and self.identities is not None:
+            identities_list = []
+            for v in self.identities:
+                if isinstance(v, dict):
+                    identities_list.append(v)
+                else:
+                    identities_list.append(v.to_dict())
+            _dict['identities'] = identities_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateProfileComponentRequest object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateProfileComponentRequest') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateProfileComponentRequest') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateProfileComponentResponse:
+    """
+    Input body parameters for the TemplateProfileComponent.
+
+    :attr str name: Name of the Profile.
+    :attr str description: (optional) Description of the Profile.
+    :attr List[TrustedProfileTemplateClaimRule] rules: (optional) Rules for the
+          Profile.
+    :attr List[ProfileIdentityResponse] identities: (optional) Identities for the
+          Profile.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        *,
+        description: str = None,
+        rules: List['TrustedProfileTemplateClaimRule'] = None,
+        identities: List['ProfileIdentityResponse'] = None,
+    ) -> None:
+        """
+        Initialize a TemplateProfileComponentResponse object.
+
+        :param str name: Name of the Profile.
+        :param str description: (optional) Description of the Profile.
+        :param List[TrustedProfileTemplateClaimRule] rules: (optional) Rules for
+               the Profile.
+        :param List[ProfileIdentityResponse] identities: (optional) Identities for
+               the Profile.
+        """
+        self.name = name
+        self.description = description
+        self.rules = rules
+        self.identities = identities
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateProfileComponentResponse':
+        """Initialize a TemplateProfileComponentResponse object from a json dictionary."""
+        args = {}
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in TemplateProfileComponentResponse JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'rules' in _dict:
+            args['rules'] = [TrustedProfileTemplateClaimRule.from_dict(v) for v in _dict.get('rules')]
+        if 'identities' in _dict:
+            args['identities'] = [ProfileIdentityResponse.from_dict(v) for v in _dict.get('identities')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateProfileComponentResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'rules') and self.rules is not None:
+            rules_list = []
+            for v in self.rules:
+                if isinstance(v, dict):
+                    rules_list.append(v)
+                else:
+                    rules_list.append(v.to_dict())
+            _dict['rules'] = rules_list
+        if hasattr(self, 'identities') and self.identities is not None:
+            identities_list = []
+            for v in self.identities:
+                if isinstance(v, dict):
+                    identities_list.append(v)
+                else:
+                    identities_list.append(v.to_dict())
+            _dict['identities'] = identities_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateProfileComponentResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateProfileComponentResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateProfileComponentResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class TrustedProfile:
     """
     Response body format for trusted profile V1 REST requests.
@@ -6354,6 +10213,14 @@ class TrustedProfile:
           last modification date in ISO format.
     :attr str iam_id: The iam_id of this trusted profile.
     :attr str account_id: ID of the account that this trusted profile belong to.
+    :attr str template_id: (optional) ID of the IAM template that was used to create
+          an enterprise-managed trusted profile in your account. When returned, this
+          indicates that the trusted profile is created from and managed by a template in
+          the root enterprise account.
+    :attr str assignment_id: (optional) ID of the assignment that was used to create
+          an enterprise-managed trusted profile in your account. When returned, this
+          indicates that the trusted profile is created from and managed by a template in
+          the root enterprise account.
     :attr int ims_account_id: (optional) IMS acount ID of the trusted profile.
     :attr int ims_user_id: (optional) IMS user ID of the trusted profile.
     :attr List[EnityHistoryRecord] history: (optional) History of the trusted
@@ -6374,6 +10241,8 @@ class TrustedProfile:
         description: str = None,
         created_at: datetime = None,
         modified_at: datetime = None,
+        template_id: str = None,
+        assignment_id: str = None,
         ims_account_id: int = None,
         ims_user_id: int = None,
         history: List['EnityHistoryRecord'] = None,
@@ -6405,6 +10274,14 @@ class TrustedProfile:
                of the creation date in ISO format.
         :param datetime modified_at: (optional) If set contains a date time string
                of the last modification date in ISO format.
+        :param str template_id: (optional) ID of the IAM template that was used to
+               create an enterprise-managed trusted profile in your account. When
+               returned, this indicates that the trusted profile is created from and
+               managed by a template in the root enterprise account.
+        :param str assignment_id: (optional) ID of the assignment that was used to
+               create an enterprise-managed trusted profile in your account. When
+               returned, this indicates that the trusted profile is created from and
+               managed by a template in the root enterprise account.
         :param int ims_account_id: (optional) IMS acount ID of the trusted profile.
         :param int ims_user_id: (optional) IMS user ID of the trusted profile.
         :param List[EnityHistoryRecord] history: (optional) History of the trusted
@@ -6421,6 +10298,8 @@ class TrustedProfile:
         self.modified_at = modified_at
         self.iam_id = iam_id
         self.account_id = account_id
+        self.template_id = template_id
+        self.assignment_id = assignment_id
         self.ims_account_id = ims_account_id
         self.ims_user_id = ims_user_id
         self.history = history
@@ -6462,6 +10341,10 @@ class TrustedProfile:
             args['account_id'] = _dict.get('account_id')
         else:
             raise ValueError('Required property \'account_id\' not present in TrustedProfile JSON')
+        if 'template_id' in _dict:
+            args['template_id'] = _dict.get('template_id')
+        if 'assignment_id' in _dict:
+            args['assignment_id'] = _dict.get('assignment_id')
         if 'ims_account_id' in _dict:
             args['ims_account_id'] = _dict.get('ims_account_id')
         if 'ims_user_id' in _dict:
@@ -6503,6 +10386,10 @@ class TrustedProfile:
             _dict['iam_id'] = self.iam_id
         if hasattr(self, 'account_id') and self.account_id is not None:
             _dict['account_id'] = self.account_id
+        if hasattr(self, 'template_id') and self.template_id is not None:
+            _dict['template_id'] = self.template_id
+        if hasattr(self, 'assignment_id') and self.assignment_id is not None:
+            _dict['assignment_id'] = self.assignment_id
         if hasattr(self, 'ims_account_id') and self.ims_account_id is not None:
             _dict['ims_account_id'] = self.ims_account_id
         if hasattr(self, 'ims_user_id') and self.ims_user_id is not None:
@@ -6537,6 +10424,467 @@ class TrustedProfile:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'TrustedProfile') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TrustedProfileTemplateClaimRule:
+    """
+    TrustedProfileTemplateClaimRule.
+
+    :attr str name: (optional) Name of the claim rule to be created or updated.
+    :attr str type: Type of the claim rule.
+    :attr str realm_name: (optional) The realm name of the Idp this claim rule
+          applies to. This field is required only if the type is specified as
+          'Profile-SAML'.
+    :attr int expiration: (optional) Session expiration in seconds, only required if
+          type is 'Profile-SAML'.
+    :attr List[ProfileClaimRuleConditions] conditions: Conditions of this claim
+          rule.
+    """
+
+    def __init__(
+        self,
+        type: str,
+        conditions: List['ProfileClaimRuleConditions'],
+        *,
+        name: str = None,
+        realm_name: str = None,
+        expiration: int = None,
+    ) -> None:
+        """
+        Initialize a TrustedProfileTemplateClaimRule object.
+
+        :param str type: Type of the claim rule.
+        :param List[ProfileClaimRuleConditions] conditions: Conditions of this
+               claim rule.
+        :param str name: (optional) Name of the claim rule to be created or
+               updated.
+        :param str realm_name: (optional) The realm name of the Idp this claim rule
+               applies to. This field is required only if the type is specified as
+               'Profile-SAML'.
+        :param int expiration: (optional) Session expiration in seconds, only
+               required if type is 'Profile-SAML'.
+        """
+        self.name = name
+        self.type = type
+        self.realm_name = realm_name
+        self.expiration = expiration
+        self.conditions = conditions
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TrustedProfileTemplateClaimRule':
+        """Initialize a TrustedProfileTemplateClaimRule object from a json dictionary."""
+        args = {}
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in TrustedProfileTemplateClaimRule JSON')
+        if 'realm_name' in _dict:
+            args['realm_name'] = _dict.get('realm_name')
+        if 'expiration' in _dict:
+            args['expiration'] = _dict.get('expiration')
+        if 'conditions' in _dict:
+            args['conditions'] = [ProfileClaimRuleConditions.from_dict(v) for v in _dict.get('conditions')]
+        else:
+            raise ValueError('Required property \'conditions\' not present in TrustedProfileTemplateClaimRule JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TrustedProfileTemplateClaimRule object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'realm_name') and self.realm_name is not None:
+            _dict['realm_name'] = self.realm_name
+        if hasattr(self, 'expiration') and self.expiration is not None:
+            _dict['expiration'] = self.expiration
+        if hasattr(self, 'conditions') and self.conditions is not None:
+            conditions_list = []
+            for v in self.conditions:
+                if isinstance(v, dict):
+                    conditions_list.append(v)
+                else:
+                    conditions_list.append(v.to_dict())
+            _dict['conditions'] = conditions_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TrustedProfileTemplateClaimRule object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TrustedProfileTemplateClaimRule') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TrustedProfileTemplateClaimRule') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        Type of the claim rule.
+        """
+
+        PROFILE_SAML = 'Profile-SAML'
+
+
+
+class TrustedProfileTemplateList:
+    """
+    TrustedProfileTemplateList.
+
+    :attr ResponseContext context: (optional) Context with key properties for
+          problem determination.
+    :attr int offset: (optional) The offset of the current page.
+    :attr int limit: (optional) Optional size of a single page.
+    :attr str first: (optional) Link to the first page.
+    :attr str previous: (optional) Link to the previous available page. If
+          'previous' property is not part of the response no previous page is available.
+    :attr str next: (optional) Link to the next available page. If 'next' property
+          is not part of the response no next page is available.
+    :attr List[TrustedProfileTemplateResponse] profile_templates: List of Profile
+          Templates based on the query paramters and the page size. The profile_templates
+          array is always part of the response but might be empty depending on the query
+          parameter values provided.
+    """
+
+    def __init__(
+        self,
+        profile_templates: List['TrustedProfileTemplateResponse'],
+        *,
+        context: 'ResponseContext' = None,
+        offset: int = None,
+        limit: int = None,
+        first: str = None,
+        previous: str = None,
+        next: str = None,
+    ) -> None:
+        """
+        Initialize a TrustedProfileTemplateList object.
+
+        :param List[TrustedProfileTemplateResponse] profile_templates: List of
+               Profile Templates based on the query paramters and the page size. The
+               profile_templates array is always part of the response but might be empty
+               depending on the query parameter values provided.
+        :param ResponseContext context: (optional) Context with key properties for
+               problem determination.
+        :param int offset: (optional) The offset of the current page.
+        :param int limit: (optional) Optional size of a single page.
+        :param str first: (optional) Link to the first page.
+        :param str previous: (optional) Link to the previous available page. If
+               'previous' property is not part of the response no previous page is
+               available.
+        :param str next: (optional) Link to the next available page. If 'next'
+               property is not part of the response no next page is available.
+        """
+        self.context = context
+        self.offset = offset
+        self.limit = limit
+        self.first = first
+        self.previous = previous
+        self.next = next
+        self.profile_templates = profile_templates
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TrustedProfileTemplateList':
+        """Initialize a TrustedProfileTemplateList object from a json dictionary."""
+        args = {}
+        if 'context' in _dict:
+            args['context'] = ResponseContext.from_dict(_dict.get('context'))
+        if 'offset' in _dict:
+            args['offset'] = _dict.get('offset')
+        if 'limit' in _dict:
+            args['limit'] = _dict.get('limit')
+        if 'first' in _dict:
+            args['first'] = _dict.get('first')
+        if 'previous' in _dict:
+            args['previous'] = _dict.get('previous')
+        if 'next' in _dict:
+            args['next'] = _dict.get('next')
+        if 'profile_templates' in _dict:
+            args['profile_templates'] = [TrustedProfileTemplateResponse.from_dict(v) for v in _dict.get('profile_templates')]
+        else:
+            raise ValueError('Required property \'profile_templates\' not present in TrustedProfileTemplateList JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TrustedProfileTemplateList object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'context') and self.context is not None:
+            if isinstance(self.context, dict):
+                _dict['context'] = self.context
+            else:
+                _dict['context'] = self.context.to_dict()
+        if hasattr(self, 'offset') and self.offset is not None:
+            _dict['offset'] = self.offset
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'first') and self.first is not None:
+            _dict['first'] = self.first
+        if hasattr(self, 'previous') and self.previous is not None:
+            _dict['previous'] = self.previous
+        if hasattr(self, 'next') and self.next is not None:
+            _dict['next'] = self.next
+        if hasattr(self, 'profile_templates') and self.profile_templates is not None:
+            profile_templates_list = []
+            for v in self.profile_templates:
+                if isinstance(v, dict):
+                    profile_templates_list.append(v)
+                else:
+                    profile_templates_list.append(v.to_dict())
+            _dict['profile_templates'] = profile_templates_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TrustedProfileTemplateList object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TrustedProfileTemplateList') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TrustedProfileTemplateList') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TrustedProfileTemplateResponse:
+    """
+    Response body format for Trusted Profile Template REST requests.
+
+    :attr str id: ID of the the template.
+    :attr int version: Version of the the template.
+    :attr str account_id: ID of the account where the template resides.
+    :attr str name: The name of the trusted profile template. This is visible only
+          in the enterprise account.
+    :attr str description: (optional) The description of the trusted profile
+          template. Describe the template for enterprise account users.
+    :attr bool committed: (optional) Committed flag determines if the template is
+          ready for assignment.
+    :attr TemplateProfileComponentResponse profile: (optional) Input body parameters
+          for the TemplateProfileComponent.
+    :attr List[PolicyTemplateReference] policy_template_references: (optional)
+          Existing policy templates that you can reference to assign access in the trusted
+          profile component.
+    :attr List[EnityHistoryRecord] history: (optional) History of the trusted
+          profile template.
+    :attr str entity_tag: (optional) Entity tag for this templateId-version
+          combination.
+    :attr str crn: (optional) Cloud resource name.
+    :attr str created_at: (optional) Timestamp of when the template was created.
+    :attr str created_by_id: (optional) IAMid of the creator.
+    :attr str last_modified_at: (optional) Timestamp of when the template was last
+          modified.
+    :attr str last_modified_by_id: (optional) IAMid of the identity that made the
+          latest modification.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        version: int,
+        account_id: str,
+        name: str,
+        *,
+        description: str = None,
+        committed: bool = None,
+        profile: 'TemplateProfileComponentResponse' = None,
+        policy_template_references: List['PolicyTemplateReference'] = None,
+        history: List['EnityHistoryRecord'] = None,
+        entity_tag: str = None,
+        crn: str = None,
+        created_at: str = None,
+        created_by_id: str = None,
+        last_modified_at: str = None,
+        last_modified_by_id: str = None,
+    ) -> None:
+        """
+        Initialize a TrustedProfileTemplateResponse object.
+
+        :param str id: ID of the the template.
+        :param int version: Version of the the template.
+        :param str account_id: ID of the account where the template resides.
+        :param str name: The name of the trusted profile template. This is visible
+               only in the enterprise account.
+        :param str description: (optional) The description of the trusted profile
+               template. Describe the template for enterprise account users.
+        :param bool committed: (optional) Committed flag determines if the template
+               is ready for assignment.
+        :param TemplateProfileComponentResponse profile: (optional) Input body
+               parameters for the TemplateProfileComponent.
+        :param List[PolicyTemplateReference] policy_template_references: (optional)
+               Existing policy templates that you can reference to assign access in the
+               trusted profile component.
+        :param List[EnityHistoryRecord] history: (optional) History of the trusted
+               profile template.
+        :param str entity_tag: (optional) Entity tag for this templateId-version
+               combination.
+        :param str crn: (optional) Cloud resource name.
+        :param str created_at: (optional) Timestamp of when the template was
+               created.
+        :param str created_by_id: (optional) IAMid of the creator.
+        :param str last_modified_at: (optional) Timestamp of when the template was
+               last modified.
+        :param str last_modified_by_id: (optional) IAMid of the identity that made
+               the latest modification.
+        """
+        self.id = id
+        self.version = version
+        self.account_id = account_id
+        self.name = name
+        self.description = description
+        self.committed = committed
+        self.profile = profile
+        self.policy_template_references = policy_template_references
+        self.history = history
+        self.entity_tag = entity_tag
+        self.crn = crn
+        self.created_at = created_at
+        self.created_by_id = created_by_id
+        self.last_modified_at = last_modified_at
+        self.last_modified_by_id = last_modified_by_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TrustedProfileTemplateResponse':
+        """Initialize a TrustedProfileTemplateResponse object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in TrustedProfileTemplateResponse JSON')
+        if 'version' in _dict:
+            args['version'] = _dict.get('version')
+        else:
+            raise ValueError('Required property \'version\' not present in TrustedProfileTemplateResponse JSON')
+        if 'account_id' in _dict:
+            args['account_id'] = _dict.get('account_id')
+        else:
+            raise ValueError('Required property \'account_id\' not present in TrustedProfileTemplateResponse JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in TrustedProfileTemplateResponse JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'committed' in _dict:
+            args['committed'] = _dict.get('committed')
+        if 'profile' in _dict:
+            args['profile'] = TemplateProfileComponentResponse.from_dict(_dict.get('profile'))
+        if 'policy_template_references' in _dict:
+            args['policy_template_references'] = [PolicyTemplateReference.from_dict(v) for v in _dict.get('policy_template_references')]
+        if 'history' in _dict:
+            args['history'] = [EnityHistoryRecord.from_dict(v) for v in _dict.get('history')]
+        if 'entity_tag' in _dict:
+            args['entity_tag'] = _dict.get('entity_tag')
+        if 'crn' in _dict:
+            args['crn'] = _dict.get('crn')
+        if 'created_at' in _dict:
+            args['created_at'] = _dict.get('created_at')
+        if 'created_by_id' in _dict:
+            args['created_by_id'] = _dict.get('created_by_id')
+        if 'last_modified_at' in _dict:
+            args['last_modified_at'] = _dict.get('last_modified_at')
+        if 'last_modified_by_id' in _dict:
+            args['last_modified_by_id'] = _dict.get('last_modified_by_id')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TrustedProfileTemplateResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'version') and self.version is not None:
+            _dict['version'] = self.version
+        if hasattr(self, 'account_id') and self.account_id is not None:
+            _dict['account_id'] = self.account_id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'committed') and self.committed is not None:
+            _dict['committed'] = self.committed
+        if hasattr(self, 'profile') and self.profile is not None:
+            if isinstance(self.profile, dict):
+                _dict['profile'] = self.profile
+            else:
+                _dict['profile'] = self.profile.to_dict()
+        if hasattr(self, 'policy_template_references') and self.policy_template_references is not None:
+            policy_template_references_list = []
+            for v in self.policy_template_references:
+                if isinstance(v, dict):
+                    policy_template_references_list.append(v)
+                else:
+                    policy_template_references_list.append(v.to_dict())
+            _dict['policy_template_references'] = policy_template_references_list
+        if hasattr(self, 'history') and self.history is not None:
+            history_list = []
+            for v in self.history:
+                if isinstance(v, dict):
+                    history_list.append(v)
+                else:
+                    history_list.append(v.to_dict())
+            _dict['history'] = history_list
+        if hasattr(self, 'entity_tag') and self.entity_tag is not None:
+            _dict['entity_tag'] = self.entity_tag
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = self.created_at
+        if hasattr(self, 'created_by_id') and self.created_by_id is not None:
+            _dict['created_by_id'] = self.created_by_id
+        if hasattr(self, 'last_modified_at') and self.last_modified_at is not None:
+            _dict['last_modified_at'] = self.last_modified_at
+        if hasattr(self, 'last_modified_by_id') and self.last_modified_by_id is not None:
+            _dict['last_modified_by_id'] = self.last_modified_by_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TrustedProfileTemplateResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TrustedProfileTemplateResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TrustedProfileTemplateResponse') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
