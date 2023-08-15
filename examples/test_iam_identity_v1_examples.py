@@ -20,6 +20,7 @@ Examples for IamIdentityV1
 import json
 import os
 import pytest
+import time
 from ibm_cloud_sdk_core import ApiException, read_external_sources
 from ibm_platform_services.iam_identity_v1 import *
 
@@ -34,6 +35,9 @@ from ibm_platform_services.iam_identity_v1 import *
 # IAM_IDENTITY_APIKEY=<IAM APIKEY for the User>
 # IAM_IDENTITY_ACCOUNT_ID=<AccountID which is unique to the User>
 # IAM_IDENTITY_IAM_ID=<IAM ID which is unique to the User account>
+# IAM_IDENTITY_IAM_ID_MEMBER=<IAM ID of a user belonging to the account but different to the one above>
+# IAM_IDENTITY_ENTERPRISE_ACCOUNT_ID=<AccountID of the enterprise account>
+# IAM_IDENTITY_ENTERPRISE_SUBACCOUNT_ID=<AccountID of an account in the enterprise>
 #
 # These configuration properties can be exported as environment variables, or stored
 # in a configuration file and then:
@@ -50,7 +54,10 @@ serviceid_name = 'Example-ServiceId'
 
 account_id = None
 iam_id = None
+iam_id_member = None
 apikey = None
+enterprise_account_id = None
+enterprise_subaccount_id = None
 
 apikey_id = None
 apikey_etag = None
@@ -70,7 +77,17 @@ account_settings_etag = None
 
 report_reference_mfa = None
 
-iam_id_member = None
+profile_template_id = None
+profile_template_version = None
+profile_template_etag = None
+profile_template_assignment_id = None
+profile_template_assignment_etag = None
+
+account_settings_template_id = None
+account_settings_template_version = None
+account_settings_template_etag = None
+account_settings_template_assignment_id = None
+account_settings_template_assignment_etag = None
 
 
 ##############################################################################
@@ -111,11 +128,61 @@ class TestIamIdentityV1Examples:
             global apikey
             apikey = config['APIKEY']
 
+            global enterprise_account_id
+            enterprise_account_id = config['ENTERPRISE_ACCOUNT_ID']
+
+            global enterprise_subaccount_id
+            enterprise_subaccount_id = config['ENTERPRISE_SUBACCOUNT_ID']
+
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
         not os.path.exists(config_file), reason="External configuration not available, skipping..."
     )
+
+    @classmethod
+    def isFinished(cls, status):
+        return "succeeded" == status.lower() or "failed" == status.lower()
+
+    @classmethod
+    def waitUntilTrustedProfileAssignmentFinished(cls, service, assignmentId):
+        finished = False
+        for x in range(20):
+            try:
+                response = service.get_trusted_profile_assignment(assignment_id=assignmentId)
+                assignment = response.get_result()
+                finished = cls.isFinished(assignment['status'])
+                if finished:
+                    global profile_template_assignment_etag
+                    profile_template_assignment_etag = response.get_headers()['Etag']
+                    profile_template_assignment_etag is not None
+                    break
+            except ApiException as e:
+                if e.code == 404:
+                    finished = True
+                    break
+            time.sleep(10)
+        assert finished == True
+
+    @classmethod
+    def waitUntilAccountSettingsAssignmentFinished(cls, service, assignmentId):
+        finished = False
+        for x in range(20):
+            try:
+                response = service.get_account_settings_assignment(assignment_id=assignmentId)
+                assignment = response.get_result()
+                finished = cls.isFinished(assignment['status'])
+                if finished:
+                    global account_settings_template_assignment_etag
+                    account_settings_template_assignment_etag = response.get_headers()['Etag']
+                    account_settings_template_assignment_etag is not None
+                    break
+            except ApiException as e:
+                if e.code == 404:
+                    finished = True
+                    break
+            time.sleep(10)
+        assert finished == True
 
     @needscredentials
     def test_create_api_key_example(self):
@@ -543,7 +610,7 @@ class TestIamIdentityV1Examples:
             claimRule = iam_identity_service.create_claim_rule(
                 profile_id=profile_id,
                 type='Profile-SAML',
-                realm_name='https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20',
+                realm_name='https://sdk.test.realm/1234',
                 expiration=43200,
                 conditions=[profile_claim_rule_conditions_model],
             ).get_result()
@@ -625,7 +692,7 @@ class TestIamIdentityV1Examples:
                 expiration=33200,
                 conditions=[profile_claim_rule_conditions_model],
                 type='Profile-SAML',
-                realm_name='https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20',
+                realm_name='https://sdk.test.realm/1234',
             ).get_result()
 
             print(json.dumps(claimRule, indent=2))
@@ -774,7 +841,7 @@ class TestIamIdentityV1Examples:
 
             # begin-set_profile_identities
             accounts = [account_id]
-            profileIdentity = ProfileIdentity(
+            profileIdentity = ProfileIdentityRequest(
                 identifier=iam_id, accounts=accounts, type="user", description="Identity description"
             )
             profile_identities_input = [profileIdentity]
@@ -1028,6 +1095,715 @@ class TestIamIdentityV1Examples:
 
             # end-get_mfa_status
 
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_profile_template(self):
+        """
+        create_profile_template request example
+        """
+        try:
+            print('\ncreate_profile_template() result:')
+            # begin-create_profile_template
+            profile_claim_rule_conditions = {}
+            profile_claim_rule_conditions['claim'] = 'blueGroups'
+            profile_claim_rule_conditions['operator'] = 'EQUALS'
+            profile_claim_rule_conditions['value'] = '\"cloud-docs-dev\"'
+
+            profile_claim_rule = {}
+            profile_claim_rule['name'] = 'My Rule'
+            profile_claim_rule['realm_name'] = 'https://sdk.test.realm/1234'
+            profile_claim_rule['type'] = 'Profile-SAML'
+            profile_claim_rule['expiration'] = 43200
+            profile_claim_rule['conditions'] = [profile_claim_rule_conditions]
+
+            profile = {}
+            profile['name'] = 'Profile-From-Example-Template'
+            profile['description'] = 'Trusted profile created from a template'
+            profile['rules'] = [profile_claim_rule]
+
+            create_response = iam_identity_service.create_profile_template(
+                name='Example-Profile-Template',
+                description='IAM enterprise trusted profile template example',
+                account_id=enterprise_account_id,
+                profile=profile,
+            )
+
+            profile_template = create_response.get_result()
+            print('\ncreate_profile_template() response: ', json.dumps(profile_template, indent=2))
+
+            global profile_template_id
+            profile_template_id = profile_template['id']
+            global profile_template_version
+            profile_template_version = profile_template['version']
+            # end-create_profile_template
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_profile_template(self):
+        """
+        get_profile_template request example
+        """
+        try:
+            print('\nget_profile_template() result:')
+            global profile_template_id
+            global profile_template_version
+
+            # begin-get_profile_template_version
+            get_response = iam_identity_service.get_profile_template_version(
+                template_id=profile_template_id, version=str(profile_template_version)
+            )
+
+            profile_template = get_response.get_result()
+            print('\nget_profile_template response: ', json.dumps(profile_template, indent=2))
+
+            global profile_template_etag
+            profile_template_etag = get_response.get_headers()['Etag']
+            profile_template_etag is not None
+            # end-get_profile_template_version
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_profile_templates(self):
+        """
+        list_profile_templates request example
+        """
+        try:
+            print('\nlist_profile_templates() result:')
+            # begin-list_profile_templates
+
+            list_response = iam_identity_service.list_profile_templates(account_id=enterprise_account_id)
+
+            profile_template_list = list_response.get_result()
+            print('\nlist_profile_templates response: ', json.dumps(profile_template_list, indent=2))
+            # end-list_profile_templates
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_profile_template(self):
+        """
+        update_profile_template request example
+        """
+        try:
+            print('\nupdate_profile_template() result:')
+            global profile_template_id
+            global profile_template_version
+            global profile_template_etag
+
+            # begin-update_profile_template_version
+            update_response = iam_identity_service.update_profile_template_version(
+                account_id=enterprise_account_id,
+                template_id=profile_template_id,
+                version=str(profile_template_version),
+                if_match=profile_template_etag,
+                name='Example-Profile-Template',
+                description='IAM enterprise trusted profile template example - updated',
+            )
+
+            profile_template = update_response.get_result()
+            print('\nupdate_profile_template() response: ', json.dumps(profile_template, indent=2))
+
+            profile_template_etag = update_response.get_headers()['Etag']
+            # end-update_profile_template_version
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_assign_profile_template(self):
+        """
+        commit_profile_template request example
+        """
+        try:
+            print('\nupdate_profile_template() result:')
+            global profile_template_id
+            global profile_template_version
+
+            # begin-commit_profile_template
+            commit_response = iam_identity_service.commit_profile_template(
+                template_id=profile_template_id, version=str(profile_template_version)
+            )
+            # end-commit_profile_template
+
+            """
+            create_trusted_profile_assignment request example
+            """
+            # begin-create_trusted_profile_assignment
+            assign_response = iam_identity_service.create_trusted_profile_assignment(
+                template_id=profile_template_id,
+                template_version=profile_template_version,
+                target_type='Account',
+                target=enterprise_subaccount_id,
+            )
+            assignment = assign_response.get_result()
+            print('\ncreate_trusted_profile_assignment() response: ', json.dumps(assignment, indent=2))
+            global profile_template_assignment_id
+            profile_template_assignment_id = assignment['id']
+            global profile_template_assignment_etag
+            profile_template_assignment_etag = assign_response.get_headers()['Etag']
+            # end-create_trusted_profile_assignment
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_trusted_profile_assignment(self):
+        """
+        get_trusted_profile_assignment request example
+        """
+        try:
+            print('\nget_trusted_profile_assignment() result:')
+            global profile_template_assignment_id
+
+            # begin-get_trusted_profile_assignment
+            response = iam_identity_service.get_trusted_profile_assignment(assignment_id=profile_template_assignment_id)
+            assignment = response.get_result()
+            print('\nget_trusted_profile_assignment() response: ', json.dumps(assignment, indent=2))
+            # end-get_trusted_profile_assignment
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_profile_template_assignments(self):
+        """
+        list_profile_template_assignments request example
+        """
+        try:
+            print('\nlist_profile_template_assignments() result:')
+            global profile_template_id
+
+            # begin-list_trusted_profile_assignments
+            list_response = iam_identity_service.list_trusted_profile_assignments(
+                account_id=enterprise_account_id, template_id=profile_template_id
+            )
+            assignment_list = list_response.get_result()
+            print('\nlist_trusted_profile_assignments() response: ', json.dumps(assignment_list, indent=2))
+            # end-list_trusted_profile_assignments
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_new_profile_template_version(self):
+        """
+        create_profile_template_version request example
+        """
+        try:
+            print('\ncreate_profile_template_version() result:')
+            global profile_template_id
+
+            # begin-create_profile_template_version
+            profile_claim_rule_conditions = {}
+            profile_claim_rule_conditions['claim'] = 'blueGroups'
+            profile_claim_rule_conditions['operator'] = 'EQUALS'
+            profile_claim_rule_conditions['value'] = '\"cloud-docs-dev\"'
+
+            profile_claim_rule = {}
+            profile_claim_rule['name'] = 'My Rule'
+            profile_claim_rule['realm_name'] = 'https://sdk.test.realm/1234'
+            profile_claim_rule['type'] = 'Profile-SAML'
+            profile_claim_rule['expiration'] = 43200
+            profile_claim_rule['conditions'] = [profile_claim_rule_conditions]
+
+            profile_identity = {}
+            profile_identity['identifier'] = iam_id
+            profile_identity['accounts'] = [enterprise_account_id]
+            profile_identity['type'] = 'user'
+            profile_identity['description'] = 'Identity description'
+
+            profile = {}
+            profile['name'] = 'Profile-From-Example-Template'
+            profile['description'] = 'Trusted profile created from a template - new version'
+            profile['rules'] = [profile_claim_rule]
+            profile['identities'] = [profile_identity]
+
+            create_response = iam_identity_service.create_profile_template_version(
+                template_id=profile_template_id,
+                name='Example-Profile-Template',
+                description='IAM enterprise trusted profile template example - new version',
+                account_id=enterprise_account_id,
+                profile=profile,
+            )
+
+            profile_template = create_response.get_result()
+            print('\ncreate_profile_template_version() response: ', json.dumps(profile_template, indent=2))
+
+            global profile_template_version
+            profile_template_version = profile_template['version']
+            # end-create_profile_template_version
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_latest_profile_template_version(self):
+        """
+        get_latest_profile_template_version request example
+        """
+        try:
+            print('\nget_latest_profile_template_version() result:')
+            global profile_template_id
+
+            # begin-get_latest_profile_template_version
+            get_response = iam_identity_service.get_latest_profile_template_version(template_id=profile_template_id)
+
+            profile_template = get_response.get_result()
+            print('\nget_latest_profile_template_version response: ', json.dumps(profile_template, indent=2))
+            # end-get_latest_profile_template_version
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_profile_template_versions(self):
+        """
+        list_profile_template_versions request example
+        """
+        try:
+            print('\nlist_profile_template_versions() result:')
+            global profile_template_id
+
+            # begin-list_versions_of_profile_template
+            list_response = iam_identity_service.list_versions_of_profile_template(template_id=profile_template_id)
+            profile_template_list = list_response.get_result()
+            print('\nlist_profile_template_versions response: ', json.dumps(profile_template_list, indent=2))
+            # end-list_versions_of_profile_template
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_profile_template_assignment(self):
+        """
+        update_trusted_profile_assignment request example
+        """
+        try:
+            print('\nupdate_trusted_profile_assignment() result:')
+            global profile_template_id
+            global profile_template_version
+            global profile_template_assignment_id
+            global profile_template_assignment_etag
+
+            commit_response = iam_identity_service.commit_profile_template(
+                template_id=profile_template_id, version=str(profile_template_version)
+            )
+
+            self.waitUntilTrustedProfileAssignmentFinished(iam_identity_service, profile_template_assignment_id)
+
+            # begin-update_trusted_profile_assignment
+            assign_response = iam_identity_service.update_trusted_profile_assignment(
+                assignment_id=profile_template_assignment_id,
+                template_version=profile_template_version,
+                if_match=profile_template_assignment_etag,
+            )
+            assignment = assign_response.get_result()
+            print('\nupdate_profile_template_assignment response: ', json.dumps(assignment, indent=2))
+            profile_template_assignment_etag = assign_response.get_headers()['Etag']
+            # end-update_trusted_profile_assignment
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_profile_template_assignment(self):
+        """
+        delete_trusted_profile_assignment request example
+        """
+        try:
+            print('\ndelete_trusted_profile_assignment() result:')
+            global profile_template_assignment_id
+
+            self.waitUntilTrustedProfileAssignmentFinished(iam_identity_service, profile_template_assignment_id)
+
+            # begin-delete_trusted_profile_assignment
+            delete_response = iam_identity_service.delete_trusted_profile_assignment(
+                assignment_id=profile_template_assignment_id
+            )
+            # end-delete_trusted_profile_assignment
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_profile_template_version(self):
+        """
+        delete_profile_template_version request example
+        """
+        try:
+            print('\ndelete_profile_template_version() result:')
+            global profile_template_id
+            global profile_template_assignment_id
+
+            # begin-delete_profile_template_version
+            delete_response = iam_identity_service.delete_profile_template_version(
+                template_id=profile_template_id, version='1'
+            )
+            # end-delete_profile_template_version
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_profile_template(self):
+        """
+        delete_all_versions_of_profile_template request example
+        """
+        try:
+            print('\ndelete_all_versions_of_profile_template() result:')
+            global profile_template_id
+
+            self.waitUntilTrustedProfileAssignmentFinished(iam_identity_service, profile_template_assignment_id)
+
+            # begin-delete_all_versions_of_profile_template
+            delete_response = iam_identity_service.delete_all_versions_of_profile_template(
+                template_id=profile_template_id
+            )
+            # end-delete_all_versions_of_profile_template
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_account_settings_template(self):
+        """
+        create_account_settings_template request example
+        """
+        try:
+            print('\ncreate_account_settings_template() result:')
+            # begin-create_account_settings_template
+            account_settings = {}
+            account_settings['mfa'] = 'LEVEL1'
+            account_settings['system_access_token_expiration_in_seconds'] = 3000
+
+            create_response = iam_identity_service.create_account_settings_template(
+                name='Example-Account-Settings-Template',
+                description='IAM enterprise account settings template example',
+                account_id=enterprise_account_id,
+                account_settings=account_settings,
+            )
+
+            account_settings_template = create_response.get_result()
+            print('\ncreate_account_settings_template() response: ', json.dumps(account_settings_template, indent=2))
+
+            global account_settings_template_id
+            account_settings_template_id = account_settings_template['id']
+            global account_settings_template_version
+            account_settings_template_version = account_settings_template['version']
+            # end-create_account_settings_template
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_account_settings_template(self):
+        """
+        get_account_settings_template_version request example
+        """
+        try:
+            print('\nget_account_settings_template_version() result:')
+            global account_settings_template_id
+            global account_settings_template_version
+
+            # begin-get_account_settings_template_version
+            get_response = iam_identity_service.get_account_settings_template_version(
+                template_id=account_settings_template_id, version=str(account_settings_template_version)
+            )
+
+            account_settings_template = get_response.get_result()
+            print('\nget_account_settings_template response: ', json.dumps(account_settings_template, indent=2))
+
+            global account_settings_template_etag
+            account_settings_template_etag = get_response.get_headers()['Etag']
+            # end-get_account_settings_template_version
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_account_settings_templates(self):
+        """
+        list_account_settings_templates request example
+        """
+        try:
+            print('\nlist_account_settings_templates() result:')
+
+            # begin-list_account_settings_templates
+            list_response = iam_identity_service.list_account_settings_templates(account_id=enterprise_account_id)
+
+            account_settings_template_list = list_response.get_result()
+            print('\nlist_account_settings_templates response: ', json.dumps(account_settings_template_list, indent=2))
+            # end-list_account_settings_templates
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_account_settings_template(self):
+        """
+        update_account_settings_template_version request example
+        """
+        try:
+            print('\nupdate_account_settings_template_version() result:')
+
+            global account_settings_template_id
+            global account_settings_template_version
+            global account_settings_template_etag
+            # begin-update_account_settings_template_version
+
+            account_settings = {}
+            account_settings['mfa'] = 'LEVEL1'
+            account_settings['system_access_token_expiration_in_seconds'] = 3000
+
+            update_response = iam_identity_service.update_account_settings_template_version(
+                account_id=enterprise_account_id,
+                template_id=account_settings_template_id,
+                version=str(account_settings_template_version),
+                if_match=account_settings_template_etag,
+                name='Example-Account-Settings-Template',
+                description='IAM enterprise account settings template example - updated',
+                account_settings=account_settings,
+            )
+
+            account_settings_template = update_response.get_result()
+            print('\nupdate_account_settings_template() response: ', json.dumps(account_settings_template, indent=2))
+
+            account_settings_template_etag = update_response.get_headers()['Etag']
+            # end-update_account_settings_template_version
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_assign_account_settings_template(self):
+        """
+        commit_account_settings_template request example
+        """
+        try:
+            print('\ncommit_account_settings_template() result:')
+
+            global account_settings_template_id
+            global account_settings_template_version
+            # begin-commit_account_settings_template
+            commit_response = iam_identity_service.commit_account_settings_template(
+                template_id=account_settings_template_id, version=str(account_settings_template_version)
+            )
+            # end-commit_account_settings_template
+            """
+            create_account_settings_assignment request example
+            """
+            print('\ncreate_account_settings_assignment() result:')
+            # begin-create_account_settings_assignment
+            assign_response = iam_identity_service.create_account_settings_assignment(
+                template_id=account_settings_template_id,
+                template_version=account_settings_template_version,
+                target_type='Account',
+                target=enterprise_subaccount_id,
+            )
+            assignment = assign_response.get_result()
+            print('\ncreate_account_settings_assignment() response: ', json.dumps(assignment, indent=2))
+            global account_settings_template_assignment_id
+            account_settings_template_assignment_id = assignment['id']
+            global account_settings_template_assignment_etag
+            account_settings_template_assignment_etag = assign_response.get_headers()['Etag']
+            # end-create_account_settings_assignment
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_account_settings_template_assignments(self):
+        """
+        list_account_settings_assignments request example
+        """
+        try:
+            print('\nlist_account_settings_assignments() result:')
+
+            global account_settings_template_id
+            # begin-list_account_settings_assignments
+
+            list_response = iam_identity_service.list_account_settings_assignments(
+                account_id=enterprise_account_id, template_id=account_settings_template_id
+            )
+            assignment_list = list_response.get_result()
+            print('\ncreate_account_settings_assignment() response: ', json.dumps(assignment_list, indent=2))
+            # end-list_account_settings_assignments
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_latest_account_settings_template_version(self):
+        """
+        get_account_settings_assignment request example
+        """
+        try:
+            print('\nget_account_settings_assignment() result:')
+            global account_settings_template_assignment_id
+
+            # begin-get_account_settings_assignment
+            response = service.get_account_settings_assignment(assignment_id=account_settings_template_assignment_id)
+            assignment = response.get_result()
+            print('\nget_latest_account_settings_template_version response: ', json.dumps(assignment, indent=2))
+            # end-get_account_settings_assignment
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_new_account_settings_template_version(self):
+        """
+        create_account_settings_template_version request example
+        """
+        try:
+            print('\ncreate_account_settings_template_version() result:')
+
+            global account_settings_template_id
+            # begin-create_account_settings_template_version
+
+            account_settings = {}
+            account_settings['mfa'] = 'LEVEL1'
+            account_settings['system_access_token_expiration_in_seconds'] = 2600
+            account_settings['restrict_create_platform_apikey'] = 'RESTRICTED'
+            account_settings['restrict_create_service_id'] = 'RESTRICTED'
+
+            create_response = iam_identity_service.create_account_settings_template_version(
+                template_id=account_settings_template_id,
+                name='Example-Account-Settings-Template',
+                description='IAM enterprise account settings template example - new version',
+                account_id=enterprise_account_id,
+                account_settings=account_settings,
+            )
+
+            account_settings_template = create_response.get_result()
+            print(
+                '\ncreate_account_settings_template_version() response: ',
+                json.dumps(account_settings_template, indent=2),
+            )
+
+            global account_settings_template_version
+            account_settings_template_version = account_settings_template['version']
+            # end-create_account_settings_template_version
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_latest_account_settings_template_version(self):
+        """
+        get_latest_account_settings_template_version request example
+        """
+        try:
+            print('\nget_latest_account_settings_template_version() result:')
+
+            global account_settings_template_id
+            # begin-get_latest_account_settings_template_version
+            get_response = iam_identity_service.get_latest_account_settings_template_version(
+                template_id=account_settings_template_id
+            )
+            account_settings_template = get_response.get_result()
+            print(
+                '\nget_latest_account_settings_template_version response: ',
+                json.dumps(account_settings_template, indent=2),
+            )
+            # end-get_latest_account_settings_template_version
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_account_settings_template_versions(self):
+        """
+        list_versions_of_account_settings_template request example
+        """
+        try:
+            print('\nlist_versions_of_account_settings_template() result:')
+
+            global account_settings_template_id
+            # begin-list_versions_of_account_settings_template
+            list_response = iam_identity_service.list_versions_of_account_settings_template(
+                template_id=account_settings_template_id
+            )
+            account_settings_template_list = list_response.get_result()
+            print(
+                '\nlist_account_settings_template_versions response: ',
+                json.dumps(account_settings_template_list, indent=2),
+            )
+            # end-list_versions_of_account_settings_template
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_account_settings_template_assignment(self):
+        """
+        update_account_settings_assignment request example
+        """
+        try:
+            print('\nupdate_account_settings_assignment() result:')
+
+            global account_settings_template_id
+            global account_settings_template_version
+            global account_settings_template_assignment_id
+            global account_settings_template_assignment_etag
+            commit_response = iam_identity_service.commit_account_settings_template(
+                template_id=account_settings_template_id, version=str(account_settings_template_version)
+            )
+
+            self.waitUntilAccountSettingsAssignmentFinished(
+                iam_identity_service, account_settings_template_assignment_id
+            )
+
+            # begin-update_account_settings_assignment
+            assign_response = iam_identity_service.update_account_settings_assignment(
+                assignment_id=account_settings_template_assignment_id,
+                template_version=account_settings_template_version,
+                if_match=account_settings_template_assignment_etag,
+            )
+            assignment = assign_response.get_result()
+            print('\nupdate_account_settings_template_assignment response: ', json.dumps(assignment, indent=2))
+            account_settings_template_assignment_etag = assign_response.get_headers()['Etag']
+            # end-update_account_settings_assignment
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_account_settings_template_assignment(self):
+        """
+        delete_account_settings_assignment request example
+        """
+        try:
+            print('\ndelete_account_settings_assignment() result:')
+            global account_settings_template_assignment_id
+
+            self.waitUntilAccountSettingsAssignmentFinished(
+                iam_identity_service, account_settings_template_assignment_id
+            )
+            # begin-delete_account_settings_assignment
+            delete_response = iam_identity_service.delete_account_settings_assignment(
+                assignment_id=account_settings_template_assignment_id
+            )
+            # end-delete_account_settings_assignment
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_account_settings_template_version(self):
+        """
+        delete_account_settings_template_version request example
+        """
+        try:
+            print('\ndelete_account_settings_template_version() result:')
+            global account_settings_template_assignment_id
+            global account_settings_template_assignment_id
+            # begin-delete_account_settings_template_version
+
+            delete_response = iam_identity_service.delete_account_settings_template_version(
+                template_id=account_settings_template_id, version='1'
+            )
+            # end-delete_account_settings_template_version
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_account_settings_template(self):
+        """
+        delete_all_versions_of_account_settings_template request example
+        """
+        try:
+            print('\ndelete_all_versions_of_account_settings_template() result:')
+            global account_settings_template_id
+            self.waitUntilAccountSettingsAssignmentFinished(
+                iam_identity_service, account_settings_template_assignment_id
+            )
+            # begin-delete_all_versions_of_account_settings_template
+            delete_response = iam_identity_service.delete_all_versions_of_account_settings_template(
+                template_id=account_settings_template_id
+            )
+            # end-delete_all_versions_of_account_settings_template
         except ApiException as e:
             pytest.fail(str(e))
 
