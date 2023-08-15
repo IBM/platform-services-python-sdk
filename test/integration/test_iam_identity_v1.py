@@ -66,6 +66,7 @@ account_settings_template_etag = None
 account_settings_template_assignment_id = None
 account_settings_template_assignment_etag = None
 
+
 class TestIamIdentityV1:
     """
     Integration Test Class for IamIdentityV1
@@ -168,17 +169,25 @@ class TestIamIdentityV1:
             for profile_template in profile_template_list['profile_templates']:
                 if profile_template['name'] == cls.profile_template_name:
                     print('>>> deleting profile template: ', profile_template['id'])
-                    list_response = cls.iam_identity_service.list_trusted_profile_assignments(account_id=cls.enterprise_account_id,template_id=profile_template['id'])
+                    list_response = cls.iam_identity_service.list_trusted_profile_assignments(
+                        account_id=cls.enterprise_account_id, template_id=profile_template['id']
+                    )
                     assert list_response.get_status_code() == 200
                     assignments_list = list_response.get_result()
                     if len(assignments_list['assignments']) > 0:
                         for assignment in assignments_list['assignments']:
                             if not cls.isFinished(assignment['status']):
-                                cls.waitUntilTrustedProfileAssignmentFinished(cls.iam_identity_service, assignment['id'])
-                            delete_assignment_response = cls.iam_identity_service.delete_trusted_profile_assignment(assignment_id=assignment['id'])
+                                cls.waitUntilTrustedProfileAssignmentFinished(
+                                    cls.iam_identity_service, assignment['id']
+                                )
+                            delete_assignment_response = cls.iam_identity_service.delete_trusted_profile_assignment(
+                                assignment_id=assignment['id']
+                            )
                             assert delete_assignment_response.get_status_code() == 202
                             cls.waitUntilTrustedProfileAssignmentFinished(cls.iam_identity_service, assignment['id'])
-                    delete_response = cls.iam_identity_service.delete_all_versions_of_profile_template(template_id=profile_template['id'])
+                    delete_response = cls.iam_identity_service.delete_all_versions_of_profile_template(
+                        template_id=profile_template['id']
+                    )
                     assert delete_response.get_status_code() == 204
 
         # list account settings templates
@@ -189,17 +198,25 @@ class TestIamIdentityV1:
             for account_settings_template in account_settings_template_list['account_settings_templates']:
                 if account_settings_template['name'] == cls.account_settings_template_name:
                     print('>>> deleting account settings template: ', account_settings_template['id'])
-                    list_response = cls.iam_identity_service.list_account_settings_assignments(account_id=cls.enterprise_account_id,template_id=account_settings_template['id'])
+                    list_response = cls.iam_identity_service.list_account_settings_assignments(
+                        account_id=cls.enterprise_account_id, template_id=account_settings_template['id']
+                    )
                     assert list_response.get_status_code() == 200
                     assignments_list = list_response.get_result()
                     if len(assignments_list['assignments']) > 0:
                         for assignment in assignments_list['assignments']:
                             if not cls.isFinished(assignment['status']):
-                                cls.waitUntilAccountSettingsAssignmentFinished(cls.iam_identity_service, assignment['id'])
-                            delete_assignment_response = cls.iam_identity_service.delete_account_settings_assignment(assignment_id=assignment['id'])
+                                cls.waitUntilAccountSettingsAssignmentFinished(
+                                    cls.iam_identity_service, assignment['id']
+                                )
+                            delete_assignment_response = cls.iam_identity_service.delete_account_settings_assignment(
+                                assignment_id=assignment['id']
+                            )
                             assert delete_assignment_response.get_status_code() == 202
                             cls.waitUntilAccountSettingsAssignmentFinished(cls.iam_identity_service, assignment['id'])
-                    delete_response = cls.iam_identity_service.delete_all_versions_of_account_settings_template(template_id=account_settings_template['id'])
+                    delete_response = cls.iam_identity_service.delete_all_versions_of_account_settings_template(
+                        template_id=account_settings_template['id']
+                    )
                     assert delete_response.get_status_code() == 204
 
         print('Finished cleaning up resources!')
@@ -1304,7 +1321,7 @@ class TestIamIdentityV1:
             name=self.profile_template_name,
             description='Python SDK test Profile Template',
             account_id=self.enterprise_account_id,
-            profile=profile
+            profile=profile,
         )
 
         assert create_response.get_status_code() == 201
@@ -1328,8 +1345,7 @@ class TestIamIdentityV1:
         assert profile_template_version is not None
 
         get_response = self.iam_identity_service.get_profile_template_version(
-            template_id=profile_template_id,
-            version=str(profile_template_version)
+            template_id=profile_template_id, version=str(profile_template_version)
         )
 
         assert get_response.get_status_code() == 200
@@ -1347,9 +1363,7 @@ class TestIamIdentityV1:
     @needscredentials
     def test_list_profile_templates(self):
 
-        list_response = self.iam_identity_service.list_profile_templates(
-            account_id=self.enterprise_account_id
-        )
+        list_response = self.iam_identity_service.list_profile_templates(account_id=self.enterprise_account_id)
 
         assert list_response.get_status_code() == 200
         profile_template_list = list_response.get_result()
@@ -1372,7 +1386,7 @@ class TestIamIdentityV1:
             version=str(profile_template_version),
             if_match=profile_template_etag,
             name=self.profile_template_name,
-            description='Python SDK test Profile Template - updated'
+            description='Python SDK test Profile Template - updated',
         )
 
         assert update_response.get_status_code() == 200
@@ -1392,8 +1406,7 @@ class TestIamIdentityV1:
         assert profile_template_version is not None
 
         commit_response = self.iam_identity_service.commit_profile_template(
-            template_id=profile_template_id,
-            version=str(profile_template_version)
+            template_id=profile_template_id, version=str(profile_template_version)
         )
         assert commit_response.get_status_code() == 204
 
@@ -1401,7 +1414,7 @@ class TestIamIdentityV1:
             template_id=profile_template_id,
             template_version=profile_template_version,
             target_type='Account',
-            target=self.enterprise_subaccount_id
+            target=self.enterprise_subaccount_id,
         )
         assert assign_response.get_status_code() == 202
         assignment = assign_response.get_result()
@@ -1418,8 +1431,7 @@ class TestIamIdentityV1:
         assert profile_template_id is not None
 
         list_response = self.iam_identity_service.list_trusted_profile_assignments(
-            account_id=self.enterprise_account_id,
-            template_id=profile_template_id
+            account_id=self.enterprise_account_id, template_id=profile_template_id
         )
         assert list_response.get_status_code() == 200
         assignment_list = list_response.get_result()
@@ -1460,7 +1472,7 @@ class TestIamIdentityV1:
             name=self.profile_template_name,
             description='Python SDK test Profile Template - new version',
             account_id=self.enterprise_account_id,
-            profile=profile
+            profile=profile,
         )
 
         assert create_response.get_status_code() == 201
@@ -1477,9 +1489,7 @@ class TestIamIdentityV1:
         global profile_template_id
         assert profile_template_id is not None
 
-        get_response = self.iam_identity_service.get_latest_profile_template_version(
-            template_id=profile_template_id
-        )
+        get_response = self.iam_identity_service.get_latest_profile_template_version(template_id=profile_template_id)
 
         assert get_response.get_status_code() == 200
         profile_template = get_response.get_result()
@@ -1491,9 +1501,7 @@ class TestIamIdentityV1:
         global profile_template_id
         assert profile_template_id is not None
 
-        list_response = self.iam_identity_service.list_versions_of_profile_template(
-            template_id=profile_template_id
-        )
+        list_response = self.iam_identity_service.list_versions_of_profile_template(template_id=profile_template_id)
 
         assert list_response.get_status_code() == 200
         profile_template_list = list_response.get_result()
@@ -1513,8 +1521,7 @@ class TestIamIdentityV1:
         assert profile_template_assignment_etag is not None
 
         commit_response = self.iam_identity_service.commit_profile_template(
-            template_id=profile_template_id,
-            version=str(profile_template_version)
+            template_id=profile_template_id, version=str(profile_template_version)
         )
         assert commit_response.get_status_code() == 204
 
@@ -1523,7 +1530,7 @@ class TestIamIdentityV1:
         assign_response = self.iam_identity_service.update_trusted_profile_assignment(
             assignment_id=profile_template_assignment_id,
             template_version=profile_template_version,
-            if_match=profile_template_assignment_etag
+            if_match=profile_template_assignment_etag,
         )
         assert assign_response.get_status_code() == 202
         assignment = assign_response.get_result()
@@ -1551,8 +1558,7 @@ class TestIamIdentityV1:
         assert profile_template_assignment_id is not None
 
         delete_response = self.iam_identity_service.delete_profile_template_version(
-            template_id=profile_template_id,
-            version='1'
+            template_id=profile_template_id, version='1'
         )
         assert delete_response.get_status_code() == 204
 
@@ -1578,7 +1584,7 @@ class TestIamIdentityV1:
             name=self.account_settings_template_name,
             description='Python SDK test Account Settings Template',
             account_id=self.enterprise_account_id,
-            account_settings=account_settings
+            account_settings=account_settings,
         )
 
         assert create_response.get_status_code() == 201
@@ -1602,8 +1608,7 @@ class TestIamIdentityV1:
         assert account_settings_template_version is not None
 
         get_response = self.iam_identity_service.get_account_settings_template_version(
-            template_id=account_settings_template_id,
-            version=str(account_settings_template_version)
+            template_id=account_settings_template_id, version=str(account_settings_template_version)
         )
 
         assert get_response.get_status_code() == 200
@@ -1621,9 +1626,7 @@ class TestIamIdentityV1:
     @needscredentials
     def test_list_account_settings_templates(self):
 
-        list_response = self.iam_identity_service.list_account_settings_templates(
-            account_id=self.enterprise_account_id
-        )
+        list_response = self.iam_identity_service.list_account_settings_templates(account_id=self.enterprise_account_id)
 
         assert list_response.get_status_code() == 200
         account_settings_template_list = list_response.get_result()
@@ -1651,7 +1654,7 @@ class TestIamIdentityV1:
             if_match=account_settings_template_etag,
             name=self.account_settings_template_name,
             description='Python SDK test Account Settings Template - updated',
-            account_settings=account_settings
+            account_settings=account_settings,
         )
 
         assert update_response.get_status_code() == 200
@@ -1671,8 +1674,7 @@ class TestIamIdentityV1:
         assert account_settings_template_version is not None
 
         commit_response = self.iam_identity_service.commit_account_settings_template(
-            template_id=account_settings_template_id,
-            version=str(account_settings_template_version)
+            template_id=account_settings_template_id, version=str(account_settings_template_version)
         )
         assert commit_response.get_status_code() == 204
 
@@ -1680,7 +1682,7 @@ class TestIamIdentityV1:
             template_id=account_settings_template_id,
             template_version=account_settings_template_version,
             target_type='Account',
-            target=self.enterprise_subaccount_id
+            target=self.enterprise_subaccount_id,
         )
         assert assign_response.get_status_code() == 202
         assignment = assign_response.get_result()
@@ -1697,8 +1699,7 @@ class TestIamIdentityV1:
         assert account_settings_template_id is not None
 
         list_response = self.iam_identity_service.list_account_settings_assignments(
-            account_id=self.enterprise_account_id,
-            template_id=account_settings_template_id
+            account_id=self.enterprise_account_id, template_id=account_settings_template_id
         )
         assert list_response.get_status_code() == 200
         assignment_list = list_response.get_result()
@@ -1721,13 +1722,15 @@ class TestIamIdentityV1:
             name=self.account_settings_template_name,
             description='Python SDK test Account Settings Template - new version',
             account_id=self.enterprise_account_id,
-            account_settings=account_settings
+            account_settings=account_settings,
         )
 
         assert create_response.get_status_code() == 201
         account_settings_template = create_response.get_result()
         assert account_settings_template is not None
-        print('\ncreate_account_settings_template_version() response: ', json.dumps(account_settings_template, indent=2))
+        print(
+            '\ncreate_account_settings_template_version() response: ', json.dumps(account_settings_template, indent=2)
+        )
 
         global account_settings_template_version
         assert account_settings_template['version'] is not None
@@ -1745,7 +1748,9 @@ class TestIamIdentityV1:
         assert get_response.get_status_code() == 200
         account_settings_template = get_response.get_result()
         assert account_settings_template is not None
-        print('\nget_latest_account_settings_template_version response: ', json.dumps(account_settings_template, indent=2))
+        print(
+            '\nget_latest_account_settings_template_version response: ', json.dumps(account_settings_template, indent=2)
+        )
 
     @needscredentials
     def test_list_account_settings_template_versions(self):
@@ -1759,7 +1764,9 @@ class TestIamIdentityV1:
         assert list_response.get_status_code() == 200
         account_settings_template_list = list_response.get_result()
         assert account_settings_template_list is not None
-        print('\nlist_account_settings_template_versions response: ', json.dumps(account_settings_template_list, indent=2))
+        print(
+            '\nlist_account_settings_template_versions response: ', json.dumps(account_settings_template_list, indent=2)
+        )
 
     @needscredentials
     def test_update_account_settings_template_assignment(self):
@@ -1774,17 +1781,18 @@ class TestIamIdentityV1:
         assert account_settings_template_assignment_etag is not None
 
         commit_response = self.iam_identity_service.commit_account_settings_template(
-            template_id=account_settings_template_id,
-            version=str(account_settings_template_version)
+            template_id=account_settings_template_id, version=str(account_settings_template_version)
         )
         assert commit_response.get_status_code() == 204
 
-        self.waitUntilAccountSettingsAssignmentFinished(self.iam_identity_service, account_settings_template_assignment_id)
+        self.waitUntilAccountSettingsAssignmentFinished(
+            self.iam_identity_service, account_settings_template_assignment_id
+        )
 
         assign_response = self.iam_identity_service.update_account_settings_assignment(
             assignment_id=account_settings_template_assignment_id,
             template_version=account_settings_template_version,
-            if_match=account_settings_template_assignment_etag
+            if_match=account_settings_template_assignment_etag,
         )
         assert assign_response.get_status_code() == 202
         assignment = assign_response.get_result()
@@ -1797,7 +1805,9 @@ class TestIamIdentityV1:
         global account_settings_template_assignment_id
         assert account_settings_template_assignment_id is not None
 
-        self.waitUntilAccountSettingsAssignmentFinished(self.iam_identity_service, account_settings_template_assignment_id)
+        self.waitUntilAccountSettingsAssignmentFinished(
+            self.iam_identity_service, account_settings_template_assignment_id
+        )
 
         delete_response = self.iam_identity_service.delete_account_settings_assignment(
             assignment_id=account_settings_template_assignment_id
@@ -1812,8 +1822,7 @@ class TestIamIdentityV1:
         assert account_settings_template_assignment_id is not None
 
         delete_response = self.iam_identity_service.delete_account_settings_template_version(
-            template_id=account_settings_template_id,
-            version='1'
+            template_id=account_settings_template_id, version='1'
         )
         assert delete_response.get_status_code() == 204
 
@@ -1822,7 +1831,9 @@ class TestIamIdentityV1:
         global account_settings_template_id
         assert account_settings_template_id is not None
 
-        self.waitUntilAccountSettingsAssignmentFinished(self.iam_identity_service, account_settings_template_assignment_id)
+        self.waitUntilAccountSettingsAssignmentFinished(
+            self.iam_identity_service, account_settings_template_assignment_id
+        )
 
         delete_response = self.iam_identity_service.delete_all_versions_of_account_settings_template(
             template_id=account_settings_template_id

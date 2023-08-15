@@ -1127,7 +1127,7 @@ class TestIamIdentityV1Examples:
                 name='Example-Profile-Template',
                 description='IAM enterprise trusted profile template example',
                 account_id=enterprise_account_id,
-                profile=profile
+                profile=profile,
             )
 
             profile_template = create_response.get_result()
@@ -1153,8 +1153,7 @@ class TestIamIdentityV1Examples:
 
             # begin-get_profile_template_version
             get_response = iam_identity_service.get_profile_template_version(
-                template_id=profile_template_id,
-                version=str(profile_template_version)
+                template_id=profile_template_id, version=str(profile_template_version)
             )
 
             profile_template = get_response.get_result()
@@ -1167,7 +1166,6 @@ class TestIamIdentityV1Examples:
         except ApiException as e:
             pytest.fail(str(e))
 
-
     @needscredentials
     def test_list_profile_templates(self):
         """
@@ -1177,9 +1175,7 @@ class TestIamIdentityV1Examples:
             print('\nlist_profile_templates() result:')
             # begin-list_profile_templates
 
-            list_response = iam_identity_service.list_profile_templates(
-                account_id=enterprise_account_id
-            )
+            list_response = iam_identity_service.list_profile_templates(account_id=enterprise_account_id)
 
             profile_template_list = list_response.get_result()
             print('\nlist_profile_templates response: ', json.dumps(profile_template_list, indent=2))
@@ -1228,8 +1224,7 @@ class TestIamIdentityV1Examples:
 
             # begin-commit_profile_template
             commit_response = iam_identity_service.commit_profile_template(
-                template_id=profile_template_id,
-                version=str(profile_template_version)
+                template_id=profile_template_id, version=str(profile_template_version)
             )
             # end-commit_profile_template
 
@@ -1241,7 +1236,7 @@ class TestIamIdentityV1Examples:
                 template_id=profile_template_id,
                 template_version=profile_template_version,
                 target_type='Account',
-                target=enterprise_subaccount_id
+                target=enterprise_subaccount_id,
             )
             assignment = assign_response.get_result()
             print('\ncreate_trusted_profile_assignment() response: ', json.dumps(assignment, indent=2))
@@ -1281,8 +1276,7 @@ class TestIamIdentityV1Examples:
 
             # begin-list_trusted_profile_assignments
             list_response = iam_identity_service.list_trusted_profile_assignments(
-                account_id=enterprise_account_id,
-                template_id=profile_template_id
+                account_id=enterprise_account_id, template_id=profile_template_id
             )
             assignment_list = list_response.get_result()
             print('\nlist_trusted_profile_assignments() response: ', json.dumps(assignment_list, indent=2))
@@ -1329,7 +1323,7 @@ class TestIamIdentityV1Examples:
                 name='Example-Profile-Template',
                 description='IAM enterprise trusted profile template example - new version',
                 account_id=enterprise_account_id,
-                profile=profile
+                profile=profile,
             )
 
             profile_template = create_response.get_result()
@@ -1351,9 +1345,7 @@ class TestIamIdentityV1Examples:
             global profile_template_id
 
             # begin-get_latest_profile_template_version
-            get_response = iam_identity_service.get_latest_profile_template_version(
-                template_id=profile_template_id
-            )
+            get_response = iam_identity_service.get_latest_profile_template_version(template_id=profile_template_id)
 
             profile_template = get_response.get_result()
             print('\nget_latest_profile_template_version response: ', json.dumps(profile_template, indent=2))
@@ -1371,9 +1363,7 @@ class TestIamIdentityV1Examples:
             global profile_template_id
 
             # begin-list_versions_of_profile_template
-            list_response = iam_identity_service.list_versions_of_profile_template(
-                template_id=profile_template_id
-            )
+            list_response = iam_identity_service.list_versions_of_profile_template(template_id=profile_template_id)
             profile_template_list = list_response.get_result()
             print('\nlist_profile_template_versions response: ', json.dumps(profile_template_list, indent=2))
             # end-list_versions_of_profile_template
@@ -1393,8 +1383,7 @@ class TestIamIdentityV1Examples:
             global profile_template_assignment_etag
 
             commit_response = iam_identity_service.commit_profile_template(
-                template_id=profile_template_id,
-                version=str(profile_template_version)
+                template_id=profile_template_id, version=str(profile_template_version)
             )
 
             self.waitUntilTrustedProfileAssignmentFinished(iam_identity_service, profile_template_assignment_id)
@@ -1403,7 +1392,7 @@ class TestIamIdentityV1Examples:
             assign_response = iam_identity_service.update_trusted_profile_assignment(
                 assignment_id=profile_template_assignment_id,
                 template_version=profile_template_version,
-                if_match=profile_template_assignment_etag
+                if_match=profile_template_assignment_etag,
             )
             assignment = assign_response.get_result()
             print('\nupdate_profile_template_assignment response: ', json.dumps(assignment, indent=2))
@@ -1443,8 +1432,7 @@ class TestIamIdentityV1Examples:
 
             # begin-delete_profile_template_version
             delete_response = iam_identity_service.delete_profile_template_version(
-                template_id=profile_template_id,
-                version='1'
+                template_id=profile_template_id, version='1'
             )
             # end-delete_profile_template_version
         except ApiException as e:
@@ -1485,7 +1473,7 @@ class TestIamIdentityV1Examples:
                 name='Example-Account-Settings-Template',
                 description='IAM enterprise account settings template example',
                 account_id=enterprise_account_id,
-                account_settings=account_settings
+                account_settings=account_settings,
             )
 
             account_settings_template = create_response.get_result()
@@ -1511,8 +1499,7 @@ class TestIamIdentityV1Examples:
 
             # begin-get_account_settings_template_version
             get_response = iam_identity_service.get_account_settings_template_version(
-                template_id=account_settings_template_id,
-                version=str(account_settings_template_version)
+                template_id=account_settings_template_id, version=str(account_settings_template_version)
             )
 
             account_settings_template = get_response.get_result()
@@ -1533,9 +1520,7 @@ class TestIamIdentityV1Examples:
             print('\nlist_account_settings_templates() result:')
 
             # begin-list_account_settings_templates
-            list_response = iam_identity_service.list_account_settings_templates(
-                account_id=enterprise_account_id
-            )
+            list_response = iam_identity_service.list_account_settings_templates(account_id=enterprise_account_id)
 
             account_settings_template_list = list_response.get_result()
             print('\nlist_account_settings_templates response: ', json.dumps(account_settings_template_list, indent=2))
@@ -1567,7 +1552,7 @@ class TestIamIdentityV1Examples:
                 if_match=account_settings_template_etag,
                 name='Example-Account-Settings-Template',
                 description='IAM enterprise account settings template example - updated',
-                account_settings=account_settings
+                account_settings=account_settings,
             )
 
             account_settings_template = update_response.get_result()
@@ -1590,8 +1575,7 @@ class TestIamIdentityV1Examples:
             global account_settings_template_version
             # begin-commit_account_settings_template
             commit_response = iam_identity_service.commit_account_settings_template(
-                template_id=account_settings_template_id,
-                version=str(account_settings_template_version)
+                template_id=account_settings_template_id, version=str(account_settings_template_version)
             )
             # end-commit_account_settings_template
             """
@@ -1603,7 +1587,7 @@ class TestIamIdentityV1Examples:
                 template_id=account_settings_template_id,
                 template_version=account_settings_template_version,
                 target_type='Account',
-                target=enterprise_subaccount_id
+                target=enterprise_subaccount_id,
             )
             assignment = assign_response.get_result()
             print('\ncreate_account_settings_assignment() response: ', json.dumps(assignment, indent=2))
@@ -1627,8 +1611,7 @@ class TestIamIdentityV1Examples:
             # begin-list_account_settings_assignments
 
             list_response = iam_identity_service.list_account_settings_assignments(
-                account_id=enterprise_account_id,
-                template_id=account_settings_template_id
+                account_id=enterprise_account_id, template_id=account_settings_template_id
             )
             assignment_list = list_response.get_result()
             print('\ncreate_account_settings_assignment() response: ', json.dumps(assignment_list, indent=2))
@@ -1675,11 +1658,14 @@ class TestIamIdentityV1Examples:
                 name='Example-Account-Settings-Template',
                 description='IAM enterprise account settings template example - new version',
                 account_id=enterprise_account_id,
-                account_settings=account_settings
+                account_settings=account_settings,
             )
 
             account_settings_template = create_response.get_result()
-            print('\ncreate_account_settings_template_version() response: ', json.dumps(account_settings_template, indent=2))
+            print(
+                '\ncreate_account_settings_template_version() response: ',
+                json.dumps(account_settings_template, indent=2),
+            )
 
             global account_settings_template_version
             account_settings_template_version = account_settings_template['version']
@@ -1701,7 +1687,10 @@ class TestIamIdentityV1Examples:
                 template_id=account_settings_template_id
             )
             account_settings_template = get_response.get_result()
-            print('\nget_latest_account_settings_template_version response: ', json.dumps(account_settings_template, indent=2))
+            print(
+                '\nget_latest_account_settings_template_version response: ',
+                json.dumps(account_settings_template, indent=2),
+            )
             # end-get_latest_account_settings_template_version
         except ApiException as e:
             pytest.fail(str(e))
@@ -1720,7 +1709,10 @@ class TestIamIdentityV1Examples:
                 template_id=account_settings_template_id
             )
             account_settings_template_list = list_response.get_result()
-            print('\nlist_account_settings_template_versions response: ', json.dumps(account_settings_template_list, indent=2))
+            print(
+                '\nlist_account_settings_template_versions response: ',
+                json.dumps(account_settings_template_list, indent=2),
+            )
             # end-list_versions_of_account_settings_template
         except ApiException as e:
             pytest.fail(str(e))
@@ -1738,17 +1730,18 @@ class TestIamIdentityV1Examples:
             global account_settings_template_assignment_id
             global account_settings_template_assignment_etag
             commit_response = iam_identity_service.commit_account_settings_template(
-                template_id=account_settings_template_id,
-                version=str(account_settings_template_version)
+                template_id=account_settings_template_id, version=str(account_settings_template_version)
             )
 
-            self.waitUntilAccountSettingsAssignmentFinished(iam_identity_service, account_settings_template_assignment_id)
+            self.waitUntilAccountSettingsAssignmentFinished(
+                iam_identity_service, account_settings_template_assignment_id
+            )
 
             # begin-update_account_settings_assignment
             assign_response = iam_identity_service.update_account_settings_assignment(
                 assignment_id=account_settings_template_assignment_id,
                 template_version=account_settings_template_version,
-                if_match=account_settings_template_assignment_etag
+                if_match=account_settings_template_assignment_etag,
             )
             assignment = assign_response.get_result()
             print('\nupdate_account_settings_template_assignment response: ', json.dumps(assignment, indent=2))
@@ -1766,7 +1759,9 @@ class TestIamIdentityV1Examples:
             print('\ndelete_account_settings_assignment() result:')
             global account_settings_template_assignment_id
 
-            self.waitUntilAccountSettingsAssignmentFinished(iam_identity_service, account_settings_template_assignment_id)
+            self.waitUntilAccountSettingsAssignmentFinished(
+                iam_identity_service, account_settings_template_assignment_id
+            )
             # begin-delete_account_settings_assignment
             delete_response = iam_identity_service.delete_account_settings_assignment(
                 assignment_id=account_settings_template_assignment_id
@@ -1787,8 +1782,7 @@ class TestIamIdentityV1Examples:
             # begin-delete_account_settings_template_version
 
             delete_response = iam_identity_service.delete_account_settings_template_version(
-                template_id=account_settings_template_id,
-                version='1'
+                template_id=account_settings_template_id, version='1'
             )
             # end-delete_account_settings_template_version
         except ApiException as e:
@@ -1802,7 +1796,9 @@ class TestIamIdentityV1Examples:
         try:
             print('\ndelete_all_versions_of_account_settings_template() result:')
             global account_settings_template_id
-            self.waitUntilAccountSettingsAssignmentFinished(iam_identity_service, account_settings_template_assignment_id)
+            self.waitUntilAccountSettingsAssignmentFinished(
+                iam_identity_service, account_settings_template_assignment_id
+            )
             # begin-delete_all_versions_of_account_settings_template
             delete_response = iam_identity_service.delete_all_versions_of_account_settings_template(
                 template_id=account_settings_template_id
@@ -1810,6 +1806,7 @@ class TestIamIdentityV1Examples:
             # end-delete_all_versions_of_account_settings_template
         except ApiException as e:
             pytest.fail(str(e))
+
 
 # endregion
 ##############################################################################
