@@ -12,7 +12,7 @@ matrix:
 cache: pip
 
 install:
-- sudo apt-get update
+# - sudo apt-get update
 - sudo apt-get install pandoc
 - pip install pypandoc
 - pip install setuptools=="60.8.2"

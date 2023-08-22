@@ -1,3 +1,17 @@
+# [0.40.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.39.0...v0.40.0) (2023-08-22)
+
+
+### Features
+
+* **IAM Access Groups:** add support for access group templates ([#212](https://github.com/IBM/platform-services-python-sdk/issues/212)) ([2aef015](https://github.com/IBM/platform-services-python-sdk/commit/2aef015bbf0984d6e30d3873bb9e055ba64850cd))
+
+# [0.39.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.38.0...v0.39.0) (2023-08-15)
+
+
+### Features
+
+* **IAM Identity:** add support for IAM enterprise ([#213](https://github.com/IBM/platform-services-python-sdk/issues/213)) ([6b92c4a](https://github.com/IBM/platform-services-python-sdk/commit/6b92c4a4f92369113e40ed58d45c65a5a5631aa8))
+
 # [0.38.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.37.0...v0.38.0) (2023-07-05)
 
 
