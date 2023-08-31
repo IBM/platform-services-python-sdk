@@ -49,7 +49,10 @@ to your external github.com id. The id linking step will also result in an invit
 `github.com/IBM` org. Accept that invitation.
 3. If you do not yet have "push" access to the SDK project, contact the project maintainer to request push access
 (you must be a member of the github.com/IBM org).
-4. Make sure that your installed version of Python is >= the minimum version supported by the SDK project.
+4. Make sure that you have installed the [tools required to build the project](CONTRIBUTING.md#prerequisites).
+5. To update a service, make sure the following additional tools are installed:
+* The [IBM OpenAPI Validator](https://github.com/IBM/openapi-validator)
+* The [IBM OpenAPI SDK Generator](github.ibm.com/CloudEngineering/openapi-sdkgen)
 
 ## Initial project setup
 1. Clone/fork the repo.  If you have push access (see above), you can clone the repo directly (no fork).  
@@ -75,10 +78,13 @@ git pull
 # create a virtual environment using the current python version, store in "./venv"
 python -m venv ./venv
 
-# source in the resulting "activate" script to use the virtual environment
+# Activate the virtual environment
+# On Linux/MacOS source in the "activate" script created by the "venv" module:
 . venv/bin/activate
+# On Windows, run the "activate" script created by the "venv" module:
+venv/scripts/activate
 
-# Install dependencies, run unit-tests and link-check the project
+# Install dependencies, run unit-tests and lint-check the project
 make all
 ```
 4. Make sure that the integration tests and working examples run clean for your service.
