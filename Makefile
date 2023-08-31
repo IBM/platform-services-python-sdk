@@ -40,4 +40,3 @@ lint:
 
 lint-fix:
 	black ${LINT_DIRS}
-	
