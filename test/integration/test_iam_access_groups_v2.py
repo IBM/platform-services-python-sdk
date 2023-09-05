@@ -567,7 +567,6 @@ class TestIamAccessGroupsV2:
         # Construct a dict representation of a RulesActionControls model
         rules_action_controls_model = {
             'remove': False,
-            'update': False,
         }
         # Construct a dict representation of a RuleInput model
         rule_input_model = {
@@ -581,7 +580,6 @@ class TestIamAccessGroupsV2:
         assertions_action_controls_model = {
             'add': False,
             'remove': True,
-            'update': True,
         }
         # Construct a dict representation of a AssertionsInput model
         assertions_input_model = {
@@ -690,7 +688,6 @@ class TestIamAccessGroupsV2:
         # Construct a dict representation of a RulesActionControls model
         rules_action_controls_model = {
             'remove': True,
-            'update': True,
         }
         # Construct a dict representation of a RuleInput model
         rule_input_model = {
@@ -704,7 +701,6 @@ class TestIamAccessGroupsV2:
         assertions_action_controls_model = {
             'add': False,
             'remove': True,
-            'update': True,
         }
         # Construct a dict representation of a AssertionsInput model
         assertions_input_model = {
@@ -822,7 +818,6 @@ class TestIamAccessGroupsV2:
         # Construct a dict representation of a RulesActionControls model
         rules_action_controls_model = {
             'remove': False,
-            'update': False,
         }
         # Construct a dict representation of a RuleInput model
         rule_input_model = {
@@ -836,7 +831,6 @@ class TestIamAccessGroupsV2:
         assertions_action_controls_model = {
             'add': False,
             'remove': True,
-            'update': True,
         }
         # Construct a dict representation of a AssertionsInput model
         assertions_input_model = {
