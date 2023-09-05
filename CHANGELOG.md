@@ -1,3 +1,17 @@
+## [0.40.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.40.1...v0.40.2) (2023-09-05)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** remove update action control from assertions ([#218](https://github.com/IBM/platform-services-python-sdk/issues/218)) ([baa58c6](https://github.com/IBM/platform-services-python-sdk/commit/baa58c6379ef5e29a7d5f7b2af857a5474d1b8eb))
+
+## [0.40.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.40.0...v0.40.1) (2023-08-31)
+
+
+### Bug Fixes
+
+* enable builds on Windows ([#215](https://github.com/IBM/platform-services-python-sdk/issues/215)) ([6395ae1](https://github.com/IBM/platform-services-python-sdk/commit/6395ae117164f378ada8bff02da98180e20f6deb))
+
 # [0.40.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.39.0...v0.40.0) (2023-08-22)
 
 

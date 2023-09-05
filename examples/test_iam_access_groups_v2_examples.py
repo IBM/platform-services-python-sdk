@@ -548,7 +548,6 @@ class TestIamAccessGroupsV2Examples:
 
             rules_action_controls_model = {
                 'remove': False,
-                'update': False,
             }
 
             rule_input_model = {
@@ -562,7 +561,6 @@ class TestIamAccessGroupsV2Examples:
             assertions_action_controls_model = {
                 'add': False,
                 'remove': True,
-                'update': True,
             }
 
             assertions_input_model = {
@@ -793,7 +791,6 @@ class TestIamAccessGroupsV2Examples:
 
             rules_action_controls_model = {
                 'remove': False,
-                'update': False,
             }
 
             rule_input_model = {

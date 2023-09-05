@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# IBM OpenAPI SDK Code Generator Version: 3.74.0-89f1dbab-20230630-160213
+# IBM OpenAPI SDK Code Generator Version: 3.78.0-67aec9b7-20230818-174940
 
 """
 The IAM Access Groups API allows for the management of access groups (Create, Read,
@@ -2474,7 +2474,11 @@ class AccessActionControls:
     :attr bool add: (optional) Action control for adding access policies to an
           enterprise-managed access group in a child account. If an access group
           administrator in a child account adds a policy, they can always update or remove
-          it.
+          it. Note that if conflicts arise between an update to this control in a new
+          version and polices added to the access group by an administrator in a child
+          account, you must resolve those conflicts in the child account. This prevents
+          breaking access in the child account. For more information, see [Working with
+          versions](https://test.cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
     """
 
     def __init__(
@@ -2488,7 +2492,12 @@ class AccessActionControls:
         :param bool add: (optional) Action control for adding access policies to an
                enterprise-managed access group in a child account. If an access group
                administrator in a child account adds a policy, they can always update or
-               remove it.
+               remove it. Note that if conflicts arise between an update to this control
+               in a new version and polices added to the access group by an administrator
+               in a child account, you must resolve those conflicts in the child account.
+               This prevents breaking access in the child account. For more information,
+               see [Working with
+               versions](https://test.cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
         """
         self.add = add
 
@@ -3375,11 +3384,15 @@ class AssertionsActionControls:
 
     :attr bool add: (optional) Action control for adding dynamic rules to an
           enterprise-managed access group. If an access group administrator in a child
-          account adds a dynamic rule, they can always update or remove it.
+          account adds a dynamic rule, they can always update or remove it. Note that if
+          conflicts arise between an update to this control and rules added or updated by
+          an administrator in the child account, you must resolve those conflicts in the
+          child account. This prevents breaking access that the rules might grant in the
+          child account. For more information, see [Working with versions].
     :attr bool remove: (optional) Action control for removing enterprise-managed
-          dynamic rules in an enterprise-managed access group.
-    :attr bool update: (optional) Action control for updating enterprise-managed
-          dynamic rules in an enterprise-managed access group.
+          dynamic rules in an enterprise-managed access group. Note that if a rule is
+          removed from an enterprise-managed access group by an administrator in a child
+          account and and you reassign the template, the rule is reinstated.
     """
 
     def __init__(
@@ -3387,7 +3400,6 @@ class AssertionsActionControls:
         *,
         add: bool = None,
         remove: bool = None,
-        update: bool = None,
     ) -> None:
         """
         Initialize a AssertionsActionControls object.
@@ -3395,14 +3407,19 @@ class AssertionsActionControls:
         :param bool add: (optional) Action control for adding dynamic rules to an
                enterprise-managed access group. If an access group administrator in a
                child account adds a dynamic rule, they can always update or remove it.
+               Note that if conflicts arise between an update to this control and rules
+               added or updated by an administrator in the child account, you must resolve
+               those conflicts in the child account. This prevents breaking access that
+               the rules might grant in the child account. For more information, see
+               [Working with versions].
         :param bool remove: (optional) Action control for removing
                enterprise-managed dynamic rules in an enterprise-managed access group.
-        :param bool update: (optional) Action control for updating
-               enterprise-managed dynamic rules in an enterprise-managed access group.
+               Note that if a rule is removed from an enterprise-managed access group by
+               an administrator in a child account and and you reassign the template, the
+               rule is reinstated.
         """
         self.add = add
         self.remove = remove
-        self.update = update
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'AssertionsActionControls':
@@ -3412,8 +3429,6 @@ class AssertionsActionControls:
             args['add'] = _dict.get('add')
         if 'remove' in _dict:
             args['remove'] = _dict.get('remove')
-        if 'update' in _dict:
-            args['update'] = _dict.get('update')
         return cls(**args)
 
     @classmethod
@@ -3428,8 +3443,6 @@ class AssertionsActionControls:
             _dict['add'] = self.add
         if hasattr(self, 'remove') and self.remove is not None:
             _dict['remove'] = self.remove
-        if hasattr(self, 'update') and self.update is not None:
-            _dict['update'] = self.update
         return _dict
 
     def _to_dict(self):
@@ -5825,9 +5838,16 @@ class MembersActionControls:
 
     :attr bool add: (optional) Action control for adding child account members to an
           enterprise-managed access group. If an access group administrator in a child
-          account adds a member, they can always remove them.
+          account adds a member, they can always remove them. Note that if conflicts arise
+          between an update to this control in a new version and members added by an
+          administrator in the child account, you must resolve those conflicts in the
+          child account. This prevents breaking access in the child account. For more
+          information, see [Working with versions]
+          (https://test.cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
     :attr bool remove: (optional) Action control for removing enterprise-managed
-          members from an enterprise-managed access group.
+          members from an enterprise-managed access group. Note that if an enterprise
+          member is removed from an enterprise-managed access group in a child account and
+          you reassign the template, the membership is reinstated.
     """
 
     def __init__(
@@ -5841,9 +5861,17 @@ class MembersActionControls:
 
         :param bool add: (optional) Action control for adding child account members
                to an enterprise-managed access group. If an access group administrator in
-               a child account adds a member, they can always remove them.
+               a child account adds a member, they can always remove them. Note that if
+               conflicts arise between an update to this control in a new version and
+               members added by an administrator in the child account, you must resolve
+               those conflicts in the child account. This prevents breaking access in the
+               child account. For more information, see [Working with versions]
+               (https://test.cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
         :param bool remove: (optional) Action control for removing
-               enterprise-managed members from an enterprise-managed access group.
+               enterprise-managed members from an enterprise-managed access group. Note
+               that if an enterprise member is removed from an enterprise-managed access
+               group in a child account and you reassign the template, the membership is
+               reinstated.
         """
         self.add = add
         self.remove = remove
@@ -6216,26 +6244,20 @@ class RuleActionControls:
 
     :attr bool remove: (optional) Action control for removing this
           enterprise-managed dynamic rule.
-    :attr bool update: (optional) Action control for updating this
-          enterprise-managed dynamic rule.
     """
 
     def __init__(
         self,
         *,
         remove: bool = None,
-        update: bool = None,
     ) -> None:
         """
         Initialize a RuleActionControls object.
 
         :param bool remove: (optional) Action control for removing this
                enterprise-managed dynamic rule.
-        :param bool update: (optional) Action control for updating this
-               enterprise-managed dynamic rule.
         """
         self.remove = remove
-        self.update = update
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'RuleActionControls':
@@ -6243,8 +6265,6 @@ class RuleActionControls:
         args = {}
         if 'remove' in _dict:
             args['remove'] = _dict.get('remove')
-        if 'update' in _dict:
-            args['update'] = _dict.get('update')
         return cls(**args)
 
     @classmethod
@@ -6257,8 +6277,6 @@ class RuleActionControls:
         _dict = {}
         if hasattr(self, 'remove') and self.remove is not None:
             _dict['remove'] = self.remove
-        if hasattr(self, 'update') and self.update is not None:
-            _dict['update'] = self.update
         return _dict
 
     def _to_dict(self):
