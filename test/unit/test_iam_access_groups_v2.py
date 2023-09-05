@@ -3062,7 +3062,7 @@ class TestCreateTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.POST,
             url,
@@ -3091,7 +3091,6 @@ class TestCreateTemplate:
         # Construct a dict representation of a RuleActionControls model
         rule_action_controls_model = {}
         rule_action_controls_model['remove'] = False
-        rule_action_controls_model['update'] = False
 
         # Construct a dict representation of a AssertionsRule model
         assertions_rule_model = {}
@@ -3105,7 +3104,6 @@ class TestCreateTemplate:
         assertions_action_controls_model = {}
         assertions_action_controls_model['add'] = False
         assertions_action_controls_model['remove'] = True
-        assertions_action_controls_model['update'] = True
 
         # Construct a dict representation of a Assertions model
         assertions_model = {}
@@ -3184,7 +3182,7 @@ class TestCreateTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.POST,
             url,
@@ -3213,7 +3211,6 @@ class TestCreateTemplate:
         # Construct a dict representation of a RuleActionControls model
         rule_action_controls_model = {}
         rule_action_controls_model['remove'] = False
-        rule_action_controls_model['update'] = False
 
         # Construct a dict representation of a AssertionsRule model
         assertions_rule_model = {}
@@ -3227,7 +3224,6 @@ class TestCreateTemplate:
         assertions_action_controls_model = {}
         assertions_action_controls_model['add'] = False
         assertions_action_controls_model['remove'] = True
-        assertions_action_controls_model['update'] = True
 
         # Construct a dict representation of a Assertions model
         assertions_model = {}
@@ -3304,7 +3300,7 @@ class TestCreateTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.POST,
             url,
@@ -3333,7 +3329,6 @@ class TestCreateTemplate:
         # Construct a dict representation of a RuleActionControls model
         rule_action_controls_model = {}
         rule_action_controls_model['remove'] = False
-        rule_action_controls_model['update'] = False
 
         # Construct a dict representation of a AssertionsRule model
         assertions_rule_model = {}
@@ -3347,7 +3342,6 @@ class TestCreateTemplate:
         assertions_action_controls_model = {}
         assertions_action_controls_model['add'] = False
         assertions_action_controls_model['remove'] = True
-        assertions_action_controls_model['update'] = True
 
         # Construct a dict representation of a Assertions model
         assertions_model = {}
@@ -3416,7 +3410,7 @@ class TestListTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "group_templates": [{"id": "id", "name": "name", "description": "description", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "group_templates": [{"id": "id", "name": "name", "description": "description", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3469,7 +3463,7 @@ class TestListTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "group_templates": [{"id": "id", "name": "name", "description": "description", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "group_templates": [{"id": "id", "name": "name", "description": "description", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3511,7 +3505,7 @@ class TestListTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "group_templates": [{"id": "id", "name": "name", "description": "description", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "group_templates": [{"id": "id", "name": "name", "description": "description", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3548,8 +3542,8 @@ class TestListTemplates:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/group_templates')
-        mock_response1 = '{"group_templates":[{"id":"id","name":"name","description":"description","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true,"update":true}}],"action_controls":{"add":false,"remove":true,"update":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1}'
-        mock_response2 = '{"group_templates":[{"id":"id","name":"name","description":"description","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true,"update":true}}],"action_controls":{"add":false,"remove":true,"update":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        mock_response1 = '{"group_templates":[{"id":"id","name":"name","description":"description","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true}}],"action_controls":{"add":false,"remove":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1}'
+        mock_response2 = '{"group_templates":[{"id":"id","name":"name","description":"description","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true}}],"action_controls":{"add":false,"remove":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -3587,8 +3581,8 @@ class TestListTemplates:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/group_templates')
-        mock_response1 = '{"group_templates":[{"id":"id","name":"name","description":"description","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true,"update":true}}],"action_controls":{"add":false,"remove":true,"update":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1}'
-        mock_response2 = '{"group_templates":[{"id":"id","name":"name","description":"description","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true,"update":true}}],"action_controls":{"add":false,"remove":true,"update":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
+        mock_response1 = '{"group_templates":[{"id":"id","name":"name","description":"description","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true}}],"action_controls":{"add":false,"remove":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1}'
+        mock_response2 = '{"group_templates":[{"id":"id","name":"name","description":"description","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true}}],"action_controls":{"add":false,"remove":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"2019-01-01T12:00:00.000Z","created_by_id":"created_by_id","last_modified_at":"2019-01-01T12:00:00.000Z","last_modified_by_id":"last_modified_by_id"}],"total_count":2,"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -3629,7 +3623,7 @@ class TestCreateTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString/versions')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.POST,
             url,
@@ -3657,8 +3651,7 @@ class TestCreateTemplateVersion:
 
         # Construct a dict representation of a RuleActionControls model
         rule_action_controls_model = {}
-        rule_action_controls_model['remove'] = True
-        rule_action_controls_model['update'] = True
+        rule_action_controls_model['remove'] = False
 
         # Construct a dict representation of a AssertionsRule model
         assertions_rule_model = {}
@@ -3672,7 +3665,6 @@ class TestCreateTemplateVersion:
         assertions_action_controls_model = {}
         assertions_action_controls_model['add'] = False
         assertions_action_controls_model['remove'] = True
-        assertions_action_controls_model['update'] = True
 
         # Construct a dict representation of a Assertions model
         assertions_model = {}
@@ -3750,7 +3742,7 @@ class TestCreateTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString/versions')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.POST,
             url,
@@ -3788,7 +3780,7 @@ class TestCreateTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString/versions')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.POST,
             url,
@@ -3831,7 +3823,7 @@ class TestListTemplateVersions:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString/versions')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "group_template_versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "group_template_versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3878,7 +3870,7 @@ class TestListTemplateVersions:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString/versions')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "group_template_versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "group_template_versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3916,7 +3908,7 @@ class TestListTemplateVersions:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString/versions')
-        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "group_template_versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
+        mock_response = '{"limit": 5, "offset": 6, "total_count": 11, "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}, "last": {"href": "href"}, "group_template_versions": [{"name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "created_at", "created_by_id": "created_by_id", "last_modified_at": "last_modified_at", "last_modified_by_id": "last_modified_by_id"}]}'
         responses.add(
             responses.GET,
             url,
@@ -3953,8 +3945,8 @@ class TestListTemplateVersions:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/group_templates/testString/versions')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"group_template_versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true,"update":true}}],"action_controls":{"add":false,"remove":true,"update":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"created_at","created_by_id":"created_by_id","last_modified_at":"last_modified_at","last_modified_by_id":"last_modified_by_id"}],"limit":1}'
-        mock_response2 = '{"total_count":2,"group_template_versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true,"update":true}}],"action_controls":{"add":false,"remove":true,"update":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"created_at","created_by_id":"created_by_id","last_modified_at":"last_modified_at","last_modified_by_id":"last_modified_by_id"}],"limit":1}'
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"group_template_versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true}}],"action_controls":{"add":false,"remove":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"created_at","created_by_id":"created_by_id","last_modified_at":"last_modified_at","last_modified_by_id":"last_modified_by_id"}],"limit":1}'
+        mock_response2 = '{"total_count":2,"group_template_versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true}}],"action_controls":{"add":false,"remove":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"created_at","created_by_id":"created_by_id","last_modified_at":"last_modified_at","last_modified_by_id":"last_modified_by_id"}],"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -3990,8 +3982,8 @@ class TestListTemplateVersions:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/group_templates/testString/versions')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"group_template_versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true,"update":true}}],"action_controls":{"add":false,"remove":true,"update":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"created_at","created_by_id":"created_by_id","last_modified_at":"last_modified_at","last_modified_by_id":"last_modified_by_id"}],"limit":1}'
-        mock_response2 = '{"total_count":2,"group_template_versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true,"update":true}}],"action_controls":{"add":false,"remove":true,"update":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"created_at","created_by_id":"created_by_id","last_modified_at":"last_modified_at","last_modified_by_id":"last_modified_by_id"}],"limit":1}'
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"group_template_versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true}}],"action_controls":{"add":false,"remove":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"created_at","created_by_id":"created_by_id","last_modified_at":"last_modified_at","last_modified_by_id":"last_modified_by_id"}],"limit":1}'
+        mock_response2 = '{"total_count":2,"group_template_versions":[{"name":"name","description":"description","account_id":"account_id","version":"version","committed":false,"group":{"name":"name","description":"description","members":{"users":["users"],"services":["services"],"action_controls":{"add":false,"remove":true}},"assertions":{"rules":[{"name":"name","expiration":10,"realm_name":"realm_name","conditions":[{"claim":"claim","operator":"operator","value":"value"}],"action_controls":{"remove":true}}],"action_controls":{"add":false,"remove":true}},"action_controls":{"access":{"add":false}}},"policy_template_references":[{"id":"id","version":"version"}],"href":"href","created_at":"created_at","created_by_id":"created_by_id","last_modified_at":"last_modified_at","last_modified_by_id":"last_modified_by_id"}],"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -4030,7 +4022,7 @@ class TestGetTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString/versions/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -4078,7 +4070,7 @@ class TestGetTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString/versions/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -4118,7 +4110,7 @@ class TestGetTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString/versions/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -4163,7 +4155,7 @@ class TestUpdateTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString/versions/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.PUT,
             url,
@@ -4192,7 +4184,6 @@ class TestUpdateTemplateVersion:
         # Construct a dict representation of a RuleActionControls model
         rule_action_controls_model = {}
         rule_action_controls_model['remove'] = False
-        rule_action_controls_model['update'] = False
 
         # Construct a dict representation of a AssertionsRule model
         assertions_rule_model = {}
@@ -4206,7 +4197,6 @@ class TestUpdateTemplateVersion:
         assertions_action_controls_model = {}
         assertions_action_controls_model['add'] = False
         assertions_action_controls_model['remove'] = True
-        assertions_action_controls_model['update'] = True
 
         # Construct a dict representation of a Assertions model
         assertions_model = {}
@@ -4288,7 +4278,7 @@ class TestUpdateTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString/versions/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.PUT,
             url,
@@ -4330,7 +4320,7 @@ class TestUpdateTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString/versions/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.PUT,
             url,
@@ -4619,7 +4609,7 @@ class TestGetLatestTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -4665,7 +4655,7 @@ class TestGetLatestTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -4703,7 +4693,7 @@ class TestGetLatestTemplateVersion:
         """
         # Set up mock
         url = preprocess_url('/v1/group_templates/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true, "update": true}}], "action_controls": {"add": false, "remove": true, "update": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "account_id": "account_id", "version": "version", "committed": false, "group": {"name": "name", "description": "description", "members": {"users": ["users"], "services": ["services"], "action_controls": {"add": false, "remove": true}}, "assertions": {"rules": [{"name": "name", "expiration": 10, "realm_name": "realm_name", "conditions": [{"claim": "claim", "operator": "operator", "value": "value"}], "action_controls": {"remove": true}}], "action_controls": {"add": false, "remove": true}}, "action_controls": {"access": {"add": false}}}, "policy_template_references": [{"id": "id", "version": "version"}], "href": "href", "created_at": "2019-01-01T12:00:00.000Z", "created_by_id": "created_by_id", "last_modified_at": "2019-01-01T12:00:00.000Z", "last_modified_by_id": "last_modified_by_id"}'
         responses.add(
             responses.GET,
             url,
@@ -5584,7 +5574,6 @@ class TestModel_AccessGroupRequest:
 
         rule_action_controls_model = {}  # RuleActionControls
         rule_action_controls_model['remove'] = True
-        rule_action_controls_model['update'] = True
 
         assertions_rule_model = {}  # AssertionsRule
         assertions_rule_model['name'] = 'testString'
@@ -5596,7 +5585,6 @@ class TestModel_AccessGroupRequest:
         assertions_action_controls_model = {}  # AssertionsActionControls
         assertions_action_controls_model['add'] = True
         assertions_action_controls_model['remove'] = True
-        assertions_action_controls_model['update'] = True
 
         assertions_model = {}  # Assertions
         assertions_model['rules'] = [assertions_rule_model]
@@ -5660,7 +5648,6 @@ class TestModel_AccessGroupResponse:
 
         rule_action_controls_model = {}  # RuleActionControls
         rule_action_controls_model['remove'] = True
-        rule_action_controls_model['update'] = True
 
         assertions_rule_model = {}  # AssertionsRule
         assertions_rule_model['name'] = 'testString'
@@ -5672,7 +5659,6 @@ class TestModel_AccessGroupResponse:
         assertions_action_controls_model = {}  # AssertionsActionControls
         assertions_action_controls_model['add'] = True
         assertions_action_controls_model['remove'] = True
-        assertions_action_controls_model['update'] = True
 
         assertions_model = {}  # Assertions
         assertions_model['rules'] = [assertions_rule_model]
@@ -6000,7 +5986,6 @@ class TestModel_Assertions:
 
         rule_action_controls_model = {}  # RuleActionControls
         rule_action_controls_model['remove'] = True
-        rule_action_controls_model['update'] = True
 
         assertions_rule_model = {}  # AssertionsRule
         assertions_rule_model['name'] = 'testString'
@@ -6012,7 +5997,6 @@ class TestModel_Assertions:
         assertions_action_controls_model = {}  # AssertionsActionControls
         assertions_action_controls_model['add'] = True
         assertions_action_controls_model['remove'] = True
-        assertions_action_controls_model['update'] = True
 
         # Construct a json representation of a Assertions model
         assertions_model_json = {}
@@ -6049,7 +6033,6 @@ class TestModel_AssertionsActionControls:
         assertions_action_controls_model_json = {}
         assertions_action_controls_model_json['add'] = True
         assertions_action_controls_model_json['remove'] = True
-        assertions_action_controls_model_json['update'] = True
 
         # Construct a model instance of AssertionsActionControls by calling from_dict on the json representation
         assertions_action_controls_model = AssertionsActionControls.from_dict(assertions_action_controls_model_json)
@@ -6088,7 +6071,6 @@ class TestModel_AssertionsRule:
 
         rule_action_controls_model = {}  # RuleActionControls
         rule_action_controls_model['remove'] = True
-        rule_action_controls_model['update'] = True
 
         # Construct a json representation of a AssertionsRule model
         assertions_rule_model_json = {}
@@ -6620,7 +6602,6 @@ class TestModel_GroupTemplate:
 
         rule_action_controls_model = {}  # RuleActionControls
         rule_action_controls_model['remove'] = True
-        rule_action_controls_model['update'] = True
 
         assertions_rule_model = {}  # AssertionsRule
         assertions_rule_model['name'] = 'testString'
@@ -6632,7 +6613,6 @@ class TestModel_GroupTemplate:
         assertions_action_controls_model = {}  # AssertionsActionControls
         assertions_action_controls_model['add'] = True
         assertions_action_controls_model['remove'] = True
-        assertions_action_controls_model['update'] = True
 
         assertions_model = {}  # Assertions
         assertions_model['rules'] = [assertions_rule_model]
@@ -6899,7 +6879,6 @@ class TestModel_ListTemplateVersionResponse:
 
         rule_action_controls_model = {}  # RuleActionControls
         rule_action_controls_model['remove'] = True
-        rule_action_controls_model['update'] = True
 
         assertions_rule_model = {}  # AssertionsRule
         assertions_rule_model['name'] = 'testString'
@@ -6911,7 +6890,6 @@ class TestModel_ListTemplateVersionResponse:
         assertions_action_controls_model = {}  # AssertionsActionControls
         assertions_action_controls_model['add'] = True
         assertions_action_controls_model['remove'] = True
-        assertions_action_controls_model['update'] = True
 
         assertions_model = {}  # Assertions
         assertions_model['rules'] = [assertions_rule_model]
@@ -7000,7 +6978,6 @@ class TestModel_ListTemplateVersionsResponse:
 
         rule_action_controls_model = {}  # RuleActionControls
         rule_action_controls_model['remove'] = True
-        rule_action_controls_model['update'] = True
 
         assertions_rule_model = {}  # AssertionsRule
         assertions_rule_model['name'] = 'testString'
@@ -7012,7 +6989,6 @@ class TestModel_ListTemplateVersionsResponse:
         assertions_action_controls_model = {}  # AssertionsActionControls
         assertions_action_controls_model['add'] = True
         assertions_action_controls_model['remove'] = True
-        assertions_action_controls_model['update'] = True
 
         assertions_model = {}  # Assertions
         assertions_model['rules'] = [assertions_rule_model]
@@ -7113,7 +7089,6 @@ class TestModel_ListTemplatesResponse:
 
         rule_action_controls_model = {}  # RuleActionControls
         rule_action_controls_model['remove'] = True
-        rule_action_controls_model['update'] = True
 
         assertions_rule_model = {}  # AssertionsRule
         assertions_rule_model['name'] = 'testString'
@@ -7125,7 +7100,6 @@ class TestModel_ListTemplatesResponse:
         assertions_action_controls_model = {}  # AssertionsActionControls
         assertions_action_controls_model['add'] = True
         assertions_action_controls_model['remove'] = True
-        assertions_action_controls_model['update'] = True
 
         assertions_model = {}  # Assertions
         assertions_model['rules'] = [assertions_rule_model]
@@ -7409,7 +7383,6 @@ class TestModel_RuleActionControls:
         # Construct a json representation of a RuleActionControls model
         rule_action_controls_model_json = {}
         rule_action_controls_model_json['remove'] = True
-        rule_action_controls_model_json['update'] = True
 
         # Construct a model instance of RuleActionControls by calling from_dict on the json representation
         rule_action_controls_model = RuleActionControls.from_dict(rule_action_controls_model_json)
@@ -7653,7 +7626,6 @@ class TestModel_TemplateResponse:
 
         rule_action_controls_model = {}  # RuleActionControls
         rule_action_controls_model['remove'] = True
-        rule_action_controls_model['update'] = True
 
         assertions_rule_model = {}  # AssertionsRule
         assertions_rule_model['name'] = 'testString'
@@ -7665,7 +7637,6 @@ class TestModel_TemplateResponse:
         assertions_action_controls_model = {}  # AssertionsActionControls
         assertions_action_controls_model['add'] = True
         assertions_action_controls_model['remove'] = True
-        assertions_action_controls_model['update'] = True
 
         assertions_model = {}  # Assertions
         assertions_model['rules'] = [assertions_rule_model]
@@ -7748,7 +7719,6 @@ class TestModel_TemplateVersionResponse:
 
         rule_action_controls_model = {}  # RuleActionControls
         rule_action_controls_model['remove'] = True
-        rule_action_controls_model['update'] = True
 
         assertions_rule_model = {}  # AssertionsRule
         assertions_rule_model['name'] = 'testString'
@@ -7760,7 +7730,6 @@ class TestModel_TemplateVersionResponse:
         assertions_action_controls_model = {}  # AssertionsActionControls
         assertions_action_controls_model['add'] = True
         assertions_action_controls_model['remove'] = True
-        assertions_action_controls_model['update'] = True
 
         assertions_model = {}  # Assertions
         assertions_model['rules'] = [assertions_rule_model]
