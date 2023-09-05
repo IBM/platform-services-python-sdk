@@ -1,3 +1,10 @@
+## [0.40.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.40.1...v0.40.2) (2023-09-05)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** remove update action control from assertions ([#218](https://github.com/IBM/platform-services-python-sdk/issues/218)) ([baa58c6](https://github.com/IBM/platform-services-python-sdk/commit/baa58c6379ef5e29a7d5f7b2af857a5474d1b8eb))
+
 ## [0.40.1](https://github.com/IBM/platform-services-python-sdk/compare/v0.40.0...v0.40.1) (2023-08-31)
 
 
