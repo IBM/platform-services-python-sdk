@@ -1,3 +1,10 @@
+# [0.41.0](https://github.com/IBM/platform-services-python-sdk/compare/v0.40.2...v0.41.0) (2023-09-05)
+
+
+### Features
+
+* **IAM Policy Management:** add support for policy templates ([#203](https://github.com/IBM/platform-services-python-sdk/issues/203)) ([c9df540](https://github.com/IBM/platform-services-python-sdk/commit/c9df5402cea5896196bd941c857f81348e6ac24c))
+
 ## [0.40.2](https://github.com/IBM/platform-services-python-sdk/compare/v0.40.1...v0.40.2) (2023-09-05)
 
 
